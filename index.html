@@ -24,6 +24,8 @@
 --fsl:  clamp(17px, 3.0vw, 22px);
 --fsxl: clamp(20px, 3.5vw, 28px);
 }
+body.fs-small{--fs:12px;--fss:11px;--fsxs:10px;--fsl:14px;--fsxl:16px;}
+body.fs-large{--fs:17px;--fss:15px;--fsxs:13px;--fsl:19px;--fsxl:24px;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,sans-serif;}
 html,body{height:100%;overflow:hidden;background:#0A0C10;color:var(--text);}
 #app{height:100vh;display:flex;flex-direction:column;overflow:hidden;}
@@ -195,7 +197,15 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div class="screen" id="screen-home">
-<div class="scroll" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:24px;background:#0A0C10;">
+<div class="topbar" style="justify-content:flex-end;">
+<button class="btn" onclick="toggleDarkMode()" id="dark-btn" style="font-size:16px;padding:5px 10px;">☀️</button>
+<div style="display:flex;gap:4px;border:1px solid #334155;border-radius:7px;overflow:hidden;">
+<button class="btn fs-btn" data-fs="S" onclick="setFontSize('S')" style="padding:4px 9px;font-size:11px;font-weight:700;border:none;border-radius:0;background:transparent;color:#64748B;">A-</button>
+<button class="btn fs-btn" data-fs="M" onclick="setFontSize('M')" style="padding:4px 9px;font-size:13px;font-weight:700;border:none;border-radius:0;background:#3B82F622;color:#3B82F6;">A</button>
+<button class="btn fs-btn" data-fs="L" onclick="setFontSize('L')" style="padding:4px 9px;font-size:15px;font-weight:700;border:none;border-radius:0;background:transparent;color:#64748B;">A+</button>
+</div>
+</div>
+<div class="scroll" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 52px);padding:24px;background:#0A0C10;">
 <div style="margin-bottom:22px;position:relative;">
 <div style="width:82px;height:82px;border-radius:18px;background:linear-gradient(135deg,#0d2140,#0F1218,#180a0a);border:2px solid #3B82F6;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 28px #3B82F644;position:relative;overflow:hidden;">
 <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3B82F6,#8B5CF6,#EF4444);"></div>
@@ -379,6 +389,7 @@ Identifiant ou mot de passe incorrect
 <div class="screen" id="screen-rapport">
 <div class="topbar">
 <button class="btn" onclick="showScreen('debrief')">← Debrief</button>
+<button class="btn btn-success" onclick="showScreen('session')" style="font-size:11px;padding:6px 10px;">↩ Session</button>
 <div style="flex:1;margin-left:10px;">
 <div class="title">RAPPORT SESSION</div>
 <div class="sub" id="rpt-sub"></div>
@@ -3032,6 +3043,17 @@ function closeConfirm(){ document.getElementById('modal-confirm').style.display=
 function doReset(){ state.exercises=[]; state.activeIdx=null; closeConfirm(); renderExList(); }
 
 // ── MODE SOMBRE/CLAIR ---──────────────────────────────────────────────────────
+function setFontSize(s){
+  document.body.classList.remove('fs-small','fs-large');
+  if(s==='S') document.body.classList.add('fs-small');
+  if(s==='L') document.body.classList.add('fs-large');
+  localStorage.setItem('cbta_fs', s||'M');
+  document.querySelectorAll('.fs-btn').forEach(b=>{
+    b.style.background=b.dataset.fs===s?'#3B82F622':'transparent';
+    b.style.color=b.dataset.fs===s?'#3B82F6':'#64748B';
+    b.style.borderColor=b.dataset.fs===s?'#3B82F6':'#334155';
+  });
+}
 var _darkMode = true;
 function toggleDarkMode(){
 _darkMode = !_darkMode;
@@ -3039,6 +3061,7 @@ document.body.classList.toggle('light-mode', !_darkMode);
 const btns = document.querySelectorAll('[onclick="toggleDarkMode()"]');
 btns.forEach(b=>b.textContent = _darkMode ? '☀️' : '🌙');
 }
+(function(){const fs=localStorage.getItem('cbta_fs')||'M';if(fs!=='M')setFontSize(fs);})();
 
 // ── VERROUILLAGE ÉCRAN ---─────────────────────────────────────────────────────
 var _locked = false;
