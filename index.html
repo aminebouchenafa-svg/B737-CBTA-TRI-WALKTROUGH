@@ -2996,17 +2996,16 @@ body+=`\n${'='.repeat(45)}\nQRH Rev55 · FCTM Rev25 · CBTA OACI\nBy Cpt Bouchen
 envoyerEmail(`Rapport CBTA — ${state.pilotName} — ${dateStr}`, body);
 }
 
-function showRapport(){
+// Generates the full rapport HTML string from current state — no DOM side-effects.
+// Returns {html, dateStr} so callers can use both.
+function buildRapportHTML(){
 const closed = state.exercises.filter(e=>e.closed);
 const now = new Date();
 const dateStr = now.toLocaleDateString('fr-FR')+' '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
 const instrName = state.instructorName || state.currentUser || "TRI";
 
-// Couleurs pilotes
-const CPT_COLOR = '#3B82F6'; // bleu
-const FO_COLOR  = '#10B981'; // vert
-
-// Couleurs compétences
+const CPT_COLOR = '#3B82F6';
+const FO_COLOR  = '#10B981';
 const COMP_COLORS = {
 KNO:'#F59E0B', WLM:'#8B5CF6', SA:'#06B6D4', PSD:'#EF4444',
 LTW:'#10B981', FPM:'#F97316', FPA:'#3B82F6', COM:'#EC4899', PRO:'#84CC16'
@@ -3046,12 +3045,9 @@ function pilotBlock(csKey, name, pilotColor){
 const {ct,avgs,global}=getStats(csKey);
 if(global===0) return '';
 const lv=levelInfo(global);
-
-// Points forts et à consolider
 const evaluated = COMPETENCIES.filter(c=>ct[c.id].count>0);
 const strong = evaluated.filter(c=>avgs[c.id]>=3.5).map(c=>c.label);
 const weak = evaluated.filter(c=>avgs[c.id]<3.0&&avgs[c.id]>0).map(c=>c.label);
-
 const rows = COMPETENCIES.map(c=>{
 const avg=avgs[c.id];
 if(!ct[c.id].count&&!ct[c.id].pos&&!ct[c.id].neg) return '';
@@ -3069,7 +3065,6 @@ return `<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;b
 <div style="width:55px;font-size:10px;color:#94a3b8;text-align:right;"><span style="color:#10B981;">+${ct[c.id].pos}</span> / <span style="color:#EF4444;">-${ct[c.id].neg}</span></div>
 </div>`;
 }).join('');
-
 return `<div style="background:#fff;border-radius:12px;border:2px solid ${pilotColor}33;margin:12px 16px;overflow:hidden;box-shadow:0 2px 8px ${pilotColor}11;">
 <div style="background:linear-gradient(135deg,${pilotColor}22,${pilotColor}11);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid ${pilotColor}33;">
 <div>
@@ -3102,10 +3097,7 @@ const gradesFo = state.foName ? COMPETENCIES.filter(c=>ex.csfo&&ex.csfo[c.id]&&e
 const cc=COMP_COLORS[c.id]||FO_COLOR;
 return `<span style="background:${cc}22;color:${cc};padding:3px 8px;border-radius:6px;font-size:11px;font-weight:800;border:1px solid ${cc}44;">${c.label} ${ex.csfo[c.id].g}</span>`;
 }).join(' ') : '';
-
-// Durée exercice
 const dur = ex.startTime ? Math.floor((Date.now()-ex.startTime)/60000) : null;
-
 return `<div style="padding:14px 16px;border-bottom:1px solid #f1f5f9;">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
 <div>
@@ -3121,7 +3113,6 @@ ${ex.notes?`<div style="font-size:12px;color:#475569;margin-top:6px;font-style:i
 }).join('');
 
 const conclusion = state.debConclNotes||'';
-
 const html = `
 <div style="font-family:-apple-system,sans-serif;color:#1e293b;background:#f8fafc;min-height:100%;">
 <div style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1e40af 100%);padding:24px 16px 20px;color:#fff;">
@@ -3168,35 +3159,16 @@ Standard CBTA OACI · By Cpt Bouchenafa Mohamed Amine
 </div>
 </div>`;
 
-// QR Code - texte court encodé via api.qrserver (réseau GitHub Pages)
-var qrAvg3=(function(){
-var ct={};COMPETENCIES.forEach(function(c){ct[c.id]={t:0,n:0};});
-closed.forEach(function(ex){var cs=ex.cs||{};Object.keys(cs).forEach(function(cid){var cd=cs[cid];if(cd&&cd.g>0){ct[cid].t+=cd.g;ct[cid].n++;}});});
-var vals=COMPETENCIES.map(function(c){return ct[c.id].n>0?ct[c.id].t/ct[c.id].n:0;}).filter(function(v){return v>0;});
-return vals.length?vals.reduce(function(a,b){return a+b;},0)/vals.length:0;
-})();
-var qrLvl=qrAvg3>=4.5?'EXEMPLAIRE':qrAvg3>=3.5?'AU-DESSUS':qrAvg3>=2.5?'STANDARD':qrAvg3>=1.5?'SOUS-STD':'INSUF';
-var qrTxt='CPT:'+state.pilotName+(state.foName?' FO:'+state.foName:'')+' | '+state.sessionName+' | '+dateStr.slice(0,10)+' | '+qrAvg3.toFixed(2)+'/5 '+qrLvl+' | TRI:'+instrName;
-var qrSrc='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data='+encodeURIComponent(qrTxt)+'&bgcolor=ffffff&color=000000&format=png&qzone=2';
+return {html, dateStr};
+}
 
-var qrBlock='<div style="text-align:center;padding:24px 16px;background:#0F1218;border-top:2px solid #1E2530;">'
-+'<div style="font-size:10px;color:#64748B;letter-spacing:2px;margin-bottom:14px;">QR CODE — RAPPORT PILOTE</div>'
-+'<div style="display:inline-block;background:#FFFFFF;padding:10px;border-radius:10px;">'
-+'<img src="'+qrSrc+'" width="180" height="180" style="display:block;" '
-+'onerror="this.parentNode.parentNode.style.display=\'none\'"/>'
-+'</div>'
-+'<div style="font-size:11px;color:#94A3B8;margin-top:12px;">Le pilote scanne ce code pour accéder à son résumé</div>'
-+'<div style="font-size:12px;font-weight:700;color:#F59E0B;margin-top:4px;">CPT '+state.pilotName+' · '+dateStr+'</div>'
-+'</div>';
-
-document.getElementById('rapport-content').innerHTML = html + qrBlock;
+function showRapport(){
+const {html, dateStr} = buildRapportHTML();
+document.getElementById('rapport-content').innerHTML = html;
 document.getElementById('rpt-sub').textContent = state.pilotName + ' · ' + dateStr;
-
-// Stocker le HTML du rapport pour ouverture dans Safari
-window._rapportHTML = html + qrBlock;
+window._rapportHTML = html;
 window._rapportDateStr = dateStr;
 window._rapportPilot = state.pilotName;
-
 showScreen('rapport');
 }
 
@@ -3233,6 +3205,38 @@ function printRapport(){
     }
   }catch(e){}
   // iOS PWA fallback: navigate current tab to a data URL
+  window.location.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(fullPage);
+}
+
+function printRapportFromHistory(idx){
+  const hist = JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const session = hist[idx];
+  if(!session || !session.rapportHTML){
+    alert('Rapport PDF non disponible pour cette session.\n(Les sessions enregistrées avant la mise à jour ne contiennent pas le rapport complet.)');
+    return;
+  }
+  const pilot = session.pilotName || '';
+  const fullPage = '<!DOCTYPE html><html><head>'
+    +'<meta charset="UTF-8">'
+    +'<meta name="viewport" content="width=device-width,initial-scale=1">'
+    +'<title>Rapport CBTA — '+pilot+'</title>'
+    +'<style>'
+    +'*{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}'
+    +'html,body{margin:0;padding:0;background:#f8fafc;}'
+    +'.noprint{padding:12px 16px;background:#fff;border-bottom:2px solid #e2e8f0;text-align:center;}'
+    +'@media print{.noprint{display:none!important;}html,body{background:#fff!important;}}'
+    +'</style>'
+    +'</head><body>'
+    +'<div class="noprint">'
+    +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
+    +'</div>'
+    +session.rapportHTML
+    +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},800);};<\/scr'+'ipt>'
+    +'</body></html>';
+  try{
+    const w = window.open('','_blank');
+    if(w){ w.document.write(fullPage); w.document.close(); return; }
+  }catch(e){}
   window.location.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(fullPage);
 }
 
@@ -3935,6 +3939,7 @@ compAvgs, compAvgsFo,
 strong, weak,
 temStats,
 conclusion: state.debConclNotes||'',
+rapportHTML: buildRapportHTML().html,
 exercises: closed.map(ex=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid);
 const st=exStats(ex);
@@ -4072,8 +4077,9 @@ if(s.weak&&s.weak.length) h+='<div style="font-size:11px;color:#EF4444;">△ '+s
 h+='</div>';
 }
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;">';
+h+='<button onclick="printRapportFromHistory('+i+')" style="flex:1;padding:8px;background:#0f172a44;border:1px solid #475569;color:#F1F5F9;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128424;&#65039; PDF</button>';
 h+='<button onclick="envoyerRapportEmail('+i+')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✉ EMAIL</button>';
-h+='<button onclick="showComparaisonPilote(\''+s.pilotName+'\')" style="flex:1;padding:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📈 ÉVOLUTION</button>';
+h+='<button onclick="showComparaisonPilote(\''+s.pilotName+'\')" style="flex:1;padding:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128200; ÉVOLUTION</button>';
 h+='</div></div>';
 });
 h+='</div>';
