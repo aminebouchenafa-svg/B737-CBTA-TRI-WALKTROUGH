@@ -63,7 +63,7 @@ textarea.form-input{resize:none;height:70px;}
 .grade-btn.active-4{background:#10B98133;border-color:#10B981;color:#10B981;}
 .grade-btn.active-5{background:#3B82F633;border-color:#3B82F6;color:#3B82F6;}
 /* OB row */
-.ob-row{display:flex;align-items:center;gap:8px;padding:11px 8px;border-radius:9px;border:1px solid #1E2530;margin-bottom:7px;background:#141920;transition:background 0.1s;}
+.ob-row{display:flex;align-items:flex-start;gap:8px;padding:11px 8px;border-radius:9px;border:1px solid #1E2530;margin-bottom:7px;background:#141920;transition:background 0.1s;}
 .ob-row.pos{background:#10B98111;border-color:#10B98133;}
 .ob-row.neg{background:#EF444411;border-color:#EF444433;}
 .ob-id{font-size:14px;font-weight:700;font-family:monospace;min-width:46px;flex-shrink:0;}
@@ -668,7 +668,7 @@ ffa:false,ffaD:"V/S mode = surveillance accrue de la vitesse et de l altitude. P
 tT:["Accel/decel non anticipee","Altitude contrainte non respectee"],
 tE:["Vitesse non surveillee en V/S mode","Altitude contrainte depassee","Transition vers autre mode non planifiee"],
 fac:["La vitesse etait-elle surveillee en permanence pendant le V/S ?","Les contraintes d altitude ont-elles ete respectees ?","Le passage vers ILS ou VNAV etait-il planifie correctement ?"]},
-{id:"rnp_approach",title:"RNP APPROACH",page:"FP.6",cat:"FLIGHT PATTERN",pri:"NORMAL",
+{id:"rnp_approach",title:"RNP APPROACH",page:"FP.6",cat:"RNP",pri:"NORMAL",
 phase:["APPROACH"],keys:["FPA","KNO","PRO","SA"],
 mem:[],
 ffa:false,ffaD:"Verifier RNP value requise vs disponible. Monitorer FTE et cross-track error. Savoir quand effectuer la remise des gaz.",
@@ -2129,6 +2129,8 @@ function buildPilotTabsHtml(onChangeSuffix){
 // ── SEAT ROLE SELECTION ---───────────────────────────────────────────────────
 var _s1Role = "CPT";
 var _s2Role = "FO";
+const LVO_COLOR = '#EC4899'; // hot pink for LVO exercises
+const RNP_COLOR = '#0EA5E9'; // sky blue for RNP exercises
 const _ROLE_COLORS = {CPT:'#3B82F6', FO:'#10B981', TRI:'#F59E0B'};
 const _ROLE_LABELS = {CPT:'COMMANDANT DE BORD', FO:'PREMIER OFFICIER', TRI:'TRI (INSTRUCTEUR EXAMINÉ)'};
 function setRoleSeat1(r, el){
@@ -2327,6 +2329,36 @@ document.getElementById('briefing-content').innerHTML = `
 </div>
 ${html}
 ${facHtml}
+<div class="card" style="margin-bottom:16px;border-left:3px solid #F59E0B;">
+<div style="font-size:10px;font-weight:700;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">TOLERANCES — SKILL TEST &amp; PROFICIENCY CHECK (EASA §4.3.5)</div>
+<div style="font-size:10px;color:#94A3B8;margin-bottom:10px;line-height:1.5;">The examiner shall make due allowance for momentary variations in response to weather, turbulence, simulated malfunctions.</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead>
+<tr style="background:#141920;">
+<th style="padding:7px 9px;text-align:left;color:#F59E0B;font-size:10px;letter-spacing:1px;border-bottom:1px solid #1E2530;">PARAMÈTRE</th>
+<th style="padding:7px 9px;text-align:right;color:#F59E0B;font-size:10px;letter-spacing:1px;border-bottom:1px solid #1E2530;">TOLÉRANCE</th>
+</tr>
+</thead>
+<tbody>
+<tr><td colspan="2" style="padding:6px 9px;font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:1px;background:#0d1a2e;border-bottom:1px solid #1E2530;">ALTITUDE / HEIGHT</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">Normal Flight</td><td style="padding:7px 9px;text-align:right;color:#10B981;font-weight:700;">± 100 ft</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">With Simulated Engine Failure</td><td style="padding:7px 9px;text-align:right;color:#10B981;font-weight:700;">± 100 ft</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">Go-Around at DA/H</td><td style="padding:7px 9px;text-align:right;color:#F59E0B;font-weight:700;">+50 / −0 ft</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">APV Baro Final Approach Segment</td><td style="padding:7px 9px;text-align:right;color:#F59E0B;font-weight:700;">+100 / −50 ft</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">Minimum Descent Altitude/Height</td><td style="padding:7px 9px;text-align:right;color:#F59E0B;font-weight:700;">+50 / −0 ft</td></tr>
+<tr><td colspan="2" style="padding:6px 9px;font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:1px;background:#0d1a2e;border-bottom:1px solid #1E2530;">TRACKING</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">Precision Approach (ILS)</td><td style="padding:7px 9px;text-align:right;color:#10B981;font-weight:700;">½ scale azimuth &amp; GP</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">RNAV/GNSS NPA &amp; APV Baro</td><td style="padding:7px 9px;text-align:right;color:#10B981;font-weight:700;">± ½ RNP accuracy</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">Other Approaches</td><td style="padding:7px 9px;text-align:right;color:#10B981;font-weight:700;">± 5°</td></tr>
+<tr><td colspan="2" style="padding:6px 9px;font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:1px;background:#0d1a2e;border-bottom:1px solid #1E2530;">CAP / HEADING</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">All Engines Operating</td><td style="padding:7px 9px;text-align:right;color:#10B981;font-weight:700;">± 5°</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">With Simulated Engine Failure</td><td style="padding:7px 9px;text-align:right;color:#F97316;font-weight:700;">± 10°</td></tr>
+<tr><td colspan="2" style="padding:6px 9px;font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:1px;background:#0d1a2e;border-bottom:1px solid #1E2530;">VITESSE / SPEED</td></tr>
+<tr style="border-bottom:1px solid #1E253044;"><td style="padding:7px 9px;color:#CBD5E1;">All Engines</td><td style="padding:7px 9px;text-align:right;color:#10B981;font-weight:700;">± 5 kt</td></tr>
+<tr><td style="padding:7px 9px;color:#CBD5E1;">Asymmetric (Engine Failure)</td><td style="padding:7px 9px;text-align:right;color:#F97316;font-weight:700;">+10 / −5 kt</td></tr>
+</tbody>
+</table>
+</div>
 </div>`;
 showScreen('briefing');
 }
@@ -2919,12 +2951,14 @@ const autoGradeHtml = (pos+neg)>0 ? `<div style="background:#0F1218;border:1px s
 const obsHtml = comp.obs.map(ob=>{
 const rec = ac.obs.find(o=>o.id===ob.id);
 const isP=rec&&rec.s==="+"; const isN=rec&&rec.s==="-"; const isNA=rec&&rec.s==="N/A";
-return `<div class="ob-row ${isP?'pos':isN?'neg':isNA?'na':''}">
-<div class="ob-id" style="color:${comp.color};">${comp.label}${ob.id}</div>
+return `<div class="ob-row ${isP?'pos':isN?'neg':isNA?'na':''}" data-obid="${ob.id}">
+<div class="ob-id" style="color:${comp.color};padding-top:2px;">${comp.label}${ob.id}</div>
 <div class="ob-text">${ob.text}</div>
+<div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;">
 <button class="ob-btn plus ${isP?'active':''}" onclick="toggleOBid(${ob.id},'+')">+</button>
 <button class="ob-btn minus ${isN?'active':''}" onclick="toggleOBid(${ob.id},'-')">−</button>
-<button class="ob-btn" style="background:${isNA?'#8B5CF633':'transparent'};border:1px solid ${isNA?'#8B5CF6':'#334155'};color:${isNA?'#8B5CF6':'#475569'};border-radius:6px;padding:6px 8px;font-size:13px;font-weight:700;cursor:pointer;min-width:40px;" onclick="toggleOBid(${ob.id},'N/A')">N/A</button>
+<button class="ob-btn" style="background:${isNA?'#8B5CF633':'transparent'};border:1px solid ${isNA?'#8B5CF6':'#334155'};color:${isNA?'#8B5CF6':'#475569'};border-radius:6px;padding:5px 6px;font-size:11px;font-weight:700;cursor:pointer;min-width:38px;" onclick="toggleOBid(${ob.id},'N/A')">N/A</button>
+</div>
 </div>`;
 }).join('');
 
