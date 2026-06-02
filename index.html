@@ -3201,14 +3201,39 @@ showScreen('rapport');
 }
 
 function printRapport(){
-  // Scroll en haut du rapport
-  const rc = document.getElementById('rapport-content');
-  if(rc) rc.scrollTop = 0;
-  const sr = document.getElementById('screen-rapport');
-  if(sr) sr.scrollTop = 0;
-  window.scrollTo(0,0);
-  // Petit délai pour laisser le scroll se faire
-  setTimeout(function(){ window.print(); }, 200);
+  const rapHtml = window._rapportHTML || '';
+  const pilot   = window._rapportPilot || '';
+
+  const fullPage = '<!DOCTYPE html><html><head>'
+    +'<meta charset="UTF-8">'
+    +'<meta name="viewport" content="width=device-width,initial-scale=1">'
+    +'<title>Rapport CBTA — '+pilot+'</title>'
+    +'<style>'
+    +'*{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}'
+    +'html,body{margin:0;padding:0;background:#f8fafc;}'
+    +'.noprint{padding:12px 16px;background:#fff;border-bottom:2px solid #e2e8f0;text-align:center;}'
+    +'@media print{.noprint{display:none!important;}html,body{background:#fff!important;}}'
+    +'</style>'
+    +'</head><body>'
+    +'<div class="noprint">'
+    +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
+    +'</div>'
+    +rapHtml
+    // Auto-trigger print after images have had time to load
+    +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},800);};<\/scr'+'ipt>'
+    +'</body></html>';
+
+  try{
+    // Opens a new tab — works on desktop and Android Chrome
+    const w = window.open('','_blank');
+    if(w){
+      w.document.write(fullPage);
+      w.document.close();
+      return;
+    }
+  }catch(e){}
+  // iOS PWA fallback: navigate current tab to a data URL
+  window.location.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(fullPage);
 }
 
 function ouvrirRapportSafari(){
