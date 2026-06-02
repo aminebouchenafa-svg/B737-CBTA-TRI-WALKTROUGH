@@ -154,6 +154,9 @@ textarea.form-input{resize:none;height:70px;}
 .pip.on{background:var(--pip-color,#3B82F6);}
 /* Note input visible */
 .note-area{width:100%;background:#1A1F2E;border:1px solid #2D3748;color:var(--text);border-radius:8px;padding:12px;font-size:var(--fs);outline:none;resize:none;min-height:72px;}
+/* Chrono alarm */
+@keyframes chronoAlarm{0%,100%{opacity:1;text-shadow:0 0 12px #EF4444;}50%{opacity:0.25;text-shadow:none;}}
+@keyframes chronoWarn {0%,100%{opacity:1;}50%{opacity:0.6;}}
 </style>
 </head>
 <body>
@@ -299,6 +302,24 @@ Identifiant ou mot de passe incorrect
 <button class="tab" onclick="exTab('tem',this)" style="color:#EF4444;">TEM</button>
 <button class="tab" onclick="exTab('crm',this)" style="color:#8B5CF6;">CRM</button>
 <button class="tab" onclick="exTab('fac',this)" style="color:#10B981;">Facilitation</button>
+</div>
+<div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E2530;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
+  <div style="text-align:left;min-width:64px;">
+    <div style="font-size:8px;color:#334155;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">SESSION</div>
+    <div id="timer-session" style="font-family:ui-monospace,monospace;font-size:14px;font-weight:700;color:#475569;letter-spacing:2px;">00:00:00</div>
+  </div>
+  <div style="text-align:center;flex:1;">
+    <div style="font-size:8px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">EXERCICE</div>
+    <div id="timer-ex-display" style="font-family:ui-monospace,monospace;font-size:34px;font-weight:900;color:#F1F5F9;letter-spacing:4px;line-height:1;">00:00</div>
+  </div>
+  <div style="text-align:right;min-width:80px;">
+    <div style="font-size:8px;color:#334155;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">LIMITE</div>
+    <div style="display:flex;align-items:center;gap:5px;justify-content:flex-end;">
+      <button onclick="setExTimeLimit(-1)" style="width:24px;height:24px;border-radius:50%;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">−</button>
+      <div id="timer-limit-val" style="font-family:ui-monospace,monospace;font-size:14px;font-weight:700;color:#475569;letter-spacing:1px;min-width:36px;text-align:center;">--:--</div>
+      <button onclick="setExTimeLimit(1)" style="width:24px;height:24px;border-radius:50%;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-size:16px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">+</button>
+    </div>
+  </div>
 </div>
 <div class="scroll" id="ex-content" style="padding:13px;"></div>
 <div class="bottom-bar" style="display:flex;gap:8px;">
@@ -1961,6 +1982,7 @@ const TRI_CAT_COLORS = {"PRÉPARATION":"#8B5CF6","INSTRUCTION":"#3B82F6","CONDUI
 let state = {
 sessionName:"", pilotName:"", foName:"", currentUser:"", instructorName:"",
 pilotRole:"CPT", foRole:"FO",
+sessionStart: null,
 exercises:[], activeIdx:null,
 activeComp:null, activePilot:"cpt",
 currentExTab:"eval", currentDebTab:"scores",
@@ -1968,6 +1990,68 @@ catFilter:"ALL", phaseFilter:"ALL",
 debRootCauses:{}, debNotes:{}, debConclNotes:"",
 triCheckGrades:{}, triCheckNotes:"", triRecommendation:""
 };
+
+// ── CHRONOMETER ---───────────────────────────────────────────────────────────
+function fmtMS(s){
+  const m=Math.floor(s/60), sec=s%60;
+  return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+}
+function fmtHMS(s){
+  const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
+  return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0');
+}
+function startChrono(){
+  if(window._chronoInterval) clearInterval(window._chronoInterval);
+  window._chronoInterval = setInterval(updateChrono, 1000);
+  updateChrono();
+}
+function updateChrono(){
+  // Session timer
+  const sesEl = document.getElementById('timer-session');
+  if(sesEl && state.sessionStart){
+    sesEl.textContent = fmtHMS(Math.floor((Date.now()-state.sessionStart)/1000));
+  }
+  // Exercise timer
+  const ex = state.activeIdx!==null ? state.exercises[state.activeIdx] : null;
+  const exEl  = document.getElementById('timer-ex-display');
+  const limEl = document.getElementById('timer-limit-val');
+  const bar   = document.getElementById('ex-timer-bar');
+  if(!exEl) return;
+  if(ex && ex.openedAt){
+    const elapsed = Math.floor((Date.now()-ex.openedAt)/1000);
+    exEl.textContent = fmtMS(elapsed);
+    const limit = (ex.timeLimit||0)*60;
+    if(limEl) limEl.textContent = ex.timeLimit ? fmtMS(ex.timeLimit*60) : '--:--';
+    if(limit>0){
+      const ratio = elapsed/limit;
+      if(ratio>=1){
+        exEl.style.color='#EF4444';
+        exEl.style.animation='chronoAlarm 0.7s ease-in-out infinite';
+        if(bar){ bar.style.borderColor='#EF4444'; bar.style.boxShadow='0 0 12px #EF444444'; }
+      } else if(ratio>=0.8){
+        exEl.style.color='#F59E0B';
+        exEl.style.animation='chronoWarn 1.2s ease-in-out infinite';
+        if(bar){ bar.style.borderColor='#F59E0B'; bar.style.boxShadow='none'; }
+      } else {
+        exEl.style.color='#10B981';
+        exEl.style.animation='';
+        if(bar){ bar.style.borderColor='#1E2530'; bar.style.boxShadow='none'; }
+      }
+    } else {
+      exEl.style.color='#F1F5F9'; exEl.style.animation='';
+      if(bar){ bar.style.borderColor='#1E2530'; bar.style.boxShadow='none'; }
+    }
+  } else {
+    exEl.textContent='--:--';
+    if(limEl) limEl.textContent='--:--';
+  }
+}
+function setExTimeLimit(delta){
+  if(state.activeIdx===null) return;
+  const ex=state.exercises[state.activeIdx];
+  ex.timeLimit=Math.max(0,Math.min(90,(ex.timeLimit||0)+delta));
+  updateChrono();
+}
 
 // ── SEAT ROLE SELECTION ---───────────────────────────────────────────────────
 var _s1Role = "CPT";
@@ -2075,6 +2159,8 @@ state.foRole         = _s2Role;
 state.triCheckGrades = {};
 state.triCheckNotes  = "";
 state.triRecommendation = "";
+state.sessionStart   = Date.now();
+startChrono();
 const pilotLine = state.foName ? state.pilotName + " / " + state.foName : state.pilotName;
 document.getElementById('hdr-pilot').textContent = pilotLine;
 document.getElementById('hdr-session').textContent = state.sessionName;
@@ -2261,6 +2347,7 @@ function openEx(i){
 state.activeIdx = i;
 state.activePilot = "cpt";
 state.currentExTab = "eval";
+if(!state.exercises[i].openedAt) state.exercises[i].openedAt = Date.now();
 renderExView();
 showScreen('ex');
 document.querySelectorAll('.tab').forEach((t,idx)=>{if(idx<4)t.className='tab'+(idx===0?' active':'');});
@@ -2296,7 +2383,6 @@ const headerColor = sysColor || pc;
 document.getElementById('ex-title').textContent = sc.title;
 document.getElementById('ex-title').style.color = headerColor;
 
-if(window._chronoInterval) clearInterval(window._chronoInterval);
 const cEl=document.getElementById('ex-hdr-cpt');
 const fEl=document.getElementById('ex-hdr-fo');
 const tEl=document.getElementById('ex-hdr-tri');
@@ -2915,7 +3001,7 @@ ${(s.mem&&(s.mem||[]).length)?'<span style="font-size:11px;color:#EF4444;font-we
 
 function addExercise(sid){
 const _sc=ALL_SC.find(s=>s.id===sid);
-state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now()});
+state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0});
 closeAddModal();
 openEx(state.exercises.length-1);
 }
@@ -4144,7 +4230,7 @@ function endSession(){
 document.getElementById('modal-end').style.display='flex';
 }
 function doEndSession(){
-// Sauvegarder dans l'historique
+if(window._chronoInterval){ clearInterval(window._chronoInterval); window._chronoInterval=null; }
 saveSessionToHistory();
 document.getElementById('modal-end').style.display='none';
 state.exercises=[];
@@ -4161,6 +4247,7 @@ state.foRole="FO";
 state.triCheckGrades={};
 state.triCheckNotes="";
 state.triRecommendation="";
+state.sessionStart=null;
 document.getElementById('inp-session').value='';
 document.getElementById('inp-cpt').value='';
 document.getElementById('inp-fo').value='';
