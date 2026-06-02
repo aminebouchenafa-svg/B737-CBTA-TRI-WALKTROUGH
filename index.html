@@ -268,6 +268,7 @@ Identifiant ou mot de passe incorrect
 <div class="sub" id="hdr-session">Session</div>
 <div class="sub" id="hdr-instructor" style="color:#3B82F6;font-size:10px;"></div>
 </div>
+<button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
 <button class="btn btn-warn" onclick="confirmReset()">↺</button>
 <button class="btn btn-primary" onclick="showDebrief()">DEBRIEF →</button>
 </div>
@@ -436,6 +437,41 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:10px;justify-content:flex-end;">
 <button class="btn" onclick="document.getElementById('modal-end').style.display='none'">Annuler</button>
 <button class="btn btn-danger" onclick="doEndSession()">Terminer</button>
+</div>
+</div>
+</div>
+
+<div id="modal-edit-session" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
+<div class="modal-box" style="width:92%;max-width:420px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+<div style="font-size:15px;font-weight:800;color:#F1F5F9;">Modifier la session</div>
+<button class="btn" onclick="document.getElementById('modal-edit-session').style.display='none'" style="padding:6px 10px;">✕</button>
+</div>
+<div style="margin-bottom:12px;">
+<label class="form-label">Session / Vol</label>
+<input id="edit-session-name" class="form-input"/>
+</div>
+<div style="margin-bottom:12px;">
+<label class="form-label" id="edit-lbl-seat1">SIÈGE GAUCHE</label>
+<div style="display:flex;gap:6px;margin-bottom:6px;">
+<button id="es1-cpt" onclick="setEditRole(1,'CPT',this)" style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #3B82F6;background:#3B82F622;color:#3B82F6;">CPT</button>
+<button id="es1-fo"  onclick="setEditRole(1,'FO',this)"  style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">FO</button>
+<button id="es1-tri" onclick="setEditRole(1,'TRI',this)" style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">TRI CHECK</button>
+</div>
+<input id="edit-pilot-name" class="form-input" placeholder="Nom siège gauche"/>
+</div>
+<div style="margin-bottom:16px;">
+<label class="form-label" id="edit-lbl-seat2">SIÈGE DROIT (optionnel)</label>
+<div style="display:flex;gap:6px;margin-bottom:6px;">
+<button id="es2-cpt" onclick="setEditRole(2,'CPT',this)" style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">CPT</button>
+<button id="es2-fo"  onclick="setEditRole(2,'FO',this)"  style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #10B981;background:#10B98122;color:#10B981;">FO</button>
+<button id="es2-tri" onclick="setEditRole(2,'TRI',this)" style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">TRI CHECK</button>
+</div>
+<input id="edit-fo-name" class="form-input" placeholder="Nom siège droit (laisser vide = solo)"/>
+</div>
+<div style="display:flex;gap:10px;">
+<button class="btn" style="flex:1;" onclick="document.getElementById('modal-edit-session').style.display='none'">Annuler</button>
+<button class="btn btn-primary" style="flex:1;" onclick="saveEditSession()">Appliquer</button>
 </div>
 </div>
 </div>
@@ -1955,6 +1991,71 @@ function setRoleSeat2(r, el){
   });
   el.style.background=_ROLE_COLORS[r]+'22'; el.style.color=_ROLE_COLORS[r]; el.style.borderColor=_ROLE_COLORS[r];
   document.getElementById('lbl-seat2').textContent='SIÈGE DROIT — '+_ROLE_LABELS[r];
+}
+
+var _es1Role = "CPT";
+var _es2Role = "FO";
+function setEditRole(seat, r, el){
+  const prefix = seat===1?'es1':'es2';
+  [prefix+'-cpt',prefix+'-fo',prefix+'-tri'].forEach(id=>{
+    const b=document.getElementById(id);
+    if(!b) return;
+    b.style.background='transparent'; b.style.color='#64748B'; b.style.borderColor='#334155';
+  });
+  el.style.background=_ROLE_COLORS[r]+'22'; el.style.color=_ROLE_COLORS[r]; el.style.borderColor=_ROLE_COLORS[r];
+  if(seat===1){ _es1Role=r; document.getElementById('edit-lbl-seat1').textContent='SIÈGE GAUCHE — '+_ROLE_LABELS[r]; }
+  else { _es2Role=r; document.getElementById('edit-lbl-seat2').textContent='SIÈGE DROIT — '+_ROLE_LABELS[r]; }
+}
+function showEditSession(){
+  // Pre-fill current values
+  document.getElementById('edit-session-name').value = state.sessionName||'';
+  document.getElementById('edit-pilot-name').value   = state.pilotName||'';
+  document.getElementById('edit-fo-name').value      = state.foName||'';
+  // Reset role buttons then activate current
+  _es1Role = state.pilotRole||'CPT';
+  _es2Role = state.foRole||'FO';
+  ['es1-cpt','es1-fo','es1-tri','es2-cpt','es2-fo','es2-tri'].forEach(id=>{
+    const b=document.getElementById(id);
+    if(!b) return;
+    b.style.background='transparent'; b.style.color='#64748B'; b.style.borderColor='#334155';
+  });
+  const activateBtn=(id,r)=>{const b=document.getElementById(id);if(!b)return;b.style.background=_ROLE_COLORS[r]+'22';b.style.color=_ROLE_COLORS[r];b.style.borderColor=_ROLE_COLORS[r];};
+  if(_es1Role==='CPT') activateBtn('es1-cpt','CPT');
+  else if(_es1Role==='FO') activateBtn('es1-fo','FO');
+  else activateBtn('es1-tri','TRI');
+  if(_es2Role==='FO') activateBtn('es2-fo','FO');
+  else if(_es2Role==='CPT') activateBtn('es2-cpt','CPT');
+  else activateBtn('es2-tri','TRI');
+  document.getElementById('edit-lbl-seat1').textContent='SIÈGE GAUCHE — '+(_ROLE_LABELS[_es1Role]||'COMMANDANT DE BORD');
+  document.getElementById('edit-lbl-seat2').textContent='SIÈGE DROIT — '+(_ROLE_LABELS[_es2Role]||'PREMIER OFFICIER');
+  document.getElementById('modal-edit-session').style.display='flex';
+}
+function saveEditSession(){
+  const newSession = document.getElementById('edit-session-name').value || state.sessionName;
+  const newPilot   = document.getElementById('edit-pilot-name').value  || state.pilotName;
+  const newFO      = document.getElementById('edit-fo-name').value;
+  state.sessionName    = newSession;
+  state.pilotName      = newPilot;
+  state.foName         = newFO;
+  state.pilotRole      = _es1Role;
+  state.foRole         = _es2Role;
+  _s1Role = _es1Role;
+  _s2Role = _es2Role;
+  // Refresh all topbar labels
+  const pilotLine = newFO ? newPilot+' / '+newFO : newPilot;
+  document.getElementById('hdr-pilot').textContent    = pilotLine;
+  document.getElementById('hdr-session').textContent  = newSession;
+  document.getElementById('deb-sub').textContent      = newSession;
+  const c1=_ROLE_COLORS[state.pilotRole]||'#3B82F6';
+  const c2=_ROLE_COLORS[state.foRole]||'#10B981';
+  const infoHTML='<span style="color:'+c1+';font-weight:700;">'+state.pilotRole+' '+state.pilotName+'</span>'
+    +(state.foName?'<span style="color:'+c2+';font-weight:700;"> · '+state.foRole+' '+state.foName+'</span>':'')
+    +'<span style="color:#94A3B8;"> · TRI '+state.instructorName+'</span>';
+  ['ex-hdr-info','comp-hdr-info','deb-hdr-info'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.innerHTML=infoHTML;
+  });
+  document.getElementById('modal-edit-session').style.display='none';
+  renderExList();
 }
 
 // ── NAVIGATION ---────────────────────────────────────────────────────────────
