@@ -80,6 +80,7 @@ textarea.form-input{resize:none;height:70px;}
 .pilot-tab{flex:1;padding:13px 8px;font-size:var(--fss);font-weight:700;cursor:pointer;border:none;background:#141920;color:#64748B;text-align:center;border-bottom:3px solid transparent;}
 .pilot-tab.cpt.active{background:#0d1a2e;color:#3B82F6;border-bottom-color:#3B82F6;box-shadow:inset 0 0 16px #3B82F618,0 2px 8px #3B82F622;text-shadow:0 0 8px #3B82F688;}
 .pilot-tab.fo.active{background:#0a1f17;color:#10B981;border-bottom-color:#10B981;box-shadow:inset 0 0 16px #10B98118,0 2px 8px #10B98122;text-shadow:0 0 8px #10B98188;}
+.pilot-tab.tri.active{background:#1a1400;color:#F59E0B;border-bottom-color:#F59E0B;box-shadow:inset 0 0 16px #F59E0B18,0 2px 8px #F59E0B22;text-shadow:0 0 8px #F59E0B88;}
 /* Stats bar */
 .stats-bar{display:flex;border-bottom:1px solid #1E2530;background:#0F1218;flex-shrink:0;}
 .stat-cell{flex:1;padding:9px 0;text-align:center;border-right:1px solid #1E2530;}
@@ -2080,6 +2081,28 @@ function setExTimeLimit(delta){
   updateChrono();
 }
 
+// ── PILOT TAB HELPER ---───────────────────────────────────────────────────────
+// Returns the pilot selector tabs (or single banner) with correct role labels/colors.
+// onChangeSuffix is appended to the onclick, e.g. ';renderExContent()' for FFA/TEM tabs.
+function buildPilotTabsHtml(onChangeSuffix){
+  const r1 = state.pilotRole||'CPT', r2 = state.foRole||'FO';
+  const c1 = _ROLE_COLORS[r1]||'#3B82F6', c2 = _ROLE_COLORS[r2]||'#10B981';
+  const l1 = _ROLE_LABELS[r1]||r1, l2 = _ROLE_LABELS[r2]||r2;
+  const cls1 = r1==='TRI'?'tri':r1==='FO'?'fo':'cpt';
+  const cls2 = r2==='CPT'?'cpt':r2==='TRI'?'tri':'fo';
+  if(!state.foName) return `<div style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</div>`;
+  return `<div class="pilot-tabs" style="margin-bottom:16px;">
+<button class="pilot-tab ${cls1} ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt')${onChangeSuffix}" style="border-right:1px solid #1E2530;">
+<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l1}</span>
+<span style="font-size:14px;">${r1} — ${state.pilotName}</span>
+</button>
+<button class="pilot-tab ${cls2} ${state.activePilot==="fo"?"active":""}" onclick="setPilot('fo')${onChangeSuffix}">
+<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l2}</span>
+<span style="font-size:14px;">${r2} — ${state.foName}</span>
+</button>
+</div>`;
+}
+
 // ── SEAT ROLE SELECTION ---───────────────────────────────────────────────────
 var _s1Role = "CPT";
 var _s2Role = "FO";
@@ -2459,19 +2482,7 @@ else if(tab==="fac") renderFacTab(ex,sc,el);
 }
 
 function renderEvalTab(ex,sc,el){
-const hasFO = state.foName;
-const pilotTabsHtml = hasFO ? `
-<div class="pilot-tabs" style="margin-bottom:16px;">
-<button class="pilot-tab cpt ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt')" style="border-right:1px solid #1E2530;">
-<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">COMMANDANT</span>
-<span style="font-size:14px;">CPT — ${state.pilotName}</span>
-</button>
-<button class="pilot-tab fo ${state.activePilot==="fo"?"active":""}" onclick="setPilot('fo')">
-<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">OFFICIER PILOTE</span>
-<span style="font-size:14px;">FO — ${state.foName}</span>
-</button>
-</div>` :
-`<div style="background:#0d1a2e;border:1px solid #3B82F644;border-left:3px solid #3B82F6;border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:14px;color:#3B82F6;font-weight:700;">CPT — ${state.pilotName}</div>`;
+const pilotTabsHtml = buildPilotTabsHtml('');
 
 const condHtml = sc.cat==='NNC' && sc.condition ? `
 <div style="background:#0d1a2e;border:1px solid #8B5CF644;border-left:3px solid #8B5CF6;border-radius:8px;padding:10px 13px;margin-bottom:12px;">
@@ -2541,22 +2552,10 @@ ACT:"Executer les procedures — Memory items, QRH, checklist — dans l ordre."
 const ffaKey = state.activePilot==="cpt" ? "ffa" : "ffafo";
 const ffa = ex[ffaKey]||{};
 const pilotLabel = state.activePilot==="cpt"
-? "CPT — "+state.pilotName
-: "FO — "+state.foName;
-const pilotColor = state.activePilot==="cpt" ? "#3B82F6" : "#10B981";
-
-const hasFO = state.foName;
-const pilotTabsHtml = hasFO ? `
-<div class="pilot-tabs" style="margin-bottom:16px;">
-<button class="pilot-tab cpt ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt');renderExContent()" style="border-right:1px solid #1E2530;">
-<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">COMMANDANT</span>
-<span style="font-size:14px;">CPT — ${state.pilotName}</span>
-</button>
-<button class="pilot-tab fo ${state.activePilot==="fo"?"active":""}" onclick="setPilot('fo');renderExContent()">
-<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">OFFICIER PILOTE</span>
-<span style="font-size:14px;">FO — ${state.foName}</span>
-</button>
-</div>` : `<div style="background:#0d1a2e;border:1px solid #3B82F644;border-left:3px solid #3B82F6;border-radius:8px;padding:8px 13px;margin-bottom:14px;font-size:14px;color:#3B82F6;font-weight:700;">CPT — ${state.pilotName}</div>`;
+? (state.pilotRole||'CPT')+" — "+state.pilotName
+: (state.foRole||'FO')+" — "+state.foName;
+const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
+const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
 
 const infoBox = `<div style="background:#0F1020;border:1px solid #8B5CF644;border-radius:9px;padding:11px 13px;margin-bottom:16px;">
 <div class="section-lbl" style="color:#8B5CF6;">POUR CE SCENARIO</div>
@@ -2595,20 +2594,8 @@ window._temSugs = {threats: sc.tT||[], errors: sc.tE||[], uas: sc.tU||(UAS_DICT[
 // Pilot-specific TEM key
 const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
 const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
-const pilotColor = state.activePilot==="cpt" ? "#3B82F6" : "#10B981";
-
-const hasFO = state.foName;
-const pilotTabsHtml = hasFO ? `
-<div class="pilot-tabs" style="margin-bottom:16px;">
-<button class="pilot-tab cpt ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt');renderExContent()" style="border-right:1px solid #1E2530;">
-<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">COMMANDANT</span>
-<span style="font-size:14px;">CPT — ${state.pilotName}</span>
-</button>
-<button class="pilot-tab fo ${state.activePilot==="fo"?"active":""}" onclick="setPilot('fo');renderExContent()">
-<span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">OFFICIER PILOTE</span>
-<span style="font-size:14px;">FO — ${state.foName}</span>
-</button>
-</div>` : `<div style="background:#0d1a2e;border:1px solid #3B82F644;border-left:3px solid #3B82F6;border-radius:8px;padding:8px 13px;margin-bottom:14px;font-size:14px;color:#3B82F6;font-weight:700;">CPT — ${state.pilotName}</div>`;
+const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
+const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
 
 const info = `<div style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:13px;color:#CBD5E1;line-height:1.7;">
 <div class="section-lbl" style="color:#3B82F6;">COMMENT UTILISER LE TEM</div>
