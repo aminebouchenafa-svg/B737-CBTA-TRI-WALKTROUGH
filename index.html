@@ -675,6 +675,92 @@ ffa:false,ffaD:"Verifier RNP value requise vs disponible. Monitorer FTE et cross
 tT:["GPS degradation","FTE elevee","Terrain proche en approche courbe"],
 tE:["RNP value non verifiee","Cross-track error non monitore","Continuite approche sans verifier RNP"],
 fac:["La RNP value requise vs disponible a-t-elle ete verifiee ?","Le FTE et cross-track error ont-ils ete surveilles ?","Les criteres de remise des gaz etaient-ils clairement definis ?"]},
+{id:"rnp_ar",title:"RNP AR APPROACH (SAAAR)",page:"FP.7",cat:"RNP",pri:"HIGH",
+phase:["APPROACH"],
+system:"FMC / RNAV",
+condition:"RNP AR — RF LEGS — CURVED APPROACH",
+keys:["FPA","SA","KNO","PRO","PSD","COM"],
+obs:["FPA1","FPA2","FPA3","FPA4","SA1","SA2","SA3","SA4","KNO1","KNO2","KNO3","PRO1","PRO2","PRO3","PSD1","PSD2","COM1","COM2"],
+mem:["RNP AR Authorization Required","Verify RAIM/GPS prediction pre-flight","RF leg entry speed critical","No VNAV PATH deviation tolerated","Missed approach procedure is RNAV — DO NOT modify"],
+ffa:false,ffaD:"Verifier RAIM/GPS prediction pre-flight. RF leg entry speed critical. Monitorer RNP actual vs required. Missed approach est RNAV — ne pas modifier.",
+tT:["GPS degradation","RF leg geometry","Terrain proche","RNP UNABLE alert"],
+tE:["RAIM non verifie pre-flight","Vitesse RF leg non respectee","Deviation VNAV PATH toleree","Missed approach procedure modifiee"],
+fac:["Comment avez-vous valide la disponibilite et la precision du systeme RNAV/RNP ?","Avez-vous verifie la prediction RAIM avant l approche ?","Comment avez-vous monitore la deviation de trajectoire LNAV/VNAV ?","Quelle etait votre strategie en cas d alerte RNP UNABLE ?","Comment la procedure de remise des gaz RNP a-t-elle ete preparee et executee ?","Comment avez-vous gere la vitesse dans les RF legs ?"],
+items:[
+  "RNP AR pre-flight authorization check",
+  "GPS RAIM prediction OK",
+  "FMC approach loaded and verified",
+  "RF leg — maintain speed for arc geometry",
+  "LNAV/VNAV path — monitor RNP actual vs required",
+  "Decision at LTP/FTP: LAND or Missed Approach",
+  "Missed approach — follow RNAV procedure exactly"
+]},
+{id:"lvo_cat2",title:"CAT II APPROACH",page:"LVO.1",cat:"LVO",pri:"CRITICAL",
+phase:["APPROACH","LANDING"],
+system:"AUTOLAND / ILS",
+condition:"CAT II CONDITIONS — RVR 300M / DH 100FT",
+keys:["FPA","FPM","SA","PRO","KNO","LTW","COM"],
+obs:["FPA1","FPA2","FPA3","FPA4","FPA5","FPA6","FPA7","FPA8","FPA9",
+     "SA1","SA2","SA3","SA4","SA5",
+     "PRO1","PRO2","PRO3","PRO4","PRO5",
+     "KNO1","KNO2","KNO3",
+     "LTW1","LTW2","LTW3",
+     "COM1","COM2","COM3"],
+mem:["CAT II minima: DH 100ft / RVR 300m","Check autoland capability armed","Monitor ILS raw data throughout","Call deviations immediately","Go-Around if any doubt below DH"],
+ffa:false,ffaD:"Verifier LAND 3 arme. Monitorer ILS raw data. Appeler les deviations immediatement. Remise des gaz si moindre doute sous DH.",
+tT:["RVR degradation","Autoland failure below DH","ILS deviation","Aircraft not in LAND 3"],
+tE:["Autoland non verifie arme","ILS raw data non monitore","Decision tardive remise des gaz","Annonces LVO non respectees"],
+fac:["Quelles etaient les minima LVO applicables (DH/RVR) pour cette approche ?","Comment avez-vous verifie et monitore les systemes d atterrissage automatique ?","Quels etaient les criteres de remise des gaz en conditions LVO ?","Comment avez-vous coordonne les annonces et les calls specifiques LVO ?","La conscience situationnelle concernant le RVR et sa tendance etait-elle maintenue ?","Comment avez-vous gere une eventuelle degradation du systeme autoland ?"],
+items:[
+  "Configuration and approach briefing",
+  "LVO checklist completed",
+  "Autoland armed and checked (LAND 3)",
+  "Monitor RVR — ATC clearance confirmed",
+  "FMA calls: LAND — FLARE — ROLLOUT",
+  "Decision at DH — LAND or GO-AROUND",
+  "Rollout guidance active",
+  "Vacate within cleared visibility"
+]},
+{id:"lvo_cat3a",title:"CAT III A APPROACH",page:"LVO.2",cat:"LVO",pri:"CRITICAL",
+phase:["APPROACH","LANDING"],
+system:"AUTOLAND / ILS",
+condition:"CAT III A — RVR 175M / DH 50FT OR NO DH",
+keys:["FPA","FPM","SA","PRO","KNO","LTW","COM"],
+obs:["FPA1","FPA2","FPA3","SA1","SA2","SA3","PRO1","PRO2","PRO3","KNO1","KNO2","LTW1","LTW2","COM1","COM2"],
+mem:["CAT III A minima: DH 50ft (or NO DH) / RVR 175m","LAND 3 mandatory","Failure action drill if autoland fails","No manual disconnect below 50ft unless unsafe"],
+ffa:false,ffaD:"LAND 3 obligatoire. RVR 175m minimum toutes zones. Sequence FMA: LAND — FLARE — ROLLOUT. Atterrissage automatique — monitorer uniquement.",
+tT:["Autoland failure","RVR below minima","LAND 3 not established","FMA sequence anomaly"],
+tE:["LAND 3 non confirme arme","RVR non verifie toutes zones","Deconnexion manuelle inappropriee","Sequence FMA non monitoree"],
+fac:["Quelles etaient les minima LVO applicables (DH/RVR) pour cette approche ?","Comment avez-vous verifie et monitore les systemes d atterrissage automatique ?","Quels etaient les criteres de remise des gaz en conditions LVO ?","Comment avez-vous coordonne les annonces et les calls specifiques LVO ?","La conscience situationnelle concernant le RVR et sa tendance etait-elle maintenue ?","Comment avez-vous gere une eventuelle degradation du systeme autoland ?"],
+items:[
+  "LVO SOP — pre-approach briefing LVO",
+  "LAND 3 confirmed armed",
+  "RVR checks: 175m minimum all zones",
+  "CAT III checklist completed",
+  "FMA sequence: LAND — FLARE — ROLLOUT",
+  "Automatic landing — monitor only",
+  "Rollout — steer to exit — report vacated"
+]},
+{id:"lvo_lvto",title:"LOW VISIBILITY TAKEOFF",page:"LVO.3",cat:"LVO",pri:"CRITICAL",
+phase:["TAKEOFF"],
+system:"EFIS / HUD",
+condition:"RVR < 400M — LVTO PROCEDURE",
+keys:["FPM","SA","PRO","KNO","LTW","COM","WLM"],
+obs:["FPM1","FPM2","SA1","SA2","PRO1","PRO2","KNO1","LTW1","COM1","WLM1","WLM2"],
+mem:["LVTO minima: RVR >= 125m (LAND 3 equipped)","Verify runway centreline lighting","EFB taxi chart ready","Confirm departure runway and SID","RTO criteria reviewed"],
+ffa:false,ffaD:"Verifier minima LVTO vs RVR actuel. Serviceabilite eclairage axe piste. Prevention runway incursion. Maintenir guidage axe au decollage.",
+tT:["RVR degradation at takeoff","Runway incursion","CL lighting unserviceable","RTO in low visibility"],
+tE:["Minima LVTO non verifies","Eclairage axe non verifie","Prevention runway incursion insuffisante","Guidage axe perdu au decollage"],
+fac:["Quelles etaient les minima LVO applicables (DH/RVR) pour cette approche ?","Comment avez-vous verifie et monitore les systemes d atterrissage automatique ?","Quels etaient les criteres de remise des gaz en conditions LVO ?","Comment avez-vous coordonne les annonces et les calls specifiques LVO ?","La conscience situationnelle concernant le RVR et sa tendance etait-elle maintenue ?","Comment avez-vous gere une eventuelle degradation du systeme autoland ?"],
+items:[
+  "LVTO minima verified vs current RVR",
+  "Runway centreline and edge lighting serviceability",
+  "Taxi clearance — runway incursion prevention",
+  "Lineup — align on CL, heading confirmed",
+  "Takeoff — maintain CL guidance",
+  "Positive rate — rotate smoothly",
+  "OEI procedure if applicable"
+]},
 ]
 
 const NNC = [
@@ -1965,7 +2051,7 @@ const COMPETENCIES = [
 // ── GRADE CONFIG ---───────────────────────────────────────────────────────────
 const GC = ["","#EF4444","#F97316","#F59E0B","#10B981","#3B82F6"];
 const GL = ["","INACCEPTABLE","SOUS-STANDARD","STANDARD","AU-DESSUS","EXEMPLAIRE"];
-const catC = {MEMORY:"#EF4444",MANEUVER:"#F97316","FLIGHT PATTERN":"#10B981",NNC:"#A855F7"};
+const catC = {MEMORY:"#EF4444",MANEUVER:"#F97316","FLIGHT PATTERN":"#10B981",NNC:"#A855F7",LVO:"#EC4899",RNP:"#0EA5E9"};
 
 const ROOT_CAUSES = [
 "Biais de confirmation","Surcharge cognitive / Effet tunnel",
@@ -2418,7 +2504,8 @@ el.innerHTML = exs.map((ex,i)=>{
 const sc = ALL_SC.find(s=>s.id===ex.sid);
 if(!sc) return '';
 const st = exStats(ex);
-const pc = sc.pri==="CRITICAL"?"#EF4444":sc.pri==="HIGH"?"#F59E0B":"#10B981";
+const pc = sc.cat==='LVO' ? LVO_COLOR : sc.cat==='RNP' ? RNP_COLOR :
+           (sc.pri==='CRITICAL'?'#EF4444':sc.pri==='HIGH'?'#F59E0B':'#3B82F6');
 const sysColor = sc.cat==="NNC" ? ((NNC_SYSTEMS[sc.id] ? NNC_SYSTEMS[sc.id].color : null)||"#8B5CF6") : null;
 const headerColor = sysColor || pc;
 const cc = catC[sc.cat]||"#64748B";
@@ -2513,7 +2600,8 @@ function renderExView(){
 const ex = state.exercises[state.activeIdx];
 const sc = ALL_SC.find(s=>s.id===ex.sid);
 if(!sc) return;
-const pc = sc.pri==="CRITICAL"?"#EF4444":sc.pri==="HIGH"?"#F59E0B":"#10B981";
+const pc = sc.cat==='LVO' ? LVO_COLOR : sc.cat==='RNP' ? RNP_COLOR :
+           (sc.pri==='CRITICAL'?'#EF4444':sc.pri==='HIGH'?'#F59E0B':'#3B82F6');
 const sysColor = sc.cat==="NNC" ? ((NNC_SYSTEMS[sc.id] ? NNC_SYSTEMS[sc.id].color : null)||"#8B5CF6") : null;
 const headerColor = sysColor || pc;
 document.getElementById('ex-title').textContent = sc.title;
@@ -3031,8 +3119,11 @@ function closeAddModal(){ document.getElementById('modal-add').style.display='no
 function renderFilters(){
 const cats=["ALL","MEMORY","MANEUVER","FLIGHT PATTERN","NNC"];
 const phases=["ALL","TAKEOFF","CLIMB","CRUISE","DESCENT","APPROACH","LANDING"];
+const catExtra = [{c:"LVO",col:LVO_COLOR},{c:"RNP",col:RNP_COLOR}];
 document.getElementById('cat-filters').innerHTML = cats.map(c=>
-`<button class="filter-btn ${state.catFilter===c?'active':''}" onclick="setCatF('${c}')">${c}</button>`).join('');
+`<button class="filter-btn ${state.catFilter===c?'active':''}" onclick="setCatF('${c}')">${c}</button>`).join('')
++ catExtra.map(({c,col})=>
+`<button class="filter-btn ${state.catFilter===c?'active':''}" onclick="setCatF('${c}')" style="color:${col};border-color:${col}44;">${c}</button>`).join('');
 document.getElementById('phase-filters').innerHTML = phases.map(p=>
 `<button class="filter-btn ${state.phaseFilter===p?'active':''}" onclick="setPhaseF('${p}')">${p}</button>`).join('');
 
@@ -3924,9 +4015,75 @@ ${facNotes}
 }).join('');
 }
 
+function getFacilitationQuestions(ex){
+  const sc = ALL_SC.find(s=>s.id===ex.sid)||{};
+  const cat = sc.cat||'';
+  const baseQ = [
+    "Comment evaluez-vous votre performance globale sur cet exercice ?",
+    "Quelles competences CBTA pensez-vous avoir bien demontrees ?",
+    "Quels aspects de votre performance souhaiteriez-vous ameliorer ?",
+    "Comment avez-vous gere la charge de travail pendant cet exercice ?",
+    "Quels etaient les facteurs TEM (menaces/erreurs) identifies ?"
+  ];
+  const catQ = {
+    'MEMORY':[
+      "Comment avez-vous memorise et applique les actions memoire ?",
+      "Avez-vous respecte l ordre et la sequence des actions requises ?",
+      "Comment avez-vous gere le CRM lors de l execution des memory items ?",
+      "Quelles etaient les menaces/erreurs identifiees dans cette situation d urgence ?"
+    ],
+    'MANEUVER':[
+      "Comment avez-vous maintenu le controle de la trajectoire de vol ?",
+      "Avez-vous respecte les parametres (altitude +/-100ft, cap +/-5 deg, vitesse +/-5kt) ?",
+      "Comment avez-vous gere la puissance et la configuration de l avion ?",
+      "Quels etaient vos indicateurs de performance (FPM, FPA) pendant la manoeuvre ?"
+    ],
+    'FLIGHT PATTERN':[
+      "Comment avez-vous planifie et prepare cette approche ?",
+      "Avez-vous respecte les stabilisation criteria (height, speed, config) ?",
+      "Comment avez-vous gere les deviations et les corrections ?",
+      "Quelle etait votre conscience situationnelle (SA) de la meteo et des obstacles ?"
+    ],
+    'NNC':[
+      "Comment avez-vous identifie et diagnostique l anomalie ?",
+      "L utilisation des procedures non-normales etait-elle correcte et complete ?",
+      "Comment avez-vous partage les taches lors de l execution de la checklist ?",
+      "Quelles etaient les priorites Aviate-Navigate-Communicate-Manage ?"
+    ],
+    'LVO':[
+      "Quelles etaient les minima LVO applicables (DH/RVR) pour cette approche ?",
+      "Comment avez-vous verifie et monitore les systemes d atterrissage automatique ?",
+      "Quels etaient les criteres de remise des gaz en conditions LVO ?",
+      "Comment avez-vous coordonne les annonces et les calls specifiques LVO ?",
+      "La conscience situationnelle concernant le RVR et sa tendance etait-elle maintenue ?",
+      "Comment avez-vous gere une eventuelle degradation du systeme autoland ?"
+    ],
+    'RNP':[
+      "Comment avez-vous valide la disponibilite et la precision du systeme RNAV/RNP ?",
+      "Avez-vous verifie la prediction RAIM avant l approche ?",
+      "Comment avez-vous monitore la deviation de trajectoire LNAV/VNAV ?",
+      "Quelle etait votre strategie en cas d alerte RNP UNABLE ?",
+      "Comment la procedure de remise des gaz RNP a-t-elle ete preparee et executee ?",
+      "Comment avez-vous gere la vitesse dans les RF legs (si applicable) ?"
+    ]
+  };
+  const specific = {
+    'rto':["Comment avez-vous decide d interrompre le decollage ?","Quels etaient les parametres de declenchement du RTO (vitesse, raison) ?","La decision etait-elle en-dessous de V1 ?","Comment avez-vous coordonne avec le PF/PNF ?"],
+    'tcas_ra':["Comment avez-vous recu et interprete la RA TCAS ?","Avez-vous repondu immediatement dans le bon sens ?","Comment avez-vous informe l ATC ?","Comment le retour au niveau autorise s est-il effectue ?"],
+    'windshear_manual':["Comment avez-vous identifie l entree dans le windshear ?","Avez-vous applique la procedure d evasion correctement ?","Comment avez-vous gere l energie de l avion pendant la manoeuvre ?"],
+    'upset_recovery':["Comment avez-vous reconnu et identifie l upset ?","La sequence de recuperation etait-elle correcte (unload-roll-pull) ?","Comment avez-vous evite les erreurs secondaires (CFIT, overspeed) ?"],
+    'engine_fire':["Comment avez-vous diagnostique et confirme le feu moteur ?","La coordination pour les memory items etait-elle efficace ?","Comment avez-vous gere la prise de decision (deroutement, atterrissage d urgence) ?"],
+  };
+  const q = [...baseQ, ...(catQ[cat]||[]), ...(specific[ex.sid]||[])];
+  return [...new Set(q)];
+}
+
 function renderDebQuestionnaire(el){
 const closed = state.exercises.filter(e=>e.closed);
-if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
+if(!closed.length){
+  el.innerHTML='<div style="padding:20px;text-align:center;color:#64748B;">Aucun exercice cloture</div>';
+  return;
+}
 
 // Identify weak comps
 const ct={};
@@ -3949,12 +4106,6 @@ const ctFo={}; COMPETENCIES.forEach(c=>{ctFo[c.id]={total:0,count:0};});
 if(state.foName){ closed.forEach(ex=>{ Object.entries(ex.csfo||{}).forEach(([cid,cd])=>{ if(cd&&cd.g>0){ctFo[cid].total+=cd.g;ctFo[cid].count++;} }); }); }
 const weakFo = state.foName ? COMPETENCIES.filter(c=>ctFo[c.id].count>0&&(ctFo[c.id].total/ctFo[c.id].count)<3.5).sort((a,b)=>(ctFo[a.id].total/ctFo[a.id].count)-(ctFo[b.id].total/ctFo[b.id].count)) : [];
 
-// All facilitation questions from closed exercises
-const allFac = closed.flatMap((ex,ei)=>{
-const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return [];
-return (sc.fac||[]).map((q,qi)=>({q,ex,sc,ei,qi,note:(ex.facNotes&&ex.facNotes[qi])||''}));
-});
-
 // Root causes per exercise
 const rcHtml = closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
@@ -3970,19 +4121,30 @@ return `<div class="card" style="margin-bottom:12px;">
 </div>`;
 }).join('');
 
-// Facilitation questions
-const facHtml = `<div class="card" style="margin-bottom:12px;">
-<div class="section-lbl" style="color:#06B6D4;margin-bottom:10px;">QUESTIONS DE FACILITATION PAR EXERCICE</div>
-${allFac.map(({q,sc,qi,note})=>`
-<div class="fac-card">
-<span style="color:#06B6D4;font-size:16px;flex-shrink:0;">?</span>
-<div style="flex:1;">
-<div style="font-size:11px;color:var(--mut);margin-bottom:3px;">${sc.title}</div>
-<div class="fac-q">${q}</div>
-${note?`<div style="font-size:12px;color:#64748B;margin-top:5px;font-style:italic;">${note}</div>`:''}
-</div>
-</div>`).join('')}
-</div>`;
+// Auto facilitation questions per exercise (CBTA)
+let facQHtml = '<div style="padding:14px;">';
+facQHtml += '<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:12px;">QUESTIONS DE FACILITATION — CBTA</div>';
+closed.forEach((ex,i)=>{
+  const sc = ALL_SC.find(s=>s.id===ex.sid)||{title:ex.sid};
+  const catColor = sc.cat==='LVO'?LVO_COLOR:sc.cat==='RNP'?RNP_COLOR:sc.cat==='NNC'?'#EF4444':sc.cat==='MEMORY'?'#F97316':sc.cat==='MANEUVER'?'#F59E0B':'#3B82F6';
+  const questions = getFacilitationQuestions(ex);
+  const noteKey = 'facQ_'+i;
+  facQHtml += '<div style="background:#0F1218;border:1px solid #1E2530;border-left:3px solid '+catColor+';border-radius:10px;padding:12px 14px;margin-bottom:12px;">';
+  facQHtml += '<div style="font-size:9px;font-weight:700;color:'+catColor+';letter-spacing:2px;margin-bottom:4px;">'+(sc.cat||'')+'</div>';
+  facQHtml += '<div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:10px;">'+sc.title+'</div>';
+  facQHtml += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">';
+  questions.forEach((q,qi)=>{
+    facQHtml += '<div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:#141920;border-radius:7px;border:1px solid #1E2530;">';
+    facQHtml += '<span style="font-size:10px;color:'+catColor+';font-weight:700;min-width:22px;margin-top:1px;">'+(qi+1)+'.</span>';
+    facQHtml += '<span style="font-size:13px;color:#CBD5E1;line-height:1.5;">'+q+'</span>';
+    facQHtml += '</div>';
+  });
+  facQHtml += '</div>';
+  facQHtml += '<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:5px;">NOTES FACILITATION</div>';
+  facQHtml += '<textarea style="width:100%;background:#0F1218;border:1px solid #1E2530;border-radius:7px;color:#F1F5F9;padding:9px;font-size:13px;resize:none;min-height:60px;box-sizing:border-box;" placeholder="Reponses et observations du stagiaire..." onchange="state.debNotes[\''+noteKey+'\']=this.value">'+(state.debNotes[noteKey]||'')+'</textarea>';
+  facQHtml += '</div>';
+});
+facQHtml += '</div>';
 
 // Weak comps
 const weakHtml = weakComps.length ? `<div class="card" style="margin-bottom:12px;border-left:3px solid #3B82F6;">
@@ -4003,7 +4165,7 @@ ${weakFo.map(c=>`<div style="display:flex;align-items:center;gap:10px;margin-bot
 </div>`).join('')}
 </div>` : '';
 
-el.innerHTML = weakHtml + weakFoHtml + rcHtml + facHtml;
+el.innerHTML = weakHtml + weakFoHtml + rcHtml + facQHtml;
 }
 
 function toggleRC(key,rc){
