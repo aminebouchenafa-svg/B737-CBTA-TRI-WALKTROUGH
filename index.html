@@ -2125,6 +2125,12 @@ function setRoleSeat2(r, el){
   });
   el.style.background=_ROLE_COLORS[r]+'22'; el.style.color=_ROLE_COLORS[r]; el.style.borderColor=_ROLE_COLORS[r];
   document.getElementById('lbl-seat2').textContent='SIÈGE DROIT — '+_ROLE_LABELS[r];
+  const foInput = document.getElementById('inp-fo');
+  if(foInput && !foInput.value.trim()){
+    foInput.value = r;
+    foInput.focus();
+    foInput.select();
+  }
 }
 
 var _es1Role = "CPT";
