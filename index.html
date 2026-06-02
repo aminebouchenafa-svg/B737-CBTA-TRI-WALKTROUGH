@@ -2112,7 +2112,8 @@ activeComp:null, activePilot:"cpt",
 currentExTab:"eval", currentDebTab:"scores",
 catFilter:"ALL", phaseFilter:"ALL",
 debRootCauses:{}, debNotes:{}, debConclNotes:"",
-triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{}
+triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
+profCheck: null
 };
 
 // ── CHRONOMETER ---───────────────────────────────────────────────────────────
@@ -4326,6 +4327,266 @@ state.triRecommendation = (state.triRecommendation===val) ? '' : val;
 renderDebTRICheck(document.getElementById('deb-content'));
 }
 
+const PROFCHECK_ITEMS = {
+  mandatory:[
+    {id:"pc_rto",label:"Rejected Takeoff"},
+    {id:"pc_ef_v1",label:"Engine Failure between V1 and V2"},
+    {id:"pc_se_ils",label:"Single Engine ILS"},
+    {id:"pc_se_ga",label:"Single Engine Go-Around"},
+    {id:"pc_se_ldg",label:"Single Engine Landing"},
+    {id:"pc_nonils",label:"Non-ILS to the Minima"},
+  ],
+  lvo:[
+    {id:"pc_lv_rto",label:"Rejected T/O during min take off weather"},
+    {id:"pc_auto1",label:"Automatic Approach N°1"},
+    {id:"pc_auto2",label:"Automatic Approach N°2"},
+    {id:"pc_auto3",label:"Automatic Approach N°3"},
+    {id:"pc_auto_ga",label:"Go-Around"},
+    {id:"pc_auto_ldg",label:"Landing"},
+  ],
+  loft:[
+    {id:"pc_crew",label:"Crew Coordination"},
+    {id:"pc_proc",label:"Compliance with Company Procedures"},
+    {id:"pc_callout",label:"Standard Call-Outs"},
+    {id:"pc_checklist",label:"Use of Checklists"},
+    {id:"pc_auto",label:"Use of Automation"},
+    {id:"pc_know",label:"Knowledge of Aircraft"},
+    {id:"pc_exec",label:"Execution of Procedures"},
+    {id:"pc_pax",label:"Attention & Communication to PAX"},
+    {id:"pc_ccm",label:"Attention & Communication with CCM"},
+    {id:"pc_evac",label:"Cabin Emergency Evacuation"},
+    {id:"pc_atc",label:"ATC Communication"},
+  ],
+  rhs:[
+    {id:"pc_rhs_ef",label:"Engine Failure between V1 and V2"},
+    {id:"pc_rhs_ils",label:"Single Engine ILS"},
+    {id:"pc_rhs_ga",label:"Single Engine Go-Around"},
+    {id:"pc_rhs_ldg",label:"Single Engine Landing"},
+    {id:"pc_rhs_ed",label:"Emergency Descent"},
+    {id:"pc_rhs_tcas",label:"TCAS Events"},
+  ]
+};
+
+if(!state.profCheck) state.profCheck = {
+  date:'', pilotName:'', position:'CAPT', staffId:'', license:'', aircraft:'B737 NG',
+  grades:{}, lvoDate:'', remarks:'', result:'', coExaminer:''
+};
+
+function showProfCheck(){
+  if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},lvoDate:'',remarks:'',result:'',coExaminer:''};
+  if(!state.profCheck.pilotName) state.profCheck.pilotName = state.pilotName||'';
+  if(!state.profCheck.date) state.profCheck.date = new Date().toISOString().slice(0,10);
+  renderProfCheck();
+  showScreen('profcheck');
+}
+
+function setPCGrade(id, val){
+  if(!state.profCheck.grades) state.profCheck.grades={};
+  state.profCheck.grades[id] = state.profCheck.grades[id]===val ? null : val;
+  renderProfCheck();
+}
+
+function setPCResult(r){
+  state.profCheck.result = state.profCheck.result===r ? '' : r;
+  renderProfCheck();
+}
+
+function renderProfCheck(){
+  const pc = state.profCheck;
+  const grades = pc.grades||{};
+  const GRADE_COLORS = {5:'#10B981',4:'#3B82F6',3:'#F59E0B',2:'#F97316',1:'#EF4444','/':'#64748B'};
+  const GRADE_VALS = ['5','4','3','2','1','/'];
+
+  function gradeRow(item){
+    const g = grades[item.id];
+    let btns = GRADE_VALS.map(v=>{
+      const active = String(g)===String(v);
+      const col = GRADE_COLORS[v]||'#64748B';
+      return '<button onclick="setPCGrade(\''+item.id+'\',\''+v+'\')" style="flex:1;padding:7px 0;border-radius:6px;font-size:13px;font-weight:800;cursor:pointer;border:1px solid '+(active?col:col+'44')+';background:'+(active?col+'33':'transparent')+';color:'+(active?col:col+'88')+';">'+v+'</button>';
+    }).join('');
+    return '<div style="padding:9px 0;border-bottom:1px solid #1E2530;">'
+      +'<div style="font-size:13px;color:#CBD5E1;margin-bottom:6px;">'+item.label+'</div>'
+      +'<div style="display:flex;gap:5px;">'+btns+'</div>'
+      +'</div>';
+  }
+
+  function sectionHeader(title, color){
+    return '<div style="background:'+color+'22;border-left:3px solid '+color+';border-radius:6px;padding:8px 12px;margin:14px 0 8px;font-size:11px;font-weight:700;color:'+color+';letter-spacing:1px;">'+title+'</div>';
+  }
+
+  let h = '';
+  // Grade scale legend
+  h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:10px 12px;margin-bottom:14px;">';
+  h+='<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">ÉCHELLE DE NOTATION</div>';
+  h+='<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+  [['5','Très Bien','#10B981'],['4','Bien','#3B82F6'],['3','Standard Requis','#F59E0B'],['2','Insuffisant','#F97316'],['1','Insatisfaisant','#EF4444'],['/','N/A','#64748B']].forEach(function(arr){
+    var v=arr[0],l=arr[1],c=arr[2];
+    h+='<span style="background:'+c+'22;border:1px solid '+c+'55;color:'+c+';border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700;">'+v+' = '+l+'</span>';
+  });
+  h+='</div></div>';
+
+  // Pilot info
+  h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px 14px;margin-bottom:14px;">';
+  h+='<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:10px;">INFORMATIONS PILOTE</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">DATE</div><input type="date" value="'+(pc.date||'')+'" onchange="state.profCheck.date=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">POSITION</div>';
+  h+='<div style="display:flex;gap:5px;">';
+  ['CAPT','FO','F/E'].forEach(function(p){var a=pc.position===p;h+='<button onclick="state.profCheck.position=\''+p+'\';renderProfCheck()" style="flex:1;padding:7px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid '+(a?'#3B82F6':'#334155')+';background:'+(a?'#3B82F622':'transparent')+';color:'+(a?'#3B82F6':'#64748B')+';">'+p+'</button>';});
+  h+='</div></div>';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">NOM DU PILOTE</div><input type="text" value="'+(pc.pilotName||'')+'" onchange="state.profCheck.pilotName=this.value" placeholder="Nom complet" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">STAFF ID</div><input type="text" value="'+(pc.staffId||'')+'" onchange="state.profCheck.staffId=this.value" placeholder="Staff ID" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">LICENSE N°</div><input type="text" value="'+(pc.license||'')+'" onchange="state.profCheck.license=this.value" placeholder="License et numéro" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">AERONEF</div><input type="text" value="'+(pc.aircraft||'B737 NG')+'" onchange="state.profCheck.aircraft=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
+  h+='</div></div>';
+
+  // Mandatory items
+  h+=sectionHeader('MANDATORY ITEMS AS PF','#EF4444');
+  PROFCHECK_ITEMS.mandatory.forEach(function(item){ h+=gradeRow(item); });
+
+  // LVO items
+  h+=sectionHeader('MANDATORY LOW VISIBILITY ITEMS (If Applicable)','#EC4899');
+  h+='<div style="padding:9px 0;border-bottom:1px solid #1E2530;">';
+  h+='<div style="font-size:10px;color:#94A3B8;margin-bottom:5px;">DATE APPROACH ON A/C (si applicable)</div>';
+  h+='<input type="text" value="'+(pc.lvoDate||'')+'" onchange="state.profCheck.lvoDate=this.value" placeholder="_ _ / _ _ / _ _" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;">';
+  h+='</div>';
+  PROFCHECK_ITEMS.lvo.forEach(function(item){ h+=gradeRow(item); });
+
+  // Loft scenario
+  h+=sectionHeader('LOFT SCENARIO','#F59E0B');
+  PROFCHECK_ITEMS.loft.forEach(function(item){ h+=gradeRow(item); });
+
+  // Right Hand Seat
+  h+=sectionHeader('RIGHT HAND SEAT QUALIFICATION','#8B5CF6');
+  PROFCHECK_ITEMS.rhs.forEach(function(item){ h+=gradeRow(item); });
+
+  // Remarks
+  h+='<div style="margin-top:14px;"><div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">REMARKS (Mandatory for Unsatisfactory Items)</div>';
+  h+='<textarea onchange="state.profCheck.remarks=this.value" style="width:100%;background:#0F1218;border:1px solid #1E2530;border-radius:8px;color:#F1F5F9;padding:10px;font-size:13px;resize:none;min-height:80px;box-sizing:border-box;" placeholder="Observations sur les items insatisfaisants...">'+(pc.remarks||'')+'</textarea></div>';
+
+  // Examiner
+  h+='<div style="margin-top:10px;"><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">TRI / SFI</div>';
+  h+='<input type="text" value="'+(pc.coExaminer||state.instructorName||'')+'" onchange="state.profCheck.coExaminer=this.value" placeholder="Nom TRI/SFI" style="width:100%;background:#0F1218;border:1px solid #1E2530;border-radius:8px;color:#F1F5F9;padding:10px;font-size:13px;"></div>';
+
+  // Result
+  h+='<div style="margin-top:14px;margin-bottom:6px;"><div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:8px;">RESULT OF PROFICIENCY CHECK</div>';
+  h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">';
+  const res=pc.result||'';
+  h+='<button onclick="setPCResult(\'SATISFACTORY\')" style="padding:16px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;border:2px solid '+(res==='SATISFACTORY'?'#10B981':'#10B98144')+';background:'+(res==='SATISFACTORY'?'#10B98133':'transparent')+';color:'+(res==='SATISFACTORY'?'#10B981':'#10B98188')+';">SATISFACTORY</button>';
+  h+='<button onclick="setPCResult(\'UNSATISFACTORY\')" style="padding:16px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;border:2px solid '+(res==='UNSATISFACTORY'?'#EF4444':'#EF444444')+';background:'+(res==='UNSATISFACTORY'?'#EF444433':'transparent')+';color:'+(res==='UNSATISFACTORY'?'#EF4444':'#EF444488')+';">UNSATISFACTORY</button>';
+  h+='</div></div>';
+
+  // Spacer
+  h+='<div style="height:20px;"></div>';
+
+  document.getElementById('profcheck-content').innerHTML = h;
+}
+
+function printProfCheck(){
+  const pc = state.profCheck || {};
+  const grades = pc.grades || {};
+  const GRADE_COLORS = {'5':'#10B981','4':'#3B82F6','3':'#F59E0B','2':'#F97316','1':'#EF4444','/':'#64748B'};
+
+  function gradeCell(id){
+    const g = String(grades[id]||'');
+    const col = GRADE_COLORS[g]||'#64748b';
+    return g ? '<td style="text-align:center;font-weight:900;color:'+col+';font-size:14px;padding:6px 8px;">'+g+'</td>'
+             : '<td style="text-align:center;color:#cbd5e1;font-size:14px;padding:6px 8px;">—</td>';
+  }
+
+  function sectionTitle(t, col){
+    return '<tr><td colspan="2" style="background:'+col+'22;color:'+col+';font-weight:700;font-size:10px;letter-spacing:1px;padding:6px 10px;border-top:2px solid '+col+'44;">'+t+'</td></tr>';
+  }
+
+  const resCol = pc.result==='SATISFACTORY'?'#10B981':pc.result==='UNSATISFACTORY'?'#EF4444':'#64748b';
+
+  const mandRows = PROFCHECK_ITEMS.mandatory.map(function(it){return '<tr><td>'+it.label+'</td>'+gradeCell(it.id)+'</tr>';}).join('');
+  const lvoRows = PROFCHECK_ITEMS.lvo.map(function(it){return '<tr><td>'+it.label+'</td>'+gradeCell(it.id)+'</tr>';}).join('');
+  const loftRows = PROFCHECK_ITEMS.loft.map(function(it){return '<tr><td>'+it.label+'</td>'+gradeCell(it.id)+'</tr>';}).join('');
+  const rhsRows = PROFCHECK_ITEMS.rhs.map(function(it){return '<tr><td>'+it.label+'</td>'+gradeCell(it.id)+'</tr>';}).join('');
+
+  const remarksBlock = pc.remarks ? '<div style="margin-top:12px;padding:10px 12px;border:1px solid #e2e8f0;border-radius:6px;"><div style="font-size:9px;font-weight:700;color:#EF4444;letter-spacing:1px;margin-bottom:4px;">REMARKS</div><div style="font-size:12px;line-height:1.6;">'+pc.remarks+'</div></div>' : '';
+
+  const html = '<!DOCTYPE html><html><head>'
+    +'<meta charset="UTF-8">'
+    +'<title>Proficiency Check — '+(pc.pilotName||'')+'</title>'
+    +'<style>'
+    +'*{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}'
+    +'body{font-family:-apple-system,sans-serif;margin:0;padding:0;background:#f8fafc;color:#0f172a;}'
+    +'.page{max-width:700px;margin:0 auto;padding:24px;background:#fff;}'
+    +'.noprint{padding:12px;background:#fff;border-bottom:2px solid #e2e8f0;text-align:center;display:flex;gap:10px;justify-content:center;}'
+    +'@media print{.noprint{display:none!important;}}'
+    +'h1{font-size:20px;font-weight:900;margin:0 0 4px;}'
+    +'table{width:100%;border-collapse:collapse;border:1px solid #e2e8f0;}'
+    +'td,th{padding:7px 10px;border-bottom:1px solid #f1f5f9;font-size:12px;}'
+    +'.header-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}'
+    +'.header-box{background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;}'
+    +'.header-label{font-size:9px;color:#64748b;font-weight:700;letter-spacing:1px;margin-bottom:2px;}'
+    +'.header-val{font-size:13px;font-weight:700;color:#0f172a;}'
+    +'</style>'
+    +'</head><body>'
+    +'<div class="noprint">'
+    +'<button onclick="if(window.opener){window.opener.focus();window.close();}else{window.close();}" style="background:#fff;color:#0f172a;border:2px solid #e2e8f0;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">← Retour</button>'
+    +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">🖨️ Imprimer / PDF</button>'
+    +'</div>'
+    +'<div class="page">'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #0f172a;">'
+    +'<div>'
+    +'<div style="font-size:10px;color:#64748b;letter-spacing:2px;font-weight:700;margin-bottom:4px;">AIR ALGÉRIE — TRAINING DEPARTMENT</div>'
+    +'<h1>PROFICIENCY CHECK</h1>'
+    +'<div style="font-size:12px;color:#64748b;">B737 NG · '+(pc.aircraft||'B737 NG')+'</div>'
+    +'</div>'
+    +'<div style="text-align:right;">'
+    +'<div style="font-size:11px;color:#64748b;">'+(pc.date||'')+'</div>'
+    +'<div style="font-size:13px;font-weight:700;color:#0f172a;">'+(pc.position||'CAPT')+'</div>'
+    +'</div>'
+    +'</div>'
+    +'<div class="header-grid">'
+    +'<div class="header-box"><div class="header-label">NOM</div><div class="header-val">'+(pc.pilotName||'')+'</div></div>'
+    +'<div class="header-box"><div class="header-label">STAFF ID</div><div class="header-val">'+(pc.staffId||'')+'</div></div>'
+    +'<div class="header-box"><div class="header-label">LICENSE</div><div class="header-val">'+(pc.license||'')+'</div></div>'
+    +'</div>'
+    +'<table>'
+    +'<thead><tr style="background:#f8fafc;"><th style="text-align:left;font-size:11px;font-weight:700;color:#0f172a;">ITEM</th><th style="text-align:center;font-size:11px;font-weight:700;color:#0f172a;width:80px;">GRADE</th></tr></thead>'
+    +'<tbody>'
+    +sectionTitle('MANDATORY ITEMS AS PF','#EF4444')
+    +mandRows
+    +sectionTitle('MANDATORY LOW VISIBILITY ITEMS (If Applicable)','#EC4899')
+    +'<tr><td>Date approach on A/C: '+(pc.lvoDate||'___/___/___')+'</td><td></td></tr>'
+    +lvoRows
+    +sectionTitle('LOFT SCENARIO','#F59E0B')
+    +loftRows
+    +sectionTitle('RIGHT HAND SEAT QUALIFICATION','#8B5CF6')
+    +rhsRows
+    +'</tbody>'
+    +'</table>'
+    +remarksBlock
+    +'<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
+    +'<div style="border:2px solid '+resCol+';border-radius:8px;padding:12px;text-align:center;">'
+    +'<div style="font-size:10px;color:#64748b;margin-bottom:4px;">RESULT</div>'
+    +'<div style="font-size:16px;font-weight:900;color:'+resCol+';">'+(pc.result||'—')+'</div>'
+    +'</div>'
+    +'<div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px;">'
+    +'<div style="font-size:10px;color:#64748b;margin-bottom:4px;">TRI / SFI</div>'
+    +'<div style="font-size:13px;font-weight:700;">'+(pc.coExaminer||state.instructorName||'')+'</div>'
+    +'</div>'
+    +'</div>'
+    +'<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
+    +'<div style="border-top:2px solid #0f172a;padding-top:6px;text-align:center;font-size:10px;color:#64748b;">Signature du pilote</div>'
+    +'<div style="border-top:2px solid #0f172a;padding-top:6px;text-align:center;font-size:10px;color:#64748b;">Signature TRI / SFI</div>'
+    +'</div>'
+    +'<div style="margin-top:20px;text-align:center;font-size:9px;color:#94a3b8;">REF. D.O.A — TRAINING DEPARTMENT · © AIR ALGÉRIE — All Rights Reserved</div>'
+    +'</div>'
+    +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},600);};<\/scr'+'ipt>'
+    +'</body></html>';
+
+  try{
+    const w = window.open('','_blank');
+    if(w){ w.document.write(html); w.document.close(); return; }
+  }catch(e){}
+  window.location.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+}
+
 function renderDebConclusion(el){
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
@@ -4606,6 +4867,7 @@ state.triCheckGrades={};
 state.triCheckNotes="";
 state.triRecommendation="";
 state.triCheckObs={};
+state.profCheck=null;
 state.sessionStart=null;
 document.getElementById('inp-session').value='';
 document.getElementById('inp-cpt').value='';
@@ -4694,6 +4956,7 @@ triCheck: (state.pilotRole==='TRI'||state.foRole==='TRI') ? {
   avg: triAvg?triAvg.toFixed(2):null
 } : null,
 rapportHTML: buildRapportHTML().html,
+profCheck: state.profCheck,
 exercises: closed.map(ex=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid);
 const st=exStats(ex);
