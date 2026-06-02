@@ -160,6 +160,49 @@ textarea.form-input{resize:none;height:70px;}
 /* Chrono alarm */
 @keyframes chronoAlarm{0%,100%{opacity:1;text-shadow:0 0 12px #EF4444;}50%{opacity:0.25;text-shadow:none;}}
 @keyframes chronoWarn {0%,100%{opacity:1;}50%{opacity:0.6;}}
+/* ── LIGHT / DAY MODE ──────────────────────────────────── */
+body.light-mode{--bg:#F8FAFC;--text:#1E293B;--mut:#64748B;--bord:#E2E8F0;background:#F8FAFC!important;color:#1E293B!important;}
+body.light-mode #app{background:#F8FAFC!important;}
+body.light-mode .screen{background:#F8FAFC!important;}
+body.light-mode .topbar{background:#FFFFFF!important;border-bottom-color:#E2E8F0!important;}
+body.light-mode .topbar .title{color:#0F172A!important;}
+body.light-mode .topbar .sub{color:#64748B!important;}
+body.light-mode .tabs{background:#FFFFFF!important;border-bottom-color:#E2E8F0!important;}
+body.light-mode .tab{background:#FFFFFF!important;color:#94A3B8!important;}
+body.light-mode .scroll{background:#F8FAFC!important;}
+body.light-mode .card{background:#FFFFFF!important;border-color:#E2E8F0!important;color:#1E293B!important;}
+body.light-mode .btn{background:#F1F5F9!important;border-color:#E2E8F0!important;color:#475569!important;}
+body.light-mode .btn-primary{background:var(--blue)!important;color:#fff!important;}
+body.light-mode .btn-success{background:#10B98122!important;color:#10B981!important;}
+body.light-mode .btn-danger{background:#fee2e2!important;color:#EF4444!important;}
+body.light-mode .form-input,body.light-mode .note-area,body.light-mode .search-input{background:#FFFFFF!important;border-color:#E2E8F0!important;color:#0F172A!important;}
+body.light-mode .ex-card{background:#FFFFFF!important;border-color:#E2E8F0!important;}
+body.light-mode .ob-row{background:#F8FAFC!important;border-color:#E2E8F0!important;}
+body.light-mode .ob-row.pos{background:#ECFDF5!important;border-color:#10B98133!important;}
+body.light-mode .ob-row.neg{background:#FEF2F2!important;border-color:#EF444433!important;}
+body.light-mode .ob-text{color:#334155!important;}
+body.light-mode .ob-id{color:inherit!important;}
+body.light-mode .comp-card{background:#FFFFFF!important;border-color:#E2E8F0!important;}
+body.light-mode .modal-box{background:#FFFFFF!important;}
+body.light-mode .modal-overlay{background:#00000088!important;}
+body.light-mode .home-card{background:#FFFFFF!important;border-color:#E2E8F0!important;}
+body.light-mode .stats-bar{background:#FFFFFF!important;border-bottom-color:#E2E8F0!important;}
+body.light-mode .bottom-bar{background:#FFFFFF!important;border-top-color:#E2E8F0!important;}
+body.light-mode .debrief-comp-row{background:#FFFFFF!important;border-color:#E2E8F0!important;}
+body.light-mode .filter-btn{background:#FFFFFF!important;border-color:#E2E8F0!important;color:#64748B!important;}
+body.light-mode .filter-btn.active{background:#EFF6FF!important;border-color:#3B82F6!important;color:#3B82F6!important;}
+body.light-mode .pilot-tab{background:#F1F5F9!important;color:#94A3B8!important;}
+body.light-mode .ffa-tag{background:#F8FAFC!important;}
+body.light-mode .grade-btn{background:#F8FAFC!important;border-color:#E2E8F0!important;color:#94A3B8!important;}
+body.light-mode .rc-btn{background:#F1F5F9!important;border-color:#E2E8F0!important;color:#475569!important;}
+body.light-mode .mem-box{background:#fef9ec!important;border-color:#F59E0B33!important;}
+body.light-mode .sc-item{background:#FFFFFF!important;border-color:#E2E8F0!important;}
+body.light-mode .sc-item-title{color:#0F172A!important;}
+body.light-mode .sc-item-sub{color:#64748B!important;}
+body.light-mode .fac-card{background:#FFFFFF!important;border-color:#E2E8F0!important;}
+body.light-mode .fac-q{color:#334155!important;}
+body.light-mode .concl-text{color:#334155!important;}
+body.light-mode html,body.light-mode body{color:#1E293B!important;}
 </style>
 </head>
 <body>
@@ -4317,6 +4360,23 @@ h+='</div>';
 el.innerHTML=h;
 }
 
+function setTRIOB(compId, obIdx, sign){
+  if(!state.triCheckObs) state.triCheckObs={};
+  const key = compId+'_'+obIdx;
+  state.triCheckObs[key] = state.triCheckObs[key]===sign ? null : sign;
+  // Auto-suggest grade based on OB counts
+  const comp = TRI_CHECK_CRITERIA.find(c=>c.id===compId);
+  if(comp){
+    const pos = comp.obs.filter((_,i)=>state.triCheckObs[compId+'_'+i]==='+').length;
+    const rated = comp.obs.filter((_,i)=>state.triCheckObs[compId+'_'+i]&&state.triCheckObs[compId+'_'+i]!=='N/A').length;
+    if(rated>0){
+      const pct=pos/rated;
+      const suggested = pct>=0.9?5:pct>=0.75?4:pct>=0.5?3:pct>=0.25?2:1;
+      state.triCheckGrades[compId]=suggested;
+    }
+  }
+  renderDebTRICheck(document.getElementById('deb-content'));
+}
 function setTRIGrade(id, n){
 if(!state.triCheckGrades) state.triCheckGrades={};
 state.triCheckGrades[id] = (state.triCheckGrades[id]===n) ? 0 : n;
