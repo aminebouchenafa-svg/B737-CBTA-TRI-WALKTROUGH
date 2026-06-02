@@ -817,6 +817,31 @@ items:[
   "Positive rate — rotate smoothly",
   "OEI procedure if applicable"
 ]},
+{id:"ef_v1v2",title:"ENGINE FAILURE BETWEEN V1 AND V2",page:"MAN.2.1",cat:"MANDATORY",pri:"CRITICAL",
+phase:["TAKEOFF","CLIMB"],system:"ENGINES",condition:"ENGINE FAILURE ABOVE V1 — CONTINUE TAKEOFF",
+keys:["FPM","PRO","WLM","SA","LTW","COM"],
+mem:["ABOVE V1 → CONTINUE TAKEOFF","Maintain centreline (rudder)","Rotate at Vr","LNAV/Climb thrust","Engine Failure memory items"],
+items:["Takeoff briefing including engine failure drill","V1 — continue takeoff","Positive rate — gear up","Memory items (if fire/severe damage)","Climb out on departure path","NNC — Engine Failure/Shutdown"]},
+{id:"se_ils",title:"SINGLE ENGINE ILS",page:"MAN.2.2",cat:"MANDATORY",pri:"CRITICAL",
+phase:["APPROACH","LANDING"],system:"ENGINES / ILS",condition:"ONE ENGINE INOPERATIVE — ILS APPROACH TO LAND",
+keys:["FPM","FPA","PRO","WLM","SA","LTW","COM"],
+mem:["Final approach speed +5kt on SEI","VREF+5 minimum on final","Go-around: max TOGA — gear up — flaps 15 — Blue line","Engine out SOPs"],
+items:["OEI approach briefing","ILS intercept and tracking","Final configuration with one engine inoperative","Stabilised approach criteria met","Decision at DH","Go-around or landing"]},
+{id:"se_ga",title:"SINGLE ENGINE GO-AROUND",page:"MAN.2.3",cat:"MANDATORY",pri:"CRITICAL",
+phase:["APPROACH"],system:"ENGINES",condition:"GO-AROUND WITH ONE ENGINE INOPERATIVE",
+keys:["FPM","PRO","WLM","SA","LTW"],
+mem:["TOGA — TOGA","Gear up positive rate","Flaps 15 then UP","Blue line (VAPP+10 minimum)","Engine out acceleration altitude"],
+items:["Go-around call — TOGA thrust","Rotate to go-around pitch","Positive rate — gear up","Accelerate to VAPP+10 minimum","Flaps retract schedule","Climb to acceleration altitude","Follow engine out SID/procedure"]},
+{id:"se_ldg",title:"SINGLE ENGINE LANDING",page:"MAN.2.4",cat:"MANDATORY",pri:"CRITICAL",
+phase:["APPROACH","LANDING"],system:"ENGINES",condition:"LANDING WITH ONE ENGINE INOPERATIVE",
+keys:["FPM","PRO","WLM","SA","LTW","COM"],
+mem:["Autoland recommended if available","Manual: add 5kt to Vref on final","Flare carefully — asymmetric thrust effect","Braking — directional control"],
+items:["OEI landing briefing","Approach stable — Vref+5","Flare — asymmetric power","Touchdown — idle thrust","Directional control on roll-out","Vacate runway"]},
+{id:"non_ils",title:"NON-ILS TO THE MINIMA",page:"MAN.2.5",cat:"MANDATORY",pri:"CRITICAL",
+phase:["APPROACH"],system:"FMC / RNAV",condition:"NPA — LNAV OR VOR APPROACH TO MINIMA",
+keys:["FPA","FPM","SA","PRO","KNO","PSD"],
+mem:["MDA + 50ft approach — level off at MDA","Visual reference before descending below MDA","Missed approach if no visual — IMMEDIATELY","CDFA technique recommended"],
+items:["NPA briefing — minima, missed approach","Approach configuration","Descend on profile — CDFA or step-down","Level at MDA if visual not acquired","Visual reference check at MDA","Land or Go-around decision"]},
 ]
 
 const NNC = [
@@ -2120,11 +2145,11 @@ const ROOT_CAUSES = [
 // ── TRI CHECK CRITERIA ---─────────────────────────────────────────────────────
 const MANDATORY_IDS = new Set([
   "rto","nnc_rto",
-  "engine_fire","nnc_eng_fail","nnc_eng_inflight_start",
+  "ef_v1v2","engine_fire","nnc_eng_fail",
+  "se_ils","se_ga","se_ldg","non_ils","nnc_one_eng_ldg",
   "tcas_ra","nnc_tcas_ra",
   "windshear_manual","windshear_auto","nnc_windshear",
   "upset_recovery",
-  "nnc_one_eng_ldg",
   "stall_recovery",
 ]);
 const TRI_CHECK_CRITERIA = [
@@ -2557,7 +2582,33 @@ el.innerHTML = `<div style="text-align:center;color:var(--faint);padding:50px 20
 </div>`;
 return;
 }
-el.innerHTML = exs.map((ex,i)=>{
+// Mandatory quick-add section
+const MANDATORY_QUICK = [
+  {id:"rto",        label:"REJECTED TAKEOFF"},
+  {id:"ef_v1v2",    label:"ENGINE FAILURE V1–V2"},
+  {id:"se_ils",     label:"SINGLE ENGINE ILS"},
+  {id:"se_ga",      label:"SINGLE ENGINE GO-AROUND"},
+  {id:"se_ldg",     label:"SINGLE ENGINE LANDING"},
+  {id:"non_ils",    label:"NON-ILS TO MINIMA"},
+  {id:"tcas_ra",    label:"TCAS RA"},
+  {id:"windshear_manual",label:"WINDSHEAR ESCAPE"},
+  {id:"upset_recovery",  label:"UPSET RECOVERY"},
+];
+let mandHtml = '<div style="padding:12px 14px 0;">';
+mandHtml += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">';
+mandHtml += '<div style="font-size:10px;font-weight:700;color:#EF4444;letter-spacing:2px;">MANDATORY ITEMS</div>';
+mandHtml += '<div style="font-size:10px;color:#64748B;">Appuyer pour ajouter</div>';
+mandHtml += '</div>';
+mandHtml += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">';
+MANDATORY_QUICK.forEach(function(m){
+  const alreadyAdded = state.exercises.some(function(e){return e.sid===m.id;});
+  mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:6px 10px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+(alreadyAdded?'#10B981':'#EF444466')+';background:'+(alreadyAdded?'#10B98122':'#EF444411')+';color:'+(alreadyAdded?'#10B981':'#EF4444')+';">'+(alreadyAdded?'✓ ':'')+m.label+'</button>';
+});
+mandHtml += '</div>';
+mandHtml += '<div style="height:1px;background:#1E2530;margin:0 -14px 12px;"></div>';
+mandHtml += '</div>';
+
+el.innerHTML = mandHtml + exs.map((ex,i)=>{
 const sc = ALL_SC.find(s=>s.id===ex.sid);
 if(!sc) return '';
 const st = exStats(ex);
@@ -2627,14 +2678,8 @@ function toggleMandatory(){
 }
 function doSecondAttempt(){
   const ex = state.exercises[state.activeIdx];
-  if(!ex || !ex.mandatory) return;
-  if(!confirm('Démarrer le 2ème essai ? Les notes du 1er essai seront sauvegardées.')) return;
-  // Save attempt 1
-  ex.attempt1cs = JSON.parse(JSON.stringify(ex.cs||{}));
-  ex.attempt1csfo = JSON.parse(JSON.stringify(ex.csfo||{}));
-  ex.attempt1ffa = JSON.parse(JSON.stringify(ex.ffa||{}));
-  ex.attempt1ffafo = JSON.parse(JSON.stringify(ex.ffafo||{}));
-  // Reset for attempt 2
+  if(!ex) return;
+  if(!confirm('Démarrer le 2ème essai ? Les notes du 1er essai seront écrasées.')) return;
   ex.cs = {};
   ex.csfo = {};
   ex.ffa = {};
@@ -2700,9 +2745,9 @@ btn.style.width="100%"; btn.style.padding="13px"; btn.style.fontSize="15px";
 const mandDiv = document.getElementById('ex-mand-btns');
 if(mandDiv){
   const avgForAttempt = exStats(ex);
-  const mandBtnHtml = '<button onclick="toggleMandatory()" style="padding:5px 9px;border-radius:6px;font-size:12px;font-weight:800;cursor:pointer;border:1px solid '+(ex.mandatory?'#EF4444':'#3B82F644')+';background:'+(ex.mandatory?'#EF444422':'transparent')+';color:'+(ex.mandatory?'#EF4444':'#3B82F688')+';">'+(ex.mandatory?'M':'T')+'</button>';
-  const redoHtml = (ex.mandatory && ex.closed && (avgForAttempt&&avgForAttempt.avg||0)<2.5 && ex.attempt===1)
-    ? '<button onclick="doSecondAttempt()" style="padding:5px 9px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid #F59E0B;background:#F59E0B22;color:#F59E0B;">2nd ATTEMPT</button>'
+  const mandBtnHtml = '<button onclick="toggleMandatory()" style="padding:5px 10px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid '+(ex.mandatory?'#EF4444':'#3B82F644')+';background:'+(ex.mandatory?'#EF444422':'transparent')+';color:'+(ex.mandatory?'#EF4444':'#64748B')+';">'+(ex.mandatory?'● M':'○ T')+'</button>';
+  const redoHtml = (ex.closed && ex.attempt===1)
+    ? '<button onclick="doSecondAttempt()" style="padding:5px 9px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid #F59E0B;background:#F59E0B22;color:#F59E0B;">2ème ESSAI</button>'
     : '';
   mandDiv.innerHTML = mandBtnHtml + redoHtml;
 }
@@ -3712,21 +3757,12 @@ TRI_CHECK_CRITERIA.forEach(comp=>{
   const g=grades[comp.id];
   if(!g) return;
   const pct=g/5*100;
-  s+='<div style="padding:10px 16px;border-bottom:1px solid #f1f5f9;">';
-  s+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">';
+  s+='<div style="display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid #f1f5f9;">';
   s+='<div style="flex:1"><div style="font-size:12px;font-weight:700;color:#0f172a;">'+comp.label+'</div>';
   s+='<div style="font-size:10px;color:'+comp.color+';font-weight:700;margin:1px 0 3px;">'+comp.cat+'</div>';
   s+='<div style="background:#e2e8f0;border-radius:4px;height:5px;overflow:hidden;"><div style="background:'+comp.color+';height:100%;width:'+pct+'%;"></div></div></div>';
-  s+='<div style="text-align:right;"><div style="font-size:18px;font-weight:900;color:'+levelC(g)+';">'+g+'</div><div style="font-size:9px;font-weight:700;color:'+levelC(g)+';">/5</div></div>';
+  s+='<div style="font-size:18px;font-weight:900;color:'+levelC(g)+';">'+g+'</div>';
   s+='</div>';
-  s+='<div style="display:flex;flex-direction:column;gap:3px;">';
-  comp.obs.forEach((ob,i)=>{
-    s+='<div style="display:flex;gap:6px;align-items:flex-start;padding:3px 0;">';
-    s+='<span style="font-size:9px;font-weight:700;color:'+comp.color+';min-width:30px;margin-top:1px;">OB '+(i+1)+'</span>';
-    s+='<span style="font-size:10px;color:#475569;line-height:1.4;">'+ob+'</span>';
-    s+='</div>';
-  });
-  s+='</div></div>';
 });
 if(state.triCheckNotes) s+='<div style="padding:12px 16px;border-top:1px solid #f1f5f9;background:#fffbeb;"><div style="font-size:10px;color:#F59E0B;font-weight:700;margin-bottom:4px;">OBSERVATIONS</div><div style="font-size:13px;color:#0f172a;line-height:1.6;">'+state.triCheckNotes+'</div></div>';
 if(rec) s+='<div style="padding:12px 16px;border-top:2px solid '+(recColors[rec]||'#e2e8f0')+'44;text-align:center;"><div style="font-size:12px;color:#64748b;margin-bottom:6px;">DÉCISION FINALE</div><div style="display:inline-block;padding:10px 32px;border-radius:10px;background:'+(recColors[rec]||'#64748b')+'22;border:2px solid '+(recColors[rec]||'#64748b')+';color:'+(recColors[rec]||'#64748b')+';font-size:18px;font-weight:900;">'+rec+'</div></div>';
@@ -4289,7 +4325,7 @@ function renderDebTRICheck(el){
 const triName = state.pilotRole==='TRI' ? state.pilotName : (state.foRole==='TRI' ? state.foName : '');
 const grades = state.triCheckGrades || {};
 if(!state.triCheckObs) state.triCheckObs={};
-const obs = state.triCheckObs;
+const obState = state.triCheckObs;
 
 let scored = TRI_CHECK_CRITERIA.filter(c=>grades[c.id]>0);
 const avg = scored.length ? scored.reduce((s,c)=>s+(grades[c.id]||0),0)/scored.length : 0;
@@ -4303,55 +4339,83 @@ function triLevel(v){
 }
 
 let h='<div style="padding:14px;">';
+// Header
 h+='<div style="background:#0F1218;border:1px solid #F59E0B44;border-left:4px solid #F59E0B;border-radius:10px;padding:12px 14px;margin-bottom:14px;">';
 h+='<div style="font-size:10px;color:#F59E0B;font-weight:700;letter-spacing:2px;margin-bottom:4px;">BOEING INSTRUCTOR COMPETENCY FRAMEWORK</div>';
 h+='<div style="font-size:16px;font-weight:800;color:#F1F5F9;">'+(triName||'TRI Examiné')+'</div>';
-h+='<div style="font-size:11px;color:#64748B;margin-top:2px;">CIT — CBTA Instructor Training · 5=Excellent · 4=Above Standard · 3=Standard · 2=Requires Improvement · 1=Unacceptable</div>';
+h+='<div style="font-size:11px;color:#64748B;margin-top:2px;">5=Excellent · 4=Above Standard · 3=Standard · 2=Requires Improvement · 1=Unacceptable</div>';
 if(avg>0){const lv=triLevel(avg);h+='<div style="margin-top:8px;display:flex;align-items:center;gap:10px;"><div style="font-size:24px;font-weight:900;color:'+lv.c+';">'+avg.toFixed(2)+'<span style="font-size:13px;color:#94A3B8;">/5</span></div><div style="font-size:11px;font-weight:700;color:'+lv.c+';">'+lv.l+'</div></div>';}
 h+='</div>';
 
 TRI_CHECK_CRITERIA.forEach(comp=>{
   const g=grades[comp.id]||0;
   const lv=g>0?triLevel(g):null;
-  const obsKey='obs_'+comp.id;
-  const isOpen=(obs[obsKey]||false);
-  h+='<div style="background:#0F1218;border:1px solid #1E2530;border-left:3px solid '+comp.color+';border-radius:10px;padding:12px 13px;margin-bottom:10px;">';
-  h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
-  h+='<div>';
+  const posCount=comp.obs.filter((_,i)=>obState[comp.id+'_'+i]==='+').length;
+  const negCount=comp.obs.filter((_,i)=>obState[comp.id+'_'+i]==='-').length;
+  const naCount=comp.obs.filter((_,i)=>obState[comp.id+'_'+i]==='N/A').length;
+  const ratedCount=posCount+negCount;
+  const pct=ratedCount>0?Math.round(posCount/ratedCount*100):0;
+  h+='<div style="background:#0F1218;border:1px solid #1E2530;border-left:3px solid '+comp.color+';border-radius:10px;padding:12px 13px;margin-bottom:12px;">';
+  // Competency header
+  h+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">';
+  h+='<div style="flex:1;">';
   h+='<div style="font-size:9px;font-weight:700;color:'+comp.color+';letter-spacing:2px;margin-bottom:3px;">'+comp.cat+'</div>';
-  h+='<div style="font-size:13px;font-weight:700;color:#F1F5F9;">'+comp.label+'</div>';
-  h+='</div>';
-  if(lv) h+='<div style="text-align:right;"><div style="font-size:22px;font-weight:900;color:'+lv.c+';">'+g+'</div><div style="font-size:9px;color:'+lv.c+';font-weight:700;">'+lv.l+'</div></div>';
-  h+='</div>';
-  // Grade buttons
-  h+='<div style="display:flex;gap:5px;margin-bottom:8px;">';
-  [1,2,3,4,5].forEach(n=>{
-    const active=g===n;
-    const gc=['','#EF4444','#F97316','#F59E0B','#10B981','#3B82F6'][n];
-    h+='<button onclick="setTRIGrade(\''+comp.id+'\','+n+')" style="flex:1;padding:9px 0;border-radius:7px;font-size:13px;font-weight:800;cursor:pointer;border:1px solid '+(active?gc:gc+'44')+';background:'+(active?gc+'33':'transparent')+';color:'+(active?gc:gc+'88')+';">'+n+'</button>';
-  });
-  h+='</div>';
-  // OB toggle
-  h+='<button onclick="state.triCheckObs=state.triCheckObs||{};state.triCheckObs[\'obs_'+comp.id+'\']=!state.triCheckObs[\'obs_'+comp.id+'\'];renderDebContent()" style="width:100%;padding:7px;background:#141920;border:1px solid #1E2530;border-radius:7px;color:#64748B;font-size:11px;cursor:pointer;font-weight:600;">'+(isOpen?'▲ Hide':'▼ Show')+' Observable Behaviours ('+comp.obs.length+')</button>';
-  if(isOpen){
-    h+='<div style="margin-top:8px;display:flex;flex-direction:column;gap:4px;">';
-    comp.obs.forEach((ob,i)=>{
-      h+='<div style="display:flex;align-items:flex-start;gap:8px;padding:7px 9px;background:#141920;border-radius:7px;border:1px solid #1E2530;">';
-      h+='<span style="font-size:10px;color:'+comp.color+';font-weight:700;min-width:28px;margin-top:1px;">OB '+(i+1)+'</span>';
-      h+='<span style="font-size:12px;color:#CBD5E1;line-height:1.5;">'+ob+'</span>';
-      h+='</div>';
-    });
+  h+='<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">'+comp.label+'</div>';
+  if(ratedCount>0){
+    h+='<div style="display:flex;align-items:center;gap:8px;">';
+    h+='<div style="flex:1;height:4px;background:#1E2530;border-radius:2px;overflow:hidden;"><div style="background:'+comp.color+';height:100%;width:'+pct+'%;"></div></div>';
+    h+='<span style="font-size:10px;color:#10B981;font-weight:700;">+'+posCount+'</span>';
+    h+='<span style="font-size:10px;color:#EF4444;font-weight:700;">−'+negCount+'</span>';
+    if(naCount>0) h+='<span style="font-size:10px;color:#64748B;font-weight:700;">N/A:'+naCount+'</span>';
     h+='</div>';
   }
   h+='</div>';
+  if(lv){
+    h+='<div style="text-align:right;margin-left:10px;">';
+    h+='<div style="font-size:22px;font-weight:900;color:'+lv.c+';">'+g+'</div>';
+    h+='<div style="font-size:9px;color:'+lv.c+';font-weight:700;">'+lv.l+'</div>';
+    h+='</div>';
+  }
+  h+='</div>';
+  // Grade buttons
+  h+='<div style="display:flex;gap:5px;margin-bottom:10px;">';
+  [1,2,3,4,5].forEach(n=>{
+    const active=g===n;
+    const gc=['','#EF4444','#F97316','#F59E0B','#10B981','#3B82F6'][n];
+    const lbl=['','UNACCEPTABLE','REQUIRES IMPROVEMENT','STANDARD','ABOVE STANDARD','EXCELLENT'][n];
+    h+='<button onclick="setTRIGrade(\''+comp.id+'\','+n+')" title="'+lbl+'" style="flex:1;padding:9px 0;border-radius:7px;font-size:14px;font-weight:800;cursor:pointer;border:1px solid '+(active?gc:gc+'44')+';background:'+(active?gc+'33':'transparent')+';color:'+(active?gc:gc+'88')+';">'+n+'</button>';
+  });
+  h+='</div>';
+  // OBs with +/−/N/A
+  h+='<div style="display:flex;flex-direction:column;gap:5px;">';
+  comp.obs.forEach(function(ob,i){
+    var obKey=comp.id+'_'+i;
+    var obVal=obState[obKey]||null;
+    var isP=obVal==='+'; var isN=obVal==='-'; var isNA=obVal==='N/A';
+    var rowBg=isP?'#10B98111':isN?'#EF444411':'#141920';
+    var rowBorder=isP?'#10B98133':isN?'#EF444433':'#1E2530';
+    h+='<div style="display:flex;align-items:flex-start;gap:7px;padding:8px 9px;background:'+rowBg+';border:1px solid '+rowBorder+';border-radius:8px;">';
+    h+='<span style="font-size:10px;color:'+comp.color+';font-weight:700;min-width:30px;margin-top:2px;flex-shrink:0;">OB '+(i+1)+'</span>';
+    h+='<span style="flex:1;font-size:12px;color:#CBD5E1;line-height:1.5;">'+ob+'</span>';
+    h+='<div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;">';
+    h+='<button onclick="setTRIOB(\''+comp.id+'\','+i+',\'+\')" style="width:34px;height:28px;border-radius:5px;border:1px solid '+(isP?'#10B981':'#10B98155')+';background:'+(isP?'#10B981':'#10B98122')+';color:'+(isP?'#fff':'#10B981')+';font-size:14px;font-weight:800;cursor:pointer;">+</button>';
+    h+='<button onclick="setTRIOB(\''+comp.id+'\','+i+',\'-\')" style="width:34px;height:28px;border-radius:5px;border:1px solid '+(isN?'#EF4444':'#EF444455')+';background:'+(isN?'#EF4444':'#EF444422')+';color:'+(isN?'#fff':'#EF4444')+';font-size:14px;font-weight:800;cursor:pointer;">−</button>';
+    h+='<button onclick="setTRIOB(\''+comp.id+'\','+i+',\'N/A\')" style="width:34px;height:24px;border-radius:5px;border:1px solid '+(isNA?'#64748B':'#334155')+';background:'+(isNA?'#64748B33':'transparent')+';color:'+(isNA?'#94A3B8':'#475569')+';font-size:10px;font-weight:700;cursor:pointer;">N/A</button>';
+    h+='</div></div>';
+  });
+  h+='</div>';
+  h+='</div>';
 });
 
+// Notes
 h+='<div style="margin-bottom:14px;"><div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:6px;">OBSERVATIONS</div>';
 h+='<textarea style="width:100%;background:#0F1218;border:1px solid #1E2530;border-radius:8px;color:#F1F5F9;padding:10px;font-size:13px;resize:none;min-height:80px;box-sizing:border-box;" placeholder="Examiner observations..." onchange="state.triCheckNotes=this.value">'+((state.triCheckNotes)||'')+'</textarea></div>';
 
+// Final decision
 h+='<div style="margin-bottom:20px;"><div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:8px;">FINAL DECISION</div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">';
-[['APTE','#10B981'],['INAPTE','#EF4444'],['REPORT','#F59E0B']].forEach(([label,col])=>{
+[['APTE','#10B981'],['INAPTE','#EF4444'],['REPORT','#F59E0B']].forEach(function(arr){
+  var label=arr[0]; var col=arr[1];
   const active=state.triRecommendation===label;
   h+='<button onclick="setTRIRec(\''+label+'\')" style="padding:14px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;border:2px solid '+(active?col:col+'44')+';background:'+(active?col+'33':'transparent')+';color:'+(active?col:col+'88')+';">'+label+'</button>';
 });
