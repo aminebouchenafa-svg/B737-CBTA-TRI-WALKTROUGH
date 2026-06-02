@@ -311,6 +311,7 @@ Identifiant ou mot de passe incorrect
   <div style="text-align:center;flex:1;">
     <div style="font-size:8px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">EXERCICE</div>
     <div id="timer-ex-display" style="font-family:ui-monospace,monospace;font-size:34px;font-weight:900;color:#F1F5F9;letter-spacing:4px;line-height:1;">00:00</div>
+    <button id="timer-pause-btn" onclick="toggleChrono()" style="margin-top:4px;padding:3px 14px;border-radius:20px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">⏸ PAUSE</button>
   </div>
   <div style="text-align:right;">
     <div style="font-size:8px;color:#334155;letter-spacing:1.5px;font-weight:700;margin-bottom:3px;">LIMITE</div>
@@ -2005,6 +2006,20 @@ function startChrono(){
   window._chronoInterval = setInterval(updateChrono, 1000);
   updateChrono();
 }
+function toggleChrono(){
+  const ex = state.activeIdx!==null ? state.exercises[state.activeIdx] : null;
+  if(!ex) return;
+  if(ex.paused){
+    // Resume: shift openedAt forward so elapsed stays the same
+    ex.openedAt = Date.now() - (ex.pausedElapsed||0)*1000;
+    ex.paused = false;
+  } else {
+    // Pause: snapshot current elapsed
+    ex.pausedElapsed = ex.openedAt ? Math.floor((Date.now()-ex.openedAt)/1000) : 0;
+    ex.paused = true;
+  }
+  updateChrono();
+}
 function updateChrono(){
   // Session timer
   const sesEl = document.getElementById('timer-session');
@@ -2016,13 +2031,24 @@ function updateChrono(){
   const exEl  = document.getElementById('timer-ex-display');
   const limEl = document.getElementById('timer-limit-val');
   const bar   = document.getElementById('ex-timer-bar');
+  const pauseBtn = document.getElementById('timer-pause-btn');
   if(!exEl) return;
   if(ex && ex.openedAt){
-    const elapsed = Math.floor((Date.now()-ex.openedAt)/1000);
+    const elapsed = ex.paused ? (ex.pausedElapsed||0) : Math.floor((Date.now()-ex.openedAt)/1000);
     exEl.textContent = fmtMS(elapsed);
+    // Pause button label
+    if(pauseBtn){
+      if(ex.paused){
+        pauseBtn.textContent='▶ REPRENDRE';
+        pauseBtn.style.background='#F59E0B22'; pauseBtn.style.borderColor='#F59E0B'; pauseBtn.style.color='#F59E0B';
+      } else {
+        pauseBtn.textContent='⏸ PAUSE';
+        pauseBtn.style.background='#1E2530'; pauseBtn.style.borderColor='#334155'; pauseBtn.style.color='#94A3B8';
+      }
+    }
     const limit = (ex.timeLimit||0)*60;
     if(limEl) limEl.textContent = ex.timeLimit ? fmtMS(ex.timeLimit*60) : '--:--';
-    if(limit>0){
+    if(!ex.paused && limit>0){
       const ratio = elapsed/limit;
       if(ratio>=1){
         exEl.style.color='#EF4444';
@@ -2038,8 +2064,9 @@ function updateChrono(){
         if(bar){ bar.style.borderColor='#1E2530'; bar.style.boxShadow='none'; }
       }
     } else {
-      exEl.style.color='#F1F5F9'; exEl.style.animation='';
-      if(bar){ bar.style.borderColor='#1E2530'; bar.style.boxShadow='none'; }
+      exEl.style.color = ex.paused ? '#F59E0B' : '#F1F5F9';
+      exEl.style.animation='';
+      if(bar){ bar.style.borderColor = ex.paused ? '#F59E0B44' : '#1E2530'; bar.style.boxShadow='none'; }
     }
   } else {
     exEl.textContent='--:--';
