@@ -373,6 +373,7 @@ Identifiant ou mot de passe incorrect
 <div id="deb-hdr-info" style="font-size:10px;color:#3B82F6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
 </div>
 <button class="btn" onclick="showPresentation()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:11px;">PRÉSENTATION</button>
+<button class="btn" onclick="showProfCheck()" style="background:#3B82F622;border-color:#3B82F6;color:#3B82F6;font-size:11px;padding:6px 10px;">☑ PROF CHECK</button>
 <button class="btn" onclick="showRapport()" style="background:#10B98122;border-color:#10B981;color:#10B981;font-size:12px;">RAPPORT</button>
 <button class="btn btn-danger" onclick="endSession()">FIN</button>
 </div>
@@ -399,6 +400,18 @@ Identifiant ou mot de passe incorrect
 <button class="btn" style="background:#10B98122;border-color:#10B981;color:#10B981;font-size:11px;padding:6px 10px;" onclick="envoyerRapportEmailActuel()">✉ EMAIL</button>
 </div>
 <div id="rapport-content" style="padding:0;background:#fff;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;"></div>
+</div>
+
+<div class="screen" id="screen-profcheck">
+<div class="topbar">
+<button class="btn" onclick="showScreen('debrief')">← Debrief</button>
+<div style="flex:1;margin-left:10px;">
+<div class="title" style="color:#3B82F6;">PROFICIENCY CHECK</div>
+<div class="sub">Air Algérie — B737 NG</div>
+</div>
+<button class="btn btn-primary" onclick="printProfCheck()" style="font-size:11px;padding:6px 10px;">🖨️ PDF</button>
+</div>
+<div class="scroll" id="profcheck-content" style="padding:14px;"></div>
 </div>
 
 <div class="screen" id="screen-history">
@@ -3655,16 +3668,65 @@ TRI_CHECK_CRITERIA.forEach(comp=>{
   const g=grades[comp.id];
   if(!g) return;
   const pct=g/5*100;
-  s+='<div style="display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid #f1f5f9;">';
+  s+='<div style="padding:10px 16px;border-bottom:1px solid #f1f5f9;">';
+  s+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">';
   s+='<div style="flex:1"><div style="font-size:12px;font-weight:700;color:#0f172a;">'+comp.label+'</div>';
-  s+='<div style="font-size:10px;color:#64748b;margin:1px 0 3px;">'+comp.cat+'</div>';
-  s+='<div style="background:#e2e8f0;border-radius:4px;height:6px;overflow:hidden;"><div style="background:'+comp.color+';height:100%;width:'+pct+'%;"></div></div></div>';
-  s+='<div style="font-size:16px;font-weight:900;color:'+levelC(g)+';">'+g+'</div></div>';
+  s+='<div style="font-size:10px;color:'+comp.color+';font-weight:700;margin:1px 0 3px;">'+comp.cat+'</div>';
+  s+='<div style="background:#e2e8f0;border-radius:4px;height:5px;overflow:hidden;"><div style="background:'+comp.color+';height:100%;width:'+pct+'%;"></div></div></div>';
+  s+='<div style="text-align:right;"><div style="font-size:18px;font-weight:900;color:'+levelC(g)+';">'+g+'</div><div style="font-size:9px;font-weight:700;color:'+levelC(g)+';">/5</div></div>';
+  s+='</div>';
+  s+='<div style="display:flex;flex-direction:column;gap:3px;">';
+  comp.obs.forEach((ob,i)=>{
+    s+='<div style="display:flex;gap:6px;align-items:flex-start;padding:3px 0;">';
+    s+='<span style="font-size:9px;font-weight:700;color:'+comp.color+';min-width:30px;margin-top:1px;">OB '+(i+1)+'</span>';
+    s+='<span style="font-size:10px;color:#475569;line-height:1.4;">'+ob+'</span>';
+    s+='</div>';
+  });
+  s+='</div></div>';
 });
 if(state.triCheckNotes) s+='<div style="padding:12px 16px;border-top:1px solid #f1f5f9;background:#fffbeb;"><div style="font-size:10px;color:#F59E0B;font-weight:700;margin-bottom:4px;">OBSERVATIONS</div><div style="font-size:13px;color:#0f172a;line-height:1.6;">'+state.triCheckNotes+'</div></div>';
 if(rec) s+='<div style="padding:12px 16px;border-top:2px solid '+(recColors[rec]||'#e2e8f0')+'44;text-align:center;"><div style="font-size:12px;color:#64748b;margin-bottom:6px;">DÉCISION FINALE</div><div style="display:inline-block;padding:10px 32px;border-radius:10px;background:'+(recColors[rec]||'#64748b')+'22;border:2px solid '+(recColors[rec]||'#64748b')+';color:'+(recColors[rec]||'#64748b')+';font-size:18px;font-weight:900;">'+rec+'</div></div>';
 s+='</div>';
 return s;
+})()}
+
+${(()=>{
+const crmItems = [
+  {k:'brief',l:'Briefing complet et pertinent'},{k:'callout',l:'Callouts standards SOP'},{k:'challenge',l:'Challenge & Response'},
+  {k:'comm',l:'Communication claire et concise'},{k:'leadership',l:'Leadership adapté'},{k:'crosscheck',l:'Cross-check mutuel'},
+  {k:'workload',l:'Gestion charge de travail'},{k:'sa',l:'Situation Awareness partagée'},{k:'decision',l:'Prise de décision'},
+  {k:'intervention',l:'Intervention sur écart'},{k:'automation',l:'Gestion automatismes'},{k:'sterile',l:'Cockpit stérile 10 000ft'}
+];
+const crmTotals = {};
+crmItems.forEach(it=>{crmTotals[it.k]={ok:0,nok:0,total:0};});
+closed.forEach(ex=>{
+  if(!ex.crm) return;
+  crmItems.forEach(it=>{
+    const v=ex.crm[it.k];
+    if(v==='ok'){crmTotals[it.k].ok++;crmTotals[it.k].total++;}
+    else if(v==='nok'){crmTotals[it.k].nok++;crmTotals[it.k].total++;}
+  });
+});
+const hasCRM = crmItems.some(it=>crmTotals[it.k].total>0);
+if(!hasCRM) return '';
+let cs='<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">BILAN CRM — RESSOURCES ÉQUIPAGE</div>';
+cs+='<div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">';
+crmItems.forEach((it,i)=>{
+  const d=crmTotals[it.k];
+  if(!d.total) return;
+  const pct=Math.round(d.ok/d.total*100);
+  const col=pct>=80?'#10B981':pct>=60?'#F59E0B':'#EF4444';
+  cs+='<div style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:'+(i<crmItems.length-1?'1px solid #f1f5f9':'none')+'">';
+  cs+='<div style="flex:1;font-size:11px;color:#0f172a;">'+it.l+'</div>';
+  cs+='<div style="display:flex;align-items:center;gap:6px;">';
+  cs+='<div style="width:60px;background:#e2e8f0;border-radius:4px;height:5px;overflow:hidden;"><div style="background:'+col+';height:100%;width:'+pct+'%;"></div></div>';
+  cs+='<span style="font-size:10px;font-weight:700;color:'+col+';min-width:28px;">'+pct+'%</span>';
+  cs+='<span style="font-size:9px;color:#10B981;">✓'+d.ok+'</span>';
+  cs+='<span style="font-size:9px;color:#EF4444;">✗'+d.nok+'</span>';
+  cs+='</div></div>';
+});
+cs+='</div>';
+return cs;
 })()}
 
 <div style="text-align:center;padding:24px 16px 12px;font-size:10px;color:#cbd5e1;line-height:1.8;">
@@ -3702,7 +3764,8 @@ function printRapport(){
     +'@media print{.noprint{display:none!important;}html,body{background:#fff!important;}}'
     +'</style>'
     +'</head><body>'
-    +'<div class="noprint">'
+    +'<div class="noprint" style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;">'
+    +'<button onclick="if(window.opener){window.opener.focus();window.close();}else{window.close();}" style="background:#fff;color:#0f172a;border:2px solid #e2e8f0;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">← Retour Session</button>'
     +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
     +'</div>'
     +rapHtml
@@ -3742,7 +3805,8 @@ function printRapportFromHistory(idx){
     +'@media print{.noprint{display:none!important;}html,body{background:#fff!important;}}'
     +'</style>'
     +'</head><body>'
-    +'<div class="noprint">'
+    +'<div class="noprint" style="display:flex;gap:10px;justify-content:center;align-items:center;flex-wrap:wrap;">'
+    +'<button onclick="window.close();" style="background:#fff;color:#0f172a;border:2px solid #e2e8f0;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">← Fermer</button>'
     +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
     +'</div>'
     +session.rapportHTML
