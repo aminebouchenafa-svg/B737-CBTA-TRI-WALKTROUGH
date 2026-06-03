@@ -276,7 +276,7 @@ body.light-mode .guide-sec div[style*="border-bottom:1px solid #1E2530"]{border-
 body.light-mode .guide-sec div[style*="color:#F1F5F9"]{color:#111827!important;}
 body.light-mode .pilot-single-lbl{background:#F0F7FF!important;}
 body.light-mode #ex-timer-bar{background:#F0EDE7!important;border-bottom-color:#DDD8CC!important;}
-body.light-mode #timer-session{color:#374151!important;}
+body.light-mode #timer-session{filter:brightness(0.85);}
 body.light-mode .ffa-tag{background:#FFFFFF!important;border:1px solid #DDD8CC!important;}
 body.light-mode .section-lbl{color:#374151!important;font-weight:800!important;}
 body.light-mode .debrief-comp-row{background:#FFFFFF!important;border-color:#DDD8CC!important;}
@@ -447,8 +447,8 @@ Identifiant ou mot de passe incorrect
 </div>
 <div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E2530;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
   <div style="text-align:left;min-width:64px;">
-    <div style="font-size:8px;color:#334155;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">SESSION</div>
-    <div id="timer-session" style="font-family:ui-monospace,monospace;font-size:14px;font-weight:700;color:#475569;letter-spacing:2px;">00:00:00</div>
+    <div style="font-size:8px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">SESSION</div>
+    <div id="timer-session" style="font-family:ui-monospace,monospace;font-size:18px;font-weight:900;color:#10B981;letter-spacing:2px;transition:color 0.4s,font-size 0.3s;">00:00:00</div>
   </div>
   <div style="text-align:center;flex:1;">
     <div style="font-size:8px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">EXERCICE</div>
@@ -2409,6 +2409,22 @@ function startChrono(){
   window._chronoInterval = setInterval(updateChrono, 1000);
   updateChrono();
 }
+function playSessionBeep(type){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    const beep=(freq,start,dur)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=freq;o.type='sine';
+      g.gain.setValueAtTime(0.6,ctx.currentTime+start);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+start+dur);
+      o.start(ctx.currentTime+start);o.stop(ctx.currentTime+start+dur+0.05);
+    };
+    if(type===1){beep(880,0,0.6);}
+    else if(type===2){beep(880,0,0.3);beep(1100,0.45,0.3);}
+    else{beep(880,0,0.2);beep(1100,0.3,0.2);beep(880,0.6,0.2);beep(1100,0.9,0.2);beep(1320,1.2,0.6);}
+  }catch(e){}
+}
 function toggleChrono(){
   const ex = state.activeIdx!==null ? state.exercises[state.activeIdx] : null;
   if(!ex) return;
@@ -2440,7 +2456,22 @@ function updateChrono(){
   // Session timer
   const sesEl = document.getElementById('timer-session');
   if(sesEl && state.sessionStart){
-    sesEl.textContent = fmtHMS(Math.floor((Date.now()-state.sessionStart)/1000));
+    const sesSec = Math.floor((Date.now()-state.sessionStart)/1000);
+    sesEl.textContent = fmtHMS(sesSec);
+    if(sesSec >= 13800){ // 3h50 — near end: red + flash
+      sesEl.style.color='#EF4444'; sesEl.style.fontSize='22px';
+      sesEl.style.animation='chronoAlarm 0.7s ease-in-out infinite';
+    } else if(sesSec >= 7200){ // 2h — orange
+      sesEl.style.color='#F59E0B'; sesEl.style.fontSize='19px';
+      sesEl.style.animation='';
+    } else { // normal — green
+      sesEl.style.color='#10B981'; sesEl.style.fontSize='18px';
+      sesEl.style.animation='';
+    }
+    if(!window._sesAlerts) window._sesAlerts={two:false,nearEnd:false,end:false};
+    if(sesSec>=7200 && !window._sesAlerts.two){window._sesAlerts.two=true;playSessionBeep(1);}
+    if(sesSec>=13800 && !window._sesAlerts.nearEnd){window._sesAlerts.nearEnd=true;playSessionBeep(2);}
+    if(sesSec>=14400 && !window._sesAlerts.end){window._sesAlerts.end=true;playSessionBeep(3);}
   }
   // Exercise timer
   const ex = state.activeIdx!==null ? state.exercises[state.activeIdx] : null;
@@ -2639,6 +2670,7 @@ state.triCheckGrades = {};
 state.triCheckNotes  = "";
 state.triRecommendation = "";
 state.sessionStart   = Date.now();
+window._sesAlerts    = {two:false,nearEnd:false,end:false};
 startChrono();
 const pilotLine = state.foName ? state.pilotName + " / " + state.foName : state.pilotName;
 document.getElementById('hdr-pilot').textContent = pilotLine;
@@ -3072,8 +3104,8 @@ el.innerHTML = pilotTabsHtml + condHtml + memHtml +
 `<div class="section-lbl">COMPETENCES — Tap pour evaluer</div>
 <div class="comp-grid">${compGrid}</div>
 <div style="margin-bottom:14px;">
-<div class="section-lbl">NOTES INSTRUCTEUR</div>
-<textarea class="note-area" placeholder="Observations libres..." onchange="saveNotes(this.value)">${notesVal}</textarea>
+<div class="section-lbl" style="color:#F59E0B;">📝 MES NOTES PRIVÉES (non incluses dans le rapport)</div>
+<textarea class="note-area" placeholder="Notes de conduite du débriefing — privées, pour votre usage uniquement..." onchange="saveNotes(this.value)">${notesVal}</textarea>
 </div>`;
 }
 
@@ -3485,6 +3517,7 @@ function renderFilters(){
 const cats=["ALL","MEMORY","MANEUVER","FLIGHT PATTERN","NNC"];
 const CAT_COLORS={"ALL":"#64748B","MEMORY":"#EF4444","MANEUVER":"#F97316","FLIGHT PATTERN":"#10B981","NNC":"#8B5CF6"};
 const phases=["ALL","TAKEOFF","CLIMB","CRUISE","DESCENT","APPROACH","LANDING"];
+const PHASE_COLORS={"ALL":"#64748B","TAKEOFF":"#FFE600","CLIMB":"#39FF14","CRUISE":"#00E5FF","DESCENT":"#FF9500","APPROACH":"#FF61C7","LANDING":"#AAFF00"};
 const catExtra = [{c:"LVO",col:LVO_COLOR},{c:"RNP",col:RNP_COLOR}];
 document.getElementById('cat-filters').innerHTML = cats.map(c=>{
 const col=CAT_COLORS[c]||'#64748B';
@@ -3493,8 +3526,11 @@ return `<button class="filter-btn ${isActive?'active':''}" onclick="setCatF('${c
 }).join('')
 + catExtra.map(({c,col})=>
 `<button class="filter-btn ${state.catFilter===c?'active':''}" onclick="setCatF('${c}')" style="color:${col};border-color:${col}44;">${c}</button>`).join('');
-document.getElementById('phase-filters').innerHTML = phases.map(p=>
-`<button class="filter-btn ${state.phaseFilter===p?'active':''}" onclick="setPhaseF('${p}')">${p}</button>`).join('');
+document.getElementById('phase-filters').innerHTML = phases.map(p=>{
+const col=PHASE_COLORS[p]||'#64748B';
+const isA=state.phaseFilter===p;
+return `<button class="filter-btn ${isA?'active':''}" onclick="setPhaseF('${p}')" style="color:${isA?col:'#94A3B8'};border-color:${col}${isA?'':'55'};${isA?'background:'+col+'22;text-shadow:0 0 8px '+col+';box-shadow:0 0 8px '+col+'44;':''}">${p}</button>`;
+}).join('');
 
 // Afficher les filtres système seulement si NNC sélectionné
 const sysDiv = document.getElementById('sys-filters');
@@ -3514,6 +3550,7 @@ function setSysF(s){ state.sysFilter=s; renderFilters(); renderScList(); }
 
 function renderScList(){
 const q = (document.getElementById('sc-search')||{}).value||'';
+const COMP_COLORS={};COMPETENCIES.forEach(c=>{COMP_COLORS[c.id.toLowerCase()]=c.color;});
 const filtered = (ALL_SC||[]).filter(s=>{
 const pOk = state.phaseFilter==="ALL"||s.phase.includes(state.phaseFilter);
 const cOk = state.catFilter==="ALL"||s.cat===state.catFilter;
@@ -3546,7 +3583,7 @@ return `<div class="sc-item" style="background:#0F1218;border-left-color:${cat_c
 <div style="flex:1;">
 <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="font-size:9px;font-weight:800;letter-spacing:1px;color:${cat_color(s)};background:${cat_color(s)}22;border:1px solid ${cat_color(s)}44;border-radius:4px;padding:1px 5px;">${s.cat}</span></div>
 <div class="sc-item-title">${s.title}</div>
-<div class="sc-item-sub">p.${s.page} · ${(s.keys||[]).map(k=>q&&k.toLowerCase()===q.toLowerCase().trim()?`<span style="background:#F59E0B33;color:#F59E0B;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid #F59E0B55;">${k}</span>`:k).join(', ')}</div>
+<div class="sc-item-sub">p.${s.page} · ${(s.keys||[]).map(k=>q&&k.toLowerCase()===q.toLowerCase().trim()?`<span style="background:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}33;color:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')};font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}55;">${k}</span>`:k).join(', ')}</div>
 </div>
 <div style="font-size:11px;font-weight:700;color:${pc};padding:3px 6px;border:1px solid ${pc}44;border-radius:4px;flex-shrink:0;">${s.pri}</div>
 </div>`;
@@ -3562,7 +3599,7 @@ return `<div class="sc-item" style="background:#0F1218;border-left-color:${cat_c
 <div style="flex:1;">
 <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="font-size:9px;font-weight:800;letter-spacing:1px;color:${cat_color(s)};background:${cat_color(s)}22;border:1px solid ${cat_color(s)}44;border-radius:4px;padding:1px 5px;">${s.cat}</span></div>
 <div class="sc-item-title">${s.title}</div>
-<div class="sc-item-sub">p.${s.page} · ${(s.keys||[]).map(k=>q&&k.toLowerCase()===q.toLowerCase().trim()?`<span style="background:#F59E0B33;color:#F59E0B;font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid #F59E0B55;">${k}</span>`:k).join(', ')}</div>
+<div class="sc-item-sub">p.${s.page} · ${(s.keys||[]).map(k=>q&&k.toLowerCase()===q.toLowerCase().trim()?`<span style="background:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}33;color:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')};font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}55;">${k}</span>`:k).join(', ')}</div>
 </div>
 <div style="font-size:11px;font-weight:700;color:${pc};padding:3px 6px;border:1px solid ${pc}44;border-radius:4px;flex-shrink:0;">${s.pri}</div>
 </div>`;
@@ -3964,7 +4001,6 @@ return `<div style="padding:14px 16px;border-bottom:1px solid #f1f5f9;">
 </div>
 ${gradesCpt?`<div style="margin-bottom:4px;"><span style="font-size:10px;color:${CPT_COLOR};font-weight:700;margin-right:6px;">CPT</span>${gradesCpt}</div>`:''}
 ${gradesFo?`<div style="margin-bottom:4px;"><span style="font-size:10px;color:${FO_COLOR};font-weight:700;margin-right:6px;">FO</span>${gradesFo}</div>`:''}
-${ex.notes?`<div style="font-size:12px;color:#475569;margin-top:6px;font-style:italic;background:#f8fafc;padding:6px 10px;border-radius:6px;">"${ex.notes}"</div>`:''}
 </div>`;
 }).join('');
 
@@ -4427,7 +4463,7 @@ ${st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(
 <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">${compBadges}</div>
 ${ffaHtml?`<div style="margin-bottom:6px;">${ffaHtml}</div>`:''}
 ${temHtml?`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px;">${temHtml}</div>`:''}
-${ex.notes?`<div style="font-size:12px;color:#64748B;font-style:italic;margin-bottom:4px;">${ex.notes}</div>`:''}
+${ex.notes?`<div style="font-size:11px;color:#F59E0B;font-weight:700;margin:6px 0 2px;letter-spacing:0.5px;">📝 MES NOTES</div><div style="font-size:12px;color:#94A3B8;font-style:italic;background:#F59E0B0D;border:1px solid #F59E0B33;border-radius:6px;padding:6px 10px;">${ex.notes}</div>`:''}
 ${facNotes}
 </div>`;
 }).join('');
@@ -6063,7 +6099,6 @@ exRows+=`<tr style="border-bottom:1px solid #e2e8f0;">
 <td style="padding:10px;vertical-align:top;">
 <div style="margin-bottom:5px;">${gradesCpt||'<span style="color:#94a3b8;font-size:11px;">Non évalué</span>'}</div>
 ${temLine}
-${ex.notes?`<div style="font-size:11px;color:#475569;margin-top:4px;font-style:italic;">${ex.notes}</div>`:''}
 </td>
 <td style="padding:10px;text-align:center;vertical-align:top;"><span style="font-size:18px;font-weight:800;color:${pc};">${st&&st.avg>0?st.avg.toFixed(1):'-'}</span></td>
 </tr>`;
