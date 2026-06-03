@@ -287,6 +287,18 @@ body.light-mode .debrief-comp-row{background:#FFFFFF!important;border-color:#DDD
 body.light-mode .card [style*="color:#F1F5F9"],body.light-mode .modal-box [style*="color:#F1F5F9"]{color:#111827!important;}
 body.light-mode .card [style*="color:#CBD5E1"],body.light-mode .modal-box [style*="color:#CBD5E1"]{color:#374151!important;}
 body.light-mode .card [style*="color:#94A3B8"],body.light-mode .modal-box [style*="color:#94A3B8"]{color:#4B5563!important;}
+@media(min-width:768px){
+#app{max-width:900px;margin:0 auto;}
+.modal-overlay{align-items:center;}
+.modal-box{border-radius:16px!important;max-width:640px!important;margin:auto;}
+.comp-grid{grid-template-columns:repeat(4,1fr)!important;}
+.home-card{max-width:520px;width:100%;}
+.card{padding:18px;}
+#timer-ex-display{font-size:44px!important;}
+#timer-session{font-size:22px!important;}
+.sc-item{padding:14px 16px;}
+.section-lbl{font-size:12px;}
+}
 </style>
 </head>
 <body class="login-active">
@@ -375,7 +387,10 @@ Identifiant ou mot de passe incorrect
 <label class="form-label">NOM DE L INSTRUCTEUR (TRI)</label>
 <input id="inp-instructor" class="form-input" placeholder="ex: Cpt Bouchenafa Mohamed Amine"/>
 </div>
-<button class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;letter-spacing:1px;" onclick="startSession()" style="background:#F59E0B;border-color:#FBBF24;">DEMARRER LA SESSION</button>
+<div style="display:flex;gap:8px;margin-bottom:0;">
+<button class="btn btn-primary" style="flex:1;padding:14px;font-size:15px;letter-spacing:1px;" onclick="startSession()">DÉMARRER LA SESSION</button>
+<button style="padding:14px 16px;border-radius:10px;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:18px;cursor:pointer;flex-shrink:0;" onclick="showScenarioLib()" title="Bibliothèque de scénarios">📋</button>
+</div>
 <div style="display:flex;gap:8px;margin-top:8px;">
 <button class="btn" style="flex:1;padding:10px;font-size:13px;background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;" onclick="showHistory()">HISTORIQUE</button>
 </div>
@@ -601,6 +616,28 @@ Identifiant ou mot de passe incorrect
 <div class="filter-row" id="sys-filters" style="flex-shrink:0;display:none;"></div>
 <div class="filter-row" id="phase-filters" style="flex-shrink:0;"></div>
 <div id="sc-list" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;"></div>
+</div>
+</div>
+
+<!-- SCENARIO LIBRARY MODAL -->
+<div class="modal-overlay" id="modal-scenarios" style="display:none;">
+<div class="modal-box center" style="max-height:90vh;overflow-y:auto;padding:0;">
+<div style="padding:16px 20px;border-bottom:1px solid #1E2530;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0F1218;z-index:1;border-radius:16px 16px 0 0;">
+<div style="font-size:15px;font-weight:800;color:#8B5CF6;letter-spacing:1px;">📋 BIBLIOTHÈQUE DE SCÉNARIOS</div>
+<button onclick="document.getElementById('modal-scenarios').style.display='none'" style="width:30px;height:30px;border-radius:50%;background:#EF444422;border:1px solid #EF444444;color:#EF4444;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
+</div>
+<div style="padding:14px 16px;">
+<div style="font-size:11px;color:#64748B;margin-bottom:10px;font-weight:700;letter-spacing:1px;">FILTRER PAR COMPÉTENCE</div>
+<div id="scen-comp-filters" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;"></div>
+<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-weight:700;letter-spacing:1px;">TYPE DE SÉANCE</div>
+<div style="display:flex;gap:6px;margin-bottom:16px;">
+<button class="scen-type-btn active" onclick="setScenType('ALL',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #64748B;background:#64748B22;color:#94A3B8;">TOUT</button>
+<button class="scen-type-btn" onclick="setScenType('OPC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #3B82F644;background:transparent;color:#64748B;">OPC</button>
+<button class="scen-type-btn" onclick="setScenType('PC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #F59E0B44;background:transparent;color:#64748B;">PC</button>
+<button class="scen-type-btn" onclick="setScenType('LINE',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #10B98144;background:transparent;color:#64748B;">LINE</button>
+</div>
+<div id="scen-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+</div>
 </div>
 </div>
 
@@ -2249,6 +2286,33 @@ var NNC_SYSTEMS = {
 "nnc_gear_up_landing":{"system":"URGENCE","color":"#EF4444"}
 };
 
+const SESSION_SCENARIOS=[
+{id:"opc_standard",title:"OPC Standard Complet",type:"OPC",focus:["FPM","PRO","WLM"],
+desc:"Session OPC 4h complète avec tous les exercices obligatoires et patterns standards.",
+exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"stall_recovery",min:10},{sid:"windshear_manual",min:10},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"non_ils",min:20},{sid:"go_around",min:12}]},
+{id:"opc_lvo",title:"OPC LVO — Basse Visibilité",type:"OPC",focus:["FPM","SA","PRO"],
+desc:"Session OPC centrée sur les opérations par basse visibilité CAT II/III. Inclut tous les obligatoires.",
+exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"lvo_lvto",min:20},{sid:"lvo_cat2",min:20},{sid:"lvo_cat3a",min:25},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15}]},
+{id:"opc_rnp",title:"OPC RNP — Navigation de Précision",type:"OPC",focus:["FPM","KNO","SA"],
+desc:"Session OPC avec approches RNP/RNAV et RNP AR. Exercices obligatoires inclus.",
+exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"rnp_ar",min:25},{sid:"rnp_approach",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15}]},
+{id:"wlm_sa_focus",title:"Focus WLM / SA",type:"PC",focus:["WLM","SA","PSD"],
+desc:"Session centrée sur la gestion de la charge de travail et la conscience situationnelle en situations dégradées.",
+exercises:[{sid:"airspeed_unrel",min:20},{sid:"cabin_alt",min:15},{sid:"windshear_auto",min:12},{sid:"engine_fire",min:20},{sid:"nnc_loss_gen",min:18},{sid:"tcas_ra",min:8},{sid:"upset_recovery",min:10},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"non_ils",min:20}]},
+{id:"crm_ltw_focus",title:"Focus CRM / LTW",type:"PC",focus:["LTW","COM","PSD"],
+desc:"Session axée sur le leadership, la communication et le travail d'équipage en environnement dégradé.",
+exercises:[{sid:"engine_fire",min:25},{sid:"loss_thrust_both",min:25},{sid:"cabin_alt",min:15},{sid:"windshear_manual",min:12},{sid:"runaway_stab",min:15},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15}]},
+{id:"psd_kno_focus",title:"Focus PSD / KNO",type:"PC",focus:["PSD","KNO","SA"],
+desc:"Session dédiée à la prise de décision, la résolution de problèmes et les connaissances systèmes.",
+exercises:[{sid:"airspeed_unrel",min:20},{sid:"runaway_stab",min:15},{sid:"emergency_desc",min:15},{sid:"nnc_loss_sys_a",min:15},{sid:"nnc_fuel_leak",min:12},{sid:"gpws",min:10},{sid:"engine_fire",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"non_ils",min:20}]},
+{id:"nnc_intensive",title:"Session NNC Intensive",type:"PC",focus:["PRO","WLM","KNO"],
+desc:"Session axée sur les procédures anormales et non-normales avec CRM complet.",
+exercises:[{sid:"rto",min:10},{sid:"nnc_eng_fail",min:20},{sid:"nnc_loss_gen",min:15},{sid:"nnc_loss_sys_a",min:15},{sid:"nnc_cargo_fwd",min:15},{sid:"cabin_alt",min:15},{sid:"engine_fire",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ldg",min:15}]},
+{id:"full_assessment",title:"Bilan Compétences Complètes",type:"LINE",focus:["KNO","WLM","SA","PSD","LTW","FPM","FPA","COM","PRO"],
+desc:"Évaluation complète de toutes les compétences CBTA. Line Check ou Check d'aptitude complet.",
+exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"airspeed_unrel",min:15},{sid:"cabin_alt",min:12},{sid:"windshear_manual",min:12},{sid:"upset_recovery",min:10},{sid:"tcas_ra",min:8},{sid:"lvo_cat2",min:20},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"non_ils",min:18}]},
+];
+
 const COMPETENCIES = [
 {id:"KNO",label:"KNO",full:"Application of Knowledge",color:"#3B82F6",obs:[
 {id:1,text:"Connait limitations, systemes et leurs interactions"},
@@ -2672,6 +2736,7 @@ state.foRole         = _s2Role;
 state.triCheckGrades = {};
 state.triCheckNotes  = "";
 state.triRecommendation = "";
+state.sigPilot=''; state.sigPilotLocked=false; state.sigInstructor=''; state.sigInstrLocked=false; state.sigDate='';
 state.sessionStart   = Date.now();
 window._sesAlerts    = {two:false,nearEnd:false,end:false};
 startChrono();
@@ -3633,6 +3698,119 @@ function setFontSize(s){
     b.style.color=b.dataset.fs===s?'#3B82F6':'#64748B';
     b.style.borderColor=b.dataset.fs===s?'#3B82F6':'#334155';
   });
+}
+var _scenTypeFilter='ALL';
+var _scenCompFilter=[];
+function showScenarioLib(){
+  document.getElementById('modal-scenarios').style.display='flex';
+  // Build competency filter chips
+  const cf=document.getElementById('scen-comp-filters');
+  cf.innerHTML=COMPETENCIES.map(c=>`<button onclick="toggleScenComp('${c.id}',this)" style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid ${c.color}44;background:transparent;color:#64748B;">${c.label}</button>`).join('');
+  renderScenList();
+}
+function toggleScenComp(id,btn){
+  const i=_scenCompFilter.indexOf(id);
+  const c=COMPETENCIES.find(x=>x.id===id);
+  if(i>=0){_scenCompFilter.splice(i,1);btn.style.background='transparent';btn.style.color='#64748B';}
+  else{_scenCompFilter.push(id);btn.style.background=c.color+'33';btn.style.color=c.color;}
+  renderScenList();
+}
+function setScenType(t,btn){
+  _scenTypeFilter=t;
+  document.querySelectorAll('.scen-type-btn').forEach(b=>{b.style.background='transparent';b.style.color='#64748B';});
+  btn.style.background=t==='OPC'?'#3B82F633':t==='PC'?'#F59E0B33':t==='LINE'?'#10B98133':'#64748B22';
+  btn.style.color=t==='OPC'?'#3B82F6':t==='PC'?'#F59E0B':t==='LINE'?'#10B981':'#94A3B8';
+  renderScenList();
+}
+function renderScenList(){
+  const filtered=SESSION_SCENARIOS.filter(s=>{
+    const typeOk=_scenTypeFilter==='ALL'||s.type===_scenTypeFilter;
+    const compOk=_scenCompFilter.length===0||_scenCompFilter.some(c=>s.focus.includes(c));
+    return typeOk&&compOk;
+  });
+  const TYPE_COL={OPC:'#3B82F6',PC:'#F59E0B',LINE:'#10B981'};
+  document.getElementById('scen-list').innerHTML=filtered.map(s=>{
+    const tc=TYPE_COL[s.type]||'#64748B';
+    const totalMin=s.exercises.reduce((a,e)=>a+e.min,0);
+    const exNames=s.exercises.map(e=>{const sc=ALL_SC.find(x=>x.id===e.sid);return sc?sc.title:'?';});
+    const focusHtml=s.focus.map(f=>{const c=COMPETENCIES.find(x=>x.id===f);return c?`<span style="font-size:10px;font-weight:700;color:${c.color};background:${c.color}22;padding:2px 7px;border-radius:10px;border:1px solid ${c.color}44;">${c.label}</span>`:''}).join('');
+    return `<div style="background:#080B10;border:1px solid #1E2530;border-radius:12px;padding:14px;border-left:3px solid ${tc};">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+<div style="font-size:14px;font-weight:800;color:#F1F5F9;flex:1;">${s.title}</div>
+<span style="font-size:10px;font-weight:700;color:${tc};background:${tc}22;padding:2px 8px;border-radius:10px;margin-left:8px;flex-shrink:0;">${s.type}</span>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">${focusHtml}</div>
+<div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">${s.desc}</div>
+<div style="font-size:11px;color:#475569;margin-bottom:10px;">
+<span style="margin-right:12px;">⏱ ${Math.floor(totalMin/60)}h${totalMin%60?String(totalMin%60).padStart(2,'0'):'00'} estimé</span>
+<span>${s.exercises.length} exercices</span>
+</div>
+<div style="font-size:11px;color:#334155;margin-bottom:10px;line-height:1.7;">${exNames.slice(0,6).join(' · ')}${exNames.length>6?` · +${exNames.length-6} autres`:''}</div>
+<button onclick="loadScenario('${s.id}')" style="width:100%;padding:10px;border-radius:8px;background:${tc}22;border:1px solid ${tc}44;color:${tc};font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">CHARGER CE SCÉNARIO →</button>
+</div>`;
+  }).join('')||'<div style="text-align:center;color:#475569;padding:20px;">Aucun scénario pour ces filtres.</div>';
+}
+function loadScenario(id){
+  const s=SESSION_SCENARIOS.find(x=>x.id===id);
+  if(!s||!state.sessionStart){
+    alert('Démarrez une session avant de charger un scénario.');
+    return;
+  }
+  if(state.exercises.length>0&&!confirm('Cette action remplacera les exercices actuels. Continuer ?')) return;
+  state.exercises=[];
+  s.exercises.forEach(e=>{
+    const sc=ALL_SC.find(x=>x.id===e.sid);
+    if(!sc) return;
+    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:e.min,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null});
+  });
+  document.getElementById('modal-scenarios').style.display='none';
+  showScreen('session');
+  if(state.exercises.length>0) openEx(0);
+}
+function initSigPad(canvasId,who){
+  const canvas=document.getElementById(canvasId);
+  if(!canvas||canvas._sigInited) return;
+  canvas._sigInited=true;
+  const ctx=canvas.getContext('2d');
+  ctx.strokeStyle='#F1F5F9';
+  ctx.lineWidth=2;
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  let drawing=false,lx=0,ly=0;
+  const getPos=(e)=>{
+    const r=canvas.getBoundingClientRect();
+    const src=e.touches?e.touches[0]:e;
+    return {x:(src.clientX-r.left)*(canvas.width/r.width),y:(src.clientY-r.top)*(canvas.height/r.height)};
+  };
+  const start=(e)=>{e.preventDefault();drawing=true;const p=getPos(e);lx=p.x;ly=p.y;ctx.beginPath();ctx.arc(lx,ly,1,0,Math.PI*2);ctx.fillStyle='#F1F5F9';ctx.fill();};
+  const move=(e)=>{e.preventDefault();if(!drawing)return;const p=getPos(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p.x,p.y);ctx.stroke();lx=p.x;ly=p.y;};
+  const stop=(e)=>{drawing=false;};
+  canvas.addEventListener('mousedown',start);
+  canvas.addEventListener('mousemove',move);
+  canvas.addEventListener('mouseup',stop);
+  canvas.addEventListener('touchstart',start,{passive:false});
+  canvas.addEventListener('touchmove',move,{passive:false});
+  canvas.addEventListener('touchend',stop);
+}
+function clearSig(who){
+  const id=who==='pilot'?'sig-canvas-pilot':'sig-canvas-instr';
+  const canvas=document.getElementById(id);
+  if(canvas){const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);}
+  if(who==='pilot'){state.sigPilot='';state.sigPilotLocked=false;}
+  else{state.sigInstructor='';state.sigInstrLocked=false;}
+  renderDebContent();
+}
+function lockSig(who){
+  const id=who==='pilot'?'sig-canvas-pilot':'sig-canvas-instr';
+  const canvas=document.getElementById(id);
+  if(!canvas) return;
+  const data=canvas.toDataURL('image/png');
+  const now=new Date();
+  const dateStr=now.toLocaleDateString('fr-FR')+' '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  if(!state.sigDate) state.sigDate=dateStr;
+  if(who==='pilot'){state.sigPilot=data;state.sigPilotLocked=true;}
+  else{state.sigInstructor=data;state.sigInstrLocked=true;}
+  renderDebContent();
 }
 var _darkMode = true;
 function toggleDarkMode(){
@@ -5319,9 +5497,41 @@ ${foSt && foSt.globalAvg>0 ? generateRecommendations('csfo', 'FO — '+state.foN
 <textarea class="note-area" style="height:90px;" placeholder="Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification..." onchange="state.debConclNotes=this.value">${state.debConclNotes}</textarea>
 </div>
 
+<div class="card" style="margin-bottom:12px;border-left:3px solid #F59E0B;">
+<div class="section-lbl" style="color:#F59E0B;margin-bottom:14px;">✍️ SIGNATURES ÉLECTRONIQUES</div>
+<div style="font-size:11px;color:#64748B;margin-bottom:12px;">Signez avec votre doigt dans chaque zone. La date est automatiquement horodatée.</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+<div>
+<div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:6px;">STAGIAIRE — ${state.pilotName||'Pilote'}</div>
+<div style="position:relative;border:1.5px dashed #334155;border-radius:8px;overflow:hidden;background:#080B10;">
+<canvas id="sig-canvas-pilot" width="200" height="100" style="width:100%;height:80px;touch-action:none;display:block;cursor:crosshair;"></canvas>
+${(state.sigPilot&&state.sigPilotLocked)?`<div style="position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;"><img src="${state.sigPilot}" style="max-width:100%;max-height:100%;object-fit:contain;"/></div>`:''}
+</div>
+<div style="display:flex;gap:6px;margin-top:6px;">
+<button onclick="clearSig('pilot')" style="flex:1;padding:5px;border-radius:6px;background:#EF444411;border:1px solid #EF444433;color:#EF4444;font-size:11px;cursor:pointer;">Effacer</button>
+<button onclick="lockSig('pilot')" style="flex:1;padding:5px;border-radius:6px;background:#10B98111;border:1px solid #10B98133;color:#10B981;font-size:11px;cursor:pointer;">Valider ✓</button>
+</div>
+${state.sigPilotLocked?`<div style="font-size:10px;color:#10B981;margin-top:4px;text-align:center;">Signé le ${state.sigDate||''}</div>`:''}
+</div>
+<div>
+<div style="font-size:11px;font-weight:700;color:#8B5CF6;margin-bottom:6px;">INSTRUCTEUR — ${state.instructorName||'TRI'}</div>
+<div style="position:relative;border:1.5px dashed #334155;border-radius:8px;overflow:hidden;background:#080B10;">
+<canvas id="sig-canvas-instr" width="200" height="100" style="width:100%;height:80px;touch-action:none;display:block;cursor:crosshair;"></canvas>
+${(state.sigInstructor&&state.sigInstrLocked)?`<div style="position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;"><img src="${state.sigInstructor}" style="max-width:100%;max-height:100%;object-fit:contain;"/></div>`:''}
+</div>
+<div style="display:flex;gap:6px;margin-top:6px;">
+<button onclick="clearSig('instr')" style="flex:1;padding:5px;border-radius:6px;background:#EF444411;border:1px solid #EF444433;color:#EF4444;font-size:11px;cursor:pointer;">Effacer</button>
+<button onclick="lockSig('instr')" style="flex:1;padding:5px;border-radius:6px;background:#10B98111;border:1px solid #10B98133;color:#10B981;font-size:11px;cursor:pointer;">Valider ✓</button>
+</div>
+${state.sigInstrLocked?`<div style="font-size:10px;color:#10B981;margin-top:4px;text-align:center;">Signé le ${state.sigDate||''}</div>`:''}
+</div>
+</div>
+</div>
+
 <div style="text-align:center;font-size:12px;color:var(--mut);padding:10px 0;">
 B737 NG CBTA TRI · QRH Rev55 · FCTM Rev25
 </div>`;
+setTimeout(()=>{initSigPad('sig-canvas-pilot','pilot');initSigPad('sig-canvas-instr','instr');},50);
 }
 
 function endSession(){
