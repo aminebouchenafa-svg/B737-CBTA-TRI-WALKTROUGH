@@ -163,7 +163,8 @@ textarea.form-input{resize:none;height:70px;}
 @keyframes chronoWarn {0%,100%{opacity:1;}50%{opacity:0.6;}}
 /* ── LIGHT / DAY MODE ──────────────────────────────────── */
 body.light-mode{background:#F7F4EE!important;color:#1E293B!important;}
-body.light-mode #app,body.light-mode .screen{background:#F7F4EE!important;}
+body.light-mode #app,body.light-mode .screen:not(#screen-login){background:#F7F4EE!important;}
+body.light-mode #screen-login,body.light-mode #screen-login .scroll{background:#0A0C10!important;color:inherit;}
 body.light-mode .topbar{background:#FFFFFF!important;border-bottom:1px solid #DDD8CC!important;}
 body.light-mode .topbar .title{color:#0F172A!important;}
 body.light-mode .topbar .sub{color:#64748B!important;}
