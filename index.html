@@ -2870,13 +2870,42 @@ function toggleMandatory(){
 function doSecondAttempt(){
   const ex = state.exercises[state.activeIdx];
   if(!ex) return;
-  if(!confirm('Démarrer le 2ème essai ? Les notes du 1er essai seront écrasées.')) return;
-  ex.cs = {};
-  ex.csfo = {};
-  ex.ffa = {};
-  ex.ffafo = {};
-  ex.closed = false;
+  if(!state.foName){
+    _doSecondAttemptForPilot('cpt');
+    return;
+  }
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.style.display = 'flex';
+  overlay.innerHTML = `
+  <div class="modal-box" style="max-width:300px;">
+    <div style="font-size:15px;font-weight:800;color:#F59E0B;margin-bottom:6px;">↻ 2ème ESSAI</div>
+    <div style="font-size:13px;color:#94A3B8;margin-bottom:16px;">Qui refait l'exercice ?<br><span style="font-size:11px;">Les notes de l'autre pilote sont conservées.</span></div>
+    <button style="width:100%;padding:12px;margin-bottom:8px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #3B82F6;background:#3B82F622;color:#3B82F6;" onclick="this.closest('.modal-overlay').remove();_doSecondAttemptForPilot('cpt')">
+      ${state.pilotRole||'CPT'} — ${state.pilotName}
+    </button>
+    <button style="width:100%;padding:12px;margin-bottom:14px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #10B981;background:#10B98122;color:#10B981;" onclick="this.closest('.modal-overlay').remove();_doSecondAttemptForPilot('fo')">
+      ${state.foRole||'FO'} — ${state.foName}
+    </button>
+    <button style="width:100%;padding:8px;border-radius:8px;font-size:13px;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;" onclick="this.closest('.modal-overlay').remove()">Annuler</button>
+  </div>`;
+  document.body.appendChild(overlay);
+}
+function _doSecondAttemptForPilot(pilot){
+  const ex = state.exercises[state.activeIdx];
+  if(!ex) return;
+  if(pilot==='cpt'){
+    ex.attempt1cs = {...(ex.cs||{})};
+    ex.attempt1ffa = {...(ex.ffa||{})};
+    ex.cs = {}; ex.ffa = {};
+  } else {
+    ex.attempt1csfo = {...(ex.csfo||{})};
+    ex.attempt1ffafo = {...(ex.ffafo||{})};
+    ex.csfo = {}; ex.ffafo = {};
+  }
   ex.attempt = 2;
+  ex.secondAttemptPilot = pilot;
+  ex.closed = false;
   ex.openedAt = Date.now();
   renderExView();
 }
@@ -3577,14 +3606,14 @@ const level = globalAvg>=4.5?'EXEMPLAIRE':globalAvg>=3.5?'AU-DESSUS DU STANDARD'
 const compRows = COMPETENCIES.map(c=>{
 const avg=compStats[c.id].count>0?compStats[c.id].total/compStats[c.id].count:0;
 if(!avg) return '';
-const cc=avg>=4.5?'#10B981':avg>=3.5?'#3B82F6':avg>=2.5?'#F59E0B':avg>=1.5?'#F97316':'#EF4444';
+const gradeColor=avg>=4.5?'#10B981':avg>=3.5?'#3B82F6':avg>=2.5?'#F59E0B':avg>=1.5?'#F97316':'#EF4444';
 const pct=avg/5*100;
 return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1E2530;">
-<div style="width:50px;font-size:13px;font-weight:800;color:${cc};">${c.label}</div>
+<div style="width:50px;font-size:13px;font-weight:800;color:${c.color};">${c.label}</div>
 <div style="flex:1;background:#1E2530;border-radius:8px;height:16px;overflow:hidden;">
-<div style="background:${cc};height:100%;width:${pct}%;border-radius:8px;"></div>
+<div style="background:${c.color};height:100%;width:${pct}%;border-radius:8px;"></div>
 </div>
-<div style="width:36px;font-size:18px;font-weight:900;color:${cc};text-align:right;">${avg.toFixed(1)}</div>
+<div style="width:36px;font-size:18px;font-weight:900;color:${gradeColor};text-align:right;">${avg.toFixed(1)}</div>
 </div>`;
 }).join('');
 
@@ -5452,10 +5481,23 @@ COMPETENCIES.forEach(c=>{
 const av=s.compAvgs&&s.compAvgs[c.id]?parseFloat(s.compAvgs[c.id]):0;
 if(!av) return;
 compH+='<div style="display:flex;align-items:center;gap:8px;padding:3px 0;">';
-compH+='<div style="width:38px;font-size:10px;font-weight:700;color:'+cc(av)+';">'+c.label+'</div>';
-compH+='<div style="flex:1;background:#1E2530;border-radius:3px;height:7px;overflow:hidden;"><div style="background:'+cc(av)+';height:100%;width:'+(av/5*100)+'%;"></div></div>';
+compH+='<div style="width:38px;font-size:10px;font-weight:700;color:'+c.color+';">'+c.label+'</div>';
+compH+='<div style="flex:1;background:#1E2530;border-radius:3px;height:7px;overflow:hidden;"><div style="background:'+c.color+';height:100%;width:'+(av/5*100)+'%;"></div></div>';
 compH+='<div style="width:26px;font-size:11px;font-weight:700;color:'+cc(av)+';text-align:right;">'+av.toFixed(1)+'</div></div>';
 });
+let compHFo='';
+if(s.foName&&s.compAvgsFo){
+COMPETENCIES.forEach(c=>{
+const av=s.compAvgsFo[c.id]?parseFloat(s.compAvgsFo[c.id]):0;
+if(!av) return;
+compHFo+='<div style="display:flex;align-items:center;gap:8px;padding:3px 0;">';
+compHFo+='<div style="width:38px;font-size:10px;font-weight:700;color:'+c.color+';">'+c.label+'</div>';
+compHFo+='<div style="flex:1;background:#1E2530;border-radius:3px;height:7px;overflow:hidden;"><div style="background:'+c.color+';height:100%;width:'+(av/5*100)+'%;opacity:0.7;"></div></div>';
+compHFo+='<div style="width:26px;font-size:11px;font-weight:700;color:'+cc(av)+';text-align:right;">'+av.toFixed(1)+'</div></div>';
+});
+}
+const foVals=s.compAvgsFo?Object.values(s.compAvgsFo).filter(v=>v&&parseFloat(v)>0).map(parseFloat):[];
+const foSc=foVals.length?foVals.reduce((a,b)=>a+b,0)/foVals.length:0;
 h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+cc(sc)+';">';
 h+='<div style="padding:12px 14px;display:flex;justify-content:space-between;">';
 h+='<div><div style="font-size:14px;font-weight:800;color:#F1F5F9;">'+s.sessionName+'</div>';
@@ -5469,13 +5511,21 @@ if(s.triCheck&&s.triCheck.recommendation){
   h+='<div style="margin-top:4px;"><span style="background:'+rc+'22;border:1px solid '+rc+';color:'+rc+';border-radius:6px;padding:2px 8px;font-size:10px;font-weight:700;">TRI CHECK · '+s.triCheck.recommendation+(s.triCheck.avg?' · '+s.triCheck.avg+'/5':'')+'</span></div>';
 }
 h+='</div>';
-h+='<div style="text-align:right;"><div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div>';
-h+='<div style="font-size:9px;font-weight:700;color:'+cc(sc)+';">'+cl(sc)+'</div></div></div>';
-if(compH) h+='<div style="padding:8px 14px;background:#0A0C10;border-top:1px solid #1E2530;">'+compH+'</div>';
+h+='<div style="text-align:right;">';
+h+='<div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div>';
+h+='<div style="font-size:9px;font-weight:700;color:'+cc(sc)+';">'+cl(sc)+'</div>';
+if(foSc>0) h+='<div style="font-size:11px;font-weight:700;color:#10B981;margin-top:4px;">FO '+foSc.toFixed(2)+'</div>';
+h+='</div></div>';
+if(compH||compHFo){
+  h+='<div style="padding:8px 14px;background:#0A0C10;border-top:1px solid #1E2530;">';
+  if(compH) h+='<div style="font-size:9px;color:#3B82F6;font-weight:700;letter-spacing:1px;margin-bottom:4px;">CPT '+s.pilotName+'</div>'+compH;
+  if(compHFo) h+='<div style="font-size:9px;color:#10B981;font-weight:700;letter-spacing:1px;margin:8px 0 4px;">FO '+s.foName+'</div>'+compHFo;
+  h+='</div>';
+}
 if((s.strong&&s.strong.length)||(s.weak&&s.weak.length)){
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;">';
-if(s.strong&&s.strong.length) h+='<div style="font-size:11px;color:#10B981;">✓ '+s.strong.join(', ')+'</div>';
-if(s.weak&&s.weak.length) h+='<div style="font-size:11px;color:#EF4444;">△ '+s.weak.join(', ')+'</div>';
+if(s.strong&&s.strong.length) h+='<div style="font-size:11px;color:#10B981;">✓ CPT: '+s.strong.join(', ')+'</div>';
+if(s.weak&&s.weak.length) h+='<div style="font-size:11px;color:#EF4444;">△ CPT: '+s.weak.join(', ')+'</div>';
 h+='</div>';
 }
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;">';
@@ -5493,24 +5543,32 @@ const el=document.getElementById('history-content');
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">Aucun pilote</div>';return;}
 const pilotes={};
+function _addPilot(key,name,sc,compAvgs,session){
+  if(!key) return;
+  if(!pilotes[key])pilotes[key]={name,sessions:[],scores:[],ct:{}};
+  COMPETENCIES.forEach(c=>{if(!pilotes[key].ct[c.id])pilotes[key].ct[c.id]={t:0,n:0};});
+  pilotes[key].sessions.push(session);
+  if(sc>0)pilotes[key].scores.push(sc);
+  if(compAvgs)Object.entries(compAvgs).forEach(([id,v])=>{if(v&&parseFloat(v)>0){pilotes[key].ct[id].t+=parseFloat(v);pilotes[key].ct[id].n++;}});
+}
 hist.forEach(s=>{
-const key=(s.pilotName||'').toLowerCase().trim();
-if(!pilotes[key])pilotes[key]={name:s.pilotName,sessions:[],scores:[],ct:{}};
-COMPETENCIES.forEach(c=>{if(!pilotes[key].ct[c.id])pilotes[key].ct[c.id]={t:0,n:0};});
-pilotes[key].sessions.push(s);
-const sc=parseFloat(s.avgScore)||0;if(sc>0)pilotes[key].scores.push(sc);
-if(s.compAvgs)Object.entries(s.compAvgs).forEach(([id,v])=>{if(v&&parseFloat(v)>0){pilotes[key].ct[id].t+=parseFloat(v);pilotes[key].ct[id].n++;}});
+  _addPilot((s.pilotName||'').toLowerCase().trim(), s.pilotName, parseFloat(s.avgScore)||0, s.compAvgs, s);
+  if(s.foName&&s.compAvgsFo){
+    const foVals=Object.values(s.compAvgsFo).filter(v=>v&&parseFloat(v)>0).map(parseFloat);
+    const foSc=foVals.length?foVals.reduce((a,b)=>a+b,0)/foVals.length:0;
+    _addPilot((s.foName||'').toLowerCase().trim(), s.foName, foSc, s.compAvgsFo, s);
+  }
 });
 let h='<div style="padding:14px;">';
 Object.values(pilotes).forEach(p=>{
 const avg=p.scores.length?p.scores.reduce((a,b)=>a+b,0)/p.scores.length:0;
-const trend=p.scores.length>=2?(p.scores[0]>p.scores[p.scores.length-1]?'↑ Progression':'↓ Régression'):'1re session';
+const trend=p.scores.length>=2?(p.scores[p.scores.length-1]>p.scores[0]?'↑ Progression':'↓ Régression'):'1re session';
 const tc=trend.includes('↑')?'#10B981':trend.includes('↓')?'#EF4444':'#64748B';
 const weak=COMPETENCIES.filter(c=>{const a=p.ct[c.id].n>0?p.ct[c.id].t/p.ct[c.id].n:0;return a>0&&a<3.5;}).map(c=>c.label);
 h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+cc(avg)+';">';
 h+='<div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center;">';
-h+='<div><div style="font-size:15px;font-weight:800;color:#F1F5F9;">CPT '+p.name+'</div>';
-h+='<div style="font-size:11px;color:#64748B;">'+p.sessions.length+' session'+(p.sessions.length>1?'s:':':')+' dern. '+p.sessions[0].date+'</div>';
+h+='<div><div style="font-size:15px;font-weight:800;color:#F1F5F9;">'+p.name+'</div>';
+h+='<div style="font-size:11px;color:#64748B;">'+p.sessions.length+' session'+(p.sessions.length>1?'s':'')+' · dern. '+(p.sessions[0]&&p.sessions[0].date?p.sessions[0].date:'')+'</div>';
 h+='<div style="font-size:12px;color:'+tc+';font-weight:700;margin-top:2px;">'+trend+'</div></div>';
 h+='<div style="text-align:right;"><div style="font-size:26px;font-weight:900;color:'+cc(avg)+';">'+avg.toFixed(2)+'</div>';
 h+='<div style="font-size:9px;color:#64748B;">moy. globale</div></div></div>';
@@ -5525,8 +5583,18 @@ el.innerHTML=h;
 function showComparaisonPilote(name){
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 const nameLower=(name||'').toLowerCase().trim();
-const sessions=hist.filter(s=>s.pilotName&&s.pilotName.toLowerCase().trim()===nameLower).reverse();
-document.getElementById('comp-pilote-name').textContent='CPT '+name;
+// Find sessions where person is CPT or FO, map to unified format
+const sessions=hist.filter(s=>
+  (s.pilotName&&s.pilotName.toLowerCase().trim()===nameLower)||
+  (s.foName&&s.foName.toLowerCase().trim()===nameLower)
+).map(s=>{
+  const isCpt=s.pilotName&&s.pilotName.toLowerCase().trim()===nameLower;
+  const cAvgs=isCpt?s.compAvgs:s.compAvgsFo;
+  let sc=isCpt?parseFloat(s.avgScore)||0:0;
+  if(!isCpt&&s.compAvgsFo){const v=Object.values(s.compAvgsFo).filter(x=>x&&parseFloat(x)>0).map(parseFloat);sc=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;}
+  return {...s,_sc:sc,_avgs:cAvgs};
+}).filter(s=>s._sc>0).reverse();
+document.getElementById('comp-pilote-name').textContent=name;
 const el=document.getElementById('comparaison-content');
 if(sessions.length<2){
 el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:14px;">Minimum 2 sessions requises</div></div>';
@@ -5534,7 +5602,7 @@ showScreen('comparaison');return;
 }
 const w=300,h2=120,p2=28;
 const xS=(w-2*p2)/(sessions.length-1),yS=(h2-2*p2)/5;
-const pts=sessions.map((s,i)=>({x:p2+i*xS,y:h2-p2-(parseFloat(s.avgScore)||0)*yS,v:parseFloat(s.avgScore)||0,d:s.date}));
+const pts=sessions.map((s,i)=>({x:p2+i*xS,y:h2-p2-s._sc*yS,v:s._sc,d:s.date}));
 const lc=pts[pts.length-1].v>=pts[0].v?'#10B981':'#EF4444';
 const path=pts.map((pt,i)=>(i===0?'M':'L')+pt.x+','+pt.y).join(' ');
 const grid=[1,2,3,4,5].map(v=>{const y=h2-p2-v*yS;return'<line x1="'+p2+'" y1="'+y+'" x2="'+(w-p2)+'" y2="'+y+'" stroke="#1E2530" stroke-width="1"/><text x="'+(p2-4)+'" y="'+(y+4)+'" font-size="9" fill="#64748B" text-anchor="end">'+v+'</text>';}).join('');
@@ -5543,12 +5611,12 @@ const svg='<svg viewBox="0 0 '+w+' '+h2+'" style="width:100%;height:140px;">'+gr
 const gd=pts[pts.length-1].v-pts[0].v;
 let compEvo='';
 COMPETENCIES.forEach(c=>{
-const vals=sessions.map(s=>s.compAvgs&&s.compAvgs[c.id]?parseFloat(s.compAvgs[c.id]):null).filter(v=>v!==null);
+const vals=sessions.map(s=>s._avgs&&s._avgs[c.id]?parseFloat(s._avgs[c.id]):null).filter(v=>v!==null);
 if(vals.length<2)return;
 const diff=vals[vals.length-1]-vals[0];
 const dc=diff>0?'#10B981':diff<0?'#EF4444':'#64748B';
 compEvo+='<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">';
-compEvo+='<div style="width:38px;font-size:11px;font-weight:700;color:'+cc(vals[vals.length-1])+';">'+c.label+'</div>';
+compEvo+='<div style="width:38px;font-size:11px;font-weight:700;color:'+c.color+';">'+c.label+'</div>';
 compEvo+='<div style="flex:1;font-size:11px;color:#94A3B8;">'+vals[0].toFixed(1)+' → <strong style="color:'+cc(vals[vals.length-1])+';">'+vals[vals.length-1].toFixed(1)+'</strong></div>';
 compEvo+='<div style="font-size:14px;font-weight:800;color:'+dc+';">'+(diff>=0?'↑':'↓')+' '+Math.abs(diff).toFixed(1)+'</div></div>';
 });
@@ -5563,10 +5631,10 @@ out+=(compEvo||'<div style="color:#64748B;font-size:12px;">Données insuffisante
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;">';
 out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">SESSIONS ('+sessions.length+')</div>';
 sessions.slice().reverse().forEach(s=>{
-const sc=parseFloat(s.avgScore)||0;
+const sc=s._sc;
 out+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1E2530;">';
 out+='<div><div style="font-size:12px;color:#F1F5F9;">'+s.sessionName+'</div><div style="font-size:10px;color:#64748B;">'+s.date+'</div></div>';
-out+='<div style="font-size:18px;font-weight:800;color:'+cc(sc)+';">'+s.avgScore+'</div></div>';
+out+='<div style="font-size:18px;font-weight:800;color:'+cc(sc)+';">'+sc.toFixed(2)+'</div></div>';
 });
 out+='</div>';
 el.innerHTML=out;
