@@ -116,7 +116,7 @@ textarea.form-input{resize:none;height:70px;}
 .ffa-btn.no{background:#EF444433;border-color:#EF4444;color:#EF4444;}
 /* TEM */
 .tem-item{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:6px;margin-bottom:6px;font-size:var(--fs);}
-.tem-sug{display:inline-block;border-radius:6px;padding:6px 12px;font-size:var(--fss);cursor:pointer;margin:3px;}
+.tem-sug{display:inline-block;border-radius:6px;padding:7px 13px;font-size:var(--fs);cursor:pointer;margin:3px;}
 .tem-add-row{display:flex;gap:6px;margin-top:6px;}
 /* Radar SVG */
 .radar-wrap{text-align:center;}
@@ -247,6 +247,8 @@ body.light-mode #screen-briefing table tr:nth-child(even) td:not([colspan]){back
 </style>
 </head>
 <body>
+<!-- Floating dark/light mode toggle — always visible on all screens -->
+<button onclick="toggleDarkMode()" id="dark-btn-fab" style="position:fixed;bottom:74px;right:12px;z-index:9997;width:44px;height:44px;border-radius:50%;background:#1E2530;border:2px solid #334155;color:#94A3B8;font-size:20px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;padding:0;">☀️</button>
 <div id="app">
 
 <div class="screen active" id="screen-login">
@@ -2504,7 +2506,7 @@ return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;borde
 <div style="width:22px;height:22px;border-radius:6px;border:2px solid ${checked?'#10B981':'#334155'};background:${checked?'#10B98133':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;">
 ${checked?'<span style="color:#10B981;font-size:14px;">✓</span>':''}
 </div>
-<div style="font-size:14px;color:${checked?'#10B981':'#CBD5E1'};text-decoration:${checked?'line-through':'none'};transition:all 0.2s;">${item}</div>
+<div style="font-size:var(--fs);color:${checked?'#10B981':'#CBD5E1'};text-decoration:${checked?'line-through':'none'};transition:all 0.2s;">${item}</div>
 </div>`;
 }).join('');
 
@@ -2514,7 +2516,7 @@ const done = t.items.filter((_,i)=>state.briefingChecks[t.id+'_'+i]).length;
 return `<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:12px;overflow:hidden;">
 <div style="padding:12px 14px;background:#151B26;display:flex;align-items:center;gap:10px;">
 <span style="font-size:20px;">${t.icon}</span>
-<div style="flex:1;font-size:13px;font-weight:700;color:#F1F5F9;letter-spacing:1px;">${t.label}</div>
+<div style="flex:1;font-size:var(--fss);font-weight:700;color:#F1F5F9;letter-spacing:1px;">${t.label}</div>
 <div style="font-size:12px;font-weight:700;color:${done===total?'#10B981':'#F59E0B'};">${done}/${total}</div>
 </div>
 <div style="padding:0 14px;">${items}</div>
@@ -2536,9 +2538,9 @@ const facBriefing = [
 const facHtml = `<div style="background:#0F1218;border:1px solid #10B98133;border-radius:12px;overflow:hidden;margin-top:4px;">
 <div style="padding:10px 14px;background:#151B26;font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;">QUESTIONS DE FACILITATION PRÉ-VOL</div>
 ${facBriefing.map((q,i)=>`<div style="padding:10px 14px;border-bottom:1px solid #1E2530;">
-<div style="font-size:12px;color:#94A3B8;margin-bottom:4px;">Q${i+1}</div>
-<div style="font-size:13px;color:#CBD5E1;margin-bottom:8px;">${q}</div>
-<input class="form-input" style="font-size:13px;" placeholder="Note de réponse..." value="${(state.briefingFacNotes&&state.briefingFacNotes[i])||''}" onchange="saveBriefFacNote(${i},this.value)"/>
+<div style="font-size:var(--fsxs);color:#94A3B8;margin-bottom:4px;">Q${i+1}</div>
+<div style="font-size:var(--fs);color:#CBD5E1;margin-bottom:8px;">${q}</div>
+<input class="form-input" placeholder="Note de réponse..." value="${(state.briefingFacNotes&&state.briefingFacNotes[i])||''}" onchange="saveBriefFacNote(${i},this.value)"/>
 </div>`).join('')}
 </div>`;
 
@@ -2943,7 +2945,7 @@ const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
 const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
 const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
 
-const info = `<div style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:13px;color:#CBD5E1;line-height:1.7;">
+const info = `<div style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
 <div class="section-lbl" style="color:#3B82F6;">COMMENT UTILISER LE TEM</div>
 <div><span style="color:#3B82F6;font-weight:700;">MENACE</span> — Evenement EXTERNE: meteo, ATC, panne technique que l equipage doit gerer.</div>
 <div><span style="color:#EF4444;font-weight:700;">ERREUR</span> — Action ou INACTION de l equipage: mauvaise identification, oubli, sequence incorrecte.</div>
@@ -2958,31 +2960,31 @@ const sections = [
 
 const sectHtml = sections.map(({k,l,c,icon,sug})=>{
 const items = tem[k]||[];
-const sugHtml = sug.map((t)=>`<span class="tem-sug" style="background:${c}11;border:1px solid ${c}33;color:${c};font-size:13px;padding:5px 10px;" onclick="addTEM('${k}','${t.replace(/'/g,"\\'")}')">${t}</span>`).join('');
-const itemsHtml = items.map((it,i)=>`<div class="tem-item" style="background:${c}0D;color:var(--text);font-size:14px;padding:10px 12px;">
+const sugHtml = sug.map((t)=>`<span class="tem-sug" style="background:${c}11;border:1px solid ${c}33;color:${c};font-size:var(--fss);padding:6px 12px;" onclick="addTEM('${k}','${t.replace(/'/g,"\\'")}')">${t}</span>`).join('');
+const itemsHtml = items.map((it,i)=>`<div class="tem-item" style="background:${c}0D;color:var(--text);font-size:var(--fs);padding:10px 12px;">
 <span>${icon} ${it.text}</span>
 <button onclick="removeTEM('${k}',${i})" style="background:none;border:none;color:#EF4444;font-size:18px;cursor:pointer;">x</button>
 </div>`).join('');
 
 // Section mitigation pour chaque item
 const mitigHtml = items.length ? `<div style="margin-top:8px;margin-bottom:4px;">
-<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">✓ CONTRE-MESURES (MITIGATION)</div>
+<div style="font-size:var(--fsxs);font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">✓ CONTRE-MESURES (MITIGATION)</div>
 ${items.map((it,i)=>`<div style="background:#10B98111;border:1px solid #10B98133;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
-<div style="font-size:12px;color:#94A3B8;margin-bottom:4px;">${it.text}</div>
+<div style="font-size:var(--fss);color:#94A3B8;margin-bottom:6px;">${it.text}</div>
 <div style="display:flex;gap:8px;align-items:center;">
-<button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'#1E2530'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:12px;font-weight:700;cursor:pointer;">✓ Geree</button>
-<button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'#1E2530'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:12px;font-weight:700;cursor:pointer;">~ Partielle</button>
-<button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'#1E2530'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:12px;font-weight:700;cursor:pointer;">✗ Non geree</button>
+<button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'#1E2530'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✓ Gérée</button>
+<button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'#1E2530'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">~ Partielle</button>
+<button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'#1E2530'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✗ Non gérée</button>
 </div>
 </div>`).join('')}
 </div>` : '';
 
 return `<div style="margin-bottom:20px;">
-<div class="section-lbl" style="color:${c};border-left:3px solid ${pilotColor};padding-left:8px;font-size:13px;">${l}</div>
+<div class="section-lbl" style="color:${c};border-left:3px solid ${pilotColor};padding-left:8px;font-size:var(--fss);">${l}</div>
 ${sugHtml?`<div style="max-height:110px;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;background:#0A0C10;border-radius:8px;padding:6px;">${sugHtml}</div>`:''}
 ${itemsHtml}
 <div class="tem-add-row">
-<input id="tem-inp-${k}" class="form-input" style="flex:1;font-size:14px;" placeholder="Ajouter..." onkeydown="if(event.key==='Enter'){addTEMInp('${k}');}"/>
+<input id="tem-inp-${k}" class="form-input" style="flex:1;font-size:var(--fs);" placeholder="Ajouter..." onkeydown="if(event.key==='Enter'){addTEMInp('${k}');}"/>
 <button class="btn" onclick="addTEMInp('${k}')">+</button>
 </div>
 ${mitigHtml}
@@ -2995,7 +2997,7 @@ if(!ex[recKey]) ex[recKey]={managed:null,note:""};
 const rec = ex[recKey];
 const recoveryHtml = `<div style="margin-bottom:20px;background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;">
 <div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:10px;">↩ RECOVERY — GESTION DE L ÉTAT INDÉSIRABLE</div>
-<div style="font-size:13px;color:#94A3B8;margin-bottom:10px;">L equipage a-t-il su recuperer la situation avant l accident ?</div>
+<div style="font-size:var(--fs);color:#94A3B8;margin-bottom:10px;">L équipage a-t-il su récupérer la situation avant l accident ?</div>
 <div style="display:flex;gap:8px;margin-bottom:10px;">
 <button onclick="setRecovery('${recKey}','yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='yes'?'#10B981':'#1E2530'};background:${rec.managed==='yes'?'#10B98133':'transparent'};color:${rec.managed==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✓ OUI — Récupéré</button>
 <button onclick="setRecovery('${recKey}','partial')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='partial'?'#F59E0B':'#1E2530'};background:${rec.managed==='partial'?'#F59E0B33':'transparent'};color:${rec.managed==='partial'?'#F59E0B':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">~ Partiel</button>
@@ -3075,7 +3077,7 @@ const items = [
 const html = items.map(item=>{
 const val = state.sessionCRM[item.k];
 return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1E2530;">
-<div style="flex:1;font-size:var(--fss);color:#CBD5E1;">${item.label}</div>
+<div style="flex:1;font-size:var(--fs);color:#CBD5E1;line-height:1.4;">${item.label}</div>
 <div style="display:flex;gap:6px;flex-shrink:0;">
 <button onclick="setCRM('${item.k}','ok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='ok'?'#10B981':'#1E2530'};background:${val==='ok'?'#10B98133':'transparent'};color:${val==='ok'?'#10B981':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✓</button>
 <button onclick="setCRM('${item.k}','nok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='nok'?'#EF4444':'#1E2530'};background:${val==='nok'?'#EF444433':'transparent'};color:${val==='nok'?'#EF4444':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✗</button>
@@ -3397,10 +3399,23 @@ var _darkMode = true;
 function toggleDarkMode(){
 _darkMode = !_darkMode;
 document.body.classList.toggle('light-mode', !_darkMode);
-const btns = document.querySelectorAll('[onclick="toggleDarkMode()"]');
-btns.forEach(b=>b.textContent = _darkMode ? '☀️' : '🌙');
+const icon = _darkMode ? '☀️' : '🌙';
+document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent=icon);
+const fab=document.getElementById('dark-btn-fab');
+if(fab) fab.textContent=icon;
+localStorage.setItem('cbta_darkmode', _darkMode?'dark':'light');
 }
 (function(){const fs=localStorage.getItem('cbta_fs')||'M';if(fs!=='M')setFontSize(fs);})();
+(function(){
+  if(localStorage.getItem('cbta_darkmode')==='light'){
+    _darkMode=false;
+    document.body.classList.add('light-mode');
+    const icon='🌙';
+    document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent=icon);
+    const fab=document.getElementById('dark-btn-fab');
+    if(fab) fab.textContent=icon;
+  }
+})();
 
 // ── VERROUILLAGE ÉCRAN ---─────────────────────────────────────────────────────
 var _locked = false;
