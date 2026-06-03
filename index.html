@@ -244,6 +244,45 @@ body.light-mode #screen-briefing table th{background:#E2DDD7!important;color:#37
 body.light-mode #screen-briefing table td{background:#F7F4EE!important;color:#374151!important;border-color:#DDD8CC!important;}
 body.light-mode #screen-briefing table td[colspan]{background:#EEF4FF!important;color:#1D4ED8!important;}
 body.light-mode #screen-briefing table tr:nth-child(even) td:not([colspan]){background:#EDE9E2!important;}
+/* ── LIGHT MODE EXTENDED OVERRIDES ─────────────────────────────────────── */
+body.light-mode{--bg:#F7F4EE;--surf:#FFFFFF;--surf2:#F0EDE7;--bord:#DDD8CC;--text:#1E293B;--mut:#475569;--faint:#94A3B8;}
+body.light-mode .mem-box{background:#FFF0F0!important;border:1px solid #FECACA!important;}
+body.light-mode .mem-item{color:#DC2626!important;font-weight:700!important;}
+body.light-mode .mem-num{color:#B91C1C!important;font-weight:900!important;}
+body.light-mode .comp-card{background:#FFFFFF!important;border-color:#DDD8CC!important;color:#1E293B!important;}
+body.light-mode .comp-card.key{background:color-mix(in srgb,var(--key-color,#3B82F6) 13%,#FFFFFF)!important;border-color:var(--key-color,#3B82F6)!important;border-width:2px!important;}
+body.light-mode .comp-full{color:#475569!important;}
+body.light-mode .tem-info-box{background:#F0FDFF!important;border:1px solid #67E8F9!important;color:#0F172A!important;}
+body.light-mode .tem-sug-cont{background:#F0F4F8!important;border-radius:8px!important;}
+body.light-mode .tem-mitg-item{background:#F0FDF4!important;border:1px solid #86EFAC!important;}
+body.light-mode .tem-mitg-desc{color:#374151!important;}
+body.light-mode .tem-recovery{background:#F0FDF4!important;border:1px solid #86EFAC!important;}
+body.light-mode .crm-header{background:#F5F3FF!important;border:1px solid #C4B5FD!important;}
+body.light-mode .crm-row{border-bottom:1px solid #DDD8CC!important;}
+body.light-mode .crm-row-text{color:#1E293B!important;}
+body.light-mode .auto-grade-box{background:#F7F4EE!important;border:1px solid #DDD8CC!important;}
+body.light-mode .fac-card{background:#F0FDFF!important;border:1px solid #67E8F955!important;}
+body.light-mode .fac-q{color:#1E293B!important;}
+body.light-mode .debrief-bar{background:#E2E8F0!important;}
+body.light-mode .concl-box{background:#FAFAFA!important;border:2px solid #DDD8CC!important;}
+body.light-mode .concl-text{color:#374151!important;}
+body.light-mode .concl-crm-item{color:#374151!important;border-bottom:1px solid #DDD8CC!important;}
+body.light-mode .guide-sec{background:#F7F9FC!important;border-color:#DDD8CC!important;}
+body.light-mode .guide-sec div[style*="color:#CBD5E1"]{color:#374151!important;}
+body.light-mode .guide-sec span[style*="color:#CBD5E1"]{color:#374151!important;}
+body.light-mode .guide-sec div[style*="color:#94A3B8"]{color:#4B5563!important;}
+body.light-mode .guide-sec span[style*="color:#94A3B8"]{color:#4B5563!important;}
+body.light-mode .guide-sec div[style*="border-bottom:1px solid #1E2530"]{border-bottom-color:#DDD8CC!important;}
+body.light-mode .guide-sec div[style*="color:#F1F5F9"]{color:#111827!important;}
+body.light-mode .pilot-single-lbl{background:#F0F7FF!important;}
+body.light-mode #ex-timer-bar{background:#F0EDE7!important;border-bottom-color:#DDD8CC!important;}
+body.light-mode #timer-session{color:#374151!important;}
+body.light-mode .ffa-tag{background:#FFFFFF!important;border:1px solid #DDD8CC!important;}
+body.light-mode .section-lbl{color:#374151!important;font-weight:800!important;}
+body.light-mode .debrief-comp-row{background:#FFFFFF!important;border-color:#DDD8CC!important;}
+body.light-mode .card [style*="color:#F1F5F9"],body.light-mode .modal-box [style*="color:#F1F5F9"]{color:#111827!important;}
+body.light-mode .card [style*="color:#CBD5E1"],body.light-mode .modal-box [style*="color:#CBD5E1"]{color:#374151!important;}
+body.light-mode .card [style*="color:#94A3B8"],body.light-mode .modal-box [style*="color:#94A3B8"]{color:#4B5563!important;}
 </style>
 </head>
 <body>
@@ -574,7 +613,7 @@ Identifiant ou mot de passe incorrect
 <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
 
 <!-- CODE COULEUR -->
-<div style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">🎨 CODE COULEUR — NOTES CBTA</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
 <div style="background:#10B98122;border:1px solid #10B98155;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#10B981;">5</div><div style="font-size:13px;color:#10B981;font-weight:700;">EXEMPLAIRE</div><div style="font-size:12px;color:#94A3B8;">Maîtrise totale, pilote autonome</div></div>
@@ -586,7 +625,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- CODE COULEUR CATÉGORIES -->
-<div style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">📂 CATÉGORIES D'EXERCICES</div>
 <div style="display:flex;flex-direction:column;gap:9px;">
 <div style="display:flex;align-items:center;gap:10px;"><span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">MEMORY</span><span style="font-size:14px;color:#CBD5E1;">Actions mémoire immédiates — pas de référence checklist</span></div>
@@ -600,7 +639,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- ÉTAPES D'UTILISATION -->
-<div style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🔄 FLUX DE TRAVAIL — ÉTAPE PAR ÉTAPE</div>
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
@@ -648,7 +687,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- COMPÉTENCES CBTA -->
-<div style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">🧠 COMPÉTENCES CBTA (Boeing Framework)</div>
 <div style="display:flex;flex-direction:column;gap:7px;">
 <div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#3B82F6;font-family:monospace;min-width:40px;">FPM</span><span style="font-size:14px;color:#CBD5E1;">Flight Path Management — gestion trajectoire & énergie</span></div>
@@ -664,7 +703,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- ASTUCES -->
-<div style="background:#0F1218;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#0F1218;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:10px;">💡 ASTUCES RAPIDES</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="display:flex;gap:8px;"><span style="color:#F59E0B;font-size:15px;">⏱</span><span style="font-size:14px;color:#CBD5E1;">Chrono automatique à chaque exercice — <span style="color:#94A3B8;">⏸ PAUSE</span> pour suspendre, <span style="color:#EF4444;">■ STOP</span> pour remettre à zéro</span></div>
@@ -2472,7 +2511,7 @@ function buildPilotTabsHtml(onChangeSuffix){
   const l1 = _ROLE_LABELS[r1]||r1, l2 = _ROLE_LABELS[r2]||r2;
   const cls1 = r1==='TRI'?'tri':r1==='FO'?'fo':'cpt';
   const cls2 = r2==='CPT'?'cpt':r2==='TRI'?'tri':'fo';
-  if(!state.foName) return `<div style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</div>`;
+  if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</div>`;
   return `<div class="pilot-tabs" style="margin-bottom:16px;">
 <button class="pilot-tab ${cls1} ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt')${onChangeSuffix}" style="border-right:1px solid #1E2530;">
 <span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l1}</span>
@@ -3105,7 +3144,7 @@ const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
 const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
 const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
 
-const info = `<div style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
+const info = `<div class="tem-info-box" style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
 <div class="section-lbl" style="color:#3B82F6;">COMMENT UTILISER LE TEM</div>
 <div><span style="color:#3B82F6;font-weight:700;">MENACE</span> — Evenement EXTERNE: meteo, ATC, panne technique que l equipage doit gerer.</div>
 <div><span style="color:#EF4444;font-weight:700;">ERREUR</span> — Action ou INACTION de l equipage: mauvaise identification, oubli, sequence incorrecte.</div>
@@ -3121,7 +3160,7 @@ const sections = [
 const sectHtml = sections.map(({k,l,c,icon,sug})=>{
 const items = tem[k]||[];
 const sugHtml = sug.map((t)=>`<span class="tem-sug" style="background:${c}11;border:1px solid ${c}33;color:${c};font-size:var(--fss);padding:6px 12px;" onclick="addTEM('${k}','${t.replace(/'/g,"\\'")}')">${t}</span>`).join('');
-const itemsHtml = items.map((it,i)=>`<div class="tem-item" style="background:${c}0D;color:var(--text);font-size:var(--fs);padding:10px 12px;">
+const itemsHtml = items.map((it,i)=>`<div class="tem-item" style="background:${c}18;color:var(--text);font-size:var(--fs);padding:10px 12px;">
 <span>${icon} ${it.text}</span>
 <button onclick="removeTEM('${k}',${i})" style="background:none;border:none;color:#EF4444;font-size:18px;cursor:pointer;">x</button>
 </div>`).join('');
@@ -3129,19 +3168,19 @@ const itemsHtml = items.map((it,i)=>`<div class="tem-item" style="background:${c
 // Section mitigation pour chaque item
 const mitigHtml = items.length ? `<div style="margin-top:8px;margin-bottom:4px;">
 <div style="font-size:var(--fsxs);font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">✓ CONTRE-MESURES (MITIGATION)</div>
-${items.map((it,i)=>`<div style="background:#10B98111;border:1px solid #10B98133;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
-<div style="font-size:var(--fss);color:#94A3B8;margin-bottom:6px;">${it.text}</div>
+${items.map((it,i)=>`<div class="tem-mitg-item" style="background:#10B98111;border:1px solid #10B98133;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
+<div class="tem-mitg-desc" style="font-size:var(--fss);color:#94A3B8;margin-bottom:6px;">${it.text}</div>
 <div style="display:flex;gap:8px;align-items:center;">
-<button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'#1E2530'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✓ Gérée</button>
-<button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'#1E2530'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">~ Partielle</button>
-<button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'#1E2530'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✗ Non gérée</button>
+<button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'var(--bord)'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✓ Gérée</button>
+<button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'var(--bord)'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">~ Partielle</button>
+<button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'var(--bord)'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✗ Non gérée</button>
 </div>
 </div>`).join('')}
 </div>` : '';
 
 return `<div style="margin-bottom:20px;">
 <div class="section-lbl" style="color:${c};border-left:3px solid ${pilotColor};padding-left:8px;font-size:var(--fss);">${l}</div>
-${sugHtml?`<div style="max-height:110px;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;background:#0A0C10;border-radius:8px;padding:6px;">${sugHtml}</div>`:''}
+${sugHtml?`<div class="tem-sug-cont" style="max-height:110px;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;background:#0A0C10;border-radius:8px;padding:6px;">${sugHtml}</div>`:''}
 ${itemsHtml}
 <div class="tem-add-row">
 <input id="tem-inp-${k}" class="form-input" style="flex:1;font-size:var(--fs);" placeholder="Ajouter..." onkeydown="if(event.key==='Enter'){addTEMInp('${k}');}"/>
@@ -3155,13 +3194,13 @@ ${mitigHtml}
 const recKey = temKey==="tem"?"rec":"recfo";
 if(!ex[recKey]) ex[recKey]={managed:null,note:""};
 const rec = ex[recKey];
-const recoveryHtml = `<div style="margin-bottom:20px;background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;">
+const recoveryHtml = `<div class="tem-recovery" style="margin-bottom:20px;background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;">
 <div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:10px;">↩ RECOVERY — GESTION DE L ÉTAT INDÉSIRABLE</div>
-<div style="font-size:var(--fs);color:#94A3B8;margin-bottom:10px;">L équipage a-t-il su récupérer la situation avant l accident ?</div>
+<div style="font-size:var(--fs);color:var(--mut);margin-bottom:10px;">L équipage a-t-il su récupérer la situation avant l accident ?</div>
 <div style="display:flex;gap:8px;margin-bottom:10px;">
-<button onclick="setRecovery('${recKey}','yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='yes'?'#10B981':'#1E2530'};background:${rec.managed==='yes'?'#10B98133':'transparent'};color:${rec.managed==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✓ OUI — Récupéré</button>
-<button onclick="setRecovery('${recKey}','partial')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='partial'?'#F59E0B':'#1E2530'};background:${rec.managed==='partial'?'#F59E0B33':'transparent'};color:${rec.managed==='partial'?'#F59E0B':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">~ Partiel</button>
-<button onclick="setRecovery('${recKey}','no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='no'?'#EF4444':'#1E2530'};background:${rec.managed==='no'?'#EF444433':'transparent'};color:${rec.managed==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✗ NON — Non récupéré</button>
+<button onclick="setRecovery('${recKey}','yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='yes'?'#10B981':'var(--bord)'};background:${rec.managed==='yes'?'#10B98133':'transparent'};color:${rec.managed==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✓ OUI — Récupéré</button>
+<button onclick="setRecovery('${recKey}','partial')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='partial'?'#F59E0B':'var(--bord)'};background:${rec.managed==='partial'?'#F59E0B33':'transparent'};color:${rec.managed==='partial'?'#F59E0B':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">~ Partiel</button>
+<button onclick="setRecovery('${recKey}','no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='no'?'#EF4444':'var(--bord)'};background:${rec.managed==='no'?'#EF444433':'transparent'};color:${rec.managed==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✗ NON — Non récupéré</button>
 </div>
 <input class="form-input" style="font-size:13px;" placeholder="Comment la situation a-t-elle été récupérée ?..." value="${rec.note||''}" onchange="setRecoveryNote('${recKey}',this.value)"/>
 </div>`;
@@ -3236,12 +3275,12 @@ const items = [
 
 const html = items.map(item=>{
 const val = state.sessionCRM[item.k];
-return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1E2530;">
-<div style="flex:1;font-size:var(--fs);color:#CBD5E1;line-height:1.4;">${item.label}</div>
+return `<div class="crm-row" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1E2530;">
+<div class="crm-row-text" style="flex:1;font-size:var(--fs);color:#CBD5E1;line-height:1.4;">${item.label}</div>
 <div style="display:flex;gap:6px;flex-shrink:0;">
-<button onclick="setCRM('${item.k}','ok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='ok'?'#10B981':'#1E2530'};background:${val==='ok'?'#10B98133':'transparent'};color:${val==='ok'?'#10B981':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✓</button>
-<button onclick="setCRM('${item.k}','nok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='nok'?'#EF4444':'#1E2530'};background:${val==='nok'?'#EF444433':'transparent'};color:${val==='nok'?'#EF4444':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✗</button>
-<button onclick="setCRM('${item.k}','na')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='na'?'#64748B':'#1E2530'};background:${val==='na'?'#64748B33':'transparent'};color:${val==='na'?'#94A3B8':'#334155'};font-size:11px;cursor:pointer;font-weight:700;">N/A</button>
+<button onclick="setCRM('${item.k}','ok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='ok'?'#10B981':'var(--bord)'};background:${val==='ok'?'#10B98133':'transparent'};color:${val==='ok'?'#10B981':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✓</button>
+<button onclick="setCRM('${item.k}','nok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='nok'?'#EF4444':'var(--bord)'};background:${val==='nok'?'#EF444433':'transparent'};color:${val==='nok'?'#EF4444':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✗</button>
+<button onclick="setCRM('${item.k}','na')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='na'?'#64748B':'var(--bord)'};background:${val==='na'?'#64748B33':'transparent'};color:${val==='na'?'#94A3B8':'var(--mut)'};font-size:11px;cursor:pointer;font-weight:700;">N/A</button>
 </div>
 </div>`;
 }).join('');
@@ -3251,10 +3290,10 @@ const nok = items.filter(i=>state.sessionCRM[i.k]==='nok').length;
 const total = items.filter(i=>state.sessionCRM[i.k]&&state.sessionCRM[i.k]!=='na').length;
 
 el.innerHTML = `
-<div style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+<div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
 <div>
 <div style="font-size:11px;font-weight:700;color:#8B5CF6;letter-spacing:2px;">CRM — RESSOURCES ÉQUIPAGE</div>
-<div style="font-size:10px;color:#64748B;margin-top:2px;">Évaluation globale pour toute la séance</div>
+<div style="font-size:10px;color:var(--mut);margin-top:2px;">Évaluation globale pour toute la séance</div>
 </div>
 ${total>0?`<div style="font-size:12px;"><span style="color:#10B981;font-weight:700;">✓${ok}</span> <span style="color:#EF4444;font-weight:700;">✗${nok}</span></div>`:''}
 </div>
@@ -3353,10 +3392,10 @@ if(total>0){
 const ratio = pos/total;
 autoGrade = ratio>=0.9?5:ratio>=0.7?4:ratio>=0.5?3:ratio>=0.3?2:1;
 }
-const autoGradeHtml = (pos+neg)>0 ? `<div style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
+const autoGradeHtml = (pos+neg)>0 ? `<div class="auto-grade-box" style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
 <div style="flex:1;">
-<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:2px;">GRADING SUGGÉRÉ (basé sur OB)</div>
-<div style="font-size:11px;color:#94A3B8;">+${pos} positif · -${neg} négatif · N/A ${na}</div>
+<div style="font-size:10px;color:var(--mut);letter-spacing:1px;margin-bottom:2px;">GRADING SUGGÉRÉ (basé sur OB)</div>
+<div style="font-size:11px;color:var(--mut);">+${pos} positif · -${neg} négatif · N/A ${na}</div>
 </div>
 <div style="font-size:24px;font-weight:900;color:${GC[autoGrade]||'#64748B'};">${autoGrade||'-'}</div>
 <button onclick="setGrade(${autoGrade})" style="background:${GC[autoGrade]||'#334155'}22;border:1px solid ${GC[autoGrade]||'#334155'};color:${GC[autoGrade]||'#94A3B8'};padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">APPLIQUER</button>
@@ -3371,7 +3410,7 @@ return `<div class="ob-row ${isP?'pos':isN?'neg':isNA?'na':''}" data-obid="${ob.
 <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;">
 <button class="ob-btn plus ${isP?'active':''}" onclick="toggleOBid(${ob.id},'+')">+</button>
 <button class="ob-btn minus ${isN?'active':''}" onclick="toggleOBid(${ob.id},'-')">−</button>
-<button class="ob-btn" style="background:${isNA?'#8B5CF633':'transparent'};border:1px solid ${isNA?'#8B5CF6':'#334155'};color:${isNA?'#8B5CF6':'#475569'};border-radius:6px;padding:5px 6px;font-size:11px;font-weight:700;cursor:pointer;min-width:38px;" onclick="toggleOBid(${ob.id},'N/A')">N/A</button>
+<button class="ob-btn" style="background:${isNA?'#8B5CF633':'transparent'};border:1px solid ${isNA?'#8B5CF6':'var(--bord)'};color:${isNA?'#8B5CF6':'var(--mut)'};border-radius:6px;padding:5px 6px;font-size:11px;font-weight:700;cursor:pointer;min-width:38px;" onclick="toggleOBid(${ob.id},'N/A')">N/A</button>
 </div>
 </div>`;
 }).join('');
@@ -5087,9 +5126,9 @@ return `<div class="card" style="margin-bottom:14px;border-left:3px solid #8B5CF
 <div style="background:#EF444422;border:1px solid #EF444444;border-radius:8px;padding:8px 14px;text-align:center;flex:1;"><div style="font-size:22px;font-weight:800;color:#EF4444;">${nokItems.length}</div><div style="font-size:10px;color:#64748B;">Non satisfaisant</div></div>
 </div>
 ${nokItems.length?`<div style="font-size:11px;font-weight:700;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">POINTS CRM À AMÉLIORER</div>
-${nokItems.map(i=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✗ ${i.label}</div>`).join('')}`:''}
+${nokItems.map(i=>`<div class="concl-crm-item" style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✗ ${i.label}</div>`).join('')}`:''}
 ${okItems.length?`<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;margin-top:8px;margin-bottom:6px;">POINTS CRM POSITIFS</div>
-${okItems.map(i=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✓ ${i.label}</div>`).join('')}`:''}
+${okItems.map(i=>`<div class="concl-crm-item" style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✓ ${i.label}</div>`).join('')}`:''}
 </div>`;
 })()}
 
