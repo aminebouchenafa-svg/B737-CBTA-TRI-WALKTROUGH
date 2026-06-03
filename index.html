@@ -238,6 +238,11 @@ body.light-mode .tab[onclick*="debTab('exercises"]{color:#10B981!important;}
 body.light-mode .tab[onclick*="debTab('tem"]{color:#F97316!important;}
 body.light-mode .tab[onclick*="debTab('questionnaire"]{color:#06B6D4!important;}
 body.light-mode .tab[onclick*="debTab('conclusion"]{color:#8B5CF6!important;}
+/* Tolerance table in briefing — override inline dark backgrounds */
+body.light-mode #screen-briefing table th{background:#E2DDD7!important;color:#374151!important;border-color:#DDD8CC!important;}
+body.light-mode #screen-briefing table td{background:#F7F4EE!important;color:#374151!important;border-color:#DDD8CC!important;}
+body.light-mode #screen-briefing table td[colspan]{background:#EEF4FF!important;color:#1D4ED8!important;}
+body.light-mode #screen-briefing table tr:nth-child(even) td:not([colspan]){background:#EDE9E2!important;}
 </style>
 </head>
 <body>
@@ -2780,9 +2785,11 @@ btn.style.width="100%"; btn.style.padding="13px"; btn.style.fontSize="15px";
 const mandDiv = document.getElementById('ex-mand-btns');
 if(mandDiv){
   const avgForAttempt = exStats(ex);
-  const mandBtnHtml = '<button onclick="toggleMandatory()" style="padding:5px 10px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid '+(ex.mandatory?'#EF4444':'#3B82F644')+';background:'+(ex.mandatory?'#EF444422':'transparent')+';color:'+(ex.mandatory?'#EF4444':'#64748B')+';">'+(ex.mandatory?'● M':'○ T')+'</button>';
-  const redoHtml = (ex.closed && ex.attempt===1)
-    ? '<button onclick="doSecondAttempt()" style="padding:5px 9px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;border:1px solid #F59E0B;background:#F59E0B22;color:#F59E0B;">2ème ESSAI</button>'
+  const mandBtnHtml = ex.mandatory
+    ? '<button onclick="toggleMandatory()" style="padding:8px 18px;border-radius:8px;font-size:15px;font-weight:900;cursor:pointer;border:2px solid #EF4444;background:#EF444433;color:#EF4444;letter-spacing:1px;">● M</button>'
+    : '<button onclick="toggleMandatory()" style="padding:8px 18px;border-radius:8px;font-size:15px;font-weight:900;cursor:pointer;border:2px solid #3B82F6;background:#3B82F633;color:#3B82F6;letter-spacing:1px;">● T</button>';
+  const redoHtml = (ex.mandatory && ex.closed && ex.attempt===1)
+    ? '<button onclick="doSecondAttempt()" style="padding:8px 14px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #F59E0B;background:#F59E0B33;color:#F59E0B;">↻ 2ème ESSAI</button>'
     : '';
   mandDiv.innerHTML = mandBtnHtml + redoHtml;
 }
@@ -4535,6 +4542,16 @@ function showProfCheck(){
   if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},lvoDate:'',remarks:'',result:'',coExaminer:''};
   if(!state.profCheck.pilotName) state.profCheck.pilotName = state.pilotName||'';
   if(!state.profCheck.date) state.profCheck.date = new Date().toISOString().slice(0,10);
+  if(!state.profCheck.grades) state.profCheck.grades={};
+  // Auto-fill grades from session mandatory exercises (only if not already set)
+  const EX_TO_PC={rto:'pc_rto',ef_v1v2:'pc_ef_v1',se_ils:'pc_se_ils',se_ga:'pc_se_ga',se_ldg:'pc_se_ldg',non_ils:'pc_nonils',tcas_ra:'pc_rhs_tcas'};
+  (state.exercises||[]).filter(ex=>ex.closed).forEach(ex=>{
+    const pcId=EX_TO_PC[ex.sid];
+    if(pcId&&!state.profCheck.grades[pcId]){
+      const st=exStats(ex);
+      if(st&&st.avg>0) state.profCheck.grades[pcId]=String(Math.round(st.avg));
+    }
+  });
   renderProfCheck();
   showScreen('profcheck');
 }
@@ -5276,11 +5293,12 @@ const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">Aucun pilote</div>';return;}
 const pilotes={};
 hist.forEach(s=>{
-if(!pilotes[s.pilotName])pilotes[s.pilotName]={name:s.pilotName,sessions:[],scores:[],ct:{}};
-COMPETENCIES.forEach(c=>{if(!pilotes[s.pilotName].ct[c.id])pilotes[s.pilotName].ct[c.id]={t:0,n:0};});
-pilotes[s.pilotName].sessions.push(s);
-const sc=parseFloat(s.avgScore)||0;if(sc>0)pilotes[s.pilotName].scores.push(sc);
-if(s.compAvgs)Object.entries(s.compAvgs).forEach(([id,v])=>{if(v&&parseFloat(v)>0){pilotes[s.pilotName].ct[id].t+=parseFloat(v);pilotes[s.pilotName].ct[id].n++;}});
+const key=(s.pilotName||'').toLowerCase().trim();
+if(!pilotes[key])pilotes[key]={name:s.pilotName,sessions:[],scores:[],ct:{}};
+COMPETENCIES.forEach(c=>{if(!pilotes[key].ct[c.id])pilotes[key].ct[c.id]={t:0,n:0};});
+pilotes[key].sessions.push(s);
+const sc=parseFloat(s.avgScore)||0;if(sc>0)pilotes[key].scores.push(sc);
+if(s.compAvgs)Object.entries(s.compAvgs).forEach(([id,v])=>{if(v&&parseFloat(v)>0){pilotes[key].ct[id].t+=parseFloat(v);pilotes[key].ct[id].n++;}});
 });
 let h='<div style="padding:14px;">';
 Object.values(pilotes).forEach(p=>{
@@ -5305,7 +5323,8 @@ el.innerHTML=h;
 
 function showComparaisonPilote(name){
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
-const sessions=hist.filter(s=>s.pilotName===name).reverse();
+const nameLower=(name||'').toLowerCase().trim();
+const sessions=hist.filter(s=>s.pilotName&&s.pilotName.toLowerCase().trim()===nameLower).reverse();
 document.getElementById('comp-pilote-name').textContent='CPT '+name;
 const el=document.getElementById('comparaison-content');
 if(sessions.length<2){
