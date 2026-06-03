@@ -3644,13 +3644,9 @@ document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textConte
 localStorage.setItem('cbta_darkmode', _darkMode?'dark':'light');
 }
 (function(){const fs=localStorage.getItem('cbta_fs')||'M';if(fs!=='M')setFontSize(fs);})();
-(function(){
-  if(localStorage.getItem('cbta_darkmode')==='light'){
-    _darkMode=false;
-    document.body.classList.add('light-mode');
-    document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent='🌙');
-  }
-})();
+// Dark mode is always the default on startup — reset any saved light preference
+localStorage.setItem('cbta_darkmode','dark');
+_darkMode=true;
 
 // ── VERROUILLAGE ÉCRAN ---─────────────────────────────────────────────────────
 var _locked = false;
