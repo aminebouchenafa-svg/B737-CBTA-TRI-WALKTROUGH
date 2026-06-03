@@ -247,8 +247,6 @@ body.light-mode #screen-briefing table tr:nth-child(even) td:not([colspan]){back
 </style>
 </head>
 <body>
-<!-- Floating dark/light mode toggle — always visible on all screens -->
-<button onclick="toggleDarkMode()" id="dark-btn-fab" style="position:fixed;top:10px;left:10px;z-index:9997;width:32px;height:32px;border-radius:8px;background:#1E253088;border:1px solid #33415566;color:#94A3B8;font-size:16px;cursor:pointer;box-shadow:0 1px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;padding:0;opacity:0.6;">☀️</button>
 <div id="app">
 
 <div class="screen active" id="screen-login">
@@ -369,7 +367,9 @@ Identifiant ou mot de passe incorrect
 <div class="title" id="hdr-pilot">Pilote</div>
 <div class="sub" id="hdr-session">Session</div>
 <div class="sub" id="hdr-instructor" style="color:#3B82F6;font-size:10px;"></div>
+
 </div>
+<button onclick="toggleDarkMode()" id="dark-btn-session" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
 <button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
 <button class="btn btn-warn" onclick="confirmReset()">↺</button>
 <button class="btn btn-primary" onclick="showDebrief()">DEBRIEF →</button>
@@ -394,6 +394,7 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:9px;color:var(--mut);">MOY</div>
 </div>
 <div id="ex-mand-btns" style="display:flex;gap:5px;"></div>
+<button onclick="toggleDarkMode()" id="dark-btn-ex" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
 <button class="btn" onclick="backToList()">Liste</button>
 </div>
 <div class="tabs">
@@ -463,6 +464,7 @@ Identifiant ou mot de passe incorrect
 <div class="sub" id="deb-sub"></div>
 <div id="deb-hdr-info" style="font-size:10px;color:#3B82F6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
 </div>
+<button onclick="toggleDarkMode()" id="dark-btn-deb" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
 <button class="btn" onclick="showPresentation()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:11px;">PRÉSENTATION</button>
 <button class="btn" onclick="showProfCheck()" style="background:#3B82F622;border-color:#3B82F6;color:#3B82F6;font-size:11px;padding:6px 10px;">☑ PROF CHECK</button>
 <button class="btn" onclick="showRapport()" style="background:#10B98122;border-color:#10B981;color:#10B981;font-size:12px;">RAPPORT</button>
@@ -3522,8 +3524,6 @@ _darkMode = !_darkMode;
 document.body.classList.toggle('light-mode', !_darkMode);
 const icon = _darkMode ? '☀️' : '🌙';
 document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent=icon);
-const fab=document.getElementById('dark-btn-fab');
-if(fab) fab.textContent=icon;
 localStorage.setItem('cbta_darkmode', _darkMode?'dark':'light');
 }
 (function(){const fs=localStorage.getItem('cbta_fs')||'M';if(fs!=='M')setFontSize(fs);})();
@@ -3531,10 +3531,7 @@ localStorage.setItem('cbta_darkmode', _darkMode?'dark':'light');
   if(localStorage.getItem('cbta_darkmode')==='light'){
     _darkMode=false;
     document.body.classList.add('light-mode');
-    const icon='🌙';
-    document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent=icon);
-    const fab=document.getElementById('dark-btn-fab');
-    if(fab) fab.textContent=icon;
+    document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent='🌙');
   }
 })();
 
