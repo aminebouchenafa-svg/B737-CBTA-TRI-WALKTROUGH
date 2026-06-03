@@ -287,6 +287,7 @@ Identifiant ou mot de passe incorrect
 <button class="btn fs-btn" data-fs="S" onclick="setFontSize('S')" style="padding:4px 9px;font-size:11px;font-weight:700;border:none;border-radius:0;background:transparent;color:#64748B;">A-</button>
 <button class="btn fs-btn" data-fs="M" onclick="setFontSize('M')" style="padding:4px 9px;font-size:13px;font-weight:700;border:none;border-radius:0;background:#3B82F622;color:#3B82F6;">A</button>
 <button class="btn fs-btn" data-fs="L" onclick="setFontSize('L')" style="padding:4px 9px;font-size:15px;font-weight:700;border:none;border-radius:0;background:transparent;color:#64748B;">A+</button>
+<button class="btn fs-btn" data-fs="XL" onclick="setFontSize('XL')" style="padding:4px 9px;font-size:17px;font-weight:900;border:none;border-radius:0;background:transparent;color:#64748B;">A++</button>
 </div>
 </div>
 <div class="scroll" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 52px);padding:24px;background:#0A0C10;">
@@ -407,7 +408,10 @@ Identifiant ou mot de passe incorrect
   <div style="text-align:center;flex:1;">
     <div style="font-size:8px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">EXERCICE</div>
     <div id="timer-ex-display" style="font-family:ui-monospace,monospace;font-size:34px;font-weight:900;color:#F1F5F9;letter-spacing:4px;line-height:1;">00:00</div>
-    <button id="timer-pause-btn" onclick="toggleChrono()" style="margin-top:4px;padding:3px 14px;border-radius:20px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">⏸ PAUSE</button>
+    <div style="display:flex;gap:5px;margin-top:4px;justify-content:center;">
+    <button id="timer-pause-btn" onclick="toggleChrono()" style="padding:3px 14px;border-radius:20px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">⏸ PAUSE</button>
+    <button onclick="resetExChrono()" style="padding:3px 10px;border-radius:20px;background:#EF444422;border:1px solid #EF444444;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;">■ STOP</button>
+    </div>
   </div>
   <div style="text-align:right;">
     <div style="font-size:8px;color:#334155;letter-spacing:1.5px;font-weight:700;margin-bottom:3px;">LIMITE</div>
@@ -2253,6 +2257,19 @@ function toggleChrono(){
   }
   updateChrono();
 }
+function resetExChrono(){
+  if(window._chronoInterval){ clearInterval(window._chronoInterval); window._chronoInterval=null; }
+  const ex=state.exercises[state.activeIdx];
+  if(ex){ ex.openedAt=null; ex.chronoElapsed=0; }
+  const disp=document.getElementById('timer-ex-display');
+  if(disp) disp.textContent='00:00';
+  const btn=document.getElementById('timer-pause-btn');
+  if(btn) btn.textContent='▶ REPRENDRE';
+  const bar=document.getElementById('ex-timer-bar');
+  if(bar){ bar.style.borderBottomColor='#1E2530'; bar.style.animation='none'; }
+  const exEl=document.getElementById('screen-ex');
+  if(exEl) exEl.style.animation='none';
+}
 function updateChrono(){
   // Session timer
   const sesEl = document.getElementById('timer-session');
@@ -3039,7 +3056,7 @@ renderExContent();
 }
 
 function renderCRMTab(ex,sc,el){
-if(!ex.crm) ex.crm={};
+if(!state.sessionCRM) state.sessionCRM={};
 const items = [
 {k:'brief',label:'Briefing décollage / approche complet et pertinent'},
 {k:'callout',label:'Callouts standards respectés (SOP)'},
@@ -3056,9 +3073,9 @@ const items = [
 ];
 
 const html = items.map(item=>{
-const val = ex.crm[item.k];
+const val = state.sessionCRM[item.k];
 return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1E2530;">
-<div style="flex:1;font-size:13px;color:#CBD5E1;">${item.label}</div>
+<div style="flex:1;font-size:var(--fss);color:#CBD5E1;">${item.label}</div>
 <div style="display:flex;gap:6px;flex-shrink:0;">
 <button onclick="setCRM('${item.k}','ok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='ok'?'#10B981':'#1E2530'};background:${val==='ok'?'#10B98133':'transparent'};color:${val==='ok'?'#10B981':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✓</button>
 <button onclick="setCRM('${item.k}','nok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='nok'?'#EF4444':'#1E2530'};background:${val==='nok'?'#EF444433':'transparent'};color:${val==='nok'?'#EF4444':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✗</button>
@@ -3067,22 +3084,24 @@ return `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;bord
 </div>`;
 }).join('');
 
-const ok = items.filter(i=>ex.crm[i.k]==='ok').length;
-const nok = items.filter(i=>ex.crm[i.k]==='nok').length;
-const total = items.filter(i=>ex.crm[i.k]&&ex.crm[i.k]!=='na').length;
+const ok = items.filter(i=>state.sessionCRM[i.k]==='ok').length;
+const nok = items.filter(i=>state.sessionCRM[i.k]==='nok').length;
+const total = items.filter(i=>state.sessionCRM[i.k]&&state.sessionCRM[i.k]!=='na').length;
 
 el.innerHTML = `
 <div style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
+<div>
 <div style="font-size:11px;font-weight:700;color:#8B5CF6;letter-spacing:2px;">CRM — RESSOURCES ÉQUIPAGE</div>
+<div style="font-size:10px;color:#64748B;margin-top:2px;">Évaluation globale pour toute la séance</div>
+</div>
 ${total>0?`<div style="font-size:12px;"><span style="color:#10B981;font-weight:700;">✓${ok}</span> <span style="color:#EF4444;font-weight:700;">✗${nok}</span></div>`:''}
 </div>
 ${html}`;
 }
 
 function setCRM(key,val){
-const ex = state.exercises[state.activeIdx];
-if(!ex.crm) ex.crm={};
-ex.crm[key] = ex.crm[key]===val?null:val;
+if(!state.sessionCRM) state.sessionCRM={};
+state.sessionCRM[key] = state.sessionCRM[key]===val?null:val;
 renderExContent();
 }
 
@@ -4844,29 +4863,65 @@ el.innerHTML = `
 <div style="font-size:11px;color:#3B82F6;font-weight:700;margin-bottom:4px;">CPT — ${state.pilotName}</div>
 <div class="concl-title" style="color:${perfColor};">${perfLevel}</div>
 <div style="font-size:22px;font-weight:800;color:${perfColor};margin-bottom:8px;">${globalAvg.toFixed(1)} / 5.0</div>
-<div class="concl-text">${perfMsg}</div>
+<div class="concl-text" style="margin-bottom:8px;">${perfMsg}</div>
+${strongComps.length?`<div style="font-size:13px;color:#10B981;font-weight:600;margin-bottom:4px;">✓ Points forts: ${strongComps.map(c=>c.label).join(', ')}</div>`:''}
+${weakComps.length?`<div style="font-size:13px;color:#EF4444;font-weight:600;">△ A consolider: ${weakComps.map(c=>c.label).join(', ')}</div>`:''}
 </div>
 
 
 ${foSt && foSt.globalAvg>0 ? (()=>{
 const foAvg=foSt.globalAvg;
-let foLevel,foColor;
-if(foAvg>=4.5){foLevel="EXEMPLAIRE";foColor="#3B82F6";}
-else if(foAvg>=3.5){foLevel="AU-DESSUS DU STANDARD";foColor="#10B981";}
-else if(foAvg>=2.5){foLevel="STANDARD";foColor="#F59E0B";}
-else if(foAvg>=1.5){foLevel="SOUS-STANDARD";foColor="#F97316";}
-else{foLevel="INACCEPTABLE";foColor="#EF4444";}
+let foLevel,foColor,foMsg;
+if(foAvg>=4.5){foLevel="EXEMPLAIRE";foColor="#3B82F6";foMsg="Performance excellente. Le copilote fait preuve d une maitrise remarquable des competences CBTA. Contribution positive a la gestion de la ressource equipage.";}
+else if(foAvg>=3.5){foLevel="AU-DESSUS DU STANDARD";foColor="#10B981";foMsg="Bonne performance globale du copilote. Maitrise correcte des situations normales et non normales. CRM actif et efficace.";}
+else if(foAvg>=2.5){foLevel="STANDARD";foColor="#F59E0B";foMsg="Performance acceptable du copilote avec des axes de progres identifies. Un accompagnement sur les competences sous-performantes est recommande.";}
+else if(foAvg>=1.5){foLevel="SOUS-STANDARD";foColor="#F97316";foMsg="Performance insuffisante du copilote sur plusieurs competences. Un reentrainement cible est necessaire.";}
+else{foLevel="INACCEPTABLE";foColor="#EF4444";foMsg="Performance inacceptable. Programme de remediation requis avant toute evaluation ulterieure.";}
 const foWeak=COMPETENCIES.filter(c=>foSt.avgs[c.id]>0&&foSt.avgs[c.id]<3.5);
 const foStrong=COMPETENCIES.filter(c=>foSt.avgs[c.id]>=4);
 return `<div class="concl-box" style="background:${foColor}18;border:1px solid ${foColor}44;margin-bottom:14px;">
 <div style="font-size:11px;color:#10B981;font-weight:700;margin-bottom:4px;">FO — ${state.foName}</div>
 <div class="concl-title" style="color:${foColor};">${foLevel}</div>
 <div style="font-size:22px;font-weight:800;color:${foColor};margin-bottom:8px;">${foAvg.toFixed(1)} / 5.0</div>
-${foStrong.length?`<div style="font-size:13px;color:#10B981;margin-bottom:4px;">Points forts: ${foStrong.map(c=>c.label).join(', ')}</div>`:''}
-${foWeak.length?`<div style="font-size:13px;color:#EF4444;">A consolider: ${foWeak.map(c=>c.label).join(', ')}</div>`:''}
+<div class="concl-text" style="margin-bottom:8px;">${foMsg}</div>
+${foStrong.length?`<div style="font-size:13px;color:#10B981;font-weight:600;margin-bottom:4px;">✓ Points forts: ${foStrong.map(c=>c.label).join(', ')}</div>`:''}
+${foWeak.length?`<div style="font-size:13px;color:#EF4444;font-weight:600;">△ A consolider: ${foWeak.map(c=>c.label).join(', ')}</div>`:''}
 </div>`;
 })() : ''}
 
+
+${(()=>{
+const crm=state.sessionCRM||{};
+const crmItems=[
+{k:'brief',label:'Briefing complet et pertinent'},
+{k:'callout',label:'Callouts standards (SOP)'},
+{k:'challenge',label:'Challenge & Response correct'},
+{k:'comm',label:'Communication claire entre pilotes'},
+{k:'leadership',label:'Leadership adapté'},
+{k:'crosscheck',label:'Cross-check mutuel efficace'},
+{k:'workload',label:'Gestion charge de travail'},
+{k:'sa',label:'Conscience situationnelle partagée'},
+{k:'decision',label:'Prise de décision adaptée'},
+{k:'intervention',label:'Intervention appropriée'},
+{k:'automation',label:'Gestion des automatismes'},
+{k:'sterile',label:'Cockpit stérile < 10 000ft'},
+];
+const filled=crmItems.filter(i=>crm[i.k]);
+if(!filled.length) return '';
+const okItems=crmItems.filter(i=>crm[i.k]==='ok');
+const nokItems=crmItems.filter(i=>crm[i.k]==='nok');
+return `<div class="card" style="margin-bottom:14px;border-left:3px solid #8B5CF6;">
+<div class="section-lbl" style="color:#8B5CF6;margin-bottom:10px;">CRM — RESSOURCES ÉQUIPAGE (SÉANCE)</div>
+<div style="display:flex;gap:12px;margin-bottom:10px;">
+<div style="background:#10B98122;border:1px solid #10B98144;border-radius:8px;padding:8px 14px;text-align:center;flex:1;"><div style="font-size:22px;font-weight:800;color:#10B981;">${okItems.length}</div><div style="font-size:10px;color:#64748B;">Satisfaisant</div></div>
+<div style="background:#EF444422;border:1px solid #EF444444;border-radius:8px;padding:8px 14px;text-align:center;flex:1;"><div style="font-size:22px;font-weight:800;color:#EF4444;">${nokItems.length}</div><div style="font-size:10px;color:#64748B;">Non satisfaisant</div></div>
+</div>
+${nokItems.length?`<div style="font-size:11px;font-weight:700;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">POINTS CRM À AMÉLIORER</div>
+${nokItems.map(i=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✗ ${i.label}</div>`).join('')}`:''}
+${okItems.length?`<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;margin-top:8px;margin-bottom:6px;">POINTS CRM POSITIFS</div>
+${okItems.map(i=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✓ ${i.label}</div>`).join('')}`:''}
+</div>`;
+})()}
 
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
 <div class="card" style="text-align:center;">
