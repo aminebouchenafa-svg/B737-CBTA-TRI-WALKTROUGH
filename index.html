@@ -164,7 +164,7 @@ textarea.form-input{resize:none;height:70px;}
 /* ── LIGHT / DAY MODE ──────────────────────────────────── */
 body.light-mode{background:#F7F4EE!important;color:#1E293B!important;}
 body.light-mode #app,body.light-mode .screen:not(#screen-login){background:#F7F4EE!important;}
-body.light-mode:has(#screen-login.active),body.light-mode:has(#screen-login.active) #app{background:#0A0C10!important;}
+body.login-active,body.login-active #app,body.login-active #screen-login,body.login-active #screen-login .scroll{background:#0A0C10!important;}
 
 body.light-mode .topbar{background:#FFFFFF!important;border-bottom:1px solid #DDD8CC!important;}
 body.light-mode .topbar .title{color:#0F172A!important;}
@@ -287,7 +287,7 @@ body.light-mode .card [style*="color:#CBD5E1"],body.light-mode .modal-box [style
 body.light-mode .card [style*="color:#94A3B8"],body.light-mode .modal-box [style*="color:#94A3B8"]{color:#4B5563!important;}
 </style>
 </head>
-<body>
+<body class="login-active">
 <div id="app">
 
 <div class="screen active" id="screen-login">
@@ -6220,6 +6220,7 @@ const p = (document.getElementById('inp-pass').value||'').trim();
 const found = CREDENTIALS.find(c=>c.user.toLowerCase()===u && c.pass===p);
 if(found){
 document.getElementById('login-error').style.display='none';
+document.body.classList.remove('login-active');
 state.currentUser = found.name;
 // Pre-fill instructor name on home
 const instrInp = document.getElementById('inp-instructor');
