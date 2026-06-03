@@ -282,6 +282,7 @@ Identifiant ou mot de passe incorrect
 
 <div class="screen" id="screen-home">
 <div class="topbar" style="justify-content:flex-end;">
+<button onclick="document.getElementById('modal-help').style.display='flex'" style="width:34px;height:34px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:17px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">?</button>
 <button class="btn" onclick="toggleDarkMode()" id="dark-btn" style="font-size:16px;padding:5px 10px;">☀️</button>
 <div style="display:flex;gap:4px;border:1px solid #334155;border-radius:7px;overflow:hidden;">
 <button class="btn fs-btn" data-fs="S" onclick="setFontSize('S')" style="padding:4px 9px;font-size:11px;font-weight:700;border:none;border-radius:0;background:transparent;color:#64748B;">A-</button>
@@ -369,6 +370,7 @@ Identifiant ou mot de passe incorrect
 <div class="sub" id="hdr-instructor" style="color:#3B82F6;font-size:10px;"></div>
 
 </div>
+<button onclick="document.getElementById('modal-help').style.display='flex'" style="width:32px;height:32px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</button>
 <button onclick="toggleDarkMode()" id="dark-btn-session" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
 <button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
 <button class="btn btn-warn" onclick="confirmReset()">↺</button>
@@ -2372,28 +2374,28 @@ function toggleChrono(){
   const ex = state.activeIdx!==null ? state.exercises[state.activeIdx] : null;
   if(!ex) return;
   if(ex.paused){
-    // Resume: shift openedAt forward so elapsed stays the same
+    // Resume from pause
     ex.openedAt = Date.now() - (ex.pausedElapsed||0)*1000;
     ex.paused = false;
+    if(!window._chronoInterval) startChrono();
+  } else if(!ex.openedAt){
+    // Start from zero (after reset or fresh open)
+    ex.openedAt = Date.now();
+    ex.pausedElapsed = 0;
+    if(!window._chronoInterval) startChrono();
   } else {
-    // Pause: snapshot current elapsed
-    ex.pausedElapsed = ex.openedAt ? Math.floor((Date.now()-ex.openedAt)/1000) : 0;
+    // Pause running timer
+    ex.pausedElapsed = Math.floor((Date.now()-ex.openedAt)/1000);
     ex.paused = true;
   }
   updateChrono();
 }
 function resetExChrono(){
-  if(window._chronoInterval){ clearInterval(window._chronoInterval); window._chronoInterval=null; }
-  const ex=state.exercises[state.activeIdx];
-  if(ex){ ex.openedAt=null; ex.chronoElapsed=0; }
-  const disp=document.getElementById('timer-ex-display');
-  if(disp) disp.textContent='00:00';
-  const btn=document.getElementById('timer-pause-btn');
-  if(btn) btn.textContent='▶ REPRENDRE';
-  const bar=document.getElementById('ex-timer-bar');
-  if(bar){ bar.style.borderBottomColor='#1E2530'; bar.style.animation='none'; }
+  const ex=state.activeIdx!==null ? state.exercises[state.activeIdx] : null;
+  if(ex){ ex.openedAt=null; ex.paused=false; ex.pausedElapsed=0; }
   const exEl=document.getElementById('screen-ex');
   if(exEl) exEl.style.animation='none';
+  updateChrono();
 }
 function updateChrono(){
   // Session timer
@@ -2444,8 +2446,14 @@ function updateChrono(){
       if(bar){ bar.style.borderColor = ex.paused ? '#F59E0B44' : '#1E2530'; bar.style.boxShadow='none'; }
     }
   } else {
-    exEl.textContent='--:--';
+    exEl.textContent='00:00';
+    exEl.style.color='#475569'; exEl.style.animation='';
     if(limEl) limEl.textContent='--:--';
+    if(pauseBtn){
+      pauseBtn.textContent='▶ START';
+      pauseBtn.style.background='#10B98122'; pauseBtn.style.borderColor='#10B981'; pauseBtn.style.color='#10B981';
+    }
+    if(bar){ bar.style.borderColor='#1E2530'; bar.style.boxShadow='none'; }
   }
 }
 function setExTimeLimit(delta){
