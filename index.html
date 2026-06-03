@@ -6239,6 +6239,22 @@ document.getElementById('inp-pass').focus();
 document.addEventListener('DOMContentLoaded', ()=>{
 const uInp = document.getElementById('inp-user');
 if(uInp) uInp.addEventListener('keydown', e=>{ if(e.key==='Enter') document.getElementById('inp-pass').focus(); });
+
+// Force dark styling on login inputs regardless of iOS native light mode
+['inp-user','inp-pass'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+  const applyDark=()=>{
+    el.style.setProperty('background','#1E2530','important');
+    el.style.setProperty('border-color','#334155','important');
+    el.style.setProperty('color','#CBD5E1','important');
+    el.style.setProperty('-webkit-text-fill-color','#CBD5E1','important');
+    el.style.setProperty('caret-color','#CBD5E1','important');
+  };
+  applyDark();
+  el.addEventListener('focus', applyDark);
+  el.addEventListener('blur', applyDark);
+});
 });
 
 </script>
