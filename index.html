@@ -5001,8 +5001,8 @@ let scored = TRI_CHECK_CRITERIA.filter(c=>grades[c.id]>0);
 const avg = scored.length ? scored.reduce((s,c)=>s+(grades[c.id]||0),0)/scored.length : 0;
 
 function triLevel(v){
-  if(v>=4.5)return{l:'EXCELLENT',c:'#10B981'};
-  if(v>=3.5)return{l:'ABOVE STANDARD',c:'#3B82F6'};
+  if(v>=4.5)return{l:'EXCELLENT',c:'#3B82F6'};
+  if(v>=3.5)return{l:'ABOVE STANDARD',c:'#10B981'};
   if(v>=2.5)return{l:'STANDARD',c:'#F59E0B'};
   if(v>=1.5)return{l:'REQUIRES IMPROVEMENT',c:'#F97316'};
   return{l:'UNACCEPTABLE',c:'#EF4444'};
