@@ -938,26 +938,96 @@ Identifiant ou mot de passe incorrect
 
 <!-- CHRONO DE SESSION -->
 <div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">⏱ CHRONO DE SESSION — CONTRÔLE MANUEL</div>
-<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">⏱ CHRONOS — CODES COULEURS & ALERTES</div>
+<div style="display:flex;flex-direction:column;gap:12px;">
+
+<!-- Chrono session : contrôle -->
 <div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:20px;flex-shrink:0;margin-top:1px;">▶</span>
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🕹</span>
 <div>
-<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Vous choisissez quand démarre le chrono global</div>
-<div style="font-size:13px;color:#94A3B8;">Le chrono de session (en haut à gauche de la liste des exercices) ne démarre <strong style="color:#F1F5F9;">pas</strong> automatiquement à la création. Appuyez sur le bouton <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 8px;border-radius:5px;font-size:14px;font-weight:700;">▶</span> pour démarrer. Ainsi, préparer votre séance la veille ne consomme pas le chrono de vol.</div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">CHRONO SESSION — Démarrage manuel (HH:MM:SS)</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:6px;">Affiché en haut à gauche de la vue exercice. Ne démarre <strong style="color:#F1F5F9;">pas</strong> automatiquement — appuyez sur <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 7px;border-radius:5px;font-weight:700;">▶</span> quand vous êtes prêt. Bouton <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 7px;border-radius:5px;font-weight:700;">⏸</span> pour pause (le temps accumulé est conservé).</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-family:monospace;font-size:15px;font-weight:900;color:#10B981;min-width:70px;">00:00→2h</span>
+<div style="flex:1;height:3px;background:#10B981;border-radius:2px;"></div>
+<span style="font-size:12px;color:#10B981;font-weight:700;">VERT</span>
+<span style="font-size:11px;color:#64748B;">Normal, séance en cours</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-family:monospace;font-size:15px;font-weight:900;color:#F59E0B;min-width:70px;">2h→3h50</span>
+<div style="flex:1;height:3px;background:#F59E0B;border-radius:2px;"></div>
+<span style="font-size:12px;color:#F59E0B;font-weight:700;">ORANGE</span>
+<span style="font-size:11px;color:#64748B;">+ légèrement plus grand + 🔔 1 bip à 2h00</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-family:monospace;font-size:15px;font-weight:900;color:#EF4444;min-width:70px;">3h50→+</span>
+<div style="flex:1;height:3px;background:#EF4444;border-radius:2px;"></div>
+<span style="font-size:12px;color:#EF4444;font-weight:700;">ROUGE</span>
+<span style="font-size:11px;color:#64748B;">+ flash rapide + 🔔🔔 2 bips à 3h50</span>
+</div>
+<div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:6px 9px;margin-top:2px;">
+<span style="font-size:11px;color:#EF4444;font-weight:700;">4h00 FIN LÉGALE</span><span style="font-size:11px;color:#64748B;"> → 🔔🔔🔔 5 bips d'alarme finale</span>
 </div>
 </div>
+</div>
+</div>
+
+<!-- Chrono exercice : sans limite -->
 <div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:20px;flex-shrink:0;margin-top:1px;">⏸</span>
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">⏱</span>
 <div>
-<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Pause & reprise</div>
-<div style="font-size:13px;color:#94A3B8;">Appuyez sur <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 8px;border-radius:5px;font-size:14px;font-weight:700;">⏸</span> pour mettre en pause (briefing supplémentaire, pause physiologique...). La durée accumulée est mémorisée. Reprenez avec ▶ sans perdre le temps déjà écoulé.</div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">CHRONO EXERCICE — Sans limite fixée (MM:SS)</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:6px;">Grand affichage central, démarre automatiquement à l'ouverture de l'exercice. Boutons <span style="color:#94A3B8;font-weight:700;">⏸ PAUSE</span> et <span style="color:#EF4444;font-weight:700;">■ STOP</span>.</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:12px;font-weight:700;min-width:70px;color:#F1F5F9;">En cours</span>
+<span style="font-size:13px;color:#F1F5F9;font-weight:900;font-family:monospace;">12:34</span>
+<span style="font-size:11px;color:#64748B;">— blanc/gris clair, neutre</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:12px;font-weight:700;min-width:70px;color:#F59E0B;">En pause</span>
+<span style="font-size:13px;color:#F59E0B;font-weight:900;font-family:monospace;">12:34</span>
+<span style="font-size:11px;color:#64748B;">— orange, temps figé</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:12px;font-weight:700;min-width:70px;color:#475569;">Arrêté</span>
+<span style="font-size:13px;color:#475569;font-weight:900;font-family:monospace;">00:00</span>
+<span style="font-size:11px;color:#64748B;">— gris foncé, remis à zéro</span>
 </div>
 </div>
-<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 11px;margin-top:2px;">
-<div style="font-size:12px;color:#10B981;font-weight:700;margin-bottom:4px;">CHRONO D'EXERCICE (différent)</div>
-<div style="font-size:12px;color:#94A3B8;">Chaque exercice individuel possède son propre chrono (en haut de la vue exercice). Celui-ci démarre automatiquement à l'ouverture de l'exercice, indépendamment du chrono global de session.</div>
 </div>
+</div>
+
+<!-- Chrono exercice : avec limite -->
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎯</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">CHRONO EXERCICE — Avec limite fixée (boutons − / +)</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:6px;">Fixez une limite de temps (1–90 min) avec les boutons <span style="background:#1E2530;border:1px solid #334155;color:#94A3B8;padding:1px 7px;border-radius:50%;font-weight:900;">−</span> et <span style="background:#1E2530;border:1px solid #334155;color:#94A3B8;padding:1px 7px;border-radius:50%;font-weight:900;">+</span> à droite. La couleur évolue selon le ratio temps écoulé / limite :</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:11px;font-weight:700;min-width:90px;color:#10B981;">&lt; 80% limite</span>
+<div style="flex:1;height:3px;background:#10B981;border-radius:2px;"></div>
+<span style="font-size:12px;color:#10B981;font-weight:700;">VERT</span>
+<span style="font-size:11px;color:#64748B;">Barre neutre</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:11px;font-weight:700;min-width:90px;color:#F59E0B;">80%–100%</span>
+<div style="flex:1;height:3px;background:#F59E0B;border-radius:2px;"></div>
+<span style="font-size:12px;color:#F59E0B;font-weight:700;">ORANGE</span>
+<span style="font-size:11px;color:#64748B;">+ pulsation lente, barre orange</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:11px;font-weight:700;min-width:90px;color:#EF4444;">≥ 100%</span>
+<div style="flex:1;height:3px;background:#EF4444;border-radius:2px;"></div>
+<span style="font-size:12px;color:#EF4444;font-weight:700;">ROUGE</span>
+<span style="font-size:11px;color:#64748B;">+ flash rapide + barre rouge avec halo</span>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
