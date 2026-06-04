@@ -596,6 +596,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <button onclick="exportHistoryJSON()" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;">⬇ Export</button>
 <label style="padding:5px 10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:12px;font-weight:700;cursor:pointer;">⬆ Import<input type="file" accept=".json" style="display:none;" onchange="importHistoryJSON(this)"/></label>
+<button onclick="showImportSessionModal()" style="padding:5px 10px;border-radius:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;font-size:12px;font-weight:700;cursor:pointer;">📎</button>
 <button class="btn btn-danger" onclick="if(confirm('Effacer tout ?')){localStorage.removeItem('cbta_history');showHistory();}">🗑</button>
 </div>
 <div class="tabs">
@@ -1110,6 +1111,64 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:10px;justify-content:flex-end;">
 <button class="btn" onclick="closeConfirm()">Annuler</button>
 <button class="btn btn-danger" onclick="doReset()">Effacer</button>
+</div>
+</div>
+</div>
+
+<div id="modal-import-session" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
+<div class="modal-box" style="max-height:92vh;display:flex;flex-direction:column;overflow:hidden;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0;">
+<div>
+<div style="font-size:15px;font-weight:900;color:#8B5CF6;">📎 IMPORTER SESSION EXTERNE</div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;">Rapport d'un autre instructeur</div>
+</div>
+<button onclick="document.getElementById('modal-import-session').style.display='none'" style="width:32px;height:32px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+</div>
+<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+
+<div style="font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:8px;">COMMANDANT DE BORD</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">MATRICULE CPT *</label><input id="imp-mat-cpt" class="form-input" placeholder="ex: 12345" oninput="lookupImportPilot()"/></div>
+<div><label class="form-label">NOM CPT *</label><input id="imp-name-cpt" class="form-input" placeholder="Nom Prénom"/></div>
+</div>
+
+<div style="font-size:10px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:8px;">PREMIER OFFICIER (optionnel)</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">MATRICULE FO</label><input id="imp-mat-fo" class="form-input" placeholder="ex: 67890"/></div>
+<div><label class="form-label">NOM FO</label><input id="imp-name-fo" class="form-input" placeholder="Nom Prénom"/></div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">COMPAGNIE</label><input id="imp-compagnie" class="form-input" placeholder="Air Algérie"/></div>
+<div><label class="form-label">DATE SESSION *</label><input id="imp-date" class="form-input" type="date"/></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">INSTRUCTEUR SOURCE *</label><input id="imp-instructor" class="form-input" placeholder="Cpt Nom Prénom"/></div>
+<div><label class="form-label">INTITULÉ SESSION</label><input id="imp-session-name" class="form-input" placeholder="TRI Check — B737"/></div>
+</div>
+
+<div style="font-size:10px;font-weight:700;color:#F59E0B;letter-spacing:2px;margin-bottom:8px;">SCORES CPT PAR COMPÉTENCE (optionnel · 0 = non évalué)</div>
+<div id="imp-comp-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;"></div>
+
+<div style="margin-bottom:12px;">
+<label class="form-label">NOTES / OBSERVATIONS</label>
+<textarea id="imp-notes" class="note-area" placeholder="Commentaires, contexte, observations de l'instructeur source..." style="min-height:70px;"></textarea>
+</div>
+
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:10px;padding:12px;margin-bottom:6px;">
+<div style="font-size:12px;font-weight:700;color:#8B5CF6;margin-bottom:8px;">📎 RAPPORT PDF ORIGINAL (optionnel)</div>
+<div id="imp-pdf-status" style="font-size:12px;color:#64748B;margin-bottom:8px;">Aucun fichier sélectionné</div>
+<label style="display:block;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;border-radius:9px;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;">
+📎 Choisir un PDF
+<input type="file" id="imp-pdf-input" accept="application/pdf,.pdf" style="display:none;" onchange="loadImportPDF(this)"/>
+</label>
+<div style="font-size:10px;color:#475569;margin-top:6px;text-align:center;">Stocké localement · Taille max recommandée : 2 Mo</div>
+</div>
+
+</div>
+<div style="display:flex;gap:8px;margin-top:12px;flex-shrink:0;">
+<button onclick="document.getElementById('modal-import-session').style.display='none'" class="btn" style="flex:1;">Annuler</button>
+<button onclick="submitImportedSession()" class="btn btn-primary" style="flex:2;padding:13px;font-size:15px;">📎 IMPORTER</button>
 </div>
 </div>
 </div>
@@ -6264,6 +6323,7 @@ if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:
 let h='<div style="padding:14px;">';
 hist.forEach((s,i)=>{
 const sc=parseFloat(s.avgScore)||0;
+const isImported=!!s.imported;
 let compH='';
 COMPETENCIES.forEach(c=>{
 const av=s.compAvgs&&s.compAvgs[c.id]?parseFloat(s.compAvgs[c.id]):0;
@@ -6286,10 +6346,11 @@ compHFo+='<div style="width:26px;font-size:11px;font-weight:700;color:'+cc(av)+'
 }
 const foVals=s.compAvgsFo?Object.values(s.compAvgsFo).filter(v=>v&&parseFloat(v)>0).map(parseFloat):[];
 const foSc=foVals.length?foVals.reduce((a,b)=>a+b,0)/foVals.length:0;
-h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+cc(sc)+';">';
+const borderColor=isImported?'#8B5CF6':cc(sc);
+h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+borderColor+';">';
 h+='<div style="padding:12px 14px;display:flex;justify-content:space-between;">';
-h+='<div><div style="font-size:14px;font-weight:800;color:#F1F5F9;">'+s.sessionName+'</div>';
-h+='<div style="font-size:11px;color:#64748B;">'+s.date+' '+s.time+' · TRI: '+s.instructorName+'</div>';
+h+='<div><div style="font-size:14px;font-weight:800;color:#F1F5F9;">'+s.sessionName+(isImported?'<span style="margin-left:7px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:5px;padding:1px 7px;font-size:9px;font-weight:700;vertical-align:middle;">📎 IMPORTÉ</span>':'')+'</div>';
+h+='<div style="font-size:11px;color:#64748B;">'+s.date+(s.time&&s.time!=='--:--'?' '+s.time:'')+' · TRI: '+s.instructorName+'</div>';
 const r1=s.pilotRole||'CPT', r2=s.foRole||'FO';
 const c1h=r1==='TRI'?'#F59E0B':r1==='FO'?'#10B981':'#3B82F6';
 const c2h=r2==='TRI'?'#F59E0B':r2==='CPT'?'#3B82F6':'#10B981';
@@ -6300,8 +6361,13 @@ if(s.triCheck&&s.triCheck.recommendation){
 }
 h+='</div>';
 h+='<div style="text-align:right;">';
-h+='<div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div>';
-h+='<div style="font-size:9px;font-weight:700;color:'+cc(sc)+';">'+cl(sc)+'</div>';
+if(isImported&&sc===0){
+  h+='<div style="font-size:26px;font-weight:900;color:#475569;">--</div>';
+  h+='<div style="font-size:9px;color:#475569;">non noté</div>';
+}else{
+  h+='<div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div>';
+  h+='<div style="font-size:9px;font-weight:700;color:'+cc(sc)+';">'+cl(sc)+'</div>';
+}
 if(foSc>0) h+='<div style="font-size:11px;font-weight:700;color:#10B981;margin-top:4px;">FO '+foSc.toFixed(2)+'</div>';
 h+='</div></div>';
 if(compH||compHFo){
@@ -6310,6 +6376,11 @@ if(compH||compHFo){
   if(compHFo) h+='<div style="font-size:9px;color:#10B981;font-weight:700;letter-spacing:1px;margin:8px 0 4px;">FO '+s.foName+'</div>'+compHFo;
   h+='</div>';
 }
+if(s.notes&&isImported){
+  h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;background:#8B5CF608;">';
+  h+='<div style="font-size:10px;color:#8B5CF6;font-weight:700;margin-bottom:2px;">📝 NOTES</div>';
+  h+='<div style="font-size:11px;color:#94A3B8;">'+s.notes.replace(/</g,'&lt;')+'</div></div>';
+}
 if((s.strong&&s.strong.length)||(s.weak&&s.weak.length)){
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;">';
 if(s.strong&&s.strong.length) h+='<div style="font-size:11px;color:#10B981;">✓ CPT: '+s.strong.join(', ')+'</div>';
@@ -6317,13 +6388,111 @@ if(s.weak&&s.weak.length) h+='<div style="font-size:11px;color:#EF4444;">△ CPT
 h+='</div>';
 }
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;">';
-h+='<button onclick="printRapportFromHistory('+i+')" style="flex:1;padding:8px;background:#0f172a44;border:1px solid #475569;color:#F1F5F9;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128424;&#65039; PDF</button>';
-h+='<button onclick="envoyerRapportEmail('+i+')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✉ EMAIL</button>';
+if(isImported){
+  if(s.importedPDF) h+='<button onclick="viewImportedPDF('+i+')" style="flex:2;padding:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📄 VOIR PDF</button>';
+}else{
+  h+='<button onclick="printRapportFromHistory('+i+')" style="flex:1;padding:8px;background:#0f172a44;border:1px solid #475569;color:#F1F5F9;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128424;&#65039; PDF</button>';
+  h+='<button onclick="envoyerRapportEmail('+i+')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✉ EMAIL</button>';
+}
 h+='<button onclick="showComparaisonPilote(\''+s.pilotName+'\')" style="flex:1;padding:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128200; ÉVOLUTION</button>';
 h+='</div></div>';
 });
 h+='</div>';
 el.innerHTML=h;
+}
+
+let _impPdfData=null;
+function showImportSessionModal(){
+  ['imp-mat-cpt','imp-name-cpt','imp-mat-fo','imp-name-fo','imp-compagnie','imp-instructor','imp-session-name','imp-notes'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  const today=new Date().toISOString().slice(0,10);
+  const dateEl=document.getElementById('imp-date');if(dateEl)dateEl.value=today;
+  const pdfStatus=document.getElementById('imp-pdf-status');
+  if(pdfStatus)pdfStatus.textContent='Aucun fichier sélectionné';
+  const pdfInput=document.getElementById('imp-pdf-input');if(pdfInput)pdfInput.value='';
+  _impPdfData=null;
+  const grid=document.getElementById('imp-comp-grid');
+  if(grid){
+    grid.innerHTML=COMPETENCIES.map(c=>`<div><label class="form-label" style="color:${c.color};">${c.label}</label><select id="imp-score-${c.id}" class="form-input" style="padding:8px;"><option value="0">— non évalué</option><option value="1">1 — Insuffisant</option><option value="2">2 — Partiellement</option><option value="3">3 — Acceptable</option><option value="4">4 — Bien</option><option value="5">5 — Excellent</option></select></div>`).join('');
+  }
+  document.getElementById('modal-import-session').style.display='flex';
+}
+function lookupImportPilot(){
+  const mat=(document.getElementById('imp-mat-cpt').value||'').trim().toUpperCase();
+  if(mat.length<3)return;
+  const db=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');
+  const found=db[mat];
+  if(found){
+    const nameEl=document.getElementById('imp-name-cpt');
+    if(nameEl&&!nameEl.value)nameEl.value=found.name||'';
+    const cieEl=document.getElementById('imp-compagnie');
+    if(cieEl&&!cieEl.value)cieEl.value=found.company||found.compagnie||'';
+  }
+}
+function loadImportPDF(input){
+  const file=input.files[0];if(!file)return;
+  const statusEl=document.getElementById('imp-pdf-status');
+  const sizeMB=(file.size/1024/1024).toFixed(2);
+  statusEl.innerHTML='<span style="color:#F59E0B;">Chargement...</span>';
+  const reader=new FileReader();
+  reader.onload=function(e){
+    _impPdfData=e.target.result;
+    const warnColor=file.size>2*1024*1024?'#F59E0B':'#10B981';
+    statusEl.innerHTML='<span style="color:'+warnColor+';">✓ '+file.name+' ('+sizeMB+' Mo)</span>'+(file.size>5*1024*1024?'<br><span style="font-size:10px;color:#EF4444;">⚠ Fichier très volumineux</span>':'');
+  };
+  reader.onerror=function(){statusEl.innerHTML='<span style="color:#EF4444;">Erreur de lecture.</span>';_impPdfData=null;};
+  reader.readAsDataURL(file);
+}
+function submitImportedSession(){
+  const matCpt=(document.getElementById('imp-mat-cpt').value||'').trim();
+  const nameCpt=(document.getElementById('imp-name-cpt').value||'').trim();
+  const dateVal=(document.getElementById('imp-date').value||'').trim();
+  const instructor=(document.getElementById('imp-instructor').value||'').trim();
+  if(!matCpt||!nameCpt||!dateVal||!instructor){alert('Champs obligatoires manquants :\nMATRICULE CPT · NOM CPT · DATE · INSTRUCTEUR SOURCE');return;}
+  const matFo=(document.getElementById('imp-mat-fo').value||'').trim();
+  const nameFo=(document.getElementById('imp-name-fo').value||'').trim();
+  const compagnie=(document.getElementById('imp-compagnie').value||'').trim();
+  const sessionName=(document.getElementById('imp-session-name').value||'').trim()||'Session importée';
+  const notes=(document.getElementById('imp-notes').value||'').trim();
+  const compAvgs={};let scoreSum=0,scoreCount=0;
+  COMPETENCIES.forEach(c=>{
+    const sel=document.getElementById('imp-score-'+c.id);
+    const v=sel?parseInt(sel.value):0;
+    if(v>0){compAvgs[c.id]=v.toString();scoreSum+=v;scoreCount++;}
+  });
+  const avgScore=scoreCount>0?(scoreSum/scoreCount).toFixed(2):'0.00';
+  const session={
+    imported:true,importedPDF:_impPdfData||null,
+    date:dateVal,time:'--:--',
+    pilotMatricule:matCpt,pilotName:nameCpt,pilotRole:'CPT',
+    foName:nameFo||null,foMatricule:matFo||null,foRole:nameFo?'FO':null,
+    compagnie,instructorName:instructor,sessionName,
+    avgScore,compAvgs,compAvgsFo:{},
+    notes,exercises:[],strong:[],weak:[],sessionCRM:{},sessionCRMNotes:''
+  };
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  hist.unshift(session);
+  localStorage.setItem('cbta_history',JSON.stringify(hist));
+  updatePilotDB(session);
+  _impPdfData=null;
+  document.getElementById('modal-import-session').style.display='none';
+  showHistory();
+  document.querySelectorAll('#screen-history .tab').forEach(t=>{
+    t.classList.remove('active');
+    if(t.textContent.includes('Sessions'))t.classList.add('active');
+  });
+  _histTab='sessions';
+  renderSessionsList();
+}
+function viewImportedPDF(idx){
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const s=hist[idx];
+  if(!s||!s.importedPDF){alert('Aucun PDF pour cette session.');return;}
+  const win=window.open('','_blank');
+  if(!win){alert('Popup bloqué — autorisez les popups pour ce site.');return;}
+  win.document.write('<html><head><title>Rapport importé</title></head><body style="margin:0;background:#000;"><iframe src="'+s.importedPDF+'" style="width:100%;height:100vh;border:0;"></iframe></body></html>');
+  win.document.close();
 }
 
 function renderPilotesList(){
