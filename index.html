@@ -3292,18 +3292,17 @@ const MANDATORY_QUICK = [
   {id:"windshear_manual",label:"WINDSHEAR ESCAPE"},
   {id:"upset_recovery",  label:"UPSET RECOVERY"},
 ];
-let mandHtml = '<div style="padding:12px 14px 0;">';
-mandHtml += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">';
-mandHtml += '<div style="font-size:10px;font-weight:700;color:#EF4444;letter-spacing:2px;">MANDATORY ITEMS</div>';
-mandHtml += '<div style="font-size:10px;color:#64748B;">Appuyer pour ajouter</div>';
-mandHtml += '</div>';
-mandHtml += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">';
+let mandHtml = '<div style="padding:12px 12px 0;">';
+mandHtml += '<div style="background:#1A0808;border:2px solid #EF444455;border-radius:12px;padding:14px 14px 12px;margin-bottom:12px;">';
+mandHtml += '<div style="font-size:16px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:3px;">⚠️ MANDATORY ITEMS</div>';
+mandHtml += '<div style="font-size:12px;color:#94A3B8;font-weight:600;margin-bottom:12px;">Appuyer pour ajouter à la session</div>';
+mandHtml += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">';
 MANDATORY_QUICK.forEach(function(m){
   const alreadyAdded = state.exercises.some(function(e){return e.sid===m.id;});
-  mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:6px 10px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+(alreadyAdded?'#10B981':'#EF444466')+';background:'+(alreadyAdded?'#10B98122':'#EF444411')+';color:'+(alreadyAdded?'#10B981':'#EF4444')+';">'+(alreadyAdded?'✓ ':'')+m.label+'</button>';
+  mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:13px 10px;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;text-align:left;line-height:1.3;border:2px solid '+(alreadyAdded?'#10B98188':'#EF444488')+';background:'+(alreadyAdded?'#0D2318':'#2A0808')+';color:'+(alreadyAdded?'#10B981':'#EF4444')+';">'+(alreadyAdded?'✅ ':'')+m.label+'</button>';
 });
 mandHtml += '</div>';
-mandHtml += '<div style="height:1px;background:#1E2530;margin:0 -14px 12px;"></div>';
+mandHtml += '</div>';
 mandHtml += '</div>';
 
 el.innerHTML = mandHtml + exs.map((ex,i)=>{
