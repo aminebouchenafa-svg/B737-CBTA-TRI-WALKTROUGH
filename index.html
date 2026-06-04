@@ -429,6 +429,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <button onclick="document.getElementById('modal-help').style.display='flex'" style="width:32px;height:32px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</button>
 <button onclick="toggleDarkMode()" id="dark-btn-session" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
+<button onclick="showScenarioLib()" style="width:32px;height:32px;border-radius:50%;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Bibliothèque de scénarios">📋</button>
 <button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
 <button class="btn btn-warn" onclick="confirmReset()">↺</button>
 <button class="btn btn-primary" onclick="showDebrief()">DEBRIEF →</button>
@@ -630,11 +631,16 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:11px;color:#64748B;margin-bottom:10px;font-weight:700;letter-spacing:1px;">FILTRER PAR COMPÉTENCE</div>
 <div id="scen-comp-filters" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;"></div>
 <div style="font-size:11px;color:#64748B;margin-bottom:8px;font-weight:700;letter-spacing:1px;">TYPE DE SÉANCE</div>
-<div style="display:flex;gap:6px;margin-bottom:16px;">
+<div style="display:flex;gap:6px;margin-bottom:8px;">
 <button class="scen-type-btn active" onclick="setScenType('ALL',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #64748B;background:#64748B22;color:#94A3B8;">TOUT</button>
-<button class="scen-type-btn" onclick="setScenType('OPC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #3B82F644;background:transparent;color:#64748B;">OPC</button>
-<button class="scen-type-btn" onclick="setScenType('PC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #F59E0B44;background:transparent;color:#64748B;">PC</button>
-<button class="scen-type-btn" onclick="setScenType('LINE',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #10B98144;background:transparent;color:#64748B;">LINE</button>
+<button class="scen-type-btn" onclick="setScenType('OPC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #FFE60066;background:transparent;color:#64748B;">OPC</button>
+<button class="scen-type-btn" onclick="setScenType('PC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #FF61C766;background:transparent;color:#64748B;">PC</button>
+<button class="scen-type-btn" onclick="setScenType('LINE',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #AAFF0066;background:transparent;color:#64748B;">LINE</button>
+</div>
+<div style="background:#080B10;border:1px solid #1E2530;border-radius:10px;padding:10px 12px;margin-bottom:14px;display:flex;flex-direction:column;gap:6px;">
+<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#FFE600;background:#FFE60022;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #FFE600;">OPC</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;"><b style="color:#CBD5E1;">Operator Proficiency Check</b> — Contrôle réglementaire EASA obligatoire tous les 6 mois. Inclut tous les exercices mandatory.</span></div>
+<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#FF61C7;background:#FF61C722;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #FF61C7;">PC</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;"><b style="color:#CBD5E1;">Proficiency Check CBTA</b> — Contrôle de compétences ciblé selon l'approche CBTA. Focalisé sur des compétences spécifiques à renforcer.</span></div>
+<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#AAFF00;background:#AAFF0022;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #AAFF00;">LINE</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;"><b style="color:#CBD5E1;">Line Check</b> — Contrôle en ligne opérationnel, simulation d'un vol réel avec dégradations progressives et évaluation globale.</span></div>
 </div>
 <div id="scen-list" style="display:flex;flex-direction:column;gap:10px;"></div>
 </div>
@@ -2287,30 +2293,39 @@ var NNC_SYSTEMS = {
 };
 
 const SESSION_SCENARIOS=[
-{id:"opc_standard",title:"OPC Standard Complet",type:"OPC",focus:["FPM","PRO","WLM"],
+{id:"opc_standard",title:"OPC Standard Complet",type:"OPC",color:"#FFE600",focus:["FPM","PRO","WLM"],
 desc:"Session OPC 4h complète avec tous les exercices obligatoires et patterns standards.",
 exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"stall_recovery",min:10},{sid:"windshear_manual",min:10},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"non_ils",min:20},{sid:"go_around",min:12}]},
-{id:"opc_lvo",title:"OPC LVO — Basse Visibilité",type:"OPC",focus:["FPM","SA","PRO"],
+{id:"opc_lvo",title:"OPC LVO — Basse Visibilité",type:"OPC",color:"#00E5FF",focus:["FPM","SA","PRO"],
 desc:"Session OPC centrée sur les opérations par basse visibilité CAT II/III. Inclut tous les obligatoires.",
 exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"lvo_lvto",min:20},{sid:"lvo_cat2",min:20},{sid:"lvo_cat3a",min:25},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15}]},
-{id:"opc_rnp",title:"OPC RNP — Navigation de Précision",type:"OPC",focus:["FPM","KNO","SA"],
+{id:"opc_rnp",title:"OPC RNP — Navigation de Précision",type:"OPC",color:"#39FF14",focus:["FPM","KNO","SA"],
 desc:"Session OPC avec approches RNP/RNAV et RNP AR. Exercices obligatoires inclus.",
 exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"rnp_ar",min:25},{sid:"rnp_approach",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15}]},
-{id:"wlm_sa_focus",title:"Focus WLM / SA",type:"PC",focus:["WLM","SA","PSD"],
+{id:"wlm_sa_focus",title:"Focus WLM / SA",type:"PC",color:"#FF61C7",focus:["WLM","SA","PSD"],
 desc:"Session centrée sur la gestion de la charge de travail et la conscience situationnelle en situations dégradées.",
 exercises:[{sid:"airspeed_unrel",min:20},{sid:"cabin_alt",min:15},{sid:"windshear_auto",min:12},{sid:"engine_fire",min:20},{sid:"nnc_loss_gen",min:18},{sid:"tcas_ra",min:8},{sid:"upset_recovery",min:10},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"non_ils",min:20}]},
-{id:"crm_ltw_focus",title:"Focus CRM / LTW",type:"PC",focus:["LTW","COM","PSD"],
+{id:"crm_ltw_focus",title:"Focus CRM / LTW",type:"PC",color:"#FF00FF",focus:["LTW","COM","PSD"],
 desc:"Session axée sur le leadership, la communication et le travail d'équipage en environnement dégradé.",
 exercises:[{sid:"engine_fire",min:25},{sid:"loss_thrust_both",min:25},{sid:"cabin_alt",min:15},{sid:"windshear_manual",min:12},{sid:"runaway_stab",min:15},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15}]},
-{id:"psd_kno_focus",title:"Focus PSD / KNO",type:"PC",focus:["PSD","KNO","SA"],
+{id:"psd_kno_focus",title:"Focus PSD / KNO",type:"PC",color:"#FF6B35",focus:["PSD","KNO","SA"],
 desc:"Session dédiée à la prise de décision, la résolution de problèmes et les connaissances systèmes.",
 exercises:[{sid:"airspeed_unrel",min:20},{sid:"runaway_stab",min:15},{sid:"emergency_desc",min:15},{sid:"nnc_loss_sys_a",min:15},{sid:"nnc_fuel_leak",min:12},{sid:"gpws",min:10},{sid:"engine_fire",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"non_ils",min:20}]},
-{id:"nnc_intensive",title:"Session NNC Intensive",type:"PC",focus:["PRO","WLM","KNO"],
+{id:"nnc_intensive",title:"Session NNC Intensive",type:"PC",color:"#FF3A20",focus:["PRO","WLM","KNO"],
 desc:"Session axée sur les procédures anormales et non-normales avec CRM complet.",
 exercises:[{sid:"rto",min:10},{sid:"nnc_eng_fail",min:20},{sid:"nnc_loss_gen",min:15},{sid:"nnc_loss_sys_a",min:15},{sid:"nnc_cargo_fwd",min:15},{sid:"cabin_alt",min:15},{sid:"engine_fire",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ldg",min:15}]},
-{id:"full_assessment",title:"Bilan Compétences Complètes",type:"LINE",focus:["KNO","WLM","SA","PSD","LTW","FPM","FPA","COM","PRO"],
+{id:"full_assessment",title:"Bilan Compétences Complètes",type:"LINE",color:"#AAFF00",focus:["KNO","WLM","SA","PSD","LTW","FPM","FPA","COM","PRO"],
 desc:"Évaluation complète de toutes les compétences CBTA. Line Check ou Check d'aptitude complet.",
 exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"airspeed_unrel",min:15},{sid:"cabin_alt",min:12},{sid:"windshear_manual",min:12},{sid:"upset_recovery",min:10},{sid:"tcas_ra",min:8},{sid:"lvo_cat2",min:20},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"non_ils",min:18}]},
+{id:"opc_upset_eme",title:"OPC Upset / Urgences",type:"OPC",color:"#FF9500",focus:["FPM","SA","WLM"],
+desc:"Session OPC ciblée sur les situations extrêmes : UPRT, Windshear, perte moteur basse altitude.",
+exercises:[{sid:"ef_v1v2",min:15},{sid:"upset_recovery",min:15},{sid:"stall_recovery",min:12},{sid:"windshear_manual",min:12},{sid:"windshear_auto",min:10},{sid:"gpws",min:10},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"tcas_ra",min:8},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"go_around",min:12}]},
+{id:"pc_lvo_rnp",title:"PC LVO + RNP Combiné",type:"PC",color:"#7DF9FF",focus:["FPM","KNO","PSD","SA"],
+desc:"Proficiency Check combinant basse visibilité et navigation de précision RNP/RNAV.",
+exercises:[{sid:"lvo_lvto",min:20},{sid:"lvo_cat2",min:20},{sid:"lvo_cat3a",min:25},{sid:"rnp_approach",min:20},{sid:"rnp_ar",min:25},{sid:"airspeed_unrel",min:15},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15}]},
+{id:"line_check_full",title:"Line Check Opérationnel",type:"LINE",color:"#DFFF00",focus:["KNO","WLM","SA","PSD","LTW","COM","PRO"],
+desc:"Simulation de Line Check réel avec vol normal, dégradation progressive et gestion CRM complète.",
+exercises:[{sid:"ef_v1v2",min:15},{sid:"go_around",min:15},{sid:"engine_fire",min:20},{sid:"cabin_alt",min:12},{sid:"nnc_loss_gen",min:15},{sid:"tcas_ra",min:8},{sid:"lvo_cat2",min:20},{sid:"rnp_approach",min:20},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"non_ils",min:18}]},
 ];
 
 const COMPETENCIES = [
@@ -2719,6 +2734,15 @@ function saveEditSession(){
   renderExList();
 }
 
+// ── TOAST ---──────────────────────────────────────────────────────────────────
+function showToast(msg,duration){
+  duration=duration||3500;
+  let t=document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';t.style.cssText='position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:#0F1218;border:1px solid #8B5CF6;color:#E2E8F0;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:9999;max-width:88vw;text-align:center;box-shadow:0 4px 20px #8B5CF644;pointer-events:none;transition:opacity 0.3s;';document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._tid);t._tid=setTimeout(()=>{t.style.opacity='0';},duration);
+}
+
 // ── NAVIGATION ---────────────────────────────────────────────────────────────
 function showScreen(id){
 document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -2740,6 +2764,7 @@ state.sigPilot=''; state.sigPilotLocked=false; state.sigInstructor=''; state.sig
 state.sessionStart   = Date.now();
 window._sesAlerts    = {two:false,nearEnd:false,end:false};
 startChrono();
+if(_pendingScenarioId){const _ps=SESSION_SCENARIOS.find(x=>x.id===_pendingScenarioId);_pendingScenarioId=null;if(_ps){setTimeout(()=>{_applyScenario(_ps);showToast('📋 Scénario "'+_ps.title+'" chargé automatiquement.');},300);}}
 const pilotLine = state.foName ? state.pilotName + " / " + state.foName : state.pilotName;
 document.getElementById('hdr-pilot').textContent = pilotLine;
 document.getElementById('hdr-session').textContent = state.sessionName;
@@ -3701,6 +3726,7 @@ function setFontSize(s){
 }
 var _scenTypeFilter='ALL';
 var _scenCompFilter=[];
+var _pendingScenarioId=null;
 function showScenarioLib(){
   document.getElementById('modal-scenarios').style.display='flex';
   // Build competency filter chips
@@ -3728,16 +3754,16 @@ function renderScenList(){
     const compOk=_scenCompFilter.length===0||_scenCompFilter.some(c=>s.focus.includes(c));
     return typeOk&&compOk;
   });
-  const TYPE_COL={OPC:'#3B82F6',PC:'#F59E0B',LINE:'#10B981'};
   document.getElementById('scen-list').innerHTML=filtered.map(s=>{
-    const tc=TYPE_COL[s.type]||'#64748B';
+    const nc=s.color||'#8B5CF6';
     const totalMin=s.exercises.reduce((a,e)=>a+e.min,0);
     const exNames=s.exercises.map(e=>{const sc=ALL_SC.find(x=>x.id===e.sid);return sc?sc.title:'?';});
     const focusHtml=s.focus.map(f=>{const c=COMPETENCIES.find(x=>x.id===f);return c?`<span style="font-size:10px;font-weight:700;color:${c.color};background:${c.color}22;padding:2px 7px;border-radius:10px;border:1px solid ${c.color}44;">${c.label}</span>`:''}).join('');
-    return `<div style="background:#080B10;border:1px solid #1E2530;border-radius:12px;padding:14px;border-left:3px solid ${tc};">
+    const isPending=_pendingScenarioId===s.id;
+    return `<div style="background:#080B10;border:1px solid ${nc}44;border-radius:12px;padding:14px;border-left:4px solid ${nc};box-shadow:0 0 12px ${nc}22;">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;flex:1;">${s.title}</div>
-<span style="font-size:10px;font-weight:700;color:${tc};background:${tc}22;padding:2px 8px;border-radius:10px;margin-left:8px;flex-shrink:0;">${s.type}</span>
+<div style="font-size:14px;font-weight:800;color:#F1F5F9;flex:1;text-shadow:0 0 8px ${nc}55;">${s.title}</div>
+<span style="font-size:10px;font-weight:700;color:${nc};background:${nc}22;padding:2px 8px;border-radius:10px;margin-left:8px;flex-shrink:0;text-shadow:0 0 6px ${nc};">${s.type}</span>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">${focusHtml}</div>
 <div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">${s.desc}</div>
@@ -3746,17 +3772,24 @@ function renderScenList(){
 <span>${s.exercises.length} exercices</span>
 </div>
 <div style="font-size:11px;color:#334155;margin-bottom:10px;line-height:1.7;">${exNames.slice(0,6).join(' · ')}${exNames.length>6?` · +${exNames.length-6} autres`:''}</div>
-<button onclick="loadScenario('${s.id}')" style="width:100%;padding:10px;border-radius:8px;background:${tc}22;border:1px solid ${tc}44;color:${tc};font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">CHARGER CE SCÉNARIO →</button>
+<button onclick="loadScenario('${s.id}')" style="width:100%;padding:10px;border-radius:8px;background:${nc}22;border:1px solid ${nc};color:${nc};font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;text-shadow:0 0 8px ${nc};box-shadow:0 0 10px ${nc}33;">${isPending?'✅ EN ATTENTE DE SESSION':'CHARGER CE SCÉNARIO →'}</button>
 </div>`;
   }).join('')||'<div style="text-align:center;color:#475569;padding:20px;">Aucun scénario pour ces filtres.</div>';
 }
 function loadScenario(id){
   const s=SESSION_SCENARIOS.find(x=>x.id===id);
-  if(!s||!state.sessionStart){
-    alert('Démarrez une session avant de charger un scénario.');
+  if(!s) return;
+  if(!state.sessionStart){
+    _pendingScenarioId=id;
+    document.getElementById('modal-scenarios').style.display='none';
+    showToast('✅ Scénario "'+s.title+'" prêt — il sera chargé au démarrage de la session.');
+    showScreen('home');
     return;
   }
   if(state.exercises.length>0&&!confirm('Cette action remplacera les exercices actuels. Continuer ?')) return;
+  _applyScenario(s);
+}
+function _applyScenario(s){
   state.exercises=[];
   s.exercises.forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid);
