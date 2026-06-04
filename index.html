@@ -5903,18 +5903,19 @@ function showComparaisonPilote(key,name){
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 const keyUpper=(key||'').toUpperCase();
 const nameLower=(name||key||'').toLowerCase().trim();
-const sessions=hist.filter(s=>{
+const sessions=hist.map((s,histIdx)=>{
   const cptKey=(s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim();
   const foKey=(s.foMatricule||'').toUpperCase()||(s.foName||'').toLowerCase().trim();
-  return cptKey===keyUpper||foKey===keyUpper||(s.pilotName||'').toLowerCase().trim()===nameLower||(s.foName||'').toLowerCase().trim()===nameLower;
-}).map(s=>{
-  const cptKey=(s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim();
+  const match=cptKey===keyUpper||foKey===keyUpper||(s.pilotName||'').toLowerCase().trim()===nameLower||(s.foName||'').toLowerCase().trim()===nameLower;
+  if(!match) return null;
   const isCpt=cptKey===keyUpper||(s.pilotName||'').toLowerCase().trim()===nameLower;
   const cAvgs=isCpt?s.compAvgs:s.compAvgsFo;
-  let sc=isCpt?parseFloat(s.avgScore)||0:0;
-  if(!isCpt&&s.compAvgsFo){const v=Object.values(s.compAvgsFo).filter(x=>x&&parseFloat(x)>0).map(parseFloat);sc=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;}
-  return {...s,_sc:sc,_avgs:cAvgs};
-}).filter(s=>s._sc>0).reverse();
+  // Score = average of this pilot's individual competency grades (not global avgScore)
+  let sc=0;
+  if(cAvgs){const v=Object.values(cAvgs).filter(x=>x&&parseFloat(x)>0).map(parseFloat);sc=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;}
+  if(!sc&&isCpt) sc=parseFloat(s.avgScore)||0;
+  return {...s,_sc:sc,_avgs:cAvgs,_histIdx:histIdx};
+}).filter(s=>s&&s._sc>0).reverse();
 const seen=new Set();
 const uniq=sessions.filter(s=>{const k=s.date+s.sessionName;if(seen.has(k))return false;seen.add(k);return true;});
 document.getElementById('comp-pilote-name').textContent=(name||key);
@@ -5934,10 +5935,13 @@ if(latestS){
   hdr+='</div></div>';
 }
 if(uniq.length<2){
-  let out=hdr+'<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:14px;">'+(uniq.length===0?'Aucune session trouvée':'Minimum 2 sessions pour la progression')+'</div></div>';
-  if(uniq.length===1){
-    const sc=uniq[0]._sc;
-    out+=`<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;"><div style="display:flex;justify-content:space-between;padding:6px 0;"><div><div style="font-size:12px;color:#F1F5F9;">${uniq[0].sessionName}</div><div style="font-size:10px;color:#64748B;">${uniq[0].date}</div></div><div style="font-size:18px;font-weight:800;color:${cc(sc)};">${sc.toFixed(2)}</div></div></div>`;
+  let out=hdr;
+  if(uniq.length===0){out+='<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:14px;">Aucune session trouvée</div></div>';}
+  else{
+    const s=uniq[0];const sc=s._sc;
+    out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
+    out+=_sessionRow(s);
+    out+='</div><div style="text-align:center;color:#64748B;font-size:12px;padding:10px;">Minimum 2 sessions pour la progression</div>';
   }
   el.innerHTML=out;showScreen('comparaison');return;
 }
@@ -5964,23 +5968,36 @@ compEvo+='<div style="font-size:14px;font-weight:800;color:'+dc+';">'+(diff>=0?'
 let out=hdr;
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
 out+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
-out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;">ÉVOLUTION SCORE GLOBAL</div>';
+out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;">ÉVOLUTION SCORE INDIVIDUEL</div>';
 out+='<div style="font-size:13px;font-weight:800;color:'+(gd>=0?'#10B981':'#EF4444')+'">'+(gd>=0?'+':'')+gd.toFixed(2)+' pts</div></div>';
 out+=svg+'</div>';
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
 out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">ÉVOLUTION PAR COMPÉTENCE</div>';
 out+=(compEvo||'<div style="color:#64748B;font-size:12px;">Données insuffisantes</div>')+'</div>';
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;">';
-out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">SESSIONS ('+uniq.length+')</div>';
-uniq.slice().reverse().forEach(s=>{
-const sc=s._sc;
-out+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1E2530;">';
-out+='<div><div style="font-size:12px;color:#F1F5F9;">'+s.sessionName+'</div><div style="font-size:10px;color:#64748B;">'+s.date+' · '+(s.instructorName||'')+'</div></div>';
-out+='<div style="font-size:18px;font-weight:800;color:'+cc(sc)+';">'+sc.toFixed(2)+'</div></div>';
-});
+out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:10px;">SESSIONS ('+uniq.length+')</div>';
+uniq.slice().reverse().forEach(s=>{out+=_sessionRow(s);});
 out+='</div>';
 el.innerHTML=out;
 showScreen('comparaison');
+}
+function _sessionRow(s){
+const sc=s._sc;
+let r='<div style="background:#080B10;border-radius:8px;padding:10px;margin-bottom:8px;">';
+r+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">';
+r+='<div><div style="font-size:13px;font-weight:800;color:#F1F5F9;">'+s.sessionName+'</div>';
+r+='<div style="font-size:10px;color:#64748B;margin-top:2px;">'+s.date+' · '+(s.instructorName||'')+'</div></div>';
+r+='<div style="text-align:right;"><div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+sc.toFixed(2)+'</div>';
+r+='<div style="font-size:9px;color:#64748B;">note individuelle</div></div></div>';
+if(s._avgs){
+  const items=COMPETENCIES.filter(c=>s._avgs[c.id]&&parseFloat(s._avgs[c.id])>0);
+  if(items.length){r+='<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">';
+    items.forEach(c=>{const v=parseFloat(s._avgs[c.id]);r+='<span style="font-size:10px;font-weight:700;color:'+cc(v)+';background:'+cc(v)+'11;padding:2px 7px;border-radius:8px;border:1px solid '+cc(v)+'33;">'+c.label+' '+v.toFixed(1)+'</span>';});
+  r+='</div>';}
+}
+if(s.rapportHTML) r+='<button onclick="printRapportFromHistory('+s._histIdx+')" style="width:100%;padding:8px;background:#8B5CF622;border:1px solid #8B5CF644;color:#8B5CF6;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:1px;">📄 RAPPORT FINAL</button>';
+r+='</div>';
+return r;
 }
 
 function envoyerRapportEmail(idx){
