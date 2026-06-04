@@ -586,6 +586,8 @@ Identifiant ou mot de passe incorrect
 <div class="title" style="color:#8B5CF6;">TABLEAU DE BORD</div>
 <div class="sub" id="dashboard-sub">TRI</div>
 </div>
+<button onclick="exportHistoryJSON()" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;">⬇ Export</button>
+<label style="padding:5px 10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:12px;font-weight:700;cursor:pointer;">⬆ Import<input type="file" accept=".json" style="display:none;" onchange="importHistoryJSON(this)"/></label>
 <button class="btn btn-danger" onclick="if(confirm('Effacer tout ?')){localStorage.removeItem('cbta_history');showHistory();}">🗑</button>
 </div>
 <div class="tabs">
@@ -5708,7 +5710,7 @@ return;
 }
 const allScores=hist.map(s=>parseFloat(s.avgScore)||0).filter(v=>v>0);
 const avgG=allScores.length?allScores.reduce((a,b)=>a+b,0)/allScores.length:0;
-const pilotes=[...new Set(hist.map(s=>s.pilotName))].length;
+const pilotKeys=new Set();hist.forEach(s=>{pilotKeys.add((s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim());if(s.foName)pilotKeys.add((s.foMatricule||'').toUpperCase()||(s.foName||'').toLowerCase().trim());});const pilotes=pilotKeys.size;
 const exTotal=hist.reduce((s,h)=>s+(h.exercisesCount||0),0);
 // Compétences globales
 const ct={};COMPETENCIES.forEach(c=>{ct[c.id]={t:0,n:0};});
@@ -5843,66 +5845,105 @@ const el=document.getElementById('history-content');
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">Aucun pilote</div>';return;}
 const pilotes={};
-function _addPilot(key,name,sc,compAvgs,session){
+function _addPilot(key,name,matricule,company,sc,compAvgs,session){
   if(!key) return;
-  if(!pilotes[key])pilotes[key]={name,sessions:[],scores:[],ct:{}};
+  if(!pilotes[key])pilotes[key]={name,matricule,company,sessions:[],scores:[],ct:{}};
   COMPETENCIES.forEach(c=>{if(!pilotes[key].ct[c.id])pilotes[key].ct[c.id]={t:0,n:0};});
+  if(name) pilotes[key].name=name;
+  if(matricule) pilotes[key].matricule=matricule;
+  if(company) pilotes[key].company=company;
   pilotes[key].sessions.push(session);
   if(sc>0)pilotes[key].scores.push(sc);
   if(compAvgs)Object.entries(compAvgs).forEach(([id,v])=>{if(v&&parseFloat(v)>0){pilotes[key].ct[id].t+=parseFloat(v);pilotes[key].ct[id].n++;}});
 }
 hist.forEach(s=>{
-  _addPilot((s.pilotName||'').toLowerCase().trim(), s.pilotName, parseFloat(s.avgScore)||0, s.compAvgs, s);
+  const cptKey=(s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim();
+  _addPilot(cptKey,s.pilotName,s.pilotMatricule||'',s.compagnie||'',parseFloat(s.avgScore)||0,s.compAvgs,s);
   if(s.foName&&s.compAvgsFo){
+    const foKey=(s.foMatricule||'').toUpperCase()||(s.foName||'').toLowerCase().trim();
     const foVals=Object.values(s.compAvgsFo).filter(v=>v&&parseFloat(v)>0).map(parseFloat);
     const foSc=foVals.length?foVals.reduce((a,b)=>a+b,0)/foVals.length:0;
-    _addPilot((s.foName||'').toLowerCase().trim(), s.foName, foSc, s.compAvgsFo, s);
+    _addPilot(foKey,s.foName,s.foMatricule||'',s.compagnie||'',foSc,s.compAvgsFo,s);
   }
 });
+// Search bar
 let h='<div style="padding:14px;">';
-Object.values(pilotes).forEach(p=>{
+h+='<div style="display:flex;gap:8px;margin-bottom:14px;"><input id="pilot-search" class="form-input" style="margin:0;" placeholder="🔍 Rechercher par matricule ou nom..." oninput="filterPilotCards(this.value)"/></div>';
+Object.entries(pilotes).forEach(([key,p])=>{
 const avg=p.scores.length?p.scores.reduce((a,b)=>a+b,0)/p.scores.length:0;
 const trend=p.scores.length>=2?(p.scores[p.scores.length-1]>p.scores[0]?'↑ Progression':'↓ Régression'):'1re session';
 const tc=trend.includes('↑')?'#10B981':trend.includes('↓')?'#EF4444':'#64748B';
 const weak=COMPETENCIES.filter(c=>{const a=p.ct[c.id].n>0?p.ct[c.id].t/p.ct[c.id].n:0;return a>0&&a<3.5;}).map(c=>c.label);
-h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+cc(avg)+';">';
+const escapedKey=key.replace(/'/g,"\\'");
+h+='<div class="pilot-card" data-key="'+key+'" data-name="'+(p.name||'').toLowerCase()+'" data-mat="'+(p.matricule||'').toLowerCase()+'" style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+cc(avg)+';">';
 h+='<div style="padding:12px 14px;display:flex;justify-content:space-between;align-items:center;">';
 h+='<div><div style="font-size:15px;font-weight:800;color:#F1F5F9;">'+p.name+'</div>';
+if(p.matricule) h+='<div style="font-size:11px;color:#8B5CF6;font-weight:700;margin-top:1px;">'+p.matricule+(p.company?' · '+p.company:'')+'</div>';
+else if(p.company) h+='<div style="font-size:11px;color:#64748B;margin-top:1px;">'+p.company+'</div>';
 h+='<div style="font-size:11px;color:#64748B;">'+p.sessions.length+' session'+(p.sessions.length>1?'s':'')+' · dern. '+(p.sessions[0]&&p.sessions[0].date?p.sessions[0].date:'')+'</div>';
 h+='<div style="font-size:12px;color:'+tc+';font-weight:700;margin-top:2px;">'+trend+'</div></div>';
 h+='<div style="text-align:right;"><div style="font-size:26px;font-weight:900;color:'+cc(avg)+';">'+avg.toFixed(2)+'</div>';
 h+='<div style="font-size:9px;color:#64748B;">moy. globale</div></div></div>';
 if(weak.length) h+='<div style="padding:6px 14px;border-top:1px solid #1E2530;background:#EF444408;"><div style="font-size:10px;color:#EF4444;">△ À consolider: '+weak.join(', ')+'</div></div>';
-h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;"><button onclick="showComparaisonPilote(\''+p.name+'\')" style="width:100%;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📈 VOIR ÉVOLUTION</button></div>';
+h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;"><button onclick="showComparaisonPilote(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\')" style="width:100%;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📈 VOIR DOSSIER COMPLET</button></div>';
 h+='</div>';
 });
 h+='</div>';
 el.innerHTML=h;
 }
+function filterPilotCards(q){
+q=q.toLowerCase().trim();
+document.querySelectorAll('.pilot-card').forEach(c=>{
+  const match=!q||c.dataset.name.includes(q)||c.dataset.mat.includes(q);
+  c.style.display=match?'':'none';
+});
+}
 
-function showComparaisonPilote(name){
+function showComparaisonPilote(key,name){
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
-const nameLower=(name||'').toLowerCase().trim();
-// Find sessions where person is CPT or FO, map to unified format
-const sessions=hist.filter(s=>
-  (s.pilotName&&s.pilotName.toLowerCase().trim()===nameLower)||
-  (s.foName&&s.foName.toLowerCase().trim()===nameLower)
-).map(s=>{
-  const isCpt=s.pilotName&&s.pilotName.toLowerCase().trim()===nameLower;
+const keyUpper=(key||'').toUpperCase();
+const nameLower=(name||key||'').toLowerCase().trim();
+const sessions=hist.filter(s=>{
+  const cptKey=(s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim();
+  const foKey=(s.foMatricule||'').toUpperCase()||(s.foName||'').toLowerCase().trim();
+  return cptKey===keyUpper||foKey===keyUpper||(s.pilotName||'').toLowerCase().trim()===nameLower||(s.foName||'').toLowerCase().trim()===nameLower;
+}).map(s=>{
+  const cptKey=(s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim();
+  const isCpt=cptKey===keyUpper||(s.pilotName||'').toLowerCase().trim()===nameLower;
   const cAvgs=isCpt?s.compAvgs:s.compAvgsFo;
   let sc=isCpt?parseFloat(s.avgScore)||0:0;
   if(!isCpt&&s.compAvgsFo){const v=Object.values(s.compAvgsFo).filter(x=>x&&parseFloat(x)>0).map(parseFloat);sc=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;}
   return {...s,_sc:sc,_avgs:cAvgs};
 }).filter(s=>s._sc>0).reverse();
-document.getElementById('comp-pilote-name').textContent=name;
+const seen=new Set();
+const uniq=sessions.filter(s=>{const k=s.date+s.sessionName;if(seen.has(k))return false;seen.add(k);return true;});
+document.getElementById('comp-pilote-name').textContent=(name||key);
 const el=document.getElementById('comparaison-content');
-if(sessions.length<2){
-el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:14px;">Minimum 2 sessions requises</div></div>';
-showScreen('comparaison');return;
+// Pilot info header
+const latestS=hist.find(s=>{const ck=(s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim();const fk=(s.foMatricule||'').toUpperCase()||(s.foName||'').toLowerCase().trim();return ck===keyUpper||fk===keyUpper;});
+let hdr='';
+if(latestS){
+  const mat=(latestS.pilotMatricule||latestS.foMatricule)||'';
+  const co=latestS.compagnie||'';
+  hdr='<div style="background:#080B10;border:1px solid #8B5CF633;border-radius:10px;padding:12px;margin-bottom:12px;display:flex;gap:12px;align-items:center;">';
+  hdr+='<div style="font-size:32px;">✈️</div><div>';
+  hdr+='<div style="font-size:15px;font-weight:800;color:#F1F5F9;">'+(name||key)+'</div>';
+  if(mat) hdr+='<div style="font-size:12px;color:#8B5CF6;font-weight:700;">Matricule : '+mat+'</div>';
+  if(co) hdr+='<div style="font-size:11px;color:#64748B;">'+co+'</div>';
+  hdr+='<div style="font-size:11px;color:#64748B;">'+uniq.length+' session'+(uniq.length>1?'s enregistrées':' enregistrée')+'</div>';
+  hdr+='</div></div>';
+}
+if(uniq.length<2){
+  let out=hdr+'<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:14px;">'+(uniq.length===0?'Aucune session trouvée':'Minimum 2 sessions pour la progression')+'</div></div>';
+  if(uniq.length===1){
+    const sc=uniq[0]._sc;
+    out+=`<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;"><div style="display:flex;justify-content:space-between;padding:6px 0;"><div><div style="font-size:12px;color:#F1F5F9;">${uniq[0].sessionName}</div><div style="font-size:10px;color:#64748B;">${uniq[0].date}</div></div><div style="font-size:18px;font-weight:800;color:${cc(sc)};">${sc.toFixed(2)}</div></div></div>`;
+  }
+  el.innerHTML=out;showScreen('comparaison');return;
 }
 const w=300,h2=120,p2=28;
-const xS=(w-2*p2)/(sessions.length-1),yS=(h2-2*p2)/5;
-const pts=sessions.map((s,i)=>({x:p2+i*xS,y:h2-p2-s._sc*yS,v:s._sc,d:s.date}));
+const xS=(w-2*p2)/(uniq.length-1),yS=(h2-2*p2)/5;
+const pts=uniq.map((s,i)=>({x:p2+i*xS,y:h2-p2-s._sc*yS,v:s._sc,d:s.date}));
 const lc=pts[pts.length-1].v>=pts[0].v?'#10B981':'#EF4444';
 const path=pts.map((pt,i)=>(i===0?'M':'L')+pt.x+','+pt.y).join(' ');
 const grid=[1,2,3,4,5].map(v=>{const y=h2-p2-v*yS;return'<line x1="'+p2+'" y1="'+y+'" x2="'+(w-p2)+'" y2="'+y+'" stroke="#1E2530" stroke-width="1"/><text x="'+(p2-4)+'" y="'+(y+4)+'" font-size="9" fill="#64748B" text-anchor="end">'+v+'</text>';}).join('');
@@ -5911,7 +5952,7 @@ const svg='<svg viewBox="0 0 '+w+' '+h2+'" style="width:100%;height:140px;">'+gr
 const gd=pts[pts.length-1].v-pts[0].v;
 let compEvo='';
 COMPETENCIES.forEach(c=>{
-const vals=sessions.map(s=>s._avgs&&s._avgs[c.id]?parseFloat(s._avgs[c.id]):null).filter(v=>v!==null);
+const vals=uniq.map(s=>s._avgs&&s._avgs[c.id]?parseFloat(s._avgs[c.id]):null).filter(v=>v!==null);
 if(vals.length<2)return;
 const diff=vals[vals.length-1]-vals[0];
 const dc=diff>0?'#10B981':diff<0?'#EF4444':'#64748B';
@@ -5920,7 +5961,8 @@ compEvo+='<div style="width:38px;font-size:11px;font-weight:700;color:'+c.color+
 compEvo+='<div style="flex:1;font-size:11px;color:#94A3B8;">'+vals[0].toFixed(1)+' → <strong style="color:'+cc(vals[vals.length-1])+';">'+vals[vals.length-1].toFixed(1)+'</strong></div>';
 compEvo+='<div style="font-size:14px;font-weight:800;color:'+dc+';">'+(diff>=0?'↑':'↓')+' '+Math.abs(diff).toFixed(1)+'</div></div>';
 });
-let out='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
+let out=hdr;
+out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
 out+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
 out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;">ÉVOLUTION SCORE GLOBAL</div>';
 out+='<div style="font-size:13px;font-weight:800;color:'+(gd>=0?'#10B981':'#EF4444')+'">'+(gd>=0?'+':'')+gd.toFixed(2)+' pts</div></div>';
@@ -5929,11 +5971,11 @@ out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px
 out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">ÉVOLUTION PAR COMPÉTENCE</div>';
 out+=(compEvo||'<div style="color:#64748B;font-size:12px;">Données insuffisantes</div>')+'</div>';
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;">';
-out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">SESSIONS ('+sessions.length+')</div>';
-sessions.slice().reverse().forEach(s=>{
+out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">SESSIONS ('+uniq.length+')</div>';
+uniq.slice().reverse().forEach(s=>{
 const sc=s._sc;
 out+='<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1E2530;">';
-out+='<div><div style="font-size:12px;color:#F1F5F9;">'+s.sessionName+'</div><div style="font-size:10px;color:#64748B;">'+s.date+'</div></div>';
+out+='<div><div style="font-size:12px;color:#F1F5F9;">'+s.sessionName+'</div><div style="font-size:10px;color:#64748B;">'+s.date+' · '+(s.instructorName||'')+'</div></div>';
 out+='<div style="font-size:18px;font-weight:800;color:'+cc(sc)+';">'+sc.toFixed(2)+'</div></div>';
 });
 out+='</div>';
@@ -6478,7 +6520,97 @@ if(uInp) uInp.addEventListener('keydown', e=>{ if(e.key==='Enter') document.getE
 });
 });
 
+// ── EXPORT / IMPORT JSON ─────────────────────────────────────────────────────
+function exportHistoryJSON(){
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const db=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');
+  const data={version:1,exported:new Date().toISOString(),history:hist,pilotdb:db};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='cbta_backup_'+new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')+'.json';
+  a.click();URL.revokeObjectURL(url);
+  showToast('✅ Backup exporté — '+hist.length+' session(s), '+Object.keys(db).length+' pilote(s)');
+}
+function importHistoryJSON(inp){
+  const file=inp.files[0];if(!file) return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const data=JSON.parse(e.target.result);
+      const incoming=data.history||data;
+      if(!Array.isArray(incoming)){showToast('❌ Fichier invalide');return;}
+      const existing=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+      if(!confirm('Importer '+incoming.length+' session(s) ?\n\nFUSIONNER avec les '+existing.length+' sessions existantes ?\n\n(Annuler = remplacer)')){
+        // Replace
+        localStorage.setItem('cbta_history',JSON.stringify(incoming));
+        if(data.pilotdb) localStorage.setItem('cbta_pilotdb',JSON.stringify(data.pilotdb));
+        showToast('✅ '+incoming.length+' sessions importées (remplacement)');
+      } else {
+        // Merge: combine and deduplicate by date+sessionName+pilotName
+        const merged=[...incoming,...existing];
+        const seen=new Set();
+        const deduped=merged.filter(s=>{const k=(s.date||'')+(s.sessionName||'')+(s.pilotName||'');if(seen.has(k))return false;seen.add(k);return true;});
+        deduped.sort((a,b)=>new Date(b.date)-new Date(a.date));
+        localStorage.setItem('cbta_history',JSON.stringify(deduped));
+        if(data.pilotdb){const edb=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
+        showToast('✅ Fusion : '+deduped.length+' sessions au total');
+      }
+      inp.value='';renderHistContent();
+    }catch(err){showToast('❌ Erreur lecture fichier');}
+  };
+  reader.readAsText(file);
+}
+
+// ── MODE PRÉSENTATION ────────────────────────────────────────────────────────
+function showPresentation(){
+  const el=document.getElementById('pres-overlay');
+  if(!el) return;
+  // Build content from current debrief state
+  const closed=state.exercises.filter(e=>e.closed);
+  const ct={};COMPETENCIES.forEach(c=>{ct[c.id]={t:0,n:0};});
+  closed.forEach(ex=>{const cs=ex.cs||{};Object.entries(cs).forEach(([cid,cd])=>{if(cd&&cd.g>0){ct[cid].t+=cd.g;ct[cid].n++;}});});
+  let total=0,count=0;closed.forEach(ex=>{const st=exStats(ex);if(st&&st.avg>0){total+=st.avg;count++;}});
+  const globalAvg=count>0?total/count:0;
+  const comps=COMPETENCIES.map(c=>({...c,avg:ct[c.id].n>0?ct[c.id].t/ct[c.id].n:0}));
+  const pilotLine=state.foName?state.pilotName+' / '+state.foName:state.pilotName;
+  let html='<div style="background:#03050A;min-height:100vh;padding:32px 24px;display:flex;flex-direction:column;gap:24px;">';
+  // Header
+  html+='<div style="text-align:center;border-bottom:2px solid #1E2530;padding-bottom:20px;">';
+  html+='<div style="font-size:11px;letter-spacing:4px;color:#64748B;margin-bottom:8px;">B737 NG · CBTA TRI · '+new Date().toLocaleDateString('fr-FR')+'</div>';
+  html+='<div style="font-size:28px;font-weight:900;color:#F1F5F9;margin-bottom:4px;">'+pilotLine+'</div>';
+  html+='<div style="font-size:14px;color:#94A3B8;">'+state.sessionName+'</div>';
+  html+='</div>';
+  // Global score
+  const gc=cc(globalAvg);
+  html+='<div style="text-align:center;background:'+gc+'11;border:2px solid '+gc+'44;border-radius:20px;padding:20px;">';
+  html+='<div style="font-size:12px;color:'+gc+';font-weight:700;letter-spacing:3px;margin-bottom:8px;">SCORE GLOBAL</div>';
+  html+='<div style="font-size:80px;font-weight:900;color:'+gc+';line-height:1;text-shadow:0 0 30px '+gc+'66;">'+globalAvg.toFixed(2)+'</div>';
+  html+='<div style="font-size:14px;color:'+gc+';font-weight:700;margin-top:8px;letter-spacing:2px;">'+cl(globalAvg)+'</div>';
+  html+='</div>';
+  // Competencies grid
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">';
+  comps.forEach(c=>{
+    if(!c.avg) return;
+    const cv=cc(c.avg);
+    html+='<div style="background:'+cv+'11;border:1px solid '+cv+'33;border-radius:14px;padding:14px;text-align:center;">';
+    html+='<div style="font-size:10px;font-weight:700;color:'+c.color+';letter-spacing:2px;margin-bottom:6px;">'+c.label+'</div>';
+    html+='<div style="font-size:36px;font-weight:900;color:'+cv+';">'+c.avg.toFixed(1)+'</div>';
+    html+='</div>';
+  });
+  html+='</div>';
+  html+='<div style="text-align:center;font-size:11px;color:#1E2530;margin-top:auto;">Appuyez pour fermer</div>';
+  html+='</div>';
+  el.innerHTML=html;
+  el.style.display='block';
+  el.onclick=function(){el.style.display='none';};
+}
+
 </script>
+
+<!-- MODE PRÉSENTATION OVERLAY -->
+<div id="pres-overlay" style="display:none;position:fixed;inset:0;z-index:99999;overflow-y:auto;-webkit-overflow-scrolling:touch;"></div>
 
 </body>
 </html>
