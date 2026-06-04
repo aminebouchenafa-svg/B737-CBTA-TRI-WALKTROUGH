@@ -5198,7 +5198,7 @@ function setPCResult(r){
 function renderProfCheck(){
   const pc = state.profCheck;
   const grades = pc.grades||{};
-  const GRADE_COLORS = {5:'#10B981',4:'#3B82F6',3:'#F59E0B',2:'#F97316',1:'#EF4444','/':'#64748B'};
+  const GRADE_COLORS = {5:'#3B82F6',4:'#10B981',3:'#F59E0B',2:'#F97316',1:'#EF4444','/':'#64748B'};
   const GRADE_VALS = ['5','4','3','2','1','/'];
 
   function gradeRow(item){
@@ -5223,7 +5223,7 @@ function renderProfCheck(){
   h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:10px 12px;margin-bottom:14px;">';
   h+='<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">ÉCHELLE DE NOTATION</div>';
   h+='<div style="display:flex;flex-wrap:wrap;gap:6px;">';
-  [['5','Très Bien','#10B981'],['4','Bien','#3B82F6'],['3','Standard Requis','#F59E0B'],['2','Insuffisant','#F97316'],['1','Insatisfaisant','#EF4444'],['/','N/A','#64748B']].forEach(function(arr){
+  [['5','Exemplaire','#3B82F6'],['4','Très Bien','#10B981'],['3','Standard Requis','#F59E0B'],['2','Insuffisant','#F97316'],['1','Insatisfaisant','#EF4444'],['/','N/A','#64748B']].forEach(function(arr){
     var v=arr[0],l=arr[1],c=arr[2];
     h+='<span style="background:'+c+'22;border:1px solid '+c+'55;color:'+c+';border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700;">'+v+' = '+l+'</span>';
   });
@@ -6699,7 +6699,7 @@ rows+=`<div style="border:1px solid #e2e8f0;border-left:4px solid #555;border-ra
 </div>
 ${negList.length?`<div style="font-size:11px;color:#94a3b8;margin-bottom:7px;font-style:italic;">Observations negatives: ${negList.join(' · ')}</div>`:''}
 <div style="font-size:11px;font-weight:700;color:#f59e0b;margin-bottom:5px;">RECOMMANDATIONS:</div>
-${items.map(rec=>`<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f1f5f9;display:flex;gap:7px;line-height:1.5;"><span style="flex-shrink:0;">→</span>${rec}</div>`).join('')}
+${items.map(rec=>`<div style="font-size:14px;padding:5px 0;border-bottom:1px solid #f1f5f9;display:flex;gap:8px;line-height:1.6;"><span style="flex-shrink:0;">→</span>${rec}</div>`).join('')}
 </div>`;
 });
 if(!rows){
