@@ -371,6 +371,10 @@ Identifiant ou mot de passe incorrect
 <button id="s1-fo"  onclick="setRoleSeat1('FO',this)"  style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">FO</button>
 <button id="s1-tri" onclick="setRoleSeat1('TRI',this)" style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">TRI CHECK</button>
 </div>
+<div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;">
+<input id="inp-mat-cpt" class="form-input" style="flex:1;margin:0;" placeholder="Matricule (ex: AF12345)" oninput="lookupPilotByMat(this.value,'cpt')"/>
+<div id="badge-cpt" style="padding:5px 10px;border-radius:8px;font-size:10px;font-weight:800;flex-shrink:0;background:#1E2530;color:#475569;letter-spacing:1px;">NEW</div>
+</div>
 <input id="inp-cpt" class="form-input" placeholder="Nom du stagiaire siège gauche"/>
 </div>
 <div style="margin-bottom:12px;">
@@ -380,7 +384,15 @@ Identifiant ou mot de passe incorrect
 <button id="s2-fo"  onclick="setRoleSeat2('FO',this)"  style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #10B981;background:#10B98122;color:#10B981;">FO</button>
 <button id="s2-tri" onclick="setRoleSeat2('TRI',this)" style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">TRI CHECK</button>
 </div>
+<div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;">
+<input id="inp-mat-fo" class="form-input" style="flex:1;margin:0;" placeholder="Matricule FO (optionnel)" oninput="lookupPilotByMat(this.value,'fo')"/>
+<div id="badge-fo" style="padding:5px 10px;border-radius:8px;font-size:10px;font-weight:800;flex-shrink:0;background:#1E2530;color:#475569;letter-spacing:1px;">NEW</div>
+</div>
 <input id="inp-fo" class="form-input" placeholder="Nom du stagiaire siège droit (optionnel)"/>
+</div>
+<div style="margin-bottom:12px;">
+<label class="form-label">COMPAGNIE</label>
+<input id="inp-company" class="form-input" placeholder="ex: Air Algérie, Air France, Transavia..."/>
 </div>
 <div style="font-size:12px;color:var(--mut);text-align:center;margin-bottom:16px;">Laissez siège droit vide si évaluation d'un seul stagiaire</div>
 <div style="margin-bottom:12px;">
@@ -2755,6 +2767,9 @@ state.sessionName    = document.getElementById('inp-session').value || "Session"
 state.pilotName      = document.getElementById('inp-cpt').value || "Pilote";
 state.foName         = document.getElementById('inp-fo').value || "";
 state.instructorName = (document.getElementById('inp-instructor')||{}).value || state.currentUser || "TRI";
+state.pilotMatricule = ((document.getElementById('inp-mat-cpt')||{}).value||'').trim().toUpperCase();
+state.foMatricule    = ((document.getElementById('inp-mat-fo')||{}).value||'').trim().toUpperCase();
+state.compagnie      = ((document.getElementById('inp-company')||{}).value||'').trim();
 state.pilotRole      = _s1Role;
 state.foRole         = _s2Role;
 state.triCheckGrades = {};
@@ -3726,6 +3741,43 @@ function setFontSize(s){
 var _scenTypeFilter='ALL';
 var _scenCompFilter=[];
 var _pendingScenarioId=null;
+function lookupPilotByMat(mat,seat){
+  mat=(mat||'').trim().toUpperCase();
+  const badge=document.getElementById('badge-'+seat);
+  const nameInp=document.getElementById(seat==='cpt'?'inp-cpt':'inp-fo');
+  const compInp=document.getElementById('inp-company');
+  if(!mat){
+    if(badge){badge.style.background='#1E2530';badge.style.color='#475569';badge.textContent='NEW';}
+    return;
+  }
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const matKey=seat==='cpt'?'pilotMatricule':'foMatricule';
+  const nameKey=seat==='cpt'?'pilotName':'foName';
+  const sessions=hist.filter(s=>(s[matKey]||'').toUpperCase()===mat);
+  if(sessions.length>0){
+    const latest=sessions[0];
+    if(nameInp&&!nameInp.value) nameInp.value=latest[nameKey]||'';
+    if(compInp&&!compInp.value&&latest.compagnie) compInp.value=latest.compagnie;
+    if(badge){badge.style.background='#10B98122';badge.style.color='#10B981';badge.textContent='✓ '+sessions.length+' SESSION'+(sessions.length>1?'S':'');}
+  } else {
+    if(badge){badge.style.background='#1E2530';badge.style.color='#475569';badge.textContent='NOUVEAU';}
+  }
+}
+function updatePilotDB(session){
+  if(!session.pilotMatricule&&!session.foMatricule) return;
+  const db=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');
+  function upsert(mat,name,company){
+    mat=(mat||'').toUpperCase();if(!mat) return;
+    if(!db[mat]) db[mat]={name,company:company||'',sessionCount:0,lastSeen:''};
+    if(name) db[mat].name=name;
+    if(company) db[mat].company=company;
+    db[mat].sessionCount=(db[mat].sessionCount||0)+1;
+    db[mat].lastSeen=session.date;
+  }
+  if(session.pilotMatricule) upsert(session.pilotMatricule,session.pilotName,session.compagnie);
+  if(session.foMatricule&&session.foName) upsert(session.foMatricule,session.foName,session.compagnie);
+  localStorage.setItem('cbta_pilotdb',JSON.stringify(db));
+}
 function showScenarioLib(){
   document.getElementById('modal-scenarios').style.display='flex';
   // Build competency filter chips
@@ -5517,6 +5569,11 @@ state.sessionStart=null;
 document.getElementById('inp-session').value='';
 document.getElementById('inp-cpt').value='';
 document.getElementById('inp-fo').value='';
+const _mCpt=document.getElementById('inp-mat-cpt');if(_mCpt)_mCpt.value='';
+const _mFo=document.getElementById('inp-mat-fo');if(_mFo)_mFo.value='';
+const _mCo=document.getElementById('inp-company');if(_mCo)_mCo.value='';
+const _bCpt=document.getElementById('badge-cpt');if(_bCpt){_bCpt.style.background='#1E2530';_bCpt.style.color='#475569';_bCpt.textContent='NEW';}
+const _bFo=document.getElementById('badge-fo');if(_bFo){_bFo.style.background='#1E2530';_bFo.style.color='#475569';_bFo.textContent='NEW';}
 showScreen('home');
 }
 
@@ -5583,7 +5640,10 @@ date: new Date().toLocaleDateString('fr-FR'),
 time: new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}),
 sessionName: state.sessionName,
 pilotName: state.pilotName,
+pilotMatricule: state.pilotMatricule||'',
 foName: state.foName,
+foMatricule: state.foMatricule||'',
+compagnie: state.compagnie||'',
 pilotRole: state.pilotRole||'CPT',
 foRole: state.foRole||'FO',
 instructorName: state.instructorName,
@@ -5612,6 +5672,7 @@ const hist = JSON.parse(localStorage.getItem('cbta_history')||'[]');
 hist.unshift(session);
 if(hist.length>100) hist.pop();
 localStorage.setItem('cbta_history', JSON.stringify(hist));
+updatePilotDB(session);
 } catch(e){ console.log('History save error:', e); }
 }
 
