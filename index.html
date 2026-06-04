@@ -411,13 +411,16 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:13px;color:#FBBF24;font-weight:600;text-shadow:0 0 8px #F59E0B44;">By Cpt Bouchenafa Mohamed Amine</div>
 <div style="font-size:11px;color:#334155;margin-top:3px;">© 2025 CBTA TRI Companion · B737NG QRH Rev55 · FCTM Rev25</div>
 <div style="font-size:10px;color:#1E2530;margin-top:2px;">Tous droits réservés · Usage instructeur uniquement</div>
+<div style="margin-top:10px;display:flex;align-items:center;justify-content:center;">
+<button id="btn-training-mode" onclick="toggleTrainingMode()" style="padding:7px 18px;border-radius:20px;background:transparent;border:2px solid #334155;color:#475569;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;">🎭 MODE ENTRAÎNEMENT</button>
+</div>
 </div>
 </div>
 </div>
 
 <div class="screen" id="screen-briefing">
 <div class="topbar">
-<button class="btn" onclick="showScreen('home')">← Retour</button>
+<button class="btn" onclick="(state.exercises&&state.exercises.length>0)?showScreen('session'):showScreen('home')">← Retour</button>
 <div style="flex:1;margin-left:10px;">
 <div class="title" style="color:#F59E0B;">BRIEFING PRÉ-SESSION</div>
 <div class="sub" id="briefing-sub">Menaces à identifier avant le vol</div>
@@ -432,6 +435,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div class="screen" id="screen-session">
+<div id="training-banner" style="display:none;background:#8B5CF6;color:#fff;text-align:center;padding:5px;font-size:11px;font-weight:800;letter-spacing:2px;flex-shrink:0;">🎭 MODE ENTRAÎNEMENT — Session non enregistrée</div>
 <div class="topbar">
 <div style="flex:1;min-width:0;">
 <div class="title" id="hdr-pilot">Pilote</div>
@@ -443,6 +447,7 @@ Identifiant ou mot de passe incorrect
 <button onclick="toggleDarkMode()" id="dark-btn-session" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
 <button onclick="showScenarioLib()" style="width:32px;height:32px;border-radius:50%;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Bibliothèque de scénarios">📋</button>
 <button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
+<button class="btn" onclick="showBriefing()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:13px;padding:6px 9px;" title="Briefing pré-session">📋</button>
 <button class="btn btn-warn" onclick="confirmReset()">↺</button>
 <button class="btn btn-primary" onclick="showDebrief()">DEBRIEF →</button>
 </div>
@@ -480,6 +485,7 @@ Identifiant ou mot de passe incorrect
   <div style="text-align:left;min-width:64px;">
     <div style="font-size:8px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">SESSION</div>
     <div id="timer-session" style="font-family:ui-monospace,monospace;font-size:18px;font-weight:900;color:#10B981;letter-spacing:2px;transition:color 0.4s,font-size 0.3s;">00:00:00</div>
+    <button id="btn-sess-timer" onclick="toggleSessionTimer()" style="margin-top:3px;padding:2px 10px;border-radius:12px;background:transparent;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:800;cursor:pointer;letter-spacing:1px;">▶</button>
   </div>
   <div style="text-align:center;flex:1;">
     <div style="font-size:8px;color:#64748B;letter-spacing:1.5px;font-weight:700;margin-bottom:1px;">EXERCICE</div>
@@ -676,8 +682,8 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">🎨 CODE COULEUR — NOTES CBTA</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-<div style="background:#10B98122;border:1px solid #10B98155;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#10B981;">5</div><div style="font-size:13px;color:#10B981;font-weight:700;">EXEMPLAIRE</div><div style="font-size:12px;color:#94A3B8;">Maîtrise totale, pilote autonome</div></div>
-<div style="background:#3B82F622;border:1px solid #3B82F655;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#3B82F6;">4</div><div style="font-size:13px;color:#3B82F6;font-weight:700;">AU-DESSUS DU STANDARD</div><div style="font-size:12px;color:#94A3B8;">Bonne performance, légères corrections</div></div>
+<div style="background:#3B82F622;border:1px solid #3B82F655;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#3B82F6;">5</div><div style="font-size:13px;color:#3B82F6;font-weight:700;">EXEMPLAIRE</div><div style="font-size:12px;color:#94A3B8;">Maîtrise totale, pilote autonome</div></div>
+<div style="background:#10B98122;border:1px solid #10B98155;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#10B981;">4</div><div style="font-size:13px;color:#10B981;font-weight:700;">AU-DESSUS DU STANDARD</div><div style="font-size:12px;color:#94A3B8;">Bonne performance, légères corrections</div></div>
 <div style="background:#F59E0B22;border:1px solid #F59E0B55;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#F59E0B;">3</div><div style="font-size:13px;color:#F59E0B;font-weight:700;">STANDARD REQUIS</div><div style="font-size:12px;color:#94A3B8;">Acceptable, standard AOM respecté</div></div>
 <div style="background:#F9731622;border:1px solid #F9731655;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#F97316;">2</div><div style="font-size:13px;color:#F97316;font-weight:700;">SOUS-STANDARD</div><div style="font-size:12px;color:#94A3B8;">Lacunes identifiées, suivi requis</div></div>
 <div style="background:#EF444422;border:1px solid #EF444455;border-radius:8px;padding:8px 10px;grid-column:span 2;"><div style="font-size:22px;font-weight:900;color:#EF4444;">1</div><div style="font-size:13px;color:#EF4444;font-weight:700;">INACCEPTABLE</div><div style="font-size:12px;color:#94A3B8;">Performance inacceptable — remédiation nécessaire</div></div>
@@ -2693,9 +2699,13 @@ function resetExChrono(){
 function updateChrono(){
   // Session timer
   const sesEl = document.getElementById('timer-session');
-  if(sesEl && state.sessionStart){
-    const sesSec = Math.floor((Date.now()-state.sessionStart)/1000);
+  if(sesEl){
+    const sesSec = state.sessionRunning && state.sessionStart
+      ? Math.floor((Date.now()-state.sessionStart)/1000)+(state.sessionElapsed||0)
+      : (state.sessionElapsed||0);
     sesEl.textContent = fmtHMS(sesSec);
+    const _sesRunBtn=document.getElementById('btn-sess-timer');
+    if(_sesRunBtn){_sesRunBtn.textContent=state.sessionRunning?'⏸':'▶';_sesRunBtn.style.color=state.sessionRunning?'#F59E0B':'#10B981';_sesRunBtn.style.borderColor=state.sessionRunning?'#F59E0B':'#10B981';}
     if(sesSec >= 13800){ // 3h50 — near end: red + flash
       sesEl.style.color='#EF4444'; sesEl.style.fontSize='22px';
       sesEl.style.animation='chronoAlarm 0.7s ease-in-out infinite';
@@ -2919,7 +2929,9 @@ state.foRole         = _s2Role;
 state.triCheckGrades = {};
 state.triCheckNotes  = "";
 state.triRecommendation = "";
-state.sessionStart   = Date.now();
+state.sessionStart   = null;
+state.sessionElapsed = 0;
+state.sessionRunning = false;
 window._sesAlerts    = {two:false,nearEnd:false,end:false};
 startChrono();
 if(_pendingScenarioId){const _ps=SESSION_SCENARIOS.find(x=>x.id===_pendingScenarioId);_pendingScenarioId=null;if(_ps){setTimeout(()=>{_applyScenario(_ps);showToast('📋 Scénario "'+_ps.title+'" chargé automatiquement.');},300);}}
@@ -5184,6 +5196,34 @@ function showProfCheck(){
   showScreen('profcheck');
 }
 
+function toggleTrainingMode(){
+  const cur=localStorage.getItem('cbta_training')==='1';
+  const next=!cur;
+  localStorage.setItem('cbta_training',next?'1':'0');
+  const btn=document.getElementById('btn-training-mode');
+  const banner=document.getElementById('training-banner');
+  if(btn){btn.style.background=next?'#8B5CF622':'transparent';btn.style.borderColor=next?'#8B5CF6':'#334155';btn.style.color=next?'#8B5CF6':'#475569';}
+  if(banner)banner.style.display=next?'block':'none';
+  showToast(next?'🎭 Mode entraînement activé — sessions non enregistrées':'✅ Mode normal réactivé');
+}
+function initTrainingMode(){
+  const on=localStorage.getItem('cbta_training')==='1';
+  const btn=document.getElementById('btn-training-mode');
+  const banner=document.getElementById('training-banner');
+  if(btn&&on){btn.style.background='#8B5CF622';btn.style.borderColor='#8B5CF6';btn.style.color='#8B5CF6';}
+  if(banner)banner.style.display=on?'block':'none';
+}
+function toggleSessionTimer(){
+  if(!state.sessionRunning){
+    state.sessionStart=Date.now();
+    state.sessionRunning=true;
+    if(!window._sesAlerts)window._sesAlerts={two:false,nearEnd:false,end:false};
+  }else{
+    state.sessionElapsed=(state.sessionElapsed||0)+Math.floor((Date.now()-state.sessionStart)/1000);
+    state.sessionStart=null;
+    state.sessionRunning=false;
+  }
+}
 function setPCGrade(id, val){
   if(!state.profCheck.grades) state.profCheck.grades={};
   state.profCheck.grades[id] = state.profCheck.grades[id]===val ? null : val;
@@ -5724,6 +5764,7 @@ showScreen('home');
 }
 
 function saveSessionToHistory(){
+  if(localStorage.getItem('cbta_training')==='1'){showToast('🎭 Mode entraînement — session non enregistrée');return;}
 try {
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length) return;
