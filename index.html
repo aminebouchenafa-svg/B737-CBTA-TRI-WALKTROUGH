@@ -677,7 +677,9 @@ Identifiant ou mot de passe incorrect
 </div>
 <button onclick="document.getElementById('modal-help').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
-<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom;">
+<div style="zoom:1.25;transform-origin:top left;">
+<div style="text-align:center;font-size:11px;color:#334155;padding:0 0 8px;letter-spacing:0.5px;">🔍 Pincez pour zoomer</div>
 
 <!-- CODE COULEUR -->
 <div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
@@ -909,11 +911,92 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 
+<!-- MODE ENTRAÎNEMENT -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:12px;">🎭 MODE ENTRAÎNEMENT (MODE FANTÔME)</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎭</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Session non enregistrée</div>
+<div style="font-size:13px;color:#94A3B8;">Sur l'écran d'accueil, appuyez sur <span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700;">🎭 MODE ENTRAÎNEMENT</span> pour activer ce mode. En mode entraînement, les sessions ne sont <strong style="color:#EF4444;">pas</strong> sauvegardées dans l'historique. Idéal pour préparer une séance la veille, tester des scénarios ou se familiariser avec l'interface.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🟣</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Bannière violette de rappel</div>
+<div style="font-size:13px;color:#94A3B8;">Une bannière <span style="background:#8B5CF6;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700;">🎭 MODE ENTRAÎNEMENT — Session non enregistrée</span> s'affiche en haut de la session. Impossible de confondre avec une vraie session.</div>
+</div>
+</div>
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:9px 11px;margin-top:2px;">
+<div style="font-size:12px;color:#8B5CF6;font-weight:700;margin-bottom:4px;">POUR DÉSACTIVER</div>
+<div style="font-size:12px;color:#94A3B8;">Retournez sur l'accueil et appuyez à nouveau sur 🎭 MODE ENTRAÎNEMENT. Le bouton repassera en mode normal et les prochaines sessions seront archivées.</div>
+</div>
+</div>
+</div>
+
+<!-- CHRONO DE SESSION -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">⏱ CHRONO DE SESSION — CONTRÔLE MANUEL</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:20px;flex-shrink:0;margin-top:1px;">▶</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Vous choisissez quand démarre le chrono global</div>
+<div style="font-size:13px;color:#94A3B8;">Le chrono de session (en haut à gauche de la liste des exercices) ne démarre <strong style="color:#F1F5F9;">pas</strong> automatiquement à la création. Appuyez sur le bouton <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 8px;border-radius:5px;font-size:14px;font-weight:700;">▶</span> pour démarrer. Ainsi, préparer votre séance la veille ne consomme pas le chrono de vol.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:20px;flex-shrink:0;margin-top:1px;">⏸</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Pause & reprise</div>
+<div style="font-size:13px;color:#94A3B8;">Appuyez sur <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 8px;border-radius:5px;font-size:14px;font-weight:700;">⏸</span> pour mettre en pause (briefing supplémentaire, pause physiologique...). La durée accumulée est mémorisée. Reprenez avec ▶ sans perdre le temps déjà écoulé.</div>
+</div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 11px;margin-top:2px;">
+<div style="font-size:12px;color:#10B981;font-weight:700;margin-bottom:4px;">CHRONO D'EXERCICE (différent)</div>
+<div style="font-size:12px;color:#94A3B8;">Chaque exercice individuel possède son propre chrono (en haut de la vue exercice). Celui-ci démarre automatiquement à l'ouverture de l'exercice, indépendamment du chrono global de session.</div>
+</div>
+</div>
+</div>
+
+<!-- RÉFÉRENCE TEM & OBs -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">📖 RÉFÉRENCE TEM & OBs — BOUTON REF</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">📖</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Accès aux références Boeing directement depuis le débrief</div>
+<div style="font-size:13px;color:#94A3B8;">Dans le débrief, le bouton <span style="background:#06B6D422;border:1px solid #06B6D4;color:#06B6D4;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700;">📖 REF</span> dans la barre supérieure ouvre une référence complète en deux onglets.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🗂</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Deux onglets de référence</div>
+<div style="font-size:13px;color:#94A3B8;display:flex;flex-direction:column;gap:5px;">
+<span><span style="color:#06B6D4;font-weight:700;">TEM CARD</span> — Boeing Threat &amp; Error Management : définitions menaces/erreurs/UAS, séquence de gestion, contre-mesures</span>
+<span><span style="color:#3B82F6;font-weight:700;">CORE OBs</span> — Les 9 compétences CBTA avec leurs observables comportementaux détaillés : parfait pour ancrer les apprentissages pendant le débrief avec le stagiaire</span>
+</div>
+</div>
+</div>
+<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:9px 11px;margin-top:2px;">
+<div style="font-size:12px;color:#06B6D4;font-weight:700;margin-bottom:4px;">ASTUCE DÉBRIEF COLLECTIF</div>
+<div style="font-size:12px;color:#94A3B8;">Combinez <span style="color:#8B5CF6;font-weight:700;">📺 Présentation</span> (scores en grand) et <span style="color:#06B6D4;font-weight:700;">📖 REF</span> (OBs) pour un débrief structuré sur projecteur : les stagiaires identifient leurs comportements dans les OBs pendant que leurs scores sont affichés.</div>
+</div>
+</div>
+</div>
+
 <!-- ASTUCES -->
 <div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">💡 ASTUCES RAPIDES</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:flex;gap:8px;"><span style="color:#F59E0B;font-size:15px;">⏱</span><span style="font-size:13px;color:#CBD5E1;">Chrono automatique à chaque exercice — <span style="color:#94A3B8;">⏸ PAUSE</span> pour suspendre, <span style="color:#EF4444;">■ STOP</span> pour remettre à zéro</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#10B981;font-size:15px;">▶</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">Chrono SESSION</span> (haut gauche) — manuel : appuyez ▶ pour démarrer, ⏸ pour pauser. Le chrono <span style="color:#F1F5F9;font-weight:700;">EXERCICE</span> démarre lui automatiquement</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#8B5CF6;font-size:15px;">🎭</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#8B5CF6;font-weight:700;">Mode Entraînement</span> sur l'accueil — sessions non archivées, bannière violette de rappel</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#06B6D4;font-size:15px;">📖</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#06B6D4;font-weight:700;">Bouton REF</span> dans le débrief — TEM Card Boeing + OBs des 9 compétences, toujours accessible</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#F59E0B;font-size:15px;">📋</span><span style="font-size:13px;color:#CBD5E1;">Bouton <span style="color:#F59E0B;font-weight:700;">📋</span> dans la barre session — retour au briefing pré-session à tout moment</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#3B82F6;font-size:15px;">A</span><span style="font-size:13px;color:#CBD5E1;">Taille police : boutons <span style="font-weight:700;">A- A A+ A++</span> sur l'écran d'accueil (en haut à droite)</span></div>
 <div style="display:flex;gap:8px;"><span style="font-size:15px;">☀️</span><span style="font-size:13px;color:#CBD5E1;">Mode jour/nuit : bouton ☀️ accessible sur tous les écrans</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#10B981;font-size:15px;">✓</span><span style="font-size:13px;color:#CBD5E1;">Clôturez chaque exercice avec <span style="color:#10B981;font-weight:700;">CLÔTURER</span> pour qu'il soit compté dans le débrief</span></div>
@@ -925,6 +1008,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
+</div>
 </div>
 <button onclick="document.getElementById('modal-help').style.display='none'" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:12px;flex-shrink:0;">Fermer le guide</button>
 </div>
