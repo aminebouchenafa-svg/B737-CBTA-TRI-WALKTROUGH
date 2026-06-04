@@ -544,6 +544,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <button onclick="toggleDarkMode()" id="dark-btn-deb" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
 <button class="btn" onclick="showPresentation()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:11px;">PRÉSENTATION</button>
+<button class="btn" style="background:#06B6D422;border-color:#06B6D4;color:#06B6D4;font-size:11px;padding:6px 10px;" onclick="document.getElementById('modal-ref').style.display='flex'">📖 REF</button>
 <button class="btn" onclick="showProfCheck()" style="background:#3B82F622;border-color:#3B82F6;color:#3B82F6;font-size:11px;padding:6px 10px;">☑ PROF CHECK</button>
 <button class="btn" onclick="showRapport()" style="background:#10B98122;border-color:#10B981;color:#10B981;font-size:12px;">RAPPORT</button>
 <button class="btn btn-danger" onclick="endSession()">FIN</button>
@@ -926,6 +927,24 @@ Identifiant ou mot de passe incorrect
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
 </div>
 <button onclick="document.getElementById('modal-help').style.display='none'" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:12px;flex-shrink:0;">Fermer le guide</button>
+</div>
+</div>
+
+<div id="modal-ref" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
+<div class="modal-box" style="max-height:94vh;display:flex;flex-direction:column;overflow:hidden;border-radius:16px 16px 0 0;">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-shrink:0;">
+<div>
+<div style="font-size:16px;font-weight:900;color:#06B6D4;">📖 RÉFÉRENCE BOEING CBTA</div>
+<div style="font-size:10px;color:#64748B;margin-top:1px;">TEM Card · Pilot Core Competencies OBs</div>
+</div>
+<button onclick="document.getElementById('modal-ref').style.display='none'" style="width:34px;height:34px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:18px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
+</div>
+<div style="display:flex;gap:6px;margin-bottom:10px;flex-shrink:0;">
+<button onclick="refTab('tem',this)" id="ref-tab-tem" style="flex:1;padding:8px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid #F59E0B;background:#F59E0B22;color:#F59E0B;">TEM CARD</button>
+<button onclick="refTab('obs',this)" id="ref-tab-obs" style="flex:1;padding:8px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">CORE OBs</button>
+</div>
+<div id="ref-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;font-size:13px;"></div>
+<button onclick="document.getElementById('modal-ref').style.display='none'" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:10px;flex-shrink:0;">Fermer</button>
 </div>
 </div>
 
@@ -5196,6 +5215,82 @@ function showProfCheck(){
   showScreen('profcheck');
 }
 
+const _REF_CONTENT = {
+tem:`<div style="padding:4px 0;">
+<div style="background:#0F1718;border:2px solid #F59E0B44;border-radius:10px;padding:12px;margin-bottom:10px;">
+<div style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">THREATS &amp; MITIGATION</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">AIRPORT/RUNWAY</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Contamination · Construction · Signage · Hotspots · NOTAMs</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">ATC</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Clearances/Re-Routes · ARR/DEP Amendments · Runway Changes · ATC Errors · Language Difficulty · Non-Standard Phraseology · Radio Congestion · Similar Call Signs</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">AIRCRAFT</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Systems · Communication · Equipment · MELs · Automation · Performance</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">ADVERSE WEATHER</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Visibility · De-icing · Winds/Windshear · Precipitation · Thunderstorms</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">ENVIRONMENT</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Terrain · Night · Traffic</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">AIRLINE/OPS/DISPATCH</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Schedule Pressure · Delays · Paperwork · Crew Scheduling · Manuals/Charts · FMC Database</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">OPERATIONAL</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Time Pressure · Missed Approach · Flight Diversion · Unfamiliar Airport · Non-Normal Conditions</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">GROUND/RAMP/MX</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Handling · Congestion · Logbook · Maintenance Errors</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">PHYSIOLOGY</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Fatigue · Stress · Hydration · Nutrition</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">CABIN</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Passengers · Interruptions · Events/Distractions · Flight Attendants</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;grid-column:span 2;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">CREW</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Experience · Recency · First Crew Flight · Route Familiarity</div></div>
+</div>
+</div>
+<div style="background:#0F1718;border:2px solid #EF444444;border-radius:10px;padding:12px;margin-bottom:10px;">
+<div style="font-size:11px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:10px;">ERRORS &amp; MITIGATION</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">SKILL-BASED</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Application of Procedures · Flight Path Management · Manual Control</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">DECISION</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Application of Knowledge · Problem Solving &amp; Decision Making</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">PERCEPTUAL</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Workload Management</div></div>
+<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">CRM</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Leadership &amp; Teamwork · Communication · Situation Awareness</div></div>
+</div>
+</div>
+<div style="background:#0F1718;border:2px solid #10B98144;border-radius:10px;padding:12px;">
+<div style="font-size:11px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:8px;">BRIEFING &amp; DEBRIEFING GUIDE</div>
+<div style="margin-bottom:8px;"><div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:4px;">✈ TAKEOFF BRIEFING</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">→ Taxi Path, Runway, Intersection<br/>→ Route: Clearance, Flight Plan, FMC RTE Crosscheck<br/>→ Return to Airport: Emergency, Takeoff Alternate<br/>→ Takeoff Performance: Data Valid, Config<br/>→ PM Duties, Noise Abatement, Engine Failure Plan</div></div>
+<div style="margin-bottom:8px;"><div style="font-size:11px;font-weight:700;color:#8B5CF6;margin-bottom:4px;">🛬 APPROACH BRIEFING</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">→ Weather, FMC Programming, NOTAMs<br/>→ Flaps, VREF &amp; Bugs, STAR &amp; Routing<br/>→ Automation: Approach Mode, Minimums, MCP ALT<br/>→ Missed Approach, Alternate, Fuel<br/>→ Landing Runway, TDZ, Exit, Taxi, Autobrake<br/>→ PM Duties, Arrival Missed Approach Plan</div></div>
+<div><div style="font-size:11px;font-weight:700;color:#F59E0B;margin-bottom:4px;">💬 DEBRIEFING GUIDE</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">→ Were safety margins compromised at any time?<br/>→ Were standards, policies or tasks compromised?<br/>→ What events prompted unresolved questions?<br/>→ In which areas could pilots have performed at a higher level?</div></div>
+</div>
+</div>`,
+obs:(function(){
+const comps=[
+{id:'PRO',color:'#F59E0B',title:'Application of Procedures',obj:'Identifies and applies appropriate procedures in accordance with published operating instructions and applicable regulations.',obs:['Identifies where to find procedures and regulations','Applies relevant operating instructions and techniques in a timely manner','Follows SOP unless a higher degree of safety dictates an appropriate deviation','Operates airplane systems and associated equipment correctly','Monitors aircraft systems status','Complies with applicable regulations','Applies relevant procedural knowledge of automation']},
+{id:'COM',color:'#EC4899',title:'Communication',obj:'Communicates by appropriate means in the operational environment, in both normal and non-normal situations.',obs:['Determines that the recipient is ready and able to receive information','Selects appropriately what, when, how and with whom to communicate','Conveys messages clearly, accurately and concisely','Ensures recipient demonstrates understanding of important information','Listens actively and demonstrates understanding when receiving information','Asks relevant and effective questions','Uses appropriate escalation to resolve identified deviations','Adheres to standard radiotelephony phraseology and procedures','Accurately reads, interprets and responds to datalink messages in English']},
+{id:'FPA',color:'#10B981',title:'Flight Path Management, Automation',obj:'Controls the flight path through automation.',obs:['Uses appropriate flight management, guidance systems and automation','Monitors and detects deviations from the intended flight path','Manages the flight path safely to achieve optimum operational performance','Maintains intended flight path during flight using automation while managing other tasks','Selects appropriate level and mode of automation considering phase of flight and workload','Effectively monitors automation, including engagement and automatic mode transitions']},
+{id:'FPM',color:'#3B82F6',title:'Flight Path Management, Manual',obj:'Controls the flight path through manual control.',obs:['Controls the airplane manually with accuracy and smoothness as appropriate to the situation','Monitors and detects deviations from the intended flight path','Manages the airplane using attitude, speed and thrust and navigational or visual information','Manages the flight path safely to achieve optimum operational performance','Maintains intended flight path during manual flight while managing other tasks','Uses appropriate flight management and guidance systems as applicable','Effectively monitors automation including automatic mode transitions']},
+{id:'KNO',color:'#84CC16',title:'Application of Knowledge',obj:'Demonstrates knowledge and understanding of relevant information, operating instructions, aircraft systems, and the operating environment.',obs:['Demonstrates practical knowledge of limitations in systems and their interaction','Demonstrates required knowledge of published operating instructions','Demonstrates knowledge of the operating environment: ATC, routings, weather, airports','Demonstrates applicable knowledge of applicable legislation','Knows where to source required information','Demonstrates a positive interest in acquiring knowledge','Is able to apply knowledge effectively']},
+{id:'LTW',color:'#F97316',title:'Leadership and Teamwork',obj:'Influences others to contribute to a shared purpose. Collaborates to accomplish the goals of the team.',obs:['Encourages team participation and open communication','Demonstrates initiative and provides direction when required','Engages others in planning','Considers inputs from others','Gives and receives feedback constructively','Addresses and resolves conflicts and disagreements in a constructive manner','Exercises decisive leadership when required','Accepts responsibility for decisions and actions','Carries out instructions when directed','Applies effective intervention strategies to resolve identified deviations','Manages cultural and language challenges, as applicable']},
+{id:'PSD',color:'#06B6D4',title:'Problem Solving and Decision-Making',obj:'Identifies precursors, mitigates problems and makes decisions.',obs:['Identifies, assesses and manages threats and errors in a timely manner','Seeks accurate and adequate information from appropriate sources','Identifies and verifies what and why things have gone wrong, if appropriate','Perseveres in working through problems while prioritizing safety','Identifies and considers appropriate options','Applies appropriate and timely decision-making techniques','Monitors, reviews and adapts decisions as required','Adapts when faced with situations where no guidance or procedure exists','Verifies that tasks are completed to the expected outcome','Demonstrates resilience when encountering an unexpected event']},
+{id:'SA',color:'#EF4444',title:'Situation Awareness',obj:'Perceives, comprehends and manages information and anticipates its effect on the operation.',obs:['Monitors and assesses the state of the airplane and its systems','Monitors and assesses the airplane energy state and anticipated flight path','Monitors and assesses the external environment and how it may affect the operation','Validates the accuracy of information and checks for gross errors','Maintains awareness of the people involved in or affected by the operation','Develops and gives assistance','Responds to indications of reduced situational awareness']},
+{id:'WLM',color:'#8B5CF6',title:'Workload Management',obj:'Maintains available workload capacity by prioritizing and distributing tasks using appropriate resources.',obs:['Demonstrates control in all situations','Plans, prioritizes and schedules appropriate tasks effectively','Tasks others efficiently when carrying out tasks','Offers and gives assistance','Delegates tasks','Manages time and cross-checks actions conscientiously','Seeks and accepts assistance when appropriate','Manages and recovers from interruptions, distractions, variations and failures effectively while performing tasks']}
+];
+return '<div style="padding:4px 0;">'+comps.map(function(c){
+return '<div style="background:#0F1718;border:1px solid '+c.color+'33;border-left:3px solid '+c.color+';border-radius:10px;padding:11px;margin-bottom:10px;">'
++'<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">'
++'<span style="font-size:12px;font-weight:800;color:'+c.color+';font-family:monospace;">'+c.id+'</span>'
++'<span style="font-size:13px;font-weight:700;color:#F1F5F9;">'+c.title+'</span>'
++'</div>'
++'<div style="font-size:11px;color:#64748B;font-style:italic;margin-bottom:8px;line-height:1.5;">'+c.obj+'</div>'
++c.obs.map(function(o,i){return '<div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:10px;color:'+c.color+';font-weight:700;flex-shrink:0;min-width:32px;">OB '+(i+1)+'</span><span style="font-size:12px;color:#CBD5E1;line-height:1.5;">'+o+'</span></div>';}).join('')
++'</div>';
+}).join('')+'</div>';
+})()
+};
+function refTab(tab,el){
+  document.querySelectorAll('#modal-ref .modal-box > div:nth-child(2) button').forEach(function(b){b.style.background='transparent';b.style.borderWidth='1px';b.style.borderColor='#334155';b.style.color='#64748B';});
+  el.style.background=tab==='tem'?'#F59E0B22':'#06B6D422';
+  el.style.borderColor=tab==='tem'?'#F59E0B':'#06B6D4';
+  el.style.borderWidth='2px';
+  el.style.color=tab==='tem'?'#F59E0B':'#06B6D4';
+  var rc=document.getElementById('ref-content');
+  if(rc)rc.innerHTML=_REF_CONTENT[tab]||'';
+}
+// init ref modal on open
+document.addEventListener('click',function(e){
+  if(e.target&&e.target.textContent&&e.target.textContent.trim()==='📖 REF'){
+    setTimeout(function(){
+      var btn=document.getElementById('ref-tab-tem');
+      if(btn)refTab('tem',btn);
+    },50);
+  }
+});
 function toggleTrainingMode(){
   const cur=localStorage.getItem('cbta_training')==='1';
   const next=!cur;
@@ -6986,6 +7081,9 @@ const CREDENTIALS = [
 {user:"bouchenafa",  pass:"B737ng2025", name:"Cpt Bouchenafa Mohamed Amine"},
 {user:"instructeur", pass:"cbta737",    name:"Instructeur"},
 ];
+
+// init training mode on page load
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initTrainingMode);}else{setTimeout(initTrainingMode,100);}
 
 function doLogin(){
 const u = (document.getElementById('inp-user').value||'').trim().toLowerCase();
