@@ -6282,6 +6282,127 @@ if(tabs[2]) tabs[2].textContent = L.tem;
 if(tabs[3]) tabs[3].textContent = L.fac;
 }
 
+// ── COMP_RECO (global scope — used by showRecoModal + generateRecommendations) ─
+const COMP_RECO = {
+PRO: {
+title:"Procedures et conformite",
+reco:[
+"Insister sur la lecture challenge-and-response des checklists en simulateur.",
+"Entrainement specifique QRH non-normaux: sequences de memory items a froid.",
+"Evaluer la connaissance des SOP lors des briefings avant chaque phase.",
+"Exercice dedie: panne injectee sans annonce - evaluer l application spontanee des procedures.",
+"Consolidation approfondie: memorisation integrale des emergency procedures prioritaires.",
+"Revue systematique des dernieres revisions SOP avec analyse des changements operationnels.",
+"Simulation scenario multi-pannes: gerer deux procedures non-normales simultanees.",
+"Evaluation QRH chrono: executer une procedure critique sous contrainte de temps et de stress."
+]
+},
+KNO:{
+title:"Connaissances systemes et regulations",
+reco:[
+"Programme d etude personnalise sur les systemes hydraulique, electrique et pressuristation.",
+"QCM hebdomadaire sur les limitations FCOM et les MEL applicables.",
+"Revision des differences B737-700/800/900 si applicable.",
+"Entrainement sur la logique EICAS: identification rapide des alertes.",
+"Approfondissement des systemes moteur FADEC: logique de controle et protections.",
+"Etude approfondie des interdependances systemes: hydraulique/commandes de vol/train.",
+"Revue complete des limitations operationnelles: VMO/MMO, altitude max, masse maxi.",
+"Exercice de diagnostic panne systeme sans aide: identifier la cause racine par la logique."
+]
+},
+WLM:{
+title:"Gestion de la charge de travail",
+reco:[
+"Exercices de priorisation: injecter plusieurs pannes simultanees et evaluer la hierarchisation.",
+"Travailler le buy-me-time et la delegation efficace au PM.",
+"Scenarios de haute charge: approche de precision + meteo limite + panne systeme.",
+"Debriefing axe sur les moments de surcharge identifies: analyser les declencheurs.",
+"Entrainement a la detection precoce des signaux de surcharge: auto-monitoring en temps reel.",
+"Scenarios avec interruptions multiples: evaluer la capacite a reprendre la tache principale.",
+"Travail sur la communication sous pression: messages courts, clairs, priorises.",
+"Exercice: refus d autorisation ATC inattendu en finale - evaluer la gestion immediate."
+]
+},
+SA:{
+title:"Conscience situationnelle",
+reco:[
+"Exercices FORDEC en temps reel: verbaliser la SA toutes les 5 minutes en croisiere.",
+"Scenarios CFIT et ALAR: travailler la detection precoce des derives d energie.",
+"Entrainement au monitoring croise: PM doit challenger activement le PF.",
+"Injecter des distracteurs (ATC, cabine) pour evaluer la robustesse de la SA.",
+"Scenarios de degradation progressive: panne partielle + meteo + nuit pour tester la SA.",
+"Exercice de projection situationnelle: anticiper les contraintes des 10 prochaines minutes.",
+"Travail sur les trappes a SA: illusions sensorielles, gradient de terrain masque.",
+"Debriefing a partir des enregistrements QAR: identifier les moments de perte de SA."
+]
+},
+PSD:{
+title:"Prise de decision et resolution de problemes",
+reco:[
+"Utiliser le modele FORDEC systematiquement pour toute decision non-normale.",
+"Scenarios open-ended sans procedure definie: evaluer l adaptabilite.",
+"Travailler les biais cognitifs: confirmation bias, plan continuation bias.",
+"Debriefs axes sur le POURQUOI de chaque decision: reconstruction du raisonnement.",
+"Mise en situation critique: evaluer la decision de Go-Around tardif face a pression temporelle.",
+"Entrainement aux decisions sous incertitude: donnees partielles, systemes degrades.",
+"Scenarios de diversion urgente: evaluer la rapidite et la qualite de la prise de decision.",
+"Debriefing par simulation mentale: rejouer la situation avec des hypotheses differentes."
+]
+},
+LTW:{
+title:"Leadership et travail d equipe",
+reco:[
+"Jeux de role: alterner CPT et FO pour developper l empathie inter-roles.",
+"Scenarios de desaccord: evaluer la resolution constructive des conflits.",
+"Travailler l assertivite du FO face a un CPT commettant une erreur deliberee.",
+"Exercices de briefing: evaluer la qualite de la communication pre-vol.",
+"Simulation equipage sous stress: evaluer le maintien de la coordination en situation critique.",
+"Exercice de feedback constructif immediat: pratique du debriefing entre pilotes post-scenario.",
+"Scenarios de fatigue simulee: evaluer le maintien du leadership en fin de vol long.",
+"Mise en situation: prise de commandement d urgence - evaluer l initiative et la gestion de crise."
+]
+},
+FPM:{
+title:"Gestion manuelle de la trajectoire",
+reco:[
+"Sessions de vol manuel pur: desengager AP et AT des le depart et jusqu a l atterrissage.",
+"Exercices de precision: ILS manual, VOR/DME manual, approche visuelle de nuit.",
+"Travailler l etat energetique: reconnaissances precoces des deviations vitesse/pente.",
+"Scenarios crosswind limite: evaluer la precision du controle axe et du flare.",
+"Consolidation vol manuel en turbulences: maintien de la trajectoire sous perturbations.",
+"Exercices de precision extreme: maintien altitude +/- 50ft, cap +/- 2 degres sur 20 min.",
+"Simulation UPRT: recovery depuis attitude non usuelle, controle manuel hors envelope.",
+"Travail sur la transition AP OFF en approche: gestion des transitoires de trajectoire."
+]
+},
+FPA:{
+title:"Gestion de l automation",
+reco:[
+"Entrainement intensif FMA: annonces systematiques de chaque changement de mode.",
+"Scenarios de degradation d automation: passer du mode complet au mode partiel.",
+"Travailler les transitions VNAV/LNAV/VS: identification des modes inattendus.",
+"Exercices FMC: programmation d un changement de route en croisiere sous pression temps.",
+"Scenarios de surprise automation: evaluer la reaction a un mode non commande.",
+"Entrainement automation partielle: IAN, FMC failure, reversion modes basiques.",
+"Exercice de monitoring FMA en continu: detecter immediatement tout mode non prevu.",
+"Simulation panne FMC en croisiere: transition manuelle vers modes conventionnels."
+]
+},
+COM:{
+title:"Communication",
+reco:[
+"Entrainement phraseologie OACI: enregistrement et ecoute critique des communications ATC.",
+"Exercices de readback: insister sur la confirmation systematique des autorisations.",
+"Travailler la communication CRM interne: annonces PF/PM standardisees.",
+"Scenarios de communication degradee: simuler parasites radio et mauvaise intelligibilite.",
+"Exercice de communication sous pression: transmettre MAYDAY/PAN correctement et calmement.",
+"Travail sur la communication inter-equipage: messages assertifs sans ambiguite en urgence.",
+"Scenarios de confusion ATC: evaluer la gestion d un clearance ambigu ou contradictoire.",
+"Entrainement a la communication avec cabine: coordination urgence evacuation/decompression."
+]
+}
+};
+
 // ── RECOMMENDATIONS ENGINE ---────────────────────────────────────────────────
 function generateRecommendations(csKey, pilotName, closed){
 const ct={};
