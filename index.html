@@ -2294,38 +2294,38 @@ var NNC_SYSTEMS = {
 
 const SESSION_SCENARIOS=[
 {id:"opc_standard",title:"OPC Standard Complet",type:"OPC",color:"#FFE600",focus:["FPM","PRO","WLM"],
-desc:"Session OPC 4h complète avec tous les exercices obligatoires et patterns standards.",
-exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"stall_recovery",min:10},{sid:"windshear_manual",min:10},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"non_ils",min:20},{sid:"go_around",min:12}]},
+desc:"Session OPC 3h30 sim avec tous les exercices obligatoires, patterns standards et remise des gaz moteur en panne.",
+exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"upset_recovery",min:12},{sid:"stall_recovery",min:12},{sid:"windshear_manual",min:12},{sid:"windshear_auto",min:10},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"non_ils",min:22},{sid:"go_around",min:15}]},
 {id:"opc_lvo",title:"OPC LVO — Basse Visibilité",type:"OPC",color:"#00E5FF",focus:["FPM","SA","PRO"],
-desc:"Session OPC centrée sur les opérations par basse visibilité CAT II/III. Inclut tous les obligatoires.",
-exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"lvo_lvto",min:20},{sid:"lvo_cat2",min:20},{sid:"lvo_cat3a",min:25},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15}]},
+desc:"Session OPC 3h30 centrée sur les opérations par basse visibilité CAT II/III. Obligatoires inclus.",
+exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"upset_recovery",min:12},{sid:"lvo_lvto",min:25},{sid:"lvo_cat2",min:25},{sid:"lvo_cat3a",min:30},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"windshear_auto",min:12}]},
 {id:"opc_rnp",title:"OPC RNP — Navigation de Précision",type:"OPC",color:"#39FF14",focus:["FPM","KNO","SA"],
-desc:"Session OPC avec approches RNP/RNAV et RNP AR. Exercices obligatoires inclus.",
-exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"upset_recovery",min:10},{sid:"rnp_ar",min:25},{sid:"rnp_approach",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15}]},
+desc:"Session OPC 3h30 avec approches RNP/RNAV et RNP AR. Exercices obligatoires inclus.",
+exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"upset_recovery",min:12},{sid:"rnp_ar",min:30},{sid:"rnp_approach",min:25},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"gpws",min:10}]},
 {id:"wlm_sa_focus",title:"Focus WLM / SA",type:"PC",color:"#FF61C7",focus:["WLM","SA","PSD"],
-desc:"Session centrée sur la gestion de la charge de travail et la conscience situationnelle en situations dégradées.",
-exercises:[{sid:"airspeed_unrel",min:20},{sid:"cabin_alt",min:15},{sid:"windshear_auto",min:12},{sid:"engine_fire",min:20},{sid:"nnc_loss_gen",min:18},{sid:"tcas_ra",min:8},{sid:"upset_recovery",min:10},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"non_ils",min:20}]},
+desc:"Session PC 3h30 centrée sur la gestion de charge de travail et la conscience situationnelle en situations dégradées.",
+exercises:[{sid:"airspeed_unrel",min:25},{sid:"cabin_alt",min:18},{sid:"windshear_auto",min:12},{sid:"windshear_manual",min:12},{sid:"engine_fire",min:25},{sid:"nnc_loss_gen",min:20},{sid:"tcas_ra",min:10},{sid:"upset_recovery",min:12},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"non_ils",min:22},{sid:"runaway_stab",min:12}]},
 {id:"crm_ltw_focus",title:"Focus CRM / LTW",type:"PC",color:"#FF00FF",focus:["LTW","COM","PSD"],
-desc:"Session axée sur le leadership, la communication et le travail d'équipage en environnement dégradé.",
-exercises:[{sid:"engine_fire",min:25},{sid:"loss_thrust_both",min:25},{sid:"cabin_alt",min:15},{sid:"windshear_manual",min:12},{sid:"runaway_stab",min:15},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15}]},
+desc:"Session PC 3h30 axée sur le leadership, la communication et le travail d'équipage en environnement dégradé.",
+exercises:[{sid:"engine_fire",min:25},{sid:"loss_thrust_both",min:30},{sid:"cabin_alt",min:18},{sid:"windshear_manual",min:12},{sid:"runaway_stab",min:18},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"nnc_loss_gen",min:15},{sid:"airspeed_unrel",min:18}]},
 {id:"psd_kno_focus",title:"Focus PSD / KNO",type:"PC",color:"#FF6B35",focus:["PSD","KNO","SA"],
-desc:"Session dédiée à la prise de décision, la résolution de problèmes et les connaissances systèmes.",
-exercises:[{sid:"airspeed_unrel",min:20},{sid:"runaway_stab",min:15},{sid:"emergency_desc",min:15},{sid:"nnc_loss_sys_a",min:15},{sid:"nnc_fuel_leak",min:12},{sid:"gpws",min:10},{sid:"engine_fire",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"non_ils",min:20}]},
+desc:"Session PC 3h30 dédiée à la prise de décision, la résolution de problèmes et les connaissances systèmes.",
+exercises:[{sid:"airspeed_unrel",min:25},{sid:"runaway_stab",min:18},{sid:"emergency_desc",min:18},{sid:"nnc_loss_sys_a",min:18},{sid:"nnc_fuel_leak",min:15},{sid:"gpws",min:12},{sid:"engine_fire",min:25},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"non_ils",min:22},{sid:"cabin_alt",min:15},{sid:"nnc_loss_gen",min:15}]},
 {id:"nnc_intensive",title:"Session NNC Intensive",type:"PC",color:"#FF3A20",focus:["PRO","WLM","KNO"],
-desc:"Session axée sur les procédures anormales et non-normales avec CRM complet.",
-exercises:[{sid:"rto",min:10},{sid:"nnc_eng_fail",min:20},{sid:"nnc_loss_gen",min:15},{sid:"nnc_loss_sys_a",min:15},{sid:"nnc_cargo_fwd",min:15},{sid:"cabin_alt",min:15},{sid:"engine_fire",min:20},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ldg",min:15}]},
+desc:"Session PC 3h30 axée sur les procédures anormales et non-normales avec CRM complet.",
+exercises:[{sid:"rto",min:12},{sid:"nnc_eng_fail",min:25},{sid:"nnc_loss_gen",min:18},{sid:"nnc_loss_sys_a",min:18},{sid:"nnc_cargo_fwd",min:18},{sid:"cabin_alt",min:18},{sid:"engine_fire",min:25},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ldg",min:20},{sid:"nnc_fuel_leak",min:15},{sid:"runaway_stab",min:12}]},
 {id:"full_assessment",title:"Bilan Compétences Complètes",type:"LINE",color:"#AAFF00",focus:["KNO","WLM","SA","PSD","LTW","FPM","FPA","COM","PRO"],
-desc:"Évaluation complète de toutes les compétences CBTA. Line Check ou Check d'aptitude complet.",
-exercises:[{sid:"ef_v1v2",min:15},{sid:"engine_fire",min:20},{sid:"airspeed_unrel",min:15},{sid:"cabin_alt",min:12},{sid:"windshear_manual",min:12},{sid:"upset_recovery",min:10},{sid:"tcas_ra",min:8},{sid:"lvo_cat2",min:20},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"non_ils",min:18}]},
+desc:"Évaluation complète 3h30 de toutes les compétences CBTA. Line Check ou Check d'aptitude global.",
+exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:22},{sid:"airspeed_unrel",min:15},{sid:"cabin_alt",min:12},{sid:"windshear_manual",min:10},{sid:"upset_recovery",min:10},{sid:"tcas_ra",min:10},{sid:"lvo_cat2",min:22},{sid:"rnp_approach",min:20},{sid:"se_ils",min:22},{sid:"se_ga",min:18},{sid:"se_ldg",min:18},{sid:"non_ils",min:15}]},
 {id:"opc_upset_eme",title:"OPC Upset / Urgences",type:"OPC",color:"#FF9500",focus:["FPM","SA","WLM"],
-desc:"Session OPC ciblée sur les situations extrêmes : UPRT, Windshear, perte moteur basse altitude.",
-exercises:[{sid:"ef_v1v2",min:15},{sid:"upset_recovery",min:15},{sid:"stall_recovery",min:12},{sid:"windshear_manual",min:12},{sid:"windshear_auto",min:10},{sid:"gpws",min:10},{sid:"engine_fire",min:20},{sid:"rto",min:10},{sid:"tcas_ra",min:8},{sid:"se_ga",min:15},{sid:"se_ldg",min:15},{sid:"go_around",min:12}]},
+desc:"Session OPC 3h30 ciblée sur les situations extrêmes : UPRT, Windshear, perte moteur basse altitude.",
+exercises:[{sid:"ef_v1v2",min:20},{sid:"upset_recovery",min:18},{sid:"stall_recovery",min:15},{sid:"windshear_manual",min:15},{sid:"windshear_auto",min:12},{sid:"gpws",min:12},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"tcas_ra",min:10},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"go_around",min:15},{sid:"non_ils",min:20}]},
 {id:"pc_lvo_rnp",title:"PC LVO + RNP Combiné",type:"PC",color:"#7DF9FF",focus:["FPM","KNO","PSD","SA"],
-desc:"Proficiency Check combinant basse visibilité et navigation de précision RNP/RNAV.",
-exercises:[{sid:"lvo_lvto",min:20},{sid:"lvo_cat2",min:20},{sid:"lvo_cat3a",min:25},{sid:"rnp_approach",min:20},{sid:"rnp_ar",min:25},{sid:"airspeed_unrel",min:15},{sid:"tcas_ra",min:8},{sid:"se_ils",min:20},{sid:"se_ga",min:15}]},
+desc:"Proficiency Check 3h30 combinant basse visibilité et navigation de précision RNP/RNAV.",
+exercises:[{sid:"lvo_lvto",min:25},{sid:"lvo_cat2",min:25},{sid:"lvo_cat3a",min:28},{sid:"rnp_approach",min:25},{sid:"rnp_ar",min:28},{sid:"airspeed_unrel",min:15},{sid:"tcas_ra",min:10},{sid:"se_ils",min:22},{sid:"se_ga",min:18},{sid:"engine_fire",min:20}]},
 {id:"line_check_full",title:"Line Check Opérationnel",type:"LINE",color:"#DFFF00",focus:["KNO","WLM","SA","PSD","LTW","COM","PRO"],
-desc:"Simulation de Line Check réel avec vol normal, dégradation progressive et gestion CRM complète.",
-exercises:[{sid:"ef_v1v2",min:15},{sid:"go_around",min:15},{sid:"engine_fire",min:20},{sid:"cabin_alt",min:12},{sid:"nnc_loss_gen",min:15},{sid:"tcas_ra",min:8},{sid:"lvo_cat2",min:20},{sid:"rnp_approach",min:20},{sid:"se_ils",min:20},{sid:"se_ga",min:15},{sid:"non_ils",min:18}]},
+desc:"Simulation de Line Check 3h30 avec vol normal, dégradation progressive et évaluation CRM complète.",
+exercises:[{sid:"ef_v1v2",min:20},{sid:"go_around",min:15},{sid:"engine_fire",min:22},{sid:"cabin_alt",min:12},{sid:"nnc_loss_gen",min:15},{sid:"tcas_ra",min:10},{sid:"lvo_cat2",min:22},{sid:"rnp_approach",min:22},{sid:"se_ils",min:22},{sid:"se_ga",min:18},{sid:"non_ils",min:20},{sid:"upset_recovery",min:10}]},
 ];
 
 const COMPETENCIES = [
@@ -2760,7 +2760,6 @@ state.foRole         = _s2Role;
 state.triCheckGrades = {};
 state.triCheckNotes  = "";
 state.triRecommendation = "";
-state.sigPilot=''; state.sigPilotLocked=false; state.sigInstructor=''; state.sigInstrLocked=false; state.sigDate='';
 state.sessionStart   = Date.now();
 window._sesAlerts    = {two:false,nearEnd:false,end:false};
 startChrono();
@@ -3799,51 +3798,6 @@ function _applyScenario(s){
   document.getElementById('modal-scenarios').style.display='none';
   showScreen('session');
   if(state.exercises.length>0) openEx(0);
-}
-function initSigPad(canvasId,who){
-  const canvas=document.getElementById(canvasId);
-  if(!canvas||canvas._sigInited) return;
-  canvas._sigInited=true;
-  const ctx=canvas.getContext('2d');
-  ctx.strokeStyle='#F1F5F9';
-  ctx.lineWidth=2;
-  ctx.lineCap='round';
-  ctx.lineJoin='round';
-  let drawing=false,lx=0,ly=0;
-  const getPos=(e)=>{
-    const r=canvas.getBoundingClientRect();
-    const src=e.touches?e.touches[0]:e;
-    return {x:(src.clientX-r.left)*(canvas.width/r.width),y:(src.clientY-r.top)*(canvas.height/r.height)};
-  };
-  const start=(e)=>{e.preventDefault();drawing=true;const p=getPos(e);lx=p.x;ly=p.y;ctx.beginPath();ctx.arc(lx,ly,1,0,Math.PI*2);ctx.fillStyle='#F1F5F9';ctx.fill();};
-  const move=(e)=>{e.preventDefault();if(!drawing)return;const p=getPos(e);ctx.beginPath();ctx.moveTo(lx,ly);ctx.lineTo(p.x,p.y);ctx.stroke();lx=p.x;ly=p.y;};
-  const stop=(e)=>{drawing=false;};
-  canvas.addEventListener('mousedown',start);
-  canvas.addEventListener('mousemove',move);
-  canvas.addEventListener('mouseup',stop);
-  canvas.addEventListener('touchstart',start,{passive:false});
-  canvas.addEventListener('touchmove',move,{passive:false});
-  canvas.addEventListener('touchend',stop);
-}
-function clearSig(who){
-  const id=who==='pilot'?'sig-canvas-pilot':'sig-canvas-instr';
-  const canvas=document.getElementById(id);
-  if(canvas){const ctx=canvas.getContext('2d');ctx.clearRect(0,0,canvas.width,canvas.height);}
-  if(who==='pilot'){state.sigPilot='';state.sigPilotLocked=false;}
-  else{state.sigInstructor='';state.sigInstrLocked=false;}
-  renderDebContent();
-}
-function lockSig(who){
-  const id=who==='pilot'?'sig-canvas-pilot':'sig-canvas-instr';
-  const canvas=document.getElementById(id);
-  if(!canvas) return;
-  const data=canvas.toDataURL('image/png');
-  const now=new Date();
-  const dateStr=now.toLocaleDateString('fr-FR')+' '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-  if(!state.sigDate) state.sigDate=dateStr;
-  if(who==='pilot'){state.sigPilot=data;state.sigPilotLocked=true;}
-  else{state.sigInstructor=data;state.sigInstrLocked=true;}
-  renderDebContent();
 }
 var _darkMode = true;
 function toggleDarkMode(){
@@ -5530,41 +5484,9 @@ ${foSt && foSt.globalAvg>0 ? generateRecommendations('csfo', 'FO — '+state.foN
 <textarea class="note-area" style="height:90px;" placeholder="Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification..." onchange="state.debConclNotes=this.value">${state.debConclNotes}</textarea>
 </div>
 
-<div class="card" style="margin-bottom:12px;border-left:3px solid #F59E0B;">
-<div class="section-lbl" style="color:#F59E0B;margin-bottom:14px;">✍️ SIGNATURES ÉLECTRONIQUES</div>
-<div style="font-size:11px;color:#64748B;margin-bottom:12px;">Signez avec votre doigt dans chaque zone. La date est automatiquement horodatée.</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-<div>
-<div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:6px;">STAGIAIRE — ${state.pilotName||'Pilote'}</div>
-<div style="position:relative;border:1.5px dashed #334155;border-radius:8px;overflow:hidden;background:#080B10;">
-<canvas id="sig-canvas-pilot" width="200" height="100" style="width:100%;height:80px;touch-action:none;display:block;cursor:crosshair;"></canvas>
-${(state.sigPilot&&state.sigPilotLocked)?`<div style="position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;"><img src="${state.sigPilot}" style="max-width:100%;max-height:100%;object-fit:contain;"/></div>`:''}
-</div>
-<div style="display:flex;gap:6px;margin-top:6px;">
-<button onclick="clearSig('pilot')" style="flex:1;padding:5px;border-radius:6px;background:#EF444411;border:1px solid #EF444433;color:#EF4444;font-size:11px;cursor:pointer;">Effacer</button>
-<button onclick="lockSig('pilot')" style="flex:1;padding:5px;border-radius:6px;background:#10B98111;border:1px solid #10B98133;color:#10B981;font-size:11px;cursor:pointer;">Valider ✓</button>
-</div>
-${state.sigPilotLocked?`<div style="font-size:10px;color:#10B981;margin-top:4px;text-align:center;">Signé le ${state.sigDate||''}</div>`:''}
-</div>
-<div>
-<div style="font-size:11px;font-weight:700;color:#8B5CF6;margin-bottom:6px;">INSTRUCTEUR — ${state.instructorName||'TRI'}</div>
-<div style="position:relative;border:1.5px dashed #334155;border-radius:8px;overflow:hidden;background:#080B10;">
-<canvas id="sig-canvas-instr" width="200" height="100" style="width:100%;height:80px;touch-action:none;display:block;cursor:crosshair;"></canvas>
-${(state.sigInstructor&&state.sigInstrLocked)?`<div style="position:absolute;inset:0;pointer-events:none;display:flex;align-items:center;justify-content:center;"><img src="${state.sigInstructor}" style="max-width:100%;max-height:100%;object-fit:contain;"/></div>`:''}
-</div>
-<div style="display:flex;gap:6px;margin-top:6px;">
-<button onclick="clearSig('instr')" style="flex:1;padding:5px;border-radius:6px;background:#EF444411;border:1px solid #EF444433;color:#EF4444;font-size:11px;cursor:pointer;">Effacer</button>
-<button onclick="lockSig('instr')" style="flex:1;padding:5px;border-radius:6px;background:#10B98111;border:1px solid #10B98133;color:#10B981;font-size:11px;cursor:pointer;">Valider ✓</button>
-</div>
-${state.sigInstrLocked?`<div style="font-size:10px;color:#10B981;margin-top:4px;text-align:center;">Signé le ${state.sigDate||''}</div>`:''}
-</div>
-</div>
-</div>
-
 <div style="text-align:center;font-size:12px;color:var(--mut);padding:10px 0;">
 B737 NG CBTA TRI · QRH Rev55 · FCTM Rev25
 </div>`;
-setTimeout(()=>{initSigPad('sig-canvas-pilot','pilot');initSigPad('sig-canvas-instr','instr');},50);
 }
 
 function endSession(){
