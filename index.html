@@ -4923,8 +4923,8 @@ TRI_CHECK_CRITERIA.forEach(comp=>{
     var rowBg=isP?'#10B98111':isN?'#EF444411':'#141920';
     var rowBorder=isP?'#10B98133':isN?'#EF444433':'#1E2530';
     h+='<div style="display:flex;align-items:flex-start;gap:7px;padding:8px 9px;background:'+rowBg+';border:1px solid '+rowBorder+';border-radius:8px;">';
-    h+='<span style="font-size:10px;color:'+comp.color+';font-weight:700;min-width:30px;margin-top:2px;flex-shrink:0;">OB '+(i+1)+'</span>';
-    h+='<span style="flex:1;font-size:12px;color:#CBD5E1;line-height:1.5;">'+ob+'</span>';
+    h+='<span style="font-size:11px;color:'+comp.color+';font-weight:700;min-width:34px;margin-top:1px;flex-shrink:0;">OB '+(i+1)+'</span>';
+    h+='<span style="flex:1;font-size:14px;color:#CBD5E1;line-height:1.6;">'+ob+'</span>';
     h+='<div style="display:flex;flex-direction:column;gap:3px;flex-shrink:0;">';
     h+='<button onclick="setTRIOB(\''+comp.id+'\','+i+',\'+\')" style="width:34px;height:28px;border-radius:5px;border:1px solid '+(isP?'#10B981':'#10B98155')+';background:'+(isP?'#10B981':'#10B98122')+';color:'+(isP?'#fff':'#10B981')+';font-size:14px;font-weight:800;cursor:pointer;">+</button>';
     h+='<button onclick="setTRIOB(\''+comp.id+'\','+i+',\'-\')" style="width:34px;height:28px;border-radius:5px;border:1px solid '+(isN?'#EF4444':'#EF444455')+';background:'+(isN?'#EF4444':'#EF444422')+';color:'+(isN?'#fff':'#EF4444')+';font-size:14px;font-weight:800;cursor:pointer;">−</button>';
@@ -5527,9 +5527,11 @@ ${weak.length?`<div style="display:flex;flex-wrap:wrap;gap:4px;">${weak.map(c=>`
 
 
 <div style="background:#141920;border:1px solid #F59E0B33;border-radius:10px;padding:13px;margin-bottom:14px;">
-<div class="section-lbl" style="color:#F59E0B;margin-bottom:12px;">RECOMMANDATIONS AUTOMATIQUES</div>
-${generateRecommendations('cs', 'CPT — '+state.pilotName, closed)}
-${foSt && foSt.globalAvg>0 ? generateRecommendations('csfo', 'FO — '+state.foName, closed) : ''}
+<div class="section-lbl" style="color:#F59E0B;margin-bottom:12px;">RECOMMANDATIONS & CONSOLIDATIONS</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<button onclick="showRecoModal('cpt')" style="width:100%;padding:13px 16px;background:#3B82F622;border:2px solid #3B82F6;color:#3B82F6;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;"><span>📋 CPT — ${state.pilotName}</span><span style="font-size:18px;">→</span></button>
+${foSt&&foSt.globalAvg>0?`<button onclick="showRecoModal('fo')" style="width:100%;padding:13px 16px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;"><span>📋 FO — ${state.foName}</span><span style="font-size:18px;">→</span></button>`:''}
+</div>
 </div>
 
 
@@ -6167,7 +6169,11 @@ reco:[
 "Insister sur la lecture challenge-and-response des checklists en simulateur.",
 "Entrainement specifique QRH non-normaux: sequences de memory items a froid.",
 "Evaluer la connaissance des SOP lors des briefings avant chaque phase.",
-"Exercice dedie: panne injectee sans annonce - evaluer l application spontanee des procedures."
+"Exercice dedie: panne injectee sans annonce - evaluer l application spontanee des procedures.",
+"Consolidation approfondie: memorisation integrale des emergency procedures prioritaires.",
+"Revue systematique des dernieres revisions SOP avec analyse des changements operationnels.",
+"Simulation scenario multi-pannes: gerer deux procedures non-normales simultanees.",
+"Evaluation QRH chrono: executer une procedure critique sous contrainte de temps et de stress."
 ]
 },
 KNO:{
@@ -6176,7 +6182,11 @@ reco:[
 "Programme d etude personnalise sur les systemes hydraulique, electrique et pressuristation.",
 "QCM hebdomadaire sur les limitations FCOM et les MEL applicables.",
 "Revision des differences B737-700/800/900 si applicable.",
-"Entrainement sur la logique EICAS: identification rapide des alertes."
+"Entrainement sur la logique EICAS: identification rapide des alertes.",
+"Approfondissement des systemes moteur FADEC: logique de controle et protections.",
+"Etude approfondie des interdependances systemes: hydraulique/commandes de vol/train.",
+"Revue complete des limitations operationnelles: VMO/MMO, altitude max, masse maxi.",
+"Exercice de diagnostic panne systeme sans aide: identifier la cause racine par la logique."
 ]
 },
 WLM:{
@@ -6185,7 +6195,11 @@ reco:[
 "Exercices de priorisation: injecter plusieurs pannes simultanees et evaluer la hierarchisation.",
 "Travailler le buy-me-time et la delegation efficace au PM.",
 "Scenarios de haute charge: approche de precision + meteo limite + panne systeme.",
-"Debriefing axe sur les moments de surcharge identifies: analyser les declencheurs."
+"Debriefing axe sur les moments de surcharge identifies: analyser les declencheurs.",
+"Entrainement a la detection precoce des signaux de surcharge: auto-monitoring en temps reel.",
+"Scenarios avec interruptions multiples: evaluer la capacite a reprendre la tache principale.",
+"Travail sur la communication sous pression: messages courts, clairs, priorises.",
+"Exercice: refus d autorisation ATC inattendu en finale - evaluer la gestion immediate."
 ]
 },
 SA:{
@@ -6194,7 +6208,11 @@ reco:[
 "Exercices FORDEC en temps reel: verbaliser la SA toutes les 5 minutes en croisiere.",
 "Scenarios CFIT et ALAR: travailler la detection precoce des derives d energie.",
 "Entrainement au monitoring croise: PM doit challenger activement le PF.",
-"Injecter des distracteurs (ATC, cabine) pour evaluer la robustesse de la SA."
+"Injecter des distracteurs (ATC, cabine) pour evaluer la robustesse de la SA.",
+"Scenarios de degradation progressive: panne partielle + meteo + nuit pour tester la SA.",
+"Exercice de projection situationnelle: anticiper les contraintes des 10 prochaines minutes.",
+"Travail sur les trappes a SA: illusions sensorielles, gradient de terrain masque.",
+"Debriefing a partir des enregistrements QAR: identifier les moments de perte de SA."
 ]
 },
 PSD:{
@@ -6203,7 +6221,11 @@ reco:[
 "Utiliser le modele FORDEC systematiquement pour toute decision non-normale.",
 "Scenarios open-ended sans procedure definie: evaluer l adaptabilite.",
 "Travailler les biais cognitifs: confirmation bias, plan continuation bias.",
-"Debriefs axes sur le POURQUOI de chaque decision: reconstruction du raisonnement."
+"Debriefs axes sur le POURQUOI de chaque decision: reconstruction du raisonnement.",
+"Mise en situation critique: evaluer la decision de Go-Around tardif face a pression temporelle.",
+"Entrainement aux decisions sous incertitude: donnees partielles, systemes degrades.",
+"Scenarios de diversion urgente: evaluer la rapidite et la qualite de la prise de decision.",
+"Debriefing par simulation mentale: rejouer la situation avec des hypotheses differentes."
 ]
 },
 LTW:{
@@ -6212,7 +6234,11 @@ reco:[
 "Jeux de role: alterner CPT et FO pour developper l empathie inter-roles.",
 "Scenarios de desaccord: evaluer la resolution constructive des conflits.",
 "Travailler l assertivite du FO face a un CPT commettant une erreur deliberee.",
-"Exercices de briefing: evaluer la qualite de la communication pre-vol."
+"Exercices de briefing: evaluer la qualite de la communication pre-vol.",
+"Simulation equipage sous stress: evaluer le maintien de la coordination en situation critique.",
+"Exercice de feedback constructif immediat: pratique du debriefing entre pilotes post-scenario.",
+"Scenarios de fatigue simulee: evaluer le maintien du leadership en fin de vol long.",
+"Mise en situation: prise de commandement d urgence - evaluer l initiative et la gestion de crise."
 ]
 },
 FPM:{
@@ -6221,7 +6247,11 @@ reco:[
 "Sessions de vol manuel pur: desengager AP et AT des le depart et jusqu a l atterrissage.",
 "Exercices de precision: ILS manual, VOR/DME manual, approche visuelle de nuit.",
 "Travailler l etat energetique: reconnaissances precoces des deviations vitesse/pente.",
-"Scenarios crosswind limite: evaluer la precision du controle axe et du flare."
+"Scenarios crosswind limite: evaluer la precision du controle axe et du flare.",
+"Consolidation vol manuel en turbulences: maintien de la trajectoire sous perturbations.",
+"Exercices de precision extreme: maintien altitude +/- 50ft, cap +/- 2 degres sur 20 min.",
+"Simulation UPRT: recovery depuis attitude non usuelle, controle manuel hors envelope.",
+"Travail sur la transition AP OFF en approche: gestion des transitoires de trajectoire."
 ]
 },
 FPA:{
@@ -6230,7 +6260,11 @@ reco:[
 "Entrainement intensif FMA: annonces systematiques de chaque changement de mode.",
 "Scenarios de degradation d automation: passer du mode complet au mode partiel.",
 "Travailler les transitions VNAV/LNAV/VS: identification des modes inattendus.",
-"Exercices FMC: programmation d un changement de route en croisiere sous pression temps."
+"Exercices FMC: programmation d un changement de route en croisiere sous pression temps.",
+"Scenarios de surprise automation: evaluer la reaction a un mode non commande.",
+"Entrainement automation partielle: IAN, FMC failure, reversion modes basiques.",
+"Exercice de monitoring FMA en continu: detecter immediatement tout mode non prevu.",
+"Simulation panne FMC en croisiere: transition manuelle vers modes conventionnels."
 ]
 },
 COM:{
@@ -6239,7 +6273,11 @@ reco:[
 "Entrainement phraseologie OACI: enregistrement et ecoute critique des communications ATC.",
 "Exercices de readback: insister sur la confirmation systematique des autorisations.",
 "Travailler la communication CRM interne: annonces PF/PM standardisees.",
-"Scenarios de communication degradee: simuler parasites radio et mauvaise intelligibilite."
+"Scenarios de communication degradee: simuler parasites radio et mauvaise intelligibilite.",
+"Exercice de communication sous pression: transmettre MAYDAY/PAN correctement et calmement.",
+"Travail sur la communication inter-equipage: messages assertifs sans ambiguite en urgence.",
+"Scenarios de confusion ATC: evaluer la gestion d un clearance ambigu ou contradictoire.",
+"Entrainement a la communication avec cabine: coordination urgence evacuation/decompression."
 ]
 }
 };
@@ -6261,7 +6299,7 @@ recoHtml+=`
 </div>
 ${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">OB negatifs: ${negList.join(' · ')}</div>`:''}
 <div style="font-size:12px;color:#F59E0B;font-weight:700;margin-bottom:6px;">RECOMMANDATIONS:</div>
-${r.reco.map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;display:flex;gap:7px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;">→</span>${rec}</div>`).join('')}
+${(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;display:flex;gap:7px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;">→</span>${rec}</div>`).join('')}
 </div>`;
 });
 
@@ -6280,6 +6318,155 @@ ${pilotName} — Score global: ${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}
 </div>
 ${recoHtml}
 </div>`;
+}
+
+// ── RECO MODAL ───────────────────────────────────────────────────────────────
+function showRecoModal(who){
+const isFo = who==='fo';
+const csKey = isFo?'csfo':'cs';
+const pilotName = isFo?(state.foName||'FO'):(state.pilotName||'CPT');
+const accentColor = isFo?'#10B981':'#3B82F6';
+const closed = state.exercises.filter(e=>e.closed);
+
+const ct={};
+COMPETENCIES.forEach(c=>{ct[c.id]={total:0,count:0,pos:0,neg:0,negObs:[]};});
+closed.forEach(ex=>{
+const cs=ex[csKey]||{};
+Object.entries(cs).forEach(([cid,cd])=>{
+if(!cd) return;
+if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else{ct[cid].neg++;ct[cid].negObs.push(o.text);}});
+});
+});
+const avgs={};
+COMPETENCIES.forEach(c=>{avgs[c.id]=ct[c.id].count>0?ct[c.id].total/ct[c.id].count:0;});
+const weak=COMPETENCIES.filter(c=>avgs[c.id]>0&&avgs[c.id]<3.5).sort((a,b)=>avgs[a.id]-avgs[b.id]);
+const strong=COMPETENCIES.filter(c=>avgs[c.id]>=4);
+const globalAvg=Object.values(avgs).filter(v=>v>0).reduce((s,v,_,a)=>s+v/a.length,0);
+
+let recoHtml='';
+weak.forEach(c=>{
+const r=COMP_RECO[c.id];
+if(!r) return;
+const avg=avgs[c.id];
+const negList=ct[c.id].negObs.slice(0,3);
+recoHtml+=`
+<div style="background:#0D1117;border:1px solid ${c.color}33;border-left:4px solid ${c.color};border-radius:10px;padding:14px;margin-bottom:12px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:14px;font-weight:800;color:${c.color};font-family:monospace;">${c.label}</span>
+<span style="font-size:12px;color:#94A3B8;">${c.full}</span>
+</div>
+<span style="font-size:15px;font-weight:800;color:#EF4444;">${avg.toFixed(1)}</span>
+</div>
+${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">OB negatifs: ${negList.join(' · ')}</div>`:''}
+<div style="font-size:11px;color:#F59E0B;font-weight:700;margin-bottom:6px;letter-spacing:0.5px;">RECOMMANDATIONS:</div>
+${(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:5px 0;border-bottom:1px solid #1E2530;display:flex;gap:8px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;margin-top:1px;">→</span>${rec}</div>`).join('')}
+</div>`;
+});
+if(!recoHtml && strong.length>0){
+recoHtml=`<div style="background:#10B98118;border:1px solid #10B98133;border-radius:10px;padding:16px;text-align:center;">
+<div style="font-size:16px;color:#10B981;font-weight:700;margin-bottom:6px;">Excellent niveau</div>
+<div style="font-size:13px;color:#94A3B8;">Aucune competence en dessous du standard. Maintenir le niveau actuel.</div>
+</div>`;
+} else if(!recoHtml){
+recoHtml=`<div style="color:#475569;text-align:center;padding:24px;font-size:13px;">Donnees insuffisantes pour generer des recommandations.</div>`;
+}
+
+const now = new Date().toLocaleDateString('fr-FR');
+const sessionLabel = (document.getElementById('inp-session')||{}).value||state.sessionName||'';
+
+const ov=document.getElementById('pres-overlay');
+ov.innerHTML=`
+<div style="width:100%;max-width:700px;max-height:90vh;overflow-y:auto;background:#141920;border:1px solid ${accentColor}44;border-radius:16px;padding:0;position:relative;box-shadow:0 20px 60px #000A;">
+<div style="background:${accentColor}18;border-bottom:1px solid ${accentColor}33;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:2;border-radius:16px 16px 0 0;">
+<div>
+<div style="font-size:11px;color:${accentColor};font-weight:700;letter-spacing:1.5px;margin-bottom:2px;">${isFo?'PREMIER OFFICIER':'COMMANDANT DE BORD'}</div>
+<div style="font-size:18px;font-weight:800;color:#F1F5F9;">${pilotName}</div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;">${sessionLabel?sessionLabel+' · ':''}${now} · Score global: <span style="color:${globalAvg>0?(globalAvg>=3.5?'#10B981':'#EF4444'):'#64748B'};font-weight:700;">${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}</span></div>
+</div>
+<div style="display:flex;gap:8px;flex-shrink:0;">
+<button onclick="printRecoModal('${who}')" style="padding:9px 14px;background:${accentColor};border:none;color:#fff;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">⬇ PDF</button>
+<button onclick="document.getElementById('pres-overlay').style.display='none'" style="padding:9px 14px;background:#1E2530;border:1px solid #334155;color:#94A3B8;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;">✕ Fermer</button>
+</div>
+</div>
+<div style="padding:18px 20px;">
+${recoHtml}
+</div>
+</div>`;
+ov.style.cssText='display:flex;position:fixed;inset:0;z-index:99999;background:#000C;align-items:center;justify-content:center;padding:16px;';
+}
+
+function printRecoModal(who){
+const isFo = who==='fo';
+const csKey = isFo?'csfo':'cs';
+const pilotName = isFo?(state.foName||'FO'):(state.pilotName||'CPT');
+const accentColor = isFo?'#10B981':'#3B82F6';
+const closed = state.exercises.filter(e=>e.closed);
+
+const ct={};
+COMPETENCIES.forEach(c=>{ct[c.id]={total:0,count:0,pos:0,neg:0,negObs:[]};});
+closed.forEach(ex=>{
+const cs=ex[csKey]||{};
+Object.entries(cs).forEach(([cid,cd])=>{
+if(!cd) return;
+if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else{ct[cid].neg++;ct[cid].negObs.push(o.text);}});
+});
+});
+const avgs={};
+COMPETENCIES.forEach(c=>{avgs[c.id]=ct[c.id].count>0?ct[c.id].total/ct[c.id].count:0;});
+const weak=COMPETENCIES.filter(c=>avgs[c.id]>0&&avgs[c.id]<3.5).sort((a,b)=>avgs[a.id]-avgs[b.id]);
+const strong=COMPETENCIES.filter(c=>avgs[c.id]>=4);
+const globalAvg=Object.values(avgs).filter(v=>v>0).reduce((s,v,_,a)=>s+v/a.length,0);
+const now=new Date().toLocaleDateString('fr-FR');
+const sessionLabel=(document.getElementById('inp-session')||{}).value||state.sessionName||'';
+
+let rows='';
+weak.forEach(c=>{
+const r=COMP_RECO[c.id];
+if(!r) return;
+const avg=avgs[c.id];
+const negList=ct[c.id].negObs.slice(0,3);
+const items=(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4));
+rows+=`<div style="border:1px solid #e2e8f0;border-left:4px solid #555;border-radius:8px;padding:12px;margin-bottom:12px;page-break-inside:avoid;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+<div><span style="font-weight:800;font-size:14px;">${c.label}</span> <span style="font-size:12px;color:#64748b;">${c.full}</span></div>
+<span style="font-weight:800;color:#ef4444;font-size:14px;">${avg.toFixed(1)}/5.0</span>
+</div>
+${negList.length?`<div style="font-size:11px;color:#94a3b8;margin-bottom:7px;font-style:italic;">Observations negatives: ${negList.join(' · ')}</div>`:''}
+<div style="font-size:11px;font-weight:700;color:#f59e0b;margin-bottom:5px;">RECOMMANDATIONS:</div>
+${items.map(rec=>`<div style="font-size:12px;padding:4px 0;border-bottom:1px solid #f1f5f9;display:flex;gap:7px;line-height:1.5;"><span style="flex-shrink:0;">→</span>${rec}</div>`).join('')}
+</div>`;
+});
+if(!rows){
+if(strong.length>0) rows=`<div style="text-align:center;padding:20px;color:#10b981;font-weight:700;">Excellent niveau — Aucune competence en dessous du standard.</div>`;
+else rows=`<div style="text-align:center;padding:20px;color:#94a3b8;">Donnees insuffisantes pour generer des recommandations.</div>`;
+}
+
+const mat = isFo?(state.foMatricule||''):(state.pilotMatricule||'');
+const w=window.open('','_blank','width=800,height=900');
+w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Recommandations — ${pilotName}</title>
+<style>
+body{font-family:'Segoe UI',Arial,sans-serif;color:#1e293b;margin:0;padding:0;background:#fff;}
+@media print{body{margin:0;}@page{margin:18mm 14mm;}}
+</style>
+</head><body>
+<div style="background:#1e293b;color:#fff;padding:20px 24px;margin-bottom:24px;">
+<div style="font-size:10px;letter-spacing:2px;color:#94a3b8;margin-bottom:4px;">RAPPORT DE RECOMMANDATIONS CBTA — B737</div>
+<div style="font-size:22px;font-weight:800;">${pilotName}${mat?' ('+mat+')':''}</div>
+<div style="font-size:12px;color:#94a3b8;margin-top:4px;">${sessionLabel?sessionLabel+' · ':''}${now} · Score global: ${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}</div>
+</div>
+<div style="padding:0 24px 24px;">
+${rows}
+<div style="margin-top:24px;padding-top:14px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center;">
+Document genere par B737 CBTA TRI — Confidentiel — Usage instructeur uniquement
+</div>
+</div>
+</body></html>`);
+w.document.close();
+setTimeout(()=>{w.print();},400);
 }
 
 // ── EXPORT FUNCTIONS ---──────────────────────────────────────────────────────
