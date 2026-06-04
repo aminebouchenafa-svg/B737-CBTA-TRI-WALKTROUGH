@@ -2958,21 +2958,34 @@ function setExTimeLimit(delta){
 // ── PILOT TAB HELPER ---───────────────────────────────────────────────────────
 // Returns the pilot selector tabs (or single banner) with correct role labels/colors.
 // onChangeSuffix is appended to the onclick, e.g. ';renderExContent()' for FFA/TEM tabs.
-function buildPilotTabsHtml(onChangeSuffix){
+function buildPilotTabsHtml(onChangeSuffix, ex){
   const r1 = state.pilotRole||'CPT', r2 = state.foRole||'FO';
   const c1 = _ROLE_COLORS[r1]||'#3B82F6', c2 = _ROLE_COLORS[r2]||'#10B981';
   const l1 = _ROLE_LABELS[r1]||r1, l2 = _ROLE_LABELS[r2]||r2;
   const cls1 = r1==='TRI'?'tri':r1==='FO'?'fo':'cpt';
   const cls2 = r2==='CPT'?'cpt':r2==='TRI'?'tri':'fo';
-  if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</div>`;
+  function _pAvg(csKey){
+    if(!ex) return null;
+    const sc=Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0);
+    return sc.length ? sc.reduce((s,v)=>s+v.g,0)/sc.length : null;
+  }
+  const avgCpt = _pAvg('cs');
+  const avgFo  = _pAvg('csfo');
+  if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;"><span style="font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</span>${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}</div>`;
   return `<div class="pilot-tabs" style="margin-bottom:16px;">
 <button class="pilot-tab ${cls1} ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt')${onChangeSuffix}" style="border-right:1px solid #1E2530;">
 <span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l1}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
 <span style="font-size:14px;">${r1} — ${state.pilotName}</span>
+${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}
+</div>
 </button>
 <button class="pilot-tab ${cls2} ${state.activePilot==="fo"?"active":""}" onclick="setPilot('fo')${onChangeSuffix}">
 <span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l2}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
 <span style="font-size:14px;">${r2} — ${state.foName}</span>
+${avgFo!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgFo)]||'#64748B'};">${avgFo.toFixed(1)}</span>`:''}
+</div>
 </button>
 </div>`;
 }
@@ -3496,7 +3509,7 @@ else if(tab==="fac") renderFacTab(ex,sc,el);
 }
 
 function renderEvalTab(ex,sc,el){
-const pilotTabsHtml = buildPilotTabsHtml('');
+const pilotTabsHtml = buildPilotTabsHtml('', ex);
 
 const condHtml = sc.cat==='NNC' && sc.condition ? `
 <div style="background:#0d1a2e;border:1px solid #8B5CF644;border-left:3px solid #8B5CF6;border-radius:8px;padding:10px 13px;margin-bottom:12px;">
@@ -3569,7 +3582,7 @@ const pilotLabel = state.activePilot==="cpt"
 ? (state.pilotRole||'CPT')+" — "+state.pilotName
 : (state.foRole||'FO')+" — "+state.foName;
 const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
-const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
+const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
 
 const infoBox = `<div style="background:#0F1020;border:1px solid #8B5CF644;border-radius:9px;padding:11px 13px;margin-bottom:16px;">
 <div class="section-lbl" style="color:#8B5CF6;">POUR CE SCENARIO</div>
@@ -3609,7 +3622,7 @@ window._temSugs = {threats: sc.tT||[], errors: sc.tE||[], uas: sc.tU||(UAS_DICT[
 const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
 const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
 const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
-const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
+const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
 
 const info = `<div class="tem-info-box" style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
 <div class="section-lbl" style="color:#3B82F6;">COMMENT UTILISER LE TEM</div>
@@ -4958,19 +4971,46 @@ if(!closed.length){
 el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>';
 return;
 }
-const cptSection = buildScoreSection('cs', 'CPT — '+state.pilotName, '#3B82F6', closed);
-const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foName, '#10B981', closed) : '';
-el.innerHTML = cptSection + foSection;
+function _gAvg(csKey){let t=0,n=0;closed.forEach(ex=>Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0).forEach(v=>{t+=v.g;n++;}));return n?t/n:null;}
+const gCpt=_gAvg('cs'), gFo=state.foName?_gAvg('csfo'):null;
+const gAll=(gCpt!==null&&gFo!==null)?(gCpt+gFo)/2:gCpt;
+const r1=state.pilotRole||'CPT', r2=state.foRole||'FO';
+const c1=_ROLE_COLORS[r1]||'#3B82F6', c2=_ROLE_COLORS[r2]||'#10B981';
+let header=`<div style="display:flex;gap:8px;padding:14px 14px 0;">`;
+if(gCpt!==null) header+=`<div style="flex:1;background:${c1}15;border:2px solid ${c1}44;border-radius:12px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:${GC[Math.round(gCpt)]||'#64748B'};">${gCpt.toFixed(2)}</div><div style="font-size:10px;color:${c1};font-weight:800;letter-spacing:1px;margin-top:3px;">${r1}<br/><span style="font-size:11px;opacity:0.7;">${state.pilotName}</span></div></div>`;
+if(gFo!==null) header+=`<div style="flex:1;background:${c2}15;border:2px solid ${c2}44;border-radius:12px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:${GC[Math.round(gFo)]||'#64748B'};">${gFo.toFixed(2)}</div><div style="font-size:10px;color:${c2};font-weight:800;letter-spacing:1px;margin-top:3px;">${r2}<br/><span style="font-size:11px;opacity:0.7;">${state.foName}</span></div></div>`;
+if(gFo!==null&&gCpt!==null&&gAll!==null) header+=`<div style="flex:1;background:#64748B15;border:2px solid #64748B44;border-radius:12px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:${GC[Math.round(gAll)]||'#64748B'};">${gAll.toFixed(2)}</div><div style="font-size:10px;color:#94A3B8;font-weight:800;letter-spacing:1px;margin-top:3px;">COLLECTIVE</div></div>`;
+header+=`</div>`;
+const cptSection = buildScoreSection('cs', 'CPT — '+state.pilotName, c1, closed);
+const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foName, c2, closed) : '';
+el.innerHTML = header + cptSection + foSection;
 }
 
 function renderDebExercises(el){
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
-el.innerHTML = closed.map((ex,i)=>{
+// Global per-pilot averages banner
+function _globalAvg(csKey){
+  let t=0,n=0;
+  closed.forEach(ex=>Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0).forEach(v=>{t+=v.g;n++;}));
+  return n?t/n:null;
+}
+const gCpt=_globalAvg('cs'), gFo=state.foName?_globalAvg('csfo'):null;
+const gAll=(gCpt!==null&&gFo!==null)?(gCpt+gFo)/2:gCpt;
+const r1=state.pilotRole||'CPT', r2=state.foRole||'FO';
+const c1=_ROLE_COLORS[r1]||'#3B82F6', c2=_ROLE_COLORS[r2]||'#10B981';
+let bannerHtml=`<div style="display:flex;gap:8px;margin-bottom:14px;">`;
+if(gCpt!==null) bannerHtml+=`<div style="flex:1;background:${c1}15;border:2px solid ${c1}44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gCpt)]||'#64748B'};">${gCpt.toFixed(2)}</div><div style="font-size:10px;color:${c1};font-weight:700;letter-spacing:1px;">${r1} — ${state.pilotName}</div></div>`;
+if(gFo!==null) bannerHtml+=`<div style="flex:1;background:${c2}15;border:2px solid ${c2}44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gFo)]||'#64748B'};">${gFo.toFixed(2)}</div><div style="font-size:10px;color:${c2};font-weight:700;letter-spacing:1px;">${r2} — ${state.foName}</div></div>`;
+if(gFo!==null&&gCpt!==null&&gAll!==null) bannerHtml+=`<div style="flex:1;background:#64748B15;border:2px solid #64748B44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gAll)]||'#64748B'};">${gAll.toFixed(2)}</div><div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;">COLLECTIVE</div></div>`;
+bannerHtml+=`</div>`;
+el.innerHTML = bannerHtml + closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
 const st=exStats(ex);
 const ac=st?GC[Math.round(st.avg)]:'#475569';
 const pc=sc.pri==="CRITICAL"?"#EF4444":sc.pri==="HIGH"?"#F59E0B":"#10B981";
+function _exAvg(csKey){const sc2=Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0);return sc2.length?sc2.reduce((s,v)=>s+v.g,0)/sc2.length:null;}
+const eCpt=_exAvg('cs'), eFo=state.foName?_exAvg('csfo'):null;
 const compBadges=COMPETENCIES.map(c=>{
 const cdC=(ex.cs||{})[c.id]; const cdF=(ex.csfo||{})[c.id];
 if(!cdC&&!cdF) return '';
@@ -5005,9 +5045,13 @@ temFo&&state.foName&&(temFo.errors||[]).length?`<span class="chip" style="backgr
 ].join('');
 const facNotes = ex.facNotes?Object.entries(ex.facNotes).filter(([,v])=>v).map(([k,v])=>`<div style="font-size:12px;color:#64748B;margin-top:3px;font-style:italic;">Q${parseInt(k)+1}: ${v}</div>`).join(''):'';
 return `<div class="card" style="margin-bottom:12px;border-left:3px solid ${pc};">
-<div style="display:flex;justify-content:space-between;margin-bottom:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;gap:8px;">
 <div style="font-size:15px;font-weight:700;color:#F1F5F9;flex:1;">${sc.title}</div>
-${st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(1)}</div>`:''}
+<div style="display:flex;gap:6px;flex-shrink:0;">
+${eCpt!==null?`<div style="text-align:center;background:${c1}15;border:1px solid ${c1}33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${GC[Math.round(eCpt)]||'#64748B'};line-height:1;">${eCpt.toFixed(1)}</div><div style="font-size:9px;color:${c1};font-weight:700;">${r1}</div></div>`:''}
+${eFo!==null?`<div style="text-align:center;background:${c2}15;border:1px solid ${c2}33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${GC[Math.round(eFo)]||'#64748B'};line-height:1;">${eFo.toFixed(1)}</div><div style="font-size:9px;color:${c2};font-weight:700;">${r2}</div></div>`:''}
+${(eFo!==null&&eCpt!==null&&st)?`<div style="text-align:center;background:#64748B15;border:1px solid #64748B33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${ac};line-height:1;">${st.avg.toFixed(1)}</div><div style="font-size:9px;color:#64748B;font-weight:700;">MOY</div></div>`:(st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(1)}</div>`:'')}
+</div>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">${compBadges}</div>
 ${ffaHtml?`<div style="margin-bottom:6px;">${ffaHtml}</div>`:''}
