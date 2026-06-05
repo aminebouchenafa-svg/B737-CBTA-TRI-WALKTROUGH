@@ -1264,7 +1264,7 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 
-<div id="modal-ref" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
+<div id="modal-ref" style="display:none;z-index:9200;" class="modal-overlay" ontouchstart="event.stopPropagation()">
 <div class="modal-box" style="height:99vh;max-height:99vh;width:99vw;max-width:99vw;display:flex;flex-direction:column;overflow:hidden;border-radius:14px;">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-shrink:0;">
 <div>
@@ -5163,6 +5163,8 @@ return `<svg width="260" height="260" viewBox="0 0 260 260">${gridSvg}${axesSvg}
 }
 
 function buildRadarSVG(cptScores, foScores, pilotLabel, foLabel){
+const cptColor=(_ROLE_COLORS&&state.pilotRole)?(_ROLE_COLORS[state.pilotRole]||'#3B82F6'):'#3B82F6';
+const foColor=(_ROLE_COLORS&&state.foRole)?(_ROLE_COLORS[state.foRole]||'#10B981'):'#10B981';
 const COMPS=COMPETENCIES.map(c=>({id:c.id,label:c.label,color:c.color}));
 const N=COMPS.length;
 const CX=160,CY=150,R=108,SVG_W=320,SVG_H=310;
@@ -5228,19 +5230,19 @@ const lvlLabels=[1,2,3,4,5].map(lv=>{
 }).join('');
 // Legend
 const legend=`
-  <rect x="10" y="${SVG_H-38}" width="12" height="12" rx="2" fill="#3B82F666" stroke="#3B82F6" stroke-width="1.5"/>
+  <rect x="10" y="${SVG_H-38}" width="12" height="12" rx="2" fill="${cptColor}66" stroke="${cptColor}" stroke-width="1.5"/>
   <text x="26" y="${SVG_H-29}" font-size="11" fill="#94A3B8" font-weight="700">${pilotLabel}</text>
-  ${foScores?`<rect x="${SVG_W/2}" y="${SVG_H-38}" width="12" height="12" rx="2" fill="#10B98166" stroke="#10B981" stroke-width="1.5"/>
+  ${foScores?`<rect x="${SVG_W/2}" y="${SVG_H-38}" width="12" height="12" rx="2" fill="${foColor}66" stroke="${foColor}" stroke-width="1.5"/>
   <text x="${SVG_W/2+16}" y="${SVG_H-29}" font-size="11" fill="#94A3B8" font-weight="700">${foLabel}</text>`:''}
 `;
 const cptPath=smoothPath(cptScores);
 const foPath=foScores?smoothPath(foScores):'';
-const cptDots=buildDots(cptScores,'#3B82F6');
-const foDots=foScores?buildDots(foScores,'#10B981'):'';
+const cptDots=buildDots(cptScores,cptColor);
+const foDots=foScores?buildDots(foScores,foColor):'';
 return `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" width="100%" style="max-width:340px;display:block;margin:0 auto;">
   ${grid}${axes}${lvlLabels}
-  ${foPath?`<path d="${foPath}" fill="#10B981" fill-opacity="0.18" stroke="#10B981" stroke-width="2"/>` :''}
-  <path d="${cptPath}" fill="#3B82F6" fill-opacity="0.22" stroke="#3B82F6" stroke-width="2"/>
+  ${foPath?`<path d="${foPath}" fill="${foColor}" fill-opacity="0.18" stroke="${foColor}" stroke-width="2"/>` :''}
+  <path d="${cptPath}" fill="${cptColor}" fill-opacity="0.22" stroke="${cptColor}" stroke-width="2"/>
   ${foDots}${cptDots}
   ${legend}
 </svg>`;
@@ -5951,36 +5953,36 @@ function showProfCheck(){
 
 const _REF_CONTENT = {
 tem:`<div style="padding:4px 0;">
-<div style="background:#0F1718;border:2px solid #F59E0B44;border-radius:10px;padding:12px;margin-bottom:10px;">
-<div style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">THREATS &amp; MITIGATION</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">AIRPORT/RUNWAY</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Contamination · Construction · Signage · Hotspots · NOTAMs</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">ATC</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Clearances/Re-Routes · ARR/DEP Amendments · Runway Changes · ATC Errors · Language Difficulty · Non-Standard Phraseology · Radio Congestion · Similar Call Signs</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">AIRCRAFT</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Systems · Communication · Equipment · MELs · Automation · Performance</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">ADVERSE WEATHER</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Visibility · De-icing · Winds/Windshear · Precipitation · Thunderstorms</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">ENVIRONMENT</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Terrain · Night · Traffic</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">AIRLINE/OPS/DISPATCH</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Schedule Pressure · Delays · Paperwork · Crew Scheduling · Manuals/Charts · FMC Database</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">OPERATIONAL</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Time Pressure · Missed Approach · Flight Diversion · Unfamiliar Airport · Non-Normal Conditions</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">GROUND/RAMP/MX</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Handling · Congestion · Logbook · Maintenance Errors</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">PHYSIOLOGY</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Fatigue · Stress · Hydration · Nutrition</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">CABIN</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Passengers · Interruptions · Events/Distractions · Flight Attendants</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;grid-column:span 2;"><div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;">CREW</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Experience · Recency · First Crew Flight · Route Familiarity</div></div>
+<div style="background:#0F1718;border:2px solid #F59E0B44;border-radius:10px;padding:14px;margin-bottom:10px;">
+<div style="font-size:14px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:12px;">THREATS &amp; MITIGATION</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">AIRPORT/RUNWAY</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Contamination · Construction · Signage · Hotspots · NOTAMs</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">ATC</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Clearances/Re-Routes · ARR/DEP Amendments · Runway Changes · ATC Errors · Language Difficulty · Non-Standard Phraseology · Radio Congestion · Similar Call Signs</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">AIRCRAFT</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Systems · Communication · Equipment · MELs · Automation · Performance</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">ADVERSE WEATHER</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Visibility · De-icing · Winds/Windshear · Precipitation · Thunderstorms</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">ENVIRONMENT</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Terrain · Night · Traffic</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">AIRLINE/OPS/DISPATCH</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Schedule Pressure · Delays · Paperwork · Crew Scheduling · Manuals/Charts · FMC Database</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">OPERATIONAL</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Time Pressure · Missed Approach · Flight Diversion · Unfamiliar Airport · Non-Normal Conditions</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">GROUND/RAMP/MX</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Handling · Congestion · Logbook · Maintenance Errors</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">PHYSIOLOGY</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Fatigue · Stress · Hydration · Nutrition</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">CABIN</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Passengers · Interruptions · Events/Distractions · Flight Attendants</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;grid-column:span 2;"><div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">CREW</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Experience · Recency · First Crew Flight · Route Familiarity</div></div>
 </div>
 </div>
-<div style="background:#0F1718;border:2px solid #EF444444;border-radius:10px;padding:12px;margin-bottom:10px;">
-<div style="font-size:11px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:10px;">ERRORS &amp; MITIGATION</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">SKILL-BASED</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Application of Procedures · Flight Path Management · Manual Control</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">DECISION</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Application of Knowledge · Problem Solving &amp; Decision Making</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">PERCEPTUAL</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Workload Management</div></div>
-<div style="background:#141920;border-radius:8px;padding:9px;"><div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:5px;">CRM</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">Leadership &amp; Teamwork · Communication · Situation Awareness</div></div>
+<div style="background:#0F1718;border:2px solid #EF444444;border-radius:10px;padding:14px;margin-bottom:10px;">
+<div style="font-size:14px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:12px;">ERRORS &amp; MITIGATION</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">SKILL-BASED</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Application of Procedures · Flight Path Management · Manual Control</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">DECISION</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Application of Knowledge · Problem Solving &amp; Decision Making</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">PERCEPTUAL</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Workload Management</div></div>
+<div style="background:#141920;border-radius:8px;padding:11px;"><div style="font-size:14px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">CRM</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">Leadership &amp; Teamwork · Communication · Situation Awareness</div></div>
 </div>
 </div>
-<div style="background:#0F1718;border:2px solid #10B98144;border-radius:10px;padding:12px;">
-<div style="font-size:11px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:8px;">BRIEFING &amp; DEBRIEFING GUIDE</div>
-<div style="margin-bottom:8px;"><div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:4px;">✈ TAKEOFF BRIEFING</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">→ Taxi Path, Runway, Intersection<br/>→ Route: Clearance, Flight Plan, FMC RTE Crosscheck<br/>→ Return to Airport: Emergency, Takeoff Alternate<br/>→ Takeoff Performance: Data Valid, Config<br/>→ PM Duties, Noise Abatement, Engine Failure Plan</div></div>
-<div style="margin-bottom:8px;"><div style="font-size:11px;font-weight:700;color:#8B5CF6;margin-bottom:4px;">🛬 APPROACH BRIEFING</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">→ Weather, FMC Programming, NOTAMs<br/>→ Flaps, VREF &amp; Bugs, STAR &amp; Routing<br/>→ Automation: Approach Mode, Minimums, MCP ALT<br/>→ Missed Approach, Alternate, Fuel<br/>→ Landing Runway, TDZ, Exit, Taxi, Autobrake<br/>→ PM Duties, Arrival Missed Approach Plan</div></div>
-<div><div style="font-size:11px;font-weight:700;color:#F59E0B;margin-bottom:4px;">💬 DEBRIEFING GUIDE</div><div style="font-size:12px;color:#94A3B8;line-height:1.7;">→ Were safety margins compromised at any time?<br/>→ Were standards, policies or tasks compromised?<br/>→ What events prompted unresolved questions?<br/>→ In which areas could pilots have performed at a higher level?</div></div>
+<div style="background:#0F1718;border:2px solid #10B98144;border-radius:10px;padding:14px;">
+<div style="font-size:14px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">BRIEFING &amp; DEBRIEFING GUIDE</div>
+<div style="margin-bottom:8px;"><div style="font-size:14px;font-weight:700;color:#3B82F6;margin-bottom:6px;">✈ TAKEOFF BRIEFING</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">→ Taxi Path, Runway, Intersection<br/>→ Route: Clearance, Flight Plan, FMC RTE Crosscheck<br/>→ Return to Airport: Emergency, Takeoff Alternate<br/>→ Takeoff Performance: Data Valid, Config<br/>→ PM Duties, Noise Abatement, Engine Failure Plan</div></div>
+<div style="margin-bottom:8px;"><div style="font-size:14px;font-weight:700;color:#8B5CF6;margin-bottom:6px;">🛬 APPROACH BRIEFING</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">→ Weather, FMC Programming, NOTAMs<br/>→ Flaps, VREF &amp; Bugs, STAR &amp; Routing<br/>→ Automation: Approach Mode, Minimums, MCP ALT<br/>→ Missed Approach, Alternate, Fuel<br/>→ Landing Runway, TDZ, Exit, Taxi, Autobrake<br/>→ PM Duties, Arrival Missed Approach Plan</div></div>
+<div><div style="font-size:14px;font-weight:700;color:#F59E0B;margin-bottom:6px;">💬 DEBRIEFING GUIDE</div><div style="font-size:15px;color:#94A3B8;line-height:1.7;">→ Were safety margins compromised at any time?<br/>→ Were standards, policies or tasks compromised?<br/>→ What events prompted unresolved questions?<br/>→ In which areas could pilots have performed at a higher level?</div></div>
 </div>
 </div>`,
 obs:(function(){
@@ -5998,10 +6000,10 @@ const comps=[
 return '<div style="padding:4px 0;">'+comps.map(function(c){
 return '<div style="background:#0F1718;border:1px solid '+c.color+'33;border-left:3px solid '+c.color+';border-radius:10px;padding:11px;margin-bottom:10px;">'
 +'<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">'
-+'<span style="font-size:12px;font-weight:800;color:'+c.color+';font-family:monospace;">'+c.id+'</span>'
-+'<span style="font-size:13px;font-weight:700;color:#F1F5F9;">'+c.title+'</span>'
++'<span style="font-size:15px;font-weight:800;color:'+c.color+';font-family:monospace;">'+c.id+'</span>'
++'<span style="font-size:16px;font-weight:700;color:#F1F5F9;">'+c.title+'</span>'
 +'</div>'
-+'<div style="font-size:11px;color:#64748B;font-style:italic;margin-bottom:8px;line-height:1.5;">'+c.obj+'</div>'
++'<div style="font-size:14px;color:#64748B;font-style:italic;margin-bottom:10px;line-height:1.5;">'+c.obj+'</div>'
 +c.obs.map(function(o,i){return '<div style="display:flex;gap:6px;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:10px;color:'+c.color+';font-weight:700;flex-shrink:0;min-width:32px;">OB '+(i+1)+'</span><span style="font-size:12px;color:#CBD5E1;line-height:1.5;">'+o+'</span></div>';}).join('')
 +'</div>';
 }).join('')+'</div>';
@@ -6078,7 +6080,7 @@ function renderProfCheck(){
     let btns = GRADE_VALS.map(v=>{
       const active = String(g)===String(v);
       const col = GRADE_COLORS[v]||'#64748B';
-      return '<button onclick="setPCGrade(\''+item.id+'\',\''+v+'\')" style="flex:1;padding:7px 0;border-radius:6px;font-size:13px;font-weight:800;cursor:pointer;border:1px solid '+(active?col:col+'44')+';background:'+(active?col+'33':'transparent')+';color:'+(active?col:col+'88')+';">'+v+'</button>';
+      return '<button onclick="setPCGrade(\''+item.id+'\',\''+v+'\')" style="flex:1;padding:13px 0;border-radius:8px;font-size:20px;font-weight:800;cursor:pointer;border:1px solid '+(active?col:col+'44')+';background:'+(active?col+'33':'transparent')+';color:'+(active?col:col+'88')+';">'+v+'</button>';
     }).join('');
     return '<div style="padding:9px 0;border-bottom:1px solid #1E2530;">'
       +'<div style="font-size:13px;color:#CBD5E1;margin-bottom:6px;">'+item.label+'</div>'
