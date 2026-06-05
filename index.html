@@ -3928,7 +3928,7 @@ ${NOK_RECOS.map(r=>`<div style="font-size:12px;color:#94A3B8;padding:4px 0 4px 1
 </div>`:''}
 </div>` : '';
 
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('crm')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('crm')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>
 <div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF644;border-radius:12px;padding:12px 16px;margin-bottom:12px;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
 <div style="font-size:14px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">👥 CRM — RESSOURCES ÉQUIPAGE</div>
@@ -5118,7 +5118,7 @@ ${(temFo.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:
 </div>`;
 }).join('');
 
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('tem')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div><div style="padding:14px;">${tableHtml}${exRows||'<div style="text-align:center;color:#64748B;padding:20px;">Aucune donnée TEM enregistrée</div>'}</div>`;
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('tem')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div><div style="padding:14px;">${tableHtml}${exRows||'<div style="text-align:center;color:#64748B;padding:20px;">Aucune donnée TEM enregistrée</div>'}</div>`;
 }
 
 function renderDebScores(el){
@@ -5139,13 +5139,13 @@ if(gFo!==null&&gCpt!==null&&gAll!==null) header+=`<div style="flex:1;background:
 header+=`</div>`;
 const cptSection = buildScoreSection('cs', 'CPT — '+state.pilotName, c1, closed);
 const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foName, c2, closed) : '';
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>` + header + cptSection + foSection;
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + cptSection + foSection;
 }
 
 function renderDebExercises(el){
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
-const dsBtn=`<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('exercises')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>`;
+const dsBtn=`<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('exercises')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>`;
 // Global per-pilot averages banner
 function _globalAvg(csKey){
   let t=0,n=0;
@@ -5959,8 +5959,7 @@ const rcSummaryHtml = topRC.length ? `
 ${topRC.map(([rc,n])=>`<div style="font-size:13px;color:#CBD5E1;padding:3px 0;">• ${rc} (${n}x)</div>`).join('')}
 </div>` : '';
 
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('conclusion')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>
-
+el.innerHTML = `
 <div class="concl-box" style="background:${perfColor}18;border:1px solid ${perfColor}44;margin-bottom:14px;">
 <div style="font-size:11px;color:#3B82F6;font-weight:700;margin-bottom:4px;">CPT — ${state.pilotName}</div>
 <div class="concl-title" style="color:${perfColor};">${perfLevel}</div>
@@ -7305,30 +7304,37 @@ if(!r) return;
 const avg=avgs[c.id];
 const negList=ct[c.id].negObs.slice(0,3);
 const items=(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4));
-rows+=`<div style="border:1px solid #e2e8f0;border-left:4px solid #555;border-radius:8px;padding:12px;margin-bottom:12px;page-break-inside:avoid;">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-<div><span style="font-weight:800;font-size:14px;">${c.label}</span> <span style="font-size:12px;color:#64748b;">${c.full}</span></div>
-<span style="font-weight:800;color:#ef4444;font-size:14px;">${avg.toFixed(1)}/5.0</span>
+const cc=c.color||'#EF4444';
+rows+=`<div style="border:1px solid ${cc}55;border-left:5px solid ${cc};border-radius:10px;padding:16px;margin-bottom:16px;page-break-inside:avoid;background:#FAFBFF;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+<div style="display:flex;align-items:center;gap:10px;">
+<span style="font-weight:900;font-size:18px;color:${cc};font-family:monospace;background:${cc}18;padding:3px 10px;border-radius:6px;border:1px solid ${cc}44;">${c.label}</span>
+<span style="font-size:14px;color:#1e293b;font-weight:600;">${c.full}</span>
 </div>
-${negList.length?`<div style="font-size:11px;color:#94a3b8;margin-bottom:7px;font-style:italic;">Observations negatives: ${negList.join(' · ')}</div>`:''}
-<div style="font-size:11px;font-weight:700;color:#f59e0b;margin-bottom:5px;">RECOMMANDATIONS:</div>
-${items.map(rec=>`<div style="font-size:14px;padding:5px 0;border-bottom:1px solid #f1f5f9;display:flex;gap:8px;line-height:1.6;"><span style="flex-shrink:0;">→</span>${rec}</div>`).join('')}
+<span style="font-weight:900;color:#ef4444;font-size:16px;background:#fef2f2;padding:4px 10px;border-radius:6px;border:1px solid #fca5a5;">${avg.toFixed(1)}/5.0</span>
+</div>
+${negList.length?`<div style="font-size:12px;color:#64748b;margin-bottom:10px;font-style:italic;background:#f8fafc;padding:6px 10px;border-radius:6px;border-left:3px solid #cbd5e1;">Observations: ${negList.join(' · ')}</div>`:''}
+<div style="font-size:11px;font-weight:800;color:${cc};letter-spacing:1.5px;margin-bottom:8px;">RECOMMANDATIONS</div>
+${items.map(rec=>`<div style="font-size:14px;padding:7px 0;border-bottom:1px solid #e2e8f0;display:flex;gap:10px;line-height:1.7;color:#0f172a;"><span style="flex-shrink:0;color:${cc};font-weight:900;">→</span><span style="font-weight:600;">${rec}</span></div>`).join('')}
 </div>`;
 });
 if(!rows){
-if(strong.length>0) rows=`<div style="text-align:center;padding:20px;color:#10b981;font-weight:700;">Excellent niveau — Aucune competence en dessous du standard.</div>`;
-else rows=`<div style="text-align:center;padding:20px;color:#94a3b8;">Donnees insuffisantes pour generer des recommandations.</div>`;
+if(strong.length>0) rows=`<div style="text-align:center;padding:20px;color:#059669;font-weight:800;font-size:16px;">✓ Excellent niveau — Aucune compétence en dessous du standard.</div>`;
+else rows=`<div style="text-align:center;padding:20px;color:#64748b;font-size:15px;">Données insuffisantes pour générer des recommandations.</div>`;
 }
 
-const bodyHtml=`<div style="background:#1e293b;color:#fff;padding:20px 24px;margin-bottom:24px;">
-<div style="font-size:10px;letter-spacing:2px;color:#94a3b8;margin-bottom:4px;">RAPPORT DE RECOMMANDATIONS CBTA — B737</div>
-<div style="font-size:22px;font-weight:800;">${pilotName}${mat?' ('+mat+')':''}</div>
-<div style="font-size:12px;color:#94a3b8;margin-top:4px;">${sessionLabel?sessionLabel+' · ':''}${now} · Score global: ${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}</div>
+const bodyHtml=`<div style="background:${accentColor};color:#fff;padding:22px 28px;margin-bottom:0;">
+<div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:6px;font-weight:700;">RAPPORT DE RECOMMANDATIONS CBTA — B737 NG</div>
+<div style="font-size:26px;font-weight:900;letter-spacing:0.5px;">${pilotName}${mat?' <span style="font-size:16px;opacity:0.8;">('+mat+')</span>':''}</div>
+<div style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:6px;font-weight:600;">${sessionLabel?sessionLabel+' · ':''}${now}${globalAvg>0?' · Score global: <strong>'+globalAvg.toFixed(2)+'/5.0</strong>':''}</div>
 </div>
-<div style="padding:0 24px 24px;">
+<div style="background:#f1f5f9;padding:10px 28px 6px;border-bottom:1px solid #e2e8f0;">
+<span style="font-size:12px;color:#64748b;font-weight:600;">${weak.length} compétence${weak.length>1?'s':''} à renforcer</span>
+</div>
+<div style="padding:20px 24px 28px;background:#fff;">
 ${rows}
-<div style="margin-top:24px;padding-top:14px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center;">
-Document genere par B737 CBTA TRI — Confidentiel — Usage instructeur uniquement
+<div style="margin-top:28px;padding-top:14px;border-top:2px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center;font-weight:500;">
+Document généré par B737 CBTA TRI Companion — Confidentiel — Usage instructeur uniquement
 </div>
 </div>`;
 
