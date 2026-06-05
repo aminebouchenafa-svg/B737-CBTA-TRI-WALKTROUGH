@@ -876,15 +876,15 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">🧠 COMPÉTENCES CBTA (Boeing Framework)</div>
 <div style="display:flex;flex-direction:column;gap:7px;">
-<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#3B82F6;font-family:monospace;min-width:40px;">FPM</span><span style="font-size:13px;color:#CBD5E1;">Flight Path Management — gestion trajectoire &amp; énergie manuelle</span></div>
-<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#10B981;font-family:monospace;min-width:40px;">FPA</span><span style="font-size:13px;color:#CBD5E1;">Flight Path Automation — gestion des automatismes (AP/AT/FMC)</span></div>
-<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#F59E0B;font-family:monospace;min-width:40px;">PRO</span><span style="font-size:13px;color:#CBD5E1;">Procedures — application des SOP, QRH et emergency items</span></div>
-<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#EF4444;font-family:monospace;min-width:40px;">SA</span><span style="font-size:13px;color:#CBD5E1;">Situation Awareness — conscience de la situation en temps réel</span></div>
+<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#EF4444;font-family:monospace;min-width:40px;">FPM</span><span style="font-size:13px;color:#CBD5E1;">Flight Path Management — gestion trajectoire &amp; énergie manuelle</span></div>
+<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#F97316;font-family:monospace;min-width:40px;">FPA</span><span style="font-size:13px;color:#CBD5E1;">Flight Path Automation — gestion des automatismes (AP/AT/FMC)</span></div>
+<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#14B8A6;font-family:monospace;min-width:40px;">PRO</span><span style="font-size:13px;color:#CBD5E1;">Procedures — application des SOP, QRH et emergency items</span></div>
+<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#06B6D4;font-family:monospace;min-width:40px;">SA</span><span style="font-size:13px;color:#CBD5E1;">Situation Awareness — conscience de la situation en temps réel</span></div>
 <div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#8B5CF6;font-family:monospace;min-width:40px;">WLM</span><span style="font-size:13px;color:#CBD5E1;">Workload Management — priorisation et délégation</span></div>
 <div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#EC4899;font-family:monospace;min-width:40px;">COM</span><span style="font-size:13px;color:#CBD5E1;">Communication — phraséologie ATC et échanges équipage</span></div>
-<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#F97316;font-family:monospace;min-width:40px;">LTW</span><span style="font-size:13px;color:#CBD5E1;">Leadership &amp; Teamwork — leadership, assertivité, coordination</span></div>
-<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#06B6D4;font-family:monospace;min-width:40px;">PSD</span><span style="font-size:13px;color:#CBD5E1;">Problem Solving &amp; Decision — FORDEC, biais cognitifs, adaptabilité</span></div>
-<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#84CC16;font-family:monospace;min-width:40px;">KNO</span><span style="font-size:13px;color:#CBD5E1;">Knowledge — systèmes, limitations, réglementation EASA</span></div>
+<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#10B981;font-family:monospace;min-width:40px;">LTW</span><span style="font-size:13px;color:#CBD5E1;">Leadership &amp; Teamwork — leadership, assertivité, coordination</span></div>
+<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#F59E0B;font-family:monospace;min-width:40px;">PSD</span><span style="font-size:13px;color:#CBD5E1;">Problem Solving &amp; Decision — FORDEC, biais cognitifs, adaptabilité</span></div>
+<div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#3B82F6;font-family:monospace;min-width:40px;">KNO</span><span style="font-size:13px;color:#CBD5E1;">Knowledge — systèmes, limitations, réglementation EASA</span></div>
 </div>
 <div style="margin-top:10px;border-top:1px solid #1E2530;padding-top:10px;">
 <div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">GRADING TRI CHECK</div>
@@ -3928,7 +3928,7 @@ ${NOK_RECOS.map(r=>`<div style="font-size:12px;color:#94A3B8;padding:4px 0 4px 1
 </div>`:''}
 </div>` : '';
 
-el.innerHTML = `
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('crm')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>
 <div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF644;border-radius:12px;padding:12px 16px;margin-bottom:12px;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
 <div style="font-size:14px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">👥 CRM — RESSOURCES ÉQUIPAGE</div>
@@ -5118,7 +5118,7 @@ ${(temFo.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:
 </div>`;
 }).join('');
 
-el.innerHTML = `<div style="padding:14px;">${tableHtml}${exRows||'<div style="text-align:center;color:#64748B;padding:20px;">Aucune donnée TEM enregistrée</div>'}</div>`;
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('tem')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div><div style="padding:14px;">${tableHtml}${exRows||'<div style="text-align:center;color:#64748B;padding:20px;">Aucune donnée TEM enregistrée</div>'}</div>`;
 }
 
 function renderDebScores(el){
@@ -5139,12 +5139,13 @@ if(gFo!==null&&gCpt!==null&&gAll!==null) header+=`<div style="flex:1;background:
 header+=`</div>`;
 const cptSection = buildScoreSection('cs', 'CPT — '+state.pilotName, c1, closed);
 const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foName, c2, closed) : '';
-el.innerHTML = header + cptSection + foSection;
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>` + header + cptSection + foSection;
 }
 
 function renderDebExercises(el){
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
+const dsBtn=`<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('exercises')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>`;
 // Global per-pilot averages banner
 function _globalAvg(csKey){
   let t=0,n=0;
@@ -5160,7 +5161,7 @@ if(gCpt!==null) bannerHtml+=`<div style="flex:1;background:${c1}15;border:2px so
 if(gFo!==null) bannerHtml+=`<div style="flex:1;background:${c2}15;border:2px solid ${c2}44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gFo)]||'#64748B'};">${gFo.toFixed(2)}</div><div style="font-size:10px;color:${c2};font-weight:700;letter-spacing:1px;">${r2} — ${state.foName}</div></div>`;
 if(gFo!==null&&gCpt!==null&&gAll!==null) bannerHtml+=`<div style="flex:1;background:#64748B15;border:2px solid #64748B44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gAll)]||'#64748B'};">${gAll.toFixed(2)}</div><div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;">COLLECTIVE</div></div>`;
 bannerHtml+=`</div>`;
-el.innerHTML = bannerHtml + closed.map((ex,i)=>{
+el.innerHTML = dsBtn + bannerHtml + closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
 const st=exStats(ex);
 const ac=st?GC[Math.round(st.avg)]:'#475569';
@@ -5958,7 +5959,7 @@ const rcSummaryHtml = topRC.length ? `
 ${topRC.map(([rc,n])=>`<div style="font-size:13px;color:#CBD5E1;padding:3px 0;">• ${rc} (${n}x)</div>`).join('')}
 </div>` : '';
 
-el.innerHTML = `
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('conclusion')" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:5px 12px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button></div>
 
 <div class="concl-box" style="background:${perfColor}18;border:1px solid ${perfColor}44;margin-bottom:14px;">
 <div style="font-size:11px;color:#3B82F6;font-weight:700;margin-bottom:4px;">CPT — ${state.pilotName}</div>
@@ -7644,6 +7645,119 @@ function importHistoryJSON(inp){
     }catch(err){showToast('❌ Erreur lecture fichier');}
   };
   reader.readAsText(file);
+}
+
+// ── DATA SHOW SECTION OVERLAY ────────────────────────────────────────────────
+function showSectionDataShow(section){
+const closed=state.exercises.filter(e=>e.closed);
+const pilotName=state.pilotName||'CPT';
+const foName=state.foName||'';
+let title='', content='';
+
+if(section==='scores'){
+  title='📊 SCORES COMPÉTENCES';
+  function _gAvg2(csKey){let t=0,n=0;closed.forEach(ex=>Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0).forEach(v=>{t+=v.g;n++;}));return n?t/n:null;}
+  const gCpt=_gAvg2('cs'), gFo=foName?_gAvg2('csfo'):null;
+  const rows=COMPETENCIES.map(c=>{
+    let tC=0,nC=0,tF=0,nF=0;
+    closed.forEach(ex=>{
+      const v=(ex.cs||{})[c.id]; if(v&&v.g>0){tC+=v.g;nC++;}
+      const vf=(ex.csfo||{})[c.id]; if(vf&&vf.g>0){tF+=vf.g;nF++;}
+    });
+    const aC=nC?tC/nC:null, aF=nF?tF/nF:null;
+    const bar=(v)=>v?`<div style="height:8px;border-radius:4px;background:${c.color};width:${Math.round(v/5*100)}%;"></div>`:'';
+    return `<div style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <span style="font-size:20px;font-weight:800;color:${c.color};">${c.label}</span>
+        <span style="font-size:18px;color:#94A3B8;">${aC?aC.toFixed(1):'-'}${aF?' / '+aF.toFixed(1):''}</span>
+      </div>
+      <div style="background:#1E2530;border-radius:4px;overflow:hidden;height:8px;">${bar(aC)}</div>
+      <div style="font-size:13px;color:#64748B;margin-top:3px;">${c.full}</div>
+    </div>`;
+  }).join('');
+  const scores=`<div style="display:flex;gap:20px;margin-bottom:24px;">
+    <div style="flex:1;text-align:center;"><div style="font-size:56px;font-weight:900;color:#3B82F6;">${gCpt?gCpt.toFixed(2):'-'}</div><div style="color:#94A3B8;font-size:14px;">${pilotName}</div></div>
+    ${gFo!==null?`<div style="flex:1;text-align:center;"><div style="font-size:56px;font-weight:900;color:#10B981;">${gFo.toFixed(2)}</div><div style="color:#94A3B8;font-size:14px;">${foName}</div></div>`:''}
+  </div>`;
+  content=scores+rows;
+}
+else if(section==='exercises'){
+  title='✈️ EXERCICES';
+  content=closed.map(ex=>{
+    const sc=ALL_SC.find(s=>s.id===ex.sid)||{label:ex.sid,color:'#64748B'};
+    const st=exStats(ex);
+    return `<div style="margin-bottom:16px;padding:16px;background:#0F172A;border-radius:12px;border-left:4px solid ${sc.color||'#64748B'};">
+      <div style="font-size:20px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">${sc.label||ex.sid}</div>
+      <div style="display:flex;gap:16px;font-size:16px;color:#94A3B8;">
+        <span style="color:${st.cptAvg>=4?'#10B981':st.cptAvg>=3?'#F59E0B':'#EF4444'};font-weight:700;">${pilotName}: ${st.cptAvg?st.cptAvg.toFixed(1):'-'}</span>
+        ${st.foAvg!==null?`<span style="color:${st.foAvg>=4?'#10B981':st.foAvg>=3?'#F59E0B':'#EF4444'};font-weight:700;">${foName}: ${st.foAvg.toFixed(1)}</span>`:''}
+      </div>
+    </div>`;
+  }).join('')||'<div style="color:#64748B;text-align:center;padding:40px;">Aucun exercice clôturé.</div>';
+}
+else if(section==='crm'){
+  title='🤝 CRM';
+  const items=[
+    {k:'brief',label:'Briefings'},
+    {k:'callout',label:'Callouts SOP'},
+    {k:'challenge',label:'Challenge & Response'},
+    {k:'comm',label:'Communication'},
+    {k:'leadership',label:'Leadership'},
+    {k:'crosscheck',label:'Cross-Check'},
+    {k:'workload',label:'Workload Mgmt'},
+    {k:'sa',label:'Situation Awareness'},
+    {k:'decision',label:'PSD / Décision'},
+    {k:'intervention',label:'Intervention assertive'},
+    {k:'automation',label:'Gestion automatismes'},
+    {k:'sterile',label:'Cockpit stérile'}
+  ];
+  const crm=state.sessionCRM||{};
+  const scored=items.filter(i=>crm[i.k]);
+  const nok=scored.filter(i=>crm[i.k]==='nok');
+  const pct=scored.length?Math.round((scored.length-nok.length)/scored.length*100):null;
+  const lvl=pct===null?'—':pct>=85?'EXCELLENT':pct>=70?'SATISFAISANT':pct>=50?'PARTIEL':'INSUFFISANT';
+  const lvlColor=pct===null?'#64748B':pct>=85?'#10B981':pct>=70?'#3B82F6':pct>=50?'#F59E0B':'#EF4444';
+  content=`<div style="text-align:center;margin-bottom:28px;">
+    <div style="font-size:64px;font-weight:900;color:${lvlColor};">${pct!==null?pct+'%':'—'}</div>
+    <div style="font-size:24px;font-weight:800;color:${lvlColor};margin-top:4px;">${lvl}</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+  ${items.filter(i=>crm[i.k]).map(i=>`<div style="padding:12px;border-radius:8px;background:${crm[i.k]==='ok'?'#10B98122':'#EF444422'};border:1px solid ${crm[i.k]==='ok'?'#10B98166':'#EF444466'};">
+    <span style="font-size:16px;font-weight:700;color:${crm[i.k]==='ok'?'#10B981':'#EF4444'};">${crm[i.k]==='ok'?'✔':'✘'} ${i.label}</span>
+  </div>`).join('')}
+  </div>`;
+}
+else if(section==='tem'){
+  title='⚠️ TEM CARD';
+  const t=state.debNotes||{};
+  const rows=[
+    {label:'Menaces identifiées',val:t.tem_threats||'—'},
+    {label:'Erreurs détectées',val:t.tem_errors||'—'},
+    {label:'UGEM / État non désiré',val:t.tem_ugem||'—'},
+  ].map(r=>`<div style="margin-bottom:20px;"><div style="font-size:15px;font-weight:700;color:#F59E0B;margin-bottom:6px;">${r.label}</div><div style="font-size:17px;color:#F1F5F9;background:#0F172A;border-radius:8px;padding:14px;line-height:1.6;">${r.val}</div></div>`).join('');
+  content=rows||'<div style="color:#64748B;text-align:center;padding:40px;">Aucune donnée TEM saisie.</div>';
+}
+else if(section==='conclusion'){
+  title='📋 CONCLUSION';
+  const note=state.debNotes||{};
+  content=`<div style="text-align:center;margin-bottom:28px;"><div style="font-size:64px;font-weight:900;color:#F1F5F9;">${note.finalGrade||'—'}</div><div style="font-size:18px;color:#94A3B8;">Note finale</div></div>
+  <div style="font-size:17px;color:#CBD5E1;background:#0F172A;border-radius:12px;padding:20px;line-height:1.8;">${(note.conclusion||'Aucune conclusion saisie.').replace(/\n/g,'<br>')}</div>`;
+}
+else {
+  title='📺 DATA SHOW'; content='<div style="color:#64748B;text-align:center;padding:40px;">Aucune donnée.</div>';
+}
+
+let ov=document.getElementById('ds-overlay');
+if(ov) ov.remove();
+ov=document.createElement('div');
+ov.id='ds-overlay';
+ov.style.cssText='position:fixed;inset:0;background:#0A0C12;z-index:99980;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0;';
+ov.innerHTML=`<div style="display:flex;align-items:center;gap:12px;position:sticky;top:0;background:#0A0C12;border-bottom:1px solid #1E2530;padding:12px 16px;z-index:2;">
+<button onclick="document.getElementById(\'ds-overlay\').remove()" style="background:#1E2530;color:#94A3B8;border:none;padding:8px 14px;border-radius:8px;font-size:14px;cursor:pointer;">✕</button>
+<span style="font-size:16px;font-weight:800;color:#F1F5F9;">${title}</span>
+</div>
+<div style="padding:20px;">${content}</div>`;
+document.body.appendChild(ov);
 }
 
 // ── MODE PRÉSENTATION ────────────────────────────────────────────────────────
