@@ -5165,42 +5165,66 @@ return `<svg width="260" height="260" viewBox="0 0 260 260">${gridSvg}${axesSvg}
 function buildRadarSVG(cptScores, foScores, pilotLabel, foLabel){
 const COMPS=COMPETENCIES.map(c=>({id:c.id,label:c.label,color:c.color}));
 const N=COMPS.length;
-const CX=160,CY=155,R=110,SVG_W=320,SVG_H=310;
+const CX=160,CY=150,R=108,SVG_W=320,SVG_H=310;
 const angle=(i)=>( (Math.PI*2/N)*i - Math.PI/2 );
 const pt=(i,val)=>{
   const a=angle(i), r=R*(val/5);
   return [CX+r*Math.cos(a), CY+r*Math.sin(a)];
 };
-// Grid circles
+// Catmull-rom smooth closed path
+const smoothPath=(scores)=>{
+  const pts=COMPS.map((c,i)=>pt(i,Math.max(scores[c.id]||0,0.05)));
+  const n=pts.length;
+  let d=`M ${pts[0][0].toFixed(2)},${pts[0][1].toFixed(2)}`;
+  for(let i=0;i<n;i++){
+    const p0=pts[(i-1+n)%n], p1=pts[i], p2=pts[(i+1)%n], p3=pts[(i+2)%n];
+    const cp1x=(p1[0]+(p2[0]-p0[0])/6).toFixed(2);
+    const cp1y=(p1[1]+(p2[1]-p0[1])/6).toFixed(2);
+    const cp2x=(p2[0]-(p3[0]-p1[0])/6).toFixed(2);
+    const cp2y=(p2[1]-(p3[1]-p1[1])/6).toFixed(2);
+    d+=` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`;
+  }
+  return d+' Z';
+};
+// Smooth grid rings (same technique)
+const smoothRing=(lv)=>{
+  const pts=COMPS.map((_,i)=>pt(i,lv));
+  const n=pts.length;
+  let d=`M ${pts[0][0].toFixed(2)},${pts[0][1].toFixed(2)}`;
+  for(let i=0;i<n;i++){
+    const p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+    const cp1x=(p1[0]+(p2[0]-p0[0])/6).toFixed(2);
+    const cp1y=(p1[1]+(p2[1]-p0[1])/6).toFixed(2);
+    const cp2x=(p2[0]-(p3[0]-p1[0])/6).toFixed(2);
+    const cp2y=(p2[1]-(p3[1]-p1[1])/6).toFixed(2);
+    d+=` C ${cp1x},${cp1y} ${cp2x},${cp2y} ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`;
+  }
+  return d+' Z';
+};
+// Grid rings
 let grid='';
 for(let lv=1;lv<=5;lv++){
-  const pts=COMPS.map((_,i)=>pt(i,lv).join(',')).join(' ');
-  grid+=`<polygon points="${pts}" fill="none" stroke="#1E2530" stroke-width="${lv===5?1.5:0.8}"/>`;
+  grid+=`<path d="${smoothRing(lv)}" fill="none" stroke="#1E2530" stroke-width="${lv===5?1.5:0.8}"/>`;
 }
 // Axis lines + labels
 let axes='';
 COMPS.forEach((c,i)=>{
   const [x2,y2]=pt(i,5);
-  const [lx,ly]=pt(i,5.7);
+  const [lx,ly]=pt(i,5.8);
   axes+=`<line x1="${CX}" y1="${CY}" x2="${x2}" y2="${y2}" stroke="#2D3748" stroke-width="1"/>`;
   axes+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="800" fill="${c.color}" font-family="ui-monospace,monospace">${c.label}</text>`;
 });
-// CPT polygon
-const buildPoly=(scores,color,opacity)=>{
-  const pts=COMPS.map((c,i)=>pt(i,scores[c.id]||0).join(',')).join(' ');
-  return `<polygon points="${pts}" fill="${color}" fill-opacity="${opacity}" stroke="${color}" stroke-width="2" stroke-linejoin="round"/>`;
-};
 // Dots
 const buildDots=(scores,color)=>COMPS.map((c,i)=>{
   const v=scores[c.id]||0;
   if(!v) return '';
   const [x,y]=pt(i,v);
-  return `<circle cx="${x}" cy="${y}" r="4" fill="${color}" stroke="#0A0C12" stroke-width="1.5"/>`;
+  return `<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="4" fill="${color}" stroke="#0A0C12" stroke-width="1.5"/>`;
 }).join('');
-// Score labels at 5 levels
+// Score labels
 const lvlLabels=[1,2,3,4,5].map(lv=>{
   const [x,y]=pt(0,lv);
-  return `<text x="${x+5}" y="${y}" font-size="8" fill="#475569">${lv}</text>`;
+  return `<text x="${(x+5).toFixed(1)}" y="${y.toFixed(1)}" font-size="8" fill="#475569">${lv}</text>`;
 }).join('');
 // Legend
 const legend=`
@@ -5209,13 +5233,14 @@ const legend=`
   ${foScores?`<rect x="${SVG_W/2}" y="${SVG_H-38}" width="12" height="12" rx="2" fill="#10B98166" stroke="#10B981" stroke-width="1.5"/>
   <text x="${SVG_W/2+16}" y="${SVG_H-29}" font-size="11" fill="#94A3B8" font-weight="700">${foLabel}</text>`:''}
 `;
-const cptPoly=buildPoly(cptScores,'#3B82F6',0.25);
-const foPoly=foScores?buildPoly(foScores,'#10B981',0.2):'';
+const cptPath=smoothPath(cptScores);
+const foPath=foScores?smoothPath(foScores):'';
 const cptDots=buildDots(cptScores,'#3B82F6');
 const foDots=foScores?buildDots(foScores,'#10B981'):'';
 return `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" width="100%" style="max-width:340px;display:block;margin:0 auto;">
   ${grid}${axes}${lvlLabels}
-  ${foPoly}${cptPoly}
+  ${foPath?`<path d="${foPath}" fill="#10B981" fill-opacity="0.18" stroke="#10B981" stroke-width="2"/>` :''}
+  <path d="${cptPath}" fill="#3B82F6" fill-opacity="0.22" stroke="#3B82F6" stroke-width="2"/>
   ${foDots}${cptDots}
   ${legend}
 </svg>`;
@@ -8045,13 +8070,20 @@ else if(section==='exercises'){
   title='✈️ EXERCICES';
   content=closed.map(ex=>{
     const sc=ALL_SC.find(s=>s.id===ex.sid)||{label:ex.sid,color:'#64748B'};
-    const st=exStats(ex);
+    const cptVals=Object.values(ex.cs||{}).filter(v=>v&&v.g>0);
+    const foVals=Object.values(ex.csfo||{}).filter(v=>v&&v.g>0);
+    const cptAvg=cptVals.length?cptVals.reduce((s,v)=>s+v.g,0)/cptVals.length:null;
+    const foAvg=(foName&&foVals.length)?foVals.reduce((s,v)=>s+v.g,0)/foVals.length:null;
+    const scoreColor=(v)=>v===null?'#64748B':v>=4?'#10B981':v>=3?'#F59E0B':'#EF4444';
+    const allObs=[...Object.values(ex.cs||{}),...Object.values(ex.csfo||{})].flatMap(v=>v?(v.obs||[]):[]);
+    const pos=allObs.filter(o=>o.s==='+').length, neg=allObs.filter(o=>o.s==='-').length;
     return `<div style="margin-bottom:16px;padding:16px;background:#0F172A;border-radius:12px;border-left:4px solid ${sc.color||'#64748B'};">
-      <div style="font-size:20px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">${sc.label||ex.sid}</div>
-      <div style="display:flex;gap:16px;font-size:16px;color:#94A3B8;">
-        <span style="color:${st.cptAvg>=4?'#10B981':st.cptAvg>=3?'#F59E0B':'#EF4444'};font-weight:700;">${pilotName}: ${st.cptAvg?st.cptAvg.toFixed(1):'-'}</span>
-        ${st.foAvg!==null?`<span style="color:${st.foAvg>=4?'#10B981':st.foAvg>=3?'#F59E0B':'#EF4444'};font-weight:700;">${foName}: ${st.foAvg.toFixed(1)}</span>`:''}
+      <div style="font-size:20px;font-weight:800;color:#F1F5F9;margin-bottom:8px;">${sc.label||ex.sid}</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:16px;">
+        <span style="color:${scoreColor(cptAvg)};font-weight:700;">${pilotName}: ${cptAvg!==null?cptAvg.toFixed(1):'-'}</span>
+        ${foAvg!==null?`<span style="color:${scoreColor(foAvg)};font-weight:700;">${foName}: ${foAvg.toFixed(1)}</span>`:''}
       </div>
+      ${(pos||neg)?`<div style="display:flex;gap:14px;margin-top:6px;font-size:13px;">${pos?`<span style="color:#10B981;">+${pos} positifs</span>`:''}${neg?`<span style="color:#EF4444;">−${neg} négatifs</span>`:''}</div>`:''}
     </div>`;
   }).join('')||'<div style="color:#64748B;text-align:center;padding:40px;">Aucun exercice clôturé.</div>';
 }
@@ -8089,13 +8121,78 @@ else if(section==='crm'){
 }
 else if(section==='tem'){
   title='⚠️ TEM CARD';
-  const t=state.debNotes||{};
-  const rows=[
-    {label:'Menaces identifiées',val:t.tem_threats||'—'},
-    {label:'Erreurs détectées',val:t.tem_errors||'—'},
-    {label:'UGEM / État non désiré',val:t.tem_ugem||'—'},
-  ].map(r=>`<div style="margin-bottom:20px;"><div style="font-size:15px;font-weight:700;color:#F59E0B;margin-bottom:6px;">${r.label}</div><div style="font-size:17px;color:#F1F5F9;background:#0F172A;border-radius:8px;padding:14px;line-height:1.6;">${r.val}</div></div>`).join('');
-  content=rows||'<div style="color:#64748B;text-align:center;padding:40px;">Aucune donnée TEM saisie.</div>';
+  const stC={threats:0,threatsMit:0,errors:0,errorsMit:0,uas:0,uasMit:0};
+  const stF={threats:0,threatsMit:0,errors:0,errorsMit:0,uas:0,uasMit:0};
+  let recC={yes:0,partial:0,no:0,tot:0}, recF={yes:0,partial:0,no:0,tot:0};
+  const exDetails=[];
+  closed.forEach(ex=>{
+    const tc=ex.tem||{threats:[],errors:[],uas:[]};
+    const tf=ex.temfo||{threats:[],errors:[],uas:[]};
+    stC.threats+=(tc.threats||[]).length;
+    stC.threatsMit+=(tc.threats||[]).filter(t=>t.mit==='ok'||t.mit==='partial').length;
+    stC.errors+=(tc.errors||[]).length;
+    stC.errorsMit+=(tc.errors||[]).filter(t=>t.mit==='ok'||t.mit==='partial').length;
+    stC.uas+=(tc.uas||[]).length;
+    stC.uasMit+=(tc.uas||[]).filter(t=>t.mit==='ok'||t.mit==='partial').length;
+    if(foName){
+      stF.threats+=(tf.threats||[]).length;
+      stF.threatsMit+=(tf.threats||[]).filter(t=>t.mit==='ok'||t.mit==='partial').length;
+      stF.errors+=(tf.errors||[]).length;
+      stF.errorsMit+=(tf.errors||[]).filter(t=>t.mit==='ok'||t.mit==='partial').length;
+      stF.uas+=(tf.uas||[]).length;
+      stF.uasMit+=(tf.uas||[]).filter(t=>t.mit==='ok'||t.mit==='partial').length;
+    }
+    if(ex.rec&&ex.rec.managed){const k=ex.rec.managed;recC[k]=(recC[k]||0)+1;recC.tot++;}
+    if(foName&&ex.recfo&&ex.recfo.managed){const k=ex.recfo.managed;recF[k]=(recF[k]||0)+1;recF.tot++;}
+    const sc=ALL_SC.find(s=>s.id===ex.sid)||{label:ex.sid,color:'#64748B'};
+    exDetails.push({sc,ex,tc,tf});
+  });
+  const pct=(n,d)=>d>0?Math.round(n/d*100)+'%':'—';
+  const recTxt=(r)=>r.tot===0?'—':`${r.yes||0}✓ ${r.partial||0}~ ${r.no||0}✗`;
+  const recColor=(r)=>r.tot===0?'#64748B':(r.yes||0)>=r.tot*0.8?'#10B981':(r.no||0)>r.tot*0.5?'#EF4444':'#F59E0B';
+  const sRow=(lbl,vC,vF,cC,cF)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid #1E2530;">
+    <span style="font-size:14px;color:#94A3B8;">${lbl}</span>
+    <div style="display:flex;gap:18px;">
+      <span style="font-size:15px;font-weight:700;color:${cC};">${vC}</span>
+      ${foName?`<span style="font-size:15px;font-weight:700;color:${cF};">${vF}</span>`:''}
+    </div></div>`;
+  const pilotHdr=foName?`<div style="display:flex;justify-content:flex-end;gap:18px;padding-bottom:8px;border-bottom:1px solid #1E2530;margin-bottom:2px;"><span style="font-size:12px;font-weight:800;color:#3B82F6;">${pilotName}</span><span style="font-size:12px;font-weight:800;color:#10B981;">${foName}</span></div>`:'';
+  const statsBlock=`<div style="background:#0F172A;border-radius:12px;padding:16px;margin-bottom:20px;">
+    <div style="font-size:12px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:12px;">📊 STATISTIQUES GLOBALES</div>
+    ${pilotHdr}
+    ${sRow('▲ Menaces identifiées',stC.threats,stF.threats,'#3B82F6','#10B981')}
+    ${sRow('▲ Menaces atténuées',stC.threatsMit+' / '+stC.threats,stF.threatsMit+' / '+stF.threats,'#10B981','#10B981')}
+    ${sRow('▲ Taux atténuation',pct(stC.threatsMit,stC.threats),pct(stF.threatsMit,stF.threats),'#10B981','#10B981')}
+    ${sRow('● Erreurs identifiées',stC.errors,stF.errors,'#EF4444','#F97316')}
+    ${sRow('● Erreurs gérées',stC.errorsMit+' / '+stC.errors,stF.errorsMit+' / '+stF.errors,'#F59E0B','#F59E0B')}
+    ${sRow('● Taux gestion',pct(stC.errorsMit,stC.errors),pct(stF.errorsMit,stF.errors),'#F59E0B','#F59E0B')}
+    ${sRow('◆ UAS observés',stC.uas,stF.uas,'#F59E0B','#F59E0B')}
+    ${sRow('◆ UAS atténués',stC.uasMit+' / '+stC.uas,stF.uasMit+' / '+stF.uas,'#10B981','#10B981')}
+    ${sRow('◆ Taux atténuation UAS',pct(stC.uasMit,stC.uas),pct(stF.uasMit,stF.uas),'#10B981','#10B981')}
+    ${sRow('↩ Recovery',recTxt(recC),recTxt(recF),recColor(recC),recColor(recF))}
+  </div>`;
+  const mitBadge=(it)=>it.mit==='ok'?'<span style="color:#10B981;font-size:11px;font-weight:700;"> ✓</span>':it.mit==='partial'?'<span style="color:#F59E0B;font-size:11px;font-weight:700;"> ~</span>':it.mit==='no'?'<span style="color:#EF4444;font-size:11px;font-weight:700;"> ✗</span>':'';
+  const renderList=(items,c,icon)=>(items||[]).map(it=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitBadge(it)}</div>`).join('');
+  const pilotTEM=(temData,label,c)=>{
+    if(!(temData.threats||[]).length&&!(temData.errors||[]).length&&!(temData.uas||[]).length) return '';
+    return `<div style="margin-bottom:8px;"><div style="font-size:10px;font-weight:800;color:${c};letter-spacing:2px;margin-bottom:6px;">${label}</div>
+    ${(temData.threats||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#3B82F666;margin-bottom:2px;">▲ MENACES</div>${renderList(temData.threats,'#3B82F6','▲')}</div>`:''}
+    ${(temData.errors||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#EF444466;margin-bottom:2px;">● ERREURS</div>${renderList(temData.errors,'#EF4444','●')}</div>`:''}
+    ${(temData.uas||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#F59E0B66;margin-bottom:2px;">◆ UAS</div>${renderList(temData.uas,'#F59E0B','◆')}</div>`:''}
+    </div>`;
+  };
+  const recBadge=(r)=>!r||!r.managed?'':r.managed==='yes'?'<span style="color:#10B981;font-weight:700;"> ✓ Récupéré</span>':r.managed==='partial'?'<span style="color:#F59E0B;font-weight:700;"> ~ Partiel</span>':'<span style="color:#EF4444;font-weight:700;"> ✗ Non récupéré</span>';
+  const detailBlock=exDetails.map(({sc,ex,tc,tf})=>{
+    const hasData=(tc.threats||[]).length||(tc.errors||[]).length||(tc.uas||[]).length||(tf.threats||[]).length||(tf.errors||[]).length||(tf.uas||[]).length;
+    if(!hasData) return '';
+    return `<div style="margin-bottom:12px;padding:14px;background:#0F172A;border-radius:10px;border-left:4px solid ${sc.color||'#64748B'};">
+      <div style="font-size:15px;font-weight:800;color:#F1F5F9;margin-bottom:10px;">${sc.label||ex.sid}</div>
+      ${pilotTEM(tc,pilotName,'#3B82F6')}
+      ${foName?pilotTEM(tf,foName,'#10B981'):''}
+      ${(ex.rec&&ex.rec.managed)||(ex.recfo&&ex.recfo.managed)?`<div style="font-size:12px;color:#64748B;margin-top:6px;border-top:1px solid #1E2530;padding-top:6px;">↩ ${pilotName}${recBadge(ex.rec)}${foName?'  '+foName+recBadge(ex.recfo):''}</div>`:''}
+    </div>`;
+  }).filter(Boolean).join('');
+  content=closed.length?statsBlock+(detailBlock?`<div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;margin-top:4px;">📋 DÉTAIL PAR EXERCICE</div>`+detailBlock:''):'<div style="color:#64748B;text-align:center;padding:40px;">Aucun exercice clôturé.</div>';
 }
 else if(section==='conclusion'){
   title='📋 CONCLUSION';
