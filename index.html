@@ -146,7 +146,7 @@ textarea.form-input{resize:none;height:70px;}
 .search-input{width:100%;background:#1A1F2E;border:1px solid #2D3748;color:var(--text);border-radius:8px;padding:10px 12px;font-size:var(--fs);outline:none;margin-bottom:9px;}
 /* Filter row */
 .filter-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px;}
-.filter-btn{border-radius:4px;padding:4px 9px;font-size:var(--fsxs);cursor:pointer;font-weight:700;border:1px solid #2D3748;background:#1A1F2E;color:#64748B;}
+.filter-btn{border-radius:6px;padding:7px 13px;font-size:13px;cursor:pointer;font-weight:700;border:1px solid #2D3748;background:#1A1F2E;color:#64748B;}
 .filter-btn.active{background:#3B82F622;border-color:#3B82F6;color:#3B82F6;}
 /* SC list item */
 .sc-item{width:100%;display:flex;gap:10px;align-items:flex-start;background:#0F1218;border:1px solid #1E2530;border-radius:8px;padding:12px;margin-bottom:6px;cursor:pointer;text-align:left;border-left:3px solid #EF4444;}
@@ -543,7 +543,7 @@ Identifiant ou mot de passe incorrect
 <div id="deb-hdr-info" style="font-size:10px;color:#3B82F6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
 </div>
 <button onclick="toggleDarkMode()" id="dark-btn-deb" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
-<button class="btn" onclick="showPresentation()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:11px;">PRÉSENTATION</button>
+<button class="btn" onclick="showPresentation()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:12px;font-weight:800;padding:7px 11px;box-shadow:0 0 8px #F59E0B44;">📺 DATA SHOW</button>
 <button class="btn" style="background:#06B6D422;border-color:#06B6D4;color:#06B6D4;font-size:11px;padding:6px 10px;" onclick="document.getElementById('modal-ref').style.display='flex'">📖 REF</button>
 <button class="btn" onclick="showProfCheck()" style="background:#3B82F622;border-color:#3B82F6;color:#3B82F6;font-size:11px;padding:6px 10px;">☑ PROF CHECK</button>
 <button class="btn" onclick="showRapport()" style="background:#10B98122;border-color:#10B981;color:#10B981;font-size:12px;">RAPPORT</button>
@@ -630,16 +630,16 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div id="modal-add" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
-<div class="modal-box" style="max-height:88vh;display:flex;flex-direction:column;overflow:hidden;">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0;">
-<div style="font-size:16px;font-weight:700;color:#F1F5F9;">Choisir un exercice</div>
-<button class="btn" onclick="closeAddModal()">x</button>
+<div class="modal-box" style="height:98vh;max-height:98vh;width:98vw;max-width:98vw;display:flex;flex-direction:column;overflow:hidden;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0;">
+<div style="font-size:18px;font-weight:800;color:#F1F5F9;">Choisir un exercice</div>
+<button class="btn" onclick="closeAddModal()" style="font-size:18px;">✕</button>
 </div>
-<input id="sc-search" class="search-input" placeholder="Rechercher: ENGINE FIRE, PRO, SA, RTO..." oninput="renderScList()" style="flex-shrink:0;"/>
-<div class="filter-row" id="cat-filters" style="flex-shrink:0;"></div>
-<div class="filter-row" id="sys-filters" style="flex-shrink:0;display:none;"></div>
-<div class="filter-row" id="phase-filters" style="flex-shrink:0;"></div>
-<div id="sc-list" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;"></div>
+<input id="sc-search" class="search-input" placeholder="Rechercher: ENGINE FIRE, PRO, SA, RTO..." oninput="renderScList()" style="flex-shrink:0;font-size:15px;padding:11px 14px;"/>
+<div class="filter-row" id="cat-filters" style="flex-shrink:0;gap:6px;"></div>
+<div class="filter-row" id="sys-filters" style="flex-shrink:0;display:none;gap:6px;"></div>
+<div class="filter-row" id="phase-filters" style="flex-shrink:0;gap:6px;"></div>
+<div id="sc-list" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;"></div>
 </div>
 </div>
 
@@ -1111,19 +1111,19 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div id="modal-ref" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
-<div class="modal-box" style="max-height:94vh;display:flex;flex-direction:column;overflow:hidden;border-radius:16px 16px 0 0;">
+<div class="modal-box" style="height:99vh;max-height:99vh;width:99vw;max-width:99vw;display:flex;flex-direction:column;overflow:hidden;border-radius:14px;">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-shrink:0;">
 <div>
-<div style="font-size:16px;font-weight:900;color:#06B6D4;">📖 RÉFÉRENCE BOEING CBTA</div>
-<div style="font-size:10px;color:#64748B;margin-top:1px;">TEM Card · Pilot Core Competencies OBs</div>
+<div style="font-size:17px;font-weight:900;color:#06B6D4;">📖 RÉFÉRENCE BOEING CBTA</div>
+<div style="font-size:11px;color:#64748B;margin-top:1px;">TEM Card · Core Competencies OBs · 🔍 Pincez pour zoomer</div>
 </div>
-<button onclick="document.getElementById('modal-ref').style.display='none'" style="width:34px;height:34px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:18px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
+<button onclick="document.getElementById('modal-ref').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:18px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
 <div style="display:flex;gap:6px;margin-bottom:10px;flex-shrink:0;">
-<button onclick="refTab('tem',this)" id="ref-tab-tem" style="flex:1;padding:8px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid #F59E0B;background:#F59E0B22;color:#F59E0B;">TEM CARD</button>
-<button onclick="refTab('obs',this)" id="ref-tab-obs" style="flex:1;padding:8px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">CORE OBs</button>
+<button onclick="refTab('tem',this)" id="ref-tab-tem" style="flex:1;padding:11px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;border:2px solid #F59E0B;background:#F59E0B22;color:#F59E0B;">TEM CARD</button>
+<button onclick="refTab('obs',this)" id="ref-tab-obs" style="flex:1;padding:11px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">CORE OBs</button>
 </div>
-<div id="ref-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;font-size:13px;"></div>
+<div id="ref-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;font-size:15px;line-height:1.7;touch-action:pan-y pinch-zoom;"></div>
 <button onclick="document.getElementById('modal-ref').style.display='none'" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:10px;flex-shrink:0;">Fermer</button>
 </div>
 </div>
@@ -2745,6 +2745,15 @@ exercises:[{sid:"lvo_lvto",min:25},{sid:"lvo_cat2",min:25},{sid:"lvo_cat3a",min:
 {id:"line_check_full",title:"Line Check Opérationnel",type:"LINE",color:"#DFFF00",focus:["KNO","WLM","SA","PSD","LTW","COM","PRO"],
 desc:"Simulation de Line Check 3h30 avec vol normal, dégradation progressive et évaluation CRM complète.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"go_around",min:15},{sid:"engine_fire",min:22},{sid:"cabin_alt",min:12},{sid:"nnc_loss_gen",min:15},{sid:"tcas_ra",min:10},{sid:"lvo_cat2",min:22},{sid:"rnp_approach",min:22},{sid:"se_ils",min:22},{sid:"se_ga",min:18},{sid:"non_ils",min:20},{sid:"upset_recovery",min:10}]},
+{id:"pannes_phases_vol",title:"Pannes Progressives — Vol Complet",type:"OPC",color:"#FF4444",focus:["PSD","WLM","LTW","SA","PRO"],
+desc:"Scénario réaliste de panne progressive du sol à l'atterrissage : démarrage dégradé → RTO → pannes montée → TCAS → dépressurisation croisière → emergency descent → approche RNP avec dégradation météo → go-around → panne moteur pendant remise des gaz → déroutement ILS one engine → atterrissage one engine.",
+exercises:[{sid:"aborted_engine_start",min:15},{sid:"rto",min:15},{sid:"engine_fire",min:25},{sid:"tcas_ra",min:10},{sid:"cabin_alt",min:15},{sid:"emergency_desc",min:15},{sid:"rnp_approach",min:25},{sid:"go_around",min:15},{sid:"se_ga",min:20},{sid:"se_ils",min:25},{sid:"se_ldg",min:20}]},
+{id:"v1v2_circuit_lvo",title:"V1–V2 · Circuit · LVO — Scénario Complet",type:"OPC",color:"#00CCFF",focus:["FPM","PRO","KNO","SA","FPA"],
+desc:"Panne moteur entre V1 et V2 → go-around single engine → circuit → atterrissage SE → séquence LVO CAT II/III complète. Tous les mandatory moteur et LVO liquidés dans une seule session logique.",
+exercises:[{sid:"ef_v1v2",min:20},{sid:"se_ga",min:20},{sid:"go_around",min:15},{sid:"se_ldg",min:20},{sid:"lvo_cat2",min:25},{sid:"lvo_cat3a",min:28},{sid:"windshear_manual",min:12},{sid:"lvo_lvto",min:20}]},
+{id:"feu_urgences_deroute",title:"Feu · Urgences · Déroutement",type:"OPC",color:"#FF6B35",focus:["PSD","WLM","LTW","PRO","COM"],
+desc:"Gestion des urgences critiques par phases : RTO → feu moteur → décision déroutement → feu cargo → dépressurisation → emergency descent → fuite carburant → ILS déroutement one engine → atterrissage one engine puis ILS non-précision. Se termine par feu + procédures évacuation.",
+exercises:[{sid:"rto",min:12},{sid:"engine_fire",min:25},{sid:"nnc_cargo_fwd",min:18},{sid:"cabin_alt",min:15},{sid:"emergency_desc",min:15},{sid:"nnc_fuel_leak",min:15},{sid:"se_ils",min:25},{sid:"se_ldg",min:20},{sid:"non_ils",min:20}]},
 ];
 
 const COMPETENCIES = [
@@ -3399,9 +3408,9 @@ MANDATORY_QUICK.forEach(function(m, idx){
   const isClosed = state.exercises.some(function(e){return e.sid===m.id && e.closed;});
   const mc = MAND_COLORS[idx];
   if(isClosed){
-    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:9px 5px;border-radius:8px;font-size:9px;font-weight:900;cursor:pointer;text-align:center;line-height:1.3;border:1px solid #44EE99;background:#071A10;color:#44EE99;box-shadow:0 0 6px #44EE9933;">✅<br>'+m.label+'</button>';
+    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:10px 5px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;text-align:center;line-height:1.3;border:3px solid #10B981;background:#10B981;color:#000000;box-shadow:0 0 10px #10B98166;">✅<br>'+m.label+'</button>';
   } else {
-    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:9px 5px;border-radius:8px;font-size:9px;font-weight:900;cursor:pointer;text-align:center;line-height:1.3;border:1px solid '+mc+'99;background:#0A0C12;color:'+mc+';box-shadow:0 0 6px '+mc+'33;">'+(alreadyAdded?'⏱<br>':'')+m.label+'</button>';
+    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:10px 5px;border-radius:8px;font-size:16px;font-weight:900;cursor:pointer;text-align:center;line-height:1.3;border:1px solid '+mc+'99;background:#0A0C12;color:'+mc+';box-shadow:0 0 6px '+mc+'33;">'+(alreadyAdded?'⏱<br>':'')+m.label+'</button>';
   }
 });
 mandHtml += '</div>';
@@ -3858,7 +3867,32 @@ const ok  = items.filter(i=>state.sessionCRM[i.k]==='ok').length;
 const nok = items.filter(i=>state.sessionCRM[i.k]==='nok').length;
 const total = items.filter(i=>state.sessionCRM[i.k]&&state.sessionCRM[i.k]!=='na').length;
 const pct = total>0 ? Math.round(ok/total*100) : null;
-const pctColor = pct===null?'#64748B':pct>=75?'#10B981':pct>=50?'#F59E0B':'#EF4444';
+// Pass mark: 70% — standard industrie EASA/NOTECHS (≥70% = Satisfaisant)
+const PASS_MARK = 70;
+const passed = pct!==null && pct>=PASS_MARK;
+const pctColor = pct===null?'#64748B':pct>=85?'#10B981':pct>=PASS_MARK?'#3B82F6':pct>=50?'#F59E0B':'#EF4444';
+const pctLevel = pct===null?null:pct>=85?'EXCELLENT':pct>=PASS_MARK?'SATISFAISANT':pct>=50?'PARTIEL':'INSUFFISANT';
+const RECO={
+  brief:'Renforcer la discipline de briefing complet avant chaque décollage et approche.',
+  callout:'Réviser les callouts SOP — cohérence et discipline de phraséologie à améliorer.',
+  challenge:'Revoir la procédure Challenge & Response avec le FCOM (section 1.1).',
+  comm:'Améliorer la communication inter-équipage : clarté, concision, confirmation.',
+  leadership:'Travailler l\'assertivité et le leadership adaptatif PF/PM.',
+  crosscheck:'Renforcer la culture du cross-check mutuel — monitoring actif.',
+  workload:'Revoir les techniques de gestion de la charge de travail (priorisation, délégation).',
+  sa:'Maintenir la conscience situationnelle partagée — briefings situationnels plus fréquents.',
+  decision:'Améliorer les techniques de PSD : FORDEC / DODAR en situations dégradées.',
+  intervention:'Pratiquer l\'intervention assertive non-conflictuelle (méthode DESC).',
+  automation:'Révision de la gestion des automatismes et du mode awareness FMA.',
+  sterile:'Rappeler et appliquer strictement les règles du cockpit stérile < 10 000 ft.'
+};
+const NOK_RECOS = items.filter(i=>state.sessionCRM[i.k]==='nok').map(i=>RECO[i.k]).filter(Boolean);
+const PARAGRAPHS={
+  EXCELLENT:`L'équipage fait preuve d'une gestion exemplaire des ressources humaines. La communication, le leadership et la conscience situationnelle partagée sont au-dessus du standard CBTA/EASA. Score ${pct}% — au-dessus du pass mark de ${PASS_MARK}%. Aucune action corrective requise.`,
+  SATISFAISANT:`Le comportement CRM répond aux exigences CBTA. L'équipage gère correctement les ressources, la communication et la prise de décision. Score ${pct}% — pass mark ${PASS_MARK}% atteint. Points d'amélioration listés ci-dessous si applicable.`,
+  PARTIEL:`Certains comportements CRM n'atteignent pas le seuil standard de ${PASS_MARK}%. Score ${pct}% — below pass mark. Une attention particulière est requise sur les items NOK. Une séance de recalibrage CRM est conseillée avant la prochaine évaluation.`,
+  INSUFFISANT:`Niveau CRM en dessous du minimum acceptable (${pct}% — pass mark ${PASS_MARK}%). Les lacunes identifiées impactent la sécurité et l'efficacité de l'équipage. Un stage CRM de remise à niveau est requis avant la prochaine session de qualification.`
+};
 
 const html = items.map(item=>{
 const val = state.sessionCRM[item.k];
@@ -3875,15 +3909,32 @@ return `<div class="crm-row" style="display:flex;align-items:center;gap:10px;pad
 </div>`;
 }).join('');
 
+const verdictHtml = pct!==null ? `
+<div style="background:${pctColor}11;border:2px solid ${pctColor}44;border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+<div>
+<div style="font-size:11px;font-weight:700;color:${pctColor};letter-spacing:2px;">${pctLevel} ${passed?'✅ PASS':'❌ FAIL'}</div>
+<div style="font-size:10px;color:#64748B;margin-top:2px;">Pass mark : ${PASS_MARK}% · Référence EASA/NOTECHS</div>
+</div>
+<div style="font-size:36px;font-weight:900;color:${pctColor};">${pct}%</div>
+</div>
+<div style="font-size:13px;color:#94A3B8;line-height:1.6;">${PARAGRAPHS[pctLevel]||''}</div>
+${NOK_RECOS.length?`<div style="margin-top:10px;border-top:1px solid ${pctColor}22;padding-top:10px;">
+<div style="font-size:11px;font-weight:700;color:${pctColor};letter-spacing:1px;margin-bottom:6px;">RECOMMANDATIONS</div>
+${NOK_RECOS.map(r=>`<div style="font-size:12px;color:#94A3B8;padding:4px 0 4px 10px;border-left:2px solid ${pctColor}55;margin-bottom:4px;">→ ${r}</div>`).join('')}
+</div>`:''}
+</div>` : '';
+
 el.innerHTML = `
-<div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF644;border-radius:12px;padding:14px 16px;margin-bottom:16px;">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+<div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF644;border-radius:12px;padding:12px 16px;margin-bottom:12px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
 <div style="font-size:14px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">👥 CRM — RESSOURCES ÉQUIPAGE</div>
 ${pct!==null?`<div style="font-size:22px;font-weight:900;color:${pctColor};">${pct}%</div>`:''}
 </div>
-<div style="font-size:12px;color:var(--mut);">Évaluation globale de la séance · ${total>0?`<span style="color:#10B981;font-weight:700;">✓ ${ok} satisfaisant</span> · <span style="color:#EF4444;font-weight:700;">✗ ${nok} non satisfaisant</span>`:'Aucun item évalué'}</div>
+<div style="font-size:11px;color:var(--mut);">${total>0?`✓ ${ok} satisfaisant · ✗ ${nok} non satisfaisant · Pass mark ${PASS_MARK}%`:'Évaluez chaque item sur l\'ensemble de la séance'}</div>
 </div>
-<div style="font-size:11px;color:#64748B;letter-spacing:1px;font-weight:700;margin-bottom:8px;padding:0 2px;">ÉVALUER CHAQUE ITEM SUR L'ENSEMBLE DE LA SÉANCE</div>
+${verdictHtml}
+<div style="font-size:11px;color:#64748B;letter-spacing:1px;font-weight:700;margin-bottom:8px;">ÉVALUATION ITEM PAR ITEM</div>
 ${html}
 <div style="margin-top:14px;">
 <div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">NOTES CRM GLOBALES</div>
@@ -4263,19 +4314,19 @@ function renderScenList(){
     const exNames=s.exercises.map(e=>{const sc=ALL_SC.find(x=>x.id===e.sid);return sc?sc.title:'?';});
     const focusHtml=s.focus.map(f=>{const c=COMPETENCIES.find(x=>x.id===f);return c?`<span style="font-size:10px;font-weight:700;color:${c.color};background:${c.color}22;padding:2px 7px;border-radius:10px;border:1px solid ${c.color}44;">${c.label}</span>`:''}).join('');
     const isPending=_pendingScenarioId===s.id;
-    return `<div style="background:#080B10;border:1px solid ${nc}44;border-radius:12px;padding:14px;border-left:4px solid ${nc};box-shadow:0 0 12px ${nc}22;">
-<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;flex:1;text-shadow:0 0 8px ${nc}55;">${s.title}</div>
-<span style="font-size:10px;font-weight:700;color:${nc};background:${nc}22;padding:2px 8px;border-radius:10px;margin-left:8px;flex-shrink:0;text-shadow:0 0 6px ${nc};">${s.type}</span>
+    return `<div style="background:#080B10;border:1px solid ${nc}44;border-radius:12px;padding:16px;border-left:4px solid ${nc};box-shadow:0 0 12px ${nc}22;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+<div style="font-size:17px;font-weight:800;color:#F1F5F9;flex:1;text-shadow:0 0 8px ${nc}55;">${s.title}</div>
+<span style="font-size:12px;font-weight:700;color:${nc};background:${nc}22;padding:3px 10px;border-radius:10px;margin-left:8px;flex-shrink:0;">${s.type}</span>
 </div>
-<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;">${focusHtml}</div>
-<div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">${s.desc}</div>
-<div style="font-size:11px;color:#475569;margin-bottom:10px;">
+<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">${focusHtml}</div>
+<div style="font-size:14px;color:#94A3B8;margin-bottom:10px;line-height:1.6;">${s.desc}</div>
+<div style="font-size:13px;color:#475569;margin-bottom:10px;">
 <span style="margin-right:12px;">⏱ ${Math.floor(totalMin/60)}h${totalMin%60?String(totalMin%60).padStart(2,'0'):'00'} estimé</span>
 <span>${s.exercises.length} exercices</span>
 </div>
-<div style="font-size:11px;color:#334155;margin-bottom:10px;line-height:1.7;">${exNames.slice(0,6).join(' · ')}${exNames.length>6?` · +${exNames.length-6} autres`:''}</div>
-<button onclick="loadScenario('${s.id}')" style="width:100%;padding:10px;border-radius:8px;background:${nc}22;border:1px solid ${nc};color:${nc};font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;text-shadow:0 0 8px ${nc};box-shadow:0 0 10px ${nc}33;">${isPending?'✅ EN ATTENTE DE SESSION':'CHARGER CE SCÉNARIO →'}</button>
+<div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.8;">${exNames.slice(0,6).join(' · ')}${exNames.length>6?` · +${exNames.length-6} autres`:''}</div>
+<button onclick="loadScenario('${s.id}')" style="width:100%;padding:13px;border-radius:8px;background:${nc}22;border:1px solid ${nc};color:${nc};font-size:15px;font-weight:700;cursor:pointer;letter-spacing:1px;text-shadow:0 0 8px ${nc};box-shadow:0 0 10px ${nc}33;">${isPending?'✅ EN ATTENTE DE SESSION':'CHARGER CE SCÉNARIO →'}</button>
 </div>`;
   }).join('')||'<div style="text-align:center;color:#475569;padding:20px;">Aucun scénario pour ces filtres.</div>';
 }
