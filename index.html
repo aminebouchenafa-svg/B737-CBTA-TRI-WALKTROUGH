@@ -3373,27 +3373,26 @@ const MANDATORY_QUICK = [
   {id:"windshear_manual",label:"WINDSHEAR ESCAPE"},
   {id:"upset_recovery",  label:"UPSET RECOVERY"},
 ];
-const MAND_COLORS=['#EF4444','#F97316','#F59E0B','#10B981','#06B6D4','#3B82F6','#8B5CF6','#EC4899','#14B8A6'];
-let mandHtml = '<div style="padding:12px 12px 0;">';
-mandHtml += '<div style="background:#0F1218;border:2px solid #EF444444;border-radius:14px;padding:14px 14px 10px;margin-bottom:12px;">';
-mandHtml += '<div style="font-size:16px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:3px;">⚠️ MANDATORY ITEMS</div>';
-mandHtml += '<div style="font-size:12px;color:#94A3B8;font-weight:600;margin-bottom:12px;">Appuyer pour ajouter à la session</div>';
-mandHtml += '<div style="display:flex;flex-direction:column;gap:9px;">';
+const MAND_COLORS=['#FF0044','#FF6A00','#FFD600','#00FF88','#00E5FF','#2979FF','#D500F9','#FF4081','#00E5CC'];
+let mandHtml = '<div style="padding:10px 10px 0;">';
+mandHtml += '<div style="background:#0A0C12;border:1px solid #EF444433;border-radius:12px;padding:10px 10px 8px;margin-bottom:10px;">';
+mandHtml += '<div style="font-size:13px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:8px;text-shadow:0 0 10px #EF444488;">⚠️ MANDATORY ITEMS</div>';
+mandHtml += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;">';
 MANDATORY_QUICK.forEach(function(m, idx){
   const alreadyAdded = state.exercises.some(function(e){return e.sid===m.id;});
   const isClosed = state.exercises.some(function(e){return e.sid===m.id && e.closed;});
   const mc = MAND_COLORS[idx];
   if(isClosed){
-    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="width:100%;padding:18px 16px;border-radius:12px;font-size:17px;font-weight:900;cursor:pointer;text-align:left;border:2px solid #10B981;background:#0A2318;color:#10B981;display:flex;align-items:center;gap:10px;">✅ '+m.label+'</button>';
+    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:10px 6px;border-radius:9px;font-size:10px;font-weight:900;cursor:pointer;text-align:center;line-height:1.3;border:2px solid #00FF88;background:#001A0F;color:#00FF88;box-shadow:0 0 12px #00FF8866;">✅<br>'+m.label+'</button>';
   } else {
-    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="width:100%;padding:18px 16px;border-radius:12px;font-size:17px;font-weight:900;cursor:pointer;text-align:left;border:2px solid '+mc+';background:'+mc+'11;color:'+mc+';display:flex;align-items:center;justify-content:space-between;">'+m.label+(alreadyAdded?'<span style="font-size:13px;font-weight:700;opacity:0.8;">⏱ EN COURS</span>':'')+'</button>';
+    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:10px 6px;border-radius:9px;font-size:10px;font-weight:900;cursor:pointer;text-align:center;line-height:1.3;border:2px solid '+mc+';background:'+mc+'0D;color:'+mc+';box-shadow:0 0 14px '+mc+'55;text-shadow:0 0 8px '+mc+';">'+(alreadyAdded?'⏱<br>':'')+m.label+'</button>';
   }
 });
 mandHtml += '</div>';
 mandHtml += '</div>';
 mandHtml += '</div>';
 
-el.innerHTML = mandHtml + exs.map((ex,i)=>{
+const exCards = exs.map((ex,i)=>{
 const sc = ALL_SC.find(s=>s.id===ex.sid);
 if(!sc) return '';
 const st = exStats(ex);
@@ -3402,27 +3401,24 @@ const pc = sc.cat==='LVO' ? LVO_COLOR : sc.cat==='RNP' ? RNP_COLOR :
 const sysColor = sc.cat==="NNC" ? ((NNC_SYSTEMS[sc.id] ? NNC_SYSTEMS[sc.id].color : null)||"#8B5CF6") : null;
 const headerColor = sysColor || pc;
 const cc = catC[sc.cat]||"#64748B";
-const avgHtml = ex.closed && st ?
-`<div style="font-size:20px;font-weight:800;color:${GC[Math.round(st.avg)] || '#64748B'}">${st.avg.toFixed(1)}</div>` :
-`<span class="chip" style="background:#F59E0B18;border:1px solid #F59E0B33;color:#F59E0B;">EN COURS</span>`;
-const keysHtml = sc.keys.slice(0,5).map(k=>{
-const c=COMPETENCIES.find(x=>x.id===k);
-const cd=(ex.cs||{})[k]||(ex.csfo||{})[k];
-const g=cd?cd.g:0;
-return c?`<span style="background:${c.color}18;border:1px solid ${c.color}33;color:${c.color};border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700;font-family:monospace;">${k}${g>0?'<span style="color:'+GC[g]+'"> '+g+'</span>':''}</span>`:''
-}).join('');
-return `<div class="ex-card" style="background:#0F1218;border-left-color:${headerColor};" onclick="openEx(${i})">
-<div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
-<span style="font-size:13px;color:var(--mut);font-weight:700;">#${i+1}</span>
-<div class="ex-title" style="flex:1;font-size:15px;font-weight:700;color:#F1F5F9;">${sc.title}${ex.mandatory?'<span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:6px;">M</span>':'<span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F688;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:600;margin-left:6px;">T</span>'}${ex.attempt===2?'<span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:3px;">2e</span>':''}</div>
-${avgHtml}
+const shortTitle = sc.title.length>22 ? sc.title.slice(0,21)+'…' : sc.title;
+const scoreHtml = ex.closed && st ?
+`<div style="font-size:20px;font-weight:900;color:${GC[Math.round(st.avg)]||'#64748B'};line-height:1;">${st.avg.toFixed(1)}</div>` :
+`<div style="font-size:9px;font-weight:700;color:#F59E0B;letter-spacing:0.5px;">EN COURS</div>`;
+const badgeHtml = ex.mandatory?'<span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:3px;padding:1px 4px;font-size:9px;font-weight:800;">M</span>':'<span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F688;border-radius:3px;padding:1px 4px;font-size:9px;font-weight:600;">T</span>';
+return `<div style="background:#0F1218;border:1px solid #1E2530;border-left:3px solid ${headerColor};border-radius:9px;padding:9px 8px;cursor:pointer;" onclick="openEx(${i})">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:4px;">
+<span style="font-size:9px;color:var(--mut);font-weight:700;">#${i+1}</span>
+${badgeHtml}
 </div>
-<div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
-<span class="chip" style="background:${cc}18;border:1px solid ${cc}33;color:${cc};">${sc.cat}</span>
-${keysHtml}
+<div style="font-size:11px;font-weight:800;color:#F1F5F9;line-height:1.3;margin-bottom:5px;">${shortTitle}</div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;">
+<span style="font-size:9px;background:${cc}18;border:1px solid ${cc}33;color:${cc};border-radius:4px;padding:1px 5px;font-weight:700;">${sc.cat}</span>
+${scoreHtml}
 </div>
 </div>`;
 }).join('');
+el.innerHTML = mandHtml + (exCards ? '<div style="padding:0 10px 12px;display:grid;grid-template-columns:repeat(3,1fr);gap:7px;">'+exCards+'</div>' : '');
 }
 
 function exStats(ex){
