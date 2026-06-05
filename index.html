@@ -413,7 +413,7 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:11px;color:#334155;margin-top:3px;">© 2025 CBTA TRI Companion · B737NG QRH Rev55 · FCTM Rev25</div>
 <div style="font-size:10px;color:#1E2530;margin-top:2px;">Tous droits réservés · Usage instructeur uniquement</div>
 <div style="margin-top:14px;display:flex;align-items:center;justify-content:center;">
-<button id="btn-training-mode" onclick="toggleTrainingMode()" style="padding:9px 22px;border-radius:20px;background:#8B5CF611;border:2px solid #8B5CF6;color:#8B5CF6;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">🎭 MODE ENTRAÎNEMENT</button>
+<button id="btn-training-mode" onclick="toggleTrainingMode()" style="padding:9px 22px;border-radius:20px;background:#00CCFF0D;border:2px solid #00CCFF88;color:#00CCFF;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;box-shadow:0 0 8px #00CCFF33;">🎭 MODE ENTRAÎNEMENT</button>
 </div>
 </div>
 </div>
@@ -5585,7 +5585,10 @@ function toggleTrainingMode(){
   localStorage.setItem('cbta_training',next?'1':'0');
   const btn=document.getElementById('btn-training-mode');
   const banner=document.getElementById('training-banner');
-  if(btn){btn.style.background=next?'#8B5CF622':'transparent';btn.style.borderColor=next?'#8B5CF6':'#334155';btn.style.color=next?'#8B5CF6':'#475569';}
+  if(btn){
+    if(next){btn.style.background='#FF880022';btn.style.borderColor='#FF8800';btn.style.color='#FF8800';btn.style.boxShadow='0 0 14px #FF880066';btn.style.textShadow='0 0 6px #FF880099';}
+    else{btn.style.background='#00CCFF0D';btn.style.borderColor='#00CCFF88';btn.style.color='#00CCFF';btn.style.boxShadow='0 0 8px #00CCFF33';btn.style.textShadow='';}
+  }
   if(banner)banner.style.display=next?'block':'none';
   showToast(next?'🎭 Mode entraînement activé — sessions non enregistrées':'✅ Mode normal réactivé');
 }
@@ -5593,7 +5596,7 @@ function initTrainingMode(){
   const on=localStorage.getItem('cbta_training')==='1';
   const btn=document.getElementById('btn-training-mode');
   const banner=document.getElementById('training-banner');
-  if(btn&&on){btn.style.background='#8B5CF622';btn.style.borderColor='#8B5CF6';btn.style.color='#8B5CF6';}
+  if(btn&&on){btn.style.background='#FF880022';btn.style.borderColor='#FF8800';btn.style.color='#FF8800';btn.style.boxShadow='0 0 14px #FF880066';btn.style.textShadow='0 0 6px #FF880099';}
   if(banner)banner.style.display=on?'block':'none';
 }
 function toggleSessionTimer(){
