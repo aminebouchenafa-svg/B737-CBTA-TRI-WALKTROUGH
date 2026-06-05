@@ -693,7 +693,7 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-shrink:0;">
 <div>
 <div style="font-size:18px;font-weight:900;color:#F59E0B;">📖 GUIDE D'UTILISATION</div>
-<div style="font-size:11px;color:#64748B;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.0</div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.1</div>
 </div>
 <button onclick="document.getElementById('modal-help').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
@@ -798,7 +798,7 @@ Identifiant ou mot de passe incorrect
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
 <div style="min-width:28px;height:28px;background:#10B981;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">6</div>
-<div><div style="font-size:15px;font-weight:700;color:#F1F5F9;">DÉBRIEF — Analyse et rapport</div><div style="font-size:13px;color:#94A3B8;margin-top:3px;">Scores par compétence, radar CBTA, TEM de session, conclusion. <span style="color:#10B981;font-weight:700;">RAPPORT PDF</span> ou <span style="color:#3B82F6;font-weight:700;">EMAIL</span>. Bouton <span style="color:#F97316;font-weight:700;">📺 PRÉSENTATION</span> pour le mode grand écran.</div></div>
+<div><div style="font-size:15px;font-weight:700;color:#F1F5F9;">DÉBRIEF — Analyse et rapport</div><div style="font-size:13px;color:#94A3B8;margin-top:3px;">6 onglets : <span style="color:#3B82F6;font-weight:700;">Scores</span> (radar CBTA + barres) · <span style="color:#10B981;font-weight:700;">Exercices</span> · <span style="color:#EF4444;font-weight:700;">TEM</span> · <span style="color:#8B5CF6;font-weight:700;">CRM</span> (pass mark 70%) · <span style="color:#06B6D4;font-weight:700;">Questionnaire</span> · <span style="color:#F59E0B;font-weight:700;">Conclusion</span>. Chaque onglet a son bouton <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 6px;border-radius:5px;font-size:11px;font-weight:800;">📺 DS</span> pour le mode grand écran. <span style="color:#10B981;font-weight:700;">RAPPORT PDF</span> ou <span style="color:#3B82F6;font-weight:700;">EMAIL</span> en fin de session.</div></div>
 </div>
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
@@ -808,7 +808,7 @@ Identifiant ou mot de passe incorrect
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;">
 <div style="min-width:28px;height:28px;background:#64748B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">8</div>
-<div><div style="font-size:15px;font-weight:700;color:#F1F5F9;">HISTORIQUE — Dossier pilote</div><div style="font-size:13px;color:#94A3B8;margin-top:3px;">Chaque session est sauvegardée. Onglet <span style="color:#3B82F6;font-weight:700;">PILOTES</span> → saisissez le matricule → <span style="color:#3B82F6;font-weight:700;">📈 ÉVOLUTION</span> pour voir la progression multi-sessions et accéder aux rapports précédents.</div></div>
+<div><div style="font-size:15px;font-weight:700;color:#F1F5F9;">HISTORIQUE — Dossier pilote</div><div style="font-size:13px;color:#94A3B8;margin-top:3px;">Chaque session est sauvegardée. Onglet <span style="color:#3B82F6;font-weight:700;">PILOTES</span> → bouton <span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;padding:1px 6px;border-radius:5px;font-size:11px;font-weight:700;">📈</span> sur un pilote → <strong style="color:#F1F5F9;">courbe de progression multi-sessions</strong> : graphe lignes colorées par compétence + détail session par session.</div></div>
 </div>
 </div>
 
@@ -840,22 +840,158 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 
-<!-- MODE PRÉSENTATION -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:12px;">🖥️ MODE PRÉSENTATION</div>
+<!-- DATA SHOW PAR SECTION -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:12px;">📺 DATA SHOW — Par section débrief</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
 <span style="font-size:18px;flex-shrink:0;margin-top:1px;">📺</span>
 <div>
-<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Affichage grand écran — projecteur</div>
-<div style="font-size:13px;color:#94A3B8;">Dans le débrief, appuyez sur le bouton <span style="color:#8B5CF6;font-weight:700;">📺 PRÉSENTATION</span> (barre supérieure). Un écran plein écran s'ouvre avec les scores en grands chiffres : idéal pour le débrief collectif sur projecteur.</div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Un bouton DS par onglet débrief</div>
+<div style="font-size:13px;color:#94A3B8;">Chaque onglet du débrief (Scores, Exercices, TEM, CRM) affiche un bouton <span style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:800;">📺 DS</span> en haut à droite. Appuyer dessus ouvre un overlay plein écran avec <strong style="color:#F1F5F9;">uniquement les données de cet onglet</strong> en gros format — idéal pour le débrief sur projecteur ou grand écran.</div>
 </div>
 </div>
 <div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:18px;flex-shrink:0;margin-top:1px;">👁</span>
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🕸</span>
 <div>
-<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Vue épurée, sans détails instructeur</div>
-<div style="font-size:13px;color:#94A3B8;">Score global, radar CBTA et scores par compétence en gros caractères. Aucune note interne visible. Touchez/cliquez n'importe où pour fermer.</div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">DS Scores — Radar CBTA + barres</div>
+<div style="font-size:13px;color:#94A3B8;">Le DATA SHOW Scores affiche le <strong style="color:#3B82F6;">radar chart</strong> (toile d'araignée 9 compétences) avec CPT en bleu et FO en vert superposés, suivi des scores globaux en 56px et des barres par compétence.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🤝</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">DS CRM — Grille OK/NOK plein écran</div>
+<div style="font-size:13px;color:#94A3B8;">Affiche le pourcentage CRM en 64px, le niveau (EXCELLENT / SATISFAISANT / PARTIEL / INSUFFISANT) et la grille des 12 items CRM colorée vert/rouge selon le résultat.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">✕</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Fermer le DATA SHOW</div>
+<div style="font-size:13px;color:#94A3B8;">Bouton <span style="background:#1E2530;color:#94A3B8;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:700;">✕</span> en haut à gauche de l'overlay.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- RADAR CHART -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:12px;">🕸 RADAR CHART — Toile d'araignée CBTA</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🕸</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Visualisation instantanée du profil</div>
+<div style="font-size:13px;color:#94A3B8;">Le radar chart s'affiche automatiquement dans l'onglet <span style="color:#3B82F6;font-weight:700;">Scores</span> du débrief. 9 axes (un par compétence CBTA), chacun coloré avec la couleur officielle de la compétence. La surface couverte visualise le profil de compétences d'un coup d'œil.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">👥</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">CPT et FO superposés</div>
+<div style="font-size:13px;color:#94A3B8;">Si un F/O est enregistré dans la session, son radar (<span style="color:#10B981;font-weight:700;">vert</span>) se superpose à celui du CPT (<span style="color:#3B82F6;font-weight:700;">bleu</span>). Identifier immédiatement les écarts de performance entre les deux pilotes.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- COURBE DE PROGRESSION -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:12px;">📈 COURBE DE PROGRESSION PILOTE</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">📈</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Évolution multi-sessions</div>
+<div style="font-size:13px;color:#94A3B8;">Dans Historique → onglet <span style="color:#10B981;font-weight:700;">PILOTES</span>, appuyez sur le bouton <span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:800;">📈</span> sur une carte pilote. Un overlay s'ouvre avec le graphe d'évolution des 9 compétences sur toutes ses sessions (minimum 2 sessions requises).</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎨</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Lecture du graphe</div>
+<div style="font-size:13px;color:#94A3B8;">Chaque ligne est colorée avec la couleur officielle de la compétence. Axe X = sessions (date), axe Y = note 1–5. Légende + tableau de scores session par session en dessous du graphe.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- CHRONO SESSION -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">⏱ CHRONO SESSION — Toujours visible</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">⏱</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Barre flottante en haut de l'app</div>
+<div style="font-size:13px;color:#94A3B8;">Le chrono session est affiché en permanence dans une barre fixe en haut de toutes les pages (sauf accueil et login). Le bouton <span style="background:transparent;border:1px solid #10B981;color:#10B981;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:900;">▶</span> / <span style="background:transparent;border:1px solid #F59E0B;color:#F59E0B;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:900;">⏸</span> est toujours accessible pour démarrer ou mettre en pause.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎨</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Code couleur du chrono</div>
+<div style="font-size:13px;color:#94A3B8;display:flex;flex-direction:column;gap:5px;">
+<span><span style="color:#10B981;font-weight:700;font-family:monospace;">00:00:00</span> — Vert : session normale (0 → 2h)</span>
+<span><span style="color:#F59E0B;font-weight:700;font-family:monospace;">02:00:00</span> — Orange : attention, 2h atteintes</span>
+<span><span style="color:#EF4444;font-weight:700;font-family:monospace;">03:50:00</span> — Rouge clignotant : fin imminente (3h50)</span>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">⚠️</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Rappel dans le choix d'exercices</div>
+<div style="font-size:13px;color:#94A3B8;">Quand vous ouvrez la liste des exercices (bouton + EXERCICE) et que le chrono n'est pas encore démarré, une bannière <span style="color:#F59E0B;font-weight:700;">⚠️ Chrono SESSION non démarré</span> s'affiche avec un bouton <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 8px;border-radius:6px;font-size:11px;font-weight:800;">▶ START</span> pour l'activer sans fermer le modal.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- CRM PASS MARK -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:12px;">🤝 CRM — SYSTÈME DE NOTATION EASA</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎯</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Pass mark : 70% (standard EASA/NOTECHS)</div>
+<div style="font-size:13px;color:#94A3B8;">Le débrief → onglet CRM évalue 12 items comportementaux (Briefings, Callouts, Challenge & Response, Communication, Leadership, Cross-Check, Workload, SA, PSD, Intervention, Automatismes, Cockpit stérile). Chaque item est noté <span style="color:#10B981;font-weight:700;">OK</span> ou <span style="color:#EF4444;font-weight:700;">NOK</span>. Le score est calculé automatiquement.</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-left:28px;">
+<div style="display:flex;gap:10px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:2px 10px;border-radius:6px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">EXCELLENT ≥85%</span><span style="font-size:12px;color:#94A3B8;">Gestion CRM exemplaire</span></div>
+<div style="display:flex;gap:10px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:2px 10px;border-radius:6px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">SATISFAISANT 70%</span><span style="font-size:12px;color:#94A3B8;">Conforme CBTA — pass mark atteint</span></div>
+<div style="display:flex;gap:10px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:2px 10px;border-radius:6px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">PARTIEL 50–69%</span><span style="font-size:12px;color:#94A3B8;">Sous le standard — amélioration requise</span></div>
+<div style="display:flex;gap:10px;align-items:center;"><span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;padding:2px 10px;border-radius:6px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">INSUFFISANT &lt;50%</span><span style="font-size:12px;color:#94A3B8;">Niveau inacceptable — action corrective</span></div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">💡</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Recommandations ciblées par item NOK</div>
+<div style="font-size:13px;color:#94A3B8;">Pour chaque item marqué NOK, l'app génère une recommandation spécifique (ex : si Workload NOK → <em>"Revoir les techniques de gestion de la charge de travail — priorisation, délégation"</em>). Un paragraphe de bilan adapté au niveau global est aussi affiché.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MANDATORY ITEMS -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:12px;">⚠️ MANDATORY ITEMS — Code visuel</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🔲</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">État normal — à faire</div>
+<div style="font-size:13px;color:#94A3B8;">Texte <strong style="color:#94A3B8;">gris</strong>, fond sombre, bordure colorée avec halo néon. Chaque exercice obligatoire a sa propre couleur pour identification rapide.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">✅</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">État terminé — exercice clôturé</div>
+<div style="font-size:13px;color:#94A3B8;">Fond coloré <strong>dim</strong> (teinte de la couleur de l'exercice à ~15% d'opacité), texte coloré atténué, badge <strong>✅</strong> dans le coin supérieur droit. Immédiatement reconnaissable sans confusion possible avec un exercice non fait.</div>
 </div>
 </div>
 </div>
