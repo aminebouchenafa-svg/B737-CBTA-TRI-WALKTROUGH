@@ -7963,6 +7963,12 @@ document.getElementById('inp-pass').focus();
 }
 }
 
+// Guarantee ses-float is hidden on initial load (login screen)
+document.addEventListener('DOMContentLoaded', ()=>{
+const fl=document.getElementById('ses-float');
+if(fl) fl.style.display='none';
+});
+
 // Allow Enter key on user field
 document.addEventListener('DOMContentLoaded', ()=>{
 const uInp = document.getElementById('inp-user');
