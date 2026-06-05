@@ -241,6 +241,7 @@ body.light-mode .tab.active{font-weight:800!important;}
 body.light-mode .tab[onclick*="debTab('scores"]{color:#3B82F6!important;}
 body.light-mode .tab[onclick*="debTab('exercises"]{color:#10B981!important;}
 body.light-mode .tab[onclick*="debTab('tem"]{color:#F97316!important;}
+body.light-mode .tab[onclick*="debTab('crm"]{color:#8B5CF6!important;}
 body.light-mode .tab[onclick*="debTab('questionnaire"]{color:#06B6D4!important;}
 body.light-mode .tab[onclick*="debTab('conclusion"]{color:#8B5CF6!important;}
 /* Tolerance table in briefing — override inline dark backgrounds */
@@ -411,8 +412,8 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:13px;color:#FBBF24;font-weight:600;text-shadow:0 0 8px #F59E0B44;">By Cpt Bouchenafa Mohamed Amine</div>
 <div style="font-size:11px;color:#334155;margin-top:3px;">© 2025 CBTA TRI Companion · B737NG QRH Rev55 · FCTM Rev25</div>
 <div style="font-size:10px;color:#1E2530;margin-top:2px;">Tous droits réservés · Usage instructeur uniquement</div>
-<div style="margin-top:10px;display:flex;align-items:center;justify-content:center;">
-<button id="btn-training-mode" onclick="toggleTrainingMode()" style="padding:7px 18px;border-radius:20px;background:transparent;border:2px solid #334155;color:#475569;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;">🎭 MODE ENTRAÎNEMENT</button>
+<div style="margin-top:14px;display:flex;align-items:center;justify-content:center;">
+<button id="btn-training-mode" onclick="toggleTrainingMode()" style="padding:9px 22px;border-radius:20px;background:#8B5CF611;border:2px solid #8B5CF6;color:#8B5CF6;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">🎭 MODE ENTRAÎNEMENT</button>
 </div>
 </div>
 </div>
@@ -478,7 +479,6 @@ Identifiant ou mot de passe incorrect
 <button class="tab active" onclick="exTab('eval',this)" style="color:#3B82F6;">Evaluation</button>
 <button class="tab" onclick="exTab('ffa',this)" style="color:#F59E0B;">FFA</button>
 <button class="tab" onclick="exTab('tem',this)" style="color:#EF4444;">TEM</button>
-<button class="tab" onclick="exTab('crm',this)" style="color:#8B5CF6;">CRM</button>
 <button class="tab" onclick="exTab('fac',this)" style="color:#10B981;">Facilitation</button>
 </div>
 <div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E2530;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
@@ -553,6 +553,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab active" onclick="debTab('scores',this)">Scores</button>
 <button class="tab" onclick="debTab('exercises',this)">Exercices</button>
 <button class="tab" onclick="debTab('tem',this)" style="color:#EF4444;">TEM</button>
+<button class="tab" onclick="debTab('crm',this)" style="color:#8B5CF6;">CRM</button>
 <button class="tab" onclick="debTab('questionnaire',this)">Questionnaire</button>
 <button class="tab" id="deb-tab-tricheck" onclick="debTab('tricheck',this)" style="color:#F59E0B;display:none;">TRI CHECK</button>
 <button class="tab" onclick="debTab('conclusion',this)">Conclusion</button>
@@ -595,6 +596,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <button onclick="exportHistoryJSON()" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;">⬇ Export</button>
 <label style="padding:5px 10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:12px;font-weight:700;cursor:pointer;">⬆ Import<input type="file" accept=".json" style="display:none;" onchange="importHistoryJSON(this)"/></label>
+<button onclick="showImportSessionModal()" style="padding:5px 10px;border-radius:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;font-size:12px;font-weight:700;cursor:pointer;">📎</button>
 <button class="btn btn-danger" onclick="if(confirm('Effacer tout ?')){localStorage.removeItem('cbta_history');showHistory();}">🗑</button>
 </div>
 <div class="tabs">
@@ -677,7 +679,9 @@ Identifiant ou mot de passe incorrect
 </div>
 <button onclick="document.getElementById('modal-help').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
-<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y pinch-zoom;">
+<div style="zoom:1.25;transform-origin:top left;">
+<div style="text-align:center;font-size:11px;color:#334155;padding:0 0 8px;letter-spacing:0.5px;">🔍 Pincez pour zoomer</div>
 
 <!-- CODE COULEUR -->
 <div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
@@ -906,6 +910,161 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:13px;color:#94A3B8;">Onglet Pilotes → cliquez <span style="color:#3B82F6;font-weight:700;">📈 ÉVOLUTION</span> sur un pilote → dossier complet : score propre de CE pilote (pas la note globale session), badges compétences, toutes ses sessions avec accès direct au <span style="color:#10B981;font-weight:700;">📄 RAPPORT FINAL</span>.</div>
 </div>
 </div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">📎</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Importer une session externe</div>
+<div style="font-size:13px;color:#94A3B8;">Bouton <span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700;">📎</span> dans la barre de l'historique — intégrez dans vos archives le rapport d'un autre instructeur. Renseignez matricule, nom pilote, scores par compétence (optionnel) et joignez le PDF original. La session s'affiche dans l'onglet <span style="color:#8B5CF6;font-weight:700;">SESSIONS</span> avec le badge <span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700;">📎 IMPORTÉ</span> et le bouton <span style="color:#8B5CF6;font-weight:700;">📄 VOIR PDF</span>. Le pilote est automatiquement versé au dossier individuel pour le suivi de progression multi-instructeur.</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MODE ENTRAÎNEMENT -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:12px;">🎭 MODE ENTRAÎNEMENT (MODE FANTÔME)</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎭</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Session non enregistrée</div>
+<div style="font-size:13px;color:#94A3B8;">Sur l'écran d'accueil, appuyez sur <span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700;">🎭 MODE ENTRAÎNEMENT</span> pour activer ce mode. En mode entraînement, les sessions ne sont <strong style="color:#EF4444;">pas</strong> sauvegardées dans l'historique. Idéal pour préparer une séance la veille, tester des scénarios ou se familiariser avec l'interface.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🟣</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Bannière violette de rappel</div>
+<div style="font-size:13px;color:#94A3B8;">Une bannière <span style="background:#8B5CF6;color:#fff;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700;">🎭 MODE ENTRAÎNEMENT — Session non enregistrée</span> s'affiche en haut de la session. Impossible de confondre avec une vraie session.</div>
+</div>
+</div>
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:9px 11px;margin-top:2px;">
+<div style="font-size:12px;color:#8B5CF6;font-weight:700;margin-bottom:4px;">POUR DÉSACTIVER</div>
+<div style="font-size:12px;color:#94A3B8;">Retournez sur l'accueil et appuyez à nouveau sur 🎭 MODE ENTRAÎNEMENT. Le bouton repassera en mode normal et les prochaines sessions seront archivées.</div>
+</div>
+</div>
+</div>
+
+<!-- CHRONO DE SESSION -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">⏱ CHRONOS — CODES COULEURS & ALERTES</div>
+<div style="display:flex;flex-direction:column;gap:12px;">
+
+<!-- Chrono session : contrôle -->
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🕹</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">CHRONO SESSION — Démarrage manuel (HH:MM:SS)</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:6px;">Affiché en haut à gauche de la vue exercice. Ne démarre <strong style="color:#F1F5F9;">pas</strong> automatiquement — appuyez sur <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 7px;border-radius:5px;font-weight:700;">▶</span> quand vous êtes prêt. Bouton <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 7px;border-radius:5px;font-weight:700;">⏸</span> pour pause (le temps accumulé est conservé).</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-family:monospace;font-size:15px;font-weight:900;color:#10B981;min-width:70px;">00:00→2h</span>
+<div style="flex:1;height:3px;background:#10B981;border-radius:2px;"></div>
+<span style="font-size:12px;color:#10B981;font-weight:700;">VERT</span>
+<span style="font-size:11px;color:#64748B;">Normal, séance en cours</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-family:monospace;font-size:15px;font-weight:900;color:#F59E0B;min-width:70px;">2h→3h50</span>
+<div style="flex:1;height:3px;background:#F59E0B;border-radius:2px;"></div>
+<span style="font-size:12px;color:#F59E0B;font-weight:700;">ORANGE</span>
+<span style="font-size:11px;color:#64748B;">+ légèrement plus grand + 🔔 1 bip à 2h00</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-family:monospace;font-size:15px;font-weight:900;color:#EF4444;min-width:70px;">3h50→+</span>
+<div style="flex:1;height:3px;background:#EF4444;border-radius:2px;"></div>
+<span style="font-size:12px;color:#EF4444;font-weight:700;">ROUGE</span>
+<span style="font-size:11px;color:#64748B;">+ flash rapide + 🔔🔔 2 bips à 3h50</span>
+</div>
+<div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:6px 9px;margin-top:2px;">
+<span style="font-size:11px;color:#EF4444;font-weight:700;">4h00 FIN LÉGALE</span><span style="font-size:11px;color:#64748B;"> → 🔔🔔🔔 5 bips d'alarme finale</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Chrono exercice : sans limite -->
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">⏱</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">CHRONO EXERCICE — Sans limite fixée (MM:SS)</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:6px;">Grand affichage central, démarre automatiquement à l'ouverture de l'exercice. Boutons <span style="color:#94A3B8;font-weight:700;">⏸ PAUSE</span> et <span style="color:#EF4444;font-weight:700;">■ STOP</span>.</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:12px;font-weight:700;min-width:70px;color:#F1F5F9;">En cours</span>
+<span style="font-size:13px;color:#F1F5F9;font-weight:900;font-family:monospace;">12:34</span>
+<span style="font-size:11px;color:#64748B;">— blanc/gris clair, neutre</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:12px;font-weight:700;min-width:70px;color:#F59E0B;">En pause</span>
+<span style="font-size:13px;color:#F59E0B;font-weight:900;font-family:monospace;">12:34</span>
+<span style="font-size:11px;color:#64748B;">— orange, temps figé</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:12px;font-weight:700;min-width:70px;color:#475569;">Arrêté</span>
+<span style="font-size:13px;color:#475569;font-weight:900;font-family:monospace;">00:00</span>
+<span style="font-size:11px;color:#64748B;">— gris foncé, remis à zéro</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Chrono exercice : avec limite -->
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎯</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">CHRONO EXERCICE — Avec limite fixée (boutons − / +)</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:6px;">Fixez une limite de temps (1–90 min) avec les boutons <span style="background:#1E2530;border:1px solid #334155;color:#94A3B8;padding:1px 7px;border-radius:50%;font-weight:900;">−</span> et <span style="background:#1E2530;border:1px solid #334155;color:#94A3B8;padding:1px 7px;border-radius:50%;font-weight:900;">+</span> à droite. La couleur évolue selon le ratio temps écoulé / limite :</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:11px;font-weight:700;min-width:90px;color:#10B981;">&lt; 80% limite</span>
+<div style="flex:1;height:3px;background:#10B981;border-radius:2px;"></div>
+<span style="font-size:12px;color:#10B981;font-weight:700;">VERT</span>
+<span style="font-size:11px;color:#64748B;">Barre neutre</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:11px;font-weight:700;min-width:90px;color:#F59E0B;">80%–100%</span>
+<div style="flex:1;height:3px;background:#F59E0B;border-radius:2px;"></div>
+<span style="font-size:12px;color:#F59E0B;font-weight:700;">ORANGE</span>
+<span style="font-size:11px;color:#64748B;">+ pulsation lente, barre orange</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<span style="font-size:11px;font-weight:700;min-width:90px;color:#EF4444;">≥ 100%</span>
+<div style="flex:1;height:3px;background:#EF4444;border-radius:2px;"></div>
+<span style="font-size:12px;color:#EF4444;font-weight:700;">ROUGE</span>
+<span style="font-size:11px;color:#64748B;">+ flash rapide + barre rouge avec halo</span>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- RÉFÉRENCE TEM & OBs -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">📖 RÉFÉRENCE TEM & OBs — BOUTON REF</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">📖</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Accès aux références Boeing directement depuis le débrief</div>
+<div style="font-size:13px;color:#94A3B8;">Dans le débrief, le bouton <span style="background:#06B6D422;border:1px solid #06B6D4;color:#06B6D4;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:700;">📖 REF</span> dans la barre supérieure ouvre une référence complète en deux onglets.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🗂</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Deux onglets de référence</div>
+<div style="font-size:13px;color:#94A3B8;display:flex;flex-direction:column;gap:5px;">
+<span><span style="color:#06B6D4;font-weight:700;">TEM CARD</span> — Boeing Threat &amp; Error Management : définitions menaces/erreurs/UAS, séquence de gestion, contre-mesures</span>
+<span><span style="color:#3B82F6;font-weight:700;">CORE OBs</span> — Les 9 compétences CBTA avec leurs observables comportementaux détaillés : parfait pour ancrer les apprentissages pendant le débrief avec le stagiaire</span>
+</div>
+</div>
+</div>
+<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:9px 11px;margin-top:2px;">
+<div style="font-size:12px;color:#06B6D4;font-weight:700;margin-bottom:4px;">ASTUCE DÉBRIEF COLLECTIF</div>
+<div style="font-size:12px;color:#94A3B8;">Combinez <span style="color:#8B5CF6;font-weight:700;">📺 Présentation</span> (scores en grand) et <span style="color:#06B6D4;font-weight:700;">📖 REF</span> (OBs) pour un débrief structuré sur projecteur : les stagiaires identifient leurs comportements dans les OBs pendant que leurs scores sont affichés.</div>
+</div>
 </div>
 </div>
 
@@ -913,18 +1072,23 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">💡 ASTUCES RAPIDES</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:flex;gap:8px;"><span style="color:#F59E0B;font-size:15px;">⏱</span><span style="font-size:13px;color:#CBD5E1;">Chrono automatique à chaque exercice — <span style="color:#94A3B8;">⏸ PAUSE</span> pour suspendre, <span style="color:#EF4444;">■ STOP</span> pour remettre à zéro</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#10B981;font-size:15px;">▶</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">Chrono SESSION</span> (haut gauche) — manuel : appuyez ▶ pour démarrer, ⏸ pour pauser. Le chrono <span style="color:#F1F5F9;font-weight:700;">EXERCICE</span> démarre lui automatiquement</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#8B5CF6;font-size:15px;">🎭</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#8B5CF6;font-weight:700;">Mode Entraînement</span> sur l'accueil — sessions non archivées, bannière violette de rappel</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#06B6D4;font-size:15px;">📖</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#06B6D4;font-weight:700;">Bouton REF</span> dans le débrief — TEM Card Boeing + OBs des 9 compétences, toujours accessible</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#F59E0B;font-size:15px;">📋</span><span style="font-size:13px;color:#CBD5E1;">Bouton <span style="color:#F59E0B;font-weight:700;">📋</span> dans la barre session — retour au briefing pré-session à tout moment</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#3B82F6;font-size:15px;">A</span><span style="font-size:13px;color:#CBD5E1;">Taille police : boutons <span style="font-weight:700;">A- A A+ A++</span> sur l'écran d'accueil (en haut à droite)</span></div>
 <div style="display:flex;gap:8px;"><span style="font-size:15px;">☀️</span><span style="font-size:13px;color:#CBD5E1;">Mode jour/nuit : bouton ☀️ accessible sur tous les écrans</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#10B981;font-size:15px;">✓</span><span style="font-size:13px;color:#CBD5E1;">Clôturez chaque exercice avec <span style="color:#10B981;font-weight:700;">CLÔTURER</span> pour qu'il soit compté dans le débrief</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#8B5CF6;font-size:15px;">☑</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#8B5CF6;font-weight:700;">PROF CHECK</span> dans le débrief — se pré-remplit automatiquement avec les notes de session</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#EC4899;font-size:15px;">📋</span><span style="font-size:13px;color:#CBD5E1;">Boutons <span style="color:#3B82F6;font-weight:700;">📋 CPT</span> et <span style="color:#10B981;font-weight:700;">📋 FO</span> dans la conclusion — recommandations individuelles avec export PDF</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#F97316;font-size:15px;">📺</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#F97316;font-weight:700;">Mode Présentation</span> dans le débrief — scores en grand pour projecteur de salle</span></div>
+<div style="display:flex;gap:8px;"><span style="color:#8B5CF6;font-size:15px;">📎</span><span style="font-size:13px;color:#CBD5E1;">Bouton <span style="color:#8B5CF6;font-weight:700;">📎</span> (historique) — importez le rapport d'un autre TRI avec PDF joint, suivi de progression multi-instructeur, badge <span style="color:#8B5CF6;font-weight:700;">IMPORTÉ</span> dans l'onglet Sessions</span></div>
 <div style="display:flex;gap:8px;"><span style="color:#10B981;font-size:15px;">💾</span><span style="font-size:13px;color:#CBD5E1;">Exportez votre JSON régulièrement — sauvegarde extérieure si le cache navigateur est vidé</span></div>
 </div>
 </div>
 
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
+</div>
 </div>
 <button onclick="document.getElementById('modal-help').style.display='none'" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:12px;flex-shrink:0;">Fermer le guide</button>
 </div>
@@ -955,6 +1119,64 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:10px;justify-content:flex-end;">
 <button class="btn" onclick="closeConfirm()">Annuler</button>
 <button class="btn btn-danger" onclick="doReset()">Effacer</button>
+</div>
+</div>
+</div>
+
+<div id="modal-import-session" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
+<div class="modal-box" style="max-height:92vh;display:flex;flex-direction:column;overflow:hidden;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0;">
+<div>
+<div style="font-size:15px;font-weight:900;color:#8B5CF6;">📎 IMPORTER SESSION EXTERNE</div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;">Rapport d'un autre instructeur</div>
+</div>
+<button onclick="document.getElementById('modal-import-session').style.display='none'" style="width:32px;height:32px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+</div>
+<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
+
+<div style="font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:8px;">COMMANDANT DE BORD</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">MATRICULE CPT *</label><input id="imp-mat-cpt" class="form-input" placeholder="ex: 12345" oninput="lookupImportPilot()"/></div>
+<div><label class="form-label">NOM CPT *</label><input id="imp-name-cpt" class="form-input" placeholder="Nom Prénom"/></div>
+</div>
+
+<div style="font-size:10px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:8px;">PREMIER OFFICIER (optionnel)</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">MATRICULE FO</label><input id="imp-mat-fo" class="form-input" placeholder="ex: 67890"/></div>
+<div><label class="form-label">NOM FO</label><input id="imp-name-fo" class="form-input" placeholder="Nom Prénom"/></div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">COMPAGNIE</label><input id="imp-compagnie" class="form-input" placeholder="Air Algérie"/></div>
+<div><label class="form-label">DATE SESSION *</label><input id="imp-date" class="form-input" type="date"/></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+<div><label class="form-label">INSTRUCTEUR SOURCE *</label><input id="imp-instructor" class="form-input" placeholder="Cpt Nom Prénom"/></div>
+<div><label class="form-label">INTITULÉ SESSION</label><input id="imp-session-name" class="form-input" placeholder="TRI Check — B737"/></div>
+</div>
+
+<div style="font-size:10px;font-weight:700;color:#F59E0B;letter-spacing:2px;margin-bottom:8px;">SCORES CPT PAR COMPÉTENCE (optionnel · 0 = non évalué)</div>
+<div id="imp-comp-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;"></div>
+
+<div style="margin-bottom:12px;">
+<label class="form-label">NOTES / OBSERVATIONS</label>
+<textarea id="imp-notes" class="note-area" placeholder="Commentaires, contexte, observations de l'instructeur source..." style="min-height:70px;"></textarea>
+</div>
+
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:10px;padding:12px;margin-bottom:6px;">
+<div style="font-size:12px;font-weight:700;color:#8B5CF6;margin-bottom:8px;">📎 RAPPORT PDF ORIGINAL (optionnel)</div>
+<div id="imp-pdf-status" style="font-size:12px;color:#64748B;margin-bottom:8px;">Aucun fichier sélectionné</div>
+<label style="display:block;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;border-radius:9px;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;">
+📎 Choisir un PDF
+<input type="file" id="imp-pdf-input" accept="application/pdf,.pdf" style="display:none;" onchange="loadImportPDF(this)"/>
+</label>
+<div style="font-size:10px;color:#475569;margin-top:6px;text-align:center;">Stocké localement · Taille max recommandée : 2 Mo</div>
+</div>
+
+</div>
+<div style="display:flex;gap:8px;margin-top:12px;flex-shrink:0;">
+<button onclick="document.getElementById('modal-import-session').style.display='none'" class="btn" style="flex:1;">Annuler</button>
+<button onclick="submitImportedSession()" class="btn btn-primary" style="flex:2;padding:13px;font-size:15px;">📎 IMPORTER</button>
 </div>
 </div>
 </div>
@@ -2653,7 +2875,7 @@ exercises:[], activeIdx:null,
 activeComp:null, activePilot:"cpt",
 currentExTab:"eval", currentDebTab:"scores",
 catFilter:"ALL", phaseFilter:"ALL",
-debRootCauses:{}, debNotes:{}, debConclNotes:"", sessionCRM:{},
+debRootCauses:{}, debNotes:{}, debConclNotes:"", sessionCRM:{}, sessionCRMNotes:"",
 triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
 profCheck: null
 };
@@ -2803,21 +3025,34 @@ function setExTimeLimit(delta){
 // ── PILOT TAB HELPER ---───────────────────────────────────────────────────────
 // Returns the pilot selector tabs (or single banner) with correct role labels/colors.
 // onChangeSuffix is appended to the onclick, e.g. ';renderExContent()' for FFA/TEM tabs.
-function buildPilotTabsHtml(onChangeSuffix){
+function buildPilotTabsHtml(onChangeSuffix, ex){
   const r1 = state.pilotRole||'CPT', r2 = state.foRole||'FO';
   const c1 = _ROLE_COLORS[r1]||'#3B82F6', c2 = _ROLE_COLORS[r2]||'#10B981';
   const l1 = _ROLE_LABELS[r1]||r1, l2 = _ROLE_LABELS[r2]||r2;
   const cls1 = r1==='TRI'?'tri':r1==='FO'?'fo':'cpt';
   const cls2 = r2==='CPT'?'cpt':r2==='TRI'?'tri':'fo';
-  if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</div>`;
+  function _pAvg(csKey){
+    if(!ex) return null;
+    const sc=Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0);
+    return sc.length ? sc.reduce((s,v)=>s+v.g,0)/sc.length : null;
+  }
+  const avgCpt = _pAvg('cs');
+  const avgFo  = _pAvg('csfo');
+  if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;"><span style="font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</span>${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}</div>`;
   return `<div class="pilot-tabs" style="margin-bottom:16px;">
 <button class="pilot-tab ${cls1} ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt')${onChangeSuffix}" style="border-right:1px solid #1E2530;">
 <span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l1}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
 <span style="font-size:14px;">${r1} — ${state.pilotName}</span>
+${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}
+</div>
 </button>
 <button class="pilot-tab ${cls2} ${state.activePilot==="fo"?"active":""}" onclick="setPilot('fo')${onChangeSuffix}">
 <span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l2}</span>
+<div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
 <span style="font-size:14px;">${r2} — ${state.foName}</span>
+${avgFo!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgFo)]||'#64748B'};">${avgFo.toFixed(1)}</span>`:''}
+</div>
 </button>
 </div>`;
 }
@@ -3138,18 +3373,24 @@ const MANDATORY_QUICK = [
   {id:"windshear_manual",label:"WINDSHEAR ESCAPE"},
   {id:"upset_recovery",  label:"UPSET RECOVERY"},
 ];
-let mandHtml = '<div style="padding:12px 14px 0;">';
-mandHtml += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">';
-mandHtml += '<div style="font-size:10px;font-weight:700;color:#EF4444;letter-spacing:2px;">MANDATORY ITEMS</div>';
-mandHtml += '<div style="font-size:10px;color:#64748B;">Appuyer pour ajouter</div>';
-mandHtml += '</div>';
-mandHtml += '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">';
-MANDATORY_QUICK.forEach(function(m){
+const MAND_COLORS=['#EF4444','#F97316','#F59E0B','#10B981','#06B6D4','#3B82F6','#8B5CF6','#EC4899','#14B8A6'];
+let mandHtml = '<div style="padding:12px 12px 0;">';
+mandHtml += '<div style="background:#0F1218;border:2px solid #EF444444;border-radius:14px;padding:14px 14px 10px;margin-bottom:12px;">';
+mandHtml += '<div style="font-size:16px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:3px;">⚠️ MANDATORY ITEMS</div>';
+mandHtml += '<div style="font-size:12px;color:#94A3B8;font-weight:600;margin-bottom:12px;">Appuyer pour ajouter à la session</div>';
+mandHtml += '<div style="display:flex;flex-direction:column;gap:9px;">';
+MANDATORY_QUICK.forEach(function(m, idx){
   const alreadyAdded = state.exercises.some(function(e){return e.sid===m.id;});
-  mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="padding:6px 10px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid '+(alreadyAdded?'#10B981':'#EF444466')+';background:'+(alreadyAdded?'#10B98122':'#EF444411')+';color:'+(alreadyAdded?'#10B981':'#EF4444')+';">'+(alreadyAdded?'✓ ':'')+m.label+'</button>';
+  const isClosed = state.exercises.some(function(e){return e.sid===m.id && e.closed;});
+  const mc = MAND_COLORS[idx];
+  if(isClosed){
+    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="width:100%;padding:18px 16px;border-radius:12px;font-size:17px;font-weight:900;cursor:pointer;text-align:left;border:2px solid #10B981;background:#0A2318;color:#10B981;display:flex;align-items:center;gap:10px;">✅ '+m.label+'</button>';
+  } else {
+    mandHtml += '<button onclick="addExercise(\''+m.id+'\')" style="width:100%;padding:18px 16px;border-radius:12px;font-size:17px;font-weight:900;cursor:pointer;text-align:left;border:2px solid '+mc+';background:'+mc+'11;color:'+mc+';display:flex;align-items:center;justify-content:space-between;">'+m.label+(alreadyAdded?'<span style="font-size:13px;font-weight:700;opacity:0.8;">⏱ EN COURS</span>':'')+'</button>';
+  }
 });
 mandHtml += '</div>';
-mandHtml += '<div style="height:1px;background:#1E2530;margin:0 -14px 12px;"></div>';
+mandHtml += '</div>';
 mandHtml += '</div>';
 
 el.innerHTML = mandHtml + exs.map((ex,i)=>{
@@ -3338,12 +3579,24 @@ const el = document.getElementById('ex-content');
 if(tab==="eval") renderEvalTab(ex,sc,el);
 else if(tab==="ffa") renderFFATab(ex,sc,el);
 else if(tab==="tem") renderTEMTab(ex,sc,el);
-else if(tab==="crm") renderCRMTab(ex,sc,el);
 else if(tab==="fac") renderFacTab(ex,sc,el);
 }
 
 function renderEvalTab(ex,sc,el){
-const pilotTabsHtml = buildPilotTabsHtml('');
+const pilotTabsHtml = buildPilotTabsHtml('', ex);
+
+// Collective average (shown only for 2-pilot sessions once scores exist)
+let collectiveHtml = '';
+if(state.foName){
+  const allScores=[...Object.values(ex.cs||{}),...Object.values(ex.csfo||{})].filter(v=>v&&v.g>0);
+  if(allScores.length){
+    const gAvg=allScores.reduce((s,v)=>s+v.g,0)/allScores.length;
+    collectiveHtml=`<div style="background:#0d1a2e;border:1px solid #33415566;border-radius:8px;padding:7px 13px;margin-top:-10px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
+<span style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1.5px;">MOY. COLLECTIVE EXERCICE</span>
+<span style="font-size:22px;font-weight:900;color:${GC[Math.round(gAvg)]||'#64748B'};">${gAvg.toFixed(1)}</span>
+</div>`;
+  }
+}
 
 const condHtml = sc.cat==='NNC' && sc.condition ? `
 <div style="background:#0d1a2e;border:1px solid #8B5CF644;border-left:3px solid #8B5CF6;border-radius:8px;padding:10px 13px;margin-bottom:12px;">
@@ -3382,7 +3635,7 @@ ${pipsHtml}
 }).join('');
 
 const notesVal = ex.notes||'';
-el.innerHTML = pilotTabsHtml + condHtml + memHtml +
+el.innerHTML = pilotTabsHtml + collectiveHtml + condHtml + memHtml +
 `<div class="section-lbl">COMPETENCES — Tap pour evaluer</div>
 <div class="comp-grid">${compGrid}</div>
 <div style="margin-bottom:14px;">
@@ -3416,7 +3669,7 @@ const pilotLabel = state.activePilot==="cpt"
 ? (state.pilotRole||'CPT')+" — "+state.pilotName
 : (state.foRole||'FO')+" — "+state.foName;
 const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
-const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
+const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
 
 const infoBox = `<div style="background:#0F1020;border:1px solid #8B5CF644;border-radius:9px;padding:11px 13px;margin-bottom:16px;">
 <div class="section-lbl" style="color:#8B5CF6;">POUR CE SCENARIO</div>
@@ -3456,7 +3709,7 @@ window._temSugs = {threats: sc.tT||[], errors: sc.tE||[], uas: sc.tU||(UAS_DICT[
 const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
 const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
 const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
-const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()');
+const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
 
 const info = `<div class="tem-info-box" style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
 <div class="section-lbl" style="color:#3B82F6;">COMMENT UTILISER LE TEM</div>
@@ -3570,54 +3823,63 @@ ex[temKey][key].splice(i,1);
 renderExContent();
 }
 
-function renderCRMTab(ex,sc,el){
+function renderDebCRM(el){
 if(!state.sessionCRM) state.sessionCRM={};
 const items = [
-{k:'brief',label:'Briefing décollage / approche complet et pertinent'},
-{k:'callout',label:'Callouts standards respectés (SOP)'},
+{k:'brief',    label:'Briefing décollage / approche complet et pertinent'},
+{k:'callout',  label:'Callouts standards respectés (SOP)'},
 {k:'challenge',label:'Challenge & Response effectué correctement'},
-{k:'comm',label:'Communication claire et concise entre pilotes'},
+{k:'comm',     label:'Communication claire et concise entre pilotes'},
 {k:'leadership',label:'Leadership adapté — PF assertif sans être autoritaire'},
 {k:'crosscheck',label:'Cross-check mutuel efficace'},
-{k:'workload',label:'Gestion de la charge de travail équilibrée'},
-{k:'sa',label:'Conscience situationnelle partagée maintenue'},
-{k:'decision',label:'Prise de décision rapide et adaptée'},
+{k:'workload', label:'Gestion de la charge de travail équilibrée'},
+{k:'sa',       label:'Conscience situationnelle partagée maintenue'},
+{k:'decision', label:'Prise de décision rapide et adaptée'},
 {k:'intervention',label:'Intervention appropriée en cas d écart'},
 {k:'automation',label:'Gestion des automatismes correcte (mode awareness)'},
-{k:'sterile',label:'Cockpit stérile respecté en dessous de 10,000ft'},
+{k:'sterile',  label:'Cockpit stérile respecté en dessous de 10 000 ft'},
 ];
+const ok  = items.filter(i=>state.sessionCRM[i.k]==='ok').length;
+const nok = items.filter(i=>state.sessionCRM[i.k]==='nok').length;
+const total = items.filter(i=>state.sessionCRM[i.k]&&state.sessionCRM[i.k]!=='na').length;
+const pct = total>0 ? Math.round(ok/total*100) : null;
+const pctColor = pct===null?'#64748B':pct>=75?'#10B981':pct>=50?'#F59E0B':'#EF4444';
 
 const html = items.map(item=>{
 const val = state.sessionCRM[item.k];
-return `<div class="crm-row" style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1E2530;">
-<div class="crm-row-text" style="flex:1;font-size:var(--fs);color:#CBD5E1;line-height:1.4;">${item.label}</div>
+const isOk  = val==='ok';
+const isNok = val==='nok';
+const isNA  = val==='na';
+return `<div class="crm-row" style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #1E2530;">
+<div class="crm-row-text" style="flex:1;font-size:var(--fs);color:${isNok?'#EF444488':isOk?'#CBD5E1':'#CBD5E1'};line-height:1.4;">${item.label}</div>
 <div style="display:flex;gap:6px;flex-shrink:0;">
-<button onclick="setCRM('${item.k}','ok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='ok'?'#10B981':'var(--bord)'};background:${val==='ok'?'#10B98133':'transparent'};color:${val==='ok'?'#10B981':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✓</button>
-<button onclick="setCRM('${item.k}','nok')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='nok'?'#EF4444':'var(--bord)'};background:${val==='nok'?'#EF444433':'transparent'};color:${val==='nok'?'#EF4444':'#64748B'};font-size:16px;cursor:pointer;font-weight:700;">✗</button>
-<button onclick="setCRM('${item.k}','na')" style="width:36px;height:36px;border-radius:8px;border:2px solid ${val==='na'?'#64748B':'var(--bord)'};background:${val==='na'?'#64748B33':'transparent'};color:${val==='na'?'#94A3B8':'var(--mut)'};font-size:11px;cursor:pointer;font-weight:700;">N/A</button>
+<button onclick="setCRM('${item.k}','ok')" style="width:40px;height:40px;border-radius:9px;border:2px solid ${isOk?'#10B981':'var(--bord)'};background:${isOk?'#10B98133':'transparent'};color:${isOk?'#10B981':'#64748B'};font-size:18px;cursor:pointer;font-weight:700;">✓</button>
+<button onclick="setCRM('${item.k}','nok')" style="width:40px;height:40px;border-radius:9px;border:2px solid ${isNok?'#EF4444':'var(--bord)'};background:${isNok?'#EF444433':'transparent'};color:${isNok?'#EF4444':'#64748B'};font-size:18px;cursor:pointer;font-weight:700;">✗</button>
+<button onclick="setCRM('${item.k}','na')" style="width:40px;height:40px;border-radius:9px;border:2px solid ${isNA?'#64748B':'var(--bord)'};background:${isNA?'#64748B33':'transparent'};color:${isNA?'#94A3B8':'var(--mut)'};font-size:11px;cursor:pointer;font-weight:700;">N/A</button>
 </div>
 </div>`;
 }).join('');
 
-const ok = items.filter(i=>state.sessionCRM[i.k]==='ok').length;
-const nok = items.filter(i=>state.sessionCRM[i.k]==='nok').length;
-const total = items.filter(i=>state.sessionCRM[i.k]&&state.sessionCRM[i.k]!=='na').length;
-
 el.innerHTML = `
-<div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;">
-<div>
-<div style="font-size:11px;font-weight:700;color:#8B5CF6;letter-spacing:2px;">CRM — RESSOURCES ÉQUIPAGE</div>
-<div style="font-size:10px;color:var(--mut);margin-top:2px;">Évaluation globale pour toute la séance</div>
+<div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF644;border-radius:12px;padding:14px 16px;margin-bottom:16px;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+<div style="font-size:14px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">👥 CRM — RESSOURCES ÉQUIPAGE</div>
+${pct!==null?`<div style="font-size:22px;font-weight:900;color:${pctColor};">${pct}%</div>`:''}
 </div>
-${total>0?`<div style="font-size:12px;"><span style="color:#10B981;font-weight:700;">✓${ok}</span> <span style="color:#EF4444;font-weight:700;">✗${nok}</span></div>`:''}
+<div style="font-size:12px;color:var(--mut);">Évaluation globale de la séance · ${total>0?`<span style="color:#10B981;font-weight:700;">✓ ${ok} satisfaisant</span> · <span style="color:#EF4444;font-weight:700;">✗ ${nok} non satisfaisant</span>`:'Aucun item évalué'}</div>
 </div>
-${html}`;
+<div style="font-size:11px;color:#64748B;letter-spacing:1px;font-weight:700;margin-bottom:8px;padding:0 2px;">ÉVALUER CHAQUE ITEM SUR L'ENSEMBLE DE LA SÉANCE</div>
+${html}
+<div style="margin-top:14px;">
+<div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">NOTES CRM GLOBALES</div>
+<textarea class="note-area" placeholder="Observations générales sur la ressource équipage..." oninput="state.sessionCRMNotes=this.value" style="min-height:80px;">${state.sessionCRMNotes||''}</textarea>
+</div>`;
 }
 
 function setCRM(key,val){
 if(!state.sessionCRM) state.sessionCRM={};
 state.sessionCRM[key] = state.sessionCRM[key]===val?null:val;
-renderExContent();
+renderDebContent();
 }
 
 function renderFacTab(ex,sc,el){
@@ -4478,34 +4740,29 @@ const crmItems = [
   {k:'workload',l:'Gestion charge de travail'},{k:'sa',l:'Situation Awareness partagée'},{k:'decision',l:'Prise de décision'},
   {k:'intervention',l:'Intervention sur écart'},{k:'automation',l:'Gestion automatismes'},{k:'sterile',l:'Cockpit stérile 10 000ft'}
 ];
-const crmTotals = {};
-crmItems.forEach(it=>{crmTotals[it.k]={ok:0,nok:0,total:0};});
-closed.forEach(ex=>{
-  if(!ex.crm) return;
-  crmItems.forEach(it=>{
-    const v=ex.crm[it.k];
-    if(v==='ok'){crmTotals[it.k].ok++;crmTotals[it.k].total++;}
-    else if(v==='nok'){crmTotals[it.k].nok++;crmTotals[it.k].total++;}
-  });
-});
-const hasCRM = crmItems.some(it=>crmTotals[it.k].total>0);
-if(!hasCRM) return '';
+const crm = state.sessionCRM || {};
+const evaluated = crmItems.filter(it=>crm[it.k]==='ok'||crm[it.k]==='nok');
+if(!evaluated.length) return '';
+const okCount = crmItems.filter(it=>crm[it.k]==='ok').length;
+const nokCount = crmItems.filter(it=>crm[it.k]==='nok').length;
+const pctGlobal = evaluated.length>0 ? Math.round(okCount/evaluated.length*100) : 0;
+const colGlobal = pctGlobal>=75?'#10B981':pctGlobal>=50?'#F59E0B':'#EF4444';
 let cs='<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">BILAN CRM — RESSOURCES ÉQUIPAGE</div>';
 cs+='<div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">';
+cs+='<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-bottom:2px solid #e2e8f0;">';
+cs+='<div style="font-size:11px;color:#475569;font-weight:600;">Évaluation globale de la séance</div>';
+cs+='<div style="font-size:18px;font-weight:900;color:'+colGlobal+';">'+pctGlobal+'%</div></div>';
 crmItems.forEach((it,i)=>{
-  const d=crmTotals[it.k];
-  if(!d.total) return;
-  const pct=Math.round(d.ok/d.total*100);
-  const col=pct>=80?'#10B981':pct>=60?'#F59E0B':'#EF4444';
+  const v = crm[it.k];
+  if(!v || v==='na') return;
+  const isOk = v==='ok';
+  const col = isOk?'#10B981':'#EF4444';
   cs+='<div style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:'+(i<crmItems.length-1?'1px solid #f1f5f9':'none')+'">';
+  cs+='<div style="width:22px;height:22px;border-radius:6px;background:'+col+'22;border:1.5px solid '+col+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:'+col+';flex-shrink:0;">'+(isOk?'✓':'✗')+'</div>';
   cs+='<div style="flex:1;font-size:11px;color:#0f172a;">'+it.l+'</div>';
-  cs+='<div style="display:flex;align-items:center;gap:6px;">';
-  cs+='<div style="width:60px;background:#e2e8f0;border-radius:4px;height:5px;overflow:hidden;"><div style="background:'+col+';height:100%;width:'+pct+'%;"></div></div>';
-  cs+='<span style="font-size:10px;font-weight:700;color:'+col+';min-width:28px;">'+pct+'%</span>';
-  cs+='<span style="font-size:9px;color:#10B981;">✓'+d.ok+'</span>';
-  cs+='<span style="font-size:9px;color:#EF4444;">✗'+d.nok+'</span>';
-  cs+='</div></div>';
+  cs+='</div>';
 });
+if(state.sessionCRMNotes) cs+='<div style="padding:10px 14px;border-top:1px solid #e2e8f0;background:#fffbf0;font-size:11px;color:#374151;line-height:1.6;"><span style="font-weight:700;color:#F59E0B;">Notes CRM : </span>'+state.sessionCRMNotes+'</div>';
 cs+='</div>';
 return cs;
 })()}
@@ -4631,6 +4888,7 @@ const tab = state.currentDebTab;
 if(tab==="scores") renderDebScores(el);
 else if(tab==="exercises") renderDebExercises(el);
 else if(tab==="tem") renderDebTEM(el);
+else if(tab==="crm") renderDebCRM(el);
 else if(tab==="questionnaire") renderDebQuestionnaire(el);
 else if(tab==="tricheck") renderDebTRICheck(el);
 else if(tab==="conclusion") renderDebConclusion(el);
@@ -4800,19 +5058,46 @@ if(!closed.length){
 el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>';
 return;
 }
-const cptSection = buildScoreSection('cs', 'CPT — '+state.pilotName, '#3B82F6', closed);
-const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foName, '#10B981', closed) : '';
-el.innerHTML = cptSection + foSection;
+function _gAvg(csKey){let t=0,n=0;closed.forEach(ex=>Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0).forEach(v=>{t+=v.g;n++;}));return n?t/n:null;}
+const gCpt=_gAvg('cs'), gFo=state.foName?_gAvg('csfo'):null;
+const gAll=(gCpt!==null&&gFo!==null)?(gCpt+gFo)/2:gCpt;
+const r1=state.pilotRole||'CPT', r2=state.foRole||'FO';
+const c1=_ROLE_COLORS[r1]||'#3B82F6', c2=_ROLE_COLORS[r2]||'#10B981';
+let header=`<div style="display:flex;gap:8px;padding:14px 14px 0;">`;
+if(gCpt!==null) header+=`<div style="flex:1;background:${c1}15;border:2px solid ${c1}44;border-radius:12px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:${GC[Math.round(gCpt)]||'#64748B'};">${gCpt.toFixed(2)}</div><div style="font-size:10px;color:${c1};font-weight:800;letter-spacing:1px;margin-top:3px;">${r1}<br/><span style="font-size:11px;opacity:0.7;">${state.pilotName}</span></div></div>`;
+if(gFo!==null) header+=`<div style="flex:1;background:${c2}15;border:2px solid ${c2}44;border-radius:12px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:${GC[Math.round(gFo)]||'#64748B'};">${gFo.toFixed(2)}</div><div style="font-size:10px;color:${c2};font-weight:800;letter-spacing:1px;margin-top:3px;">${r2}<br/><span style="font-size:11px;opacity:0.7;">${state.foName}</span></div></div>`;
+if(gFo!==null&&gCpt!==null&&gAll!==null) header+=`<div style="flex:1;background:#64748B15;border:2px solid #64748B44;border-radius:12px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:${GC[Math.round(gAll)]||'#64748B'};">${gAll.toFixed(2)}</div><div style="font-size:10px;color:#94A3B8;font-weight:800;letter-spacing:1px;margin-top:3px;">COLLECTIVE</div></div>`;
+header+=`</div>`;
+const cptSection = buildScoreSection('cs', 'CPT — '+state.pilotName, c1, closed);
+const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foName, c2, closed) : '';
+el.innerHTML = header + cptSection + foSection;
 }
 
 function renderDebExercises(el){
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
-el.innerHTML = closed.map((ex,i)=>{
+// Global per-pilot averages banner
+function _globalAvg(csKey){
+  let t=0,n=0;
+  closed.forEach(ex=>Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0).forEach(v=>{t+=v.g;n++;}));
+  return n?t/n:null;
+}
+const gCpt=_globalAvg('cs'), gFo=state.foName?_globalAvg('csfo'):null;
+const gAll=(gCpt!==null&&gFo!==null)?(gCpt+gFo)/2:gCpt;
+const r1=state.pilotRole||'CPT', r2=state.foRole||'FO';
+const c1=_ROLE_COLORS[r1]||'#3B82F6', c2=_ROLE_COLORS[r2]||'#10B981';
+let bannerHtml=`<div style="display:flex;gap:8px;margin-bottom:14px;">`;
+if(gCpt!==null) bannerHtml+=`<div style="flex:1;background:${c1}15;border:2px solid ${c1}44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gCpt)]||'#64748B'};">${gCpt.toFixed(2)}</div><div style="font-size:10px;color:${c1};font-weight:700;letter-spacing:1px;">${r1} — ${state.pilotName}</div></div>`;
+if(gFo!==null) bannerHtml+=`<div style="flex:1;background:${c2}15;border:2px solid ${c2}44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gFo)]||'#64748B'};">${gFo.toFixed(2)}</div><div style="font-size:10px;color:${c2};font-weight:700;letter-spacing:1px;">${r2} — ${state.foName}</div></div>`;
+if(gFo!==null&&gCpt!==null&&gAll!==null) bannerHtml+=`<div style="flex:1;background:#64748B15;border:2px solid #64748B44;border-radius:10px;padding:10px;text-align:center;"><div style="font-size:24px;font-weight:900;color:${GC[Math.round(gAll)]||'#64748B'};">${gAll.toFixed(2)}</div><div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;">COLLECTIVE</div></div>`;
+bannerHtml+=`</div>`;
+el.innerHTML = bannerHtml + closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
 const st=exStats(ex);
 const ac=st?GC[Math.round(st.avg)]:'#475569';
 const pc=sc.pri==="CRITICAL"?"#EF4444":sc.pri==="HIGH"?"#F59E0B":"#10B981";
+function _exAvg(csKey){const sc2=Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0);return sc2.length?sc2.reduce((s,v)=>s+v.g,0)/sc2.length:null;}
+const eCpt=_exAvg('cs'), eFo=state.foName?_exAvg('csfo'):null;
 const compBadges=COMPETENCIES.map(c=>{
 const cdC=(ex.cs||{})[c.id]; const cdF=(ex.csfo||{})[c.id];
 if(!cdC&&!cdF) return '';
@@ -4847,9 +5132,13 @@ temFo&&state.foName&&(temFo.errors||[]).length?`<span class="chip" style="backgr
 ].join('');
 const facNotes = ex.facNotes?Object.entries(ex.facNotes).filter(([,v])=>v).map(([k,v])=>`<div style="font-size:12px;color:#64748B;margin-top:3px;font-style:italic;">Q${parseInt(k)+1}: ${v}</div>`).join(''):'';
 return `<div class="card" style="margin-bottom:12px;border-left:3px solid ${pc};">
-<div style="display:flex;justify-content:space-between;margin-bottom:9px;">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;gap:8px;">
 <div style="font-size:15px;font-weight:700;color:#F1F5F9;flex:1;">${sc.title}</div>
-${st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(1)}</div>`:''}
+<div style="display:flex;gap:6px;flex-shrink:0;">
+${eCpt!==null?`<div style="text-align:center;background:${c1}15;border:1px solid ${c1}33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${GC[Math.round(eCpt)]||'#64748B'};line-height:1;">${eCpt.toFixed(1)}</div><div style="font-size:9px;color:${c1};font-weight:700;">${r1}</div></div>`:''}
+${eFo!==null?`<div style="text-align:center;background:${c2}15;border:1px solid ${c2}33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${GC[Math.round(eFo)]||'#64748B'};line-height:1;">${eFo.toFixed(1)}</div><div style="font-size:9px;color:${c2};font-weight:700;">${r2}</div></div>`:''}
+${(eFo!==null&&eCpt!==null&&st)?`<div style="text-align:center;background:#64748B15;border:1px solid #64748B33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${ac};line-height:1;">${st.avg.toFixed(1)}</div><div style="font-size:9px;color:#64748B;font-weight:700;">MOY</div></div>`:(st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(1)}</div>`:'')}
+</div>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">${compBadges}</div>
 ${ffaHtml?`<div style="margin-bottom:6px;">${ffaHtml}</div>`:''}
@@ -5660,6 +5949,7 @@ ${nokItems.length?`<div style="font-size:11px;font-weight:700;color:#EF4444;lett
 ${nokItems.map(i=>`<div class="concl-crm-item" style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✗ ${i.label}</div>`).join('')}`:''}
 ${okItems.length?`<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;margin-top:8px;margin-bottom:6px;">POINTS CRM POSITIFS</div>
 ${okItems.map(i=>`<div class="concl-crm-item" style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✓ ${i.label}</div>`).join('')}`:''}
+${state.sessionCRMNotes?`<div style="margin-top:10px;padding:8px 10px;background:#8B5CF611;border:1px solid #8B5CF633;border-radius:7px;font-size:13px;color:#CBD5E1;line-height:1.6;"><span style="font-size:11px;font-weight:700;color:#8B5CF6;">NOTES : </span>${state.sessionCRMNotes}</div>`:''}
 </div>`;
 })()}
 
@@ -5835,6 +6125,7 @@ state.debRootCauses={};
 state.debNotes={};
 state.debConclNotes="";
 state.sessionCRM={};
+state.sessionCRMNotes="";
 state.briefingChecks={};
 state.pilotName="";
 state.foName="";
@@ -5935,6 +6226,8 @@ compAvgs, compAvgsFo,
 strong, weak,
 temStats,
 conclusion: state.debConclNotes||'',
+sessionCRM: {...(state.sessionCRM||{})},
+sessionCRMNotes: state.sessionCRMNotes||'',
 triCheck: (state.pilotRole==='TRI'||state.foRole==='TRI') ? {
   triName: state.pilotRole==='TRI'?state.pilotName:state.foName,
   grades: {...(state.triCheckGrades||{})},
@@ -6058,6 +6351,7 @@ if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:
 let h='<div style="padding:14px;">';
 hist.forEach((s,i)=>{
 const sc=parseFloat(s.avgScore)||0;
+const isImported=!!s.imported;
 let compH='';
 COMPETENCIES.forEach(c=>{
 const av=s.compAvgs&&s.compAvgs[c.id]?parseFloat(s.compAvgs[c.id]):0;
@@ -6080,10 +6374,11 @@ compHFo+='<div style="width:26px;font-size:11px;font-weight:700;color:'+cc(av)+'
 }
 const foVals=s.compAvgsFo?Object.values(s.compAvgsFo).filter(v=>v&&parseFloat(v)>0).map(parseFloat):[];
 const foSc=foVals.length?foVals.reduce((a,b)=>a+b,0)/foVals.length:0;
-h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+cc(sc)+';">';
+const borderColor=isImported?'#8B5CF6':cc(sc);
+h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+borderColor+';">';
 h+='<div style="padding:12px 14px;display:flex;justify-content:space-between;">';
-h+='<div><div style="font-size:14px;font-weight:800;color:#F1F5F9;">'+s.sessionName+'</div>';
-h+='<div style="font-size:11px;color:#64748B;">'+s.date+' '+s.time+' · TRI: '+s.instructorName+'</div>';
+h+='<div><div style="font-size:14px;font-weight:800;color:#F1F5F9;">'+s.sessionName+(isImported?'<span style="margin-left:7px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:5px;padding:1px 7px;font-size:9px;font-weight:700;vertical-align:middle;">📎 IMPORTÉ</span>':'')+'</div>';
+h+='<div style="font-size:11px;color:#64748B;">'+s.date+(s.time&&s.time!=='--:--'?' '+s.time:'')+' · TRI: '+s.instructorName+'</div>';
 const r1=s.pilotRole||'CPT', r2=s.foRole||'FO';
 const c1h=r1==='TRI'?'#F59E0B':r1==='FO'?'#10B981':'#3B82F6';
 const c2h=r2==='TRI'?'#F59E0B':r2==='CPT'?'#3B82F6':'#10B981';
@@ -6094,8 +6389,13 @@ if(s.triCheck&&s.triCheck.recommendation){
 }
 h+='</div>';
 h+='<div style="text-align:right;">';
-h+='<div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div>';
-h+='<div style="font-size:9px;font-weight:700;color:'+cc(sc)+';">'+cl(sc)+'</div>';
+if(isImported&&sc===0){
+  h+='<div style="font-size:26px;font-weight:900;color:#475569;">--</div>';
+  h+='<div style="font-size:9px;color:#475569;">non noté</div>';
+}else{
+  h+='<div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div>';
+  h+='<div style="font-size:9px;font-weight:700;color:'+cc(sc)+';">'+cl(sc)+'</div>';
+}
 if(foSc>0) h+='<div style="font-size:11px;font-weight:700;color:#10B981;margin-top:4px;">FO '+foSc.toFixed(2)+'</div>';
 h+='</div></div>';
 if(compH||compHFo){
@@ -6104,6 +6404,11 @@ if(compH||compHFo){
   if(compHFo) h+='<div style="font-size:9px;color:#10B981;font-weight:700;letter-spacing:1px;margin:8px 0 4px;">FO '+s.foName+'</div>'+compHFo;
   h+='</div>';
 }
+if(s.notes&&isImported){
+  h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;background:#8B5CF608;">';
+  h+='<div style="font-size:10px;color:#8B5CF6;font-weight:700;margin-bottom:2px;">📝 NOTES</div>';
+  h+='<div style="font-size:11px;color:#94A3B8;">'+s.notes.replace(/</g,'&lt;')+'</div></div>';
+}
 if((s.strong&&s.strong.length)||(s.weak&&s.weak.length)){
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;">';
 if(s.strong&&s.strong.length) h+='<div style="font-size:11px;color:#10B981;">✓ CPT: '+s.strong.join(', ')+'</div>';
@@ -6111,13 +6416,111 @@ if(s.weak&&s.weak.length) h+='<div style="font-size:11px;color:#EF4444;">△ CPT
 h+='</div>';
 }
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;">';
-h+='<button onclick="printRapportFromHistory('+i+')" style="flex:1;padding:8px;background:#0f172a44;border:1px solid #475569;color:#F1F5F9;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128424;&#65039; PDF</button>';
-h+='<button onclick="envoyerRapportEmail('+i+')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✉ EMAIL</button>';
+if(isImported){
+  if(s.importedPDF) h+='<button onclick="viewImportedPDF('+i+')" style="flex:2;padding:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📄 VOIR PDF</button>';
+}else{
+  h+='<button onclick="printRapportFromHistory('+i+')" style="flex:1;padding:8px;background:#0f172a44;border:1px solid #475569;color:#F1F5F9;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128424;&#65039; PDF</button>';
+  h+='<button onclick="envoyerRapportEmail('+i+')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✉ EMAIL</button>';
+}
 h+='<button onclick="showComparaisonPilote(\''+s.pilotName+'\')" style="flex:1;padding:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128200; ÉVOLUTION</button>';
 h+='</div></div>';
 });
 h+='</div>';
 el.innerHTML=h;
+}
+
+let _impPdfData=null;
+function showImportSessionModal(){
+  ['imp-mat-cpt','imp-name-cpt','imp-mat-fo','imp-name-fo','imp-compagnie','imp-instructor','imp-session-name','imp-notes'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+  const today=new Date().toISOString().slice(0,10);
+  const dateEl=document.getElementById('imp-date');if(dateEl)dateEl.value=today;
+  const pdfStatus=document.getElementById('imp-pdf-status');
+  if(pdfStatus)pdfStatus.textContent='Aucun fichier sélectionné';
+  const pdfInput=document.getElementById('imp-pdf-input');if(pdfInput)pdfInput.value='';
+  _impPdfData=null;
+  const grid=document.getElementById('imp-comp-grid');
+  if(grid){
+    grid.innerHTML=COMPETENCIES.map(c=>`<div><label class="form-label" style="color:${c.color};">${c.label}</label><select id="imp-score-${c.id}" class="form-input" style="padding:8px;"><option value="0">— non évalué</option><option value="1">1 — Insuffisant</option><option value="2">2 — Partiellement</option><option value="3">3 — Acceptable</option><option value="4">4 — Bien</option><option value="5">5 — Excellent</option></select></div>`).join('');
+  }
+  document.getElementById('modal-import-session').style.display='flex';
+}
+function lookupImportPilot(){
+  const mat=(document.getElementById('imp-mat-cpt').value||'').trim().toUpperCase();
+  if(mat.length<3)return;
+  const db=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');
+  const found=db[mat];
+  if(found){
+    const nameEl=document.getElementById('imp-name-cpt');
+    if(nameEl&&!nameEl.value)nameEl.value=found.name||'';
+    const cieEl=document.getElementById('imp-compagnie');
+    if(cieEl&&!cieEl.value)cieEl.value=found.company||found.compagnie||'';
+  }
+}
+function loadImportPDF(input){
+  const file=input.files[0];if(!file)return;
+  const statusEl=document.getElementById('imp-pdf-status');
+  const sizeMB=(file.size/1024/1024).toFixed(2);
+  statusEl.innerHTML='<span style="color:#F59E0B;">Chargement...</span>';
+  const reader=new FileReader();
+  reader.onload=function(e){
+    _impPdfData=e.target.result;
+    const warnColor=file.size>2*1024*1024?'#F59E0B':'#10B981';
+    statusEl.innerHTML='<span style="color:'+warnColor+';">✓ '+file.name+' ('+sizeMB+' Mo)</span>'+(file.size>5*1024*1024?'<br><span style="font-size:10px;color:#EF4444;">⚠ Fichier très volumineux</span>':'');
+  };
+  reader.onerror=function(){statusEl.innerHTML='<span style="color:#EF4444;">Erreur de lecture.</span>';_impPdfData=null;};
+  reader.readAsDataURL(file);
+}
+function submitImportedSession(){
+  const matCpt=(document.getElementById('imp-mat-cpt').value||'').trim();
+  const nameCpt=(document.getElementById('imp-name-cpt').value||'').trim();
+  const dateVal=(document.getElementById('imp-date').value||'').trim();
+  const instructor=(document.getElementById('imp-instructor').value||'').trim();
+  if(!matCpt||!nameCpt||!dateVal||!instructor){alert('Champs obligatoires manquants :\nMATRICULE CPT · NOM CPT · DATE · INSTRUCTEUR SOURCE');return;}
+  const matFo=(document.getElementById('imp-mat-fo').value||'').trim();
+  const nameFo=(document.getElementById('imp-name-fo').value||'').trim();
+  const compagnie=(document.getElementById('imp-compagnie').value||'').trim();
+  const sessionName=(document.getElementById('imp-session-name').value||'').trim()||'Session importée';
+  const notes=(document.getElementById('imp-notes').value||'').trim();
+  const compAvgs={};let scoreSum=0,scoreCount=0;
+  COMPETENCIES.forEach(c=>{
+    const sel=document.getElementById('imp-score-'+c.id);
+    const v=sel?parseInt(sel.value):0;
+    if(v>0){compAvgs[c.id]=v.toString();scoreSum+=v;scoreCount++;}
+  });
+  const avgScore=scoreCount>0?(scoreSum/scoreCount).toFixed(2):'0.00';
+  const session={
+    imported:true,importedPDF:_impPdfData||null,
+    date:dateVal,time:'--:--',
+    pilotMatricule:matCpt,pilotName:nameCpt,pilotRole:'CPT',
+    foName:nameFo||null,foMatricule:matFo||null,foRole:nameFo?'FO':null,
+    compagnie,instructorName:instructor,sessionName,
+    avgScore,compAvgs,compAvgsFo:{},
+    notes,exercises:[],strong:[],weak:[],sessionCRM:{},sessionCRMNotes:''
+  };
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  hist.unshift(session);
+  localStorage.setItem('cbta_history',JSON.stringify(hist));
+  updatePilotDB(session);
+  _impPdfData=null;
+  document.getElementById('modal-import-session').style.display='none';
+  showHistory();
+  document.querySelectorAll('#screen-history .tab').forEach(t=>{
+    t.classList.remove('active');
+    if(t.textContent.includes('Sessions'))t.classList.add('active');
+  });
+  _histTab='sessions';
+  renderSessionsList();
+}
+function viewImportedPDF(idx){
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const s=hist[idx];
+  if(!s||!s.importedPDF){alert('Aucun PDF pour cette session.');return;}
+  const win=window.open('','_blank');
+  if(!win){alert('Popup bloqué — autorisez les popups pour ce site.');return;}
+  win.document.write('<html><head><title>Rapport importé</title></head><body style="margin:0;background:#000;"><iframe src="'+s.importedPDF+'" style="width:100%;height:100vh;border:0;"></iframe></body></html>');
+  win.document.close();
 }
 
 function renderPilotesList(){
