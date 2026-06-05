@@ -3369,7 +3369,7 @@ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
 document.getElementById('screen-'+id).classList.add('active');
 const fl=document.getElementById('ses-float');
 if(fl){
-  const hideOn=['login','home'];
+  const hideOn=['login','home','briefing'];
   const show=!hideOn.includes(id);
   fl.style.display=show?'flex':'none';
   // Add top padding to active screen so content isn't hidden behind float bar
