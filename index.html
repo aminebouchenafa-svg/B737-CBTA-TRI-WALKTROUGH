@@ -655,7 +655,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <input id="sc-search" class="search-input" placeholder="Rechercher: ENGINE FIRE, PRO, SA, RTO..." oninput="renderScList()" style="flex-shrink:0;font-size:15px;padding:11px 14px;"/>
 <div class="filter-row" id="cat-filters" style="flex-shrink:0;gap:6px;"></div>
-<div class="filter-row" id="sys-filters" style="flex-shrink:0;display:none;gap:6px;"></div>
+<div class="filter-row" id="sys-filters" style="flex-shrink:0;display:none;gap:6px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;"></div>
 <div class="filter-row" id="phase-filters" style="flex-shrink:0;gap:6px;"></div>
 <div id="sc-list" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;"></div>
 </div>
@@ -4333,9 +4333,13 @@ return `<button class="filter-btn ${isA?'active':''}" onclick="setPhaseF('${p}')
 const sysDiv = document.getElementById('sys-filters');
 if(state.catFilter==="NNC"){
 const sysOrder = ["ALL","Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Automatic Flight","Communications","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
+const SYS_COLORS={"ALL":"#64748B","Miscellaneous":"#94A3B8","Airplane Gen., Emer. Equip., Doors, Windows":"#8B5CF6","Air Systems":"#06B6D4","Pressurisation":"#0EA5E9","Anti-Ice, Rain":"#38BDF8","Automatic Flight":"#A78BFA","Communications":"#EC4899","Electrical":"#FBBF24","Engines, APU":"#F97316","Fire Protection":"#EF4444","Flight Controls":"#6366F1","Warning Systems":"#60A5FA","Flight Management, Navigation":"#2DD4BF","Fuel":"#FB923C","Hydraulics":"#10B981","Landing Gear":"#F59E0B","Emergency Procedures":"#DC2626"};
 sysDiv.style.display='flex';
-sysDiv.innerHTML = sysOrder.map(s=>
-`<button class="filter-btn ${(state.sysFilter||'ALL')===s?'active':''}" onclick="setSysF('${s}')">${s}</button>`).join('');
+sysDiv.innerHTML = sysOrder.map(s=>{
+const col=SYS_COLORS[s]||'#64748B';
+const isA=(state.sysFilter||'ALL')===s;
+return `<button class="filter-btn ${isA?'active':''}" onclick="setSysF('${s}')" style="white-space:nowrap;flex-shrink:0;color:${isA?col:'#94A3B8'};border-color:${col}${isA?'':'44'};${isA?'background:'+col+'22;':''}">${s}</button>`;
+}).join('');
 } else {
 sysDiv.style.display='none';
 state.sysFilter='ALL';
