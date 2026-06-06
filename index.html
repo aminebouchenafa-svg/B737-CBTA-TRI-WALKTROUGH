@@ -4981,19 +4981,19 @@ function closeTimeLimitModal(){document.getElementById('modal-timelimit').style.
 const DISTRACTEURS=[
   {id:'atc',icon:'🎙',cat:'ATC',color:'#3B82F6',
    title:'Clairance ATC immédiate',
-   desc:'Vecteur déroutement — contacter APP 119.7 MHz. Dégagement DAAE: METAR VFR, QNH 1018.',
-   tem:'ATC: clairance immédiate déroutement DAAE — gestion priorités/CRM en cours de procédure'},
+   desc:'Déroutement inattendu — vecteur radar vers terrain alternatif. Fréquence approche à contacter. Confirmer carburant suffisant.',
+   tem:'ATC: clairance déroutement immédiate — gestion priorités/CRM en cours de procédure'},
   {id:'cabine',icon:'🚨',cat:'CABINE',color:'#F59E0B',
    title:'Urgence médicale passager',
-   desc:'Siège 26F: passager inconscient. Chef de cabine demande défibrillateur. Décision diversion?',
-   tem:'Cabine: urgence médicale passager 26F — WLM/SA avec procédure simultanée'},
+   desc:'Passager inconscient en cabine. Chef de cabine demande défibrillateur et assistance. Décision diversion à prendre.',
+   tem:'Cabine: urgence médicale passager — WLM/SA avec procédure simultanée, décision diversion'},
   {id:'meteo',icon:'⛈',cat:'MÉTÉO',color:'#10B981',
    title:'Dégagement indisponible',
-   desc:'DAAG: brouillard soudain RVR 175m. DAAE NOTAM CLOSED +30min. Carburant 1h15.',
-   tem:'Météo: dégagement primaire indisponible, alternative fermée — SA critique carburant/alternates'},
+   desc:'Brouillard soudain sur terrain de dégagement — RVR en dessous des minima. Alternative suivante à +45min. Carburant limité.',
+   tem:'Météo: dégagement indisponible à la dernière minute — SA critique carburant/alternates'},
   {id:'porte',icon:'🚪',cat:'CABINE',color:'#EC4899',
    title:'Rapport porte non armée',
-   desc:'Chef de cabine: porte 2L voyant ARMED éteint — signalé en finale. Confirmation requise.',
+   desc:'Chef de cabine: porte 2L voyant ARMED éteint — signalé en finale. Confirmation requise avant atterrissage.',
    tem:'Rapport cabine: porte 2L signalée non armée en finale — interruption procédure/CRM'}
 ];
 
