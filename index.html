@@ -727,7 +727,7 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-shrink:0;">
 <div>
 <div style="font-size:18px;font-weight:900;color:#F59E0B;">📖 GUIDE D'UTILISATION</div>
-<div style="font-size:11px;color:#64748B;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.1</div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.2</div>
 </div>
 <button onclick="document.getElementById('modal-help').style.display='none'" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
@@ -758,6 +758,45 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;align-items:center;gap:10px;"><span style="background:#EF444422;border:1px solid #DC2626;color:#DC2626;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">MANDATORY</span><span style="font-size:13px;color:#CBD5E1;">Obligatoires EASA — RTO, SE ILS, SE GA, SE LDG, Non-ILS, TCAS, Windshear, Upset</span></div>
 <div style="display:flex;align-items:center;gap:10px;"><span style="background:#EC489922;border:1px solid #EC4899;color:#EC4899;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">LVO</span><span style="font-size:13px;color:#CBD5E1;">Low Visibility Operations — CAT II/III, LVTO</span></div>
 <div style="display:flex;align-items:center;gap:10px;"><span style="background:#0EA5E922;border:1px solid #0EA5E9;color:#0EA5E9;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">RNP</span><span style="font-size:13px;color:#CBD5E1;">Approches RNP et RNP AR</span></div>
+</div>
+</div>
+
+<!-- LOFTS DE SESSION -->
+<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">🗂 LOFTS DE SESSION</div>
+<div style="display:flex;flex-direction:column;gap:9px;">
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">🗂</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Qu'est-ce qu'un Loft ?</div>
+<div style="font-size:13px;color:#94A3B8;">Un Loft est une liste d'exercices sauvegardée et réutilisable. Créez une fois votre scénario (ex. <em>Summer Recurrent 2026</em>) et rechargez-le en un tap à chaque nouvelle session.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">➕</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Créer un nouveau Loft</div>
+<div style="font-size:13px;color:#94A3B8;">Bouton <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 7px;border-radius:5px;font-size:12px;font-weight:800;">🗂</span> sur l'écran d'accueil → <span style="color:#10B981;font-weight:700;">＋ NOUVEAU LOFT</span>. Entrez un nom, puis <span style="color:#10B981;font-weight:700;">＋ Ajouter un exercice</span> pour ouvrir la bibliothèque et sélectionner vos exercices un par un. Une fois la liste complète, appuyez sur <span style="color:#10B981;font-weight:700;">SAUVEGARDER LE LOFT</span>.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">▶</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Charger un Loft</div>
+<div style="font-size:13px;color:#94A3B8;"><span style="color:#10B981;font-weight:700;">Sans session active :</span> appuyez sur <span style="color:#10B981;font-weight:700;">▶ Charger</span> — le Loft sera appliqué automatiquement au démarrage de la prochaine session.<br/><span style="color:#3B82F6;font-weight:700;">Session déjà démarrée :</span> les exercices du Loft sont ajoutés immédiatement à la session en cours.</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">✏</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Modifier ou supprimer un Loft</div>
+<div style="font-size:13px;color:#94A3B8;">Bouton <span style="color:#F59E0B;font-weight:700;">✏</span> pour éditer le nom ou la liste d'exercices (ajout/suppression). Bouton <span style="color:#EF4444;font-weight:700;">🗑</span> pour supprimer définitivement. Les Lofts sont stockés localement sur votre appareil (localStorage) — ils restent disponibles entre les sessions.</div>
+</div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 11px;margin-top:2px;">
+<div style="font-size:12px;color:#10B981;font-weight:700;margin-bottom:4px;">💡 CONSEIL D'UTILISATION</div>
+<div style="font-size:12px;color:#94A3B8;">Créez un Loft par type de session : <em>Initial Type Rating</em>, <em>Recurrent Standard</em>, <em>LVO Check</em>... Vous pouvez aussi créer un Loft personnalisé pour un stagiaire, avec uniquement les exercices sur lesquels il doit progresser.</div>
+</div>
 </div>
 </div>
 
@@ -799,7 +838,7 @@ Identifiant ou mot de passe incorrect
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
 <div style="min-width:28px;height:28px;background:#F97316;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">1</div>
-<div><div style="font-size:15px;font-weight:700;color:#F1F5F9;">ACCUEIL — Identifier les pilotes</div><div style="font-size:13px;color:#94A3B8;margin-top:3px;">Saisissez le <span style="color:#F97316;font-weight:700;">matricule</span> du CPT et du F/O → l'app remplit le nom automatiquement. Entrez le nom de l'instructeur TRI, choisissez les rôles (CPT / FO / TRI CHECK), nommez la session et choisissez un scénario.</div></div>
+<div><div style="font-size:15px;font-weight:700;color:#F1F5F9;">ACCUEIL — Identifier les pilotes</div><div style="font-size:13px;color:#94A3B8;margin-top:3px;">Saisissez le <span style="color:#F97316;font-weight:700;">matricule</span> du CPT et du F/O → l'app remplit le nom automatiquement. Entrez le nom de l'instructeur TRI, choisissez les rôles (CPT / FO / TRI CHECK), nommez la session et choisissez un scénario. Bouton <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 6px;border-radius:5px;font-size:11px;font-weight:800;">🗂</span> pour charger un <span style="color:#10B981;font-weight:700;">Loft</span> (liste d'exercices prédéfinie).</div></div>
 </div>
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
