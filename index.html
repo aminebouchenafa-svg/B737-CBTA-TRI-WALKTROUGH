@@ -4778,7 +4778,7 @@ function openAddForPlan(){
   renderFilters();
   renderScList();
   const ma = document.getElementById('modal-add');
-  if(ma) ma.style.display = 'flex';
+  if(ma){ ma.style.zIndex='9400'; ma.style.display = 'flex'; }
   const rem = document.getElementById('modal-add-timer-reminder');
   if(rem) rem.style.display = 'none';
 }
