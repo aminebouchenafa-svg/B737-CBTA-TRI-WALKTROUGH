@@ -2823,8 +2823,8 @@ var NNC_SYSTEMS = {
 "nnc_equip_cooling_off":{"system":"Warning Systems","color":"#8B5CF6"},
 "nnc_zone_temp":{"system":"Air Systems","color":"#06B6D4"},
 "nnc_volcanic_ash":{"system":"METEO","color":"#60A5FA"},
-"nnc_ap_disengage":{"system":"AUTOMATIQUE","color":"#A78BFA"},
-"nnc_at_disengage":{"system":"AUTOMATIQUE","color":"#A78BFA"},
+"nnc_ap_disengage":{"system":"Automatic Flight","color":"#A78BFA"},
+"nnc_at_disengage":{"system":"Automatic Flight","color":"#A78BFA"},
 "nnc_auto_slat_fail":{"system":"Flight Controls","color":"#10B981"},
 "nnc_stuck_mic":{"system":"Miscellaneous","color":"#94A3B8"},
 "nnc_acars_fail":{"system":"Miscellaneous","color":"#94A3B8"},
@@ -4332,7 +4332,7 @@ return `<button class="filter-btn ${isA?'active':''}" onclick="setPhaseF('${p}')
 // Afficher les filtres système seulement si NNC sélectionné
 const sysDiv = document.getElementById('sys-filters');
 if(state.catFilter==="NNC"){
-const sysOrder = ["ALL","Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
+const sysOrder = ["ALL","Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Automatic Flight","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
 sysDiv.style.display='flex';
 sysDiv.innerHTML = sysOrder.map(s=>
 `<button class="filter-btn ${(state.sysFilter||'ALL')===s?'active':''}" onclick="setSysF('${s}')">${s}</button>`).join('');
@@ -4368,7 +4368,7 @@ const sys = (NNC_SYSTEMS[s.id]&&NNC_SYSTEMS[s.id].system)||"Miscellaneous";
 if(!groups[sys]) groups[sys]=[];
 groups[sys].push(s);
 });
-const sysOrder = ["Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
+const sysOrder = ["Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Automatic Flight","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
 let html = '';
 [...sysOrder, ...Object.keys(groups).filter(s=>!sysOrder.includes(s))].forEach(sys=>{
 if(!groups[sys]||!groups[sys].length) return;
