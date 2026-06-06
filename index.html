@@ -4332,7 +4332,7 @@ return `<button class="filter-btn ${isA?'active':''}" onclick="setPhaseF('${p}')
 // Afficher les filtres système seulement si NNC sélectionné
 const sysDiv = document.getElementById('sys-filters');
 if(state.catFilter==="NNC"){
-const sysOrder = ["ALL","Emergency Procedures","Fire Protection","Engines, APU","Hydraulics","Electrical","Fuel","Flight Controls","Pressurisation","Flight Management, Navigation","Warning Systems","Anti-Ice, Rain","Air Systems","Airplane Gen., Emer. Equip., Doors, Windows","Landing Gear","Miscellaneous"];
+const sysOrder = ["ALL","Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
 sysDiv.style.display='flex';
 sysDiv.innerHTML = sysOrder.map(s=>
 `<button class="filter-btn ${(state.sysFilter||'ALL')===s?'active':''}" onclick="setSysF('${s}')">${s}</button>`).join('');
@@ -4368,7 +4368,7 @@ const sys = (NNC_SYSTEMS[s.id]&&NNC_SYSTEMS[s.id].system)||"Miscellaneous";
 if(!groups[sys]) groups[sys]=[];
 groups[sys].push(s);
 });
-const sysOrder = ["Emergency Procedures","Fire Protection","Engines, APU","Hydraulics","Electrical","Fuel","Flight Controls","Pressurisation","Flight Management, Navigation","Warning Systems","Anti-Ice, Rain","Air Systems","Airplane Gen., Emer. Equip., Doors, Windows","Landing Gear","Miscellaneous"];
+const sysOrder = ["Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
 let html = '';
 [...sysOrder, ...Object.keys(groups).filter(s=>!sysOrder.includes(s))].forEach(sys=>{
 if(!groups[sys]||!groups[sys].length) return;
