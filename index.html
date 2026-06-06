@@ -4657,7 +4657,7 @@ function renderPlansList(){
     return `<div style="background:#080B10;border:1px solid #10B98144;border-radius:12px;padding:14px;margin-bottom:10px;border-left:4px solid #10B981;">
 <div style="font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">${p.name}</div>
 <div style="font-size:11px;color:#475569;margin-bottom:8px;">${p.exIds.length} exercice${p.exIds.length>1?'s':''} · ${dateStr}</div>
-<div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.7;">${exNames.slice(0,5).join(' · ')}${exNames.length>5?' · <span style="color:#10B981;">+'+（exNames.length-5)+'</span>':''}</div>
+<div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.7;">${exNames.slice(0,5).join(' · ')}${exNames.length>5?' · <span style="color:#10B981;">+'+(exNames.length-5)+'</span>':''}</div>
 <div style="display:flex;gap:8px;">
 <button onclick="loadPlan('${p.id}')" style="flex:2;padding:10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:13px;font-weight:700;cursor:pointer;">▶ Charger</button>
 <button onclick="editPlan('${p.id}')" style="flex:1;padding:10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:13px;font-weight:700;cursor:pointer;">✏</button>
