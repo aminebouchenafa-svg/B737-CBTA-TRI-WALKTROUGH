@@ -1649,7 +1649,7 @@ ffa:false,ffaD:"V/S mode = surveillance accrue de la vitesse et de l altitude. P
 tT:["Accel/decel non anticipee","Altitude contrainte non respectee"],
 tE:["Vitesse non surveillee en V/S mode","Altitude contrainte depassee","Transition vers autre mode non planifiee"],
 fac:["La vitesse etait-elle surveillee en permanence pendant le V/S ?","Les contraintes d altitude ont-elles ete respectees ?","Le passage vers ILS ou VNAV etait-il planifie correctement ?"]},
-{id:"ils_raw_data",title:"ILS RAW DATA",page:"FP.8",cat:"FLIGHT PATTERN",pri:"HIGH",
+{id:"ils_raw_data",title:"ILS RAW DATA",page:"FP.8",cat:"FLIGHT PATTERN",pri:"HIGH",advanced:true,
 phase:["APPROACH","LANDING"],
 system:"ILS / INSTRUMENTS",
 condition:"DUAL ENGINE — NO FD / NO AP / NO AT",
@@ -3770,10 +3770,11 @@ const g=cd?cd.g:0;
 return c?`<span style="background:${c.color}18;border:1px solid ${c.color}33;color:${c.color};border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700;font-family:monospace;">${k}${g>0?'<span style="color:'+GC[g]+'"> '+g+'</span>':''}</span>`:''
 }).join('');
 const tlc=ex.timeLimitColor||'#00E5FF';
-return `<div class="ex-card" style="background:#0F1218;border-left-color:${headerColor};" onclick="openEx(${i})">
+const advGlow=sc.advanced?'box-shadow:0 0 14px #FF8C0033,inset 0 0 20px #FF6B0008;':'';
+return `<div class="ex-card" style="background:#0F1218;border-left-color:${headerColor};${advGlow}" onclick="openEx(${i})">
 <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
 <span style="font-size:13px;color:var(--mut);font-weight:700;">#${i+1}</span>
-<div class="ex-title" style="flex:1;font-size:15px;font-weight:700;color:#F1F5F9;">${sc.title}${ex.mandatory?'<span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:6px;">M</span>':'<span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F688;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:600;margin-left:6px;">T</span>'}${ex.attempt===2?'<span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:3px;">2e</span>':''}</div>
+<div class="ex-title" style="flex:1;font-size:15px;font-weight:700;color:#F1F5F9;">${sc.title}${sc.advanced?'<span style="margin-left:5px;background:#FF6B0022;border:1px solid #FF8C00;color:#FF8C00;border-radius:4px;padding:1px 5px;font-size:9px;font-weight:900;box-shadow:0 0 6px #FF8C0066;">⚡</span>':''}${ex.mandatory?'<span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:6px;">M</span>':'<span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F688;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:600;margin-left:6px;">T</span>'}${ex.attempt===2?'<span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:3px;">2e</span>':''}</div>
 ${avgHtml}
 <button onclick="event.stopPropagation();openTimeLimitModalForEx(${i})" title="Limite de temps" style="width:36px;height:36px;flex-shrink:0;border-radius:8px;background:${ex.timeLimit?tlc+'22':'#1E253088'};border:1px solid ${ex.timeLimit?tlc+'66':'#33415544'};color:${ex.timeLimit?tlc:'#334155'};font-size:${ex.timeLimit?'9':'15'}px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;${ex.timeLimit?'box-shadow:0 0 8px '+tlc+'55;text-shadow:0 0 6px '+tlc+';':''}">${ex.timeLimit?String(ex.timeLimit)+'m':'⏱'}</button>
 </div>
@@ -4534,7 +4535,7 @@ const pc=pc_fn(s);
 return `<div class="sc-item" style="background:#0F1218;border-left-color:${cat_color(s)};" onclick="addExercise('${s.id}')">
 <div style="flex:1;">
 <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="font-size:9px;font-weight:800;letter-spacing:1px;color:${cat_color(s)};background:${cat_color(s)}22;border:1px solid ${cat_color(s)}44;border-radius:4px;padding:1px 5px;">${s.cat}</span></div>
-<div class="sc-item-title">${s.title}</div>
+<div class="sc-item-title">${s.title}${s.advanced?'<span style="margin-left:6px;background:#FF6B0022;border:1px solid #FF8C00;color:#FF8C00;border-radius:4px;padding:1px 5px;font-size:9px;font-weight:900;letter-spacing:0.5px;box-shadow:0 0 6px #FF8C0066;">⚡ EXPERT</span>':''}</div>
 <div class="sc-item-sub">p.${s.page} · ${(s.keys||[]).map(k=>q&&k.toLowerCase()===q.toLowerCase().trim()?`<span style="background:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}33;color:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')};font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}55;">${k}</span>`:k).join(', ')}</div>
 </div>
 <div style="font-size:11px;font-weight:700;color:${pc};padding:3px 6px;border:1px solid ${pc}44;border-radius:4px;flex-shrink:0;">${s.pri}</div>
@@ -4550,7 +4551,7 @@ const pc=pc_fn(s); const cc=catC[s.cat]||"#64748B";
 return `<div class="sc-item" style="background:#0F1218;border-left-color:${cat_color(s)};" onclick="addExercise('${s.id}')">
 <div style="flex:1;">
 <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="font-size:9px;font-weight:800;letter-spacing:1px;color:${cat_color(s)};background:${cat_color(s)}22;border:1px solid ${cat_color(s)}44;border-radius:4px;padding:1px 5px;">${s.cat}</span></div>
-<div class="sc-item-title">${s.title}</div>
+<div class="sc-item-title">${s.title}${s.advanced?'<span style="margin-left:6px;background:#FF6B0022;border:1px solid #FF8C00;color:#FF8C00;border-radius:4px;padding:1px 5px;font-size:9px;font-weight:900;letter-spacing:0.5px;box-shadow:0 0 6px #FF8C0066;">⚡ EXPERT</span>':''}</div>
 <div class="sc-item-sub">p.${s.page} · ${(s.keys||[]).map(k=>q&&k.toLowerCase()===q.toLowerCase().trim()?`<span style="background:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}33;color:${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')};font-weight:700;padding:1px 4px;border-radius:3px;border:1px solid ${(COMP_COLORS[k.toLowerCase()]||'#F59E0B')}55;">${k}</span>`:k).join(', ')}</div>
 </div>
 <div style="font-size:11px;font-weight:700;color:${pc};padding:3px 6px;border:1px solid ${pc}44;border-radius:4px;flex-shrink:0;">${s.pri}</div>
