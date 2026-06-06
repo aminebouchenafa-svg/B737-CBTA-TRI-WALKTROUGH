@@ -774,15 +774,15 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div id="modal-help" ontouchstart="event.stopPropagation()" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9100;">
-<div style="position:absolute;top:8%;left:0;right:0;bottom:0;background:#131820;border-radius:16px 16px 0 0;overflow:hidden;display:flex;flex-direction:column;padding:20px;box-sizing:border-box;">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-shrink:0;">
+<div style="position:absolute;top:8%;left:0;right:0;bottom:0;background:#131820;border-radius:16px 16px 0 0;overflow-y:scroll;-webkit-overflow-scrolling:touch;">
+<div style="position:sticky;top:0;background:#131820;z-index:1;display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid #1E2530;">
 <div>
 <div style="font-size:18px;font-weight:900;color:#F59E0B;">📖 GUIDE D'UTILISATION</div>
 <div style="font-size:11px;color:#94A3B8;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.4</div>
 </div>
 <button onclick="closeGuide()" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
-<div id="guide-scroll" style="flex:1;min-height:0;overflow-y:scroll;-webkit-overflow-scrolling:touch;touch-action:pan-y;">
+<div id="guide-scroll" style="padding:14px 20px 0;">
 <div style="text-align:center;font-size:11px;color:#64748B;padding:0 0 10px;letter-spacing:0.5px;">Faites défiler pour tout lire</div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -2011,7 +2011,7 @@ Identifiant ou mot de passe incorrect
 
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
 </div>
-<button onclick="closeGuide()" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:12px;flex-shrink:0;">Fermer le guide</button>
+<button onclick="closeGuide()" class="btn btn-primary" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;">Fermer le guide</button>
 </div>
 </div>
 
