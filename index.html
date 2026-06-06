@@ -510,13 +510,9 @@ Identifiant ou mot de passe incorrect
     <button onclick="resetExChrono()" style="padding:3px 10px;border-radius:20px;background:#EF444422;border:1px solid #EF444444;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;">■ STOP</button>
     </div>
   </div>
-  <div style="text-align:right;">
-    <div style="font-size:8px;color:#334155;letter-spacing:1.5px;font-weight:700;margin-bottom:3px;">LIMITE</div>
-    <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
-      <button onclick="setExTimeLimit(-1)" style="width:30px;height:30px;border-radius:50%;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">−</button>
-      <div id="timer-limit-val" style="font-family:ui-monospace,monospace;font-size:22px;font-weight:900;color:#64748B;letter-spacing:2px;min-width:52px;text-align:center;">--:--</div>
-      <button onclick="setExTimeLimit(1)" style="width:30px;height:30px;border-radius:50%;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">+</button>
-    </div>
+  <div onclick="openTimeLimitModal()" style="cursor:pointer;text-align:right;padding:5px 10px;border-radius:10px;background:#0F1218;border:1px solid #1E2530;transition:border-color 0.2s,box-shadow 0.2s;" onmouseover="this.style.borderColor='#06B6D488';this.style.boxShadow='0 0 10px #06B6D422'" onmouseout="this.style.borderColor='#1E2530';this.style.boxShadow='none'">
+    <div style="font-size:8px;color:#334155;letter-spacing:1.5px;font-weight:700;margin-bottom:3px;">TIME LIMIT</div>
+    <div id="timer-limit-val" style="font-family:ui-monospace,monospace;font-size:22px;font-weight:900;color:#64748B;letter-spacing:2px;min-width:52px;text-align:center;transition:color 0.2s,text-shadow 0.2s;">--:--</div>
   </div>
 </div>
 <div class="scroll" id="ex-content" style="padding:13px;"></div>
@@ -533,6 +529,32 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:10px;justify-content:flex-end;">
 <button class="btn" onclick="document.getElementById('modal-delete-ex').style.display='none'">Annuler</button>
 <button class="btn btn-danger" onclick="deleteEx()">Supprimer</button>
+</div>
+</div>
+</div>
+
+<!-- TIME LIMIT CLOCK MODAL -->
+<div id="modal-timelimit" class="modal-overlay" style="display:none;z-index:9500;background:#03050AEE;" ontouchstart="event.stopPropagation()">
+<div style="width:100%;max-width:420px;display:flex;flex-direction:column;align-items:center;padding:28px 20px 24px;position:relative;">
+<button onclick="closeTimeLimitModal()" style="position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:#1E2530;border:1px solid #334155;color:#64748B;font-size:18px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">×</button>
+<div style="font-size:9px;letter-spacing:6px;color:#334155;font-weight:800;margin-bottom:18px;">⏱ TIME LIMIT</div>
+<div id="tl-display" style="font-family:'Courier New',Courier,monospace;font-size:88px;font-weight:900;letter-spacing:6px;color:#00E5FF;text-shadow:0 0 24px #00E5FF,0 0 48px #00E5FF66;line-height:1;margin-bottom:6px;transition:color 0.2s,text-shadow 0.2s;user-select:none;">00:00</div>
+<div style="font-size:9px;letter-spacing:4px;color:#1E2530;font-weight:700;margin-bottom:26px;">MINUTES</div>
+<div style="display:flex;gap:10px;align-items:center;margin-bottom:28px;">
+<button onclick="adjTimeLimit(-10)" style="width:62px;height:62px;border-radius:14px;background:#1E2530;border:2px solid #FF2D9877;color:#FF2D98;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 0 12px #FF2D9844;letter-spacing:-1px;">−10</button>
+<button onclick="adjTimeLimit(-5)" style="width:50px;height:50px;border-radius:12px;background:#1E2530;border:2px solid #FF2D9844;color:#FF2D98;font-size:14px;font-weight:900;cursor:pointer;">−5</button>
+<button onclick="adjTimeLimit(-1)" style="width:42px;height:42px;border-radius:10px;background:#1E2530;border:2px solid #FF2D9822;color:#FF2D98BB;font-size:13px;font-weight:900;cursor:pointer;">−1</button>
+<button onclick="adjTimeLimit(1)" style="width:42px;height:42px;border-radius:10px;background:#1E2530;border:2px solid #00E5FF22;color:#00E5FFBB;font-size:13px;font-weight:900;cursor:pointer;">+1</button>
+<button onclick="adjTimeLimit(5)" style="width:50px;height:50px;border-radius:12px;background:#1E2530;border:2px solid #00E5FF44;color:#00E5FF;font-size:14px;font-weight:900;cursor:pointer;">+5</button>
+<button onclick="adjTimeLimit(10)" style="width:62px;height:62px;border-radius:14px;background:#1E2530;border:2px solid #00E5FF77;color:#00E5FF;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 0 12px #00E5FF44;letter-spacing:-1px;">+10</button>
+</div>
+<div style="margin-bottom:24px;text-align:center;">
+<div style="font-size:9px;letter-spacing:3px;color:#334155;font-weight:700;margin-bottom:10px;">COULEUR</div>
+<div id="tl-color-row" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;"></div>
+</div>
+<div style="display:flex;gap:10px;width:100%;">
+<button onclick="clearTimeLimit()" style="flex:1;padding:15px;border-radius:12px;background:#EF444415;border:2px solid #EF444444;color:#EF4444;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:1px;">EFFACER</button>
+<button onclick="confirmTimeLimit()" style="flex:2;padding:15px;border-radius:12px;background:#10B98115;border:2px solid #10B98166;color:#10B981;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:1px;">VALIDER</button>
 </div>
 </div>
 </div>
@@ -1719,6 +1741,27 @@ items:[
   "Takeoff — maintain CL guidance",
   "Positive rate — rotate smoothly",
   "OEI procedure if applicable"
+]},
+{id:"lvo_lvto_reject",title:"LVTO REJECT",page:"LVO.3",cat:"LVO",pri:"CRITICAL",
+phase:["TAKEOFF"],
+system:"EFIS / HUD",
+condition:"RVR < 400M — REJECT BELOW V1",
+keys:["FPM","SA","PRO","KNO","LTW","COM","WLM"],
+obs:["FPM1","FPM2","SA1","SA2","PRO1","PRO2","KNO1","LTW1","COM1","WLM1","WLM2"],
+mem:["GO/STOP decision criteria briefed before takeoff","MAX BRAKING — autobrake RTO armed","SPOILERS — auto deploy confirmed","REVERSE THRUST — full and symmetric","Maintain CL guidance in low visibility","ATC notification after stop"],
+ffa:true,ffaD:"Identification critere RTO sous V1 en basse visibilite. Gestion freinage et deceleration. Prevention excursion piste en LVO. Coordination equipage pendant rejet.",
+tT:["RTO decision above V1","Runway excursion in low visibility","CL guidance lost during reject","Asymmetric reverse thrust"],
+tE:["Critere GO/STOP non briefed","Actions rejet tardives ou au-dessus V1","Guidage axe perdu","Reverse asymetrique non corrige"],
+fac:["Quels etaient vos criteres GO/STOP au decollage ?","Comment avez-vous maintenu le guidage axe pendant le rejet ?","La basse visibilite a-t-elle impacte votre prise de decision ?","Comment avez-vous coordonne les actions avec votre copilote ?","Quelles etaient vos priorites apres l'arret complet ?"],
+items:[
+  "GO/STOP decision criteria briefed",
+  "Reject initiated BELOW V1",
+  "MAX braking — autobrake RTO",
+  "Spoilers — auto deploy verified",
+  "Reverse thrust — full and symmetric",
+  "Maintain runway CL in LVO",
+  "Aircraft stopped — ATC notification",
+  "Emergency procedures as required"
 ]},
 {id:"ef_v1v2",title:"ENGINE FAILURE BETWEEN V1 AND V2",page:"MAN.2.1",cat:"MANDATORY",pri:"CRITICAL",
 phase:["TAKEOFF","CLIMB"],system:"ENGINES",condition:"ENGINE FAILURE ABOVE V1 — CONTINUE TAKEOFF",
@@ -3236,7 +3279,7 @@ function updateChrono(){
       }
     }
     const limit = (ex.timeLimit||0)*60;
-    if(limEl) limEl.textContent = ex.timeLimit ? fmtMS(ex.timeLimit*60) : '--:--';
+    if(limEl){const tlc=ex.timeLimitColor||'#00E5FF';limEl.textContent=ex.timeLimit?fmtMS(ex.timeLimit*60):'--:--';limEl.style.color=ex.timeLimit?tlc:'#64748B';limEl.style.textShadow=ex.timeLimit?'0 0 8px '+tlc+'66':'none';}
     if(!ex.paused && limit>0){
       const ratio = elapsed/limit;
       if(ratio>=1){
@@ -3694,11 +3737,13 @@ const cd=(ex.cs||{})[k]||(ex.csfo||{})[k];
 const g=cd?cd.g:0;
 return c?`<span style="background:${c.color}18;border:1px solid ${c.color}33;color:${c.color};border-radius:5px;padding:2px 7px;font-size:11px;font-weight:700;font-family:monospace;">${k}${g>0?'<span style="color:'+GC[g]+'"> '+g+'</span>':''}</span>`:''
 }).join('');
+const tlc=ex.timeLimitColor||'#00E5FF';
 return `<div class="ex-card" style="background:#0F1218;border-left-color:${headerColor};" onclick="openEx(${i})">
 <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
 <span style="font-size:13px;color:var(--mut);font-weight:700;">#${i+1}</span>
 <div class="ex-title" style="flex:1;font-size:15px;font-weight:700;color:#F1F5F9;">${sc.title}${ex.mandatory?'<span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:6px;">M</span>':'<span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F688;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:600;margin-left:6px;">T</span>'}${ex.attempt===2?'<span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:800;margin-left:3px;">2e</span>':''}</div>
 ${avgHtml}
+<button onclick="event.stopPropagation();openTimeLimitModalForEx(${i})" title="Limite de temps" style="width:36px;height:36px;flex-shrink:0;border-radius:8px;background:${ex.timeLimit?tlc+'22':'#1E253088'};border:1px solid ${ex.timeLimit?tlc+'66':'#33415544'};color:${ex.timeLimit?tlc:'#334155'};font-size:${ex.timeLimit?'9':'15'}px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;${ex.timeLimit?'box-shadow:0 0 8px '+tlc+'55;text-shadow:0 0 6px '+tlc+';':''}">${ex.timeLimit?String(ex.timeLimit)+'m':'⏱'}</button>
 </div>
 <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
 <span class="chip" style="background:${cc}18;border:1px solid ${cc}33;color:${cc};">${sc.cat}</span>
@@ -4651,15 +4696,18 @@ function renderPlansList(){
     el.innerHTML='<div style="text-align:center;color:#475569;padding:30px 10px;font-size:14px;line-height:1.8;">Aucun loft sauvegardé.<br><span style="color:#64748B;font-size:12px;">Créez votre premier loft avec ＋ NOUVEAU LOFT</span></div>';
     return;
   }
-  el.innerHTML = plans.map(p=>{
+  const LP=['#39FF14','#00E5FF','#FF6B35','#A78BFA','#FFE500','#FF2D98','#00FF9F','#F97316','#06B6D4','#EC4899'];
+  el.innerHTML = plans.map((p,idx)=>{
+    const col=LP[idx%LP.length];
+    const isNew=idx===0;
     const exNames = p.exIds.map(id=>{const sc=ALL_SC.find(x=>x.id===id);return sc?sc.title:id;});
     const dateStr = new Date(p.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
-    return `<div style="background:#080B10;border:1px solid #10B98144;border-radius:12px;padding:14px;margin-bottom:10px;border-left:4px solid #10B981;">
-<div style="font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">${p.name}</div>
+    return `<div style="background:#080B10;border:1px solid ${col}44;border-radius:12px;padding:14px;margin-bottom:10px;border-left:4px solid ${col};${isNew?'box-shadow:0 0 22px '+col+'33,0 0 6px '+col+'22;':''}">
+<div style="font-size:16px;font-weight:800;color:${col};margin-bottom:4px;${isNew?'text-shadow:0 0 12px '+col+'AA;':''}">${p.name}</div>
 <div style="font-size:11px;color:#475569;margin-bottom:8px;">${p.exIds.length} exercice${p.exIds.length>1?'s':''} · ${dateStr}</div>
-<div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.7;">${exNames.slice(0,5).join(' · ')}${exNames.length>5?' · <span style="color:#10B981;">+'+(exNames.length-5)+'</span>':''}</div>
+<div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.7;">${exNames.slice(0,5).join(' · ')}${exNames.length>5?' · <span style="color:'+col+';">+'+(exNames.length-5)+'</span>':''}</div>
 <div style="display:flex;gap:8px;">
-<button onclick="loadPlan('${p.id}')" style="flex:2;padding:10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:13px;font-weight:700;cursor:pointer;">▶ Charger</button>
+<button onclick="loadPlan('${p.id}')" style="flex:2;padding:10px;border-radius:8px;background:${col}22;border:1px solid ${col};color:${col};font-size:13px;font-weight:700;cursor:pointer;">▶ Charger</button>
 <button onclick="editPlan('${p.id}')" style="flex:1;padding:10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:13px;font-weight:700;cursor:pointer;">✏</button>
 <button onclick="deletePlan('${p.id}')" style="flex:1;padding:10px;border-radius:8px;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;">🗑</button>
 </div></div>`;
@@ -4748,6 +4796,49 @@ function deletePlan(id){
   _savePlans(getPlans().filter(p=>p.id!==id));
   renderPlansList();
 }
+
+// ── TIME LIMIT CLOCK MODAL ────────────────────────────────────────────────────
+var _tlExIdx=null,_tlMinutes=0,_tlColor='#00E5FF';
+const TL_COLORS=['#00E5FF','#39FF14','#FF2D98','#FFE500','#F97316','#A78BFA','#FF4466','#FFFFFF'];
+function openTimeLimitModal(){if(state.activeIdx===null)return;_openTLModal(state.activeIdx);}
+function openTimeLimitModalForEx(i){_openTLModal(i);}
+function _openTLModal(i){
+  _tlExIdx=i;
+  const ex=state.exercises[i];
+  _tlMinutes=ex.timeLimit||0;
+  _tlColor=ex.timeLimitColor||'#00E5FF';
+  _renderTLColors();_updateTLDisplay();
+  document.getElementById('modal-timelimit').style.display='flex';
+}
+function adjTimeLimit(delta){_tlMinutes=Math.max(0,Math.min(90,_tlMinutes+delta));_updateTLDisplay();}
+function _updateTLDisplay(){
+  const mm=String(_tlMinutes).padStart(2,'0');
+  const el=document.getElementById('tl-display');
+  if(!el)return;
+  el.textContent=mm+':00';
+  el.style.color=_tlColor;
+  el.style.textShadow='0 0 24px '+_tlColor+',0 0 48px '+_tlColor+'66';
+}
+function setTLColor(col){_tlColor=col;_updateTLDisplay();_renderTLColors();}
+function _renderTLColors(){
+  const row=document.getElementById('tl-color-row');
+  if(!row)return;
+  row.innerHTML=TL_COLORS.map(c=>`<div onclick="setTLColor('${c}')" style="width:34px;height:34px;border-radius:50%;background:${c};cursor:pointer;transition:all 0.15s;box-shadow:${c===_tlColor?'0 0 16px '+c+',0 0 6px '+c:'none'};transform:${c===_tlColor?'scale(1.35)':'scale(1)'};border:2px solid ${c===_tlColor?'#fff':'transparent'};"></div>`).join('');
+}
+function clearTimeLimit(){_tlMinutes=0;_updateTLDisplay();}
+function confirmTimeLimit(){
+  if(_tlExIdx===null)return;
+  const ex=state.exercises[_tlExIdx];
+  ex.timeLimit=_tlMinutes;ex.timeLimitColor=_tlColor;
+  closeTimeLimitModal();
+  const onEx=document.getElementById('screen-ex').classList.contains('active')&&state.activeIdx===_tlExIdx;
+  if(onEx){
+    const limEl=document.getElementById('timer-limit-val');
+    if(limEl){limEl.textContent=ex.timeLimit?fmtMS(ex.timeLimit*60):'--:--';limEl.style.color=ex.timeLimit?_tlColor:'#64748B';limEl.style.textShadow=ex.timeLimit?'0 0 8px '+_tlColor+'66':'none';}
+  } else {renderExList();}
+  showToast('⏱ Limite '+(ex.timeLimit?ex.timeLimit+'min':'supprimée'));
+}
+function closeTimeLimitModal(){document.getElementById('modal-timelimit').style.display='none';}
 function loadPlan(id){
   const plan = getPlans().find(p=>p.id===id);
   if(!plan) return;
