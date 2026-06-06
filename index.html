@@ -5121,8 +5121,16 @@ function openDistracteur(){
 function injectDistracteur(i){
   const d=DISTRACTEURS[i];
   closeDistracteur();
-  // Auto-add to TEM threats
-  addTEM('threats', d.icon+' [DISTRACTEUR '+d.cat+'] '+d.tem);
+  // Add to BOTH CPT and FO TEM — distractor is a crew-wide threat
+  const ex=state.exercises[state.activeIdx];
+  const text=d.icon+' [DISTRACTEUR '+d.cat+'] '+d.tem;
+  const ts=new Date().toTimeString().slice(0,5);
+  ['tem','temfo'].forEach(tk=>{
+    if(!ex[tk]) ex[tk]={threats:[],errors:[],uas:[]};
+    if(!ex[tk].threats) ex[tk].threats=[];
+    if(!ex[tk].threats.some(x=>x.text===text)) ex[tk].threats.push({text,ts});
+  });
+  renderExContent();
   // Show dramatic alert overlay
   const al=document.getElementById('dist-alert');
   const inner=document.getElementById('dist-alert-inner');
