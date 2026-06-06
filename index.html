@@ -350,7 +350,7 @@ Identifiant ou mot de passe incorrect
 
 <div class="screen" id="screen-home">
 <div class="topbar" style="justify-content:flex-end;">
-<span style="font-size:9px;color:#334155;font-weight:700;letter-spacing:1px;margin-right:4px;">v2.3</span>
+<span style="font-size:9px;color:#334155;font-weight:700;letter-spacing:1px;margin-right:4px;">v2.4</span>
 <button onclick="openGuide()" style="width:34px;height:34px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:17px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">?</button>
 <button class="btn" onclick="toggleDarkMode()" id="dark-btn" style="font-size:16px;padding:5px 10px;">☀️</button>
 <div style="display:flex;gap:4px;border:1px solid #334155;border-radius:7px;overflow:hidden;">
@@ -773,12 +773,12 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 
-<div id="modal-help" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
-<div class="modal-box" style="height:92vh;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;border-radius:16px 16px 0 0;">
+<div id="modal-help" style="display:none;z-index:9100;" class="modal-overlay" ontouchstart="event.stopPropagation()">
+<div class="modal-box" style="height:92vh;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;border-radius:16px 16px 0 0;background:#0F1218;padding:20px;width:100%;">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-shrink:0;">
 <div>
 <div style="font-size:18px;font-weight:900;color:#F59E0B;">📖 GUIDE D'UTILISATION</div>
-<div style="font-size:11px;color:#64748B;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.3</div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.4</div>
 </div>
 <button onclick="closeGuide()" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
@@ -788,7 +788,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 1. CODE COULEUR -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B44;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B44;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">🎨 NOTES CBTA — CODE COULEUR</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
 <div style="background:#3B82F618;border:1px solid #3B82F655;border-radius:8px;padding:9px 10px;">
@@ -822,7 +822,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 2. 9 COMPÉTENCES CBTA -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">🧠 LES 9 COMPÉTENCES CBTA</div>
 <div style="display:flex;flex-direction:column;gap:6px;">
 <div style="display:flex;gap:10px;align-items:center;background:#EF444411;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#EF4444;font-family:monospace;min-width:36px;">FPM</span><span style="font-size:12px;color:#CBD5E1;">Flight Path Management — trajectoire &amp; énergie <em>manuelle</em></span></div>
@@ -844,7 +844,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 3. WORKFLOW PAS-À-PAS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🔄 WORKFLOW — 8 ÉTAPES</div>
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
@@ -930,7 +930,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 4. CATÉGORIES EXERCICES -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">📂 BIBLIOTHÈQUE D'EXERCICES</div>
 <div style="display:flex;flex-direction:column;gap:7px;">
 <div style="display:flex;align-items:center;gap:9px;"><span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">MEMORY</span><span style="font-size:12px;color:#CBD5E1;">Actions immédiates de mémoire — pas de checklist</span></div>
@@ -950,7 +950,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 5. LOFTS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">🗂 LOFTS DE SESSION</div>
 <div style="display:flex;flex-direction:column;gap:9px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -984,7 +984,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 6. MATRICULE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F9731633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F9731633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F97316;letter-spacing:2px;margin-bottom:10px;">👤 IDENTIFICATION PILOTES — MATRICULE</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="font-size:12px;color:#94A3B8;line-height:1.7;">
@@ -1002,7 +1002,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 7. CHRONOS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:10px;">⏱ CHRONOS — SESSION · EXERCICE · TIME LIMIT</div>
 <div style="display:flex;flex-direction:column;gap:12px;">
 
@@ -1039,7 +1039,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 8. ONGLETS EXERCICE EN DÉTAIL -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:10px;">📋 DANS L'EXERCICE — DÉTAIL DES 4 ONGLETS</div>
 
 <div style="margin-bottom:12px;background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:10px 12px;">
@@ -1070,7 +1070,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 9. MANDATORY -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #DC262633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #DC262633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#DC2626;letter-spacing:2px;margin-bottom:10px;">⚠️ EXERCICES MANDATORY — OBLIGATOIRES EASA</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Les exercices MANDATORY sont les éléments <strong style="color:#EF4444;">obligatoires réglementaires</strong> EASA que tout OPC ou PC doit contenir. Ils apparaissent dans une barre colorée en haut de la liste des exercices pour un accès rapide.</div>
@@ -1107,7 +1107,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 10. MENACE ALÉATOIRE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #7C3AED33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #7C3AED33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:2px;margin-bottom:10px;">🎲 MENACE ALÉATOIRE — INJECTEUR TEM</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Bouton <span style="background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;padding:1px 7px;border-radius:5px;font-weight:800;">🎲</span> dans la barre du bas d'un exercice ouvert. Ouvre une liste de <strong style="color:#A78BFA;">16 scénarios</strong> (ATC · Cabine · Météo · Piste · Système) regroupés par catégorie. Ou utilisez <span style="color:#EF4444;font-weight:700;">🎲 INJECTION ALÉATOIRE</span> pour surprendre au hasard.</div>
@@ -1128,7 +1128,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 11. DÉBRIEF -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">📊 DÉBRIEF — DÉTAIL DES 6 ONGLETS</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 
@@ -1168,7 +1168,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 12. DATA SHOW + REF -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">📺 DATA SHOW &amp; 📖 REF — DÉBRIEF COLLECTIF</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 
@@ -1204,7 +1204,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 13. MODE ENTRAÎNEMENT -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #00CCFF22;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #00CCFF22;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#00CCFF;letter-spacing:2px;margin-bottom:10px;">🎭 MODE ENTRAÎNEMENT — SESSION FANTÔME</div>
 <div style="display:flex;flex-direction:column;gap:7px;">
 <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Bouton en bas de l'accueil. Les sessions en mode entraînement <strong style="color:#EF4444;">ne sont pas sauvegardées</strong> dans l'historique. Idéal pour se préparer ou tester un nouveau scénario.</div>
@@ -1219,7 +1219,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 14. SAUVEGARDE JSON -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">💾 SAUVEGARDE — EXPORT &amp; IMPORT JSON</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="display:flex;gap:9px;align-items:flex-start;">
@@ -1244,7 +1244,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 15. HISTORIQUE & XP -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">📈 HISTORIQUE &amp; DOSSIER PILOTE</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="font-size:12px;color:#94A3B8;margin-bottom:2px;">Accessible via le bouton <strong style="color:#8B5CF6;">TABLEAU DE BORD</strong> sur l'accueil. 3 onglets :</div>
@@ -1260,7 +1260,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 16. SYSTÈME XP -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #FF8C0033;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #FF8C0033;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#FF8C00;letter-spacing:2px;margin-bottom:10px;">⚡ SYSTÈME XP — PROGRESSION CUMULÉE</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="font-size:12px;color:#94A3B8;line-height:1.6;"><span style="color:#FF8C00;font-weight:700;">XP</span> (Experience Points) = somme des notes obtenues sur <em>toutes</em> les sessions. Plus un pilote s'entraîne régulièrement avec de bonnes performances, plus son XP augmente. Un pilote avec 15 XP en KNO a prouvé sa connaissance sur plusieurs séances — plus fiable qu'une bonne note unique.</div>
@@ -1278,7 +1278,7 @@ Identifiant ou mot de passe incorrect
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- 17. ASTUCES -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">💡 ASTUCES RAPIDES</div>
 <div style="display:flex;flex-direction:column;gap:7px;">
 <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:14px;flex-shrink:0;">▶</span><span style="font-size:12px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">Chrono SESSION</span> — démarrez-le <em>avant</em> le premier exercice, pas après</span></div>
@@ -1302,7 +1302,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- CATÉGORIES EXERCICES -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">📂 CATÉGORIES D'EXERCICES</div>
 <div style="display:flex;flex-direction:column;gap:9px;">
 <div style="display:flex;align-items:center;gap:10px;"><span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800;min-width:110px;text-align:center;">MEMORY</span><span style="font-size:13px;color:#CBD5E1;">Actions mémoire immédiates — pas de référence checklist</span></div>
@@ -1316,7 +1316,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- LOFTS DE SESSION -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">🗂 LOFTS DE SESSION</div>
 <div style="display:flex;flex-direction:column;gap:9px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1355,7 +1355,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- IDENTIFICATION PILOTES -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F97316AA;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F97316AA;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F97316;letter-spacing:2px;margin-bottom:12px;">👤 IDENTIFICATION PILOTES — MATRICULE</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1387,7 +1387,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- FLUX DE TRAVAIL -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🔄 FLUX DE TRAVAIL — ÉTAPE PAR ÉTAPE</div>
 
 <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
@@ -1440,7 +1440,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- RECOMMANDATIONS PAR PILOTE -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:12px;">📋 RECOMMANDATIONS & CONSOLIDATIONS</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1468,7 +1468,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- DATA SHOW PAR SECTION -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:12px;">📺 DATA SHOW — Par section débrief</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1503,7 +1503,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- RADAR CHART -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:12px;">🕸 RADAR CHART — Polygone CBTA</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1524,7 +1524,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- COURBE DE PROGRESSION -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:12px;">📈 COURBE DE PROGRESSION PILOTE</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1545,7 +1545,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- CHRONO SESSION -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">⏱ CHRONO SESSION — Toujours visible</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1577,7 +1577,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- CRM PASS MARK -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:12px;">🤝 CRM — SYSTÈME DE NOTATION EASA</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1604,7 +1604,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- MANDATORY ITEMS -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:12px;">⚠️ MANDATORY ITEMS — Code visuel</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1625,7 +1625,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- SAUVEGARDE JSON -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">💾 SAUVEGARDE & RESTAURATION JSON</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1650,7 +1650,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- COMPÉTENCES CBTA -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">🧠 COMPÉTENCES CBTA (Boeing Framework)</div>
 <div style="display:flex;flex-direction:column;gap:7px;">
 <div style="display:flex;gap:8px;align-items:center;"><span style="font-size:14px;font-weight:800;color:#EF4444;font-family:monospace;min-width:40px;">FPM</span><span style="font-size:13px;color:#CBD5E1;">Flight Path Management — gestion trajectoire &amp; énergie manuelle</span></div>
@@ -1670,7 +1670,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- HISTORIQUE & DOSSIER PILOTE -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">📈 HISTORIQUE & DOSSIER PILOTE</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1702,7 +1702,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- MODE ENTRAÎNEMENT -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #00CCFF33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #00CCFF33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#00CCFF;letter-spacing:2px;margin-bottom:12px;">🎭 MODE ENTRAÎNEMENT (MODE FANTÔME)</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1743,7 +1743,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- CHRONO DE SESSION -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">⏱ CHRONOS — CODES COULEURS & ALERTES</div>
 <div style="display:flex;flex-direction:column;gap:12px;">
 
@@ -1838,7 +1838,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- RÉFÉRENCE TEM & OBs -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">📖 RÉFÉRENCE TEM & OBs — BOUTON REF</div>
 <div style="display:flex;flex-direction:column;gap:10px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1866,7 +1866,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- MENACE ALÉATOIRE -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #7C3AED33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #7C3AED33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:2px;margin-bottom:10px;">🎲 MENACE ALÉATOIRE — INJECTEUR DE DISTRACTEURS</div>
 <div style="display:flex;flex-direction:column;gap:9px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1950,7 +1950,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- SYSTÈME XP -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">⚡ SYSTÈME XP — PROGRESSION CUMULÉE</div>
 <div style="display:flex;flex-direction:column;gap:9px;">
 <div style="display:flex;gap:10px;align-items:flex-start;">
@@ -1991,7 +1991,7 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- ASTUCES -->
-<div class="guide-sec" style="background:#0F1218;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">💡 ASTUCES RAPIDES</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <div style="display:flex;gap:8px;"><span style="color:#10B981;font-size:15px;">▶</span><span style="font-size:13px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">Chrono SESSION</span> (haut gauche) — manuel : appuyez ▶ pour démarrer, ⏸ pour pauser. Le chrono <span style="color:#F1F5F9;font-weight:700;">EXERCICE</span> démarre lui automatiquement</span></div>
