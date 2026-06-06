@@ -1366,19 +1366,54 @@ Identifiant ou mot de passe incorrect
 <span style="font-size:18px;flex-shrink:0;margin-top:1px;">🎲</span>
 <div>
 <div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">À quoi ça sert ?</div>
-<div style="font-size:13px;color:#94A3B8;">Le bouton <span style="background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;padding:1px 7px;border-radius:5px;font-size:13px;">🎲</span> (barre du bas dans un exercice ouvert) injecte une perturbation réaliste en pleine procédure pour tester la gestion des priorités, la Situation Awareness et le Workload Management.</div>
+<div style="font-size:13px;color:#94A3B8;">Le bouton <span style="background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;padding:1px 7px;border-radius:5px;font-size:13px;">🎲</span> (barre du bas dans un exercice ouvert) injecte une perturbation réaliste en pleine procédure pour tester WLM, SA et COM. <span style="color:#A78BFA;font-weight:700;">16 scénarios</span> disponibles, regroupés par catégorie.</div>
 </div>
 </div>
 <div style="display:flex;gap:10px;align-items:flex-start;">
 <span style="font-size:18px;flex-shrink:0;margin-top:1px;">📋</span>
 <div>
-<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">4 types de distracteurs disponibles</div>
-<div style="font-size:13px;color:#94A3B8;">
-<div style="display:flex;flex-direction:column;gap:5px;margin-top:3px;">
-<div><span style="color:#3B82F6;font-weight:700;">🎙 ATC</span> — Clairance immédiate inattendue, déroutement</div>
-<div><span style="color:#F59E0B;font-weight:700;">🚨 CABINE (médical)</span> — Urgence médicale passager en vol</div>
-<div><span style="color:#10B981;font-weight:700;">⛈ MÉTÉO</span> — Dégagement soudainement indisponible</div>
-<div><span style="color:#EC4899;font-weight:700;">🚪 CABINE (sécurité)</span> — Rapport porte non armée signalée en finale</div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:6px;">16 scénarios — 5 catégories</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:8px 10px;">
+<div style="font-size:10px;font-weight:900;color:#3B82F6;letter-spacing:2px;margin-bottom:5px;">🎙 ATC (4)</div>
+<div style="font-size:12px;color:#94A3B8;display:flex;flex-direction:column;gap:3px;">
+<div>• <span style="color:#CBD5E1;">Clairance déroutement</span> — vecteur inattendu vers alternatif</div>
+<div>• <span style="color:#CBD5E1;">Perte radio (NORDO)</span> — squawk 7600, procédure silence radio</div>
+<div>• <span style="color:#CBD5E1;">TCAS RA inattendu</span> — "CLIMB CLIMB" en approche</div>
+<div>• <span style="color:#CBD5E1;">Piste obstruée</span> — remise de gaz non planifiée</div>
+</div>
+</div>
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:8px 10px;">
+<div style="font-size:10px;font-weight:900;color:#F59E0B;letter-spacing:2px;margin-bottom:5px;">🚨 CABINE (4)</div>
+<div style="font-size:12px;color:#94A3B8;display:flex;flex-direction:column;gap:3px;">
+<div>• <span style="color:#CBD5E1;">Urgence médicale</span> — passager inconscient, défibrillateur, diversion</div>
+<div>• <span style="color:#CBD5E1;">Porte non armée</span> — voyant ARMED éteint signalé en finale</div>
+<div>• <span style="color:#CBD5E1;">Fumée en cabine</span> — source non identifiée zone arrière</div>
+<div>• <span style="color:#CBD5E1;">Passager perturbateur</span> — menace sécurité, squawk 7500 envisagé</div>
+</div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:8px 10px;">
+<div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:5px;">⛈ MÉTÉO (3)</div>
+<div style="font-size:12px;color:#94A3B8;display:flex;flex-direction:column;gap:3px;">
+<div>• <span style="color:#CBD5E1;">Dégagement indisponible</span> — RVR sous minima, carburant limité</div>
+<div>• <span style="color:#CBD5E1;">Cisaillement vent</span> — PIREP windshear finale, perte 20kt</div>
+<div>• <span style="color:#CBD5E1;">Givrage non anticipé</span> — givre sévère non prévu ATIS</div>
+</div>
+</div>
+<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:8px 10px;">
+<div style="font-size:10px;font-weight:900;color:#06B6D4;letter-spacing:2px;margin-bottom:5px;">🧊 PISTE (1)</div>
+<div style="font-size:12px;color:#94A3B8;">
+<div>• <span style="color:#CBD5E1;">Contamination piste</span> — braking action POOR, performance non recalculée</div>
+</div>
+</div>
+<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:8px;padding:8px 10px;">
+<div style="font-size:10px;font-weight:900;color:#A78BFA;letter-spacing:2px;margin-bottom:5px;">⚙ SYSTÈME (4)</div>
+<div style="font-size:12px;color:#94A3B8;display:flex;flex-direction:column;gap:3px;">
+<div>• <span style="color:#CBD5E1;">Déséquilibre carburant</span> — ECAM FUEL IMBAL en vol</div>
+<div>• <span style="color:#CBD5E1;">Pressurisation anormale</span> — CABIN ALTITUDE, descente urgente?</div>
+<div>• <span style="color:#CBD5E1;">Alarme feu cargo</span> — NNC FWD CARGO FIRE, diversion immédiate</div>
+<div>• <span style="color:#CBD5E1;">Bird strike</span> — impact perçu, paramètres moteur à surveiller</div>
+</div>
 </div>
 </div>
 </div>
@@ -1386,13 +1421,23 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:10px;align-items:flex-start;">
 <span style="font-size:18px;flex-shrink:0;margin-top:1px;">⚡</span>
 <div>
-<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Effet automatique</div>
-<div style="font-size:13px;color:#94A3B8;">La menace sélectionnée est <span style="color:#EF4444;font-weight:700;">automatiquement enregistrée dans TEM → Threats</span> avec horodatage. Une alerte dramatique s'affiche 2,8 secondes pour marquer l'injection, puis disparaît.</div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Deux modes d'injection</div>
+<div style="font-size:13px;color:#94A3B8;">
+<div style="margin-bottom:4px;"><span style="color:#EF4444;font-weight:700;">🎲 INJECTION ALÉATOIRE</span> — bouton rouge en haut du modal : injecte un scénario au hasard sans regarder la liste. Idéal pour surprendre même vous-même.</div>
+<div><span style="color:#A78BFA;font-weight:700;">Choix manuel</span> — faites défiler la liste par catégorie et sélectionnez le scénario adapté au contexte de l'exercice.</div>
+</div>
+</div>
+</div>
+<div style="display:flex;gap:10px;align-items:flex-start;">
+<span style="font-size:18px;flex-shrink:0;margin-top:1px;">📌</span>
+<div>
+<div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Enregistrement automatique</div>
+<div style="font-size:13px;color:#94A3B8;">La menace injectée est <span style="color:#EF4444;font-weight:700;">automatiquement ajoutée dans TEM → Menaces</span> avec l'heure d'injection (⏱HH:MM). Visible dans l'onglet TEM de l'exercice et dans le débrief.</div>
 </div>
 </div>
 <div style="background:#7C3AED11;border:1px solid #7C3AED33;border-radius:8px;padding:9px 11px;margin-top:2px;">
 <div style="font-size:12px;color:#A78BFA;font-weight:700;margin-bottom:4px;">💡 USAGE PÉDAGOGIQUE</div>
-<div style="font-size:12px;color:#94A3B8;">Injectez le distracteur <em>sans prévenir</em> les stagiaires pendant un exercice clé (approche, panne moteur…). Observez comment ils priorisent et communiquent. Débriefez ensuite sur WLM, SA et COM grâce aux OBs correspondants.</div>
+<div style="font-size:12px;color:#94A3B8;">Injectez <em>sans prévenir</em> les stagiaires pendant un exercice clé. Exemple : injectez <span style="color:#10B981;font-weight:700;">⛈ Dégagement indisponible</span> en pleine procédure AIRSPEED UNRELIABLE, ou <span style="color:#3B82F6;font-weight:700;">🎙 TCAS RA</span> lors d'une approche ILS. Débriefez ensuite sur WLM, SA et COM en vous appuyant sur l'heure d'injection dans le TEM.</div>
 </div>
 </div>
 </div>
