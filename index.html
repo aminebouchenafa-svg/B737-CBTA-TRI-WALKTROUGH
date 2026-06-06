@@ -2776,7 +2776,7 @@ var NNC_SYSTEMS = {
 "nnc_unable_rnp":{"system":"Flight Management, Navigation","color":"#2DD4BF"},
 "nnc_overspeed":{"system":"Miscellaneous","color":"#94A3B8"},
 "nnc_tail_strike":{"system":"Miscellaneous","color":"#94A3B8"},
-"nnc_radio_cont":{"system":"Miscellaneous","color":"#94A3B8"},
+"nnc_radio_cont":{"system":"Warning Systems","color":"#60A5FA"},
 "nnc_gear_no_retract":{"system":"Landing Gear","color":"#F59E0B"},
 "nnc_hyd_low_pressure":{"system":"Hydraulics","color":"#F59E0B"},
 "nnc_cowl_valve":{"system":"Anti-Ice, Rain","color":"#06B6D4"},
@@ -2826,8 +2826,8 @@ var NNC_SYSTEMS = {
 "nnc_ap_disengage":{"system":"Automatic Flight","color":"#A78BFA"},
 "nnc_at_disengage":{"system":"Automatic Flight","color":"#A78BFA"},
 "nnc_auto_slat_fail":{"system":"Flight Controls","color":"#10B981"},
-"nnc_stuck_mic":{"system":"Miscellaneous","color":"#94A3B8"},
-"nnc_acars_fail":{"system":"Miscellaneous","color":"#94A3B8"},
+"nnc_stuck_mic":{"system":"Communications","color":"#EC4899"},
+"nnc_acars_fail":{"system":"Communications","color":"#EC4899"},
 "nnc_bat_discharge":{"system":"Electrical","color":"#EAB308"},
 "nnc_standby_hyd_low_press":{"system":"Hydraulics","color":"#F59E0B"},
 "nnc_standby_hyd_low_qty":{"system":"Hydraulics","color":"#F59E0B"},
@@ -4332,7 +4332,7 @@ return `<button class="filter-btn ${isA?'active':''}" onclick="setPhaseF('${p}')
 // Afficher les filtres système seulement si NNC sélectionné
 const sysDiv = document.getElementById('sys-filters');
 if(state.catFilter==="NNC"){
-const sysOrder = ["ALL","Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Automatic Flight","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
+const sysOrder = ["ALL","Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Automatic Flight","Communications","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
 sysDiv.style.display='flex';
 sysDiv.innerHTML = sysOrder.map(s=>
 `<button class="filter-btn ${(state.sysFilter||'ALL')===s?'active':''}" onclick="setSysF('${s}')">${s}</button>`).join('');
@@ -4368,7 +4368,7 @@ const sys = (NNC_SYSTEMS[s.id]&&NNC_SYSTEMS[s.id].system)||"Miscellaneous";
 if(!groups[sys]) groups[sys]=[];
 groups[sys].push(s);
 });
-const sysOrder = ["Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Automatic Flight","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
+const sysOrder = ["Miscellaneous","Airplane Gen., Emer. Equip., Doors, Windows","Air Systems","Pressurisation","Anti-Ice, Rain","Automatic Flight","Communications","Electrical","Engines, APU","Fire Protection","Flight Controls","Warning Systems","Flight Management, Navigation","Fuel","Hydraulics","Landing Gear","Emergency Procedures"];
 let html = '';
 [...sysOrder, ...Object.keys(groups).filter(s=>!sysOrder.includes(s))].forEach(sys=>{
 if(!groups[sys]||!groups[sys].length) return;
