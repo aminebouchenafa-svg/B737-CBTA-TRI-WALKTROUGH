@@ -562,14 +562,15 @@ Identifiant ou mot de passe incorrect
 
 <!-- MENACE ALÉATOIRE MODAL -->
 <div id="modal-distracteur" class="modal-overlay" style="display:none;z-index:9600;background:#060008F2;" ontouchstart="event.stopPropagation()">
-<div style="width:100%;max-width:480px;padding:26px 18px 20px;position:relative;">
-<div style="text-align:center;margin-bottom:22px;">
-<div style="font-size:10px;letter-spacing:6px;color:#EF444455;font-weight:800;margin-bottom:8px;">⚠ SIMULATION TEM</div>
-<div style="font-size:24px;font-weight:900;color:#EF4444;text-shadow:0 0 20px #EF4444,0 0 40px #EF444455;letter-spacing:3px;margin-bottom:4px;">MENACE ALÉATOIRE</div>
-<div style="font-size:12px;color:#475569;">Injecte une perturbation — teste la gestion de priorités (WLM/SA)</div>
+<div style="width:100%;max-width:480px;max-height:92vh;display:flex;flex-direction:column;padding:22px 18px 16px;position:relative;">
+<div style="text-align:center;margin-bottom:14px;flex-shrink:0;">
+<div style="font-size:10px;letter-spacing:6px;color:#EF444455;font-weight:800;margin-bottom:6px;">⚠ SIMULATION TEM</div>
+<div style="font-size:22px;font-weight:900;color:#EF4444;text-shadow:0 0 20px #EF4444,0 0 40px #EF444455;letter-spacing:3px;margin-bottom:6px;">MENACE ALÉATOIRE</div>
+<button onclick="injectDistracteur(Math.floor(Math.random()*DISTRACTEURS.length))" style="width:100%;padding:11px;border-radius:12px;background:#EF444422;border:2px solid #EF444488;color:#EF4444;font-size:14px;font-weight:900;cursor:pointer;letter-spacing:2px;margin-bottom:4px;">🎲 INJECTION ALÉATOIRE</button>
+<div style="font-size:11px;color:#334155;margin-top:4px;">ou choisir ci-dessous</div>
 </div>
-<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px;" id="dist-list"></div>
-<button onclick="closeDistracteur()" style="width:100%;padding:13px;border-radius:12px;background:#0F1218;border:1px solid #1E2530;color:#475569;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;">ANNULER</button>
+<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:8px;margin-bottom:12px;padding-right:2px;" id="dist-list"></div>
+<button onclick="closeDistracteur()" style="width:100%;padding:12px;border-radius:12px;background:#0F1218;border:1px solid #1E2530;color:#475569;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;">ANNULER</button>
 </div>
 </div>
 
@@ -4979,39 +4980,95 @@ function closeTimeLimitModal(){document.getElementById('modal-timelimit').style.
 
 // ── MENACE ALÉATOIRE ───────────────────────────────────────────────────────
 const DISTRACTEURS=[
-  {id:'atc',icon:'🎙',cat:'ATC',color:'#3B82F6',
-   title:'Clairance ATC immédiate',
+  // ── ATC ──────────────────────────────────────────────────────────────────
+  {id:'atc_deroute',icon:'🎙',cat:'ATC',color:'#3B82F6',
+   title:'Clairance déroutement',
    desc:'Déroutement inattendu — vecteur radar vers terrain alternatif. Fréquence approche à contacter. Confirmer carburant suffisant.',
    tem:'ATC: clairance déroutement immédiate — gestion priorités/CRM en cours de procédure'},
-  {id:'cabine',icon:'🚨',cat:'CABINE',color:'#F59E0B',
+  {id:'atc_radio',icon:'📻',cat:'ATC',color:'#3B82F6',
+   title:'Perte communication radio',
+   desc:'Plus de réponse ATC sur deux fréquences. Procédure NORDO — squawk 7600. Continuer ou déroutement?',
+   tem:'ATC: perte communication radio (NORDO) — procédure 7600, SA espace aérien'},
+  {id:'atc_tcas',icon:'⚠️',cat:'ATC',color:'#8B5CF6',
+   title:'TCAS RA inattendu',
+   desc:'TCAS: "CLIMB CLIMB" — trafic croisé non annoncé par ATC. Suivi RA obligatoire. Confirmer avec ATC.',
+   tem:'TCAS: RA inattendu en phase de vol — suivi RA vs instruction ATC, WLM/SA'},
+  {id:'atc_piste',icon:'🛬',cat:'ATC',color:'#3B82F6',
+   title:'Piste obstruée — remise de gaz',
+   desc:'TWR: "Go around, aircraft on runway." Remise de gaz immédiate. Coordination ATC pour retour approche.',
+   tem:'ATC: piste obstruée signalée en courte finale — remise de gaz non prévue, WLM'},
+  // ── CABINE ───────────────────────────────────────────────────────────────
+  {id:'cabine_medical',icon:'🚨',cat:'CABINE',color:'#F59E0B',
    title:'Urgence médicale passager',
    desc:'Passager inconscient en cabine. Chef de cabine demande défibrillateur et assistance. Décision diversion à prendre.',
    tem:'Cabine: urgence médicale passager — WLM/SA avec procédure simultanée, décision diversion'},
-  {id:'meteo',icon:'⛈',cat:'MÉTÉO',color:'#10B981',
+  {id:'cabine_porte',icon:'🚪',cat:'CABINE',color:'#EC4899',
+   title:'Porte non armée signalée',
+   desc:'Chef de cabine: porte 2L voyant ARMED éteint — signalé en finale. Confirmation requise avant atterrissage.',
+   tem:'Rapport cabine: porte 2L signalée non armée en finale — interruption procédure/CRM'},
+  {id:'cabine_fumee',icon:'💨',cat:'CABINE',color:'#F97316',
+   title:'Fumée signalée en cabine',
+   desc:'Chef de cabine: fumée légère perçue dans zone économique arrière. Source non identifiée. Diversion?',
+   tem:'Cabine: fumée signalée zone arrière — SA/WLM, décision diversion vs continuation'},
+  {id:'cabine_pax',icon:'🆘',cat:'CABINE',color:'#EF4444',
+   title:'Passager perturbateur',
+   desc:'Passager menaçant — chef de cabine demande intervention. Squawk 7500 envisagé. Coordination avec ATC.',
+   tem:'Cabine: passager perturbateur/menaçant — décision sqwk 7500, CRM/COM ATC'},
+  // ── MÉTÉO & PISTE ─────────────────────────────────────────────────────────
+  {id:'meteo_dega',icon:'⛈',cat:'MÉTÉO',color:'#10B981',
    title:'Dégagement indisponible',
    desc:'Brouillard soudain sur terrain de dégagement — RVR en dessous des minima. Alternative suivante à +45min. Carburant limité.',
    tem:'Météo: dégagement indisponible à la dernière minute — SA critique carburant/alternates'},
-  {id:'porte',icon:'🚪',cat:'CABINE',color:'#EC4899',
-   title:'Rapport porte non armée',
-   desc:'Chef de cabine: porte 2L voyant ARMED éteint — signalé en finale. Confirmation requise avant atterrissage.',
-   tem:'Rapport cabine: porte 2L signalée non armée en finale — interruption procédure/CRM'}
+  {id:'meteo_cisaillement',icon:'💨',cat:'MÉTÉO',color:'#10B981',
+   title:'Cisaillement vent signalé',
+   desc:'PIREP précédent: windshear à 400ft finale — perte de vitesse 20kt. Décision approcher ou dégager?',
+   tem:'Météo: windshear signalé sur finale par trafic précédent — SA/décision go-around'},
+  {id:'meteo_piste',icon:'🧊',cat:'PISTE',color:'#06B6D4',
+   title:'Contamination piste',
+   desc:'Braking action rapportée POOR — piste contaminée. Cartes performance non recalculées. Atterrir ou attendre?',
+   tem:'Piste: contamination signalée, braking action POOR — performance atterrissage non recalculée'},
+  {id:'meteo_givrage',icon:'❄️',cat:'MÉTÉO',color:'#06B6D4',
+   title:'Givrage non anticipé',
+   desc:'Givre modéré à sévère rencontré — non prévu par ATIS. Anti-ice moteurs activé. Impact carburant.',
+   tem:'Météo: givrage modéré à sévère non anticipé — activation anti-ice, SA carburant/performance'},
+  // ── TECHNIQUE ─────────────────────────────────────────────────────────────
+  {id:'tech_fuel',icon:'⛽',cat:'SYSTÈME',color:'#A78BFA',
+   title:'Déséquilibre carburant',
+   desc:'ECAM FUEL IMBAL détecté — différence croissante entre les réservoirs. Procédure balance fuel.',
+   tem:'Système: déséquilibre carburant ECAM — procédure balance fuel pendant phase de vol'},
+  {id:'tech_pressu',icon:'🌡',cat:'SYSTÈME',color:'#A78BFA',
+   title:'Pressurisation anormale',
+   desc:'ECAM CABIN ALTITUDE — indication pression cabine anormale. Descente urgente envisagée? Procédure.',
+   tem:'Système: indication pressurisation anormale — SA altitude cabine, décision descente urgente'},
+  {id:'tech_feu_cargo',icon:'🔥',cat:'SYSTÈME',color:'#EF4444',
+   title:'Alarme feu cargo',
+   desc:'ECAM FWD CARGO FIRE — alarme feu soute avant. Procédure NNC cargo fire. Diversion immédiate.',
+   tem:'Système: alarme feu cargo — procédure NNC en cours, diversion immédiate, WLM critique'},
+  {id:'tech_bird',icon:'🐦',cat:'SYSTÈME',color:'#F59E0B',
+   title:'Impact oiseau signalé',
+   desc:'Impact oiseau perçu au décollage ou en approche. Paramètres moteur à surveiller. Continuer ou retour?',
+   tem:'Système: bird strike perçu — vérification paramètres moteur, décision poursuite/retour'},
 ];
 
 function openDistracteur(){
   if(state.activeIdx===null) return;
   const dl=document.getElementById('dist-list');
   if(dl){
-    dl.innerHTML=DISTRACTEURS.map((d,i)=>`
-      <div onclick="injectDistracteur(${i})" style="background:#0A0C12;border:2px solid ${d.color}44;border-left:4px solid ${d.color};border-radius:12px;padding:14px 16px;cursor:pointer;transition:background 0.15s,box-shadow 0.15s;" onmouseover="this.style.background='${d.color}11';this.style.boxShadow='0 0 14px ${d.color}33'" onmouseout="this.style.background='#0A0C12';this.style.boxShadow='none'">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <span style="font-size:22px;">${d.icon}</span>
-          <div>
-            <div style="font-size:9px;letter-spacing:3px;color:${d.color};font-weight:800;">${d.cat}</div>
-            <div style="font-size:15px;font-weight:800;color:#F1F5F9;">${d.title}</div>
-          </div>
+    // Group by category
+    const cats=[...new Set(DISTRACTEURS.map(d=>d.cat))];
+    dl.innerHTML=cats.map(cat=>{
+      const group=DISTRACTEURS.filter(d=>d.cat===cat);
+      const col=group[0].color;
+      return `<div style="font-size:9px;letter-spacing:3px;font-weight:900;color:${col};margin-top:4px;margin-bottom:2px;padding-left:4px;">${cat}</div>`
+        +group.map((d,_)=>{const i=DISTRACTEURS.indexOf(d);return `
+      <div onclick="injectDistracteur(${i})" style="background:#0A0C12;border:1px solid ${d.color}33;border-left:3px solid ${d.color};border-radius:10px;padding:11px 14px;cursor:pointer;" ontouchstart="this.style.background='${d.color}11'" ontouchend="this.style.background='#0A0C12'">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px;">
+          <span style="font-size:19px;">${d.icon}</span>
+          <div style="font-size:14px;font-weight:800;color:#F1F5F9;">${d.title}</div>
         </div>
-        <div style="font-size:12px;color:#94A3B8;line-height:1.5;padding-left:32px;">${d.desc}</div>
-      </div>`).join('');
+        <div style="font-size:11px;color:#64748B;line-height:1.4;padding-left:28px;">${d.desc}</div>
+      </div>`;}).join('');
+    }).join('');
   }
   document.getElementById('modal-distracteur').style.display='flex';
 }
