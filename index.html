@@ -5284,15 +5284,15 @@ function buildReportRadar(avgsObj, color){
   const pt=(i,v)=>{const a=angle(i),rv=r*(v/5);return[cx+Math.cos(a)*rv,cy+Math.sin(a)*rv];};
   // True circular arc rings (convex outward = real spider web)
   const arcRingR=(lv)=>{const ps=COMPETENCIES.map((_,i)=>pt(i,lv));const rv=(r*(lv/5)).toFixed(2);let d=`M ${ps[0][0].toFixed(2)},${ps[0][1].toFixed(2)}`;for(let i=0;i<n;i++){const p2=ps[(i+1)%n];d+=` A ${rv} ${rv} 0 0 1 ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`;}return d+' Z';};
-  // Arc data path (avg radius between consecutive vertices)
-  const arcDataR=(pts)=>{const m=pts.length;const radii=pts.map(([x,y])=>Math.sqrt((x-cx)**2+(y-cy)**2));let d=`M ${pts[0][0].toFixed(2)},${pts[0][1].toFixed(2)}`;for(let i=0;i<m;i++){const[bx,by]=pts[(i+1)%m];const rv=Math.max((radii[i]+radii[(i+1)%m])/2,1).toFixed(2);d+=` A ${rv} ${rv} 0 0 1 ${bx.toFixed(2)},${by.toFixed(2)}`;}return d+' Z';};
+  // Data path: straight lines between vertices
+  const lineDataR=(pts)=>'M '+pts.map(p=>p.map(v=>v.toFixed(2)).join(',')).join(' L ')+' Z';
   let gridSvg='';
   for(let lv=1;lv<=5;lv++) gridSvg+=`<path d="${arcRingR(lv)}" fill="none" stroke="#e2e8f0" stroke-width="${lv===5?1.2:0.6}"/>`;
   const axesSvg=COMPETENCIES.map((_,i)=>{const[x2,y2]=pt(i,5);return`<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#cbd5e1" stroke-width="0.8"/>`;}).join('');
   const dataPts=COMPETENCIES.map((c,i)=>pt(i,Math.max(avgsObj[c.id]||0,0.05)));
   const dotsSvg=COMPETENCIES.map((c,i)=>{const[x,y]=pt(i,Math.max(avgsObj[c.id]||0,0.05));return`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="3.5" fill="${c.color}"/>`;}).join('');
   const lblSvg=COMPETENCIES.map((c,i)=>{const[lx,ly]=pt(i,6.05);return`<text x="${lx.toFixed(2)}" y="${ly.toFixed(2)}" fill="${c.color}" text-anchor="middle" dominant-baseline="middle" font-size="8" font-weight="700" font-family="monospace">${c.label}</text>`;}).join('');
-  return `<svg width="220" height="220" viewBox="0 0 220 220">${gridSvg}${axesSvg}<path d="${arcDataR(dataPts)}" fill="${color}20" stroke="${color}" stroke-width="1.5"/>${dotsSvg}${lblSvg}</svg>`;
+  return `<svg width="220" height="220" viewBox="0 0 220 220">${gridSvg}${axesSvg}<path d="${lineDataR(dataPts)}" fill="${color}20" stroke="${color}" stroke-width="1.5"/>${dotsSvg}${lblSvg}</svg>`;
 }
 
 function pilotBlock(csKey, name, pilotColor){
@@ -5633,13 +5633,8 @@ const arcRing=(lv)=>{
   for(let i=0;i<N;i++){const p2=ps[(i+1)%N];d+=` A ${rv} ${rv} 0 0 1 ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`;}
   return d+' Z';
 };
-// Data path: arcs between vertices using avg radius → curves outward to follow grid
-const arcPath=(scores)=>{
-  const items=COMPS.map((c,i)=>{const v=Math.max(scores[c.id]||0,0.05);return[pt(i,v),R*(v/5)];});
-  let d=`M ${items[0][0][0].toFixed(2)},${items[0][0][1].toFixed(2)}`;
-  for(let i=0;i<N;i++){const[[bx,by],rb]=items[(i+1)%N],ra=items[i][1],r=Math.max((ra+rb)/2,1).toFixed(2);d+=` A ${r} ${r} 0 0 1 ${bx.toFixed(2)},${by.toFixed(2)}`;}
-  return d+' Z';
-};
+// Data path: straight lines between vertices
+const linePath=(scores)=>'M '+COMPS.map((c,i)=>pt(i,Math.max(scores[c.id]||0,0.05)).map(v=>v.toFixed(2)).join(',')).join(' L ')+' Z';
 const gc=(v)=>v>=4.5?'#3B82F6':v>=3.5?'#10B981':v>=2.5?'#F59E0B':v>=1.5?'#F97316':'#EF4444';
 // Grid rings — arc-based, alternating subtle fill
 let grid='';
@@ -5664,7 +5659,7 @@ COMPS.forEach((c,i)=>{
 const hasFo=foScores&&COMPS.some(c=>(foScores[c.id]||0)>0);
 let foLayer='';
 if(hasFo){
-  foLayer=`<path d="${arcPath(foScores)}" fill="${foColor}20" stroke="${foColor}" stroke-width="2.5" stroke-dasharray="9,5"/>`;
+  foLayer=`<path d="${linePath(foScores)}" fill="${foColor}20" stroke="${foColor}" stroke-width="2.5" stroke-dasharray="9,5"/>`;
   COMPS.forEach((c,i)=>{
     const fv=foScores[c.id]||0;if(!fv)return;
     const[x,y]=pt(i,fv);
@@ -5672,7 +5667,7 @@ if(hasFo){
   });
 }
 // CPT layer — solid arc polygon + CIRCLE markers
-let cptLayer=`<path d="${arcPath(cptScores)}" fill="${cptColor}22" stroke="${cptColor}" stroke-width="3"/>`;
+let cptLayer=`<path d="${linePath(cptScores)}" fill="${cptColor}22" stroke="${cptColor}" stroke-width="3"/>`;
 COMPS.forEach((c,i)=>{
   const cv=cptScores[c.id]||0;if(!cv)return;
   const[x,y]=pt(i,cv);
