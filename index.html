@@ -5629,32 +5629,32 @@ const cptColor=(_ROLE_COLORS&&state.pilotRole)?(_ROLE_COLORS[state.pilotRole]||'
 const foColor=(_ROLE_COLORS&&state.foRole)?(_ROLE_COLORS[state.foRole]||'#10B981'):'#10B981';
 const COMPS=COMPETENCIES.map(c=>({id:c.id,label:c.label,color:c.color}));
 const N=COMPS.length;
-const CX=160,CY=158,R=108,W=320,H=340;
+const CX=160,CY=155,R=108,W=320,H=318;
 const angle=(i)=>(Math.PI*2/N)*i-Math.PI/2;
-const pt=(i,v)=>{const a=angle(i),r=R*(v/5);return[CX+r*Math.cos(a),CY+r*Math.sin(a)];};
+const pt=(i,v)=>{const a=angle(i),rv=R*(v/5);return[CX+rv*Math.cos(a),CY+rv*Math.sin(a)];};
 const linePath=(scores)=>'M '+COMPS.map((c,i)=>pt(i,Math.max(scores[c.id]||0,0.05)).map(v=>v.toFixed(2)).join(',')).join(' L ')+' Z';
 const smoothRing=(lv)=>{
-  const pts=COMPS.map((_,i)=>pt(i,lv));const n=pts.length;
-  let d=`M ${pts[0][0].toFixed(2)},${pts[0][1].toFixed(2)}`;
-  for(let i=0;i<n;i++){
-    const p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+  const ps=COMPS.map((_,i)=>pt(i,lv));const m=ps.length;
+  let d=`M ${ps[0][0].toFixed(2)},${ps[0][1].toFixed(2)}`;
+  for(let i=0;i<m;i++){
+    const p0=ps[(i-1+m)%m],p1=ps[i],p2=ps[(i+1)%m],p3=ps[(i+2)%m];
     d+=` C ${(p1[0]+(p2[0]-p0[0])/6).toFixed(2)},${(p1[1]+(p2[1]-p0[1])/6).toFixed(2)} ${(p2[0]-(p3[0]-p1[0])/6).toFixed(2)},${(p2[1]-(p3[1]-p1[1])/6).toFixed(2)} ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`;
   }
   return d+' Z';
 };
 const gc=(v)=>v>=4.5?'#3B82F6':v>=3.5?'#10B981':v>=2.5?'#F59E0B':v>=1.5?'#F97316':'#EF4444';
-// Grid rings — alternating subtle fill
+// Grid rings
 let grid='';
 for(let lv=1;lv<=5;lv++){
   const fill=lv===5?'#131820':lv===4?'#111720':lv===3?'#0F1520':lv===2?'#0D1318':'none';
   grid+=`<path d="${smoothRing(lv)}" fill="${fill}" stroke="#1E2530" stroke-width="${lv===5?1.5:0.7}"/>`;
 }
-// Level labels on 12-o-clock axis
-for(let lv=1;lv<=5;lv++){
-  const [x,y]=pt(0,lv);const c=gc(lv);
-  grid+=`<rect x="${(x+2).toFixed(1)}" y="${(y-7).toFixed(1)}" width="14" height="14" rx="3" fill="${c}25"/>`;
-  grid+=`<text x="${(x+9).toFixed(1)}" y="${y.toFixed(1)}" dominant-baseline="central" text-anchor="middle" font-size="8.5" fill="${c}" font-weight="900">${lv}</text>`;
-}
+// Only 3 level labels on north axis (1, 3, 5)
+[1,3,5].forEach(lv=>{
+  const[x,y]=pt(0,lv);const c=gc(lv);
+  grid+=`<rect x="${(x+2).toFixed(1)}" y="${(y-7).toFixed(1)}" width="13" height="13" rx="3" fill="${c}25"/>`;
+  grid+=`<text x="${(x+8.5).toFixed(1)}" y="${y.toFixed(1)}" dominant-baseline="central" text-anchor="middle" font-size="8" fill="${c}" font-weight="900">${lv}</text>`;
+});
 // Axes + labels
 let axes='';
 COMPS.forEach((c,i)=>{
@@ -5662,35 +5662,36 @@ COMPS.forEach((c,i)=>{
   axes+=`<line x1="${CX}" y1="${CY}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#263040" stroke-width="1"/>`;
   axes+=`<text x="${lx.toFixed(2)}" y="${ly.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="800" fill="${c.color}" font-family="ui-monospace,monospace">${c.label}</text>`;
 });
-// FO layer — dashed outline + grade-colored dots + score labels
+// FO layer — dashed polygon, hollow dots in foColor (no score labels)
 const hasFo=foScores&&COMPS.some(c=>(foScores[c.id]||0)>0);
 let foLayer='';
 if(hasFo){
   foLayer=`<path d="${linePath(foScores)}" fill="${foColor}14" stroke="${foColor}" stroke-width="2" stroke-dasharray="6,3"/>`;
   COMPS.forEach((c,i)=>{
     const fv=foScores[c.id]||0;if(!fv)return;
-    const[x,y]=pt(i,fv);const fc=gc(fv);
-    foLayer+=`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="5" fill="${fc}" stroke="${foColor}" stroke-width="1.5" stroke-dasharray="2,1"/>`;
-    foLayer+=`<text x="${x.toFixed(2)}" y="${(y-12).toFixed(2)}" text-anchor="middle" font-size="8.5" fill="${fc}" font-weight="800">${fv.toFixed(1)}</text>`;
+    const[x,y]=pt(i,fv);
+    foLayer+=`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="5.5" fill="#090C12" stroke="${foColor}" stroke-width="2.5"/>`;
   });
 }
-// CPT layer — solid fill + grade-colored dots + score labels
+// CPT layer — solid polygon, solid cptColor dots (no score labels)
 let cptLayer=`<path d="${linePath(cptScores)}" fill="${cptColor}1E" stroke="${cptColor}" stroke-width="2.5"/>`;
 COMPS.forEach((c,i)=>{
   const cv=cptScores[c.id]||0;if(!cv)return;
-  const[x,y]=pt(i,cv);const cc=gc(cv);
-  cptLayer+=`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="6.5" fill="${cc}" stroke="#090C12" stroke-width="2"/>`;
-  cptLayer+=`<text x="${x.toFixed(2)}" y="${(y-13).toFixed(2)}" text-anchor="middle" font-size="9.5" fill="${cc}" font-weight="900">${cv.toFixed(1)}</text>`;
+  const[x,y]=pt(i,cv);
+  cptLayer+=`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="6.5" fill="${cptColor}" stroke="#090C12" stroke-width="2"/>`;
 });
-// Center average badge
-const valid=COMPS.filter(c=>(cptScores[c.id]||0)>0);
-const avg=valid.length?valid.reduce((a,c)=>a+(cptScores[c.id]||0),0)/valid.length:0;
+// Center badge — collective (CPT + FO) average
+const cptValid=COMPS.filter(c=>(cptScores[c.id]||0)>0);
+const cptAvg=cptValid.length?cptValid.reduce((a,c)=>a+(cptScores[c.id]||0),0)/cptValid.length:0;
+const foValid=hasFo?COMPS.filter(c=>(foScores[c.id]||0)>0):[];
+const foAvg=foValid.length?foValid.reduce((a,c)=>a+(foScores[c.id]||0),0)/foValid.length:0;
+const collectiveAvg=(cptAvg>0&&foAvg>0)?(cptAvg+foAvg)/2:(cptAvg||foAvg);
 let center='';
-if(avg>0){
-  const ac=gc(avg);
-  center=`<circle cx="${CX}" cy="${CY}" r="26" fill="#090C12" stroke="${ac}" stroke-width="2.5"/>`;
-  center+=`<text x="${CX}" y="${CY-4}" text-anchor="middle" font-size="16" font-weight="900" fill="${ac}">${avg.toFixed(1)}</text>`;
-  center+=`<text x="${CX}" y="${CY+11}" text-anchor="middle" font-size="7" fill="#475569" letter-spacing="1.5">MOY</text>`;
+if(collectiveAvg>0){
+  const ac=gc(collectiveAvg);
+  center=`<circle cx="${CX}" cy="${CY}" r="27" fill="#090C12" stroke="${ac}" stroke-width="2.5"/>`;
+  center+=`<text x="${CX}" y="${CY-4}" text-anchor="middle" font-size="16" font-weight="900" fill="${ac}">${collectiveAvg.toFixed(1)}</text>`;
+  center+=`<text x="${CX}" y="${CY+11}" text-anchor="middle" font-size="7" fill="#475569" letter-spacing="1.5">${hasFo?'COLLECTIF':'MOY'}</text>`;
 }
 // Legend
 const LY=H-14;
@@ -5698,7 +5699,7 @@ const legend=`<line x1="12" y1="${LY-3}" x2="28" y2="${LY-3}" stroke="${cptColor
   <circle cx="20" cy="${LY-3}" r="4.5" fill="${cptColor}" stroke="#090C12" stroke-width="1.5"/>
   <text x="33" y="${LY}" font-size="10" fill="#CBD5E1" font-weight="700">${pilotLabel||'CPT'}</text>
   ${hasFo?`<line x1="${W/2}" y1="${LY-3}" x2="${W/2+16}" y2="${LY-3}" stroke="${foColor}" stroke-width="2" stroke-dasharray="5,3"/>
-  <circle cx="${W/2+8}" cy="${LY-3}" r="4.5" fill="${foColor}" stroke="${foColor}" stroke-width="1.5"/>
+  <circle cx="${W/2+8}" cy="${LY-3}" r="4.5" fill="#090C12" stroke="${foColor}" stroke-width="2.5"/>
   <text x="${W/2+22}" y="${LY}" font-size="10" fill="#CBD5E1" font-weight="700">${foLabel||'FO'}</text>`:''}`;
 return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;">${grid}${axes}${foLayer}${cptLayer}${center}${legend}</svg>`;
 }
@@ -5999,9 +6000,28 @@ const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foNa
 function _compAvg(csKey){const m={};COMPETENCIES.forEach(c=>{let t=0,n=0;closed.forEach(ex=>{const v=(ex[csKey]||{})[c.id];if(v&&v.g>0){t+=v.g;n++;}});m[c.id]=n?t/n:0;});return m;}
 const cptMap=_compAvg('cs');
 const foMap=state.foName?_compAvg('csfo'):null;
+const gc2=(v)=>v>=4.5?'#3B82F6':v>=3.5?'#10B981':v>=2.5?'#F59E0B':v>=1.5?'#F97316':'#EF4444';
+const scoreTableRows=COMPETENCIES.map(c=>{
+  const cv=cptMap[c.id],fv=foMap?foMap[c.id]:0;
+  if(!cv&&!fv) return '';
+  const pct=cv?Math.round(cv/5*100):0;
+  return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid #1E2530;">
+    <span style="font-size:11px;font-weight:800;color:${c.color};font-family:monospace;width:30px;">${c.label}</span>
+    <div style="flex:1;height:4px;background:#1E2530;border-radius:2px;overflow:hidden;"><div style="height:4px;background:${c.color};width:${pct}%;border-radius:2px;"></div></div>
+    <span style="font-size:12px;font-weight:800;color:${cv?gc2(cv):'#334155'};width:26px;text-align:right;">${cv?cv.toFixed(1):'-'}</span>
+    ${foMap?`<span style="font-size:12px;font-weight:700;color:${fv?gc2(fv):'#334155'};width:26px;text-align:right;">${fv?fv.toFixed(1):'-'}</span>`:''}
+  </div>`;
+}).join('');
+const scoreTableHeader=`<div style="display:flex;align-items:center;gap:8px;padding:0 0 6px;border-bottom:2px solid #1E2530;margin-bottom:2px;">
+  <span style="font-size:9px;font-weight:800;color:#475569;letter-spacing:1px;width:30px;">COMP</span>
+  <div style="flex:1;"></div>
+  <span style="font-size:9px;font-weight:800;color:${c1};width:26px;text-align:right;">${r1}</span>
+  ${foMap?`<span style="font-size:9px;font-weight:800;color:${c2};width:26px;text-align:right;">${r2}</span>`:''}
+</div>`;
 const radarHtml=`<div style="padding:14px 14px 4px;">
   <div style="font-size:10px;font-weight:800;color:#475569;letter-spacing:2px;margin-bottom:8px;">RADAR CBTA</div>
   <div style="background:#0F1218;border-radius:10px;padding:10px;overflow:hidden;">${buildRadarSVG(cptMap,foMap,state.pilotName||'CPT',state.foName||'FO')}</div>
+  <div style="background:#0F1218;border-radius:10px;padding:10px 12px;margin-top:8px;">${scoreTableHeader}${scoreTableRows}</div>
 </div>`;
 el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + cptSection + foSection;
 }
