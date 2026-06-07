@@ -5818,7 +5818,7 @@ return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;">${s}</s
 
 function setChartType(t){
 state.chartType=t;
-const el=document.querySelector('#deb-content-scores');
+const el=document.getElementById('deb-content');
 if(el)renderDebScores(el);
 }
 
