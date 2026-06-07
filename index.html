@@ -3860,7 +3860,8 @@ currentExTab:"eval", currentDebTab:"scores",
 catFilter:"ALL", phaseFilter:"ALL",
 debRootCauses:{}, debNotes:{}, debConclNotes:"", sessionCRM:{}, sessionCRMNotes:"",
 triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
-profCheck: null
+profCheck: null,
+chartType:'radar'
 };
 
 // ── CHRONOMETER ---───────────────────────────────────────────────────────────
@@ -6399,6 +6400,136 @@ return `<svg viewBox="0 0 ${SVG_W} ${SVG_H}" width="100%" style="max-width:340px
 </svg>`;
 }
 
+function buildColsSVG(cptScores,foScores,pLbl,foLbl){
+const N=COMPETENCIES.length;
+const W=320,H=210,PL=26,PR=4,PT=18,PB=48;
+const IW=W-PL-PR,IH=H-PT-PB;
+const bw=IW/N;
+const hasFo=foScores&&COMPETENCIES.some(c=>(foScores[c.id]||0)>0);
+let s=`<rect width="${W}" height="${H}" rx="10" fill="#374151"/>`;
+[1,2,3,4,5].forEach(v=>{
+  const y=PT+IH*(1-v/5);
+  s+=`<line x1="${PL}" y1="${y}" x2="${PL+IW}" y2="${y}" stroke="#4B5563" stroke-width="${v===5?1:0.5}" stroke-dasharray="${v<5?'3,3':''}"/>`;
+  s+=`<text x="${PL-3}" y="${y}" text-anchor="end" dominant-baseline="central" font-size="7" fill="#9CA3AF">${v}</text>`;
+});
+s+=`<line x1="${PL}" y1="${PT+IH}" x2="${PL+IW}" y2="${PT+IH}" stroke="#6B7280" stroke-width="1.5"/>`;
+COMPETENCIES.forEach((c,i)=>{
+  const x=PL+i*bw;
+  const cv=cptScores[c.id]||0,fv=hasFo?(foScores[c.id]||0):0;
+  if(hasFo){
+    const hw=bw/2;
+    const ch=(cv/5)*IH,fh=(fv/5)*IH;
+    if(ch>0)s+=`<rect x="${x}" y="${PT+IH-ch}" width="${hw}" height="${ch}" fill="${c.color}" rx="2"/>`;
+    if(fh>0)s+=`<rect x="${x+hw}" y="${PT+IH-fh}" width="${hw}" height="${fh}" fill="${c.color}" opacity="0.45" rx="2"/>`;
+    if(cv>0)s+=`<text x="${x+hw/2}" y="${PT+IH-ch-3}" text-anchor="middle" font-size="7" fill="${c.color}" font-weight="700">${cv.toFixed(1)}</text>`;
+    if(fv>0)s+=`<text x="${x+hw+hw/2}" y="${PT+IH-fh-3}" text-anchor="middle" font-size="7" fill="${c.color}" opacity="0.7" font-weight="700">${fv.toFixed(1)}</text>`;
+  }else{
+    const ch=(cv/5)*IH;
+    if(ch>0)s+=`<rect x="${x}" y="${PT+IH-ch}" width="${bw}" height="${ch}" fill="${c.color}" rx="2"/>`;
+    if(cv>0)s+=`<text x="${x+bw/2}" y="${PT+IH-ch-3}" text-anchor="middle" font-size="8" fill="${c.color}" font-weight="700">${cv.toFixed(1)}</text>`;
+  }
+  s+=`<text x="${x+bw/2}" y="${PT+IH+11}" text-anchor="middle" font-size="7.5" fill="${c.color}" font-weight="700" font-family="monospace">${c.label}</text>`;
+  const sc=cptScores[c.id]||0;
+  const sgc=sc>=4.5?'#3B82F6':sc>=3.5?'#10B981':sc>=2.5?'#F59E0B':sc>=1.5?'#F97316':'#EF4444';
+  s+=`<rect x="${x}" y="${PT+IH+21}" width="${bw}" height="3" fill="${sgc}" opacity="0.8"/>`;
+});
+if(hasFo){
+  s+=`<rect x="${PL}" y="${H-9}" width="8" height="5" fill="#94A3B8" rx="1"/>`;
+  s+=`<text x="${PL+11}" y="${H-5}" font-size="7" fill="#9CA3AF">${pLbl||'CPT'}</text>`;
+  s+=`<rect x="${PL+55}" y="${H-9}" width="8" height="5" fill="#94A3B8" opacity="0.45" rx="1"/>`;
+  s+=`<text x="${PL+66}" y="${H-5}" font-size="7" fill="#9CA3AF">${foLbl||'FO'}</text>`;
+}
+return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;border-radius:10px;">${s}</svg>`;
+}
+
+function buildRingsSVG(cptScores,foScores,pLbl,foLbl){
+const N=COMPETENCIES.length;
+const W=320,H=200,CX=95,CY=95,RMAX=85,RMIN=12;
+const TRACK=Math.max(Math.floor((RMAX-RMIN)/N)-2,3);
+const hasFo=foScores&&COMPETENCIES.some(c=>(foScores[c.id]||0)>0);
+let s='';
+const valid=COMPETENCIES.filter(c=>(cptScores[c.id]||0)>0);
+const avg=valid.length?valid.reduce((a,c)=>a+(cptScores[c.id]||0),0)/valid.length:0;
+if(avg>0){
+  const ac=avg>=4.5?'#3B82F6':avg>=3.5?'#10B981':avg>=2.5?'#F59E0B':avg>=1.5?'#F97316':'#EF4444';
+  s+=`<text x="${CX}" y="${CY-5}" text-anchor="middle" font-size="22" font-weight="900" fill="${ac}">${avg.toFixed(1)}</text>`;
+  s+=`<text x="${CX}" y="${CY+11}" text-anchor="middle" font-size="8" fill="#475569">MOY</text>`;
+}
+COMPETENCIES.forEach((c,i)=>{
+  const r=RMIN+(N-1-i)*((RMAX-RMIN)/N)+TRACK/2;
+  const cv=cptScores[c.id]||0,fv=hasFo?(foScores[c.id]||0):0;
+  const a0=-Math.PI/2;
+  s+=`<circle cx="${CX}" cy="${CY}" r="${r}" fill="none" stroke="${c.color}" stroke-width="${TRACK}" stroke-opacity="0.12"/>`;
+  const drawArc=(v,tw,extra)=>{
+    if(v<=0)return;
+    const pct=v/5;
+    if(pct>=0.999){s+=`<circle cx="${CX}" cy="${CY}" r="${r}" fill="none" stroke="${c.color}" stroke-width="${tw}"${extra||''}/>`;return;}
+    const a1=a0+pct*2*Math.PI;
+    const lf=pct>0.5?1:0;
+    const ax=(CX+r*Math.cos(a0)).toFixed(1),ay=(CY+r*Math.sin(a0)).toFixed(1);
+    const bx=(CX+r*Math.cos(a1)).toFixed(1),by=(CY+r*Math.sin(a1)).toFixed(1);
+    s+=`<path d="M ${ax} ${ay} A ${r} ${r} 0 ${lf} 1 ${bx} ${by}" fill="none" stroke="${c.color}" stroke-width="${tw}" stroke-linecap="round"${extra||''}/>`;
+  };
+  drawArc(cv,TRACK,'');
+  if(hasFo)drawArc(fv,Math.max(TRACK-3,2),' opacity="0.35" stroke-dasharray="4,2"');
+  const ly=18+i*(H-16)/N;
+  s+=`<text x="196" y="${ly+4}" dominant-baseline="central" font-size="8.5" font-weight="800" fill="${c.color}" font-family="monospace">${c.label}</text>`;
+  const sc=cptScores[c.id]||0;
+  const bw=(sc/5)*90;
+  const sc2=sc>=4.5?'#3B82F6':sc>=3.5?'#10B981':sc>=2.5?'#F59E0B':sc>=1.5?'#F97316':'#EF4444';
+  s+=`<rect x="218" y="${ly}" width="${bw}" height="6" rx="3" fill="${sc2}" opacity="0.8"/>`;
+  if(sc>0)s+=`<text x="312" y="${ly+4}" dominant-baseline="central" text-anchor="end" font-size="8" fill="${c.color}" font-weight="700">${sc.toFixed(1)}</text>`;
+});
+return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;">${s}</svg>`;
+}
+
+function buildPolarSVG(cptScores,foScores,pLbl,foLbl){
+const N=COMPETENCIES.length;
+const W=320,H=288,CX=155,CY=146,R=112;
+const hasFo=foScores&&COMPETENCIES.some(c=>(foScores[c.id]||0)>0);
+const sliceA=2*Math.PI/N;
+const angle=(i)=>i*sliceA-Math.PI/2;
+let s='';
+[1,2,3,4,5].forEach(lv=>{
+  s+=`<circle cx="${CX}" cy="${CY}" r="${R*lv/5}" fill="none" stroke="#1E2530" stroke-width="${lv===5?1.5:0.5}"/>`;
+});
+for(let i=0;i<N;i++){
+  const a=angle(i);
+  s+=`<line x1="${CX}" y1="${CY}" x2="${(CX+R*Math.cos(a)).toFixed(1)}" y2="${(CY+R*Math.sin(a)).toFixed(1)}" stroke="#1E253055" stroke-width="1"/>`;
+}
+if(hasFo){
+  COMPETENCIES.forEach((c,i)=>{
+    const fv=foScores[c.id]||0;if(!fv)return;
+    const r2=R*(fv/5);
+    const a1=angle(i)-sliceA/2,a2=angle(i)+sliceA/2;
+    const x1=(CX+r2*Math.cos(a1)).toFixed(1),y1=(CY+r2*Math.sin(a1)).toFixed(1);
+    const x2=(CX+r2*Math.cos(a2)).toFixed(1),y2=(CY+r2*Math.sin(a2)).toFixed(1);
+    s+=`<path d="M ${CX} ${CY} L ${x1} ${y1} A ${r2} ${r2} 0 0 1 ${x2} ${y2} Z" fill="${c.color}" fill-opacity="0.22" stroke="${c.color}" stroke-opacity="0.35" stroke-width="0.5"/>`;
+  });
+}
+COMPETENCIES.forEach((c,i)=>{
+  const cv=cptScores[c.id]||0;if(!cv)return;
+  const r2=R*(cv/5);
+  const a1=angle(i)-sliceA/2,a2=angle(i)+sliceA/2;
+  const x1=(CX+r2*Math.cos(a1)).toFixed(1),y1=(CY+r2*Math.sin(a1)).toFixed(1);
+  const x2=(CX+r2*Math.cos(a2)).toFixed(1),y2=(CY+r2*Math.sin(a2)).toFixed(1);
+  s+=`<path d="M ${CX} ${CY} L ${x1} ${y1} A ${r2} ${r2} 0 0 1 ${x2} ${y2} Z" fill="${c.color}" fill-opacity="0.65" stroke="${c.color}" stroke-width="1"/>`;
+});
+COMPETENCIES.forEach((c,i)=>{
+  const a=angle(i);
+  const lx=(CX+(R+17)*Math.cos(a)).toFixed(1),ly=(CY+(R+17)*Math.sin(a)).toFixed(1);
+  s+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="9" font-weight="800" fill="${c.color}" font-family="monospace">${c.label}</text>`;
+});
+if(hasFo)s+=`<text x="10" y="${H-5}" font-size="8" fill="#64748B">■ ${pLbl||'CPT'} (opaque)  □ ${foLbl||'FO'} (transparent)</text>`;
+return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;">${s}</svg>`;
+}
+
+function setChartType(t){
+state.chartType=t;
+const el=document.querySelector('#deb-content-scores');
+if(el)renderDebScores(el);
+}
+
 function buildProgressionSVG(sessions, pilotKey){
 // sessions: array of {date, scores:{KNO:x, WLM:x, ...}, label}
 if(!sessions||sessions.length<2) return `<div style="color:#64748B;text-align:center;padding:20px;font-size:13px;">Minimum 2 sessions nécessaires pour afficher la progression.</div>`;
@@ -6466,7 +6597,7 @@ let ov=document.getElementById('prog-overlay');
 if(ov) ov.remove();
 ov=document.createElement('div');
 ov.id='prog-overlay';
-ov.style.cssText='position:fixed;inset:0;background:#0A0C12;z-index:99970;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+ov.style.cssText='position:fixed;inset:0;background:#111827;z-index:99970;overflow-y:auto;-webkit-overflow-scrolling:touch;';
 // Legend
 const legendHtml=COMPETENCIES.map(c=>`<span style="display:inline-flex;align-items:center;gap:4px;margin:3px 6px;"><span style="display:inline-block;width:14px;height:3px;background:${c.color};border-radius:2px;"></span><span style="font-size:11px;font-weight:700;color:${c.color};">${c.label}</span></span>`).join('');
 ov.innerHTML=`<div style="position:sticky;top:0;background:#0A0C12;border-bottom:1px solid #1E2530;padding:12px 16px;z-index:2;display:flex;align-items:center;gap:12px;">
@@ -6695,9 +6826,16 @@ const foSection  = state.foName ? buildScoreSection('csfo', 'FO — '+state.foNa
 function _compAvg(csKey){const m={};COMPETENCIES.forEach(c=>{let t=0,n=0;closed.forEach(ex=>{const v=(ex[csKey]||{})[c.id];if(v&&v.g>0){t+=v.g;n++;}});m[c.id]=n?t/n:0;});return m;}
 const cptMap=_compAvg('cs');
 const foMap=state.foName?_compAvg('csfo'):null;
-const radarHtml=`<div style="padding:14px 14px 4px;">
-  <div style="font-size:10px;font-weight:800;color:#475569;letter-spacing:2px;margin-bottom:8px;">RADAR COMPÉTENCES</div>
-  ${buildRadarSVG(cptMap,foMap,state.pilotName||'CPT',state.foName||'FO')}
+const ct=state.chartType||'radar';
+const chartFns={'radar':buildRadarSVG,'cols':buildColsSVG,'rings':buildRingsSVG,'polar':buildPolarSVG};
+const chartSvg=(chartFns[ct]||buildRadarSVG)(cptMap,foMap,state.pilotName||'CPT',state.foName||'FO');
+const chartNames={'radar':'🕸 Araignée','cols':'📊 Colonnes','rings':'⭕ Annulaire','polar':'🎯 Polaire'};
+const chartSelector=`<div style="display:flex;gap:6px;padding:12px 14px 4px;flex-wrap:wrap;">
+  ${Object.entries(chartNames).map(([k,v])=>`<button onclick="setChartType('${k}')" style="padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid ${ct===k?COMPETENCIES[0].color:'#334155'};background:${ct===k?COMPETENCIES[0].color+'22':'transparent'};color:${ct===k?COMPETENCIES[0].color:'#64748B'};transition:all 0.2s;">${v}</button>`).join('')}
+</div>`;
+const radarHtml=`<div style="padding:0 14px 4px;">
+  ${chartSelector}
+  <div style="background:#0F1218;border-radius:10px;padding:10px;overflow:hidden;">${chartSvg}</div>
 </div>`;
 el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + cptSection + foSection;
 }
