@@ -5712,9 +5712,9 @@ COMPETENCIES.forEach((c,i)=>{
     const hw=bw/2;
     const ch=(cv/5)*IH,fh=(fv/5)*IH;
     if(ch>0)s+=`<rect x="${x}" y="${PT+IH-ch}" width="${hw}" height="${ch}" fill="${c.color}" rx="2"/>`;
-    if(fh>0)s+=`<rect x="${x+hw}" y="${PT+IH-fh}" width="${hw}" height="${fh}" fill="${c.color}" opacity="0.45" rx="2"/>`;
+    if(fh>0)s+=`<rect x="${x+hw}" y="${PT+IH-fh}" width="${hw}" height="${fh}" fill="${c.color}" fill-opacity="0.12" stroke="${c.color}" stroke-width="1.5" rx="2" stroke-dasharray="3,2"/>`;
     if(cv>0)s+=`<text x="${x+hw/2}" y="${PT+IH-ch-3}" text-anchor="middle" font-size="7" fill="${c.color}" font-weight="700">${cv.toFixed(1)}</text>`;
-    if(fv>0)s+=`<text x="${x+hw+hw/2}" y="${PT+IH-fh-3}" text-anchor="middle" font-size="7" fill="${c.color}" opacity="0.7" font-weight="700">${fv.toFixed(1)}</text>`;
+    if(fv>0)s+=`<text x="${x+hw+hw/2}" y="${PT+IH-fh-3}" text-anchor="middle" font-size="7" fill="${c.color}" opacity="0.85" font-weight="700">${fv.toFixed(1)}</text>`;
   }else{
     const ch=(cv/5)*IH;
     if(ch>0)s+=`<rect x="${x}" y="${PT+IH-ch}" width="${bw}" height="${ch}" fill="${c.color}" rx="2"/>`;
@@ -5727,9 +5727,9 @@ COMPETENCIES.forEach((c,i)=>{
 });
 if(hasFo){
   s+=`<rect x="${PL}" y="${H-9}" width="8" height="5" fill="#94A3B8" rx="1"/>`;
-  s+=`<text x="${PL+11}" y="${H-5}" font-size="7" fill="#9CA3AF">${pLbl||'CPT'}</text>`;
-  s+=`<rect x="${PL+55}" y="${H-9}" width="8" height="5" fill="#94A3B8" opacity="0.45" rx="1"/>`;
-  s+=`<text x="${PL+66}" y="${H-5}" font-size="7" fill="#9CA3AF">${foLbl||'FO'}</text>`;
+  s+=`<text x="${PL+11}" y="${H-5}" font-size="7" fill="#9CA3AF">${pLbl||'CPT'} (plein)</text>`;
+  s+=`<rect x="${PL+80}" y="${H-9}" width="8" height="5" fill="none" stroke="#94A3B8" stroke-width="1.5" stroke-dasharray="3,2" rx="1"/>`;
+  s+=`<text x="${PL+91}" y="${H-5}" font-size="7" fill="#9CA3AF">${foLbl||'FO'} (pointillés)</text>`;
 }
 return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;border-radius:10px;">${s}</svg>`;
 }
@@ -5789,6 +5789,16 @@ for(let i=0;i<N;i++){
   const a=angle(i);
   s+=`<line x1="${CX}" y1="${CY}" x2="${(CX+R*Math.cos(a)).toFixed(1)}" y2="${(CY+R*Math.sin(a)).toFixed(1)}" stroke="#1E253055" stroke-width="1"/>`;
 }
+// CPT sectors first (solid fill)
+COMPETENCIES.forEach((c,i)=>{
+  const cv=cptScores[c.id]||0;if(!cv)return;
+  const r2=R*(cv/5);
+  const a1=angle(i)-sliceA/2,a2=angle(i)+sliceA/2;
+  const x1=(CX+r2*Math.cos(a1)).toFixed(1),y1=(CY+r2*Math.sin(a1)).toFixed(1);
+  const x2=(CX+r2*Math.cos(a2)).toFixed(1),y2=(CY+r2*Math.sin(a2)).toFixed(1);
+  s+=`<path d="M ${CX} ${CY} L ${x1} ${y1} A ${r2} ${r2} 0 0 1 ${x2} ${y2} Z" fill="${c.color}" fill-opacity="0.7" stroke="${c.color}" stroke-width="1"/>`;
+});
+// FO sectors on top — dashed outline only, no fill
 if(hasFo){
   COMPETENCIES.forEach((c,i)=>{
     const fv=foScores[c.id]||0;if(!fv)return;
@@ -5796,23 +5806,15 @@ if(hasFo){
     const a1=angle(i)-sliceA/2,a2=angle(i)+sliceA/2;
     const x1=(CX+r2*Math.cos(a1)).toFixed(1),y1=(CY+r2*Math.sin(a1)).toFixed(1);
     const x2=(CX+r2*Math.cos(a2)).toFixed(1),y2=(CY+r2*Math.sin(a2)).toFixed(1);
-    s+=`<path d="M ${CX} ${CY} L ${x1} ${y1} A ${r2} ${r2} 0 0 1 ${x2} ${y2} Z" fill="${c.color}" fill-opacity="0.22" stroke="${c.color}" stroke-opacity="0.35" stroke-width="0.5"/>`;
+    s+=`<path d="M ${CX} ${CY} L ${x1} ${y1} A ${r2} ${r2} 0 0 1 ${x2} ${y2} Z" fill="none" stroke="${c.color}" stroke-width="2.5" stroke-dasharray="5,3" stroke-linejoin="round"/>`;
   });
 }
-COMPETENCIES.forEach((c,i)=>{
-  const cv=cptScores[c.id]||0;if(!cv)return;
-  const r2=R*(cv/5);
-  const a1=angle(i)-sliceA/2,a2=angle(i)+sliceA/2;
-  const x1=(CX+r2*Math.cos(a1)).toFixed(1),y1=(CY+r2*Math.sin(a1)).toFixed(1);
-  const x2=(CX+r2*Math.cos(a2)).toFixed(1),y2=(CY+r2*Math.sin(a2)).toFixed(1);
-  s+=`<path d="M ${CX} ${CY} L ${x1} ${y1} A ${r2} ${r2} 0 0 1 ${x2} ${y2} Z" fill="${c.color}" fill-opacity="0.65" stroke="${c.color}" stroke-width="1"/>`;
-});
 COMPETENCIES.forEach((c,i)=>{
   const a=angle(i);
   const lx=(CX+(R+17)*Math.cos(a)).toFixed(1),ly=(CY+(R+17)*Math.sin(a)).toFixed(1);
   s+=`<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="central" font-size="9" font-weight="800" fill="${c.color}" font-family="monospace">${c.label}</text>`;
 });
-if(hasFo)s+=`<text x="10" y="${H-5}" font-size="8" fill="#64748B">■ ${pLbl||'CPT'} (opaque)  □ ${foLbl||'FO'} (transparent)</text>`;
+if(hasFo)s+=`<text x="10" y="${H-5}" font-size="8" fill="#64748B">■ ${pLbl||'CPT'} (plein)  ┅ ${foLbl||'FO'} (pointillés)</text>`;
 return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;">${s}</svg>`;
 }
 
@@ -6119,9 +6121,10 @@ function _compAvg(csKey){const m={};COMPETENCIES.forEach(c=>{let t=0,n=0;closed.
 const cptMap=_compAvg('cs');
 const foMap=state.foName?_compAvg('csfo'):null;
 const ct=state.chartType||'radar';
-const chartFns={'radar':buildRadarSVG,'cols':buildColsSVG,'rings':buildRingsSVG,'polar':buildPolarSVG};
-const chartSvg=(chartFns[ct]||buildRadarSVG)(cptMap,foMap,state.pilotName||'CPT',state.foName||'FO');
-const chartNames={'radar':'🕸 Araignée','cols':'📊 Colonnes','rings':'⭕ Annulaire','polar':'🎯 Polaire'};
+const chartFns={'radar':buildRadarSVG,'cols':buildColsSVG,'polar':buildPolarSVG};
+if(!chartFns[ct]) state.chartType=ct='radar';
+const chartSvg=chartFns[ct](cptMap,foMap,state.pilotName||'CPT',state.foName||'FO');
+const chartNames={'radar':'🕸 Araignée','cols':'📊 Colonnes','polar':'🎯 Polaire'};
 const chartSelector=`<div style="display:flex;gap:6px;padding:12px 14px 4px;flex-wrap:wrap;">
   ${Object.entries(chartNames).map(([k,v])=>`<button onclick="setChartType('${k}')" style="padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1.5px solid ${ct===k?COMPETENCIES[0].color:'#334155'};background:${ct===k?COMPETENCIES[0].color+'22':'transparent'};color:${ct===k?COMPETENCIES[0].color:'#64748B'};transition:all 0.2s;">${v}</button>`).join('')}
 </div>`;
