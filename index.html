@@ -5280,16 +5280,25 @@ if(avg>=2.5)return'#F59E0B';if(avg>=1.5)return'#F97316';return'#EF4444';
 
 function buildReportRadar(avgsObj, color){
   const cx=110,cy=110,r=85,n=COMPETENCIES.length;
-  const pts=COMPETENCIES.map((c,i)=>{
-    const a=(i/n)*2*Math.PI-Math.PI/2,v=(avgsObj[c.id]||0)/5;
-    return {x:cx+Math.cos(a)*r*v,y:cy+Math.sin(a)*r*v,lx:cx+Math.cos(a)*(r+18),ly:cy+Math.sin(a)*(r+18),c};
-  });
-  const poly=pts.map(p=>p.x+','+p.y).join(' ');
-  const grids=[1,2,3,4,5].map(lv=>COMPETENCIES.map((_,i)=>{const a=(i/n)*2*Math.PI-Math.PI/2;return(cx+Math.cos(a)*r*(lv/5))+','+(cy+Math.sin(a)*r*(lv/5));}).join(' '));
-  const gridSvg=grids.map(p=>'<polygon points="'+p+'" fill="none" stroke="#e2e8f0" stroke-width="0.8"/>').join('');
-  const axesSvg=COMPETENCIES.map((_,i)=>{const a=(i/n)*2*Math.PI-Math.PI/2;return'<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+Math.cos(a)*r)+'" y2="'+(cy+Math.sin(a)*r)+'" stroke="#cbd5e1" stroke-width="0.8"/>';}).join('');
-  const lblSvg=pts.map(p=>'<text x="'+p.lx+'" y="'+p.ly+'" fill="'+p.c.color+'" text-anchor="middle" dominant-baseline="middle" font-size="8" font-weight="700" font-family="monospace">'+p.c.label+'</text>').join('');
-  return '<svg width="220" height="220" viewBox="0 0 220 220">'+gridSvg+axesSvg+'<polygon points="'+poly+'" fill="'+color+'20" stroke="'+color+'" stroke-width="1.5"/>'+lblSvg+'</svg>';
+  const angle=(i)=>(i/n)*2*Math.PI-Math.PI/2;
+  const pt=(i,v)=>{const a=angle(i),rv=r*(v/5);return[cx+Math.cos(a)*rv,cy+Math.sin(a)*rv];};
+  const smoothPath=(src)=>{
+    const ps=typeof src==='number'?COMPETENCIES.map((_,i)=>pt(i,src)):src;
+    const m=ps.length;
+    let d=`M ${ps[0][0].toFixed(2)},${ps[0][1].toFixed(2)}`;
+    for(let i=0;i<m;i++){
+      const p0=ps[(i-1+m)%m],p1=ps[i],p2=ps[(i+1)%m],p3=ps[(i+2)%m];
+      d+=` C ${(p1[0]+(p2[0]-p0[0])/6).toFixed(2)},${(p1[1]+(p2[1]-p0[1])/6).toFixed(2)} ${(p2[0]-(p3[0]-p1[0])/6).toFixed(2)},${(p2[1]-(p3[1]-p1[1])/6).toFixed(2)} ${p2[0].toFixed(2)},${p2[1].toFixed(2)}`;
+    }
+    return d+' Z';
+  };
+  let gridSvg='';
+  for(let lv=1;lv<=5;lv++) gridSvg+=`<path d="${smoothPath(lv)}" fill="none" stroke="#e2e8f0" stroke-width="${lv===5?1.2:0.6}"/>`;
+  const axesSvg=COMPETENCIES.map((_,i)=>{const[x2,y2]=pt(i,5);return`<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="#cbd5e1" stroke-width="0.8"/>`;}).join('');
+  const dataPts=COMPETENCIES.map((c,i)=>pt(i,Math.max(avgsObj[c.id]||0,0.05)));
+  const dotsSvg=COMPETENCIES.map((c,i)=>{const[x,y]=pt(i,Math.max(avgsObj[c.id]||0,0.05));return`<circle cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="3.5" fill="${c.color}"/>`;}).join('');
+  const lblSvg=COMPETENCIES.map((c,i)=>{const[lx,ly]=pt(i,6.05);return`<text x="${lx.toFixed(2)}" y="${ly.toFixed(2)}" fill="${c.color}" text-anchor="middle" dominant-baseline="middle" font-size="8" font-weight="700" font-family="monospace">${c.label}</text>`;}).join('');
+  return `<svg width="220" height="220" viewBox="0 0 220 220">${gridSvg}${axesSvg}<path d="${smoothPath(dataPts)}" fill="${color}20" stroke="${color}" stroke-width="1.5"/>${dotsSvg}${lblSvg}</svg>`;
 }
 
 function pilotBlock(csKey, name, pilotColor){
@@ -5310,7 +5319,7 @@ return `<div style="display:flex;align-items:center;gap:10px;padding:10px 16px;b
 <div style="background:#e2e8f0;border-radius:6px;height:12px;overflow:hidden;">
 <div style="background:${compColor};height:100%;width:${pct}%;border-radius:6px;transition:width 0.5s;"></div>
 </div>
-<div style="font-size:10px;color:#94a3b8;margin-top:2px;">${c.full||c.label}</div>
+<div style="font-size:10px;color:#475569;font-weight:600;margin-top:2px;">${c.full||c.label}</div>
 </div>
 <div style="width:32px;font-size:15px;font-weight:900;color:${compColor};text-align:right;">${avg>0?avg.toFixed(1):'-'}</div>
 <div style="width:55px;font-size:10px;color:#94a3b8;text-align:right;"><span style="color:#10B981;">+${ct[c.id].pos}</span> / <span style="color:#EF4444;">-${ct[c.id].neg}</span></div>
@@ -5321,8 +5330,8 @@ return `<div style="background:#fff;border-radius:12px;border:2px solid ${pilotC
 <div>
 <div style="font-size:10px;color:${pilotColor};font-weight:700;letter-spacing:1px;margin-bottom:2px;">${csKey==='cs'?(state.pilotRole||'CPT'):( state.foRole||'FO')} — ${csKey==='cs'?(_ROLE_LABELS[state.pilotRole]||'COMMANDANT DE BORD'):(_ROLE_LABELS[state.foRole]||'PREMIER OFFICIER')}</div>
 <div style="font-size:15px;font-weight:800;color:#0f172a;">${name}</div>
-${strong.length?`<div style="font-size:11px;color:#10B981;margin-top:4px;">✓ Points forts: ${strong.join(', ')}</div>`:''}
-${weak.length?`<div style="font-size:11px;color:#EF4444;margin-top:2px;">△ À consolider: ${weak.join(', ')}</div>`:''}
+${strong.length?`<div style="font-size:11px;color:#047857;font-weight:700;margin-top:4px;">✓ Points forts: ${strong.join(', ')}</div>`:''}
+${weak.length?`<div style="font-size:11px;color:#B91C1C;font-weight:700;margin-top:2px;">△ À consolider: ${weak.join(', ')}</div>`:''}
 </div>
 <div style="text-align:right;">
 <div style="font-size:28px;font-weight:900;color:${pilotColor};">${global.toFixed(2)}</div>
