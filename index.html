@@ -5636,17 +5636,13 @@ const arcRing=(lv)=>{
 // Data path: straight lines between vertices
 const linePath=(scores)=>'M '+COMPS.map((c,i)=>pt(i,Math.max(scores[c.id]||0,0.05)).map(v=>v.toFixed(2)).join(',')).join(' L ')+' Z';
 const gc=(v)=>v>=4.5?'#3B82F6':v>=3.5?'#10B981':v>=2.5?'#F59E0B':v>=1.5?'#F97316':'#EF4444';
-// Grid rings — arc-based, alternating subtle fill
+// Grade colors for rings: 1=red … 5=blue (dim fills, visible strokes)
+const RING_C=['#EF4444','#F97316','#F59E0B','#10B981','#3B82F6'];
+// Draw outer→inner so inner zones overlay — creates visible grade zones
 let grid='';
-for(let lv=1;lv<=5;lv++){
-  const fill=lv===5?'#131820':lv===4?'#111720':lv===3?'#0F1520':lv===2?'#0D1318':'none';
-  grid+=`<path d="${arcRing(lv)}" fill="${fill}" stroke="#1E2530" stroke-width="${lv===5?1.5:0.7}"/>`;
-}
-// All 5 level labels offset right of north spoke (avoids center badge overlap)
-for(let lv=1;lv<=5;lv++){
-  const[x,y]=pt(0,lv);const c=gc(lv);
-  grid+=`<rect x="${(x+18).toFixed(1)}" y="${(y-7).toFixed(1)}" width="13" height="13" rx="3" fill="${c}30"/>`;
-  grid+=`<text x="${(x+24.5).toFixed(1)}" y="${y.toFixed(1)}" dominant-baseline="central" text-anchor="middle" font-size="8" fill="${c}" font-weight="900">${lv}</text>`;
+for(let lv=5;lv>=1;lv--){
+  const rc=RING_C[lv-1];
+  grid+=`<path d="${arcRing(lv)}" fill="${rc}0E" stroke="${rc}50" stroke-width="${lv===5?1.5:0.9}"/>`;
 }
 // Axes + labels
 let axes='';
