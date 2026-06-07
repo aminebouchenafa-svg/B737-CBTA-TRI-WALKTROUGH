@@ -5452,26 +5452,47 @@ const crmItems = [
 const crm = state.sessionCRM || {};
 const evaluated = crmItems.filter(it=>crm[it.k]==='ok'||crm[it.k]==='nok');
 if(!evaluated.length) return '';
-const okCount = crmItems.filter(it=>crm[it.k]==='ok').length;
-const nokCount = crmItems.filter(it=>crm[it.k]==='nok').length;
-const pctGlobal = evaluated.length>0 ? Math.round(okCount/evaluated.length*100) : 0;
-const colGlobal = pctGlobal>=75?'#10B981':pctGlobal>=50?'#F59E0B':'#EF4444';
+const okItems = crmItems.filter(it=>crm[it.k]==='ok');
+const nokItems = crmItems.filter(it=>crm[it.k]==='nok');
+const pctGlobal = evaluated.length>0 ? Math.round(okItems.length/evaluated.length*100) : 0;
+const colGlobal = pctGlobal>=85?'#10B981':pctGlobal>=70?'#3B82F6':pctGlobal>=50?'#F59E0B':'#EF4444';
+const crmLevel = pctGlobal>=85?'EXCELLENT':pctGlobal>=70?'SATISFAISANT':pctGlobal>=50?'PARTIEL':'INSUFFISANT';
+// Donut SVG
+const r=38,CX2=48,CY2=48,circ=2*Math.PI*r;
+const arc=(pctGlobal/100*circ).toFixed(1);
+const donut=`<svg width="96" height="96" viewBox="0 0 96 96">
+  <circle cx="${CX2}" cy="${CY2}" r="${r}" fill="none" stroke="#e2e8f0" stroke-width="10"/>
+  <circle cx="${CX2}" cy="${CY2}" r="${r}" fill="none" stroke="${colGlobal}" stroke-width="10"
+    stroke-dasharray="${arc} ${circ.toFixed(1)}" stroke-linecap="round" transform="rotate(-90,${CX2},${CY2})"/>
+  <text x="${CX2}" y="${CY2-3}" text-anchor="middle" font-size="17" font-weight="900" fill="${colGlobal}">${pctGlobal}%</text>
+  <text x="${CX2}" y="${CY2+13}" text-anchor="middle" font-size="8" fill="#94a3b8" letter-spacing="1">CRM</text>
+</svg>`;
 let cs='<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">BILAN CRM — RESSOURCES ÉQUIPAGE</div>';
-cs+='<div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">';
-cs+='<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:#f8fafc;border-bottom:2px solid #e2e8f0;">';
-cs+='<div style="font-size:11px;color:#475569;font-weight:600;">Évaluation globale de la séance</div>';
-cs+='<div style="font-size:18px;font-weight:900;color:'+colGlobal+';">'+pctGlobal+'%</div></div>';
-crmItems.forEach((it,i)=>{
-  const v = crm[it.k];
-  if(!v || v==='na') return;
-  const isOk = v==='ok';
-  const col = isOk?'#10B981':'#EF4444';
-  cs+='<div style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:'+(i<crmItems.length-1?'1px solid #f1f5f9':'none')+'">';
-  cs+='<div style="width:22px;height:22px;border-radius:6px;background:'+col+'22;border:1.5px solid '+col+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:'+col+';flex-shrink:0;">'+(isOk?'✓':'✗')+'</div>';
-  cs+='<div style="flex:1;font-size:11px;color:#0f172a;">'+it.l+'</div>';
-  cs+='</div>';
-});
-if(state.sessionCRMNotes) cs+='<div style="padding:10px 14px;border-top:1px solid #e2e8f0;background:#fffbf0;font-size:11px;color:#374151;line-height:1.6;"><span style="font-weight:700;color:#F59E0B;">Notes CRM : </span>'+state.sessionCRMNotes+'</div>';
+cs+=`<div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">`;
+// Header: donut + badge niveau
+cs+=`<div style="display:flex;align-items:center;gap:14px;padding:14px 16px;background:#f8fafc;border-bottom:2px solid #e2e8f0;">
+  ${donut}
+  <div style="flex:1;">
+    <div style="font-size:11px;color:#64748b;margin-bottom:6px;">${evaluated.length} items évalués sur 12</div>
+    <div style="display:inline-block;padding:5px 14px;border-radius:20px;background:${colGlobal}18;border:2px solid ${colGlobal};color:${colGlobal};font-size:13px;font-weight:900;letter-spacing:1px;">${crmLevel}</div>
+    <div style="margin-top:8px;display:flex;gap:10px;">
+      <span style="font-size:12px;font-weight:700;color:#10B981;">✓ ${okItems.length} satisfaisants</span>
+      <span style="font-size:12px;font-weight:700;color:#EF4444;">✗ ${nokItems.length} non satisfaisants</span>
+    </div>
+  </div>
+</div>`;
+// Two columns: OK | NOK
+cs+=`<div style="display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #e2e8f0;">
+  <div style="padding:12px 14px;border-right:1px solid #e2e8f0;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:1px;margin-bottom:8px;">POINTS POSITIFS</div>
+    ${okItems.length?okItems.map(it=>`<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px;"><span style="color:#10B981;font-weight:900;flex-shrink:0;">✓</span><span style="font-size:11px;color:#1e293b;line-height:1.4;">${it.l}</span></div>`).join(''):'<div style="font-size:11px;color:#94a3b8;font-style:italic;">Aucun</div>'}
+  </div>
+  <div style="padding:12px 14px;">
+    <div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:8px;">À AMÉLIORER</div>
+    ${nokItems.length?nokItems.map(it=>`<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px;"><span style="color:#EF4444;font-weight:900;flex-shrink:0;">✗</span><span style="font-size:11px;color:#1e293b;line-height:1.4;">${it.l}</span></div>`).join(''):'<div style="font-size:11px;color:#94a3b8;font-style:italic;">Aucun</div>'}
+  </div>
+</div>`;
+if(state.sessionCRMNotes) cs+=`<div style="padding:10px 14px;background:#fffbf0;font-size:11px;color:#374151;line-height:1.6;"><span style="font-weight:700;color:#F59E0B;">Notes : </span>${state.sessionCRMNotes}</div>`;
 cs+='</div>';
 return cs;
 })()}
