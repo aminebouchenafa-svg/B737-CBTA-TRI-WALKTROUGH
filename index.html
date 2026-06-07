@@ -783,522 +783,747 @@ Identifiant ou mot de passe incorrect
 <button onclick="closeGuide()" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
 <div id="guide-scroll" style="padding:14px 20px 0;">
-<div style="text-align:center;font-size:11px;color:#64748B;padding:0 0 10px;letter-spacing:0.5px;">Faites défiler pour tout lire</div>
+<div style="text-align:center;font-size:11px;color:#64748B;padding:0 0 14px;letter-spacing:0.5px;">10 chapitres · ~7 min · Scroll pour explorer 👇</div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 1. CODE COULEUR -->
+<!-- CHAPITRE 0 — HERO BANNER -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div style="background:linear-gradient(135deg,#0F172A 0%,#1E1B4B 50%,#0F172A 100%);border:1px solid #3B82F655;border-radius:14px;padding:20px 16px 18px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:#3B82F608;border-radius:50%;"></div>
+  <div style="position:absolute;bottom:-30px;left:-10px;width:80px;height:80px;background:#8B5CF608;border-radius:50%;"></div>
+  <div style="font-size:30px;margin-bottom:8px;">🛩</div>
+  <div style="font-size:17px;font-weight:900;color:#F1F5F9;letter-spacing:1px;margin-bottom:4px;">BIENVENUE DANS VOTRE COCKPIT CBTA</div>
+  <div style="font-size:12px;color:#94A3B8;margin-bottom:14px;line-height:1.5;">B737 NG TRI Companion — L'outil qui transforme vos séances en données</div>
+  <div style="display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+    <div style="background:#3B82F622;border:1px solid #3B82F655;border-radius:20px;padding:4px 12px;font-size:11px;color:#3B82F6;font-weight:700;">10 chapitres</div>
+    <div style="background:#10B98122;border:1px solid #10B98155;border-radius:20px;padding:4px 12px;font-size:11px;color:#10B981;font-weight:700;">~7 minutes</div>
+    <div style="background:#F59E0B22;border:1px solid #F59E0B55;border-radius:20px;padding:4px 12px;font-size:11px;color:#F59E0B;font-weight:700;">Scroll pour explorer</div>
+  </div>
+  <div style="background:#090C1299;border:1px solid #3B82F633;border-radius:10px;padding:10px 14px;display:inline-block;">
+    <div style="font-size:16px;font-weight:900;color:#F1F5F9;letter-spacing:3px;">NOTEZ · ANALYSEZ · PROGRESSEZ</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SOMMAIRE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — VOS 10 CHAPITRES</div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px;">
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">1 · Démarrage en 4 étapes</span>
+    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">2 · Grille de notation CBTA</span>
+    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">3 · Les 9 compétences</span>
+    <span style="background:#F9731622;border:1px solid #F9731655;color:#F97316;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">4 · Anatomie d'un exercice</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">5 · Scorer pendant la séance</span>
+    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">6 · TEM : Menaces &amp; Erreurs</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">7 · FFA : Fly Focus Act</span>
+    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">8 · CRM : Ressources équipage</span>
+    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">9 · Le Débrief complet</span>
+    <span style="background:#F59E0B22;border:1px solid #FBBF2455;color:#FBBF24;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;">10 · Astuces Pro &amp; Raccourcis</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPITRE 1 — DÉMARRAGE EN 4 ÉTAPES -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B44;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">🎨 NOTES CBTA — CODE COULEUR</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
-<div style="background:#3B82F618;border:1px solid #3B82F655;border-radius:8px;padding:9px 10px;">
-  <div style="font-size:28px;font-weight:900;color:#3B82F6;line-height:1;">5</div>
-  <div style="font-size:12px;color:#3B82F6;font-weight:800;margin-top:2px;">EXEMPLAIRE</div>
-  <div style="font-size:11px;color:#64748B;margin-top:2px;">Maîtrise totale — autonome</div>
-</div>
-<div style="background:#10B98118;border:1px solid #10B98155;border-radius:8px;padding:9px 10px;">
-  <div style="font-size:28px;font-weight:900;color:#10B981;line-height:1;">4</div>
-  <div style="font-size:12px;color:#10B981;font-weight:800;margin-top:2px;">AU-DESSUS STANDARD</div>
-  <div style="font-size:11px;color:#64748B;margin-top:2px;">Bonne perf, légères corrections</div>
-</div>
-<div style="background:#F59E0B18;border:1px solid #F59E0B55;border-radius:8px;padding:9px 10px;">
-  <div style="font-size:28px;font-weight:900;color:#F59E0B;line-height:1;">3</div>
-  <div style="font-size:12px;color:#F59E0B;font-weight:800;margin-top:2px;">STANDARD REQUIS</div>
-  <div style="font-size:11px;color:#64748B;margin-top:2px;">Acceptable, conforme AOM</div>
-</div>
-<div style="background:#F9731618;border:1px solid #F9731655;border-radius:8px;padding:9px 10px;">
-  <div style="font-size:28px;font-weight:900;color:#F97316;line-height:1;">2</div>
-  <div style="font-size:12px;color:#F97316;font-weight:800;margin-top:2px;">SOUS-STANDARD</div>
-  <div style="font-size:11px;color:#64748B;margin-top:2px;">Lacunes — suivi requis</div>
-</div>
-<div style="background:#EF444418;border:1px solid #EF444455;border-radius:8px;padding:9px 10px;grid-column:span 2;">
-  <div style="font-size:28px;font-weight:900;color:#EF4444;line-height:1;">1</div>
-  <div style="font-size:12px;color:#EF4444;font-weight:800;margin-top:2px;">INACCEPTABLE</div>
-  <div style="font-size:11px;color:#64748B;margin-top:2px;">Performance inacceptable — remédiation nécessaire</div>
-</div>
-</div>
+  <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:12px;">🚀 CHAPITRE 1 — DÉMARRAGE EN 4 ÉTAPES</div>
+
+  <!-- Étape 1 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#F59E0B;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">SESSION — Configurer les pilotes</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Sur l'écran d'accueil, saisissez le <span style="color:#F59E0B;font-weight:700;">matricule</span> du CPT et du FO — le nom se remplit automatiquement si le pilote est connu. Assignez les rôles : <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:800;">CPT</span> / <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:800;">FO</span> / <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:800;">TRI CHECK</span>. Nommez la session (ex: <em>B737 OPC DAAG Hiver 2026</em>).</div>
+    </div>
+  </div>
+
+  <!-- Étape 2 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#F97316;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">Sélectionner un exercice</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Appuie sur <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:800;">← Liste</span> puis sélectionne ton exercice dans la bibliothèque. Filtre par <span style="color:#F59E0B;font-weight:700;">phase de vol</span> (PREFLIGHT, TAKEOFF, CLIMB, CRUISE, DESCENT, APPROACH, LANDING, ABNORMAL), par <span style="color:#EF4444;font-weight:700;">priorité</span> (CRITICAL, HIGH, STANDARD), ou tape directement le nom : ex. <em>ENGINE FIRE</em>, <em>ILS CAT III</em>, <em>TCAS RA</em>.</div>
+    </div>
+  </div>
+
+  <!-- Étape 3 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#10B981;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">Durant l'exercice — Évaluer en temps réel</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Note les <span style="color:#3B82F6;font-weight:700;">compétences</span> (1–5), ajoute des observations <span style="color:#10B981;font-weight:700;">+</span> (positif) et <span style="color:#EF4444;font-weight:700;">−</span> (axe de progrès), identifie les <span style="color:#EF4444;font-weight:700;">menaces TEM</span> et coche les <span style="color:#F59E0B;font-weight:700;">items FFA</span>. Tout se fait en live — pas d'interruption du vol simulé.</div>
+    </div>
+  </div>
+
+  <!-- Étape 4 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#3B82F6;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+    <div style="flex:1;">
+      <div style="font-size:13px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">Clôturer → Débrief automatique</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Appuie sur <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:800;">CLÔTURER</span> pour sceller les données. Répète pour chaque exercice. En fin de session, ouvre le <span style="color:#3B82F6;font-weight:700;">DÉBRIEF</span> — le radar CBTA, le TEM, le CRM et la conclusion sont générés automatiquement.</div>
+    </div>
+  </div>
+
+  <!-- Exemple concret -->
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;margin-top:8px;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE CONCRET</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Le Captain Bob effectue un MAYDAY pour feu moteur en montée FL150. Tu ouvres l'exercice <em>ENGINE FIRE IN FLIGHT</em>, tu actives les compétences <span style="background:#84CC1622;border:1px solid #84CC1655;color:#84CC16;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:800;font-family:monospace;">PRO</span> <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:800;font-family:monospace;">SA</span> <span style="background:#EC489922;border:1px solid #EC489955;color:#EC4899;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:800;font-family:monospace;">COM</span> et tu notes en direct.</div>
+  </div>
+
+  <!-- Essaie maintenant -->
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Ferme ce guide → appuie sur <strong>← Liste</strong> → sélectionne ton premier exercice. Tu as 30 secondes pour le trouver et l'ouvrir.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 2. 9 COMPÉTENCES CBTA -->
-<!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">🧠 LES 9 COMPÉTENCES CBTA</div>
-<div style="display:flex;flex-direction:column;gap:6px;">
-<div style="display:flex;gap:10px;align-items:center;background:#EF444411;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#EF4444;font-family:monospace;min-width:36px;">FPM</span><span style="font-size:12px;color:#CBD5E1;">Flight Path Management — trajectoire &amp; énergie <em>manuelle</em></span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#F9731611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#F97316;font-family:monospace;min-width:36px;">FPA</span><span style="font-size:12px;color:#CBD5E1;">Flight Path Automation — AP / AT / FMC / LNAV / VNAV</span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#14B8A611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#14B8A6;font-family:monospace;min-width:36px;">PRO</span><span style="font-size:12px;color:#CBD5E1;">Procedures — SOP, QRH, NNC, actions mémoire</span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#06B6D411;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#06B6D4;font-family:monospace;min-width:36px;">SA</span><span style="font-size:12px;color:#CBD5E1;">Situation Awareness — conscience permanente de la situation</span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#8B5CF611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#8B5CF6;font-family:monospace;min-width:36px;">WLM</span><span style="font-size:12px;color:#CBD5E1;">Workload Management — priorisation, délégation des tâches</span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#EC489911;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#EC4899;font-family:monospace;min-width:36px;">COM</span><span style="font-size:12px;color:#CBD5E1;">Communication — phraséologie ATC, échanges équipage, callouts</span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#10B98111;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#10B981;font-family:monospace;min-width:36px;">LTW</span><span style="font-size:12px;color:#CBD5E1;">Leadership &amp; Teamwork — assertivité, coordination, suivi croisé</span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#F59E0B11;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#F59E0B;font-family:monospace;min-width:36px;">PSD</span><span style="font-size:12px;color:#CBD5E1;">Problem Solving &amp; Decision — FORDEC, adaptabilité, biais cognitifs</span></div>
-<div style="display:flex;gap:10px;align-items:center;background:#3B82F611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#3B82F6;font-family:monospace;min-width:36px;">KNO</span><span style="font-size:12px;color:#CBD5E1;">Knowledge — systèmes, limitations, réglementation EASA</span></div>
-</div>
-<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:8px 10px;margin-top:10px;">
-<div style="font-size:11px;color:#8B5CF6;font-weight:700;margin-bottom:3px;">⚡ BADGE NIVEAU EXPERT</div>
-<div style="font-size:12px;color:#94A3B8;">Certains exercices sont marqués <span style="background:#FF8C0022;border:1px solid #FF8C00;color:#FF8C00;font-size:10px;font-weight:900;padding:1px 7px;border-radius:5px;">⚡ EXPERT</span> — procédures avancées nécessitant une maîtrise multi-compétences. Ex: ILS RAW DATA, AIRSPEED UNRELIABLE, RNP AR…</div>
-</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 3. WORKFLOW PAS-À-PAS -->
-<!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🔄 WORKFLOW — 8 ÉTAPES</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
-<div style="min-width:28px;height:28px;background:#F97316;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">1</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">ACCUEIL — Instructor Station</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">① Entrez le <span style="color:#F97316;font-weight:700;">matricule</span> CPT et F/O → le nom se remplit automatiquement si connu.<br/>② Choisissez les rôles : <span style="color:#3B82F6;font-weight:700;">CPT</span> / <span style="color:#10B981;font-weight:700;">FO</span> / <span style="color:#F59E0B;font-weight:700;">TRI CHECK</span>.<br/>③ Nommez la session (ex: <em>B737 OPC LVO</em>).<br/>④ Optionnel : bouton <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:800;">🗂</span> pour charger un <strong style="color:#10B981;">Loft</strong> (liste pré-enregistrée).</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
-<div style="min-width:28px;height:28px;background:#F59E0B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">2</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">BRIEFING PRÉ-SESSION</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Cochez les items du briefing pré-vol (météo, NOTAM, fuel, performance…). Répondez aux questions de facilitation. Consultez les <strong style="color:#F59E0B;">tolérances EASA</strong> si besoin. Puis appuyez sur <span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:800;">✈ DÉMARRER</span>.</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
-<div style="min-width:28px;height:28px;background:#8B5CF6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">3</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">SESSION — Ajouter les exercices</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Bouton <span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:700;">+ EXERCICE</span> → recherchez par nom, compétence ou phase de vol.<br/>La barre <span style="color:#EF4444;font-weight:700;">MANDATORY</span> en haut affiche les boutons obligatoires EASA à cocher.<br/><strong style="color:#10B981;">Démarrez le chrono SESSION</strong> avant le premier exercice (bouton ▶ en haut à gauche).</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
-<div style="min-width:28px;height:28px;background:#EF4444;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">4</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">EXERCICE — 4 onglets d'évaluation</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.7;">
-<div style="margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;">EVALUATION</span> — Notes 1–5 par compétence + observables <span style="color:#10B981;font-weight:700;">+</span>/<span style="color:#EF4444;font-weight:700;">−</span></div>
-<div style="margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;">FFA</span> — FLY / FOCUS / ACT : conscience situationnelle séquencée</div>
-<div style="margin-bottom:3px;"><span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;">TEM</span> — Menaces · Erreurs · UAS · Contre-mesures · Recovery</div>
-<div><span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;">FACILITATION</span> — Questions de débrief à poser au stagiaire</div>
-</div>
-<div style="margin-top:6px;background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:6px 9px;">
-<span style="font-size:11px;color:#EF4444;font-weight:700;">⚠ RAPPEL :</span><span style="font-size:11px;color:#94A3B8;"> Le <strong style="color:#8B5CF6;">CRM</strong> n'est PAS dans l'exercice — il se note dans le <strong style="color:#10B981;">Débrief → onglet CRM</strong></span>
-</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
-<div style="min-width:28px;height:28px;background:#EC4899;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">5</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">T / M — Training ou Mandatory</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Le bouton <span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:1px 8px;border-radius:5px;font-size:11px;font-weight:700;">● T</span> désigne un exercice de formation libre.<br/>Le bouton <span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;padding:1px 8px;border-radius:5px;font-size:11px;font-weight:700;">● M</span> désigne un exercice obligatoire EASA. En cas d'échec (note &lt;3), un bouton <span style="color:#F59E0B;font-weight:700;">↻ 2ème ESSAI</span> apparaît.<br/>Une fois l'exercice terminé → appuyez sur <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:800;">CLÔTURER</span> pour l'inclure dans le débrief.</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
-<div style="min-width:28px;height:28px;background:#10B981;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">6</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">DÉBRIEF — 6 onglets</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.7;">
-<div style="margin-bottom:3px;"><span style="color:#3B82F6;font-weight:700;">Scores</span> — Radar CBTA CPT+FO superposés + barres par compétence</div>
-<div style="margin-bottom:3px;"><span style="color:#F59E0B;font-weight:700;">Exercices</span> — Récapitulatif de chaque exercice clôturé</div>
-<div style="margin-bottom:3px;"><span style="color:#EF4444;font-weight:700;">TEM</span> — Synthèse globale menaces / erreurs / UAS / recoveries</div>
-<div style="margin-bottom:3px;"><span style="color:#8B5CF6;font-weight:700;">CRM</span> — 12 items comportementaux OK/NOK · Pass mark 70%</div>
-<div style="margin-bottom:3px;"><span style="color:#06B6D4;font-weight:700;">Questionnaire</span> — Auto-évaluation du stagiaire</div>
-<div><span style="color:#10B981;font-weight:700;">Conclusion</span> — Synthèse + recommandations CPT/FO + export PDF</div>
-</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
-<div style="min-width:28px;height:28px;background:#3B82F6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">7</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">RAPPORT — PDF & Email</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Bouton <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:800;">RAPPORT</span> dans la barre débrief → rapport complet avec scores, TEM, conclusion, recommandations individuelles.<br/>Bouton <span style="color:#10B981;font-weight:700;">✉ EMAIL</span> pour l'envoyer directement. Le rapport est aussi archivé dans l'historique.</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;">
-<div style="min-width:28px;height:28px;background:#64748B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">8</div>
-<div>
-<div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">FIN — Sauvegarder & Historique</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Bouton <span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:700;">FIN</span> → la session est archivée avec tous les scores, le rapport PDF et les données TEM. Retrouvez-la dans <span style="color:#8B5CF6;font-weight:700;">Tableau de bord → Historique</span>.</div>
-</div>
-</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 4. CATÉGORIES EXERCICES -->
+<!-- CHAPITRE 2 — GRILLE DE NOTATION CBTA -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">📂 BIBLIOTHÈQUE D'EXERCICES</div>
-<div style="display:flex;flex-direction:column;gap:7px;">
-<div style="display:flex;align-items:center;gap:9px;"><span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">MEMORY</span><span style="font-size:12px;color:#CBD5E1;">Actions immédiates de mémoire — pas de checklist</span></div>
-<div style="display:flex;align-items:center;gap:9px;"><span style="background:#F9731622;border:1px solid #F97316;color:#F97316;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">MANEUVER</span><span style="font-size:12px;color:#CBD5E1;">Manœuvres spéciales — TCAS, Windshear, GPWS, Upset…</span></div>
-<div style="display:flex;align-items:center;gap:9px;"><span style="background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">FLIGHT PATTERN</span><span style="font-size:12px;color:#CBD5E1;">Procédures d'approche et figures standards</span></div>
-<div style="display:flex;align-items:center;gap:9px;"><span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">NNC</span><span style="font-size:12px;color:#CBD5E1;">Non-Normal Checklists — pannes systèmes QRH</span></div>
-<div style="display:flex;align-items:center;gap:9px;"><span style="background:#DC262622;border:1px solid #DC2626;color:#DC2626;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">MANDATORY</span><span style="font-size:12px;color:#CBD5E1;">Obligatoires EASA — RTO, SE ILS, SE GA, SE LDG, TCAS, Windshear, Upset</span></div>
-<div style="display:flex;align-items:center;gap:9px;"><span style="background:#EC489922;border:1px solid #EC4899;color:#EC4899;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">LVO</span><span style="font-size:12px;color:#CBD5E1;">Low Visibility Operations — CAT II/III, LVTO, LVTO REJECT</span></div>
-<div style="display:flex;align-items:center;gap:9px;"><span style="background:#0EA5E922;border:1px solid #0EA5E9;color:#0EA5E9;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:100px;text-align:center;">RNP</span><span style="font-size:12px;color:#CBD5E1;">Approches RNP et RNP AR — Navigation de précision</span></div>
-</div>
-<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:7px;padding:7px 10px;margin-top:8px;">
-<div style="font-size:11px;color:#F59E0B;font-weight:700;margin-bottom:3px;">💡 RECHERCHE INTELLIGENTE</div>
-<div style="font-size:12px;color:#94A3B8;">Tapez directement dans la barre de recherche : nom (<em>ENGINE FIRE</em>), compétence (<em>SA, WLM</em>), page QRH (<em>MAN.1</em>), ou phase (<em>TAKEOFF</em>). Les filtres par catégorie et phase de vol s'appliquent en temps réel.</div>
-</div>
+  <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:12px;">🎨 CHAPITRE 2 — GRILLE DE NOTATION CBTA</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">5 niveaux de performance. Chaque note correspond à un comportement observable défini — pas une appréciation subjective.</div>
+
+  <!-- Les 5 grades -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;">
+    <div style="background:#3B82F618;border:1px solid #3B82F655;border-radius:9px;padding:10px 11px;">
+      <div style="font-size:30px;font-weight:900;color:#3B82F6;line-height:1;">5</div>
+      <div style="font-size:11px;color:#3B82F6;font-weight:800;margin-top:3px;letter-spacing:1px;">EXEMPLAIRE</div>
+      <div style="font-size:11px;color:#64748B;margin-top:4px;line-height:1.4;">Maîtrise totale. Autonome même sous pression. Peut enseigner.</div>
+    </div>
+    <div style="background:#10B98118;border:1px solid #10B98155;border-radius:9px;padding:10px 11px;">
+      <div style="font-size:30px;font-weight:900;color:#10B981;line-height:1;">4</div>
+      <div style="font-size:11px;color:#10B981;font-weight:800;margin-top:3px;letter-spacing:1px;">AU-DESSUS</div>
+      <div style="font-size:11px;color:#64748B;margin-top:4px;line-height:1.4;">Légères imperfections. Corrections autonomes. Très bon niveau.</div>
+    </div>
+    <div style="background:#F59E0B18;border:1px solid #F59E0B55;border-radius:9px;padding:10px 11px;">
+      <div style="font-size:30px;font-weight:900;color:#F59E0B;line-height:1;">3</div>
+      <div style="font-size:11px;color:#F59E0B;font-weight:800;margin-top:3px;letter-spacing:1px;">STANDARD ✓</div>
+      <div style="font-size:11px;color:#64748B;margin-top:4px;line-height:1.4;">Seuil de réussite. Conforme SOP/AOM. Acceptable en ligne.</div>
+    </div>
+    <div style="background:#F9731618;border:1px solid #F9731655;border-radius:9px;padding:10px 11px;">
+      <div style="font-size:30px;font-weight:900;color:#F97316;line-height:1;">2</div>
+      <div style="font-size:11px;color:#F97316;font-weight:800;margin-top:3px;letter-spacing:1px;">SOUS-STANDARD</div>
+      <div style="font-size:11px;color:#64748B;margin-top:4px;line-height:1.4;">Lacunes visibles. Suivi obligatoire. Remédiation à planifier.</div>
+    </div>
+    <div style="background:#EF444418;border:1px solid #EF444455;border-radius:9px;padding:10px 11px;grid-column:span 2;">
+      <div style="font-size:30px;font-weight:900;color:#EF4444;line-height:1;">1</div>
+      <div style="font-size:11px;color:#EF4444;font-weight:800;margin-top:3px;letter-spacing:1px;">INACCEPTABLE — REMÉDIATION IMMÉDIATE</div>
+      <div style="font-size:11px;color:#64748B;margin-top:4px;line-height:1.4;">Performance dangereuse ou nulle. Exercice à refaire. Briefing obligatoire avant toute progression.</div>
+    </div>
+  </div>
+
+  <!-- Règles d'or -->
+  <div style="background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:9px 12px;margin-bottom:8px;">
+    <div style="font-size:11px;font-weight:800;color:#EF4444;margin-bottom:4px;">⚠ RÈGLES D'OR</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.6;">
+      <div style="margin-bottom:3px;">• Un <span style="color:#F59E0B;font-weight:700;">3</span> = seuil de réussite minimum — ne jamais omettre de débriéfer même un 3 juste passé.</div>
+      <div style="margin-bottom:3px;">• Un <span style="color:#F97316;font-weight:700;">2</span> = remédiation à planifier — JAMAIS laisser sans feedback structuré et documenté.</div>
+      <div>• Un <span style="color:#3B82F6;font-weight:700;">5</span> = rare et exceptionnel — documente le comportement exemplaire précis dans les observations.</div>
+    </div>
+  </div>
+
+  <!-- Exemple concret -->
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE CONCRET</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Bob anticipe spontanément un vent de travers 22 kt avant même le briefing approche, adapte la Vref et briefe un GO critères déroute. Tu notes : <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:800;font-family:monospace;">SA</span><span style="color:#10B981;font-weight:900;">:4</span> <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:800;font-family:monospace;">WLM</span><span style="color:#10B981;font-weight:900;">:4</span> + obs+ "Anticipation vent traversier proactive avant briefing ATC".</div>
+  </div>
+
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Lors du prochain exercice, force-toi à cocher <strong>3 compétences minimum</strong> et à taper au moins 1 observation positive et 1 observation négative précise.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 5. LOFTS -->
+<!-- CHAPITRE 3 — LES 9 COMPÉTENCES CBTA -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">🗂 LOFTS DE SESSION</div>
-<div style="display:flex;flex-direction:column;gap:9px;">
-<div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:17px;flex-shrink:0;margin-top:1px;">🗂</span>
-<div>
-<div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Qu'est-ce qu'un Loft ?</div>
-<div style="font-size:12px;color:#94A3B8;">Une liste d'exercices sauvegardée et réutilisable. Ex: créez <em>OPC Standard 2026</em> une seule fois, rechargez-le en un tap à chaque session.</div>
-</div>
-</div>
-<div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:17px;flex-shrink:0;margin-top:1px;">➕</span>
-<div>
-<div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Créer un Loft</div>
-<div style="font-size:12px;color:#94A3B8;">Bouton <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:700;">🗂</span> (accueil) → <span style="color:#10B981;font-weight:700;">＋ NOUVEAU LOFT</span> → nommez-le → <span style="color:#3B82F6;font-weight:700;">＋ Ajouter</span> pour ouvrir la bibliothèque → sélectionnez les exercices un par un → <span style="color:#10B981;font-weight:700;">SAUVEGARDER</span>.</div>
-</div>
-</div>
-<div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:17px;flex-shrink:0;margin-top:1px;">▶</span>
-<div>
-<div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">Charger un Loft</div>
-<div style="font-size:12px;color:#94A3B8;"><span style="color:#10B981;font-weight:700;">Avant session :</span> bouton ▶ Charger → les exercices s'ajouteront au démarrage.<br/><span style="color:#3B82F6;font-weight:700;">Session déjà active :</span> les exercices s'ajoutent immédiatement à la liste en cours.</div>
-</div>
-</div>
-<div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:7px 10px;margin-top:2px;">
-<div style="font-size:11px;color:#10B981;font-weight:700;margin-bottom:2px;">💡 IDÉES DE LOFTS</div>
-<div style="font-size:12px;color:#94A3B8;">OPC Standard · LVO Check · Initial Type Rating · Remédiation pilote (exercices ciblés sur ses faiblesses)</div>
-</div>
-</div>
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:12px;">🧠 CHAPITRE 3 — LES 9 COMPÉTENCES CBTA</div>
+
+  <!-- KNOWLEDGE-BASED -->
+  <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:7px;">KNOWLEDGE-BASED</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+    <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">KNO</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Knowledge</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">Systèmes B737, limitations, réglementation EASA — la base théorique qui soutient tout.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : Bob hésite sur la limite VMO/MMO en descente rapide.</div>
+    </div>
+    <div style="background:#84CC1611;border:1px solid #84CC1633;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#84CC1622;border:1px solid #84CC1655;color:#84CC16;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">PRO</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Procedures</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">SOP, QRH, NNC, actions mémoire — application rigoureuse dans le bon ordre.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : callout GEAR DN non effectué à l'extension — PRO:2.</div>
+    </div>
+  </div>
+
+  <!-- COGNITIVE -->
+  <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:7px;">COGNITIVE</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+    <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">SA</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Situation Awareness</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">Conscience permanente de la situation aéronef, météo, trafic, carburant.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : équipage pas conscient que le dégagement est CAVOK mais l'alternant fermé.</div>
+    </div>
+    <div style="background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">PSD</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Problem Solving &amp; Decision</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">FORDEC, adaptabilité, gestion des biais cognitifs — décider vite et bien.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : Bob tient à atterrir malgré 3 items QRH non complétés — PSD:1.</div>
+    </div>
+    <div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">WLM</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Workload Management</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">Priorisation, délégation, gestion du temps en situation complexe.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : CPT gère checklist ET ATC ET ACAS en même temps sans déléguer au FO.</div>
+    </div>
+  </div>
+
+  <!-- BEHAVIORAL -->
+  <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:7px;">BEHAVIORAL</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+    <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">LTW</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Leadership &amp; Teamwork</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">Assertivité, coordination équipage, suivi croisé mutuel.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : FO ne challenge pas une erreur évidente du CPT — LTW:2.</div>
+    </div>
+    <div style="background:#F9731611;border:1px solid #F9731633;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#F9731622;border:1px solid #F9731655;color:#F97316;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">FPM</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Flight Path Management</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">Trajectoire et énergie en pilotage manuel — stabilité approche, gestion des déviations.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : approche non stabilisée à 500ft — déviation ILS > 1 dot.</div>
+    </div>
+    <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">FPA</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Flight Path Automation</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">AP, AT, FMC, LNAV, VNAV — programmation, surveillance et reprise des automatismes.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : FMC pas reprogrammé après déroutement — FPA:2.</div>
+    </div>
+    <div style="background:#EC489911;border:1px solid #EC489933;border-radius:8px;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px;">
+        <span style="background:#EC489922;border:1px solid #EC489955;color:#EC4899;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">COM</span>
+        <span style="font-size:12px;font-weight:700;color:#F1F5F9;">Communication</span>
+      </div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;margin-bottom:3px;">Phraséologie ATC, échanges équipage, callouts SOP — clarté, concision, confirmation.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Déclencheur : Bob répond au TCAS sans relire le RA à voix haute — COM:2.</div>
+    </div>
+  </div>
+
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Ouvre l'historique de tes dernières sessions → repère quelle compétence revient le plus souvent avec un score 2. C'est ton axe de travail prioritaire.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 6. MATRICULE -->
+<!-- CHAPITRE 4 — ANATOMIE D'UN EXERCICE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #F9731633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#F97316;letter-spacing:2px;margin-bottom:10px;">👤 IDENTIFICATION PILOTES — MATRICULE</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="font-size:12px;color:#94A3B8;line-height:1.7;">
-① Entrez le matricule compagnie dans le champ dédié (ex: <em>CA-1234</em>).<br/>
-② Si le pilote est connu, le badge passe de <span style="background:#1E2530;color:#475569;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:700;">NEW</span> à <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:700;">✓ N SESSIONS</span> et le nom se remplit seul.<br/>
-③ Si nouveau pilote, remplissez le nom manuellement — il sera mémorisé pour la prochaine fois.
-</div>
-<div style="background:#F9731611;border:1px solid #F9731633;border-radius:7px;padding:7px 10px;">
-<div style="font-size:11px;color:#F97316;font-weight:700;margin-bottom:2px;">POURQUOI LE MATRICULE ?</div>
-<div style="font-size:12px;color:#94A3B8;">Deux pilotes peuvent avoir le même nom. Le matricule garantit que le bon dossier de progression est retrouvé, même des mois plus tard ou par un autre TRI.</div>
-</div>
-</div>
+<div class="guide-sec" style="background:#141B26;border:1px solid #F9731644;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#F97316;letter-spacing:2px;margin-bottom:12px;">📂 CHAPITRE 4 — ANATOMIE D'UN EXERCICE</div>
+
+  <!-- Niveaux de priorité -->
+  <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:7px;">NIVEAUX DE PRIORITÉ</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+    <div style="display:flex;align-items:center;gap:10px;background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:7px 10px;">
+      <span style="background:#EF4444;color:#fff;padding:2px 9px;border-radius:5px;font-size:11px;font-weight:800;min-width:72px;text-align:center;">CRITICAL</span>
+      <span style="font-size:12px;color:#CBD5E1;">Exercices vitaux EASA — évaluation chaque OPC/PC. Échec = blocage. Ex: ENGINE FIRE, DECOMPRESSION EXPLOSIVE, TCAS RA.</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:#F9731611;border:1px solid #F9731633;border-radius:7px;padding:7px 10px;">
+      <span style="background:#F97316;color:#fff;padding:2px 9px;border-radius:5px;font-size:11px;font-weight:800;min-width:72px;text-align:center;">HIGH</span>
+      <span style="font-size:12px;color:#CBD5E1;">Exercices importants, recommandés chaque cycle. Ex: SINGLE ENGINE APPROACH, WINDSHEAR ESCAPE, RNP AR.</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:7px 10px;">
+      <span style="background:#10B981;color:#090C12;padding:2px 9px;border-radius:5px;font-size:11px;font-weight:800;min-width:72px;text-align:center;">STANDARD</span>
+      <span style="font-size:12px;color:#CBD5E1;">Exercices de base, formation continue. Ex: NDB APPROACH, VOR/DME, ILS MANUAL, PATTERN WORK.</span>
+    </div>
+  </div>
+
+  <!-- Phases de vol -->
+  <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:7px;">PHASES DE VOL — FILTRES DISPONIBLES</div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;">
+    <span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F6;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">PREFLIGHT</span>
+    <span style="background:#F9731622;border:1px solid #F9731644;color:#F97316;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">TAKEOFF</span>
+    <span style="background:#10B98122;border:1px solid #10B98144;color:#10B981;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">CLIMB</span>
+    <span style="background:#8B5CF622;border:1px solid #8B5CF644;color:#8B5CF6;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">CRUISE</span>
+    <span style="background:#06B6D422;border:1px solid #06B6D444;color:#06B6D4;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">DESCENT</span>
+    <span style="background:#EC489922;border:1px solid #EC489944;color:#EC4899;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">APPROACH</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B44;color:#F59E0B;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">LANDING</span>
+    <span style="background:#EF444422;border:1px solid #EF444444;color:#EF4444;padding:3px 8px;border-radius:5px;font-size:10px;font-weight:700;">ABNORMAL</span>
+  </div>
+
+  <!-- Carte exercice type -->
+  <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:7px;">ANATOMIE D'UNE CARTE EXERCICE</div>
+  <div style="background:#0F172A;border:1px solid #334155;border-radius:9px;padding:10px 12px;margin-bottom:10px;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;">
+      <div>
+        <div style="font-size:13px;font-weight:800;color:#F1F5F9;">ENGINE FIRE IN FLIGHT</div>
+        <div style="font-size:11px;color:#64748B;">NNC · QRH MAN.31 · 12 min</div>
+      </div>
+      <span style="background:#EF4444;color:#fff;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:800;">CRITICAL</span>
+    </div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px;">
+      <span style="background:#F9731622;border:1px solid #F9731644;color:#F97316;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">CLIMB</span>
+      <span style="background:#EF444422;border:1px solid #EF444444;color:#EF4444;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">CRUISE</span>
+      <span style="background:#EC489922;border:1px solid #EC489944;color:#EC4899;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;">APPROACH</span>
+    </div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;">
+      <span style="background:#84CC1622;border:1px solid #84CC1655;color:#84CC16;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">PRO</span>
+      <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">SA</span>
+      <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">PSD</span>
+      <span style="background:#EC489922;border:1px solid #EC489955;color:#EC4899;padding:2px 7px;border-radius:5px;font-size:11px;font-weight:800;font-family:monospace;">COM</span>
+    </div>
+  </div>
+
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Dans la Liste exercices → active le filtre <strong>CRITICAL</strong> → tu verras exactement ce que l'EASA exige pour un OPC/PC complet. Mémorise-les.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 7. CHRONOS -->
+<!-- CHAPITRE 5 — SCORER PENDANT LA SÉANCE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:10px;">⏱ CHRONOS — SESSION · EXERCICE · TIME LIMIT</div>
-<div style="display:flex;flex-direction:column;gap:12px;">
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98144;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">✍ CHAPITRE 5 — SCORER PENDANT LA SÉANCE</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:10px;">Le scoring en temps réel c'est le coeur de l'app. Voici les 5 sous-étapes dans l'ordre.</div>
 
-<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:800;color:#06B6D4;letter-spacing:1px;margin-bottom:7px;">① CHRONO SESSION — HH:MM:SS (manuel)</div>
-<div style="font-size:12px;color:#94A3B8;margin-bottom:7px;">Affiché en haut à gauche de l'écran session. <strong style="color:#F1F5F9;">Ne démarre pas automatiquement.</strong> Appuyez sur <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 6px;border-radius:4px;font-weight:800;">▶</span> quand vous êtes prêt. Pause avec <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 6px;border-radius:4px;font-weight:800;">⏸</span>.</div>
-<div style="display:flex;flex-direction:column;gap:4px;">
-<div style="display:flex;align-items:center;gap:8px;"><span style="font-family:monospace;font-weight:900;color:#10B981;font-size:13px;min-width:80px;">0 → 2h00</span><div style="flex:1;height:3px;background:#10B981;border-radius:2px;"></div><span style="font-size:11px;color:#10B981;font-weight:700;">VERT</span><span style="font-size:11px;color:#64748B;margin-left:4px;">Normal</span></div>
-<div style="display:flex;align-items:center;gap:8px;"><span style="font-family:monospace;font-weight:900;color:#F59E0B;font-size:13px;min-width:80px;">2h → 3h50</span><div style="flex:1;height:3px;background:#F59E0B;border-radius:2px;"></div><span style="font-size:11px;color:#F59E0B;font-weight:700;">ORANGE</span><span style="font-size:11px;color:#64748B;margin-left:4px;">+ 🔔 bip à 2h00</span></div>
-<div style="display:flex;align-items:center;gap:8px;"><span style="font-family:monospace;font-weight:900;color:#EF4444;font-size:13px;min-width:80px;">3h50 → +</span><div style="flex:1;height:3px;background:#EF4444;border-radius:2px;"></div><span style="font-size:11px;color:#EF4444;font-weight:700;">ROUGE</span><span style="font-size:11px;color:#64748B;margin-left:4px;">+ clignotant + 🔔🔔 2 bips</span></div>
-<div style="background:#EF444411;border:1px solid #EF444433;border-radius:5px;padding:4px 8px;margin-top:2px;font-size:11px;"><span style="color:#EF4444;font-weight:700;">4h00</span><span style="color:#64748B;"> → FIN LÉGALE — 🔔🔔🔔🔔🔔 alarme finale</span></div>
-</div>
-</div>
+  <!-- Sous-étape 1 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#10B981;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Appuyer sur l'exercice — il s'ouvre</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Le chrono exercice démarre automatiquement. Tu vois les 4 onglets : EVAL · FFA · TEM · FACILITATION. Le nom de l'exercice et la page QRH sont affichés en haut.</div>
+    </div>
+  </div>
 
-<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:7px;">② CHRONO EXERCICE — MM:SS (automatique)</div>
-<div style="font-size:12px;color:#94A3B8;margin-bottom:6px;">Démarre <strong style="color:#F1F5F9;">automatiquement</strong> à l'ouverture de l'exercice. Grand affichage central. Boutons <span style="color:#94A3B8;font-weight:700;">⏸ PAUSE</span> et <span style="color:#EF4444;font-weight:700;">■ STOP</span>.<br/>Couleurs : blanc (en cours) · orange (en pause) · gris (arrêté).</div>
-</div>
+  <!-- Sous-étape 2 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#3B82F6;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Onglet EVAL — noter 1 à 5</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Pour chaque compétence active (pré-sélectionnée selon l'exercice), tape le bouton <span style="color:#EF4444;font-weight:700;">1</span> à <span style="color:#3B82F6;font-weight:700;">5</span>. Bascule entre <span style="color:#3B82F6;font-weight:700;">📋 CPT</span> et <span style="color:#10B981;font-weight:700;">📋 FO</span> pour noter chaque pilote séparément. La couleur du score s'adapte en temps réel.</div>
+    </div>
+  </div>
 
-<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:800;color:#A78BFA;letter-spacing:1px;margin-bottom:7px;">③ TIME LIMIT — Horloge numérique configurable</div>
-<div style="font-size:12px;color:#94A3B8;margin-bottom:6px;">Cliquez sur la case <span style="font-family:monospace;color:#64748B;font-weight:700;">--:--</span> en haut à droite de l'exercice → une horloge numérique s'ouvre (style cockpit). Réglage par boutons <strong>−10/−5/−1/+1/+5/+10</strong> minutes. Choisissez une couleur néon (cyan, lime, rose…). Validez → la limite est mémorisée pour cet exercice.</div>
-<div style="display:flex;flex-direction:column;gap:4px;">
-<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:#10B981;font-weight:700;min-width:100px;">&lt; 80% limite</span><div style="flex:1;height:3px;background:#10B981;border-radius:2px;"></div><span style="font-size:11px;color:#10B981;">VERT — barre neutre</span></div>
-<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:#F59E0B;font-weight:700;min-width:100px;">80% → 100%</span><div style="flex:1;height:3px;background:#F59E0B;border-radius:2px;"></div><span style="font-size:11px;color:#F59E0B;">ORANGE — pulsation</span></div>
-<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:#EF4444;font-weight:700;min-width:100px;">≥ 100%</span><div style="flex:1;height:3px;background:#EF4444;border-radius:2px;"></div><span style="font-size:11px;color:#EF4444;">ROUGE — flash + halo</span></div>
-</div>
-<div style="margin-top:6px;font-size:11px;color:#64748B;">⏱ Le bouton horloge sur chaque carte exercice permet de régler la limite <em>sans ouvrir l'exercice</em>.</div>
-</div>
+  <!-- Sous-étape 3 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#8B5CF6;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Observations : + positif / − négatif</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Bouton <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:1px 5px;border-radius:4px;font-size:11px;font-weight:700;">+ OBS</span> pour un comportement positif. Bouton <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:1px 5px;border-radius:4px;font-size:11px;font-weight:700;">− OBS</span> pour un axe de progrès. Tape un texte précis — ex: <em>"Annonce GEAR DOWN avant le marqueur extérieur sans rappel"</em>. Plus c'est précis, plus le débrief est qualitatif.</div>
+    </div>
+  </div>
 
-</div>
+  <!-- Sous-étape 4 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#F59E0B;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Onglet FFA — cocher FLY / FOCUS / ACT</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Trois cases à cocher : <span style="color:#3B82F6;font-weight:700;">FLY</span> (trajectoire OK ?) <span style="color:#F59E0B;font-weight:700;">FOCUS</span> (conscience situationnelle OK ?) <span style="color:#EF4444;font-weight:700;">ACT</span> (actions adaptées ?). Coché = OUI · Décoché = NON à débriéfer.</div>
+    </div>
+  </div>
+
+  <!-- Sous-étape 5 -->
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#EF4444;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</div>
+    <div>
+      <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Onglet TEM — identifier menaces + erreurs</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Ajoute les menaces externes, les erreurs équipage et les UAS détectés. Chaque item est horodaté automatiquement. Voir Chapitre 6 pour le détail TEM complet.</div>
+    </div>
+  </div>
+
+  <!-- Exemple concret -->
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE CONCRET</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Tu observes que Bob ne check pas les items ECAM après un avertissement de configuration : tu ouvres l'onglet EVAL → <span style="background:#84CC1622;border:1px solid #84CC1655;color:#84CC16;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:800;font-family:monospace;">PRO</span> → note <span style="color:#F97316;font-weight:900;">2</span> → puis obs− <em>"ECAM items CONFIG non séquencés après alerte — séquence QRH non respectée"</em>.</div>
+  </div>
+
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Ouvre n'importe quel exercice de la liste → note <strong>3 compétences</strong> avec des scores différents → ajoute <strong>1 obs positive</strong>. Tu verras comment le débrief se construit en temps réel.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 8. ONGLETS EXERCICE EN DÉTAIL -->
+<!-- CHAPITRE 6 — TEM : MENACES & ERREURS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:10px;">📋 DANS L'EXERCICE — DÉTAIL DES 4 ONGLETS</div>
+  <div style="font-size:13px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:10px;">⚡ CHAPITRE 6 — TEM : MENACES &amp; ERREURS</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">Le modèle TEM (Threat &amp; Error Management) de l'OACI structure l'analyse des risques en 4 catégories. Tu les enregistres en live dans l'onglet TEM de chaque exercice.</div>
 
-<div style="margin-bottom:12px;background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:10px 12px;">
-<div style="font-size:12px;font-weight:900;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">EVALUATION — Notes &amp; Observables</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Notez chaque compétence CBTA de 1 à 5 en touchant les boutons. Ajoutez des observables comportementaux en touchant <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:1px 5px;border-radius:4px;font-size:11px;font-weight:700;">+</span> (point positif) ou <span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;padding:1px 5px;border-radius:4px;font-size:11px;font-weight:700;">−</span> (axe de progrès). Basculez entre <span style="color:#3B82F6;font-weight:700;">📋 CPT</span> et <span style="color:#10B981;font-weight:700;">📋 FO</span> pour noter chaque pilote séparément.</div>
-</div>
+  <!-- 4 catégories TEM -->
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:10px;">
+    <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:11px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">▲ MENACES (THREATS) — Externes à l'équipage</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-bottom:4px;">Événements ou conditions imposées de l'extérieur. L'équipage ne les cause pas mais doit les gérer.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Exemples B737 : vent de travers 25kt non briefé · ATC instruction tardive · panne système · contamination piste · trafic ACAS.</div>
+    </div>
+    <div style="background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:11px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:4px;">● ERREURS (ERRORS) — Commises par l'équipage</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-bottom:4px;">Actions ou inactions de l'équipage qui s'écartent des SOP ou de l'intention.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Exemples : callout GEAR omis à 1000ft · mauvais réglage altimètre · QRH non complété avant approche · FCU mal programmé.</div>
+    </div>
+    <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">◆ UAS — Undesired Aircraft States</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-bottom:4px;">États de l'avion non désirés résultant de menaces ou d'erreurs non maîtrisées.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Exemples : déviation cap supérieure à 15° · vitesse hors plage · altitude non tenue ± 200ft · approche non stabilisée.</div>
+    </div>
+    <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:11px;font-weight:800;color:#10B981;letter-spacing:1px;margin-bottom:4px;">✓ RECOVERIES — Corrections réussies</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-bottom:4px;">Actions de l'équipage qui ramènent l'avion vers un état désiré après un UAS ou une erreur détectée.</div>
+      <div style="font-size:11px;color:#64748B;font-style:italic;">Exemples : remise des gaz au bon moment · correction cap spontanée avant limite · challenge FO sur altitude.</div>
+    </div>
+  </div>
 
-<div style="margin-bottom:12px;background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:10px 12px;">
-<div style="font-size:12px;font-weight:900;color:#F59E0B;letter-spacing:1px;margin-bottom:6px;">FFA — FLY · FOCUS · ACT</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Grille de conscience situationnelle en 3 niveaux :<br/><span style="color:#3B82F6;font-weight:700;">FLY</span> — L'avion est-il en sécurité ? Position, énergie, trajectoire.<br/><span style="color:#F59E0B;font-weight:700;">FOCUS</span> — L'équipage gère-t-il la menace principale ?<br/><span style="color:#EF4444;font-weight:700;">ACT</span> — Les actions sont-elles adaptées et priorisées ?</div>
-</div>
+  <!-- Niveaux de mitigation -->
+  <div style="background:#0F172A;border:1px solid #334155;border-radius:8px;padding:9px 11px;margin-bottom:10px;">
+    <div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:1px;margin-bottom:6px;">NIVEAU DE CONTRE-MESURE PAR ITEM</div>
+    <div style="display:flex;flex-direction:column;gap:5px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;min-width:70px;text-align:center;">OK ✓</span>
+        <span style="font-size:12px;color:#94A3B8;">Menace/erreur identifiée ET gérée correctement</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;min-width:70px;text-align:center;">PARTIEL ~</span>
+        <span style="font-size:12px;color:#94A3B8;">Gérée incomplètement ou tardivement — à débriéfer</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:800;min-width:70px;text-align:center;">NON ✗</span>
+        <span style="font-size:12px;color:#94A3B8;">Non identifiée ou non traitée — point critique à adresser</span>
+      </div>
+    </div>
+  </div>
 
-<div style="margin-bottom:12px;background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:10px 12px;">
-<div style="font-size:12px;font-weight:900;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">TEM — Threat &amp; Error Management</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Trois sections à remplir pendant l'exercice :<br/>
-<span style="color:#3B82F6;font-weight:700;">▲ MENACES</span> — événements externes (météo, ATC, panne système…)<br/>
-<span style="color:#EF4444;font-weight:700;">● ERREURS</span> — actions ou inactions de l'équipage (oubli, mauvaise séquence…)<br/>
-<span style="color:#F59E0B;font-weight:700;">◆ UAS</span> — États Indésirables Résultants (déviation altitude, vitesse anormale…)</div>
-<div style="font-size:12px;color:#94A3B8;">Pour chaque item : marquez la contre-mesure <span style="color:#10B981;font-weight:700;">✓ Gérée</span> / <span style="color:#F59E0B;font-weight:700;">~ Partielle</span> / <span style="color:#EF4444;font-weight:700;">✗ Non gérée</span>. Chaque item est horodaté automatiquement (⏱HH:MM). Bouton <span style="color:#A78BFA;font-weight:700;">🎲</span> pour injecter une menace surprise.</div>
-</div>
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE CONCRET</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">
+      <div style="margin-bottom:3px;">Menace : <em>"Vent traversier 25kt → identifiée mais briefing approche incomplet"</em> → PARTIEL</div>
+      <div style="margin-bottom:3px;">Erreur : <em>"Callout GEAR DOWN omis à 1000ft radar altitude"</em> → NON</div>
+      <div style="margin-bottom:3px;">UAS : <em>"Déviation cap &gt; 15° pendant procédure QRH"</em></div>
+      <div>Recovery : <em>"FO annonce cap — CPT corrige spontanément avant limite"</em> → OK</div>
+    </div>
+  </div>
 
-<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:10px 12px;">
-<div style="font-size:12px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:6px;">FACILITATION — Questions de débrief</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Liste de questions préparées spécifiquement pour cet exercice. Utilisez-les pendant le débrief en vol ou en salle pour guider la réflexion du stagiaire sur ses propres actions. Touches pour cocher les questions abordées.</div>
-</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 9. MANDATORY -->
-<!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #DC262633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#DC2626;letter-spacing:2px;margin-bottom:10px;">⚠️ EXERCICES MANDATORY — OBLIGATOIRES EASA</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Les exercices MANDATORY sont les éléments <strong style="color:#EF4444;">obligatoires réglementaires</strong> EASA que tout OPC ou PC doit contenir. Ils apparaissent dans une barre colorée en haut de la liste des exercices pour un accès rapide.</div>
-<div style="background:#DC262611;border:1px solid #DC262633;border-radius:8px;padding:9px 11px;">
-<div style="font-size:11px;font-weight:800;color:#DC2626;letter-spacing:1px;margin-bottom:6px;">EXERCICES MANDATORY B737</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
-<div style="font-size:11px;color:#94A3B8;">• RTO (Rejected Takeoff)</div>
-<div style="font-size:11px;color:#94A3B8;">• SE ILS Approach</div>
-<div style="font-size:11px;color:#94A3B8;">• SE Go-Around</div>
-<div style="font-size:11px;color:#94A3B8;">• SE Landing</div>
-<div style="font-size:11px;color:#94A3B8;">• Non-Precision Approach</div>
-<div style="font-size:11px;color:#94A3B8;">• TCAS RA</div>
-<div style="font-size:11px;color:#94A3B8;">• Windshear Escape</div>
-<div style="font-size:11px;color:#94A3B8;">• Upset Recovery</div>
-</div>
-</div>
-<div style="display:flex;flex-direction:column;gap:6px;">
-<div style="display:flex;align-items:center;gap:8px;">
-<span style="background:#1E2530;color:#64748B;border:1px solid #334155;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;">RTO</span>
-<span style="font-size:12px;color:#94A3B8;">Fond sombre → exercice <strong style="color:#F1F5F9;">non effectué</strong></span>
-</div>
-<div style="display:flex;align-items:center;gap:8px;">
-<span style="background:#10B98133;color:#10B981;border:1px solid #10B981;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;">RTO ✅</span>
-<span style="font-size:12px;color:#94A3B8;">Fond coloré → exercice <strong style="color:#10B981;">clôturé</strong></span>
-</div>
-</div>
-<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:7px;padding:7px 10px;">
-<div style="font-size:11px;color:#F59E0B;font-weight:700;margin-bottom:3px;">↻ 2ème ESSAI MANDATORY</div>
-<div style="font-size:12px;color:#94A3B8;">Si un exercice MANDATORY est noté <strong style="color:#EF4444;">&lt; 3 (sous-standard)</strong>, un bouton <span style="color:#F59E0B;font-weight:700;">↻ 2ème ESSAI</span> apparaît automatiquement dans la liste. Appuyez dessus pour créer un doublon de l'exercice à refaire.</div>
-</div>
-</div>
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Avant ton prochain départ simulé → identifie <strong>2 menaces</strong> probables (météo, ATC, piste, système) et entre-les dans le TEM dès l'ouverture de l'exercice. Tu verras la puissance de l'outil.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 10. MENACE ALÉATOIRE -->
+<!-- CHAPITRE 7 — FFA : FLY FOCUS ACT -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #7C3AED33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:2px;margin-bottom:10px;">🎲 MENACE ALÉATOIRE — INJECTEUR TEM</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Bouton <span style="background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;padding:1px 7px;border-radius:5px;font-weight:800;">🎲</span> dans la barre du bas d'un exercice ouvert. Ouvre une liste de <strong style="color:#A78BFA;">16 scénarios</strong> (ATC · Cabine · Météo · Piste · Système) regroupés par catégorie. Ou utilisez <span style="color:#EF4444;font-weight:700;">🎲 INJECTION ALÉATOIRE</span> pour surprendre au hasard.</div>
-<div style="display:flex;flex-direction:column;gap:5px;">
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:6px;padding:6px 9px;font-size:11px;color:#94A3B8;"><span style="color:#3B82F6;font-weight:700;">🎙 ATC (4)</span> — Déroutement · NORDO 7600 · TCAS RA · Piste obstruée</div>
-<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:6px;padding:6px 9px;font-size:11px;color:#94A3B8;"><span style="color:#F59E0B;font-weight:700;">🚨 CABINE (4)</span> — Médical · Porte non armée · Fumée · Passager perturbateur</div>
-<div style="background:#10B98111;border:1px solid #10B98133;border-radius:6px;padding:6px 9px;font-size:11px;color:#94A3B8;"><span style="color:#10B981;font-weight:700;">⛈ MÉTÉO (3)</span> — Dégagement indispo · Windshear · Givrage non anticipé</div>
-<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:6px;padding:6px 9px;font-size:11px;color:#94A3B8;"><span style="color:#06B6D4;font-weight:700;">🧊 PISTE (1)</span> — Contamination / Braking action POOR</div>
-<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:6px;padding:6px 9px;font-size:11px;color:#94A3B8;"><span style="color:#A78BFA;font-weight:700;">⚙ SYSTÈME (4)</span> — Fuel imbal · Pressurisation · Feu cargo · Bird strike</div>
-</div>
-<div style="background:#7C3AED11;border:1px solid #7C3AED33;border-radius:7px;padding:7px 10px;">
-<div style="font-size:11px;color:#A78BFA;font-weight:700;margin-bottom:3px;">EFFET AUTOMATIQUE</div>
-<div style="font-size:12px;color:#94A3B8;">La menace est injectée <strong>simultanément dans le TEM CPT et FO</strong> avec horodatage. Une alerte colorée s'affiche 2,8 sec, puis disparaît. Idéal : injecter sans prévenir les stagiaires et observer leur réaction WLM/SA.</div>
-</div>
-</div>
-</div>
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B44;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">🎯 CHAPITRE 7 — FFA : FLY FOCUS ACT</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">Le modèle FFA est le filtre de conscience situationnelle de l'OACI. Trois niveaux hiérarchiques — si le premier échoue, les autres n'ont plus de sens.</div>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 11. DÉBRIEF -->
-<!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">📊 DÉBRIEF — DÉTAIL DES 6 ONGLETS</div>
-<div style="display:flex;flex-direction:column;gap:10px;">
+  <!-- 3 piliers FFA -->
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
+    <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:10px 12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#3B82F6;font-size:18px;font-weight:900;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✈</div>
+        <div>
+          <div style="font-size:14px;font-weight:900;color:#3B82F6;letter-spacing:1px;">FLY</div>
+          <div style="font-size:11px;color:#64748B;">Contrôle trajectoire &amp; paramètres</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">L'avion est-il en sécurité ? Altitude, vitesse, trajectoire, énergie — la maîtrise du pilotage pur. Si FLY est NON, tout s'arrête là.</div>
+    </div>
+    <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:10px 12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#F59E0B;font-size:18px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">👁</div>
+        <div>
+          <div style="font-size:14px;font-weight:900;color:#F59E0B;letter-spacing:1px;">FOCUS</div>
+          <div style="font-size:11px;color:#64748B;">Conscience situationnelle + anticipation</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">L'équipage gère-t-il la bonne priorité ? Est-il conscient de la menace principale ? Anticipe-t-il les 5 prochaines minutes ? FOCUS NON = tunnel vision ou saturation.</div>
+    </div>
+    <div style="background:#EF444411;border:1px solid #EF444433;border-radius:9px;padding:10px 12px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:5px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:#EF4444;font-size:18px;font-weight:900;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">⚡</div>
+        <div>
+          <div style="font-size:14px;font-weight:900;color:#EF4444;letter-spacing:1px;">ACT</div>
+          <div style="font-size:11px;color:#64748B;">Prise de décision + actions adaptées</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Les actions sont-elles appropriées, séquencées, et proportionnées à la situation ? ACT NON = décision inadaptée ou manque d'initiative critique.</div>
+    </div>
+  </div>
 
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:900;color:#3B82F6;margin-bottom:5px;">SCORES — Radar CBTA</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Radar en toile d'araignée : <span style="color:#3B82F6;font-weight:700;">CPT en bleu</span> et <span style="color:#10B981;font-weight:700;">FO en vert</span> superposés pour comparer les profils. Barres de score par compétence avec couleur CBTA. Score global en grand. Bouton <span style="color:#F59E0B;font-weight:700;">📺 DATA SHOW</span> pour projection plein écran.</div>
-</div>
+  <!-- Règle et interprétation -->
+  <div style="background:#0F172A;border:1px solid #334155;border-radius:8px;padding:9px 11px;margin-bottom:10px;">
+    <div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:1px;margin-bottom:6px;">INTERPRÉTATION RAPIDE</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;align-items:center;gap:8px;"><span style="color:#10B981;font-weight:800;font-size:12px;min-width:100px;">FLY+FOCUS+ACT</span><span style="font-size:12px;color:#10B981;">Séquence parfaite — vol maîtrisé de bout en bout ✓</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="color:#F59E0B;font-weight:800;font-size:12px;min-width:100px;">FLY OK / FOCUS NON</span><span style="font-size:12px;color:#94A3B8;">Pilote en mode réactif — pas d'anticipation à travailler</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="color:#EF4444;font-weight:800;font-size:12px;min-width:100px;">FLY NON</span><span style="font-size:12px;color:#EF4444;">Perte de contrôle basique — priorité absolue en remédiation</span></div>
+    </div>
+  </div>
 
-<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:900;color:#F59E0B;margin-bottom:5px;">EXERCICES — Récapitulatif</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Tous les exercices clôturés listés avec leur score moyen, durée, et indicateur T/M. Accès direct à la fiche détaillée de chaque exercice pour revoir les observables notés pendant la séance.</div>
-</div>
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE CONCRET</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Bob dévie de 200ft en finale ILS CAT II pendant qu'il débriefe le FO : <span style="color:#EF4444;font-weight:700;">FLY:NON</span> (déviation), <span style="color:#10B981;font-weight:700;">FOCUS:OK</span> (conscient de l'approche), <span style="color:#10B981;font-weight:700;">ACT:OK</span> (corrige rapidement). En débrief tu demandes : "Qu'est-ce qui t'a distrait du contrôle de la trajectoire ?"</div>
+  </div>
 
-<div style="background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:900;color:#EF4444;margin-bottom:5px;">TEM — Synthèse globale</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Toutes les menaces, erreurs et UAS de tous les exercices regroupées. Statistiques : nb menaces atténuées / nb erreurs / nb UAS / recoveries OK. Utilisé pour identifier les patterns récurrents sur toute la session.</div>
-</div>
-
-<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:900;color:#8B5CF6;margin-bottom:5px;">CRM — 12 items comportementaux</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Cochez <span style="color:#10B981;font-weight:700;">OK</span> ou <span style="color:#EF4444;font-weight:700;">NOK</span> pour chacun des 12 items (Briefings, Challenge &amp; Response, Communication, Leadership, Cross-Check, Workload, SA, PSD…). Score calculé automatiquement. <strong style="color:#F1F5F9;">Pass mark EASA/NOTECHS : 70%.</strong><br/>
-<span style="color:#10B981;font-weight:700;">≥85%</span> EXCELLENT · <span style="color:#3B82F6;font-weight:700;">70%</span> SATISFAISANT · <span style="color:#F59E0B;font-weight:700;">50-69%</span> PARTIEL · <span style="color:#EF4444;font-weight:700;">&lt;50%</span> INSUFFISANT</div>
-</div>
-
-<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:900;color:#06B6D4;margin-bottom:5px;">QUESTIONNAIRE — Auto-évaluation</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Questions de réflexion destinées au stagiaire pour évaluer sa propre perception de la session. Complète le débrief instructeur avec la vision du pilote.</div>
-</div>
-
-<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 11px;">
-<div style="font-size:12px;font-weight:900;color:#10B981;margin-bottom:5px;">CONCLUSION — Synthèse &amp; Recommandations</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Résumé automatique de la session. Boutons <span style="color:#3B82F6;font-weight:700;">📋 CPT</span> et <span style="color:#10B981;font-weight:700;">📋 FO</span> → recommandations individuelles ciblées sur les compétences faibles. Export <span style="color:#3B82F6;font-weight:700;">⬇ PDF</span> pour le dossier pilote. Si <span style="color:#F59E0B;font-weight:700;">TRI CHECK</span> activé, l'onglet dédié apparaît avec la grille d'évaluation TRI.</div>
-</div>
-</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 12. DATA SHOW + REF -->
-<!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">📺 DATA SHOW &amp; 📖 REF — DÉBRIEF COLLECTIF</div>
-<div style="display:flex;flex-direction:column;gap:10px;">
-
-<div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:17px;flex-shrink:0;margin-top:1px;">📺</span>
-<div>
-<div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">DATA SHOW — Projection plein écran</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Bouton <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:800;">📺 DATA SHOW</span> dans la barre du débrief. Affiche les scores du débrief en <strong>grand format plein écran</strong> (radar CBTA, barres, score global) optimisé pour projection sur TV ou écran de salle. Basculez entre les onglets pour afficher TEM, CRM ou Exercices en plein écran.</div>
-</div>
-</div>
-
-<div style="display:flex;gap:10px;align-items:flex-start;">
-<span style="font-size:17px;flex-shrink:0;margin-top:1px;">📖</span>
-<div>
-<div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:3px;">REF — TEM Card &amp; OBs Boeing</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Bouton <span style="background:#06B6D422;border:1px solid #06B6D4;color:#06B6D4;padding:1px 8px;border-radius:6px;font-size:12px;font-weight:700;">📖 REF</span> dans la barre du débrief. Deux onglets :<br/>
-<span style="color:#06B6D4;font-weight:700;">TEM CARD</span> — Définitions Boeing menaces / erreurs / UAS / contre-mesures.<br/>
-<span style="color:#3B82F6;font-weight:700;">CORE OBs</span> — 9 blocs colorés (un par compétence). Touchez un bloc → OBs en grand format. Bouton ← Retour pour revenir à la grille.</div>
-</div>
-</div>
-
-<div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:10px 12px;">
-<div style="font-size:12px;font-weight:800;color:#F59E0B;margin-bottom:5px;">💡 COMMENT COMBINER DATA SHOW + REF</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.7;">
-<div style="margin-bottom:4px;"><span style="background:#F59E0B22;border:1px solid #F59E0B55;border-radius:4px;padding:1px 6px;color:#F59E0B;font-weight:700;font-size:11px;">ÉTAPE 1</span> Ouvrez <span style="color:#F59E0B;font-weight:700;">📺 DATA SHOW</span> → les scores du pilote s'affichent en grand. Montrez les résultats à l'équipage.</div>
-<div style="margin-bottom:4px;"><span style="background:#06B6D422;border:1px solid #06B6D455;border-radius:4px;padding:1px 6px;color:#06B6D4;font-weight:700;font-size:11px;">ÉTAPE 2</span> Fermez DATA SHOW (✕) → ouvrez <span style="color:#06B6D4;font-weight:700;">📖 REF</span> → onglet <span style="color:#3B82F6;font-weight:700;">CORE OBs</span> → touchez la compétence à débriefer.</div>
-<div><span style="background:#10B98122;border:1px solid #10B98155;border-radius:4px;padding:1px 6px;color:#10B981;font-weight:700;font-size:11px;">ÉTAPE 3</span> Les stagiaires identifient leurs comportements dans les OBs et les associent à leur score → débrief structuré et objectif.</div>
-</div>
-</div>
-</div>
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Coche FFA pour <strong>3 exercices consécutifs</strong> dans ta prochaine session. En débrief, compare les cases NON — tu verras apparaître des patterns révélateurs sur l'équipage.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 13. MODE ENTRAÎNEMENT -->
+<!-- CHAPITRE 8 — CRM : RESSOURCES ÉQUIPAGE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #00CCFF22;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#00CCFF;letter-spacing:2px;margin-bottom:10px;">🎭 MODE ENTRAÎNEMENT — SESSION FANTÔME</div>
-<div style="display:flex;flex-direction:column;gap:7px;">
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Bouton en bas de l'accueil. Les sessions en mode entraînement <strong style="color:#EF4444;">ne sont pas sauvegardées</strong> dans l'historique. Idéal pour se préparer ou tester un nouveau scénario.</div>
-<div style="display:flex;flex-direction:column;gap:5px;">
-<div style="display:flex;align-items:center;gap:8px;"><span style="background:#00CCFF0D;border:2px solid #00CCFF88;color:#00CCFF;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;">🎭 ENTRAÎNEMENT</span><span style="font-size:11px;color:#64748B;margin-left:4px;">Cyan = inactif (mode normal)</span></div>
-<div style="display:flex;align-items:center;gap:8px;"><span style="background:#FF880022;border:2px solid #FF8800;color:#FF8800;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;">🎭 ENTRAÎNEMENT</span><span style="font-size:11px;color:#64748B;margin-left:4px;">Orange = actif (session fantôme)</span></div>
-</div>
-<div style="font-size:12px;color:#94A3B8;">Une bannière <span style="background:#8B5CF6;color:#fff;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:700;">🎭 MODE ENTRAÎNEMENT</span> s'affiche en haut de session. Impossible de confondre avec une vraie séance.</div>
-</div>
+<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF644;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">🤝 CHAPITRE 8 — CRM : RESSOURCES ÉQUIPAGE</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">Le CRM (Crew Resource Management) se note dans l'onglet <strong style="color:#10B981;">DÉBRIEF → CRM</strong>, pas dans l'exercice. Il évalue la séance entière sur 12 items comportementaux NOTECHS EASA.</div>
+
+  <!-- 12 items -->
+  <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px;">
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF611;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</span>
+      <span style="font-size:12px;color:#CBD5E1;">Briefing complet et pertinent (départ, approche, situations anormales)</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF60A;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</span>
+      <span style="font-size:12px;color:#CBD5E1;">Callouts standards SOP respectés en permanence</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF611;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</span>
+      <span style="font-size:12px;color:#CBD5E1;">Challenge &amp; Response — lecture et réponse checklists systématique</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF60A;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</span>
+      <span style="font-size:12px;color:#CBD5E1;">Communication claire, concise et confirmée entre pilotes</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF611;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">5</span>
+      <span style="font-size:12px;color:#CBD5E1;">Leadership adapté à la situation — assertif sans être autoritaire</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF60A;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">6</span>
+      <span style="font-size:12px;color:#CBD5E1;">Cross-check mutuel efficace — surveillance croisée des paramètres</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF611;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">7</span>
+      <span style="font-size:12px;color:#CBD5E1;">Gestion de la charge de travail — délégation et priorisation des tâches</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF60A;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">8</span>
+      <span style="font-size:12px;color:#CBD5E1;">Situation Awareness partagée — même image mentale dans les deux sièges</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF611;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">9</span>
+      <span style="font-size:12px;color:#CBD5E1;">Prise de décision adaptée — méthode FORDEC appliquée sous pression</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF60A;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">10</span>
+      <span style="font-size:12px;color:#CBD5E1;">Intervention appropriée sur écart — FO challenge CPT si nécessaire</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF611;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">11</span>
+      <span style="font-size:12px;color:#CBD5E1;">Gestion des automatismes — AP/AT supervisés et reprises si nécessaire</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;background:#8B5CF60A;border-radius:6px;padding:6px 9px;">
+      <span style="background:#8B5CF6;color:#fff;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">12</span>
+      <span style="font-size:12px;color:#CBD5E1;">Cockpit stérile respecté sous 10 000ft — pas de conversations non opérationnelles</span>
+    </div>
+  </div>
+
+  <!-- Niveaux CRM -->
+  <div style="background:#0F172A;border:1px solid #334155;border-radius:8px;padding:9px 11px;margin-bottom:10px;">
+    <div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:1px;margin-bottom:6px;">NIVEAUX NOTECHS EASA — PASS MARK : 70% (≥ 9/12)</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;align-items:center;gap:8px;"><span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:800;min-width:90px;text-align:center;">≥ 85% EXCELLENT</span><span style="font-size:12px;color:#94A3B8;">CRM exemplaire — équipage très efficace</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:800;min-width:90px;text-align:center;">70-84% SATISF.</span><span style="font-size:12px;color:#94A3B8;">Niveau réglementaire atteint</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:800;min-width:90px;text-align:center;">50-69% PARTIEL</span><span style="font-size:12px;color:#94A3B8;">Lacunes comportementales identifiées</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;padding:2px 6px;border-radius:4px;font-size:11px;font-weight:800;min-width:90px;text-align:center;">&lt;50% INSUFFIS.</span><span style="font-size:12px;color:#94A3B8;">Remédiation CRM obligatoire avant ligne</span></div>
+    </div>
+  </div>
+
+  <div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:8px 10px;margin-bottom:10px;">
+    <div style="font-size:11px;font-weight:800;color:#EF4444;margin-bottom:3px;">⚠ RAPPEL IMPORTANT</div>
+    <div style="font-size:12px;color:#CBD5E1;">Le CRM se note dans l'onglet <strong>DÉBRIEF → CRM</strong> — pas dans chaque exercice. C'est une évaluation globale de toute la séance.</div>
+  </div>
+
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Après avoir clôturé au moins 1 exercice → ouvre le <strong>Débrief → onglet CRM</strong> → évalue les 12 items en cochant OK ou NOK pour chaque pilote. Vois le score s'afficher en temps réel.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 14. SAUVEGARDE JSON -->
+<!-- CHAPITRE 9 — LE DÉBRIEF -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">💾 SAUVEGARDE — EXPORT &amp; IMPORT JSON</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="display:flex;gap:9px;align-items:flex-start;">
-<span style="font-size:16px;flex-shrink:0;margin-top:1px;">📤</span>
-<div><div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Exporter</div><div style="font-size:12px;color:#94A3B8;">Historique → bouton <span style="color:#10B981;font-weight:700;">⬇ Export</span> → télécharge un fichier JSON avec toutes vos sessions et dossiers pilotes. Sauvegardez-le sur votre cloud (iCloud, Google Drive…).</div></div>
-</div>
-<div style="display:flex;gap:9px;align-items:flex-start;">
-<span style="font-size:16px;flex-shrink:0;margin-top:1px;">📥</span>
-<div><div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Importer</div><div style="font-size:12px;color:#94A3B8;">Bouton <span style="color:#3B82F6;font-weight:700;">⬆ Import</span> → choisissez votre fichier. Mode <span style="color:#10B981;font-weight:700;">FUSIONNER</span> (ajoute sans écraser) ou <span style="color:#EF4444;font-weight:700;">REMPLACER</span> (repart du fichier importé).</div></div>
-</div>
-<div style="display:flex;gap:9px;align-items:flex-start;">
-<span style="font-size:16px;flex-shrink:0;margin-top:1px;">📎</span>
-<div><div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Importer une session externe</div><div style="font-size:12px;color:#94A3B8;">Bouton <span style="color:#8B5CF6;font-weight:700;">📎</span> → importez le rapport d'un autre TRI avec PDF joint. La session s'affiche avec le badge <span style="color:#8B5CF6;font-weight:700;">📎 IMPORTÉ</span> dans l'historique.</div></div>
-</div>
-<div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:7px 10px;">
-<div style="font-size:11px;color:#EF4444;font-weight:700;margin-bottom:2px;">⚠️ IMPORTANT</div>
-<div style="font-size:12px;color:#94A3B8;">Si le cache navigateur est vidé (mise à jour iOS, stockage plein…), toutes les données locales sont perdues. <strong style="color:#F1F5F9;">Exportez après chaque séance.</strong></div>
-</div>
-</div>
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F644;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">📊 CHAPITRE 9 — LE DÉBRIEF — ANALYSE COMPLÈTE</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">6 onglets pour décortiquer la performance. Chaque onglet est une vue différente sur les mêmes données.</div>
+
+  <!-- 6 onglets -->
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+
+    <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:10px 12px;">
+      <div style="font-size:12px;font-weight:900;color:#3B82F6;margin-bottom:5px;">📡 SCORES — Radar CBTA</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:5px;">Radar en toile d'araignée avec <span style="color:#3B82F6;font-weight:700;">cercle CPT (●)</span> et <span style="color:#10B981;font-weight:700;">losange FO (◆)</span> superposés pour comparer les profils. Barres de score par compétence colorées CBTA. Score global en grand chiffre.</div>
+      <div style="background:#090C1299;border:1px solid #1E2A3A;border-radius:6px;padding:7px 9px;">
+        <div style="font-size:11px;color:#64748B;font-weight:700;margin-bottom:3px;">LECTURE DU RADAR</div>
+        <div style="font-size:11px;color:#94A3B8;line-height:1.5;">
+          <div>• Plus le polygone est grand et centré → meilleure est la performance globale.</div>
+          <div>• Un creux vers <span style="color:#F97316;font-weight:700;">FPM</span> = point d'amélioration pilotage identifié.</div>
+          <div>• CPT (●) vs FO (◆) superposés → compare les profils des deux pilotes.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:10px 12px;">
+      <div style="font-size:12px;font-weight:900;color:#F59E0B;margin-bottom:5px;">📋 EXERCICES — Récapitulatif détaillé</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Chaque exercice clôturé listé avec : score moyen coloré, durée chronométrée, indicateur T/M, et accès direct aux observations notées. Tu peux rouvrir la fiche détaillée de n'importe quel exercice.</div>
+    </div>
+
+    <div style="background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:10px 12px;">
+      <div style="font-size:12px;font-weight:900;color:#EF4444;margin-bottom:5px;">⚡ TEM — Synthèse globale</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Toutes les menaces, erreurs et UAS de toute la session regroupés. Statistiques : nombre de menaces atténuées / erreurs / UAS / recoveries réussies. Idéal pour identifier des patterns récurrents sur plusieurs exercices.</div>
+    </div>
+
+    <div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:10px 12px;">
+      <div style="font-size:12px;font-weight:900;color:#8B5CF6;margin-bottom:5px;">🤝 CRM — Bilan comportemental</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Donut visuel avec le % CRM + badge niveau + liste des 12 items OK/NOK séparés CPT et FO. Pass mark EASA/NOTECHS : 70%. Référence EASA ORO.FC.115 et NOTECHS framework.</div>
+    </div>
+
+    <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:10px 12px;">
+      <div style="font-size:12px;font-weight:900;color:#06B6D4;margin-bottom:5px;">❓ QUESTIONNAIRE — Auto-évaluation stagiaire</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Questions de réflexion adressées au stagiaire pour recueillir sa propre perception de la session. Indispensable pour comparer la vision de l'instructeur et la conscience de soi du pilote.</div>
+    </div>
+
+    <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:10px 12px;">
+      <div style="font-size:12px;font-weight:900;color:#10B981;margin-bottom:5px;">✅ CONCLUSION — Synthèse auto-générée</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Résumé automatique de la session avec recommandations individuelles CPT et FO ciblées sur les compétences faibles. Zone de notes instructeur libre. Export PDF professionnel en un tap.</div>
+    </div>
+  </div>
+
+  <!-- Rapport PDF -->
+  <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:9px 11px;margin-bottom:8px;">
+    <div style="font-size:11px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">📄 RAPPORT PDF PROFESSIONNEL</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Bouton <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:700;">⬇ PDF</span> en haut de la Conclusion → rapport complet généré incluant : scores CBTA, radar, récapitulatif exercices, synthèse TEM, bilan CRM, recommandations individualisées. Archivé dans le dossier pilote.</div>
+  </div>
+
+  <!-- Data Show -->
+  <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:9px 11px;margin-bottom:10px;">
+    <div style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">📺 DATA SHOW — Projection salle de briefing</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Bouton <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:700;">📺 DS</span> → affichage plein écran optimisé pour projecteur ou grand écran. Radar CBTA géant, barres de score lisibles depuis le fond de salle. Bascule entre les onglets en plein écran pour le débrief collectif.</div>
+  </div>
+
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Clôture <strong>2 exercices</strong> → ouvre le <strong>Débrief → Scores</strong>. Le radar CBTA est déjà construit. Navigue dans les 6 onglets pour voir la puissance de l'analyse automatique.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 15. HISTORIQUE & XP -->
+<!-- CHAPITRE 10 — ASTUCES PRO & RACCOURCIS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">📈 HISTORIQUE &amp; DOSSIER PILOTE</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="font-size:12px;color:#94A3B8;margin-bottom:2px;">Accessible via le bouton <strong style="color:#8B5CF6;">TABLEAU DE BORD</strong> sur l'accueil. 3 onglets :</div>
-<div style="display:flex;flex-direction:column;gap:5px;">
-<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:6px;padding:7px 10px;"><span style="font-size:11px;font-weight:800;color:#F59E0B;">DASHBOARD</span><span style="font-size:11px;color:#94A3B8;margin-left:6px;">— KPIs globaux, compétences flotte, dernières sessions</span></div>
-<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:6px;padding:7px 10px;"><span style="font-size:11px;font-weight:800;color:#8B5CF6;">SESSIONS</span><span style="font-size:11px;color:#94A3B8;margin-left:6px;">— Liste chronologique, accès aux rapports PDF</span></div>
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:6px;padding:7px 10px;"><span style="font-size:11px;font-weight:800;color:#3B82F6;">PILOTES</span><span style="font-size:11px;color:#94A3B8;margin-left:6px;">— Fiche par pilote : score moyen, trend, barres XP, bouton Progression</span></div>
-</div>
-<div style="font-size:12px;color:#94A3B8;">Bouton <span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:700;">📈 VOIR DOSSIER COMPLET</span> → toutes les sessions du pilote + accès aux rapports PDF archivés.<br/>Bouton <span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:700;">📈 Progression</span> → courbe multi-sessions + barres XP cumulées.</div>
-</div>
+<div class="guide-sec" style="background:#141B26;border:1px solid #FBBF2444;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#FBBF24;letter-spacing:2px;margin-bottom:12px;">⭐ CHAPITRE 10 — ASTUCES PRO &amp; RACCOURCIS</div>
+
+  <!-- 6 tips -->
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;">
+
+    <div style="display:flex;gap:10px;align-items:flex-start;background:#0F172A;border:1px solid #1E2A3A;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:20px;flex-shrink:0;">🌙</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Light / Dark Mode</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Bouton <span style="color:#F59E0B;font-weight:700;">☀</span> en haut à droite de n'importe quel écran. Mode clair pour salle de briefing lumineuse, mode sombre pour simulateur à faible éclairage. Le réglage est mémorisé.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:flex-start;background:#0F172A;border:1px solid #1E2A3A;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:20px;flex-shrink:0;">📈</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Historique pilote &amp; courbe de progression</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Tableau de bord → onglet PILOTES → tape sur un nom → bouton <span style="color:#8B5CF6;font-weight:700;">📈 Progression</span>. Tu vois la courbe multi-sessions de chaque compétence + les barres XP cumulées. Puissant pour les bilans annuels.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:flex-start;background:#0F172A;border:1px solid #1E2A3A;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:20px;flex-shrink:0;">⏱</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Chrono session — démarrer AVANT le 1er exercice</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Le chrono SESSION ne démarre pas automatiquement. Appuie sur <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:700;">▶</span> dès l'entrée en cabine. La limite légale est 4h00 — alertes à 2h, 3h50 et 4h00.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:flex-start;background:#0F172A;border:1px solid #1E2A3A;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:20px;flex-shrink:0;">🎲</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Menace aléatoire — surprendre les stagiaires</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Dans un exercice ouvert → bouton <span style="color:#A78BFA;font-weight:700;">🎲</span> → injection surprise d'un scénario (ATC, cabine, météo, piste, système). La menace est injectée dans le TEM CPT et FO simultanément avec horodatage. Observe la réaction <span style="font-family:monospace;color:#8B5CF6;font-size:11px;font-weight:800;">WLM</span> et <span style="font-family:monospace;color:#06B6D4;font-size:11px;font-weight:800;">SA</span> en direct.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:flex-start;background:#0F172A;border:1px solid #1E2A3A;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:20px;flex-shrink:0;">🔢</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Double-tap sur un score — effacer et recommencer</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Tu as noté trop vite ? Double-tape sur le bouton de score déjà sélectionné pour le désélectionner et remettre la compétence à zéro. Aucune manipulation complexe — rapide et discret en cours de vol.</div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:flex-start;background:#0F172A;border:1px solid #1E2A3A;border-radius:8px;padding:9px 11px;">
+      <div style="font-size:20px;flex-shrink:0;">📱</div>
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">PWA — Fonctionne hors-ligne</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">iPhone : bouton <span style="color:#3B82F6;font-weight:700;">Partager</span> → <span style="color:#3B82F6;font-weight:700;">Sur l'écran d'accueil</span>. Android : menu ⋮ → <span style="color:#10B981;font-weight:700;">Installer l'application</span>. L'app fonctionne <strong>sans connexion internet</strong> dans le simulateur. Toutes les données restent locales.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bonus REF -->
+  <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:9px 11px;margin-bottom:10px;">
+    <div style="font-size:11px;font-weight:800;color:#06B6D4;letter-spacing:1px;margin-bottom:4px;">📖 BONUS — REF → CORE OBs</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Bouton <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:700;">📖 REF</span> dans la barre du débrief → onglet <span style="color:#3B82F6;font-weight:700;">CORE OBs</span>. Répertoire complet des comportements CBTA par compétence. Idéal pendant le débrief pour que les stagiaires s'auto-identifient dans les comportements listés. Croise les 9 compétences avec les comportements observables Boeing.</div>
+  </div>
+
+  <!-- Essaie maintenant -->
+  <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:8px;padding:9px 12px;margin-top:10px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:3px;">🎯 ESSAIE MAINTENANT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">Ajoute l'app à ton écran d'accueil maintenant — iPhone : bouton <strong>Partager → Sur l'écran d'accueil</strong>. Tu auras l'app en un tap le jour J dans le simulateur, sans connexion.</div>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 16. SYSTÈME XP -->
+<!-- FINALE CARD -->
 <!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #FF8C0033;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#FF8C00;letter-spacing:2px;margin-bottom:10px;">⚡ SYSTÈME XP — PROGRESSION CUMULÉE</div>
-<div style="display:flex;flex-direction:column;gap:8px;">
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;"><span style="color:#FF8C00;font-weight:700;">XP</span> (Experience Points) = somme des notes obtenues sur <em>toutes</em> les sessions. Plus un pilote s'entraîne régulièrement avec de bonnes performances, plus son XP augmente. Un pilote avec 15 XP en KNO a prouvé sa connaissance sur plusieurs séances — plus fiable qu'une bonne note unique.</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
-<div style="background:#47556922;border:1px solid #475569;border-radius:6px;padding:6px 8px;"><div style="font-size:13px;">🌱</div><div style="font-size:11px;font-weight:800;color:#64748B;">ROOKIE</div><div style="font-size:10px;color:#475569;">0–1 XP</div></div>
-<div style="background:#3B82F611;border:1px solid #3B82F655;border-radius:6px;padding:6px 8px;"><div style="font-size:13px;">🌿</div><div style="font-size:11px;font-weight:800;color:#64748B;">STANDARD</div><div style="font-size:10px;color:#475569;">2–5 XP</div></div>
-<div style="background:#3B82F622;border:1px solid #3B82F6;border-radius:6px;padding:6px 8px;"><div style="font-size:13px;">⭐</div><div style="font-size:11px;font-weight:800;color:#3B82F6;">CONFIRMÉ</div><div style="font-size:10px;color:#475569;">6–11 XP</div></div>
-<div style="background:#10B98122;border:1px solid #10B981;border-radius:6px;padding:6px 8px;"><div style="font-size:13px;">🔥</div><div style="font-size:11px;font-weight:800;color:#10B981;">AVANCÉ</div><div style="font-size:10px;color:#475569;">12–19 XP</div></div>
-<div style="background:#FF8C0022;border:1px solid #FF8C00;border-radius:6px;padding:6px 8px;grid-column:span 2;"><div style="font-size:13px;">⚡</div><div style="font-size:11px;font-weight:800;color:#FF8C00;">EXPERT</div><div style="font-size:10px;color:#94A3B8;">20+ XP — maîtrise multi-sessions démontrée</div></div>
-</div>
-<div style="font-size:11px;color:#64748B;">Barres XP visibles dans chaque fiche pilote (onglet Pilotes) + dans l'overlay Progression.</div>
-</div>
-</div>
-
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 17. ASTUCES -->
-<!-- ══════════════════════════════════════════════════════════════ -->
-<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">💡 ASTUCES RAPIDES</div>
-<div style="display:flex;flex-direction:column;gap:7px;">
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:14px;flex-shrink:0;">▶</span><span style="font-size:12px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">Chrono SESSION</span> — démarrez-le <em>avant</em> le premier exercice, pas après</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:14px;flex-shrink:0;">✓</span><span style="font-size:12px;color:#CBD5E1;">Toujours <span style="color:#10B981;font-weight:700;">CLÔTURER</span> un exercice pour qu'il soit compté dans le débrief et l'historique</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#EF4444;font-size:14px;flex-shrink:0;">⚠</span><span style="font-size:12px;color:#CBD5E1;"><span style="color:#EF4444;font-weight:700;">CRM</span> = onglet du <strong style="color:#F1F5F9;">DÉBRIEF</strong>, pas de l'exercice</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#A78BFA;font-size:14px;flex-shrink:0;">🎲</span><span style="font-size:12px;color:#CBD5E1;"><span style="color:#A78BFA;font-weight:700;">Menace aléatoire</span> — injectez sans prévenir pour tester WLM/SA en situation réelle</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#06B6D4;font-size:14px;flex-shrink:0;">📖</span><span style="font-size:12px;color:#CBD5E1;"><span style="color:#06B6D4;font-weight:700;">REF → CORE OBs</span> — utilisez-le pendant le débrief pour que les stagiaires s'auto-identifient</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F97316;font-size:14px;flex-shrink:0;">🪪</span><span style="font-size:12px;color:#CBD5E1;">Saisissez toujours le <span style="color:#F97316;font-weight:700;">matricule</span> pour rattacher la session au bon dossier pilote</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#3B82F6;font-size:14px;flex-shrink:0;">A</span><span style="font-size:12px;color:#CBD5E1;">Taille de police : boutons <span style="font-weight:700;">A- / A / A+ / A++</span> en haut à droite de l'accueil</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:14px;flex-shrink:0;">☀️</span><span style="font-size:12px;color:#CBD5E1;">Mode jour/nuit — bouton ☀️ disponible sur tous les écrans</span></div>
-<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:14px;flex-shrink:0;">💾</span><span style="font-size:12px;color:#CBD5E1;"><span style="color:#EF4444;font-weight:700;">Exportez le JSON après chaque séance</span> — c'est votre seule sauvegarde externe</span></div>
-</div>
-</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-<div style="background:#3B82F622;border:1px solid #3B82F655;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#3B82F6;">5</div><div style="font-size:13px;color:#3B82F6;font-weight:700;">EXEMPLAIRE</div><div style="font-size:12px;color:#94A3B8;">Maîtrise totale, pilote autonome</div></div>
-<div style="background:#10B98122;border:1px solid #10B98155;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#10B981;">4</div><div style="font-size:13px;color:#10B981;font-weight:700;">AU-DESSUS DU STANDARD</div><div style="font-size:12px;color:#94A3B8;">Bonne performance, légères corrections</div></div>
-<div style="background:#F59E0B22;border:1px solid #F59E0B55;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#F59E0B;">3</div><div style="font-size:13px;color:#F59E0B;font-weight:700;">STANDARD REQUIS</div><div style="font-size:12px;color:#94A3B8;">Acceptable, standard AOM respecté</div></div>
-<div style="background:#F9731622;border:1px solid #F9731655;border-radius:8px;padding:8px 10px;"><div style="font-size:22px;font-weight:900;color:#F97316;">2</div><div style="font-size:13px;color:#F97316;font-weight:700;">SOUS-STANDARD</div><div style="font-size:12px;color:#94A3B8;">Lacunes identifiées, suivi requis</div></div>
-<div style="background:#EF444422;border:1px solid #EF444455;border-radius:8px;padding:8px 10px;grid-column:span 2;"><div style="font-size:22px;font-weight:900;color:#EF4444;">1</div><div style="font-size:13px;color:#EF4444;font-weight:700;">INACCEPTABLE</div><div style="font-size:12px;color:#94A3B8;">Performance inacceptable — remédiation nécessaire</div></div>
-</div>
+<div style="background:linear-gradient(135deg,#0F172A 0%,#1B1B3A 100%);border:1px solid #3B82F633;border-radius:12px;padding:16px 14px;margin-bottom:14px;text-align:center;">
+  <div style="font-size:22px;margin-bottom:8px;">🏆</div>
+  <div style="font-size:14px;font-weight:900;color:#F1F5F9;margin-bottom:4px;">Vous êtes prêt à voler avec les données</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:12px;line-height:1.5;">Chaque séance notée est une séance qui compte. Chaque obs écrite est un débrief de qualité.</div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:5px;">
+    <span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F6;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;">CBTA Compliant</span>
+    <span style="background:#10B98122;border:1px solid #10B98144;color:#10B981;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;">EASA ORO.FC</span>
+    <span style="background:#8B5CF622;border:1px solid #8B5CF644;color:#8B5CF6;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;">NOTECHS</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B44;color:#F59E0B;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:700;">B737 NG QRH Rev55</span>
+  </div>
 </div>
 
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
