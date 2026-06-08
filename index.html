@@ -7053,8 +7053,10 @@ if(tmExs.length){
 }
 const fdTotal=closed.filter(e=>e.fordec).length;
 const ntTotal=closed.filter(e=>e.nits).length;
-const fdColor=fdTotal===closed.length?'#8B5CF6':fdTotal>0?'#F59E0B':'#475569';
-const ntColor=ntTotal===closed.length?'#3B82F6':ntTotal>0?'#F59E0B':'#475569';
+const fdPct=closed.length?fdTotal/closed.length:0;
+const ntPct=closed.length?ntTotal/closed.length:0;
+const fdColor=fdPct===1?'#8B5CF6':fdPct>=0.5?'#F59E0B':fdPct>0?'#EF4444':'#475569';
+const ntColor=ntPct===1?'#3B82F6':ntPct>=0.5?'#F59E0B':ntPct>0?'#EF4444':'#475569';
 const crmSummaryHtml=`<div style="display:flex;gap:8px;margin-bottom:14px;">
   <div style="flex:1;background:${fdColor}15;border:2px solid ${fdColor}44;border-radius:10px;padding:10px 12px;">
     <div style="font-size:11px;font-weight:900;color:${fdColor};letter-spacing:1.5px;margin-bottom:3px;">FORDEC</div>
