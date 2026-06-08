@@ -2187,7 +2187,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <div style="margin-top:8px;background:#10B98111;border:1px solid #10B98133;border-radius:6px;padding:6px 9px;">
 <div style="font-size:11px;color:#10B981;font-weight:700;margin-bottom:3px;">⏱ G / L — GAIN OU PERTE DE TEMPS</div>
-<div style="font-size:12px;color:#94A3B8;">À la clôture d'un exercice avec time limit : badge <span style="color:#10B981;font-weight:900;">G:Xm</span> (vert = temps gagné) ou <span style="color:#EF4444;font-weight:900;">L:Xm</span> (rouge = dépassement). Récapitulatif dans le Débrief → Exercices.</div>
+<div style="font-size:12px;color:#94A3B8;">À la clôture d'un exercice avec time limit : badge <span style="color:#10B981;font-weight:900;">S:Xm</span> (vert = temps économisé) ou <span style="color:#EF4444;font-weight:900;">L:Xm</span> (rouge = dépassement). Récapitulatif dans le Débrief → Exercices.</div>
 </div>
 </div>
 </div>
@@ -2206,15 +2206,15 @@ Identifiant ou mot de passe incorrect
       <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Dans la liste des exercices, tape le bouton <span style="background:#06B6D422;border:1px solid #06B6D4;color:#06B6D4;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:800;">⏱</span> sur une carte → saisis la durée en minutes → valide. Le chrono de l'exercice démarre automatiquement à l'ouverture.</div>
     </div>
     <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:10px 12px;">
-      <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:5px;">② GAIN / PERTE À LA CLÔTURE</div>
+      <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:5px;">② SAVING / PERTE À LA CLÔTURE</div>
       <div style="font-size:12px;color:#94A3B8;line-height:1.5;">À la clôture de l'exercice, un badge apparaît sur la carte :<br/>
-        <span style="color:#10B981;font-weight:900;">G:Xm</span> vert = l'équipage a terminé <strong style="color:#10B981;">avant</strong> la limite<br/>
+        <span style="color:#10B981;font-weight:900;">S:Xm</span> vert = l'équipage a terminé <strong style="color:#10B981;">avant</strong> la limite<br/>
         <span style="color:#EF4444;font-weight:900;">L:Xm</span> rouge = l'équipage a <strong style="color:#EF4444;">dépassé</strong> la limite</div>
     </div>
     <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:10px 12px;">
       <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1px;margin-bottom:5px;">③ RÉCAP DANS LE DÉBRIEF</div>
       <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Débrief → onglet <strong style="color:#F59E0B;">Exercices</strong> → bloc TIME MANAGEMENT :<br/>
-        • Tableau par exercice : limite fixée + G ou L en minutes<br/>
+        • Tableau par exercice : limite fixée + S ou L en minutes<br/>
         • <strong style="color:#F1F5F9;">Moyenne par exercice</strong> — indicateur global de gestion du temps<br/>
         • Si perte détectée → <strong style="color:#F59E0B;">recommandations</strong> automatiques (briefing, checklist, coordination)</div>
     </div>
@@ -5014,7 +5014,7 @@ return `<div class="ex-card" style="background:#0F1218;border-left-color:${heade
 ${avgHtml}
 <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0;gap:2px;">
 <button onclick="event.stopPropagation();openTimeLimitModalForEx(${i})" title="Limite de temps" style="width:36px;height:36px;border-radius:8px;background:${ex.timeLimit?tlc+'22':'#1E253088'};border:1px solid ${ex.timeLimit?tlc+'66':'#33415544'};color:${ex.timeLimit?tlc:'#334155'};font-size:${ex.timeLimit?'9':'15'}px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;${ex.timeLimit?'box-shadow:0 0 8px '+tlc+'55;text-shadow:0 0 6px '+tlc+';':''}">${ex.timeLimit?String(ex.timeLimit)+'m':'⏱'}</button>
-${ex.closed&&ex.timeLimit&&ex.timeDeltaSec!==undefined?(ex.timeDeltaSec>=0?`<div style="font-size:9px;font-weight:900;color:#10B981;text-align:center;letter-spacing:0.5px;text-shadow:0 0 4px #10B98166;">G:${Math.round(ex.timeDeltaSec/60)}m</div>`:`<div style="font-size:9px;font-weight:900;color:#EF4444;text-align:center;letter-spacing:0.5px;text-shadow:0 0 4px #EF444466;">L:${Math.round(Math.abs(ex.timeDeltaSec)/60)}m</div>`):''}
+${ex.closed&&ex.timeLimit&&ex.timeDeltaSec!==undefined?(ex.timeDeltaSec>=0?`<div style="font-size:9px;font-weight:900;color:#10B981;text-align:center;letter-spacing:0.5px;text-shadow:0 0 4px #10B98166;">S:${Math.round(ex.timeDeltaSec/60)}m</div>`:`<div style="font-size:9px;font-weight:900;color:#EF4444;text-align:center;letter-spacing:0.5px;text-shadow:0 0 4px #EF444466;">L:${Math.round(Math.abs(ex.timeDeltaSec)/60)}m</div>`):''}
 </div>
 </div>
 <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
@@ -7710,7 +7710,7 @@ temFo&&state.foName&&(temFo.errors||[]).length?`<span class="chip" style="backgr
 const facNotes = ex.facNotes?Object.entries(ex.facNotes).filter(([,v])=>v).map(([k,v])=>`<div style="font-size:12px;color:#64748B;margin-top:3px;font-style:italic;">Q${parseInt(k)+1}: ${v}</div>`).join(''):'';
 return `<div class="card" style="margin-bottom:12px;border-left:3px solid ${pc};">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:9px;gap:8px;">
-<div style="font-size:15px;font-weight:700;color:#F1F5F9;flex:1;">${sc.title}${ex.timeLimit?`<span style="margin-left:6px;font-size:10px;color:#00E5FF;font-weight:700;">⏱${ex.timeLimit}m</span>`:''}${ex.timeDeltaSec!==undefined&&ex.timeLimit?(ex.timeDeltaSec>=0?`<span style="margin-left:4px;font-size:10px;font-weight:900;color:#10B981;">G:${Math.round(ex.timeDeltaSec/60)}m</span>`:`<span style="margin-left:4px;font-size:10px;font-weight:900;color:#EF4444;">L:${Math.round(Math.abs(ex.timeDeltaSec)/60)}m</span>`):''}
+<div style="font-size:15px;font-weight:700;color:#F1F5F9;flex:1;">${sc.title}${ex.timeLimit?`<span style="margin-left:6px;font-size:10px;color:#00E5FF;font-weight:700;">⏱${ex.timeLimit}m</span>`:''}${ex.timeDeltaSec!==undefined&&ex.timeLimit?(ex.timeDeltaSec>=0?`<span style="margin-left:4px;font-size:10px;font-weight:900;color:#10B981;">S:${Math.round(ex.timeDeltaSec/60)}m</span>`:`<span style="margin-left:4px;font-size:10px;font-weight:900;color:#EF4444;">L:${Math.round(Math.abs(ex.timeDeltaSec)/60)}m</span>`):''}
 </div>
 <div style="display:flex;gap:6px;flex-shrink:0;">
 ${eCpt!==null?`<div style="text-align:center;background:${c1}15;border:1px solid ${c1}33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${GC[Math.round(eCpt)]||'#64748B'};line-height:1;">${eCpt.toFixed(1)}</div><div style="font-size:9px;color:${c1};font-weight:700;">${r1}</div></div>`:''}
