@@ -1803,6 +1803,143 @@ Identifiant ou mot de passe incorrect
   </div>
 </div>
 
+<!-- GRADING SUGGÉRÉ — EXPLICATION -->
+<div style="background:#0A0D1A;border:1px solid #F59E0B44;border-radius:9px;padding:12px;margin-bottom:12px;">
+  <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">🤖 LE GRADING SUGGÉRÉ — COMMENT ÇA MARCHE</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:12px;">
+    Après avoir coché des observables, l'app affiche une <strong style="color:#F59E0B;">note suggérée en orange</strong>. Ce n'est pas une décision automatique — c'est un point de départ pour votre réflexion. <strong style="color:#F1F5F9;">Vous restez toujours le seul juge.</strong>
+  </div>
+
+  <!-- DEUX MODES -->
+  <div style="font-size:11px;font-weight:800;color:#CBD5E1;letter-spacing:1px;margin-bottom:8px;">DEUX MODES SELON VOTRE FAÇON DE NOTER :</div>
+
+  <!-- MODE 1 -->
+  <div style="background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+    <div style="font-size:11px;font-weight:900;color:#EF4444;margin-bottom:6px;">MODE 1 — Vous notez uniquement les défauts</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:8px;">
+      Workflow rapide : vous ne cochez que ce qui n'allait <strong style="color:#EF4444;">pas bien</strong> (les "−"). Les comportements non cochés sont considérés comme <strong style="color:#F1F5F9;">acceptables</strong>.
+    </div>
+    <div style="background:#0A0D1A;border-radius:6px;padding:8px 10px;margin-bottom:8px;">
+      <div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:4px;">FORMULE</div>
+      <div style="font-size:12px;color:#F1F5F9;font-family:monospace;">score = (total OB officiel − nb de "−") ÷ total OB</div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#CBD5E1;margin-bottom:6px;">Exemple — compétence PSD (9 OB officiels) :</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:8px;align-items:center;background:#10B98111;border-radius:5px;padding:5px 8px;">
+        <span style="font-size:11px;color:#64748B;min-width:80px;">1 défaut</span>
+        <span style="font-size:11px;color:#64748B;flex:1;">(9−1)÷9 = 89%</span>
+        <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:900;">4</span>
+        <span style="font-size:11px;color:#10B981;">Au-dessus</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;background:#F59E0B11;border-radius:5px;padding:5px 8px;">
+        <span style="font-size:11px;color:#64748B;min-width:80px;">3 défauts</span>
+        <span style="font-size:11px;color:#64748B;flex:1;">(9−3)÷9 = 67%</span>
+        <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:900;">4</span>
+        <span style="font-size:11px;color:#F59E0B;">Au-dessus</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;background:#F59E0B11;border-radius:5px;padding:5px 8px;">
+        <span style="font-size:11px;color:#64748B;min-width:80px;">5 défauts</span>
+        <span style="font-size:11px;color:#64748B;flex:1;">(9−5)÷9 = 44%</span>
+        <span style="background:#F9731622;border:1px solid #F97316;color:#F97316;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:900;">2</span>
+        <span style="font-size:11px;color:#F97316;">Sous-standard</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;background:#EF444411;border-radius:5px;padding:5px 8px;">
+        <span style="font-size:11px;color:#64748B;min-width:80px;">9 défauts</span>
+        <span style="font-size:11px;color:#64748B;flex:1;">(9−9)÷9 = 0%</span>
+        <span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:900;">1</span>
+        <span style="font-size:11px;color:#EF4444;">Inacceptable</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODE 2 -->
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:10px 12px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:900;color:#10B981;margin-bottom:6px;">MODE 2 — Vous notez les bons ET les mauvais comportements</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:8px;">
+      Workflow détaillé : vous cochez des "+" <strong style="color:#10B981;">et</strong> des "−". Le calcul porte uniquement sur <strong style="color:#F1F5F9;">ce que vous avez activement noté</strong>.
+    </div>
+    <div style="background:#0A0D1A;border-radius:6px;padding:8px 10px;margin-bottom:8px;">
+      <div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:4px;">FORMULE</div>
+      <div style="font-size:12px;color:#F1F5F9;font-family:monospace;">score = nb de "+" ÷ (nb de "+" + nb de "−")</div>
+    </div>
+    <div style="font-size:11px;font-weight:700;color:#CBD5E1;margin-bottom:6px;">Exemple — compétence PSD :</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:8px;align-items:center;background:#3B82F611;border-radius:5px;padding:5px 8px;">
+        <span style="font-size:11px;color:#64748B;min-width:80px;">7+ et 1−</span>
+        <span style="font-size:11px;color:#64748B;flex:1;">7÷8 = 87%</span>
+        <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:900;">4</span>
+        <span style="font-size:11px;color:#10B981;">Au-dessus</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;background:#F59E0B11;border-radius:5px;padding:5px 8px;">
+        <span style="font-size:11px;color:#64748B;min-width:80px;">5+ et 3−</span>
+        <span style="font-size:11px;color:#64748B;flex:1;">5÷8 = 62%</span>
+        <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:900;">4</span>
+        <span style="font-size:11px;color:#F59E0B;">Au-dessus</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;background:#EF444411;border-radius:5px;padding:5px 8px;">
+        <span style="font-size:11px;color:#64748B;min-width:80px;">3+ et 5−</span>
+        <span style="font-size:11px;color:#64748B;flex:1;">3÷8 = 37%</span>
+        <span style="background:#F9731622;border:1px solid #F97316;color:#F97316;padding:2px 8px;border-radius:5px;font-size:12px;font-weight:900;">2</span>
+        <span style="font-size:11px;color:#F97316;">Sous-standard</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BARÈME -->
+  <div style="background:#0A0D1A;border:1px solid #334155;border-radius:8px;padding:10px 12px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:#CBD5E1;letter-spacing:1px;margin-bottom:8px;">BARÈME DE CONVERSION (%  →  NOTE)</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:11px;color:#64748B;width:70px;">≥ 90%</span>
+        <span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:2px 10px;border-radius:5px;font-size:12px;font-weight:900;min-width:28px;text-align:center;">5</span>
+        <span style="font-size:11px;color:#3B82F6;">EXEMPLAIRE</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:11px;color:#64748B;width:70px;">≥ 70%</span>
+        <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;padding:2px 10px;border-radius:5px;font-size:12px;font-weight:900;min-width:28px;text-align:center;">4</span>
+        <span style="font-size:11px;color:#10B981;">AU-DESSUS DU STANDARD</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:11px;color:#64748B;width:70px;">≥ 50%</span>
+        <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:2px 10px;border-radius:5px;font-size:12px;font-weight:900;min-width:28px;text-align:center;">3</span>
+        <span style="font-size:11px;color:#F59E0B;">STANDARD</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:11px;color:#64748B;width:70px;">≥ 30%</span>
+        <span style="background:#F9731622;border:1px solid #F97316;color:#F97316;padding:2px 10px;border-radius:5px;font-size:12px;font-weight:900;min-width:28px;text-align:center;">2</span>
+        <span style="font-size:11px;color:#F97316;">SOUS-STANDARD</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="font-size:11px;color:#64748B;width:70px;">< 30%</span>
+        <span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;padding:2px 10px;border-radius:5px;font-size:12px;font-weight:900;min-width:28px;text-align:center;">1</span>
+        <span style="font-size:11px;color:#EF4444;">INACCEPTABLE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- L'INSTRUCTEUR EST MAÎTRE -->
+  <div style="background:#A78BFA22;border:2px solid #A78BFA;border-radius:8px;padding:12px;">
+    <div style="font-size:12px;font-weight:900;color:#A78BFA;letter-spacing:1px;margin-bottom:6px;">⚖️ L'INSTRUCTEUR EST TOUJOURS MAÎTRE DU GRADING</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.6;margin-bottom:8px;">
+      La note suggérée est un <strong style="color:#F1F5F9;">outil d'aide</strong>, pas une décision. L'algorithme compte des coches — il ne voit pas la situation, l'énergie du pilote, la complexité du scénario, ni le contexte CRM. <strong style="color:#A78BFA;">Vous oui.</strong>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:#EF4444;font-size:12px;flex-shrink:0;">✗</span>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Ne jamais appuyer "APPLIQUER" sans réfléchir — lisez la suggestion, comparez à votre ressenti global.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:#10B981;font-size:12px;flex-shrink:0;">✓</span>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Utilisez la suggestion comme <strong style="color:#F1F5F9;">point d'ancrage</strong> : si elle dit 4 et que vous hésitiez entre 3 et 4, elle confirme 4. Si elle dit 3 mais que le pilote était clairement en difficulté, mettez 2.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:#10B981;font-size:12px;flex-shrink:0;">✓</span>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Un seul comportement <strong style="color:#EF4444;">dangereux</strong> peut justifier un 1 même si les autres observables étaient positifs — la sécurité prime sur la moyenne.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- EXEMPLE CONCRET SE ILS -->
 <div style="background:#0A0D1A;border:1px solid #FF61C733;border-radius:9px;padding:12px;">
   <div style="font-size:11px;font-weight:900;color:#FF61C7;letter-spacing:1.5px;margin-bottom:10px;">✈️ EXEMPLE COMPLET — SE ILS (SINGLE ENGINE ILS)</div>
