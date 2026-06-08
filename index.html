@@ -6859,15 +6859,27 @@ if(tmExs.length){
     const sc=ALL_SC.find(s=>s.id===e.sid);
     const d=e.timeDeltaSec; const m=Math.abs(Math.round(d/60));
     const c=d>=0?'#10B981':'#EF4444';
-    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} (${e.timeLimit}min)</span><span style="font-size:11px;font-weight:800;color:${c};">${d>=0?'G':'L'}:${m}min</span></div>`;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} <span style="color:#64748B;">(limite ${e.timeLimit}min)</span></span><span style="font-size:12px;font-weight:900;color:${c};">${d>=0?'G':'L'}:${m}min</span></div>`;
   }).join('');
+  const avgDelta = totalDelta/tmExs.length;
+  const avgMin = Math.abs(Math.round(avgDelta/60));
   tmHtml=`<div style="background:${tmBg};border:1px solid ${tmBorder};border-radius:9px;padding:10px 12px;margin-bottom:14px;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
-    <div style="font-size:12px;font-weight:800;color:${tmColor};letter-spacing:1px;">⏱ TIME MANAGEMENT — ${tmExs.length} exercice${tmExs.length>1?'s':''} chronométré${tmExs.length>1?'s':''}</div>
+    <div style="font-size:12px;font-weight:800;color:${tmColor};letter-spacing:1px;">⏱ TIME MANAGEMENT — ${tmExs.length} exercice${tmExs.length>1?'s':''}</div>
     <div style="font-size:18px;font-weight:900;color:${tmColor};text-shadow:0 0 6px ${tmColor}66;">${gained?'G':'L'}:${totalMin}min</div>
   </div>
-  <div style="margin-bottom:4px;">${rows}</div>
+  <div style="margin-bottom:6px;">${rows}</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid ${tmBorder};margin-top:2px;">
+    <span style="font-size:11px;font-weight:700;color:#94A3B8;">Moyenne par exercice</span>
+    <span style="font-size:13px;font-weight:900;color:${tmColor};">${gained?'G':'L'}:${avgMin}min</span>
+  </div>
   ${recoHtml}
+  </div>`;
+} else {
+  tmHtml=`<div style="background:#06B6D408;border:1px solid #06B6D422;border-radius:9px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+  <span style="font-size:18px;">⏱</span>
+  <div><div style="font-size:11px;font-weight:800;color:#06B6D4;letter-spacing:1px;">TIME MANAGEMENT</div>
+  <div style="font-size:11px;color:#475569;">Fixez une time limit sur un exercice (bouton ⏱ de la carte) pour activer ce bloc.</div></div>
   </div>`;
 }
 el.innerHTML = dsBtn + bannerHtml + tmHtml + closed.map((ex,i)=>{
@@ -7036,26 +7048,29 @@ return `<div class="card" style="margin-bottom:12px;">
 }).join('');
 
 // Auto facilitation questions per exercise (CBTA)
+const EX_COLORS=['#FF61C7','#39FF14','#00E5FF','#FFE600','#FF9500','#A78BFA','#10B981','#F97316','#3B82F6','#EF4444','#EC4899','#FFCC33','#33DDBB','#FF5577','#44EE99','#06B6D4'];
 let facQHtml = '<div style="padding:14px;">';
 facQHtml += '<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:12px;">QUESTIONS DE FACILITATION — CBTA</div>';
 closed.forEach((ex,i)=>{
   const sc = ALL_SC.find(s=>s.id===ex.sid)||{title:ex.sid};
-  const catColor = sc.cat==='LVO'?LVO_COLOR:sc.cat==='RNP'?RNP_COLOR:sc.cat==='NNC'?'#EF4444':sc.cat==='MEMORY'?'#F97316':sc.cat==='MANEUVER'?'#F59E0B':'#3B82F6';
+  const exColor = EX_COLORS[i % EX_COLORS.length];
   const questions = getFacilitationQuestions(ex);
   const noteKey = 'facQ_'+i;
-  facQHtml += '<div style="background:#0F1218;border:1px solid #1E2530;border-left:3px solid '+catColor+';border-radius:10px;padding:12px 14px;margin-bottom:12px;">';
-  facQHtml += '<div style="font-size:9px;font-weight:700;color:'+catColor+';letter-spacing:2px;margin-bottom:4px;">'+(sc.cat||'')+'</div>';
+  facQHtml += '<div style="background:#0F1218;border:1px solid '+exColor+'33;border-left:3px solid '+exColor+';border-radius:10px;padding:12px 14px;margin-bottom:12px;">';
+  facQHtml += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">';
+  facQHtml += '<span style="font-size:9px;font-weight:800;color:'+exColor+';letter-spacing:2px;background:'+exColor+'15;border:1px solid '+exColor+'44;border-radius:5px;padding:2px 7px;">'+(sc.cat||'')+'</span>';
+  facQHtml += '<span style="font-size:10px;font-weight:700;color:#475569;">EX '+(i+1)+'</span></div>';
   facQHtml += '<div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:10px;">'+sc.title+'</div>';
-  facQHtml += '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">';
+  facQHtml += '<div style="display:flex;flex-direction:column;gap:5px;margin-bottom:10px;">';
   questions.forEach((q,qi)=>{
-    facQHtml += '<div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:#141920;border-radius:7px;border:1px solid #1E2530;">';
-    facQHtml += '<span style="font-size:10px;color:'+catColor+';font-weight:700;min-width:22px;margin-top:1px;">'+(qi+1)+'.</span>';
+    facQHtml += '<div style="display:flex;align-items:flex-start;gap:8px;padding:8px 10px;background:#141920;border-radius:7px;border:1px solid '+exColor+'22;">';
+    facQHtml += '<span style="font-size:11px;font-weight:900;color:'+exColor+';min-width:22px;margin-top:1px;flex-shrink:0;">'+(qi+1)+'.</span>';
     facQHtml += '<span style="font-size:13px;color:#CBD5E1;line-height:1.5;">'+q+'</span>';
     facQHtml += '</div>';
   });
   facQHtml += '</div>';
   facQHtml += '<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:5px;">NOTES FACILITATION</div>';
-  facQHtml += '<textarea style="width:100%;background:#0F1218;border:1px solid #1E2530;border-radius:7px;color:#F1F5F9;padding:9px;font-size:13px;resize:none;min-height:60px;box-sizing:border-box;" placeholder="Reponses et observations du stagiaire..." onchange="state.debNotes[\''+noteKey+'\']=this.value">'+(state.debNotes[noteKey]||'')+'</textarea>';
+  facQHtml += '<textarea style="width:100%;background:#0F1218;border:1px solid '+exColor+'33;border-radius:7px;color:#F1F5F9;padding:9px;font-size:13px;resize:none;min-height:60px;box-sizing:border-box;" placeholder="Reponses et observations du stagiaire..." onchange="state.debNotes[\''+noteKey+'\']=this.value">'+(state.debNotes[noteKey]||'')+'</textarea>';
   facQHtml += '</div>';
 });
 facQHtml += '</div>';
