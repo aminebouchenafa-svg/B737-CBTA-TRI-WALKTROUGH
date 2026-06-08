@@ -5554,16 +5554,26 @@ const gradeLbl = ac.g>0 ? `<div style="font-size:14px;color:${GC[ac.g]};text-ali
 const pos = ac.obs.filter(o=>o.s==="+").length;
 const neg = ac.obs.filter(o=>o.s==="-").length;
 const na  = ac.obs.filter(o=>o.s==="N/A").length;
-const total = comp.obs.length - na;
+const officialTotal = comp.obs.length - na;
 let autoGrade = 0;
-if(total>0){
-const ratio = pos/total;
+let gradeModeLabel = '';
+if((pos+neg)>0){
+let ratio;
+if(pos===0){
+// Seuls des négatifs cochés : les non-cochés sont considérés acceptables
+ratio = Math.max(0,(officialTotal-neg)/officialTotal);
+gradeModeLabel=`${neg} défaut(s) sur ${officialTotal} OB`;
+} else {
+// Positifs et négatifs cochés : ratio sur les obs notés
+ratio = pos/(pos+neg);
+gradeModeLabel=`+${pos} · −${neg} notés`;
+}
 autoGrade = ratio>=0.9?5:ratio>=0.7?4:ratio>=0.5?3:ratio>=0.3?2:1;
 }
 const autoGradeHtml = (pos+neg)>0 ? `<div class="auto-grade-box" style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
 <div style="flex:1;">
 <div style="font-size:10px;color:var(--mut);letter-spacing:1px;margin-bottom:2px;">GRADING SUGGÉRÉ (basé sur OB)</div>
-<div style="font-size:11px;color:var(--mut);">+${pos} positif · -${neg} négatif · N/A ${na}</div>
+<div style="font-size:11px;color:var(--mut);">${gradeModeLabel} · N/A ${na}</div>
 </div>
 <div style="font-size:24px;font-weight:900;color:${GC[autoGrade]||'#64748B'};">${autoGrade||'-'}</div>
 <button onclick="setGrade(${autoGrade})" style="background:${GC[autoGrade]||'#334155'}22;border:1px solid ${GC[autoGrade]||'#334155'};color:${GC[autoGrade]||'#94A3B8'};padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">APPLIQUER</button>
