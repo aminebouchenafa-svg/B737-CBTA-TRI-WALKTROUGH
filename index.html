@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="B737 CBTA TRI"/>
@@ -32,7 +32,7 @@ body.fs-large{--fs:17px;--fss:15px;--fsxs:13px;--fsl:19px;--fsxl:24px;}
 body.fs-xlarge{--fs:21px;--fss:18px;--fsxs:16px;--fsl:25px;--fsxl:32px;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:-apple-system,BlinkMacSystemFont,sans-serif;}
 html,body{height:100%;overflow:hidden;background:#0A0C10;color:var(--text);}
-#app{height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+#app{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;}
 .screen{display:none;flex-direction:column;height:100%;overflow:hidden;background:#0A0C10;}
 .screen.active{display:flex;}
 /* Scrollable content */
@@ -144,7 +144,7 @@ textarea.form-input{resize:none;height:70px;}
 /* Home */
 .home-card{background:#0F1218;border:1px solid #1E2530;border-radius:14px;padding:28px;width:100%;max-width:420px;}
 /* Bottom bar */
-.bottom-bar{padding:11px 13px;border-top:1px solid #1E2530;background:#0F1218;flex-shrink:0;}
+.bottom-bar{padding:11px 13px;padding-bottom:max(11px,env(safe-area-inset-bottom));border-top:1px solid #1E2530;background:#0F1218;flex-shrink:0;}
 /* Search */
 .search-input{width:100%;background:#1A1F2E;border:1px solid #2D3748;color:var(--text);border-radius:8px;padding:10px 12px;font-size:var(--fs);outline:none;margin-bottom:9px;}
 /* Filter row */
@@ -1973,9 +1973,112 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 
+<!-- INJECTEUR DE MENACES -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #7C3AED33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:2px;margin-bottom:10px;">🎲 INJECTEUR DE MENACES — MODE D'EMPLOI</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:10px;">Bouton <span style="background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;padding:2px 8px;border-radius:5px;font-weight:800;">🎲</span> dans la barre du bas d'un exercice ouvert. Deux modes :</div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:7px;padding:7px 10px;">
+<div style="font-size:11px;color:#A78BFA;font-weight:800;margin-bottom:3px;">🎲 INJECTION ALÉATOIRE</div>
+<div style="font-size:12px;color:#94A3B8;">Tape <span style="color:#EF4444;font-weight:700;">🎲 INJECTION ALÉATOIRE</span> pour surprendre l'équipage avec une menace au hasard. La menace s'insère <strong style="color:#F1F5F9;">simultanément dans le TEM CPT et FO</strong> avec horodatage automatique. Aucun préavis aux stagiaires — idéal pour tester la réactivité WLM/SA.</div>
+</div>
+<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:7px;padding:7px 10px;">
+<div style="font-size:11px;color:#3B82F6;font-weight:800;margin-bottom:3px;">📋 CHOISIR DANS LA LISTE</div>
+<div style="font-size:12px;color:#94A3B8;">Sélectionne une menace précise pour un exercice ciblé. Chaque menace inclut une description et un libellé TEM pré-rédigé.</div>
+</div>
+</div>
+<div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:8px;">16 MENACES EN 5 CATÉGORIES</div>
+<div style="display:flex;flex-direction:column;gap:5px;">
+<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:7px;padding:8px 10px;">
+<div style="font-size:11px;color:#3B82F6;font-weight:800;margin-bottom:5px;">🎙 ATC — 4 menaces</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Clairance déroutement</span> — vecteur radar inattendu vers terrain alternatif</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Perte communication radio</span> — NORDO, squawk 7600, décision continuation</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">TCAS RA inattendu</span> — "CLIMB CLIMB" non annoncé ATC, suivi RA obligatoire</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Piste obstruée</span> — TWR "Go around, aircraft on runway", remise de gaz immédiate</div>
+</div>
+</div>
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:7px;padding:8px 10px;">
+<div style="font-size:11px;color:#F59E0B;font-weight:800;margin-bottom:5px;">🚨 CABINE — 4 menaces</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Urgence médicale passager</span> — inconscient, défibrillateur, décision diversion</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Porte non armée signalée</span> — 2L en finale, confirmation requise avant atterro</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Fumée en cabine</span> — zone arrière, source non identifiée, diversion ?</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Passager perturbateur</span> — menaçant, squawk 7500 envisagé, coordination ATC</div>
+</div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
+<div style="font-size:11px;color:#10B981;font-weight:800;margin-bottom:5px;">⛈ MÉTÉO — 3 menaces</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Dégagement indisponible</span> — brouillard soudain, RVR sous minima, carburant limité</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Cisaillement vent signalé</span> — PIREP windshear 400ft, perte 20kt, go-around ?</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Givrage non anticipé</span> — modéré à sévère non prévu ATIS, anti-ice activé</div>
+</div>
+</div>
+<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:7px;padding:8px 10px;">
+<div style="font-size:11px;color:#06B6D4;font-weight:800;margin-bottom:5px;">🧊 PISTE — 1 menace</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Contamination piste</span> — Braking action POOR, performance non recalculée, attente ou atterro ?</div>
+</div>
+<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:7px;padding:8px 10px;">
+<div style="font-size:11px;color:#A78BFA;font-weight:800;margin-bottom:5px;">⚙ SYSTÈME — 4 menaces</div>
+<div style="display:flex;flex-direction:column;gap:3px;">
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Déséquilibre carburant</span> — ECAM FUEL IMBAL croissant, procédure balance fuel</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Pressurisation anormale</span> — ECAM CABIN ALTITUDE, descente urgente envisagée ?</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Alarme feu cargo</span> — ECAM FWD CARGO FIRE, NNC cargo fire, diversion immédiate</div>
+<div style="font-size:11px;color:#CBD5E1;">• <span style="color:#F1F5F9;font-weight:700;">Impact oiseau</span> — perçu au décollage/approche, vérification moteur, retour ?</div>
+</div>
+</div>
+</div>
+<div style="background:#7C3AED11;border:1px solid #7C3AED33;border-radius:7px;padding:7px 10px;margin-top:8px;">
+<div style="font-size:11px;color:#A78BFA;font-weight:700;margin-bottom:3px;">💡 BONNE PRATIQUE TRI</div>
+<div style="font-size:12px;color:#94A3B8;">Injectez <strong style="color:#F1F5F9;">sans prévenir</strong> l'équipage en pleine procédure. Observez : qui détecte en premier (SA), qui priorise (WLM), qui communique (COM). Notez immédiatement la réaction dans le TEM avant de continuer. La menace est horodatée automatiquement.</div>
+</div>
+</div>
+
+<!-- MANDATORY — DÉTAIL COULEURS & PROCÉDURE -->
+<div class="guide-sec" style="background:#141B26;border:2px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:10px;">⚠️ MANDATORY — COULEURS &amp; PROCÉDURE COMPLÈTE</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:10px;">Les 9 items <strong style="color:#EF4444;">MANDATORY</strong> EASA apparaissent dans une barre colorée en haut de la liste des exercices. Chaque item a sa propre couleur néon pour une identification instantanée :</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:10px;">
+<div style="background:#FF557722;border:1px solid #FF5577;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#FF5577;letter-spacing:1px;">RTO</div><div style="font-size:11px;color:#94A3B8;">Rejected Takeoff</div></div>
+<div style="background:#FF884422;border:1px solid #FF8844;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#FF8844;letter-spacing:1px;">EF V1–V2</div><div style="font-size:11px;color:#94A3B8;">Engine Failure V1–V2</div></div>
+<div style="background:#FFCC3322;border:1px solid #FFCC33;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#FFCC33;letter-spacing:1px;">SE ILS</div><div style="font-size:11px;color:#94A3B8;">Single Engine ILS</div></div>
+<div style="background:#44EE9922;border:1px solid #44EE99;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#44EE99;letter-spacing:1px;">SE GO-AROUND</div><div style="font-size:11px;color:#94A3B8;">Single Engine Go-Around</div></div>
+<div style="background:#33CCFF22;border:1px solid #33CCFF;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#33CCFF;letter-spacing:1px;">SE LANDING</div><div style="font-size:11px;color:#94A3B8;">Single Engine Landing</div></div>
+<div style="background:#5588FF22;border:1px solid #5588FF;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#5588FF;letter-spacing:1px;">NON-ILS</div><div style="font-size:11px;color:#94A3B8;">Non-ILS to Minima</div></div>
+<div style="background:#BB55FF22;border:1px solid #BB55FF;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#BB55FF;letter-spacing:1px;">TCAS RA</div><div style="font-size:11px;color:#94A3B8;">TCAS Resolution Advisory</div></div>
+<div style="background:#FF66BB22;border:1px solid #FF66BB;border-radius:7px;padding:7px 9px;"><div style="font-size:10px;font-weight:900;color:#FF66BB;letter-spacing:1px;">WINDSHEAR</div><div style="font-size:11px;color:#94A3B8;">Windshear Escape Maneuver</div></div>
+<div style="background:#33DDBB22;border:1px solid #33DDBB;border-radius:7px;padding:7px 9px;grid-column:span 2;"><div style="font-size:10px;font-weight:900;color:#33DDBB;letter-spacing:1px;">UPSET RECOVERY</div><div style="font-size:11px;color:#94A3B8;">Unusual Attitude Recovery</div></div>
+</div>
+<div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:8px;">COMMENT UTILISER LA BARRE MANDATORY</div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+<div style="display:flex;align-items:center;gap:10px;background:#0F1218;border-radius:7px;padding:8px 10px;">
+<span style="background:#1E2530;color:#64748B;border:1px solid #334155;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;">RTO</span>
+<span style="font-size:12px;color:#94A3B8;">Fond sombre, texte grisé → exercice <strong style="color:#F1F5F9;">non encore effectué</strong></span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;background:#0F1218;border-radius:7px;padding:8px 10px;">
+<span style="background:#FF557733;color:#FF5577;border:1px solid #FF5577;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700;">RTO ✅</span>
+<span style="font-size:12px;color:#94A3B8;">Fond coloré + ✅ → exercice <strong style="color:#10B981;">clôturé avec succès</strong></span>
+</div>
+</div>
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:7px;padding:8px 10px;margin-bottom:8px;">
+<div style="font-size:11px;color:#F59E0B;font-weight:800;margin-bottom:5px;">↻ 2ème ESSAI — PROCÉDURE</div>
+<div style="display:flex;flex-direction:column;gap:4px;">
+<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;font-size:12px;flex-shrink:0;font-weight:700;">①</span><span style="font-size:12px;color:#94A3B8;">L'exercice MANDATORY est noté <span style="color:#EF4444;font-weight:700;">&lt; 3 (sous-standard)</span> et clôturé</span></div>
+<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;font-size:12px;flex-shrink:0;font-weight:700;">②</span><span style="font-size:12px;color:#94A3B8;">Un badge <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:1px 6px;border-radius:4px;font-size:11px;font-weight:700;">2e</span> et un bouton <span style="color:#F59E0B;font-weight:700;">↻ 2ème ESSAI</span> apparaissent dans la liste</span></div>
+<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;font-size:12px;flex-shrink:0;font-weight:700;">③</span><span style="font-size:12px;color:#94A3B8;">Appuyez sur <span style="color:#F59E0B;font-weight:700;">↻ 2ème ESSAI</span> → un duplicata de l'exercice s'ajoute à la liste</span></div>
+<div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;font-size:12px;flex-shrink:0;font-weight:700;">④</span><span style="font-size:12px;color:#94A3B8;">Refaites l'exercice → clôturez → le 2ème essai est noté séparément dans le débrief</span></div>
+</div>
+</div>
+<div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:7px 10px;">
+<div style="font-size:11px;color:#EF4444;font-weight:700;margin-bottom:3px;">⚠ RÉGLEMENTATION EASA</div>
+<div style="font-size:12px;color:#94A3B8;">Tous les 9 items MANDATORY doivent être effectués et clôturés pour valider un OPC/PC EASA. Un item non clôturé = check non valide réglementairement. La barre MANDATORY vous donne l'état en temps réel.</div>
+</div>
+</div>
+
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
 </div>
-<button onclick="closeGuide()" class="btn btn-primary" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;">Fermer le guide</button>
+<button onclick="closeGuide()" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;border-radius:10px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-weight:700;cursor:pointer;letter-spacing:1px;">✕ Fermer le guide</button>
 </div>
 </div>
 
