@@ -2144,8 +2144,8 @@ Identifiant ou mot de passe incorrect
       <div><div style="font-size:11px;font-weight:900;color:#8B5CF6;letter-spacing:1.5px;">NATURE</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Nature de la panne ou de la situation anormale détectée.</div></div>
     </div>
     <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
-      <div style="width:32px;height:32px;border-radius:8px;background:#3B82F622;border:2px solid #3B82F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #3B82F655;"><span style="font-size:16px;font-weight:900;color:#3B82F6;text-shadow:0 0 8px #3B82F6;">I</span></div>
-      <div><div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;">INTENTION</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Ce que le PIC a l'intention de faire — la procédure choisie et son objectif.</div></div>
+      <div style="width:32px;height:32px;border-radius:8px;background:#FF61C722;border:2px solid #FF61C7;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #FF61C755;"><span style="font-size:16px;font-weight:900;color:#FF61C7;text-shadow:0 0 8px #FF61C7;">I</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#FF61C7;letter-spacing:1.5px;">INTENTION</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Ce que le PIC a l'intention de faire — la procédure choisie et son objectif.</div></div>
     </div>
     <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
       <div style="width:32px;height:32px;border-radius:8px;background:#F59E0B22;border:2px solid #F59E0B;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #F59E0B55;"><span style="font-size:16px;font-weight:900;color:#F59E0B;text-shadow:0 0 8px #F59E0B;">T</span></div>
@@ -5163,14 +5163,14 @@ const FORDEC_STEPS=[
 ];
 const NITS_STEPS=[
   {l:'N',label:'NATURE',desc:"Nature de la panne ou de la situation anormale.",color:'#8B5CF6'},
-  {l:'I',label:'INTENTION',desc:"Ce que le PIC a l'intention de faire — la procédure choisie.",color:'#3B82F6'},
+  {l:'I',label:'INTENTION',desc:"Ce que le PIC a l'intention de faire — la procédure choisie.",color:'#FF61C7'},
   {l:'T',label:'TIME',desc:"Temps disponible / moment d'exécution de la procédure.",color:'#F59E0B'},
   {l:'S',label:'SPECIAL',desc:"Instructions particulières, précautions, points d'attention.",color:'#10B981'},
 ];
 const fUsed=ex.fordec===true;
 const nUsed=ex.nits===true;
-const fBtnStyle=(u)=>u
-  ?`background:#8B5CF633;border:2px solid #8B5CF6;color:#8B5CF6;box-shadow:0 0 12px #8B5CF655;`
+const btnStyle=(u,c)=>u
+  ?`background:${c}33;border:2px solid ${c};color:${c};box-shadow:0 0 12px ${c}55;`
   :`background:#1A1F2E;border:2px solid #334155;color:#64748B;`;
 const fordecRows=FORDEC_STEPS.map(s=>`
   <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #1E253066;">
@@ -5200,7 +5200,7 @@ el.innerHTML=`
         <div style="font-size:13px;font-weight:900;color:#8B5CF6;letter-spacing:2px;text-shadow:0 0 8px #8B5CF688;">FORDEC</div>
         <div style="font-size:11px;color:#64748B;letter-spacing:1px;">Modèle de prise de décision</div>
       </div>
-      <button onclick="toggleFordec()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${fBtnStyle(fUsed)}">${fUsed?'✓ UTILISÉ':'— NON UTILISÉ'}</button>
+      <button onclick="toggleFordec()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${btnStyle(fUsed,'#8B5CF6')}">${fUsed?'✓ UTILISÉ':'— NON UTILISÉ'}</button>
     </div>
     ${fordecRows}
   </div>
@@ -5210,7 +5210,7 @@ el.innerHTML=`
         <div style="font-size:13px;font-weight:900;color:#3B82F6;letter-spacing:2px;text-shadow:0 0 8px #3B82F688;">NITS BRIEF</div>
         <div style="font-size:11px;color:#64748B;letter-spacing:1px;">Brief équipage avant exécution</div>
       </div>
-      <button onclick="toggleNits()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${fBtnStyle(nUsed)}">${nUsed?'✓ EFFECTUÉ':'— NON EFFECTUÉ'}</button>
+      <button onclick="toggleNits()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${btnStyle(nUsed,'#3B82F6')}">${nUsed?'✓ EFFECTUÉ':'— NON EFFECTUÉ'}</button>
     </div>
     ${nitsRows}
   </div>
