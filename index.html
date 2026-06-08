@@ -516,6 +516,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab active" onclick="exTab('eval',this)" style="color:#3B82F6;">Evaluation</button>
 <button class="tab" onclick="exTab('ffa',this)" style="color:#F59E0B;">FFA</button>
 <button class="tab" onclick="exTab('tem',this)" style="color:#EF4444;">TEM</button>
+<button class="tab" onclick="exTab('crm',this)" style="color:#8B5CF6;">FORDEC</button>
 <button class="tab" onclick="exTab('fac',this)" style="color:#10B981;">Facilitation</button>
 </div>
 <div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E2530;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
@@ -2089,6 +2090,76 @@ Identifiant ou mot de passe incorrect
 <div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:7px 10px;">
 <div style="font-size:11px;color:#EF4444;font-weight:700;margin-bottom:3px;">⚠ RÉGLEMENTATION EASA</div>
 <div style="font-size:12px;color:#94A3B8;">Tous les 9 items MANDATORY doivent être effectués et clôturés pour valider un OPC/PC EASA. Un item non clôturé = check non valide réglementairement. La barre MANDATORY vous donne l'état en temps réel.</div>
+</div>
+</div>
+
+<!-- FORDEC -->
+<div style="margin-bottom:14px;padding:0 20px;">
+<div style="background:linear-gradient(135deg,#0A0612 0%,#0D0A1A 100%);border:1px solid #8B5CF633;border-radius:12px;padding:16px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,#8B5CF644,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+  <div style="font-size:13px;font-weight:900;color:#8B5CF6;letter-spacing:3px;text-shadow:0 0 12px #8B5CF699;margin-bottom:4px;">⚡ FORDEC</div>
+  <div style="font-size:11px;color:#64748B;letter-spacing:1px;margin-bottom:14px;">Modèle de prise de décision — à utiliser face à toute situation anormale</div>
+  <div style="display:flex;flex-direction:column;gap:0;">
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#FF61C722;border:2px solid #FF61C7;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #FF61C755;"><span style="font-size:16px;font-weight:900;color:#FF61C7;text-shadow:0 0 8px #FF61C7;">F</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#FF61C7;letter-spacing:1.5px;">FACTS</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Que se passe-t-il ? Rassembler et partager les informations disponibles.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#39FF1422;border:2px solid #39FF14;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #39FF1455;"><span style="font-size:16px;font-weight:900;color:#39FF14;text-shadow:0 0 8px #39FF14;">O</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#39FF14;letter-spacing:1.5px;">OPTIONS</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Quelles alternatives ? Lister sans juger, impliquer le crew.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#FF950022;border:2px solid #FF9500;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #FF950055;"><span style="font-size:16px;font-weight:900;color:#FF9500;text-shadow:0 0 8px #FF9500;">R</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#FF9500;letter-spacing:1.5px;">RISKS &amp; BENEFITS</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Risques et avantages de chaque option. Quelle est la meilleure ?</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#00E5FF22;border:2px solid #00E5FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #00E5FF55;"><span style="font-size:16px;font-weight:900;color:#00E5FF;text-shadow:0 0 8px #00E5FF;">D</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#00E5FF;letter-spacing:1.5px;">DECISION</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Décision prise et annoncée. L'équipage est aligné sur le plan d'action.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#FFE60022;border:2px solid #FFE600;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #FFE60055;"><span style="font-size:16px;font-weight:900;color:#FFE600;text-shadow:0 0 8px #FFE600;">E</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#FFE600;letter-spacing:1.5px;">EXECUTION</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Qui fait quoi ? Répartition des rôles et exécution de la procédure.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#AAFF0022;border:2px solid #AAFF00;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #AAFF0055;"><span style="font-size:16px;font-weight:900;color:#AAFF00;text-shadow:0 0 8px #AAFF00;">C</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#AAFF00;letter-spacing:1.5px;">CHECK</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">L'action a-t-elle produit l'effet attendu ? Confirmer ou reconsidérer.</div></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;background:#8B5CF611;border:1px solid #8B5CF633;border-radius:7px;padding:8px 10px;">
+    <div style="font-size:10px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:3px;">DANS L'APP — Onglet FORDEC</div>
+    <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Ouvre un exercice → onglet <strong style="color:#8B5CF6;">FORDEC</strong> → coche <strong style="color:#8B5CF6;">FORDEC UTILISÉ</strong> si l'équipage a appliqué la méthode. Un badge <strong style="color:#8B5CF6;">F</strong> apparaît sur la carte et le débrief affiche le taux d'utilisation.</div>
+  </div>
+</div>
+</div>
+
+<!-- NITS BRIEF -->
+<div style="margin-bottom:14px;padding:0 20px;">
+<div style="background:linear-gradient(135deg,#060A14 0%,#080E1A 100%);border:1px solid #3B82F633;border-radius:12px;padding:16px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,#3B82F644,transparent 70%);border-radius:50%;pointer-events:none;"></div>
+  <div style="font-size:13px;font-weight:900;color:#3B82F6;letter-spacing:3px;text-shadow:0 0 12px #3B82F699;margin-bottom:4px;">📡 NITS BRIEF</div>
+  <div style="font-size:11px;color:#64748B;letter-spacing:1px;margin-bottom:14px;">Brief équipage — se fait APRÈS FORDEC, AVANT l'exécution de la procédure</div>
+  <div style="display:flex;flex-direction:column;gap:0;">
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#8B5CF622;border:2px solid #8B5CF6;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #8B5CF755;"><span style="font-size:16px;font-weight:900;color:#8B5CF6;text-shadow:0 0 8px #8B5CF6;">N</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#8B5CF6;letter-spacing:1.5px;">NATURE</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Nature de la panne ou de la situation anormale détectée.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#3B82F622;border:2px solid #3B82F6;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #3B82F655;"><span style="font-size:16px;font-weight:900;color:#3B82F6;text-shadow:0 0 8px #3B82F6;">I</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;">INTENTION</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Ce que le PIC a l'intention de faire — la procédure choisie et son objectif.</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E253055;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#F59E0B22;border:2px solid #F59E0B;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #F59E0B55;"><span style="font-size:16px;font-weight:900;color:#F59E0B;text-shadow:0 0 8px #F59E0B;">T</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;">TIME</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Temps disponible ou moment d'exécution — urgence ou temps pour réfléchir ?</div></div>
+    </div>
+    <div style="display:flex;gap:12px;align-items:flex-start;padding:9px 0;">
+      <div style="width:32px;height:32px;border-radius:8px;background:#10B98122;border:2px solid #10B981;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px #10B98155;"><span style="font-size:16px;font-weight:900;color:#10B981;text-shadow:0 0 8px #10B981;">S</span></div>
+      <div><div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;">SPECIAL INSTRUCTIONS</div><div style="font-size:12px;color:#94A3B8;line-height:1.4;margin-top:2px;">Instructions particulières, précautions, rôles spécifiques PF/PM.</div></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;background:#3B82F611;border:1px solid #3B82F633;border-radius:7px;padding:8px 10px;">
+    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:3px;">SÉQUENCE COMPLÈTE</div>
+    <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Panne détectée → <strong style="color:#8B5CF6;">FORDEC</strong> (décider) → <strong style="color:#3B82F6;">NITS</strong> (briefer l'équipage) → Exécuter la procédure. Un badge <strong style="color:#3B82F6;">N</strong> apparaît sur la carte si le NITS brief a été effectué.</div>
+  </div>
 </div>
 </div>
 
@@ -4532,6 +4603,7 @@ ${ex.closed&&ex.timeLimit&&ex.timeDeltaSec!==undefined?(ex.timeDeltaSec>=0?`<div
 <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
 <span class="chip" style="background:${cc}18;border:1px solid ${cc}33;color:${cc};">${sc.cat}</span>
 ${keysHtml}
+${ex.fordec?'<span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:800;letter-spacing:0.5px;box-shadow:0 0 6px #8B5CF644;">F</span>':''}${ex.nits?'<span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:800;letter-spacing:0.5px;box-shadow:0 0 6px #3B82F644;">N</span>':''}
 </div>
 </div>`;
 }).join('');
@@ -4698,6 +4770,7 @@ const el = document.getElementById('ex-content');
 if(tab==="eval") renderEvalTab(ex,sc,el);
 else if(tab==="ffa") renderFFATab(ex,sc,el);
 else if(tab==="tem") renderTEMTab(ex,sc,el);
+else if(tab==="crm") renderFordecNitsTab(ex,sc,el);
 else if(tab==="fac") renderFacTab(ex,sc,el);
 }
 
@@ -5079,6 +5152,84 @@ if(!ex.facNotes) ex.facNotes={};
 ex.facNotes[i]=val;
 }
 
+function renderFordecNitsTab(ex,sc,el){
+const FORDEC_STEPS=[
+  {l:'F',label:'FACTS',desc:"Que se passe-t-il exactement ? Rassembler les informations disponibles.",color:'#FF61C7'},
+  {l:'O',label:'OPTIONS',desc:"Quelles sont les alternatives possibles ? Lister sans juger.",color:'#39FF14'},
+  {l:'R',label:'RISKS',desc:"Risques et bénéfices de chaque option. Quelle est la meilleure ?",color:'#FF9500'},
+  {l:'D',label:'DECISION',desc:"Décision prise. L'équipage est aligné sur le plan.",color:'#00E5FF'},
+  {l:'E',label:'EXECUTION',desc:"Qui fait quoi ? Répartition des tâches et exécution.",color:'#FFE600'},
+  {l:'C',label:'CHECK',desc:"L'action a-t-elle produit l'effet attendu ? Vérification du résultat.",color:'#AAFF00'},
+];
+const NITS_STEPS=[
+  {l:'N',label:'NATURE',desc:"Nature de la panne ou de la situation anormale.",color:'#8B5CF6'},
+  {l:'I',label:'INTENTION',desc:"Ce que le PIC a l'intention de faire — la procédure choisie.",color:'#3B82F6'},
+  {l:'T',label:'TIME',desc:"Temps disponible / moment d'exécution de la procédure.",color:'#F59E0B'},
+  {l:'S',label:'SPECIAL',desc:"Instructions particulières, précautions, points d'attention.",color:'#10B981'},
+];
+const fUsed=ex.fordec===true;
+const nUsed=ex.nits===true;
+const fBtnStyle=(u)=>u
+  ?`background:#8B5CF633;border:2px solid #8B5CF6;color:#8B5CF6;box-shadow:0 0 12px #8B5CF655;`
+  :`background:#1A1F2E;border:2px solid #334155;color:#64748B;`;
+const fordecRows=FORDEC_STEPS.map(s=>`
+  <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #1E253066;">
+    <div style="width:36px;height:36px;border-radius:9px;background:${s.color}22;border:2px solid ${s.color}88;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px ${s.color}44;">
+      <span style="font-size:18px;font-weight:900;color:${s.color};text-shadow:0 0 8px ${s.color};">${s.l}</span>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:900;color:${s.color};letter-spacing:1.5px;margin-bottom:3px;">${s.label}</div>
+      <div style="font-size:13px;color:#94A3B8;line-height:1.5;">${s.desc}</div>
+    </div>
+  </div>`).join('');
+const nitsRows=NITS_STEPS.map(s=>`
+  <div style="display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid #1E253066;">
+    <div style="width:36px;height:36px;border-radius:9px;background:${s.color}22;border:2px solid ${s.color}88;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 0 10px ${s.color}44;">
+      <span style="font-size:18px;font-weight:900;color:${s.color};text-shadow:0 0 8px ${s.color};">${s.l}</span>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:900;color:${s.color};letter-spacing:1.5px;margin-bottom:3px;">${s.label}</div>
+      <div style="font-size:13px;color:#94A3B8;line-height:1.5;">${s.desc}</div>
+    </div>
+  </div>`).join('');
+el.innerHTML=`
+<div style="margin-bottom:16px;">
+  <div style="background:#0A0D1A;border:2px solid #8B5CF644;border-radius:12px;padding:14px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div>
+        <div style="font-size:13px;font-weight:900;color:#8B5CF6;letter-spacing:2px;text-shadow:0 0 8px #8B5CF688;">FORDEC</div>
+        <div style="font-size:11px;color:#64748B;letter-spacing:1px;">Modèle de prise de décision</div>
+      </div>
+      <button onclick="toggleFordec()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${fBtnStyle(fUsed)}">${fUsed?'✓ UTILISÉ':'— NON UTILISÉ'}</button>
+    </div>
+    ${fordecRows}
+  </div>
+  <div style="background:#0A0D1A;border:2px solid #3B82F644;border-radius:12px;padding:14px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <div>
+        <div style="font-size:13px;font-weight:900;color:#3B82F6;letter-spacing:2px;text-shadow:0 0 8px #3B82F688;">NITS BRIEF</div>
+        <div style="font-size:11px;color:#64748B;letter-spacing:1px;">Brief équipage avant exécution</div>
+      </div>
+      <button onclick="toggleNits()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${fBtnStyle(nUsed)}">${nUsed?'✓ EFFECTUÉ':'— NON EFFECTUÉ'}</button>
+    </div>
+    ${nitsRows}
+  </div>
+</div>`;
+}
+
+function toggleFordec(){
+const ex=state.exercises[state.activeIdx];
+ex.fordec=!ex.fordec;
+renderExContent();
+renderExView();
+}
+function toggleNits(){
+const ex=state.exercises[state.activeIdx];
+ex.nits=!ex.nits;
+renderExContent();
+renderExView();
+}
+
 // ── COMP PANEL ---────────────────────────────────────────────────────────────
 function openComp(cid){
 const ex = state.exercises[state.activeIdx];
@@ -5327,7 +5478,7 @@ if(_planAddMode){
   return;
 }
 const _sc=ALL_SC.find(s=>s.id===sid);
-state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null});
+state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
 closeAddModal();
 openEx(state.exercises.length-1);
 }
@@ -5788,7 +5939,7 @@ function _applyPlan(plan){
   state.exercises = [];
   plan.exIds.forEach(sid=>{
     if(!ALL_SC.find(x=>x.id===sid)) return;
-    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null});
+    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
   });
   closePlans();
   renderExList();
@@ -6900,7 +7051,23 @@ if(tmExs.length){
   <div style="font-size:11px;color:#475569;">Fixez une time limit sur un exercice (bouton ⏱ de la carte) pour activer ce bloc.</div></div>
   </div>`;
 }
-el.innerHTML = dsBtn + bannerHtml + tmHtml + closed.map((ex,i)=>{
+const fdTotal=closed.filter(e=>e.fordec).length;
+const ntTotal=closed.filter(e=>e.nits).length;
+const fdColor=fdTotal===closed.length?'#8B5CF6':fdTotal>0?'#F59E0B':'#475569';
+const ntColor=ntTotal===closed.length?'#3B82F6':ntTotal>0?'#F59E0B':'#475569';
+const crmSummaryHtml=`<div style="display:flex;gap:8px;margin-bottom:14px;">
+  <div style="flex:1;background:${fdColor}15;border:2px solid ${fdColor}44;border-radius:10px;padding:10px 12px;">
+    <div style="font-size:11px;font-weight:900;color:${fdColor};letter-spacing:1.5px;margin-bottom:3px;">FORDEC</div>
+    <div style="font-size:22px;font-weight:900;color:${fdColor};text-shadow:0 0 10px ${fdColor}88;">${fdTotal}<span style="font-size:13px;color:#475569;">/${closed.length}</span></div>
+    <div style="font-size:10px;color:#475569;margin-top:2px;">exercices avec FORDEC</div>
+  </div>
+  <div style="flex:1;background:${ntColor}15;border:2px solid ${ntColor}44;border-radius:10px;padding:10px 12px;">
+    <div style="font-size:11px;font-weight:900;color:${ntColor};letter-spacing:1.5px;margin-bottom:3px;">NITS BRIEF</div>
+    <div style="font-size:22px;font-weight:900;color:${ntColor};text-shadow:0 0 10px ${ntColor}88;">${ntTotal}<span style="font-size:13px;color:#475569;">/${closed.length}</span></div>
+    <div style="font-size:10px;color:#475569;margin-top:2px;">exercices avec NITS brief</div>
+  </div>
+</div>`;
+el.innerHTML = dsBtn + bannerHtml + crmSummaryHtml + tmHtml + closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
 const st=exStats(ex);
 const ac=st?GC[Math.round(st.avg)]:'#475569';
