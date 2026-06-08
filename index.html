@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="B737 CBTA TRI"/>
 <meta name="theme-color" content="#0A0C10"/>
+<meta name="color-scheme" content="dark"/>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
 <meta http-equiv="Pragma" content="no-cache"/>
 <meta http-equiv="Expires" content="0"/>
@@ -170,11 +171,23 @@ body.light-mode #app,body.light-mode .screen:not(#screen-login){background:#F7F4
 body.login-active,body.login-active #app,body.login-active #screen-login,body.login-active #screen-login .scroll{background:#0A0C10!important;color-scheme:dark;}
 body.login-active #screen-login .form-input{background:#1E2530!important;border-color:#334155!important;color:#CBD5E1!important;color-scheme:dark;-webkit-appearance:none;appearance:none;}
 body.login-active #screen-login .form-input::placeholder{color:#475569!important;}
-body.login-active #screen-login .form-input:-webkit-autofill,
-body.login-active #screen-login .form-input:-webkit-autofill:hover,
-body.login-active #screen-login .form-input:-webkit-autofill:focus,
-body.login-active #screen-login .form-input:-webkit-autofill:active{-webkit-box-shadow:0 0 0 60px #1E2530 inset!important;-webkit-text-fill-color:#CBD5E1!important;caret-color:#CBD5E1;transition:background-color 9999s ease-in-out 0s;}
-.form-input:-webkit-autofill,.form-input:-webkit-autofill:hover,.form-input:-webkit-autofill:focus,.form-input:-webkit-autofill:active{-webkit-box-shadow:0 0 0 60px #1A1F2E inset!important;-webkit-text-fill-color:var(--text)!important;caret-color:var(--text);transition:background-color 9999s ease-in-out 0s;}
+#inp-user:-webkit-autofill,#inp-user:-webkit-autofill:hover,#inp-user:-webkit-autofill:focus,#inp-user:-webkit-autofill:active,
+#inp-pass:-webkit-autofill,#inp-pass:-webkit-autofill:hover,#inp-pass:-webkit-autofill:focus,#inp-pass:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 100px #1E2530 inset!important;
+  box-shadow:0 0 0 100px #1E2530 inset!important;
+  -webkit-text-fill-color:#CBD5E1!important;
+  color:#CBD5E1!important;
+  caret-color:#CBD5E1!important;
+  background-color:#1E2530!important;
+  transition:background-color 99999s 0s,color 99999s 0s;
+}
+.form-input:-webkit-autofill,.form-input:-webkit-autofill:hover,.form-input:-webkit-autofill:focus,.form-input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 100px #1A1F2E inset!important;
+  box-shadow:0 0 0 100px #1A1F2E inset!important;
+  -webkit-text-fill-color:var(--text)!important;
+  caret-color:var(--text)!important;
+  transition:background-color 99999s 0s,color 99999s 0s;
+}
 
 body.light-mode .topbar{background:#FFFFFF!important;border-bottom:1px solid #DDD8CC!important;}
 body.light-mode .topbar .title{color:#0F172A!important;}
@@ -337,11 +350,11 @@ Identifiant ou mot de passe incorrect
 </div>
 <div style="margin-bottom:12px;">
 <label class="form-label">IDENTIFIANT</label>
-<input id="inp-user" class="form-input" placeholder="Votre identifiant" autocomplete="username"/>
+<input id="inp-user" class="form-input" placeholder="Votre identifiant" autocomplete="username" style="color-scheme:dark;"/>
 </div>
 <div style="margin-bottom:8px;">
 <label class="form-label">MOT DE PASSE</label>
-<input id="inp-pass" class="form-input" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+<input id="inp-pass" class="form-input" type="password" placeholder="••••••••" autocomplete="current-password" style="color-scheme:dark;" onkeydown="if(event.key==='Enter')doLogin()"/>
 </div>
 <div style="font-size:11px;color:#334155;text-align:center;margin-bottom:18px;">Acces reserve aux instructeurs autorises</div>
 <button class="btn btn-primary" style="width:100%;padding:14px;font-size:15px;letter-spacing:2px;" onclick="doLogin()" style="background:#F59E0B;border-color:#FBBF24;">CONNEXION</button>
