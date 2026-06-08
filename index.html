@@ -4170,6 +4170,81 @@ const GL = ["","INACCEPTABLE","SOUS-STANDARD","STANDARD","AU-DESSUS","EXEMPLAIRE
 const catC = {MEMORY:"#EF4444",MANEUVER:"#F97316","FLIGHT PATTERN":"#10B981",NNC:"#A855F7",LVO:"#EC4899",RNP:"#0EA5E9"};
 const PHASE_COLORS={"ALL":"#64748B","TAKEOFF":"#FFE600","CLIMB":"#39FF14","CRUISE":"#00E5FF","DESCENT":"#FF9500","APPROACH":"#FF61C7","LANDING":"#AAFF00"};
 
+const OBS_EXAMPLES={
+  KNO:[
+    {text:"Ne cite pas les limites VMO/MMO du B737",s:"-"},
+    {text:"Incapable d'expliquer fonctionnement GPWS/EGPWS",s:"-"},
+    {text:"Méconnaît les procédures FCOM/QRH en panne moteur",s:"-"},
+    {text:"Cite correctement la procédure FCOM décompression cabine",s:"+"},
+    {text:"Connaît les minima alternates et politiques carburant",s:"+"},
+    {text:"Explique l'interaction systèmes hydrauliques avec précision",s:"+"},
+  ],
+  WLM:[
+    {text:"Accumule les tâches sans priorisation en finale",s:"-"},
+    {text:"Ne délègue pas la radio lors d'une panne",s:"-"},
+    {text:"Perd le monitoring avion pendant une tâche secondaire",s:"-"},
+    {text:"Délègue la checklist QRH au F/O pendant gestion hydraulique",s:"+"},
+    {text:"Briefing PASS clair avant la phase critique",s:"+"},
+    {text:"Gère l'interruption radio sans impact sur le pilotage",s:"+"},
+  ],
+  SA:[
+    {text:"Pas de callout sur déviation de vitesse +15 kt en approche",s:"-"},
+    {text:"Perd conscience de la position avion lors d'un ECAM",s:"-"},
+    {text:"Ne voit pas la tendance énergie basse sur le PAPI",s:"-"},
+    {text:"Callout TREND +10 proactif lors de l'approche finale",s:"+"},
+    {text:"Détecte variation d'énergie après nivellement automatique",s:"+"},
+    {text:"Conscience permanente de l'état systèmes en multi-tâche",s:"+"},
+  ],
+  PSD:[
+    {text:"FORDEC non appliqué — décision prise sans consulter le F/O",s:"-"},
+    {text:"Continue l'approche malgré météo dégradée (pression temps)",s:"-"},
+    {text:"Fixation sur une panne sans réévaluer la situation globale",s:"-"},
+    {text:"FORDEC structuré avant décision déroutement moteur",s:"+"},
+    {text:"GO-AROUND décidé tôt sans hésitation après écart ILS",s:"+"},
+    {text:"Révise la décision initiale après mise à jour météo ATIS",s:"+"},
+  ],
+  LTW:[
+    {text:"Pas d'inclusion du F/O dans le briefing départ panne",s:"-"},
+    {text:"Ordres donnés sans feedback ni confirmation d'équipage",s:"-"},
+    {text:"Ignore la suggestion du F/O sans explication",s:"-"},
+    {text:"Brief NITS complet avant délégation tâche au F/O",s:"+"},
+    {text:"Intègre la suggestion du F/O de façon constructive",s:"+"},
+    {text:"Leadership décisif lors du déroutement — équipage informé",s:"+"},
+  ],
+  FPM:[
+    {text:"Dépassement de 200 ft en manuel lors remise de gaz",s:"-"},
+    {text:"Vitesse non stabilisée sous 500 ft AAL",s:"-"},
+    {text:"Dérive 1/2 dot LOC non corrigée en approche",s:"-"},
+    {text:"Maintien axe ILS précis en manuel jusqu'au seuil",s:"+"},
+    {text:"Contrôle symétrique efficace après panne moteur",s:"+"},
+    {text:"Transitions manuel/auto fluides et annoncées",s:"+"},
+  ],
+  FPA:[
+    {text:"Mode FMA non annoncé après changement automatique",s:"-"},
+    {text:"Interception ILS en V/S au lieu de APP mode",s:"-"},
+    {text:"LNAV non armé — déviation route non détectée",s:"-"},
+    {text:"Annonce FMA correctement à chaque changement de mode",s:"+"},
+    {text:"Rétrogradation d'automatisation appropriée lors urgence",s:"+"},
+    {text:"Sélection niveau automation adapté à la charge de travail",s:"+"},
+  ],
+  COM:[
+    {text:"Pas de readback sur la clairance de descente ATC",s:"-"},
+    {text:"Communication interne absente pendant procédure urgence",s:"-"},
+    {text:"Ton de voix inadapté — génère tension dans l'équipage",s:"-"},
+    {text:"Phraséologie OACI irréprochable tout au long du vol",s:"+"},
+    {text:"Briefing approche complet avec challenge/réponse F/O",s:"+"},
+    {text:"Remontée d'information ATC précise et synthétique",s:"+"},
+  ],
+  PRO:[
+    {text:"TO MEMO non complété avant le décollage",s:"-"},
+    {text:"QRH non sorti après déclenchement alarme feu moteur",s:"-"},
+    {text:"SOP non respectée lors du go-around panne",s:"-"},
+    {text:"Challenge/réponse respecté sur toute la checklist",s:"+"},
+    {text:"SOP appliquée sans omission lors de la remise de gaz panne",s:"+"},
+    {text:"Checklist après panne effectuée en temps utile et complète",s:"+"},
+  ],
+};
+
 const ROOT_CAUSES = [
 "Biais de confirmation","Surcharge cognitive / Effet tunnel",
 "Manque de clarte leadership PF/PM","Perte de SA progressive",
@@ -5508,6 +5583,21 @@ return `<div class="ob-row ${isP?'pos':isN?'neg':isNA?'na':''}" data-obid="${ob.
 </div>`;
 }).join('');
 
+const examples = OBS_EXAMPLES[comp.id]||[];
+const examplesHtml = examples.length ? `
+<div class="section-lbl" style="margin-top:18px;color:#F59E0B;letter-spacing:1.5px;">EXEMPLES CONTEXTUELS B737</div>
+<div style="font-size:10px;color:#475569;margin-bottom:8px;margin-top:-4px;">Appuyez pour ajouter à vos observations (en complément des OB Boeing)</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px;padding-bottom:16px;">
+${examples.map((ex,i)=>{
+const qid='q_'+comp.id+'_'+i;
+const added=ac.obs.find(o=>o.id===qid);
+const active=added&&added.s===ex.s;
+const col=ex.s==='+'?'#10B981':'#EF4444';
+const activeStyle=active?`background:${col}22;border:1px solid ${col};color:${col};box-shadow:0 0 8px ${col}44;`:`background:#0F1218;border:1px solid #1E293B;color:#475569;`;
+return `<button onclick="addQuickObs('${comp.id}',${i})" style="${activeStyle}border-radius:16px;padding:5px 12px;font-size:11px;cursor:pointer;line-height:1.4;text-align:left;">${ex.s==='+'?'<span style="color:#10B981;font-weight:900;">+</span>':'<span style="color:#EF4444;font-weight:900;">−</span>'} ${ex.text}</button>`;
+}).join('')}
+</div>` : '';
+
 document.getElementById('comp-content').innerHTML = `
 <div style="margin-bottom:18px;">
 <div class="section-lbl">GRADE CBTA (1 a 5)</div>
@@ -5515,8 +5605,9 @@ document.getElementById('comp-content').innerHTML = `
 ${gradeLbl}
 </div>
 ${autoGradeHtml}
-<div class="section-lbl">OBSERVABLE BEHAVIORS</div>
-${obsHtml}`;
+<div class="section-lbl">OBSERVABLE BEHAVIORS BOEING</div>
+${obsHtml}
+${examplesHtml}`;
 }
 
 function setGrade(n){
@@ -5530,6 +5621,12 @@ const comp = COMPETENCIES.find(c=>c.id===state.activeComp.cid);
 const ob = comp ? comp.obs.find(o=>o.id===id) : null;
 const text = ob ? ob.text : String(id);
 toggleOB(id,text,sign);
+}
+function addQuickObs(cid,i){
+const ex=(OBS_EXAMPLES[cid]||[])[i];
+if(!ex) return;
+const qid='q_'+cid+'_'+i;
+toggleOB(qid,ex.text,ex.s);
 }
 function toggleOB(id,text,sign){
 const obs = state.activeComp.obs;
