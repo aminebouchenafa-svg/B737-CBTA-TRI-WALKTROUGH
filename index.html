@@ -5049,6 +5049,101 @@ const COMPETENCIES = [
 ]},
 ]
 
+// ── COMPETENCIES EN (official Boeing CBTA OBs) ---─────────────────────────────
+const COMPETENCIES_EN = [
+{id:"KNO",obs:[
+"Demonstrates practical and applicable knowledge of limitations and systems and their interaction",
+"Demonstrates required knowledge of published operating instructions",
+"Demonstrates knowledge of the physical environment, the air traffic environment including routings, weather, airports and the operational infrastructure",
+"Demonstrates appropriate knowledge of applicable legislation",
+"Knows where to source required information",
+"Demonstrates a positive interest in acquiring knowledge",
+"Is able to apply knowledge effectively",
+]},
+{id:"WLM",obs:[
+"Exercises self-control in all situations",
+"Plans, prioritizes and schedules appropriate tasks effectively",
+"Manages time efficiently when carrying out tasks",
+"Offers and gives assistance",
+"Delegates tasks",
+"Seeks and accepts assistance, when appropriate",
+"Monitors, reviews and cross-checks actions conscientiously",
+"Verifies that tasks are completed to the expected outcome",
+"Manages and recovers from interruptions, distractions, variations and failures effectively while performing tasks",
+]},
+{id:"SA",obs:[
+"Monitors and assesses the state of the airplane and its systems",
+"Monitors and assesses the airplane's energy state, and its anticipated flight path",
+"Monitors and assesses the general environment as it may affect the operation",
+"Validates the accuracy of information and checks for gross errors",
+"Maintains awareness of the people involved in, or affected by, the operation and their capacity to perform as expected",
+"Develops effective contingency plans based upon potential risks associated with threats and errors",
+"Responds to indications of reduced situational awareness",
+]},
+{id:"PSD",obs:[
+"Identifies, assesses, and manages threats and errors in a timely manner",
+"Seeks accurate and adequate information from appropriate sources",
+"Identifies and verifies what and why things have gone wrong, if appropriate",
+"Perseveres in working through problems while prioritizing safety",
+"Identifies and considers appropriate options",
+"Applies appropriate and timely decision-making techniques",
+"Monitors, reviews and adapts decisions as required",
+"Adapts when faced with situations where no guidance or procedure exists",
+"Demonstrates resilience when encountering an unexpected event",
+]},
+{id:"LTW",obs:[
+"Encourages team participation and open communication",
+"Demonstrates initiative and provides direction when required",
+"Engages others in planning",
+"Considers inputs from others",
+"Gives and receives feedback constructively",
+"Addresses and resolves conflicts and disagreements in a constructive manner",
+"Exercises decisive leadership when required",
+"Accepts responsibility for decisions and actions",
+"Carries out instructions when directed",
+"Applies effective intervention strategies to resolve identified deviations",
+"Manages cultural and language challenges, as applicable",
+]},
+{id:"FPM",obs:[
+"Controls the airplane manually with accuracy and smoothness as appropriate to the situation",
+"Monitors and detects deviations from the intended flight path and takes appropriate action",
+"Manually controls the airplane using the relationship between airplane altitude, speed and thrust, and navigation signals or visual information",
+"Manages the flight path safely to achieve optimum operational performance",
+"Maintains the intended flight path during manual flight while managing other tasks and distractions",
+"Uses appropriate flight management and guidance systems, as installed and applicable to the conditions",
+"Effectively monitors flight guidance systems, including engagement and automatic mode transitions",
+]},
+{id:"FPA",obs:[
+"Uses appropriate flight management, guidance systems and automation, as installed and applicable to the conditions",
+"Monitors and detects deviations from the intended flight path and takes appropriate action",
+"Manages the flight path safely to achieve optimum operational performance",
+"Maintains the intended flight path during flight using automation while managing other tasks and distractions",
+"Selects appropriate level and mode of automation in a timely manner considering phase of flight and workload",
+"Effectively monitors automation, including engagement and automatic mode transitions",
+]},
+{id:"COM",obs:[
+"Determines that the recipient is ready and able to receive information",
+"Selects appropriately what, when, how and with whom to communicate",
+"Conveys messages clearly, accurately and concisely",
+"Confirms that the recipient demonstrates understanding of important information",
+"Listens actively and demonstrates understanding when receiving information",
+"Asks relevant and effective questions",
+"Uses appropriate escalation in communication to resolve identified deviations",
+"Uses and interprets non-verbal communication in a manner appropriate to the organizational and social culture",
+"Adheres to standard radiotelephone phraseology and procedures",
+"Accurately reads, interprets, constructs and responds to datalink messages in English",
+]},
+{id:"PRO",obs:[
+"Identifies where to find procedures and regulations",
+"Applies relevant operating instructions, procedures and techniques in a timely manner",
+"Follows standard operating procedures (SOP) unless a higher degree of safety dictates an appropriate deviation",
+"Operates airplane systems and associated equipment correctly",
+"Monitors aircraft systems status",
+"Complies with applicable regulations",
+"Applies relevant procedural knowledge",
+]},
+];
+
 // ── GRADE CONFIG ---───────────────────────────────────────────────────────────
 const GC = ["","#EF4444","#F97316","#F59E0B","#10B981","#3B82F6"];
 const GL = ["","INACCEPTABLE","SOUS-STANDARD","STANDARD","AU-DESSUS","EXEMPLAIRE"]; // updated by setLang()
@@ -5057,80 +5152,86 @@ const PHASE_COLORS={"ALL":"#64748B","TAKEOFF":"#FFE600","CLIMB":"#39FF14","CRUIS
 
 const OBS_EXAMPLES={
   KNO:[
-    {text:"Ne cite pas les limites VMO/MMO du B737",s:"-"},
-    {text:"Incapable d'expliquer fonctionnement GPWS/EGPWS",s:"-"},
-    {text:"Méconnaît les procédures FCOM/QRH en panne moteur",s:"-"},
-    {text:"Cite correctement la procédure FCOM décompression cabine",s:"+"},
-    {text:"Connaît les minima alternates et politiques carburant",s:"+"},
-    {text:"Explique l'interaction systèmes hydrauliques avec précision",s:"+"},
+    {text:_lang==='en'?"Does not recall B737 VMO/MMO limits":"Ne cite pas les limites VMO/MMO du B737",s:"-"},
+    {text:_lang==='en'?"Unable to explain GPWS/EGPWS operation":"Incapable d'expliquer fonctionnement GPWS/EGPWS",s:"-"},
+    {text:_lang==='en'?"Unfamiliar with FCOM/QRH engine failure procedures":"Méconnaît les procédures FCOM/QRH en panne moteur",s:"-"},
+    {text:_lang==='en'?"Correctly recalls FCOM cabin depressurization procedure":"Cite correctement la procédure FCOM décompression cabine",s:"+"},
+    {text:_lang==='en'?"Knows alternate minima and fuel policies":"Connaît les minima alternates et politiques carburant",s:"+"},
+    {text:_lang==='en'?"Accurately explains hydraulic system interaction":"Explique l'interaction systèmes hydrauliques avec précision",s:"+"},
   ],
   WLM:[
-    {text:"Accumule les tâches sans priorisation en finale",s:"-"},
-    {text:"Ne délègue pas la radio lors d'une panne",s:"-"},
-    {text:"Perd le monitoring avion pendant une tâche secondaire",s:"-"},
-    {text:"Délègue la checklist QRH au F/O pendant gestion hydraulique",s:"+"},
-    {text:"Briefing PASS clair avant la phase critique",s:"+"},
-    {text:"Gère l'interruption radio sans impact sur le pilotage",s:"+"},
+    {text:_lang==='en'?"Stacks tasks without prioritization on final":"Accumule les tâches sans priorisation en finale",s:"-"},
+    {text:_lang==='en'?"Does not delegate radio during a failure":"Ne délègue pas la radio lors d'une panne",s:"-"},
+    {text:_lang==='en'?"Loses aircraft monitoring during secondary task":"Perd le monitoring avion pendant une tâche secondaire",s:"-"},
+    {text:_lang==='en'?"Delegates QRH checklist to F/O during hydraulic management":"Délègue la checklist QRH au F/O pendant gestion hydraulique",s:"+"},
+    {text:_lang==='en'?"Clear PASS briefing before critical phase":"Briefing PASS clair avant la phase critique",s:"+"},
+    {text:_lang==='en'?"Manages radio interruption without impact on flying":"Gère l'interruption radio sans impact sur le pilotage",s:"+"},
   ],
   SA:[
-    {text:"Pas de callout sur déviation de vitesse +15 kt en approche",s:"-"},
-    {text:"Perd conscience de la position avion lors d'un ECAM",s:"-"},
-    {text:"Ne voit pas la tendance énergie basse sur le PAPI",s:"-"},
-    {text:"Callout TREND +10 proactif lors de l'approche finale",s:"+"},
-    {text:"Détecte variation d'énergie après nivellement automatique",s:"+"},
-    {text:"Conscience permanente de l'état systèmes en multi-tâche",s:"+"},
+    {text:_lang==='en'?"No callout on +15 kt speed deviation on approach":"Pas de callout sur déviation de vitesse +15 kt en approche",s:"-"},
+    {text:_lang==='en'?"Loses aircraft position awareness during ECAM":"Perd conscience de la position avion lors d'un ECAM",s:"-"},
+    {text:_lang==='en'?"Misses low energy trend on PAPI":"Ne voit pas la tendance énergie basse sur le PAPI",s:"-"},
+    {text:_lang==='en'?"Proactive TREND +10 callout on final approach":"Callout TREND +10 proactif lors de l'approche finale",s:"+"},
+    {text:_lang==='en'?"Detects energy variation after automatic level-off":"Détecte variation d'énergie après nivellement automatique",s:"+"},
+    {text:_lang==='en'?"Permanent system state awareness during multi-tasking":"Conscience permanente de l'état systèmes en multi-tâche",s:"+"},
   ],
   PSD:[
-    {text:"FORDEC non appliqué — décision prise sans consulter le F/O",s:"-"},
-    {text:"Continue l'approche malgré météo dégradée (pression temps)",s:"-"},
-    {text:"Fixation sur une panne sans réévaluer la situation globale",s:"-"},
-    {text:"FORDEC structuré avant décision déroutement moteur",s:"+"},
-    {text:"GO-AROUND décidé tôt sans hésitation après écart ILS",s:"+"},
-    {text:"Révise la décision initiale après mise à jour météo ATIS",s:"+"},
+    {text:_lang==='en'?"FORDEC not applied — decision made without consulting F/O":"FORDEC non appliqué — décision prise sans consulter le F/O",s:"-"},
+    {text:_lang==='en'?"Continues approach despite deteriorating weather (time pressure)":"Continue l'approche malgré météo dégradée (pression temps)",s:"-"},
+    {text:_lang==='en'?"Fixation on failure without reassessing overall situation":"Fixation sur une panne sans réévaluer la situation globale",s:"-"},
+    {text:_lang==='en'?"Structured FORDEC before engine diversion decision":"FORDEC structuré avant décision déroutement moteur",s:"+"},
+    {text:_lang==='en'?"Go-around decided early without hesitation after ILS deviation":"GO-AROUND décidé tôt sans hésitation après écart ILS",s:"+"},
+    {text:_lang==='en'?"Revises initial decision after ATIS weather update":"Révise la décision initiale après mise à jour météo ATIS",s:"+"},
   ],
   LTW:[
-    {text:"Pas d'inclusion du F/O dans le briefing départ panne",s:"-"},
-    {text:"Ordres donnés sans feedback ni confirmation d'équipage",s:"-"},
-    {text:"Ignore la suggestion du F/O sans explication",s:"-"},
-    {text:"Brief NITS complet avant délégation tâche au F/O",s:"+"},
-    {text:"Intègre la suggestion du F/O de façon constructive",s:"+"},
-    {text:"Leadership décisif lors du déroutement — équipage informé",s:"+"},
+    {text:_lang==='en'?"F/O not included in engine failure departure briefing":"Pas d'inclusion du F/O dans le briefing départ panne",s:"-"},
+    {text:_lang==='en'?"Orders given without crew feedback or confirmation":"Ordres donnés sans feedback ni confirmation d'équipage",s:"-"},
+    {text:_lang==='en'?"Ignores F/O suggestion without explanation":"Ignore la suggestion du F/O sans explication",s:"-"},
+    {text:_lang==='en'?"Complete NITS brief before task delegation to F/O":"Brief NITS complet avant délégation tâche au F/O",s:"+"},
+    {text:_lang==='en'?"Incorporates F/O suggestion constructively":"Intègre la suggestion du F/O de façon constructive",s:"+"},
+    {text:_lang==='en'?"Decisive leadership during diversion — crew kept informed":"Leadership décisif lors du déroutement — équipage informé",s:"+"},
   ],
   FPM:[
-    {text:"Dépassement de 200 ft en manuel lors remise de gaz",s:"-"},
-    {text:"Vitesse non stabilisée sous 500 ft AAL",s:"-"},
-    {text:"Dérive 1/2 dot LOC non corrigée en approche",s:"-"},
-    {text:"Maintien axe ILS précis en manuel jusqu'au seuil",s:"+"},
-    {text:"Contrôle symétrique efficace après panne moteur",s:"+"},
-    {text:"Transitions manuel/auto fluides et annoncées",s:"+"},
+    {text:_lang==='en'?"200 ft overshoot in manual during go-around":"Dépassement de 200 ft en manuel lors remise de gaz",s:"-"},
+    {text:_lang==='en'?"Speed not stabilized below 500 ft AAL":"Vitesse non stabilisée sous 500 ft AAL",s:"-"},
+    {text:_lang==='en'?"1/2 dot LOC drift uncorrected on approach":"Dérive 1/2 dot LOC non corrigée en approche",s:"-"},
+    {text:_lang==='en'?"Precise ILS centerline maintained manually to threshold":"Maintien axe ILS précis en manuel jusqu'au seuil",s:"+"},
+    {text:_lang==='en'?"Effective symmetric control after engine failure":"Contrôle symétrique efficace après panne moteur",s:"+"},
+    {text:_lang==='en'?"Smooth and announced manual/auto transitions":"Transitions manuel/auto fluides et annoncées",s:"+"},
   ],
   FPA:[
-    {text:"Mode FMA non annoncé après changement automatique",s:"-"},
-    {text:"Interception ILS en V/S au lieu de APP mode",s:"-"},
-    {text:"LNAV non armé — déviation route non détectée",s:"-"},
-    {text:"Annonce FMA correctement à chaque changement de mode",s:"+"},
-    {text:"Rétrogradation d'automatisation appropriée lors urgence",s:"+"},
-    {text:"Sélection niveau automation adapté à la charge de travail",s:"+"},
+    {text:_lang==='en'?"FMA mode not called out after automatic change":"Mode FMA non annoncé après changement automatique",s:"-"},
+    {text:_lang==='en'?"ILS intercept in V/S instead of APP mode":"Interception ILS en V/S au lieu de APP mode",s:"-"},
+    {text:_lang==='en'?"LNAV not armed — route deviation undetected":"LNAV non armé — déviation route non détectée",s:"-"},
+    {text:_lang==='en'?"Correctly calls out FMA at each mode change":"Annonce FMA correctement à chaque changement de mode",s:"+"},
+    {text:_lang==='en'?"Appropriate automation downgrade during emergency":"Rétrogradation d'automatisation appropriée lors urgence",s:"+"},
+    {text:_lang==='en'?"Automation level selection appropriate to workload":"Sélection niveau automation adapté à la charge de travail",s:"+"},
   ],
   COM:[
-    {text:"Pas de readback sur la clairance de descente ATC",s:"-"},
-    {text:"Communication interne absente pendant procédure urgence",s:"-"},
-    {text:"Ton de voix inadapté — génère tension dans l'équipage",s:"-"},
-    {text:"Phraséologie OACI irréprochable tout au long du vol",s:"+"},
-    {text:"Briefing approche complet avec challenge/réponse F/O",s:"+"},
-    {text:"Remontée d'information ATC précise et synthétique",s:"+"},
+    {text:_lang==='en'?"No complete readback after complex ATC clearance":"Pas de readback complet après clairance ATC complexe",s:"-"},
+    {text:_lang==='en'?"Unclear radio transmission — ATC misunderstanding":"Transmission radio peu claire — incompréhension ATC",s:"-"},
+    {text:_lang==='en'?"Does not confirm F/O understanding after briefing":"Ne confirme pas la compréhension du F/O après briefing",s:"-"},
+    {text:_lang==='en'?"Complete and precise readback of ILS clearance":"Readback complet et précis de la clairance ILS",s:"+"},
+    {text:_lang==='en'?"Closed loop on each critical PM action":"Loop fermée sur chaque action critique du PM",s:"+"},
+    {text:_lang==='en'?"Proactive communication before each phase transition":"Communication proactive avant chaque transition de phase",s:"+"},
   ],
   PRO:[
-    {text:"TO MEMO non complété avant le décollage",s:"-"},
-    {text:"QRH non sorti après déclenchement alarme feu moteur",s:"-"},
-    {text:"SOP non respectée lors du go-around panne",s:"-"},
-    {text:"Challenge/réponse respecté sur toute la checklist",s:"+"},
-    {text:"SOP appliquée sans omission lors de la remise de gaz panne",s:"+"},
-    {text:"Checklist après panne effectuée en temps utile et complète",s:"+"},
+    {text:_lang==='en'?"Skips checklist step under workload":"Saute une étape checklist sous charge de travail",s:"-"},
+    {text:_lang==='en'?"Uses memory instead of QRH for NNC procedure":"Utilise mémoire au lieu du QRH pour procédure NNC",s:"-"},
+    {text:_lang==='en'?"Abnormal procedure executed without PM callout":"Procédure anormale exécutée sans annonce au PM",s:"-"},
+    {text:_lang==='en'?"QRH followed rigorously step by step":"QRH suivi rigoureusement étape par étape",s:"+"},
+    {text:_lang==='en'?"SOP followed in all circumstances including emergency":"SOP respectées en toutes circonstances y compris urgence",s:"+"},
+    {text:_lang==='en'?"Complete FCOM checklist even under high workload":"Checklist FCOM complète même sous forte charge de travail",s:"+"},
   ],
 };
 
-const ROOT_CAUSES = [
+const ROOT_CAUSES = _lang==='en' ? [
+"Confirmation bias","Cognitive overload / Tunnel vision",
+"Lack of PF/PM leadership clarity","Progressive SA loss",
+"Startle effect / Surprise","Fixation / Channelized attention",
+"Fatigue / Stress","Poor initial planning",
+"Absence of cross-check","Deficient communication"
+] : [
 "Biais de confirmation","Surcharge cognitive / Effet tunnel",
 "Manque de clarte leadership PF/PM","Perte de SA progressive",
 "Startle effect / Surprise","Fixation / Channelized attention",
@@ -5276,10 +5377,10 @@ function updateChrono(){
     // Pause button label
     if(pauseBtn){
       if(ex.paused){
-        pauseBtn.textContent='▶ REPRENDRE';
+        pauseBtn.textContent=_lang==='en'?'▶ RESUME':'▶ REPRENDRE';
         pauseBtn.style.background='#F59E0B22'; pauseBtn.style.borderColor='#F59E0B'; pauseBtn.style.color='#F59E0B';
       } else {
-        pauseBtn.textContent='⏸ PAUSE';
+        pauseBtn.textContent=_lang==='en'?'⏸ PAUSE':'⏸ PAUSE';
         pauseBtn.style.background='#1E2530'; pauseBtn.style.borderColor='#334155'; pauseBtn.style.color='#94A3B8';
       }
     }
@@ -5548,7 +5649,14 @@ showBriefing();
 }
 
 function showBriefing(){
-const threats = [
+const threats = _lang==='en' ? [
+{id:'wx',icon:'🌩️',label:'WEATHER',items:['Wind shear / windshear','Icing','Reduced visibility','Thunderstorm / CB on route']},
+{id:'notam',icon:'📋',label:'NOTAMs / ATIS',items:['Runway / ILS NOTAM','Special procedures','Airspace restrictions','ATIS received and analyzed']},
+{id:'fuel',icon:'⛽',label:'FUEL',items:['Required vs loaded fuel','Alternate fuel','Extra fuel if needed','Fuel freeze altitude']},
+{id:'perf',icon:'📊',label:'PERFORMANCE',items:['V1 / VR / V2 calculated','Mass and balance','Takeoff distance','Landing distance']},
+{id:'crew',icon:'👥',label:'CREW',items:['Takeoff briefing done','Approach briefing done','PF/PM roles defined','FMS programmed and verified']},
+{id:'sys',icon:'⚙️',label:'SYSTEMS',items:['Applicable MEL checked','Systems tested','Hydraulic / electrical','Pressurization']},
+] : [
 {id:'wx',icon:'🌩️',label:'MÉTÉO',items:['Vent cisaillant / windshear','Givrage / icing','Visibilité réduite','Orage / CB sur route']},
 {id:'notam',icon:'📋',label:'NOTAMs / ATIS',items:['NOTAM piste / ILS','Procédures spéciales','Restrictions espace aérien','ATIS reçu et analysé']},
 {id:'fuel',icon:'⛽',label:'CARBURANT',items:['Fuel requis vs chargé','Alternate fuel','Extra fuel si besoin','Fuel freeze altitude']},
@@ -5589,7 +5697,13 @@ const doneAll = Object.values(state.briefingChecks).filter(Boolean).length;
 const pct = Math.round(doneAll/totalAll*100);
 
 // Questions de facilitation pré-vol
-const facBriefing = [
+const facBriefing = _lang==='en' ? [
+"How did you prepare for this session? What are your training priorities?",
+"What are the main threats you identified for this flight?",
+"How do you plan to manage workload between PF and PM?",
+"Are there any MEL items or special procedures to anticipate?",
+"What are your personal minima and GO/NO-GO decisions?",
+] : [
 "Comment avez-vous préparé cette session ? Quelles sont vos priorités d entraînement ?",
 "Quelles sont les menaces principales que vous avez identifiées pour ce vol ?",
 "Comment comptez-vous gérer la charge de travail entre PF et PM ?",
@@ -5597,11 +5711,11 @@ const facBriefing = [
 "Quels sont vos minima personnels et décisions GO/NO-GO ?",
 ];
 const facHtml = `<div style="background:#0F1218;border:1px solid #10B98133;border-radius:12px;overflow:hidden;margin-top:4px;">
-<div style="padding:10px 14px;background:#151B26;font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;">QUESTIONS DE FACILITATION PRÉ-VOL</div>
+<div style="padding:10px 14px;background:#151B26;font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;">${_lang==='en'?'PRE-FLIGHT FACILITATION QUESTIONS':'QUESTIONS DE FACILITATION PRÉ-VOL'}</div>
 ${facBriefing.map((q,i)=>`<div style="padding:10px 14px;border-bottom:1px solid #1E2530;">
 <div style="font-size:var(--fsxs);color:#94A3B8;margin-bottom:4px;">Q${i+1}</div>
 <div style="font-size:var(--fs);color:#CBD5E1;margin-bottom:8px;">${q}</div>
-<input class="form-input" placeholder="Note de réponse..." value="${(state.briefingFacNotes&&state.briefingFacNotes[i])||''}" onchange="saveBriefFacNote(${i},this.value)"/>
+<input class="form-input" placeholder="${_lang==='en'?'Response notes...':'Note de réponse...'}" value="${(state.briefingFacNotes&&state.briefingFacNotes[i])||''}" onchange="saveBriefFacNote(${i},this.value)"/>
 </div>`).join('')}
 </div>`;
 
@@ -6024,7 +6138,11 @@ state.exercises[state.activeIdx].notes = val;
 function renderFFATab(ex,sc,el){
 const tags = ["FLY","FOCUS","ACT"];
 const tc = {FLY:"#10B981",FOCUS:"#3B82F6",ACT:"#8B5CF6"};
-const td = {
+const td = _lang==='en' ? {
+FLY:"Maintain aircraft control — trajectory, attitude, speed — FIRST.",
+FOCUS:"Analyze the situation — FMA, EICAS, systems — and assign PF/PM roles.",
+ACT:"Execute the procedures — Memory items, QRH, checklist — in order."
+} : {
 FLY:"Maintenir le controle de l avion — trajectoire, assiette, vitesse — AVANT tout.",
 FOCUS:"Analyser la situation — FMA, EICAS, systemes — et assigner les roles PF/PM.",
 ACT:"Executer les procedures — Memory items, QRH, checklist — dans l ordre."
@@ -6040,9 +6158,9 @@ const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'
 const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
 
 const infoBox = `<div style="background:#0F1020;border:1px solid #8B5CF644;border-radius:9px;padding:11px 13px;margin-bottom:16px;">
-<div class="section-lbl" style="color:#8B5CF6;">POUR CE SCENARIO</div>
+<div class="section-lbl" style="color:#8B5CF6;">${_lang==='en'?'FOR THIS SCENARIO':'POUR CE SCENARIO'}</div>
 <div style="font-size:14px;color:#CBD5E1;line-height:1.6;">${sc.ffaD||sc.condition||''}</div>
-${!sc.ffa&&sc.ffa!==undefined?'<div style="margin-top:8px;font-size:12px;color:#F59E0B;">Ce scenario n utilise pas la sequence FFA classique.</div>':''}
+${!sc.ffa&&sc.ffa!==undefined?`<div style="margin-top:8px;font-size:12px;color:#F59E0B;">${_lang==='en'?'This scenario does not use the classic FFA sequence.':'Ce scenario n utilise pas la sequence FFA classique.'}</div>`:''}
 </div>`;
 
 const tagsHtml = sc.ffa ? tags.map(tag=>{
@@ -6053,8 +6171,8 @@ return `<div class="ffa-tag" style="border:1px solid ${col}33;border-left:3px so
 <div class="ffa-desc">${td[tag]}</div>
 </div>
 <div class="ffa-btns">
-<button class="ffa-btn ${val===true?'yes':''}" onclick="setFFA('${tag}',true)">OUI</button>
-<button class="ffa-btn ${val===false?'no':''}" onclick="setFFA('${tag}',false)">NON</button>
+<button class="ffa-btn ${val===true?'yes':''}" onclick="setFFA('${tag}',true)">${_lang==='en'?'YES':'OUI'}</button>
+<button class="ffa-btn ${val===false?'no':''}" onclick="setFFA('${tag}',false)">${_lang==='en'?'NO':'NON'}</button>
 <button class="ffa-btn" onclick="setFFA('${tag}',null)" style="flex:0.4;">--</button>
 </div>
 </div>`;
@@ -6079,7 +6197,12 @@ const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
 const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
 const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
 
-const info = `<div class="tem-info-box" style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
+const info = _lang==='en' ? `<div class="tem-info-box" style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
+<div class="section-lbl" style="color:#3B82F6;">HOW TO USE TEM</div>
+<div><span style="color:#3B82F6;font-weight:700;">THREAT</span> — EXTERNAL event: weather, ATC, technical failure the crew must manage.</div>
+<div><span style="color:#EF4444;font-weight:700;">ERROR</span> — Crew action or INACTION: misidentification, omission, incorrect sequence.</div>
+<div><span style="color:#F59E0B;font-weight:700;">UAS</span> — RESULTING undesired state: altitude deviation, abnormal speed, incorrect trajectory.</div>
+</div>` : `<div class="tem-info-box" style="background:#001A1A;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:16px;font-size:var(--fs);color:#CBD5E1;line-height:1.7;">
 <div class="section-lbl" style="color:#3B82F6;">COMMENT UTILISER LE TEM</div>
 <div><span style="color:#3B82F6;font-weight:700;">MENACE</span> — Evenement EXTERNE: meteo, ATC, panne technique que l equipage doit gerer.</div>
 <div><span style="color:#EF4444;font-weight:700;">ERREUR</span> — Action ou INACTION de l equipage: mauvaise identification, oubli, sequence incorrecte.</div>
@@ -6087,9 +6210,9 @@ const info = `<div class="tem-info-box" style="background:#001A1A;border:1px sol
 </div>`;
 
 const sections = [
-{k:"threats",l:"MENACES OBSERVEES",c:"#3B82F6",icon:"▲",sug:[...(sc.tT||[]),...THREATS_GLOBAL_EXTRA.filter(t=>!(sc.tT||[]).includes(t))]},
-{k:"errors",l:"ERREURS OBSERVEES",c:"#EF4444",icon:"●",sug:[...(sc.tE||[]),...ERRORS_GLOBAL_EXTRA.filter(e=>!(sc.tE||[]).includes(e))]},
-{k:"uas",l:"ETATS INDESIRABLES (UAS)",c:"#F59E0B",icon:"◆",sug:[...(sc.tU||UAS_DICT[sc.id]||[]),...UAS_GLOBAL.filter(u=>!(sc.tU||UAS_DICT[sc.id]||[]).includes(u))]},
+{k:"threats",l:_lang==='en'?"OBSERVED THREATS":"MENACES OBSERVEES",c:"#3B82F6",icon:"▲",sug:[...(sc.tT||[]),...THREATS_GLOBAL_EXTRA.filter(t=>!(sc.tT||[]).includes(t))]},
+{k:"errors",l:_lang==='en'?"OBSERVED ERRORS":"ERREURS OBSERVEES",c:"#EF4444",icon:"●",sug:[...(sc.tE||[]),...ERRORS_GLOBAL_EXTRA.filter(e=>!(sc.tE||[]).includes(e))]},
+{k:"uas",l:_lang==='en'?"UNDESIRED AIRCRAFT STATES (UAS)":"ETATS INDESIRABLES (UAS)",c:"#F59E0B",icon:"◆",sug:[...(sc.tU||UAS_DICT[sc.id]||[]),...UAS_GLOBAL.filter(u=>!(sc.tU||UAS_DICT[sc.id]||[]).includes(u))]},
 ];
 
 const sectHtml = sections.map(({k,l,c,icon,sug})=>{
@@ -6102,13 +6225,13 @@ const itemsHtml = items.map((it,i)=>`<div class="tem-item" style="background:${c
 
 // Section mitigation pour chaque item
 const mitigHtml = items.length ? `<div style="margin-top:8px;margin-bottom:4px;">
-<div style="font-size:var(--fsxs);font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">✓ CONTRE-MESURES (MITIGATION)</div>
+<div style="font-size:var(--fsxs);font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">✓ ${_lang==='en'?'COUNTERMEASURES (MITIGATION)':'CONTRE-MESURES (MITIGATION)'}</div>
 ${items.map((it,i)=>`<div class="tem-mitg-item" style="background:#10B98111;border:1px solid #10B98133;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
 <div class="tem-mitg-desc" style="font-size:var(--fss);color:#94A3B8;margin-bottom:6px;">${it.text}</div>
 <div style="display:flex;gap:8px;align-items:center;">
-<button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'var(--bord)'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✓ Gérée</button>
-<button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'var(--bord)'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">~ Partielle</button>
-<button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'var(--bord)'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">✗ Non gérée</button>
+<button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'var(--bord)'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'✓ Managed':'✓ Gérée'}</button>
+<button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'var(--bord)'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'~ Partial':'~ Partielle'}</button>
+<button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'var(--bord)'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'✗ Unmanaged':'✗ Non gérée'}</button>
 </div>
 </div>`).join('')}
 </div>` : '';
@@ -6118,7 +6241,7 @@ return `<div style="margin-bottom:20px;">
 ${sugHtml?`<div class="tem-sug-cont" style="max-height:110px;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;background:#0A0C10;border-radius:8px;padding:6px;">${sugHtml}</div>`:''}
 ${itemsHtml}
 <div class="tem-add-row">
-<input id="tem-inp-${k}" class="form-input" style="flex:1;font-size:var(--fs);" placeholder="Ajouter..." onkeydown="if(event.key==='Enter'){addTEMInp('${k}');}"/>
+<input id="tem-inp-${k}" class="form-input" style="flex:1;font-size:var(--fs);" placeholder="${_lang==='en'?'Add...':'Ajouter...'}" onkeydown="if(event.key==='Enter'){addTEMInp('${k}');}"/>
 <button class="btn" onclick="addTEMInp('${k}')">+</button>
 </div>
 ${mitigHtml}
@@ -6130,14 +6253,14 @@ const recKey = temKey==="tem"?"rec":"recfo";
 if(!ex[recKey]) ex[recKey]={managed:null,note:""};
 const rec = ex[recKey];
 const recoveryHtml = `<div class="tem-recovery" style="margin-bottom:20px;background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;">
-<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:10px;">↩ RECOVERY — GESTION DE L ÉTAT INDÉSIRABLE</div>
-<div style="font-size:var(--fs);color:var(--mut);margin-bottom:10px;">L équipage a-t-il su récupérer la situation avant l accident ?</div>
+<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:10px;">↩ RECOVERY — ${_lang==='en'?'MANAGEMENT OF UNDESIRED STATE':'GESTION DE L ÉTAT INDÉSIRABLE'}</div>
+<div style="font-size:var(--fs);color:var(--mut);margin-bottom:10px;">${_lang==='en'?'Did the crew manage to recover the situation before an accident?':'L équipage a-t-il su récupérer la situation avant l accident ?'}</div>
 <div style="display:flex;gap:8px;margin-bottom:10px;">
-<button onclick="setRecovery('${recKey}','yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='yes'?'#10B981':'var(--bord)'};background:${rec.managed==='yes'?'#10B98133':'transparent'};color:${rec.managed==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✓ OUI — Récupéré</button>
-<button onclick="setRecovery('${recKey}','partial')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='partial'?'#F59E0B':'var(--bord)'};background:${rec.managed==='partial'?'#F59E0B33':'transparent'};color:${rec.managed==='partial'?'#F59E0B':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">~ Partiel</button>
-<button onclick="setRecovery('${recKey}','no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='no'?'#EF4444':'var(--bord)'};background:${rec.managed==='no'?'#EF444433':'transparent'};color:${rec.managed==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✗ NON — Non récupéré</button>
+<button onclick="setRecovery('${recKey}','yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='yes'?'#10B981':'var(--bord)'};background:${rec.managed==='yes'?'#10B98133':'transparent'};color:${rec.managed==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?'✓ YES — Recovered':'✓ OUI — Récupéré'}</button>
+<button onclick="setRecovery('${recKey}','partial')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='partial'?'#F59E0B':'var(--bord)'};background:${rec.managed==='partial'?'#F59E0B33':'transparent'};color:${rec.managed==='partial'?'#F59E0B':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?'~ Partial':'~ Partiel'}</button>
+<button onclick="setRecovery('${recKey}','no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='no'?'#EF4444':'var(--bord)'};background:${rec.managed==='no'?'#EF444433':'transparent'};color:${rec.managed==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?'✗ NO — Not recovered':'✗ NON — Non récupéré'}</button>
 </div>
-<input class="form-input" style="font-size:13px;" placeholder="Comment la situation a-t-elle été récupérée ?..." value="${rec.note||''}" onchange="setRecoveryNote('${recKey}',this.value)"/>
+<input class="form-input" style="font-size:13px;" placeholder="${_lang==='en'?'How was the situation recovered?...':'Comment la situation a-t-elle été récupérée ?...'}" value="${rec.note||''}" onchange="setRecoveryNote('${recKey}',this.value)"/>
 </div>`;
 
 el.innerHTML = pilotTabsHtml + info + sectHtml + recoveryHtml;
@@ -6193,7 +6316,20 @@ renderExContent();
 
 function renderDebCRM(el){
 if(!state.sessionCRM) state.sessionCRM={};
-const items = [
+const items = _lang==='en' ? [
+{k:'brief',    label:'Complete and relevant takeoff/approach briefing'},
+{k:'callout',  label:'Standard callouts followed (SOP)'},
+{k:'challenge',label:'Challenge & Response performed correctly'},
+{k:'comm',     label:'Clear and concise inter-crew communication'},
+{k:'leadership',label:'Appropriate leadership — PF assertive without being authoritarian'},
+{k:'crosscheck',label:'Effective mutual cross-check'},
+{k:'workload', label:'Balanced workload management'},
+{k:'sa',       label:'Shared situational awareness maintained'},
+{k:'decision', label:'Rapid and adapted decision-making'},
+{k:'intervention',label:'Appropriate intervention in case of deviation'},
+{k:'automation',label:'Correct automation management (mode awareness)'},
+{k:'sterile',  label:'Sterile cockpit observed below 10,000 ft'},
+] : [
 {k:'brief',    label:'Briefing décollage / approche complet et pertinent'},
 {k:'callout',  label:'Callouts standards respectés (SOP)'},
 {k:'challenge',label:'Challenge & Response effectué correctement'},
@@ -6272,13 +6408,13 @@ ${NOK_RECOS.map(r=>`<div style="font-size:12px;color:#94A3B8;padding:4px 0 4px 1
 el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('crm')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>
 <div class="crm-header" style="background:#0F1218;border:1px solid #8B5CF644;border-radius:12px;padding:12px 16px;margin-bottom:12px;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-<div style="font-size:14px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">👥 CRM — RESSOURCES ÉQUIPAGE</div>
+<div style="font-size:14px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">👥 ${_lang==='en'?'CRM — CREW RESOURCES':'CRM — RESSOURCES ÉQUIPAGE'}</div>
 ${pct!==null?`<div style="font-size:22px;font-weight:900;color:${pctColor};">${pct}%</div>`:''}
 </div>
-<div style="font-size:11px;color:var(--mut);">${total>0?`✓ ${ok} satisfaisant · ✗ ${nok} non satisfaisant · Pass mark ${PASS_MARK}%`:'Évaluez chaque item sur l\'ensemble de la séance'}</div>
+<div style="font-size:11px;color:var(--mut);">${total>0?`✓ ${ok} ${_lang==='en'?'satisfactory':'satisfaisant'} · ✗ ${nok} ${_lang==='en'?'not satisfactory':'non satisfaisant'} · Pass mark ${PASS_MARK}%`:(_lang==='en'?'Evaluate each item across the entire session':'Évaluez chaque item sur l\'ensemble de la séance')}</div>
 </div>
 ${verdictHtml}
-<div style="font-size:11px;color:#64748B;letter-spacing:1px;font-weight:700;margin-bottom:8px;">ÉVALUATION ITEM PAR ITEM</div>
+<div style="font-size:11px;color:#64748B;letter-spacing:1px;font-weight:700;margin-bottom:8px;">${_lang==='en'?'ITEM BY ITEM EVALUATION':'ÉVALUATION ITEM PAR ITEM'}</div>
 ${html}
 <div style="margin-top:14px;">
 <div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">NOTES CRM GLOBALES</div>
@@ -6294,7 +6430,11 @@ renderDebContent();
 
 function renderFacTab(ex,sc,el){
 // Questions de base de l'exercice + questions génériques si moins de 3
-const defaultFac = [
+const defaultFac = _lang==='en' ? [
+"How did you identify and manage the situation?",
+"Was the coordination between pilots effective throughout the exercise?",
+"What could have been done differently to improve the management?"
+] : [
 "Comment avez-vous identifie et gere la situation ?",
 "La coordination entre les pilotes etait-elle efficace tout au long de l exercice ?",
 "Qu est-ce qui aurait pu etre fait differemment pour ameliorer la gestion ?"
@@ -6313,12 +6453,12 @@ const html = questions.map((q,i)=>`
 <div class="fac-q" style="font-size:15px;line-height:1.5;">${q}</div>
 </div>
 <div class="fac-ans" style="display:none;margin-top:10px;">
-<textarea class="note-area" style="height:65px;font-size:14px;" placeholder="Note de reponse..." onchange="saveFacNote(${i},this.value)">${(ex.facNotes&&ex.facNotes[i])||''}</textarea>
+<textarea class="note-area" style="height:65px;font-size:14px;" placeholder="${_lang==='en'?'Response notes...':'Note de reponse...'}" onchange="saveFacNote(${i},this.value)">${(ex.facNotes&&ex.facNotes[i])||''}</textarea>
 </div>
 </div>`).join('');
 
 el.innerHTML = `
-<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:14px;">QUESTIONS DE FACILITATION — Appuyez pour développer</div>
+<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:14px;">${_lang==='en'?'FACILITATION QUESTIONS — Tap to expand':'QUESTIONS DE FACILITATION — Appuyez pour développer'}</div>
 ${html}`;
 }
 
@@ -6330,12 +6470,12 @@ ex.facNotes[i]=val;
 
 function renderFordecNitsTab(ex,sc,el){
 const FORDEC_STEPS=[
-  {l:'F',label:'FACTS',desc:"Que se passe-t-il exactement ? Rassembler les informations disponibles.",color:'#FF61C7'},
-  {l:'O',label:'OPTIONS',desc:"Quelles sont les alternatives possibles ? Lister sans juger.",color:'#39FF14'},
-  {l:'R',label:'RISKS',desc:"Risques et bénéfices de chaque option. Quelle est la meilleure ?",color:'#FF9500'},
-  {l:'D',label:'DECISION',desc:"Décision prise. L'équipage est aligné sur le plan.",color:'#00E5FF'},
-  {l:'E',label:'EXECUTION',desc:"Qui fait quoi ? Répartition des tâches et exécution.",color:'#FFE600'},
-  {l:'C',label:'CHECK',desc:"L'action a-t-elle produit l'effet attendu ? Vérification du résultat.",color:'#AAFF00'},
+  {l:'F',label:'FACTS',desc:_lang==='en'?"FACTS: What is happening exactly? Gather available information.":"Que se passe-t-il exactement ? Rassembler les informations disponibles.",color:'#FF61C7'},
+  {l:'O',label:'OPTIONS',desc:_lang==='en'?"OPTIONS: What are the possible alternatives? List without judging.":"Quelles sont les alternatives possibles ? Lister sans juger.",color:'#39FF14'},
+  {l:'R',label:'RISKS',desc:_lang==='en'?"RISKS: Risks and benefits of each option. Which is best?":"Risques et bénéfices de chaque option. Quelle est la meilleure ?",color:'#FF9500'},
+  {l:'D',label:'DECISION',desc:_lang==='en'?"DECISION: Make the decision. Crew aligned on the plan.":"Décision prise. L'équipage est aligné sur le plan.",color:'#00E5FF'},
+  {l:'E',label:'EXECUTION',desc:_lang==='en'?"EXECUTE: Implement the decision. Who does what?":"Qui fait quoi ? Répartition des tâches et exécution.",color:'#FFE600'},
+  {l:'C',label:'CHECK',desc:_lang==='en'?"CHECK: Verify the outcome. Did the action produce the expected result?":"L'action a-t-elle produit l'effet attendu ? Vérification du résultat.",color:'#AAFF00'},
 ];
 const NITS_STEPS=[
   {l:'N',label:'NATURE',desc:"Nature de la panne ou de la situation anormale.",color:'#8B5CF6'},
@@ -6374,9 +6514,9 @@ el.innerHTML=`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
       <div>
         <div style="font-size:13px;font-weight:900;color:#8B5CF6;letter-spacing:2px;text-shadow:0 0 8px #8B5CF688;">FORDEC</div>
-        <div style="font-size:11px;color:#64748B;letter-spacing:1px;">Modèle de prise de décision</div>
+        <div style="font-size:11px;color:#64748B;letter-spacing:1px;">${_lang==='en'?'Decision-making model':'Modèle de prise de décision'}</div>
       </div>
-      <button onclick="toggleFordec()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${btnStyle(fUsed,'#8B5CF6')}">${fUsed?'✓ UTILISÉ':'— NON UTILISÉ'}</button>
+      <button onclick="toggleFordec()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${btnStyle(fUsed,'#8B5CF6')}">${fUsed?(_lang==='en'?'✓ USED':'✓ UTILISÉ'):(_lang==='en'?'— NOT USED':'— NON UTILISÉ')}</button>
     </div>
     ${fordecRows}
   </div>
@@ -6384,9 +6524,9 @@ el.innerHTML=`
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
       <div>
         <div style="font-size:13px;font-weight:900;color:#3B82F6;letter-spacing:2px;text-shadow:0 0 8px #3B82F688;">NITS BRIEF</div>
-        <div style="font-size:11px;color:#64748B;letter-spacing:1px;">Brief équipage avant exécution</div>
+        <div style="font-size:11px;color:#64748B;letter-spacing:1px;">${_lang==='en'?'Crew brief before execution':'Brief équipage avant exécution'}</div>
       </div>
-      <button onclick="toggleNits()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${btnStyle(nUsed,'#3B82F6')}">${nUsed?'✓ EFFECTUÉ':'— NON EFFECTUÉ'}</button>
+      <button onclick="toggleNits()" style="padding:9px 16px;border-radius:9px;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;transition:all 0.2s;${btnStyle(nUsed,'#3B82F6')}">${nUsed?(_lang==='en'?'✓ PERFORMED':'✓ EFFECTUÉ'):(_lang==='en'?'— NOT PERFORMED':'— NON EFFECTUÉ')}</button>
     </div>
     ${nitsRows}
   </div>
@@ -6458,29 +6598,31 @@ let ratio;
 if(pos===0){
 // Seuls des négatifs cochés : les non-cochés sont considérés acceptables
 ratio = Math.max(0,(officialTotal-neg)/officialTotal);
-gradeModeLabel=`${neg} défaut(s) sur ${officialTotal} OB`;
+gradeModeLabel=_lang==='en'?`${neg} defect(s) out of ${officialTotal} OB`:`${neg} défaut(s) sur ${officialTotal} OB`;
 } else {
 // Positifs et négatifs cochés : ratio sur les obs notés
 ratio = pos/(pos+neg);
-gradeModeLabel=`+${pos} · −${neg} notés`;
+gradeModeLabel=`+${pos} · −${neg} ${_lang==='en'?'rated':'notés'}`;
 }
 autoGrade = ratio>=0.9?5:ratio>=0.7?4:ratio>=0.5?3:ratio>=0.3?2:1;
 }
 const autoGradeHtml = (pos+neg)>0 ? `<div class="auto-grade-box" style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:8px 12px;margin-bottom:12px;display:flex;align-items:center;gap:10px;">
 <div style="flex:1;">
-<div style="font-size:10px;color:var(--mut);letter-spacing:1px;margin-bottom:2px;">GRADING SUGGÉRÉ (basé sur OB)</div>
+<div style="font-size:10px;color:var(--mut);letter-spacing:1px;margin-bottom:2px;">${_lang==='en'?'SUGGESTED GRADE (based on OB)':'GRADING SUGGÉRÉ (basé sur OB)'}</div>
 <div style="font-size:11px;color:var(--mut);">${gradeModeLabel} · N/A ${na}</div>
 </div>
 <div style="font-size:24px;font-weight:900;color:${GC[autoGrade]||'#64748B'};">${autoGrade||'-'}</div>
-<button onclick="setGrade(${autoGrade})" style="background:${GC[autoGrade]||'#334155'}22;border:1px solid ${GC[autoGrade]||'#334155'};color:${GC[autoGrade]||'#94A3B8'};padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">APPLIQUER</button>
+<button onclick="setGrade(${autoGrade})" style="background:${GC[autoGrade]||'#334155'}22;border:1px solid ${GC[autoGrade]||'#334155'};color:${GC[autoGrade]||'#94A3B8'};padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;">${_lang==='en'?'APPLY':'APPLIQUER'}</button>
 </div>` : '';
 
-const obsHtml = comp.obs.map(ob=>{
+const _compEn = COMPETENCIES_EN.find(c=>c.id===comp.id);
+const obsHtml = comp.obs.map((ob,_oi)=>{
 const rec = ac.obs.find(o=>o.id===ob.id);
 const isP=rec&&rec.s==="+"; const isN=rec&&rec.s==="-"; const isNA=rec&&rec.s==="N/A";
+const obText = _lang==='en' ? ((_compEn&&_compEn.obs[_oi])||ob.text) : ob.text;
 return `<div class="ob-row ${isP?'pos':isN?'neg':isNA?'na':''}" data-obid="${ob.id}">
 <div class="ob-id" style="color:${comp.color};padding-top:2px;">${comp.label}${ob.id}</div>
-<div class="ob-text">${ob.text}</div>
+<div class="ob-text">${obText}</div>
 <div style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;">
 <button class="ob-btn plus ${isP?'active':''}" onclick="toggleOBid(${ob.id},'+')">+</button>
 <button class="ob-btn minus ${isN?'active':''}" onclick="toggleOBid(${ob.id},'-')">−</button>
@@ -6491,8 +6633,8 @@ return `<div class="ob-row ${isP?'pos':isN?'neg':isNA?'na':''}" data-obid="${ob.
 
 const examples = OBS_EXAMPLES[comp.id]||[];
 const examplesHtml = examples.length ? `
-<div class="section-lbl" style="margin-top:18px;color:#F59E0B;letter-spacing:1.5px;">EXEMPLES CONTEXTUELS B737</div>
-<div style="font-size:10px;color:#475569;margin-bottom:8px;margin-top:-4px;">Appuyez pour ajouter à vos observations (en complément des OB Boeing)</div>
+<div class="section-lbl" style="margin-top:18px;color:#F59E0B;letter-spacing:1.5px;">${_lang==='en'?'B737 CONTEXTUAL EXAMPLES':'EXEMPLES CONTEXTUELS B737'}</div>
+<div style="font-size:10px;color:#475569;margin-bottom:8px;margin-top:-4px;">${_lang==='en'?'Tap to add to your observations (in addition to Boeing OBs)':'Appuyez pour ajouter à vos observations (en complément des OB Boeing)'}</div>
 <div style="display:flex;flex-wrap:wrap;gap:6px;padding-bottom:16px;">
 ${examples.map((ex,i)=>{
 const qid='q_'+comp.id+'_'+i;
@@ -6506,7 +6648,7 @@ return `<button onclick="addQuickObs('${comp.id}',${i})" style="${activeStyle}bo
 
 document.getElementById('comp-content').innerHTML = `
 <div style="margin-bottom:18px;">
-<div class="section-lbl">GRADE CBTA (1 a 5)</div>
+<div class="section-lbl">${_lang==='en'?'CBTA GRADE (1 TO 5)':'GRADE CBTA (1 À 5)'}</div>
 <div class="grade-row">${gradeHtml}</div>
 ${gradeLbl}
 </div>
@@ -6658,7 +6800,7 @@ return `<div class="sc-item" style="background:#0F1218;border-left-color:${cat_c
 </div>`;
 }).join('');
 });
-document.getElementById('sc-list').innerHTML = html || '<div style="text-align:center;color:var(--faint);padding:20px;">Aucun exercice trouve</div>';
+document.getElementById('sc-list').innerHTML = html || `<div style="text-align:center;color:var(--faint);padding:20px;">${_lang==='en'?'No exercise found':'Aucun exercice trouve'}</div>`;
 return;
 }
 
@@ -6672,7 +6814,7 @@ return `<div class="sc-item" style="background:#0F1218;border-left-color:${cat_c
 </div>
 <div style="font-size:11px;font-weight:700;color:${pc};padding:3px 6px;border:1px solid ${pc}44;border-radius:4px;flex-shrink:0;">${s.pri}</div>
 </div>`;
-}).join('') || '<div style="text-align:center;color:var(--faint);padding:20px;">Aucun exercice trouve</div>';
+}).join('') || `<div style="text-align:center;color:var(--faint);padding:20px;">${_lang==='en'?'No exercise found':'Aucun exercice trouve'}</div>`;
 }
 
 function addExercise(sid){
@@ -7330,7 +7472,7 @@ if(btn) btn.textContent = _locked ? '🔒' : '🔓';
 // ── MODE PRÉSENTATION DEBRIEF ---──────────────────────────────────────────────
 function showPresentation(){
 const closed = state.exercises.filter(e=>e.closed);
-if(!closed.length){ alert('Aucun exercice clôturé'); return; }
+if(!closed.length){ alert(_lang==='en'?'No closed exercise':'Aucun exercice clôturé'); return; }
 
 // Score global
 let total=0,count=0;
@@ -7346,7 +7488,7 @@ if(cd&&cd.g>0){compStats[cid].total+=cd.g;compStats[cid].count++;}
 });
 const globalAvg = count>0?total/count:0;
 const color = globalAvg>=4.5?'#10B981':globalAvg>=3.5?'#3B82F6':globalAvg>=2.5?'#F59E0B':globalAvg>=1.5?'#F97316':'#EF4444';
-const level = globalAvg>=4.5?'EXEMPLAIRE':globalAvg>=3.5?'AU-DESSUS DU STANDARD':globalAvg>=2.5?'STANDARD':globalAvg>=1.5?'SOUS-STANDARD':'INACCEPTABLE';
+const level = globalAvg>=4.5?(_lang==='en'?'EXEMPLARY':'EXEMPLAIRE'):globalAvg>=3.5?(_lang==='en'?'ABOVE STANDARD':'AU-DESSUS DU STANDARD'):globalAvg>=2.5?'STANDARD':globalAvg>=1.5?(_lang==='en'?'BELOW STANDARD':'SOUS-STANDARD'):(_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE');
 
 const compRows = COMPETENCIES.map(c=>{
 const avg=compStats[c.id].count>0?compStats[c.id].total/compStats[c.id].count:0;
@@ -7365,16 +7507,16 @@ return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;bord
 document.getElementById('presentation-content').innerHTML = `
 <div style="padding:24px;min-height:100%;background:#0A0C10;">
 <div style="text-align:center;margin-bottom:30px;">
-<div style="font-size:11px;letter-spacing:3px;color:#94A3B8;margin-bottom:8px;">RÉSULTAT GLOBAL SESSION</div>
+<div style="font-size:11px;letter-spacing:3px;color:#94A3B8;margin-bottom:8px;">${_lang==='en'?'GLOBAL SESSION RESULT':'RÉSULTAT GLOBAL SESSION'}</div>
 <div style="font-size:80px;font-weight:900;color:${color};line-height:1;margin-bottom:8px;">${globalAvg.toFixed(2)}</div>
 <div style="font-size:14px;color:#94A3B8;margin-bottom:4px;">/5.00</div>
 <div style="font-size:16px;font-weight:800;color:${color};letter-spacing:2px;">${level}</div>
 <div style="font-size:14px;color:#94A3B8;margin-top:8px;">CPT ${state.pilotName}${state.foName?' · FO '+state.foName:''}</div>
 </div>
-<div style="font-size:11px;font-weight:700;color:#64748B;letter-spacing:2px;margin-bottom:12px;">COMPÉTENCES</div>
+<div style="font-size:11px;font-weight:700;color:#64748B;letter-spacing:2px;margin-bottom:12px;">${_lang==='en'?'COMPETENCIES':'COMPÉTENCES'}</div>
 ${compRows}
 <div style="margin-top:24px;">
-<div style="font-size:11px;font-weight:700;color:#64748B;letter-spacing:2px;margin-bottom:12px;">EXERCICES ÉVALUÉS</div>
+<div style="font-size:11px;font-weight:700;color:#64748B;letter-spacing:2px;margin-bottom:12px;">${_lang==='en'?'EVALUATED EXERCISES':'EXERCICES ÉVALUÉS'}</div>
 ${closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
 const st=exStats(ex);
@@ -8194,7 +8336,7 @@ ${scoreBars}
 
 function renderDebTEM(el){
 const closed = state.exercises.filter(e=>e.closed);
-if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice clôturé.</div>'; return; }
+if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">'+(_lang==='en'?'No closed exercise.':'Aucun exercice clôturé.')+'</div>'; return; }
 
 // Stats globales TEM
 let statsCpt={threats:0,threatsMit:0,errors:0,errorsMit:0,uas:0,rec:0,recOk:0};
@@ -8226,31 +8368,31 @@ ${state.foName?`<td style="padding:8px 10px;text-align:center;font-size:14px;fon
 
 const tableHtml = `
 <div class="card" style="margin-bottom:14px;border-left:3px solid #EF4444;padding:0;overflow:hidden;">
-<div style="padding:12px 14px;background:#151B26;font-size:11px;font-weight:700;color:#EF4444;letter-spacing:1px;">TABLEAU RÉCAPITULATIF TEM</div>
+<div style="padding:12px 14px;background:#151B26;font-size:11px;font-weight:700;color:#EF4444;letter-spacing:1px;">${_lang==='en'?'TEM SUMMARY TABLE':'TABLEAU RÉCAPITULATIF TEM'}</div>
 <table style="width:100%;border-collapse:collapse;">
 <thead>
 <tr style="background:#0F1218;">
-<th style="padding:8px 10px;text-align:left;font-size:10px;color:#64748B;letter-spacing:1px;">INDICATEUR</th>
+<th style="padding:8px 10px;text-align:left;font-size:10px;color:#64748B;letter-spacing:1px;">${_lang==='en'?'INDICATOR':'INDICATEUR'}</th>
 <th style="padding:8px 10px;text-align:center;font-size:10px;color:#3B82F6;letter-spacing:1px;">CPT</th>
 ${state.foName?`<th style="padding:8px 10px;text-align:center;font-size:10px;color:#10B981;letter-spacing:1px;">FO</th>`:''}
 </tr>
 </thead>
 <tbody>
-${renderStatRow('Menaces identifiées',statsCpt.threats,statsFo.threats,'#3B82F6','#10B981')}
-${renderStatRow('Menaces atténuées',statsCpt.threatsMit+' / '+statsCpt.threats,statsFo.threatsMit+' / '+statsFo.threats,'#10B981','#10B981')}
-${renderStatRow('Taux atténuation',statsCpt.threats>0?Math.round(statsCpt.threatsMit/statsCpt.threats*100)+'%':'—',statsFo.threats>0?Math.round(statsFo.threatsMit/statsFo.threats*100)+'%':'—','#10B981','#10B981')}
-${renderStatRow('Erreurs identifiées',statsCpt.errors,statsFo.errors,'#EF4444','#F97316')}
-${renderStatRow('Erreurs gérées',statsCpt.errorsMit+' / '+statsCpt.errors,statsFo.errorsMit+' / '+statsFo.errors,'#F59E0B','#F59E0B')}
-${renderStatRow('UAS observés',statsCpt.uas,statsFo.uas,'#F59E0B','#F59E0B')}
+${renderStatRow(_lang==='en'?'Identified threats':'Menaces identifiées',statsCpt.threats,statsFo.threats,'#3B82F6','#10B981')}
+${renderStatRow(_lang==='en'?'Mitigated threats':'Menaces atténuées',statsCpt.threatsMit+' / '+statsCpt.threats,statsFo.threatsMit+' / '+statsFo.threats,'#10B981','#10B981')}
+${renderStatRow(_lang==='en'?'Mitigation rate':'Taux atténuation',statsCpt.threats>0?Math.round(statsCpt.threatsMit/statsCpt.threats*100)+'%':'—',statsFo.threats>0?Math.round(statsFo.threatsMit/statsFo.threats*100)+'%':'—','#10B981','#10B981')}
+${renderStatRow(_lang==='en'?'Identified errors':'Erreurs identifiées',statsCpt.errors,statsFo.errors,'#EF4444','#F97316')}
+${renderStatRow(_lang==='en'?'Managed errors':'Erreurs gérées',statsCpt.errorsMit+' / '+statsCpt.errors,statsFo.errorsMit+' / '+statsFo.errors,'#F59E0B','#F59E0B')}
+${renderStatRow(_lang==='en'?'UAS observed':'UAS observés',statsCpt.uas,statsFo.uas,'#F59E0B','#F59E0B')}
 ${renderStatRow('Recoveries',statsCpt.rec>0?statsCpt.recOk+'/'+statsCpt.rec:'—',statsFo.rec>0?statsFo.recOk+'/'+statsFo.rec:'—','#10B981','#10B981')}
 </tbody>
 </table>
 </div>`;
 
 const renderList = (items,color,icon)=>items.length?items.map(it=>{
-const mitLabel = it.mit==='ok'?'<span style="color:#10B981;font-size:10px;margin-left:6px;background:#10B98122;padding:1px 6px;border-radius:4px;">✓ Gérée</span>':
-it.mit==='partial'?'<span style="color:#F59E0B;font-size:10px;margin-left:6px;background:#F59E0B22;padding:1px 6px;border-radius:4px;">~ Partielle</span>':
-it.mit==='no'?'<span style="color:#EF4444;font-size:10px;margin-left:6px;background:#EF444422;padding:1px 6px;border-radius:4px;">✗ Non gérée</span>':'';
+const mitLabel = it.mit==='ok'?`<span style="color:#10B981;font-size:10px;margin-left:6px;background:#10B98122;padding:1px 6px;border-radius:4px;">${_lang==='en'?'✓ Managed':'✓ Gérée'}</span>`:
+it.mit==='partial'?`<span style="color:#F59E0B;font-size:10px;margin-left:6px;background:#F59E0B22;padding:1px 6px;border-radius:4px;">${_lang==='en'?'~ Partial':'~ Partielle'}</span>`:
+it.mit==='no'?`<span style="color:#EF4444;font-size:10px;margin-left:6px;background:#EF444422;padding:1px 6px;border-radius:4px;">${_lang==='en'?'✗ Unmanaged':'✗ Non gérée'}</span>`:'';
 return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitLabel}</div>`;
 }).join('') : '';
 
@@ -8260,9 +8402,9 @@ const temCpt=ex.tem||{threats:[],errors:[],uas:[]};
 const temFo=ex.temfo||{threats:[],errors:[],uas:[]};
 const rec=ex.rec||{}; const recfo=ex.recfo||{};
 const recColor=rec.managed==='yes'?'#10B981':rec.managed==='partial'?'#F59E0B':rec.managed==='no'?'#EF4444':'#64748B';
-const recLabel=rec.managed==='yes'?'✓ Récupéré':rec.managed==='partial'?'~ Partiel':rec.managed==='no'?'✗ Non récupéré':'—';
+const recLabel=rec.managed==='yes'?(_lang==='en'?'✓ Recovered':'✓ Récupéré'):rec.managed==='partial'?(_lang==='en'?'~ Partial':'~ Partiel'):rec.managed==='no'?(_lang==='en'?'✗ Not recovered':'✗ Non récupéré'):'—';
 const recfoColor=recfo.managed==='yes'?'#10B981':recfo.managed==='partial'?'#F59E0B':recfo.managed==='no'?'#EF4444':'#64748B';
-const recfoLabel=recfo.managed==='yes'?'✓ Récupéré':recfo.managed==='partial'?'~ Partiel':recfo.managed==='no'?'✗ Non récupéré':'—';
+const recfoLabel=recfo.managed==='yes'?(_lang==='en'?'✓ Recovered':'✓ Récupéré'):recfo.managed==='partial'?(_lang==='en'?'~ Partial':'~ Partiel'):recfo.managed==='no'?(_lang==='en'?'✗ Not recovered':'✗ Non récupéré'):'—';
 
 const hasData=(temCpt.threats||[]).length||(temCpt.errors||[]).length||(temCpt.uas||[]).length||
 (temFo.threats||[]).length||(temFo.errors||[]).length||(temFo.uas||[]).length;
@@ -8273,8 +8415,8 @@ return `<div class="card" style="margin-bottom:12px;border-left:3px solid #EF444
 <div style="display:grid;grid-template-columns:1fr${state.foName?' 1fr':''};gap:12px;">
 <div>
 <div style="font-size:10px;color:#3B82F6;font-weight:700;letter-spacing:1px;margin-bottom:6px;">CPT — ${state.pilotName}</div>
-${(temCpt.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#3B82F644;margin-bottom:3px;">▲ MENACES</div>${renderList(temCpt.threats,'#3B82F6','▲')}</div>`:''}
-${(temCpt.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#EF444444;margin-bottom:3px;">● ERREURS</div>${renderList(temCpt.errors,'#EF4444','●')}</div>`:''}
+${(temCpt.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#3B82F644;margin-bottom:3px;">▲ ${_lang==='en'?'THREATS':'MENACES'}</div>${renderList(temCpt.threats,'#3B82F6','▲')}</div>`:''}
+${(temCpt.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#EF444444;margin-bottom:3px;">● ${_lang==='en'?'ERRORS':'ERREURS'}</div>${renderList(temCpt.errors,'#EF4444','●')}</div>`:''}
 ${(temCpt.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F59E0B44;margin-bottom:3px;">◆ UAS</div>${renderList(temCpt.uas,'#F59E0B','◆')}</div>`:''}
 <div style="padding:6px 8px;background:#10B98111;border-radius:6px;border:1px solid #10B98133;margin-top:4px;">
 <span style="font-size:10px;font-weight:700;color:#10B981;">RECOVERY: </span>
@@ -8283,8 +8425,8 @@ ${(temCpt.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size
 </div>
 ${state.foName?`<div>
 <div style="font-size:10px;color:#10B981;font-weight:700;letter-spacing:1px;margin-bottom:6px;">FO — ${state.foName}</div>
-${(temFo.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#10B98144;margin-bottom:3px;">▲ MENACES</div>${renderList(temFo.threats,'#10B981','▲')}</div>`:''}
-${(temFo.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F9731644;margin-bottom:3px;">● ERREURS</div>${renderList(temFo.errors,'#F97316','●')}</div>`:''}
+${(temFo.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#10B98144;margin-bottom:3px;">▲ ${_lang==='en'?'THREATS':'MENACES'}</div>${renderList(temFo.threats,'#10B981','▲')}</div>`:''}
+${(temFo.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F9731644;margin-bottom:3px;">● ${_lang==='en'?'ERRORS':'ERREURS'}</div>${renderList(temFo.errors,'#F97316','●')}</div>`:''}
 ${(temFo.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F59E0B44;margin-bottom:3px;">◆ UAS</div>${renderList(temFo.uas,'#F59E0B','◆')}</div>`:''}
 <div style="padding:6px 8px;background:#10B98111;border-radius:6px;border:1px solid #10B98133;margin-top:4px;">
 <span style="font-size:10px;font-weight:700;color:#10B981;">RECOVERY: </span>
@@ -8295,13 +8437,13 @@ ${(temFo.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:
 </div>`;
 }).join('');
 
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('tem')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div><div style="padding:14px;">${tableHtml}${exRows||'<div style="text-align:center;color:#64748B;padding:20px;">Aucune donnée TEM enregistrée</div>'}</div>`;
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('tem')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div><div style="padding:14px;">${tableHtml}${exRows||'<div style="text-align:center;color:#64748B;padding:20px;">'+(_lang==='en'?'No TEM data recorded':'Aucune donnée TEM enregistrée')+'</div>'}</div>`;
 }
 
 function renderDebScores(el){
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length){
-el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>';
+el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">'+(_lang==='en'?'No exercise closed.':'Aucun exercice cloture.')+'</div>';
 return;
 }
 function _gAvg(csKey){let t=0,n=0;closed.forEach(ex=>Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0).forEach(v=>{t+=v.g;n++;}));return n?t/n:null;}
@@ -8348,7 +8490,7 @@ el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14
 
 function renderDebExercises(el){
 const closed = state.exercises.filter(e=>e.closed);
-if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
+if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">'+(_lang==='en'?'No exercise closed.':'Aucun exercice cloture.')+'</div>'; return; }
 const dsBtn=`<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('exercises')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>`;
 // Global per-pilot averages banner
 function _globalAvg(csKey){
@@ -8375,29 +8517,37 @@ if(tmExs.length){
   const tmColor = gained?'#10B981':'#EF4444';
   const tmBg = gained?'#10B98111':'#EF444411';
   const tmBorder = gained?'#10B98133':'#EF444433';
-  const recoHtml = !gained?`<div style="margin-top:7px;"><div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:5px;">💡 RECOMMANDATIONS TIME MANAGEMENT</div><div style="display:flex;flex-direction:column;gap:3px;">
+  const recoHtml = !gained?`<div style="margin-top:7px;"><div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:5px;">💡 ${_lang==='en'?'TIME MANAGEMENT RECOMMENDATIONS':'RECOMMANDATIONS TIME MANAGEMENT'}</div><div style="display:flex;flex-direction:column;gap:3px;">
+  ${_lang==='en'?`
+  <div style="font-size:11px;color:#94A3B8;">• Apply <strong style="color:#F1F5F9;">slot pressure</strong>: give the crew a fictitious ATC slot to speed up decisions and the QRH sequence.</div>
+  <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#F1F5F9;">Fast-forward the simulator</strong> during cruise phases without maneuvers — go directly to the descent setup.</div>
+  <div style="font-size:11px;color:#94A3B8;">• In the <strong style="color:#F1F5F9;">pre-session briefing</strong>, set target timers aloud: "RTO in 8 min max, SE ILS in 12 min".</div>
+  <div style="font-size:11px;color:#94A3B8;">• Use <strong style="color:#F1F5F9;">chrono callouts</strong> during the exercise: "You have 3 min left" to condition execution pace.</div>
+  <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#F1F5F9;">Penalize procedural hesitations</strong> by adding a distraction (SELCAL, cabin) to force WLM prioritization.</div>
+  `:`
   <div style="font-size:11px;color:#94A3B8;">• Appliquez une <strong style="color:#F1F5F9;">pression de slots</strong> : donnez à l'équipage un créneau ATC fictif pour accélérer les décisions et la séquence QRH.</div>
   <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#F1F5F9;">Accélérez le simulateur</strong> pendant les phases de croisière sans manœuvres — passez directement à la mise en descente.</div>
   <div style="font-size:11px;color:#94A3B8;">• En <strong style="color:#F1F5F9;">briefing pré-session</strong>, fixez les minuteries cibles à voix haute : "RTO en 8 min max, SE ILS en 12 min".</div>
   <div style="font-size:11px;color:#94A3B8;">• Utilisez les <strong style="color:#F1F5F9;">callouts chrono</strong> pendant l'exercice : "Il te reste 3 min" pour conditionner le rythme d'exécution.</div>
   <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#F1F5F9;">Pénalisez les hésitations</strong> procédurales en ajoutant une distraction (SELCAL, cabine) pour forcer la priorisation WLM.</div>
+  `}
   </div></div>`:'';
   const rows = tmExs.map(e=>{
     const sc=ALL_SC.find(s=>s.id===e.sid);
     const d=e.timeDeltaSec; const m=Math.abs(Math.round(d/60));
     const c=d>=0?'#10B981':'#EF4444';
-    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} <span style="color:#64748B;">(limite ${e.timeLimit}min)</span></span><span style="font-size:12px;font-weight:900;color:${c};">${d>=0?'G':'L'}:${m}min</span></div>`;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} <span style="color:#64748B;">(${_lang==='en'?'limit':'limite'} ${e.timeLimit}min)</span></span><span style="font-size:12px;font-weight:900;color:${c};">${d>=0?'G':'L'}:${m}min</span></div>`;
   }).join('');
   const avgDelta = totalDelta/tmExs.length;
   const avgMin = Math.abs(Math.round(avgDelta/60));
   tmHtml=`<div style="background:${tmBg};border:1px solid ${tmBorder};border-radius:9px;padding:10px 12px;margin-bottom:14px;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
-    <div style="font-size:12px;font-weight:800;color:${tmColor};letter-spacing:1px;">⏱ TIME MANAGEMENT — ${tmExs.length} exercice${tmExs.length>1?'s':''}</div>
+    <div style="font-size:12px;font-weight:800;color:${tmColor};letter-spacing:1px;">⏱ TIME MANAGEMENT — ${tmExs.length} ${_lang==='en'?'exercise':'exercice'}${tmExs.length>1?'s':''}</div>
     <div style="font-size:18px;font-weight:900;color:${tmColor};text-shadow:0 0 6px ${tmColor}66;">${gained?'G':'L'}:${totalMin}min</div>
   </div>
   <div style="margin-bottom:6px;">${rows}</div>
   <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid ${tmBorder};margin-top:2px;">
-    <span style="font-size:11px;font-weight:700;color:#94A3B8;">Moyenne par exercice</span>
+    <span style="font-size:11px;font-weight:700;color:#94A3B8;">${_lang==='en'?'Average per exercise':'Moyenne par exercice'}</span>
     <span style="font-size:13px;font-weight:900;color:${tmColor};">${gained?'G':'L'}:${avgMin}min</span>
   </div>
   ${recoHtml}
@@ -8406,7 +8556,7 @@ if(tmExs.length){
   tmHtml=`<div style="background:#06B6D408;border:1px solid #06B6D422;border-radius:9px;padding:9px 12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
   <span style="font-size:18px;">⏱</span>
   <div><div style="font-size:11px;font-weight:800;color:#06B6D4;letter-spacing:1px;">TIME MANAGEMENT</div>
-  <div style="font-size:11px;color:#475569;">Fixez une time limit sur un exercice (bouton ⏱ de la carte) pour activer ce bloc.</div></div>
+  <div style="font-size:11px;color:#475569;">${_lang==='en'?'Set a time limit on an exercise (⏱ button on the card) to activate this block.':'Fixez une time limit sur un exercice (bouton ⏱ de la carte) pour activer ce bloc.'}</div></div>
   </div>`;
 }
 const fdTotal=closed.filter(e=>e.fordec).length;
@@ -8419,12 +8569,12 @@ const crmSummaryHtml=`<div style="display:flex;gap:8px;margin-bottom:14px;">
   <div style="flex:1;background:${fdColor}15;border:2px solid ${fdColor}44;border-radius:10px;padding:10px 12px;">
     <div style="font-size:11px;font-weight:900;color:${fdColor};letter-spacing:1.5px;margin-bottom:3px;">FORDEC</div>
     <div style="font-size:22px;font-weight:900;color:${fdColor};text-shadow:0 0 10px ${fdColor}88;">${fdTotal}<span style="font-size:13px;color:#475569;">/${closed.length}</span></div>
-    <div style="font-size:10px;color:#475569;margin-top:2px;">exercices avec FORDEC</div>
+    <div style="font-size:10px;color:#475569;margin-top:2px;">${_lang==='en'?'exercises with FORDEC':'exercices avec FORDEC'}</div>
   </div>
   <div style="flex:1;background:${ntColor}15;border:2px solid ${ntColor}44;border-radius:10px;padding:10px 12px;">
     <div style="font-size:11px;font-weight:900;color:${ntColor};letter-spacing:1.5px;margin-bottom:3px;">NITS BRIEF</div>
     <div style="font-size:22px;font-weight:900;color:${ntColor};text-shadow:0 0 10px ${ntColor}88;">${ntTotal}<span style="font-size:13px;color:#475569;">/${closed.length}</span></div>
-    <div style="font-size:10px;color:#475569;margin-top:2px;">exercices avec NITS brief</div>
+    <div style="font-size:10px;color:#475569;margin-top:2px;">${_lang==='en'?'exercises with NITS brief':'exercices avec NITS brief'}</div>
   </div>
 </div>`;
 el.innerHTML = dsBtn + bannerHtml + crmSummaryHtml + tmHtml + closed.map((ex,i)=>{
@@ -8460,10 +8610,10 @@ const ffaHtml = [ffaCpt,ffaFo].filter(Boolean).join('  ');
 const temCpt = ex.tem;
 const temFo = ex.temfo;
 const temHtml = [
-temCpt&&(temCpt.threats||[]).length?`<span class="chip" style="background:#3B82F618;border:1px solid #3B82F633;color:#3B82F6;">CPT ${temCpt.threats.length} men.</span>`:'',
-temCpt&&(temCpt.errors||[]).length?`<span class="chip" style="background:#EF444418;border:1px solid #EF444433;color:#EF4444;">CPT ${temCpt.errors.length} err.</span>`:'',
-temFo&&state.foName&&(temFo.threats||[]).length?`<span class="chip" style="background:#3B82F618;border:1px solid #10B98133;color:#10B981;">FO ${temFo.threats.length} men.</span>`:'',
-temFo&&state.foName&&(temFo.errors||[]).length?`<span class="chip" style="background:#EF444418;border:1px solid #F9731633;color:#F97316;">FO ${temFo.errors.length} err.</span>`:'',
+temCpt&&(temCpt.threats||[]).length?`<span class="chip" style="background:#3B82F618;border:1px solid #3B82F633;color:#3B82F6;">CPT ${temCpt.threats.length} ${_lang==='en'?'thr.':'men.'}</span>`:'',
+temCpt&&(temCpt.errors||[]).length?`<span class="chip" style="background:#EF444418;border:1px solid #EF444433;color:#EF4444;">CPT ${temCpt.errors.length} ${_lang==='en'?'err.':'err.'}</span>`:'',
+temFo&&state.foName&&(temFo.threats||[]).length?`<span class="chip" style="background:#3B82F618;border:1px solid #10B98133;color:#10B981;">FO ${temFo.threats.length} ${_lang==='en'?'thr.':'men.'}</span>`:'',
+temFo&&state.foName&&(temFo.errors||[]).length?`<span class="chip" style="background:#EF444418;border:1px solid #F9731633;color:#F97316;">FO ${temFo.errors.length} ${_lang==='en'?'err.':'err.'}</span>`:'',
 (temCpt&&(temCpt.uas||[]).length)||(temFo&&(temFo.uas||[]).length)?`<span class="chip" style="background:#F59E0B18;border:1px solid #F59E0B33;color:#F59E0B;">UAS</span>`:'',
 ].join('');
 const facNotes = ex.facNotes?Object.entries(ex.facNotes).filter(([,v])=>v).map(([k,v])=>`<div style="font-size:12px;color:#64748B;margin-top:3px;font-style:italic;">Q${parseInt(k)+1}: ${v}</div>`).join(''):'';
@@ -8474,13 +8624,13 @@ return `<div class="card" style="margin-bottom:12px;border-left:3px solid ${pc};
 <div style="display:flex;gap:6px;flex-shrink:0;">
 ${eCpt!==null?`<div style="text-align:center;background:${c1}15;border:1px solid ${c1}33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${GC[Math.round(eCpt)]||'#64748B'};line-height:1;">${eCpt.toFixed(1)}</div><div style="font-size:9px;color:${c1};font-weight:700;">${r1}</div></div>`:''}
 ${eFo!==null?`<div style="text-align:center;background:${c2}15;border:1px solid ${c2}33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${GC[Math.round(eFo)]||'#64748B'};line-height:1;">${eFo.toFixed(1)}</div><div style="font-size:9px;color:${c2};font-weight:700;">${r2}</div></div>`:''}
-${(eFo!==null&&eCpt!==null&&st)?`<div style="text-align:center;background:#64748B15;border:1px solid #64748B33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${ac};line-height:1;">${st.avg.toFixed(1)}</div><div style="font-size:9px;color:#64748B;font-weight:700;">MOY</div></div>`:(st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(1)}</div>`:'')}
+${(eFo!==null&&eCpt!==null&&st)?`<div style="text-align:center;background:#64748B15;border:1px solid #64748B33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${ac};line-height:1;">${st.avg.toFixed(1)}</div><div style="font-size:9px;color:#64748B;font-weight:700;">${_lang==='en'?'AVG':'MOY'}</div></div>`:(st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(1)}</div>`:'')}
 </div>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">${compBadges}</div>
 ${ffaHtml?`<div style="margin-bottom:6px;">${ffaHtml}</div>`:''}
 ${temHtml?`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px;">${temHtml}</div>`:''}
-${ex.notes?`<div style="font-size:11px;color:#F59E0B;font-weight:700;margin:6px 0 2px;letter-spacing:0.5px;">📝 MES NOTES</div><div style="font-size:12px;color:#94A3B8;font-style:italic;background:#F59E0B0D;border:1px solid #F59E0B33;border-radius:6px;padding:6px 10px;">${ex.notes}</div>`:''}
+${ex.notes?`<div style="font-size:11px;color:#F59E0B;font-weight:700;margin:6px 0 2px;letter-spacing:0.5px;">📝 ${_lang==='en'?'MY NOTES':'MES NOTES'}</div><div style="font-size:12px;color:#94A3B8;font-style:italic;background:#F59E0B0D;border:1px solid #F59E0B33;border-radius:6px;padding:6px 10px;">${ex.notes}</div>`:''}
 ${facNotes}
 </div>`;
 }).join('');
@@ -8489,14 +8639,63 @@ ${facNotes}
 function getFacilitationQuestions(ex){
   const sc = ALL_SC.find(s=>s.id===ex.sid)||{};
   const cat = sc.cat||'';
-  const baseQ = [
+  // Use exercise's own facilitation questions if available
+  if(sc.fac && sc.fac.length) return sc.fac;
+  const baseQ = _lang==='en'?[
+    "How do you evaluate your overall performance on this exercise?",
+    "Which CBTA competencies do you feel you demonstrated well?",
+    "Which aspects of your performance would you like to improve?",
+    "How did you manage the workload during this exercise?",
+    "What were the TEM factors (threats/errors) identified?"
+  ]:[
     "Comment evaluez-vous votre performance globale sur cet exercice ?",
     "Quelles competences CBTA pensez-vous avoir bien demontrees ?",
     "Quels aspects de votre performance souhaiteriez-vous ameliorer ?",
     "Comment avez-vous gere la charge de travail pendant cet exercice ?",
     "Quels etaient les facteurs TEM (menaces/erreurs) identifies ?"
   ];
-  const catQ = {
+  const catQ = _lang==='en'?{
+    'MEMORY':[
+      "How did you memorize and apply the memory actions?",
+      "Did you respect the order and sequence of required actions?",
+      "How did you manage CRM during the execution of memory items?",
+      "What were the threats/errors identified in this emergency situation?"
+    ],
+    'MANEUVER':[
+      "How did you maintain control of the flight path?",
+      "Did you respect the parameters (altitude +/-100ft, heading +/-5 deg, speed +/-5kt)?",
+      "How did you manage aircraft power and configuration?",
+      "What were your performance indicators (FPM, FPA) during the maneuver?"
+    ],
+    'FLIGHT PATTERN':[
+      "How did you plan and prepare this approach?",
+      "Did you meet the stabilization criteria (height, speed, config)?",
+      "How did you manage deviations and corrections?",
+      "What was your situational awareness (SA) regarding weather and obstacles?"
+    ],
+    'NNC':[
+      "How did you identify and diagnose the abnormality?",
+      "Was the use of abnormal procedures correct and complete?",
+      "How did you share tasks during checklist execution?",
+      "What were the Aviate-Navigate-Communicate-Manage priorities?"
+    ],
+    'LVO':[
+      "What were the applicable LVO minima (DH/RVR) for this approach?",
+      "How did you verify and monitor the automatic landing systems?",
+      "What were the go-around criteria in LVO conditions?",
+      "How did you coordinate LVO-specific callouts and announcements?",
+      "Was situational awareness of RVR and its trend maintained?",
+      "How did you manage a potential autoland system degradation?"
+    ],
+    'RNP':[
+      "How did you validate the availability and accuracy of the RNAV/RNP system?",
+      "Did you verify the RAIM prediction before the approach?",
+      "How did you monitor LNAV/VNAV path deviation?",
+      "What was your strategy in case of an RNP UNABLE alert?",
+      "How was the RNP missed approach procedure prepared and executed?",
+      "How did you manage speed in RF legs (if applicable)?"
+    ]
+  }:{
     'MEMORY':[
       "Comment avez-vous memorise et applique les actions memoire ?",
       "Avez-vous respecte l ordre et la sequence des actions requises ?",
@@ -8538,7 +8737,13 @@ function getFacilitationQuestions(ex){
       "Comment avez-vous gere la vitesse dans les RF legs (si applicable) ?"
     ]
   };
-  const specific = {
+  const specific = _lang==='en'?{
+    'rto':["How did you decide to reject the takeoff?","What were the RTO trigger parameters (speed, reason)?","Was the decision below V1?","How did you coordinate with the PF/PNF?"],
+    'tcas_ra':["How did you receive and interpret the TCAS RA?","Did you respond immediately in the correct direction?","How did you inform ATC?","How was the return to the cleared level carried out?"],
+    'windshear_manual':["How did you identify entry into windshear?","Did you apply the escape maneuver correctly?","How did you manage aircraft energy during the maneuver?"],
+    'upset_recovery':["How did you recognize and identify the upset?","Was the recovery sequence correct (unload-roll-pull)?","How did you avoid secondary errors (CFIT, overspeed)?"],
+    'engine_fire':["How did you diagnose and confirm the engine fire?","Was the coordination for memory items effective?","How did you manage the decision-making (diversion, emergency landing)?"],
+  }:{
     'rto':["Comment avez-vous decide d interrompre le decollage ?","Quels etaient les parametres de declenchement du RTO (vitesse, raison) ?","La decision etait-elle en-dessous de V1 ?","Comment avez-vous coordonne avec le PF/PNF ?"],
     'tcas_ra':["Comment avez-vous recu et interprete la RA TCAS ?","Avez-vous repondu immediatement dans le bon sens ?","Comment avez-vous informe l ATC ?","Comment le retour au niveau autorise s est-il effectue ?"],
     'windshear_manual':["Comment avez-vous identifie l entree dans le windshear ?","Avez-vous applique la procedure d evasion correctement ?","Comment avez-vous gere l energie de l avion pendant la manoeuvre ?"],
@@ -8552,7 +8757,7 @@ function getFacilitationQuestions(ex){
 function renderDebQuestionnaire(el){
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length){
-  el.innerHTML='<div style="padding:20px;text-align:center;color:#64748B;">Aucun exercice cloture</div>';
+  el.innerHTML='<div style="padding:20px;text-align:center;color:#64748B;">'+(_lang==='en'?'No exercise closed':'Aucun exercice cloture')+'</div>';
   return;
 }
 
@@ -8585,17 +8790,17 @@ const selected = state.debRootCauses[rcKey]||[];
 const rcBtns = ROOT_CAUSES.map(rc=>`<button class="rc-btn ${selected.includes(rc)?'active':''}" onclick="toggleRC('${rcKey}','${rc}')">${rc}</button>`).join('');
 return `<div class="card" style="margin-bottom:12px;">
 <div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">${sc.title}</div>
-<div class="section-lbl" style="color:#F59E0B;margin-bottom:8px;">ROOT CAUSES identifiees</div>
+<div class="section-lbl" style="color:#F59E0B;margin-bottom:8px;">${_lang==='en'?'ROOT CAUSES identified':'ROOT CAUSES identifiees'}</div>
 <div style="margin-bottom:10px;">${rcBtns}</div>
-<div class="section-lbl" style="color:#64748B;">Note debriefing:</div>
-<textarea class="note-area" placeholder="Observations et analyse..." onchange="saveDebNote('${rcKey}',this.value)">${state.debNotes[rcKey]||''}</textarea>
+<div class="section-lbl" style="color:#64748B;">${_lang==='en'?'Debriefing note:':'Note debriefing:'}</div>
+<textarea class="note-area" placeholder="${_lang==='en'?'Observations and analysis...':'Observations et analyse...'}" onchange="saveDebNote('${rcKey}',this.value)">${state.debNotes[rcKey]||''}</textarea>
 </div>`;
 }).join('');
 
 // Auto facilitation questions per exercise (CBTA)
 const EX_COLORS=['#FF61C7','#39FF14','#00E5FF','#FFE600','#FF9500','#A78BFA','#10B981','#F97316','#3B82F6','#EF4444','#EC4899','#FFCC33','#33DDBB','#FF5577','#44EE99','#06B6D4'];
 let facQHtml = '<div style="padding:14px;">';
-facQHtml += '<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:12px;">QUESTIONS DE FACILITATION — CBTA</div>';
+facQHtml += '<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:12px;">'+(_lang==='en'?'FACILITATION QUESTIONS — CBTA':'QUESTIONS DE FACILITATION — CBTA')+'</div>';
 closed.forEach((ex,i)=>{
   const sc = ALL_SC.find(s=>s.id===ex.sid)||{title:ex.sid};
   const exColor = EX_COLORS[i % EX_COLORS.length];
@@ -8614,15 +8819,15 @@ closed.forEach((ex,i)=>{
     facQHtml += '</div>';
   });
   facQHtml += '</div>';
-  facQHtml += '<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:5px;">NOTES FACILITATION</div>';
-  facQHtml += '<textarea style="width:100%;background:#0F1218;border:1px solid '+exColor+'33;border-radius:7px;color:#F1F5F9;padding:9px;font-size:13px;resize:none;min-height:60px;box-sizing:border-box;" placeholder="Reponses et observations du stagiaire..." onchange="state.debNotes[\''+noteKey+'\']=this.value">'+(state.debNotes[noteKey]||'')+'</textarea>';
+  facQHtml += '<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:5px;">'+(_lang==='en'?'FACILITATION NOTES':'NOTES FACILITATION')+'</div>';
+  facQHtml += '<textarea style="width:100%;background:#0F1218;border:1px solid '+exColor+'33;border-radius:7px;color:#F1F5F9;padding:9px;font-size:13px;resize:none;min-height:60px;box-sizing:border-box;" placeholder="'+(_lang==='en'?'Trainee responses and observations...':'Reponses et observations du stagiaire...')+'" onchange="state.debNotes[\''+noteKey+'\']=this.value">'+(state.debNotes[noteKey]||'')+'</textarea>';
   facQHtml += '</div>';
 });
 facQHtml += '</div>';
 
 // Weak comps
 const weakHtml = weakComps.length ? `<div class="card" style="margin-bottom:12px;border-left:3px solid #3B82F6;">
-<div class="section-lbl" style="color:#3B82F6;">CPT — ${state.pilotName} — COMPETENCES A CONSOLIDER</div>
+<div class="section-lbl" style="color:#3B82F6;">CPT — ${state.pilotName} — ${_lang==='en'?'COMPETENCIES TO CONSOLIDATE':'COMPETENCES A CONSOLIDER'}</div>
 ${weakComps.map(c=>`<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
 <span style="font-size:14px;font-weight:700;color:${c.color};font-family:monospace;">${c.label}</span>
 <span style="font-size:13px;color:#94A3B8;">${c.full}</span>
@@ -8631,7 +8836,7 @@ ${weakComps.map(c=>`<div style="display:flex;align-items:center;gap:10px;margin-
 </div>` : '';
 
 const weakFoHtml = weakFo.length ? `<div class="card" style="margin-bottom:12px;border-left:3px solid #10B981;">
-<div class="section-lbl" style="color:#10B981;">FO — ${state.foName} — COMPETENCES A CONSOLIDER</div>
+<div class="section-lbl" style="color:#10B981;">FO — ${state.foName} — ${_lang==='en'?'COMPETENCIES TO CONSOLIDATE':'COMPETENCES A CONSOLIDER'}</div>
 ${weakFo.map(c=>`<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
 <span style="font-size:14px;font-weight:700;color:${c.color};font-family:monospace;">${c.label}</span>
 <span style="font-size:13px;color:#94A3B8;">${c.full}</span>
@@ -8672,7 +8877,7 @@ let h='<div style="padding:14px;">';
 // Header
 h+='<div style="background:#0F1218;border:1px solid #F59E0B44;border-left:4px solid #F59E0B;border-radius:10px;padding:12px 14px;margin-bottom:14px;">';
 h+='<div style="font-size:10px;color:#F59E0B;font-weight:700;letter-spacing:2px;margin-bottom:4px;">BOEING INSTRUCTOR COMPETENCY FRAMEWORK</div>';
-h+='<div style="font-size:16px;font-weight:800;color:#F1F5F9;">'+(triName||'TRI Examiné')+'</div>';
+h+='<div style="font-size:16px;font-weight:800;color:#F1F5F9;">'+(triName||(_lang==='en'?'Examined TRI':'TRI Examiné'))+'</div>';
 h+='<div style="font-size:11px;color:#64748B;margin-top:2px;">5=Excellent · 4=Above Standard · 3=Standard · 2=Requires Improvement · 1=Unacceptable</div>';
 if(avg>0){const lv=triLevel(avg);h+='<div style="margin-top:8px;display:flex;align-items:center;gap:10px;"><div style="font-size:24px;font-weight:900;color:'+lv.c+';">'+avg.toFixed(2)+'<span style="font-size:13px;color:#94A3B8;">/5</span></div><div style="font-size:11px;font-weight:700;color:'+lv.c+';">'+lv.l+'</div></div>';}
 h+='</div>';
@@ -8744,7 +8949,7 @@ h+='<textarea style="width:100%;background:#0F1218;border:1px solid #1E2530;bord
 // Final decision
 h+='<div style="margin-bottom:20px;"><div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:8px;">FINAL DECISION</div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">';
-[['APTE','#10B981'],['INAPTE','#EF4444'],['REPORT','#F59E0B']].forEach(function(arr){
+(_lang==='en'?[['QUALIFIED','#10B981'],['UNQUALIFIED','#EF4444'],['DEFERRED','#F59E0B']]:[['APTE','#10B981'],['INAPTE','#EF4444'],['REPORT','#F59E0B']]).forEach(function(arr){
   var label=arr[0]; var col=arr[1];
   const active=state.triRecommendation===label;
   h+='<button onclick="setTRIRec(\''+label+'\')" style="padding:14px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;border:2px solid '+(active?col:col+'44')+';background:'+(active?col+'33':'transparent')+';color:'+(active?col:col+'88')+';">'+label+'</button>';
@@ -8967,7 +9172,7 @@ function toggleTrainingMode(){
     else{btn.style.background='#00CCFF0D';btn.style.borderColor='#00CCFF88';btn.style.color='#00CCFF';btn.style.boxShadow='0 0 8px #00CCFF33';btn.style.textShadow='';}
   }
   if(banner)banner.style.display=next?'block':'none';
-  showToast(next?'🎭 Mode entraînement activé — sessions non enregistrées':'✅ Mode normal réactivé');
+  showToast(next?(_lang==='en'?'🎭 Training mode enabled — sessions not saved':'🎭 Mode entraînement activé — sessions non enregistrées'):(_lang==='en'?'✅ Normal mode re-enabled':'✅ Mode normal réactivé'));
 }
 function initTrainingMode(){
   const on=localStorage.getItem('cbta_training')==='1';
@@ -9024,9 +9229,12 @@ function renderProfCheck(){
   let h = '';
   // Grade scale legend
   h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:10px 12px;margin-bottom:14px;">';
-  h+='<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">ÉCHELLE DE NOTATION</div>';
+  h+='<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">'+(_lang==='en'?'GRADING SCALE':'ÉCHELLE DE NOTATION')+'</div>';
   h+='<div style="display:flex;flex-wrap:wrap;gap:6px;">';
-  [['5','Exemplaire','#3B82F6'],['4','Très Bien','#10B981'],['3','Standard Requis','#F59E0B'],['2','Insuffisant','#F97316'],['1','Insatisfaisant','#EF4444'],['/','N/A','#64748B']].forEach(function(arr){
+  (_lang==='en'
+    ?[['5','Exemplary','#3B82F6'],['4','Above Standard','#10B981'],['3','Standard','#F59E0B'],['2','Below Standard','#F97316'],['1','Unacceptable','#EF4444'],['/','N/A','#64748B']]
+    :[['5','Exemplaire','#3B82F6'],['4','Très Bien','#10B981'],['3','Standard Requis','#F59E0B'],['2','Insuffisant','#F97316'],['1','Insatisfaisant','#EF4444'],['/','N/A','#64748B']]
+  ).forEach(function(arr){
     var v=arr[0],l=arr[1],c=arr[2];
     h+='<span style="background:'+c+'22;border:1px solid '+c+'55;color:'+c+';border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700;">'+v+' = '+l+'</span>';
   });
@@ -9034,17 +9242,17 @@ function renderProfCheck(){
 
   // Pilot info
   h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px 14px;margin-bottom:14px;">';
-  h+='<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:10px;">INFORMATIONS PILOTE</div>';
+  h+='<div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:10px;">'+(_lang==='en'?'PILOT INFORMATION':'INFORMATIONS PILOTE')+'</div>';
   h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">DATE</div><input type="date" value="'+(pc.date||'')+'" onchange="state.profCheck.date=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">POSITION</div>';
   h+='<div style="display:flex;gap:5px;">';
   ['CAPT','FO','F/E'].forEach(function(p){var a=pc.position===p;h+='<button onclick="state.profCheck.position=\''+p+'\';renderProfCheck()" style="flex:1;padding:7px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid '+(a?'#3B82F6':'#334155')+';background:'+(a?'#3B82F622':'transparent')+';color:'+(a?'#3B82F6':'#64748B')+';">'+p+'</button>';});
   h+='</div></div>';
-  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">NOM DU PILOTE</div><input type="text" value="'+(pc.pilotName||'')+'" onchange="state.profCheck.pilotName=this.value" placeholder="Nom complet" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">'+(_lang==='en'?'PILOT NAME':'NOM DU PILOTE')+'</div><input type="text" value="'+(pc.pilotName||'')+'" onchange="state.profCheck.pilotName=this.value" placeholder="'+(_lang==='en'?'Full name':'Nom complet')+'" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">STAFF ID</div><input type="text" value="'+(pc.staffId||'')+'" onchange="state.profCheck.staffId=this.value" placeholder="Staff ID" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">LICENSE N°</div><input type="text" value="'+(pc.license||'')+'" onchange="state.profCheck.license=this.value" placeholder="License et numéro" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
-  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">AERONEF</div><input type="text" value="'+(pc.aircraft||'B737 NG')+'" onchange="state.profCheck.aircraft=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
+  h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">'+(_lang==='en'?'AIRCRAFT':'AERONEF')+'</div><input type="text" value="'+(pc.aircraft||'B737 NG')+'" onchange="state.profCheck.aircraft=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='</div></div>';
 
   // Mandatory items
@@ -9054,7 +9262,7 @@ function renderProfCheck(){
   // LVO items
   h+=sectionHeader('MANDATORY LOW VISIBILITY ITEMS (If Applicable)','#EC4899');
   h+='<div style="padding:9px 0;border-bottom:1px solid #1E2530;">';
-  h+='<div style="font-size:10px;color:#94A3B8;margin-bottom:5px;">DATE APPROACH ON A/C (si applicable)</div>';
+  h+='<div style="font-size:10px;color:#94A3B8;margin-bottom:5px;">DATE APPROACH ON A/C ('+(_lang==='en'?'if applicable':'si applicable')+')</div>';
   h+='<input type="text" value="'+(pc.lvoDate||'')+'" onchange="state.profCheck.lvoDate=this.value" placeholder="_ _ / _ _ / _ _" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;">';
   h+='</div>';
   PROFCHECK_ITEMS.lvo.forEach(function(item){ h+=gradeRow(item); });
@@ -9069,7 +9277,7 @@ function renderProfCheck(){
 
   // Remarks
   h+='<div style="margin-top:14px;"><div style="font-size:10px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">REMARKS (Mandatory for Unsatisfactory Items)</div>';
-  h+='<textarea onchange="state.profCheck.remarks=this.value" style="width:100%;background:#0F1218;border:1px solid #1E2530;border-radius:8px;color:#F1F5F9;padding:10px;font-size:13px;resize:none;min-height:80px;box-sizing:border-box;" placeholder="Observations sur les items insatisfaisants...">'+(pc.remarks||'')+'</textarea></div>';
+  h+='<textarea onchange="state.profCheck.remarks=this.value" style="width:100%;background:#0F1218;border:1px solid #1E2530;border-radius:8px;color:#F1F5F9;padding:10px;font-size:13px;resize:none;min-height:80px;box-sizing:border-box;" placeholder="'+(_lang==='en'?'Observations on unsatisfactory items...':'Observations sur les items insatisfaisants...')+'">'+(pc.remarks||'')+'</textarea></div>';
 
   // Examiner
   h+='<div style="margin-top:10px;"><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">TRI / SFI</div>';
@@ -9196,7 +9404,7 @@ function printProfCheck(){
 
 function renderDebConclusion(el){
 const closed = state.exercises.filter(e=>e.closed);
-if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">Aucun exercice cloture.</div>'; return; }
+if(!closed.length){ el.innerHTML='<div style="text-align:center;color:var(--faint);padding:50px;">'+(_lang==='en'?'No exercise closed.':'Aucun exercice cloture.')+'</div>'; return; }
 
 // Compute per-pilot stats
 function pilotStats(csKey){
@@ -9245,11 +9453,11 @@ const topRC = Object.entries(rcCount).sort((a,b)=>b[1]-a[1]).slice(0,3);
 
 // Performance level
 let perfLevel, perfColor, perfMsg;
-if(globalAvg>=4.5){perfLevel="EXEMPLAIRE";perfColor="#3B82F6";perfMsg="Performance excellente. Le pilote demontre une maitrise remarquable de toutes les competences CBTA. Propre a effectuer des vols en ligne sans supervision particuliere.";}
-else if(globalAvg>=3.5){perfLevel="AU-DESSUS DU STANDARD";perfColor="#10B981";perfMsg="Bonne performance globale. Le pilote maitrise les situations normales et la plupart des situations non normales. Quelques points de consolidation identifies.";}
-else if(globalAvg>=2.5){perfLevel="STANDARD";perfColor="#F59E0B";perfMsg="Performance acceptable mais des lacunes identifiees necessitent un suivi. Une session de recalage est recommandee sur les competences sous-performantes.";}
-else if(globalAvg>=1.5){perfLevel="SOUS-STANDARD";perfColor="#F97316";perfMsg="Performance insuffisante sur plusieurs competences cles. Une session de reentrainement est necessaire avant la prochaine evaluation.";}
-else{perfLevel="INACCEPTABLE";perfColor="#EF4444";perfMsg="Performance inacceptable. Le pilote necessite un programme de remediation complet avant toute evaluation ulterieure.";}
+if(globalAvg>=4.5){perfLevel=_lang==='en'?"EXEMPLARY":"EXEMPLAIRE";perfColor="#3B82F6";perfMsg=_lang==='en'?"Excellent performance. The pilot demonstrates remarkable mastery of all CBTA competencies. Ready to operate line flights without specific supervision.":"Performance excellente. Le pilote demontre une maitrise remarquable de toutes les competences CBTA. Propre a effectuer des vols en ligne sans supervision particuliere.";}
+else if(globalAvg>=3.5){perfLevel=_lang==='en'?"ABOVE STANDARD":"AU-DESSUS DU STANDARD";perfColor="#10B981";perfMsg=_lang==='en'?"Good overall performance. The pilot masters normal situations and most abnormal situations. A few consolidation points identified.":"Bonne performance globale. Le pilote maitrise les situations normales et la plupart des situations non normales. Quelques points de consolidation identifies.";}
+else if(globalAvg>=2.5){perfLevel=_lang==='en'?"STANDARD":"STANDARD";perfColor="#F59E0B";perfMsg=_lang==='en'?"Acceptable performance but identified gaps require follow-up. A recalibration session is recommended on under-performing competencies.":"Performance acceptable mais des lacunes identifiees necessitent un suivi. Une session de recalage est recommandee sur les competences sous-performantes.";}
+else if(globalAvg>=1.5){perfLevel=_lang==='en'?"BELOW STANDARD":"SOUS-STANDARD";perfColor="#F97316";perfMsg=_lang==='en'?"Insufficient performance on several key competencies. A retraining session is required before the next evaluation.":"Performance insuffisante sur plusieurs competences cles. Une session de reentrainement est necessaire avant la prochaine evaluation.";}
+else{perfLevel=_lang==='en'?"UNACCEPTABLE":"INACCEPTABLE";perfColor="#EF4444";perfMsg=_lang==='en'?"Unacceptable performance. The pilot requires a complete remediation program before any further evaluation.":"Performance inacceptable. Le pilote necessite un programme de remediation complet avant toute evaluation ulterieure.";}
 
 // FFA compliance per pilot
 const ffaTotal={FLY:0,FOCUS:0,ACT:0,tot:0};
@@ -9261,7 +9469,7 @@ if(state.foName&&ex.ffafo){['FLY','FOCUS','ACT'].forEach(t=>{if(ex.ffafo[t]!==un
 
 const rcSummaryHtml = topRC.length ? `
 <div style="margin-top:10px;">
-<div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:6px;">Root Causes principales identifiees :</div>
+<div style="font-size:13px;font-weight:700;color:#F59E0B;margin-bottom:6px;">${_lang==='en'?'Main Root Causes identified:':'Root Causes principales identifiees :'}</div>
 ${topRC.map(([rc,n])=>`<div style="font-size:13px;color:#CBD5E1;padding:3px 0;">• ${rc} (${n}x)</div>`).join('')}
 </div>` : '';
 
@@ -9271,19 +9479,19 @@ el.innerHTML = `
 <div class="concl-title" style="color:${perfColor};">${perfLevel}</div>
 <div style="font-size:22px;font-weight:800;color:${perfColor};margin-bottom:8px;">${globalAvg.toFixed(1)} / 5.0</div>
 <div class="concl-text" style="margin-bottom:8px;">${perfMsg}</div>
-${strongComps.length?`<div style="font-size:13px;color:#10B981;font-weight:600;margin-bottom:4px;">✓ Points forts: ${strongComps.map(c=>c.label).join(', ')}</div>`:''}
-${weakComps.length?`<div style="font-size:13px;color:#EF4444;font-weight:600;">△ A consolider: ${weakComps.map(c=>c.label).join(', ')}</div>`:''}
+${strongComps.length?`<div style="font-size:13px;color:#10B981;font-weight:600;margin-bottom:4px;">✓ ${_lang==='en'?'Strengths':'Points forts'}: ${strongComps.map(c=>c.label).join(', ')}</div>`:''}
+${weakComps.length?`<div style="font-size:13px;color:#EF4444;font-weight:600;">△ ${_lang==='en'?'To consolidate':'A consolider'}: ${weakComps.map(c=>c.label).join(', ')}</div>`:''}
 </div>
 
 
 ${foSt && foSt.globalAvg>0 ? (()=>{
 const foAvg=foSt.globalAvg;
 let foLevel,foColor,foMsg;
-if(foAvg>=4.5){foLevel="EXEMPLAIRE";foColor="#3B82F6";foMsg="Performance excellente. Le copilote fait preuve d une maitrise remarquable des competences CBTA. Contribution positive a la gestion de la ressource equipage.";}
-else if(foAvg>=3.5){foLevel="AU-DESSUS DU STANDARD";foColor="#10B981";foMsg="Bonne performance globale du copilote. Maitrise correcte des situations normales et non normales. CRM actif et efficace.";}
-else if(foAvg>=2.5){foLevel="STANDARD";foColor="#F59E0B";foMsg="Performance acceptable du copilote avec des axes de progres identifies. Un accompagnement sur les competences sous-performantes est recommande.";}
-else if(foAvg>=1.5){foLevel="SOUS-STANDARD";foColor="#F97316";foMsg="Performance insuffisante du copilote sur plusieurs competences. Un reentrainement cible est necessaire.";}
-else{foLevel="INACCEPTABLE";foColor="#EF4444";foMsg="Performance inacceptable. Programme de remediation requis avant toute evaluation ulterieure.";}
+if(foAvg>=4.5){foLevel=_lang==='en'?"EXEMPLARY":"EXEMPLAIRE";foColor="#3B82F6";foMsg=_lang==='en'?"Excellent performance. The first officer demonstrates remarkable mastery of CBTA competencies. Positive contribution to crew resource management.":"Performance excellente. Le copilote fait preuve d une maitrise remarquable des competences CBTA. Contribution positive a la gestion de la ressource equipage.";}
+else if(foAvg>=3.5){foLevel=_lang==='en'?"ABOVE STANDARD":"AU-DESSUS DU STANDARD";foColor="#10B981";foMsg=_lang==='en'?"Good overall performance of the first officer. Correct mastery of normal and abnormal situations. Active and effective CRM.":"Bonne performance globale du copilote. Maitrise correcte des situations normales et non normales. CRM actif et efficace.";}
+else if(foAvg>=2.5){foLevel=_lang==='en'?"STANDARD":"STANDARD";foColor="#F59E0B";foMsg=_lang==='en'?"Acceptable first officer performance with identified areas for improvement. Support on under-performing competencies is recommended.":"Performance acceptable du copilote avec des axes de progres identifies. Un accompagnement sur les competences sous-performantes est recommande.";}
+else if(foAvg>=1.5){foLevel=_lang==='en'?"BELOW STANDARD":"SOUS-STANDARD";foColor="#F97316";foMsg=_lang==='en'?"Insufficient first officer performance on several competencies. Targeted retraining is required.":"Performance insuffisante du copilote sur plusieurs competences. Un reentrainement cible est necessaire.";}
+else{foLevel=_lang==='en'?"UNACCEPTABLE":"INACCEPTABLE";foColor="#EF4444";foMsg=_lang==='en'?"Unacceptable performance. Remediation program required before any further evaluation.":"Performance inacceptable. Programme de remediation requis avant toute evaluation ulterieure.";}
 const foWeak=COMPETENCIES.filter(c=>foSt.avgs[c.id]>0&&foSt.avgs[c.id]<3.5);
 const foStrong=COMPETENCIES.filter(c=>foSt.avgs[c.id]>=4);
 return `<div class="concl-box" style="background:${foColor}18;border:1px solid ${foColor}44;margin-bottom:14px;">
@@ -9291,15 +9499,28 @@ return `<div class="concl-box" style="background:${foColor}18;border:1px solid $
 <div class="concl-title" style="color:${foColor};">${foLevel}</div>
 <div style="font-size:22px;font-weight:800;color:${foColor};margin-bottom:8px;">${foAvg.toFixed(1)} / 5.0</div>
 <div class="concl-text" style="margin-bottom:8px;">${foMsg}</div>
-${foStrong.length?`<div style="font-size:13px;color:#10B981;font-weight:600;margin-bottom:4px;">✓ Points forts: ${foStrong.map(c=>c.label).join(', ')}</div>`:''}
-${foWeak.length?`<div style="font-size:13px;color:#EF4444;font-weight:600;">△ A consolider: ${foWeak.map(c=>c.label).join(', ')}</div>`:''}
+${foStrong.length?`<div style="font-size:13px;color:#10B981;font-weight:600;margin-bottom:4px;">✓ ${_lang==='en'?'Strengths':'Points forts'}: ${foStrong.map(c=>c.label).join(', ')}</div>`:''}
+${foWeak.length?`<div style="font-size:13px;color:#EF4444;font-weight:600;">△ ${_lang==='en'?'To consolidate':'A consolider'}: ${foWeak.map(c=>c.label).join(', ')}</div>`:''}
 </div>`;
 })() : ''}
 
 
 ${(()=>{
 const crm=state.sessionCRM||{};
-const crmItems=[
+const crmItems=_lang==='en'?[
+{k:'brief',label:'Complete and relevant briefing'},
+{k:'callout',label:'Standard callouts (SOP)'},
+{k:'challenge',label:'Correct challenge & response'},
+{k:'comm',label:'Clear communication between pilots'},
+{k:'leadership',label:'Adapted leadership'},
+{k:'crosscheck',label:'Effective mutual cross-check'},
+{k:'workload',label:'Workload management'},
+{k:'sa',label:'Shared situational awareness'},
+{k:'decision',label:'Appropriate decision-making'},
+{k:'intervention',label:'Appropriate intervention'},
+{k:'automation',label:'Automation management'},
+{k:'sterile',label:'Sterile cockpit < 10,000ft'},
+]:[
 {k:'brief',label:'Briefing complet et pertinent'},
 {k:'callout',label:'Callouts standards (SOP)'},
 {k:'challenge',label:'Challenge & Response correct'},
@@ -9318,37 +9539,37 @@ if(!filled.length) return '';
 const okItems=crmItems.filter(i=>crm[i.k]==='ok');
 const nokItems=crmItems.filter(i=>crm[i.k]==='nok');
 return `<div class="card" style="margin-bottom:14px;border-left:3px solid #8B5CF6;">
-<div class="section-lbl" style="color:#8B5CF6;margin-bottom:10px;">CRM — RESSOURCES ÉQUIPAGE (SÉANCE)</div>
+<div class="section-lbl" style="color:#8B5CF6;margin-bottom:10px;">${_lang==='en'?'CRM — CREW RESOURCES (SESSION)':'CRM — RESSOURCES ÉQUIPAGE (SÉANCE)'}</div>
 <div style="display:flex;gap:12px;margin-bottom:10px;">
-<div style="background:#10B98122;border:1px solid #10B98144;border-radius:8px;padding:8px 14px;text-align:center;flex:1;"><div style="font-size:22px;font-weight:800;color:#10B981;">${okItems.length}</div><div style="font-size:10px;color:#64748B;">Satisfaisant</div></div>
-<div style="background:#EF444422;border:1px solid #EF444444;border-radius:8px;padding:8px 14px;text-align:center;flex:1;"><div style="font-size:22px;font-weight:800;color:#EF4444;">${nokItems.length}</div><div style="font-size:10px;color:#64748B;">Non satisfaisant</div></div>
+<div style="background:#10B98122;border:1px solid #10B98144;border-radius:8px;padding:8px 14px;text-align:center;flex:1;"><div style="font-size:22px;font-weight:800;color:#10B981;">${okItems.length}</div><div style="font-size:10px;color:#64748B;">${_lang==='en'?'Satisfactory':'Satisfaisant'}</div></div>
+<div style="background:#EF444422;border:1px solid #EF444444;border-radius:8px;padding:8px 14px;text-align:center;flex:1;"><div style="font-size:22px;font-weight:800;color:#EF4444;">${nokItems.length}</div><div style="font-size:10px;color:#64748B;">${_lang==='en'?'Not satisfactory':'Non satisfaisant'}</div></div>
 </div>
-${nokItems.length?`<div style="font-size:11px;font-weight:700;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">POINTS CRM À AMÉLIORER</div>
+${nokItems.length?`<div style="font-size:11px;font-weight:700;color:#EF4444;letter-spacing:1px;margin-bottom:6px;">${_lang==='en'?'CRM POINTS TO IMPROVE':'POINTS CRM À AMÉLIORER'}</div>
 ${nokItems.map(i=>`<div class="concl-crm-item" style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✗ ${i.label}</div>`).join('')}`:''}
-${okItems.length?`<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;margin-top:8px;margin-bottom:6px;">POINTS CRM POSITIFS</div>
+${okItems.length?`<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:1px;margin-top:8px;margin-bottom:6px;">${_lang==='en'?'POSITIVE CRM POINTS':'POINTS CRM POSITIFS'}</div>
 ${okItems.map(i=>`<div class="concl-crm-item" style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;">✓ ${i.label}</div>`).join('')}`:''}
-${state.sessionCRMNotes?`<div style="margin-top:10px;padding:8px 10px;background:#8B5CF611;border:1px solid #8B5CF633;border-radius:7px;font-size:13px;color:#CBD5E1;line-height:1.6;"><span style="font-size:11px;font-weight:700;color:#8B5CF6;">NOTES : </span>${state.sessionCRMNotes}</div>`:''}
+${state.sessionCRMNotes?`<div style="margin-top:10px;padding:8px 10px;background:#8B5CF611;border:1px solid #8B5CF633;border-radius:7px;font-size:13px;color:#CBD5E1;line-height:1.6;"><span style="font-size:11px;font-weight:700;color:#8B5CF6;">${_lang==='en'?'NOTES: ':'NOTES : '}</span>${state.sessionCRMNotes}</div>`:''}
 </div>`;
 })()}
 
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
 <div class="card" style="text-align:center;">
 <div style="font-size:24px;font-weight:800;color:#3B82F6;">${closed.length}</div>
-<div style="font-size:12px;color:var(--mut);">Exercices</div>
+<div style="font-size:12px;color:var(--mut);">${_lang==='en'?'Exercises':'Exercices'}</div>
 </div>
 <div class="card" style="text-align:center;">
 <div style="font-size:24px;font-weight:800;color:#10B981;">+${allPos}</div>
-<div style="font-size:12px;color:var(--mut);">OB positifs</div>
+<div style="font-size:12px;color:var(--mut);">${_lang==='en'?'Positive OBs':'OB positifs'}</div>
 </div>
 <div class="card" style="text-align:center;">
 <div style="font-size:24px;font-weight:800;color:#EF4444;">-${allNeg}</div>
-<div style="font-size:12px;color:var(--mut);">OB negatifs</div>
+<div style="font-size:12px;color:var(--mut);">${_lang==='en'?'Negative OBs':'OB negatifs'}</div>
 </div>
 </div>
 
 
 ${strongComps.length?`<div class="card" style="margin-bottom:12px;border-left:3px solid #10B981;">
-<div class="section-lbl" style="color:#10B981;margin-bottom:8px;">POINTS FORTS</div>
+<div class="section-lbl" style="color:#10B981;margin-bottom:8px;">${_lang==='en'?'STRENGTHS':'POINTS FORTS'}</div>
 ${strongComps.map(c=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #1E2530;">
 <div><span style="font-size:14px;font-weight:700;color:${c.color};font-family:monospace;">${c.label}</span> <span style="font-size:13px;color:#94A3B8;">${c.full}</span></div>
 <span style="font-size:14px;font-weight:800;color:#10B981;">${avgs[c.id].toFixed(1)}</span>
@@ -9357,7 +9578,7 @@ ${strongComps.map(c=>`<div style="display:flex;justify-content:space-between;ali
 
 
 ${weakComps.length?`<div class="card" style="margin-bottom:12px;border-left:3px solid #EF4444;">
-<div class="section-lbl" style="color:#EF4444;margin-bottom:8px;">COMPETENCES A CONSOLIDER</div>
+<div class="section-lbl" style="color:#EF4444;margin-bottom:8px;">${_lang==='en'?'COMPETENCIES TO CONSOLIDATE':'COMPETENCES A CONSOLIDER'}</div>
 ${weakComps.map(c=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #1E2530;">
 <div><span style="font-size:14px;font-weight:700;color:${c.color};font-family:monospace;">${c.label}</span> <span style="font-size:13px;color:#94A3B8;">${c.full}</span></div>
 <span style="font-size:14px;font-weight:800;color:#EF4444;">${avgs[c.id].toFixed(1)}</span>
@@ -9370,12 +9591,12 @@ ${ffaTotal.tot>0?`<div class="card" style="margin-bottom:12px;">
 <div style="font-size:11px;color:#3B82F6;font-weight:700;margin-bottom:6px;">CPT — ${state.pilotName}</div>
 ${['FLY','FOCUS','ACT'].map(t=>{const col={FLY:"#10B981",FOCUS:"#3B82F6",ACT:"#8B5CF6"}[t];return ffaTotal[t]!==undefined?`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;">
 <span style="font-size:14px;font-weight:700;color:${col};">${t}</span>
-<span style="font-size:13px;color:${ffaTotal[t]>0?'#10B981':'#EF4444'};">${ffaTotal[t]>0?'Respecte':'Non respecte'}</span>
+<span style="font-size:13px;color:${ffaTotal[t]>0?'#10B981':'#EF4444'};">${ffaTotal[t]>0?(_lang==='en'?'Observed':'Respecte'):(_lang==='en'?'Not observed':'Non respecte')}</span>
 </div>`:''}).join('')}
 ${state.foName&&ffaTotalFo.tot>0?`<div style="font-size:11px;color:#10B981;font-weight:700;margin-top:10px;margin-bottom:6px;">FO — ${state.foName}</div>
 ${['FLY','FOCUS','ACT'].map(t=>{const col={FLY:"#10B981",FOCUS:"#3B82F6",ACT:"#8B5CF6"}[t];return ffaTotalFo[t]!==undefined?`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;">
 <span style="font-size:14px;font-weight:700;color:${col};">${t}</span>
-<span style="font-size:13px;color:${ffaTotalFo[t]>0?'#10B981':'#EF4444'};">${ffaTotalFo[t]>0?'Respecte':'Non respecte'}</span>
+<span style="font-size:13px;color:${ffaTotalFo[t]>0?'#10B981':'#EF4444'};">${ffaTotalFo[t]>0?(_lang==='en'?'Observed':'Respecte'):(_lang==='en'?'Not observed':'Non respecte')}</span>
 </div>`:''}).join('')}`:''}
 </div>`:''}
 
@@ -9397,28 +9618,28 @@ totalUAS+=(tem.uas||[]).length+(temfo.uas||[]).length;
 if(ex.rec&&ex.rec.managed){totalRec++;if(ex.rec.managed==='yes'||ex.rec.managed==='partial')recOk++;}
 });
 return `<div class="card" style="margin-bottom:12px;border-left:3px solid #EF4444;">
-<div class="section-lbl" style="color:#EF4444;margin-bottom:10px;">STATISTIQUES TEM</div>
+<div class="section-lbl" style="color:#EF4444;margin-bottom:10px;">${_lang==='en'?'TEM STATISTICS':'STATISTIQUES TEM'}</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
 <div style="background:#0F1218;border-radius:8px;padding:10px;text-align:center;">
 <div style="font-size:22px;font-weight:900;color:#3B82F6;">${totalThreats}</div>
-<div style="font-size:10px;color:#64748B;">Menaces identifiées</div>
-<div style="font-size:11px;color:#10B981;">${managedThreats} atténuées</div>
+<div style="font-size:10px;color:#64748B;">${_lang==='en'?'Identified threats':'Menaces identifiées'}</div>
+<div style="font-size:11px;color:#10B981;">${managedThreats} ${_lang==='en'?'mitigated':'atténuées'}</div>
 </div>
 <div style="background:#0F1218;border-radius:8px;padding:10px;text-align:center;">
 <div style="font-size:22px;font-weight:900;color:#EF4444;">${totalErrors}</div>
-<div style="font-size:10px;color:#64748B;">Erreurs identifiées</div>
-<div style="font-size:11px;color:#F59E0B;">${managedErrors} gérées</div>
+<div style="font-size:10px;color:#64748B;">${_lang==='en'?'Identified errors':'Erreurs identifiées'}</div>
+<div style="font-size:11px;color:#F59E0B;">${managedErrors} ${_lang==='en'?'managed':'gérées'}</div>
 </div>
 <div style="background:#0F1218;border-radius:8px;padding:10px;text-align:center;">
 <div style="font-size:22px;font-weight:900;color:#F59E0B;">${totalUAS}</div>
-<div style="font-size:10px;color:#64748B;">UAS observés</div>
+<div style="font-size:10px;color:#64748B;">${_lang==='en'?'UAS observed':'UAS observés'}</div>
 </div>
 <div style="background:#0F1218;border-radius:8px;padding:10px;text-align:center;">
 <div style="font-size:22px;font-weight:900;color:#10B981;">${totalRec>0?recOk+'/'+totalRec:'-'}</div>
-<div style="font-size:10px;color:#64748B;">Recoveries réussies</div>
+<div style="font-size:10px;color:#64748B;">${_lang==='en'?'Successful recoveries':'Recoveries réussies'}</div>
 </div>
 </div>
-${totalThreats>0?`<div style="margin-top:10px;font-size:11px;color:#64748B;">Taux d atténuation menaces: <strong style="color:#10B981;">${Math.round(managedThreats/totalThreats*100)}%</strong> · Erreurs gérées: <strong style="color:#F59E0B;">${totalErrors>0?Math.round(managedErrors/totalErrors*100):0}%</strong></div>`:''}
+${totalThreats>0?`<div style="margin-top:10px;font-size:11px;color:#64748B;">${_lang==='en'?'Threat mitigation rate':'Taux d atténuation menaces'}: <strong style="color:#10B981;">${Math.round(managedThreats/totalThreats*100)}%</strong> · ${_lang==='en'?'Errors managed':'Erreurs gérées'}: <strong style="color:#F59E0B;">${totalErrors>0?Math.round(managedErrors/totalErrors*100):0}%</strong></div>`:''}
 </div>`;
 })()}
 
@@ -9428,15 +9649,22 @@ const avg=cptSt.globalAvg;
 if(avg===0) return '';
 const strong=COMPETENCIES.filter(c=>cptSt.avgs[c.id]>=4);
 const weak=COMPETENCIES.filter(c=>cptSt.avgs[c.id]>0&&cptSt.avgs[c.id]<3.5);
-const level=avg>=4.5?'EXEMPLAIRE':avg>=3.5?'AU-DESSUS DU STANDARD':avg>=2.5?'STANDARD':avg>=1.5?'SOUS-STANDARD':'INACCEPTABLE';
+const level=avg>=4.5?(_lang==='en'?'EXEMPLARY':'EXEMPLAIRE'):avg>=3.5?(_lang==='en'?'ABOVE STANDARD':'AU-DESSUS DU STANDARD'):avg>=2.5?'STANDARD':avg>=1.5?(_lang==='en'?'BELOW STANDARD':'SOUS-STANDARD'):(_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE');
 const color=avg>=4.5?'#10B981':avg>=3.5?'#3B82F6':avg>=2.5?'#F59E0B':avg>=1.5?'#F97316':'#EF4444';
-const rapport = `Le Commandant ${state.pilotName} a effectué ${closed.length} exercice${closed.length>1?'s':''} au cours de la session ${state.sessionName}. ` +
+const rapport = _lang==='en' ?
+`Captain ${state.pilotName} completed ${closed.length} exercise${closed.length>1?'s':''} during session ${state.sessionName}. ` +
+`Overall CBTA score: ${avg.toFixed(2)}/5.00 — level ${level}. ` +
+(strong.length?`Strengths identified: ${strong.map(c=>c.full||c.label).join(', ')}. `:'')+
+(weak.length?`Competencies requiring consolidation: ${weak.map(c=>c.full||c.label).join(', ')}. `:'')+
+`${avg>=3.5?'Performance meets CBTA standards. Proficiency maintained.':'Enhanced follow-up recommended before the next evaluation.'}`
+:
+`Le Commandant ${state.pilotName} a effectué ${closed.length} exercice${closed.length>1?'s':''} au cours de la session ${state.sessionName}. ` +
 `Son score global CBTA est de ${avg.toFixed(2)}/5.00 — niveau ${level}. ` +
 (strong.length?`Points forts identifiés: ${strong.map(c=>c.full||c.label).join(', ')}. `:'')+
 (weak.length?`Compétences nécessitant consolidation: ${weak.map(c=>c.full||c.label).join(', ')}. `:'')+
 `${avg>=3.5?'Performance conforme aux standards CBTA. Aptitude maintenue.':'Un suivi renforcé est recommandé avant la prochaine évaluation.'}`;
 return `<div class="card" style="margin-bottom:12px;border-left:3px solid #3B82F6;">
-<div style="font-size:10px;color:#3B82F6;font-weight:700;letter-spacing:1px;margin-bottom:6px;">RAPPORT AUTOMATIQUE — CPT ${state.pilotName}</div>
+<div style="font-size:10px;color:#3B82F6;font-weight:700;letter-spacing:1px;margin-bottom:6px;">${_lang==='en'?'AUTO REPORT — CPT':'RAPPORT AUTOMATIQUE — CPT'} ${state.pilotName}</div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
 <div style="font-size:20px;font-weight:900;color:${color};">${avg.toFixed(2)}<span style="font-size:12px;color:#64748B;">/5</span></div>
 <div style="font-size:12px;font-weight:700;color:${color};letter-spacing:1px;">${level}</div>
@@ -9452,14 +9680,20 @@ ${foSt&&foSt.globalAvg>0?(()=>{
 const avg=foSt.globalAvg;
 const strong=COMPETENCIES.filter(c=>foSt.avgs[c.id]>=4);
 const weak=COMPETENCIES.filter(c=>foSt.avgs[c.id]>0&&foSt.avgs[c.id]<3.5);
-const level=avg>=4.5?'EXEMPLAIRE':avg>=3.5?'AU-DESSUS DU STANDARD':avg>=2.5?'STANDARD':avg>=1.5?'SOUS-STANDARD':'INACCEPTABLE';
+const level=avg>=4.5?(_lang==='en'?'EXEMPLARY':'EXEMPLAIRE'):avg>=3.5?(_lang==='en'?'ABOVE STANDARD':'AU-DESSUS DU STANDARD'):avg>=2.5?'STANDARD':avg>=1.5?(_lang==='en'?'BELOW STANDARD':'SOUS-STANDARD'):(_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE');
 const color=avg>=4.5?'#10B981':avg>=3.5?'#3B82F6':avg>=2.5?'#F59E0B':avg>=1.5?'#F97316':'#EF4444';
-const rapport = `Le Premier Officier ${state.foName} a obtenu un score global CBTA de ${avg.toFixed(2)}/5.00 — niveau ${level}. ` +
+const rapport = _lang==='en' ?
+`First Officer ${state.foName} achieved an overall CBTA score of ${avg.toFixed(2)}/5.00 — level ${level}. ` +
+(strong.length?`Strengths: ${strong.map(c=>c.full||c.label).join(', ')}. `:'')+
+(weak.length?`To consolidate: ${weak.map(c=>c.full||c.label).join(', ')}. `:'')+
+`${avg>=3.5?'Proficiency maintained.':'A consolidation program is recommended.'}`
+:
+`Le Premier Officier ${state.foName} a obtenu un score global CBTA de ${avg.toFixed(2)}/5.00 — niveau ${level}. ` +
 (strong.length?`Points forts: ${strong.map(c=>c.full||c.label).join(', ')}. `:'')+
 (weak.length?`À consolider: ${weak.map(c=>c.full||c.label).join(', ')}. `:'')+
 `${avg>=3.5?'Aptitude maintenue.':'Un programme de consolidation est recommandé.'}`;
 return `<div class="card" style="margin-bottom:12px;border-left:3px solid #10B981;">
-<div style="font-size:10px;color:#10B981;font-weight:700;letter-spacing:1px;margin-bottom:6px;">RAPPORT AUTOMATIQUE — FO ${state.foName}</div>
+<div style="font-size:10px;color:#10B981;font-weight:700;letter-spacing:1px;margin-bottom:6px;">${_lang==='en'?'AUTO REPORT — FO':'RAPPORT AUTOMATIQUE — FO'} ${state.foName}</div>
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
 <div style="font-size:20px;font-weight:900;color:${color};">${avg.toFixed(2)}<span style="font-size:12px;color:#64748B;">/5</span></div>
 <div style="font-size:12px;font-weight:700;color:${color};letter-spacing:1px;">${level}</div>
@@ -9472,7 +9706,7 @@ ${weak.length?`<div style="display:flex;flex-wrap:wrap;gap:4px;">${weak.map(c=>`
 
 
 <div style="background:#141920;border:1px solid #F59E0B33;border-radius:10px;padding:13px;margin-bottom:14px;">
-<div class="section-lbl" style="color:#F59E0B;margin-bottom:12px;">RECOMMANDATIONS & CONSOLIDATIONS</div>
+<div class="section-lbl" style="color:#F59E0B;margin-bottom:12px;">${_lang==='en'?'RECOMMENDATIONS & CONSOLIDATIONS':'RECOMMANDATIONS & CONSOLIDATIONS'}</div>
 <div style="display:flex;flex-direction:column;gap:8px;">
 <button onclick="showRecoModal('cpt')" style="width:100%;padding:13px 16px;background:#3B82F622;border:2px solid #3B82F6;color:#3B82F6;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;"><span>📋 CPT — ${state.pilotName}</span><span style="font-size:18px;">→</span></button>
 ${foSt&&foSt.globalAvg>0?`<button onclick="showRecoModal('fo')" style="width:100%;padding:13px 16px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;"><span>📋 FO — ${state.foName}</span><span style="font-size:18px;">→</span></button>`:''}
@@ -9481,8 +9715,8 @@ ${foSt&&foSt.globalAvg>0?`<button onclick="showRecoModal('fo')" style="width:100
 
 
 <div class="card" style="margin-bottom:12px;">
-<div class="section-lbl" style="margin-bottom:8px;">NOTE LIBRE INSTRUCTEUR</div>
-<textarea class="note-area" style="height:90px;" placeholder="Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification..." onchange="state.debConclNotes=this.value">${state.debConclNotes}</textarea>
+<div class="section-lbl" style="margin-bottom:8px;">${_lang==='en'?'INSTRUCTOR FREE NOTE':'NOTE LIBRE INSTRUCTEUR'}</div>
+<textarea class="note-area" style="height:90px;" placeholder="${_lang==='en'?'Recommendation for next session, points to work on line, qualification decision...':'Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification...'}" onchange="state.debConclNotes=this.value">${state.debConclNotes}</textarea>
 </div>
 
 <div style="text-align:center;font-size:12px;color:var(--mut);padding:10px 0;">
@@ -9675,16 +9909,16 @@ let h='<div style="padding:14px;">';
 // KPIs
 h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">';
 h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:#8B5CF6;">'+hist.length+'</div><div style="font-size:10px;color:#64748B;">Sessions</div></div>';
-h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:#3B82F6;">'+pilotes+'</div><div style="font-size:10px;color:#64748B;">Pilotes</div></div>';
-h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:#F59E0B;">'+exTotal+'</div><div style="font-size:10px;color:#64748B;">Exercices</div></div>';
+h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:#3B82F6;">'+pilotes+'</div><div style="font-size:10px;color:#64748B;">'+(_lang==='en'?'Pilots':'Pilotes')+'</div></div>';
+h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;text-align:center;"><div style="font-size:28px;font-weight:900;color:#F59E0B;">'+exTotal+'</div><div style="font-size:10px;color:#64748B;">'+(_lang==='en'?'Exercises':'Exercices')+'</div></div>';
 h+='<div style="background:#0F1218;border:1px solid '+cc(avgG)+'33;border-radius:10px;padding:12px;text-align:center;border-left:3px solid '+cc(avgG)+';">';
 h+='<div style="font-size:28px;font-weight:900;color:'+cc(avgG)+';">'+avgG.toFixed(2)+'</div>';
 h+='<div style="font-size:9px;color:'+cc(avgG)+';font-weight:700;">'+cl(avgG)+'</div>';
-h+='<div style="font-size:9px;color:#64748B;">Moy. flotte</div></div></div>';
+h+='<div style="font-size:9px;color:#64748B;">'+(_lang==='en'?'Fleet avg.':'Moy. flotte')+'</div></div></div>';
 // Compétences flotte
 if(cAvgs.length){
 h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:14px;">';
-h+='<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:10px;">COMPÉTENCES — FLOTTE</div>';
+h+='<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:10px;">'+(_lang==='en'?'COMPETENCIES — FLEET':'COMPÉTENCES — FLOTTE')+'</div>';
 cAvgs.forEach(c=>{
 h+='<div style="display:flex;align-items:center;gap:8px;padding:5px 0;">';
 h+='<div style="width:38px;font-size:11px;font-weight:700;color:'+cc(c.avg)+';">'+c.label+'</div>';
@@ -9695,23 +9929,23 @@ h+='</div>';
 // Points forts/faibles flotte
 const best=cAvgs[0],worst=cAvgs[cAvgs.length-1];
 h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">';
-h+='<div style="background:#10B98111;border:1px solid #10B98133;border-radius:10px;padding:10px;"><div style="font-size:9px;color:#10B981;font-weight:700;letter-spacing:1px;margin-bottom:4px;">POINT FORT FLOTTE</div><div style="font-size:14px;font-weight:800;color:#10B981;">'+best.label+' '+best.avg.toFixed(1)+'</div></div>';
-h+='<div style="background:#EF444411;border:1px solid #EF444433;border-radius:10px;padding:10px;"><div style="font-size:9px;color:#EF4444;font-weight:700;letter-spacing:1px;margin-bottom:4px;">À CONSOLIDER</div><div style="font-size:14px;font-weight:800;color:#EF4444;">'+worst.label+' '+worst.avg.toFixed(1)+'</div></div>';
+h+='<div style="background:#10B98111;border:1px solid #10B98133;border-radius:10px;padding:10px;"><div style="font-size:9px;color:#10B981;font-weight:700;letter-spacing:1px;margin-bottom:4px;">'+(_lang==='en'?'FLEET STRENGTH':'POINT FORT FLOTTE')+'</div><div style="font-size:14px;font-weight:800;color:#10B981;">'+best.label+' '+best.avg.toFixed(1)+'</div></div>';
+h+='<div style="background:#EF444411;border:1px solid #EF444433;border-radius:10px;padding:10px;"><div style="font-size:9px;color:#EF4444;font-weight:700;letter-spacing:1px;margin-bottom:4px;">'+(_lang==='en'?'TO CONSOLIDATE':'À CONSOLIDER')+'</div><div style="font-size:14px;font-weight:800;color:#EF4444;">'+worst.label+' '+worst.avg.toFixed(1)+'</div></div>';
 h+='</div>';
 }
 // TEM flotte
 if(tG.th>0){
 h+='<div style="background:#0F1218;border:1px solid #EF444433;border-radius:10px;padding:12px;margin-bottom:14px;">';
-h+='<div style="font-size:10px;font-weight:700;color:#EF4444;letter-spacing:1px;margin-bottom:10px;">STATISTIQUES TEM — FLOTTE</div>';
+h+='<div style="font-size:10px;font-weight:700;color:#EF4444;letter-spacing:1px;margin-bottom:10px;">'+(_lang==='en'?'TEM STATISTICS — FLEET':'STATISTIQUES TEM — FLOTTE')+'</div>';
 h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">';
-h+='<div style="text-align:center;"><div style="font-size:22px;font-weight:900;color:#3B82F6;">'+tG.th+'</div><div style="font-size:10px;color:#64748B;">Menaces</div><div style="font-size:11px;color:#10B981;">'+tG.thM+' atténuées ('+(tG.th>0?Math.round(tG.thM/tG.th*100):0)+'%)</div></div>';
-h+='<div style="text-align:center;"><div style="font-size:22px;font-weight:900;color:#EF4444;">'+tG.er+'</div><div style="font-size:10px;color:#64748B;">Erreurs</div></div>';
+h+='<div style="text-align:center;"><div style="font-size:22px;font-weight:900;color:#3B82F6;">'+tG.th+'</div><div style="font-size:10px;color:#64748B;">'+(_lang==='en'?'Threats':'Menaces')+'</div><div style="font-size:11px;color:#10B981;">'+tG.thM+' '+(_lang==='en'?'mitigated':'atténuées')+' ('+(tG.th>0?Math.round(tG.thM/tG.th*100):0)+'%)</div></div>';
+h+='<div style="text-align:center;"><div style="font-size:22px;font-weight:900;color:#EF4444;">'+tG.er+'</div><div style="font-size:10px;color:#64748B;">'+(_lang==='en'?'Errors':'Erreurs')+'</div></div>';
 h+='<div style="text-align:center;"><div style="font-size:22px;font-weight:900;color:#F59E0B;">'+tG.uas+'</div><div style="font-size:10px;color:#64748B;">UAS</div></div>';
 h+='<div style="text-align:center;"><div style="font-size:22px;font-weight:900;color:#10B981;">'+(tG.rT>0?tG.rOk+'/'+tG.rT:'-')+'</div><div style="font-size:10px;color:#64748B;">Recoveries</div></div>';
 h+='</div></div>';
 }
 // 3 dernières sessions
-h+='<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:8px;">3 DERNIÈRES SESSIONS</div>';
+h+='<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:8px;">'+(_lang==='en'?'3 LATEST SESSIONS':'3 DERNIÈRES SESSIONS')+'</div>';
 hist.slice(0,3).forEach(s=>{
 const sc=parseFloat(s.avgScore)||0;
 h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:8px;padding:10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">';
@@ -9755,7 +9989,7 @@ const foSc=foVals.length?foVals.reduce((a,b)=>a+b,0)/foVals.length:0;
 const borderColor=isImported?'#8B5CF6':cc(sc);
 h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:10px;overflow:hidden;border-left:4px solid '+borderColor+';">';
 h+='<div style="padding:12px 14px;display:flex;justify-content:space-between;">';
-h+='<div><div style="font-size:14px;font-weight:800;color:#F1F5F9;">'+s.sessionName+(isImported?'<span style="margin-left:7px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:5px;padding:1px 7px;font-size:9px;font-weight:700;vertical-align:middle;">📎 IMPORTÉ</span>':'')+'</div>';
+h+='<div><div style="font-size:14px;font-weight:800;color:#F1F5F9;">'+s.sessionName+(isImported?'<span style="margin-left:7px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:5px;padding:1px 7px;font-size:9px;font-weight:700;vertical-align:middle;">📎 '+(_lang==='en'?'IMPORTED':'IMPORTÉ')+'</span>':'')+'</div>';
 h+='<div style="font-size:11px;color:#64748B;">'+s.date+(s.time&&s.time!=='--:--'?' '+s.time:'')+' · TRI: '+s.instructorName+'</div>';
 const r1=s.pilotRole||'CPT', r2=s.foRole||'FO';
 const c1h=r1==='TRI'?'#F59E0B':r1==='FO'?'#10B981':'#3B82F6';
@@ -9769,7 +10003,7 @@ h+='</div>';
 h+='<div style="text-align:right;">';
 if(isImported&&sc===0){
   h+='<div style="font-size:26px;font-weight:900;color:#475569;">--</div>';
-  h+='<div style="font-size:9px;color:#475569;">non noté</div>';
+  h+='<div style="font-size:9px;color:#475569;">'+(_lang==='en'?'not rated':'non noté')+'</div>';
 }else{
   h+='<div style="font-size:26px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div>';
   h+='<div style="font-size:9px;font-weight:700;color:'+cc(sc)+';">'+cl(sc)+'</div>';
@@ -9800,7 +10034,7 @@ if(isImported){
   h+='<button onclick="printRapportFromHistory('+i+')" style="flex:1;padding:8px;background:#0f172a44;border:1px solid #475569;color:#F1F5F9;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128424;&#65039; PDF</button>';
   h+='<button onclick="envoyerRapportEmail('+i+')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✉ EMAIL</button>';
 }
-h+='<button onclick="showComparaisonPilote(\''+s.pilotName+'\')" style="flex:1;padding:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128200; ÉVOLUTION</button>';
+h+='<button onclick="showComparaisonPilote(\''+s.pilotName+'\')" style="flex:1;padding:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128200; '+(_lang==='en'?'TREND':'ÉVOLUTION')+'</button>';
 h+='</div></div>';
 });
 h+='</div>';
@@ -9820,7 +10054,10 @@ function showImportSessionModal(){
   _impPdfData=null;
   const grid=document.getElementById('imp-comp-grid');
   if(grid){
-    grid.innerHTML=COMPETENCIES.map(c=>`<div><label class="form-label" style="color:${c.color};">${c.label}</label><select id="imp-score-${c.id}" class="form-input" style="padding:8px;"><option value="0">— non évalué</option><option value="1">1 — Insuffisant</option><option value="2">2 — Partiellement</option><option value="3">3 — Acceptable</option><option value="4">4 — Bien</option><option value="5">5 — Excellent</option></select></div>`).join('');
+    const _opts=_lang==='en'
+      ?`<option value="0">— not evaluated</option><option value="1">1 — Insufficient</option><option value="2">2 — Partial</option><option value="3">3 — Acceptable</option><option value="4">4 — Good</option><option value="5">5 — Excellent</option>`
+      :`<option value="0">— non évalué</option><option value="1">1 — Insuffisant</option><option value="2">2 — Partiellement</option><option value="3">3 — Acceptable</option><option value="4">4 — Bien</option><option value="5">5 — Excellent</option>`;
+    grid.innerHTML=COMPETENCIES.map(c=>`<div><label class="form-label" style="color:${c.color};">${c.label}</label><select id="imp-score-${c.id}" class="form-input" style="padding:8px;">${_opts}</select></div>`).join('');
   }
   document.getElementById('modal-import-session').style.display='flex';
 }
@@ -9840,14 +10077,14 @@ function loadImportPDF(input){
   const file=input.files[0];if(!file)return;
   const statusEl=document.getElementById('imp-pdf-status');
   const sizeMB=(file.size/1024/1024).toFixed(2);
-  statusEl.innerHTML='<span style="color:#F59E0B;">Chargement...</span>';
+  statusEl.innerHTML='<span style="color:#F59E0B;">'+(_lang==='en'?'Loading...':'Chargement...')+'</span>';
   const reader=new FileReader();
   reader.onload=function(e){
     _impPdfData=e.target.result;
     const warnColor=file.size>2*1024*1024?'#F59E0B':'#10B981';
-    statusEl.innerHTML='<span style="color:'+warnColor+';">✓ '+file.name+' ('+sizeMB+' Mo)</span>'+(file.size>5*1024*1024?'<br><span style="font-size:10px;color:#EF4444;">⚠ Fichier très volumineux</span>':'');
+    statusEl.innerHTML='<span style="color:'+warnColor+';">✓ '+file.name+' ('+sizeMB+' Mo)</span>'+(file.size>5*1024*1024?'<br><span style="font-size:10px;color:#EF4444;">⚠ '+(_lang==='en'?'Very large file':'Fichier très volumineux')+'</span>':'');
   };
-  reader.onerror=function(){statusEl.innerHTML='<span style="color:#EF4444;">Erreur de lecture.</span>';_impPdfData=null;};
+  reader.onerror=function(){statusEl.innerHTML='<span style="color:#EF4444;">'+(_lang==='en'?'Read error.':'Erreur de lecture.')+'</span>';_impPdfData=null;};
   reader.readAsDataURL(file);
 }
 function submitImportedSession(){
@@ -9855,11 +10092,11 @@ function submitImportedSession(){
   const nameCpt=(document.getElementById('imp-name-cpt').value||'').trim();
   const dateVal=(document.getElementById('imp-date').value||'').trim();
   const instructor=(document.getElementById('imp-instructor').value||'').trim();
-  if(!matCpt||!nameCpt||!dateVal||!instructor){alert('Champs obligatoires manquants :\nMATRICULE CPT · NOM CPT · DATE · INSTRUCTEUR SOURCE');return;}
+  if(!matCpt||!nameCpt||!dateVal||!instructor){alert(_lang==='en'?'Missing required fields:\nCPT MATRICULE · CPT NAME · DATE · SOURCE INSTRUCTOR':'Champs obligatoires manquants :\nMATRICULE CPT · NOM CPT · DATE · INSTRUCTEUR SOURCE');return;}
   const matFo=(document.getElementById('imp-mat-fo').value||'').trim();
   const nameFo=(document.getElementById('imp-name-fo').value||'').trim();
   const compagnie=(document.getElementById('imp-compagnie').value||'').trim();
-  const sessionName=(document.getElementById('imp-session-name').value||'').trim()||'Session importée';
+  const sessionName=(document.getElementById('imp-session-name').value||'').trim()||(_lang==='en'?'Imported session':'Session importée');
   const notes=(document.getElementById('imp-notes').value||'').trim();
   const compAvgs={};let scoreSum=0,scoreCount=0;
   COMPETENCIES.forEach(c=>{
@@ -9894,10 +10131,10 @@ function submitImportedSession(){
 function viewImportedPDF(idx){
   const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
   const s=hist[idx];
-  if(!s||!s.importedPDF){alert('Aucun PDF pour cette session.');return;}
+  if(!s||!s.importedPDF){alert(_lang==='en'?'No PDF for this session.':'Aucun PDF pour cette session.');return;}
   const win=window.open('','_blank');
-  if(!win){alert('Popup bloqué — autorisez les popups pour ce site.');return;}
-  win.document.write('<html><head><title>Rapport importé</title></head><body style="margin:0;background:#000;"><iframe src="'+s.importedPDF+'" style="width:100%;height:100vh;border:0;"></iframe></body></html>');
+  if(!win){alert(_lang==='en'?'Popup blocked — allow popups for this site.':'Popup bloqué — autorisez les popups pour ce site.');return;}
+  win.document.write('<html><head><title>'+(_lang==='en'?'Imported report':'Rapport importé')+'</title></head><body style="margin:0;background:#000;"><iframe src="'+s.importedPDF+'" style="width:100%;height:100vh;border:0;"></iframe></body></html>');
   win.document.close();
 }
 
@@ -9941,14 +10178,14 @@ h+='<div style="padding:12px 14px;display:flex;justify-content:space-between;ali
 h+='<div><div style="font-size:15px;font-weight:800;color:#F1F5F9;">'+p.name+'</div>';
 if(p.matricule) h+='<div style="font-size:11px;color:#8B5CF6;font-weight:700;margin-top:1px;">'+p.matricule+(p.company?' · '+p.company:'')+'</div>';
 else if(p.company) h+='<div style="font-size:11px;color:#64748B;margin-top:1px;">'+p.company+'</div>';
-h+='<div style="font-size:11px;color:#64748B;">'+p.sessions.length+' session'+(p.sessions.length>1?'s':'')+' · dern. '+(p.sessions[0]&&p.sessions[0].date?p.sessions[0].date:'')+'</div>';
+h+='<div style="font-size:11px;color:#64748B;">'+p.sessions.length+' session'+(p.sessions.length>1?'s':'')+' · '+(_lang==='en'?'last':'dern.')+' '+(p.sessions[0]&&p.sessions[0].date?p.sessions[0].date:'')+'</div>';
 h+='<div style="font-size:12px;color:'+tc+';font-weight:700;margin-top:2px;">'+trend+'</div></div>';
 h+='<div style="text-align:right;"><div style="font-size:26px;font-weight:900;color:'+cc(avg)+';">'+avg.toFixed(2)+'</div>';
 h+='<div style="font-size:9px;color:#64748B;">'+t('moy_globale')+'</div></div></div>';
 if(weak.length) h+='<div style="padding:6px 14px;border-top:1px solid #1E2530;background:#EF444408;"><div style="font-size:10px;color:#EF4444;">'+t('a_consolider')+weak.join(', ')+'</div></div>';
 // XP bars
 const xpHtml=(()=>{
-  function xpLevel(xp){return xp>=20?{lbl:'EXPERT',icon:'⚡',col:'#FF8C00'}:xp>=12?{lbl:'AVANCÉ',icon:'🔥',col:'#10B981'}:xp>=6?{lbl:'CONFIRMÉ',icon:'⭐',col:'#3B82F6'}:xp>=2?{lbl:'STANDARD',icon:'🌿',col:'#64748B'}:{lbl:'ROOKIE',icon:'🌱',col:'#475569'};}
+  function xpLevel(xp){return xp>=20?{lbl:'EXPERT',icon:'⚡',col:'#FF8C00'}:xp>=12?{lbl:(_lang==='en'?'ADVANCED':'AVANCÉ'),icon:'🔥',col:'#10B981'}:xp>=6?{lbl:(_lang==='en'?'PROFICIENT':'CONFIRMÉ'),icon:'⭐',col:'#3B82F6'}:xp>=2?{lbl:'STANDARD',icon:'🌿',col:'#64748B'}:{lbl:'ROOKIE',icon:'🌱',col:'#475569'};}
   const maxXP=Math.max(1,p.sessions.length)*5;
   const compsWithData=COMPETENCIES.filter(c=>p.ct[c.id].n>0);
   if(!compsWithData.length) return '';
@@ -9974,7 +10211,7 @@ const xpHtml=(()=>{
     +'</div>'+rows+'</div>';
 })();
 h+=xpHtml;
-h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;flex-wrap:wrap;"><button onclick="showComparaisonPilote(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;min-width:120px;">📈 DOSSIER COMPLET</button><button onclick="showPilotProgression(\''+p.name.replace(/'/g,"\\'")+'\')" style="padding:8px 12px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">📈 Courbe</button><button onclick="exportPilotDossier(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\',\''+p.matricule.replace(/'/g,"\\'")+'\')" style="padding:8px 12px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">📦 Exporter</button></div>';
+h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;flex-wrap:wrap;"><button onclick="showComparaisonPilote(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;min-width:120px;">📈 '+(_lang==='en'?'FULL RECORD':'DOSSIER COMPLET')+'</button><button onclick="showPilotProgression(\''+p.name.replace(/'/g,"\\'")+'\')" style="padding:8px 12px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">📈 '+(_lang==='en'?'Trend':'Courbe')+'</button><button onclick="exportPilotDossier(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\',\''+p.matricule.replace(/'/g,"\\'")+'\')" style="padding:8px 12px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">📦 '+(_lang==='en'?'Export':'Exporter')+'</button></div>';
 h+='</div>';
 });
 h+='</div>';
@@ -10018,19 +10255,19 @@ if(latestS){
   hdr='<div style="background:#080B10;border:1px solid #8B5CF633;border-radius:10px;padding:12px;margin-bottom:12px;display:flex;gap:12px;align-items:center;">';
   hdr+='<div style="font-size:32px;">✈️</div><div>';
   hdr+='<div style="font-size:15px;font-weight:800;color:#F1F5F9;">'+(name||key)+'</div>';
-  if(mat) hdr+='<div style="font-size:12px;color:#8B5CF6;font-weight:700;">Matricule : '+mat+'</div>';
+  if(mat) hdr+='<div style="font-size:12px;color:#8B5CF6;font-weight:700;">'+(_lang==='en'?'Staff ID':'Matricule')+' : '+mat+'</div>';
   if(co) hdr+='<div style="font-size:11px;color:#64748B;">'+co+'</div>';
-  hdr+='<div style="font-size:11px;color:#64748B;">'+uniq.length+' session'+(uniq.length>1?'s enregistrées':' enregistrée')+'</div>';
+  hdr+='<div style="font-size:11px;color:#64748B;">'+uniq.length+' '+(_lang==='en'?'session'+(uniq.length>1?'s recorded':' recorded'):'session'+(uniq.length>1?'s enregistrées':' enregistrée'))+'</div>';
   hdr+='</div></div>';
 }
 if(uniq.length<2){
   let out=hdr;
-  if(uniq.length===0){out+='<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:14px;">Aucune session trouvée</div></div>';}
+  if(uniq.length===0){out+='<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:14px;">'+(_lang==='en'?'No session found':'Aucune session trouvée')+'</div></div>';}
   else{
     const s=uniq[0];const sc=s._sc;
     out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
     out+=_sessionRow(s);
-    out+='</div><div style="text-align:center;color:#64748B;font-size:12px;padding:10px;">Minimum 2 sessions pour la progression</div>';
+    out+='</div><div style="text-align:center;color:#64748B;font-size:12px;padding:10px;">'+(_lang==='en'?'Minimum 2 sessions for trend display':'Minimum 2 sessions pour la progression')+'</div>';
   }
   el.innerHTML=out;showScreen('comparaison');return;
 }
@@ -10057,12 +10294,12 @@ compEvo+='<div style="font-size:14px;font-weight:800;color:'+dc+';">'+(diff>=0?'
 let out=hdr;
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
 out+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">';
-out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;">ÉVOLUTION SCORE INDIVIDUEL</div>';
+out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;">'+(_lang==='en'?'INDIVIDUAL SCORE TREND':'ÉVOLUTION SCORE INDIVIDUEL')+'</div>';
 out+='<div style="font-size:13px;font-weight:800;color:'+(gd>=0?'#10B981':'#EF4444')+'">'+(gd>=0?'+':'')+gd.toFixed(2)+' pts</div></div>';
 out+=svg+'</div>';
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:12px;">';
-out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">ÉVOLUTION PAR COMPÉTENCE</div>';
-out+=(compEvo||'<div style="color:#64748B;font-size:12px;">Données insuffisantes</div>')+'</div>';
+out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:8px;">'+(_lang==='en'?'TREND BY COMPETENCY':'ÉVOLUTION PAR COMPÉTENCE')+'</div>';
+out+=(compEvo||'<div style="color:#64748B;font-size:12px;">'+(_lang==='en'?'Insufficient data':'Données insuffisantes')+'</div>')+'</div>';
 out+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;padding:12px;">';
 out+='<div style="font-size:10px;color:#64748B;letter-spacing:1px;margin-bottom:10px;">SESSIONS ('+uniq.length+')</div>';
 uniq.slice().reverse().forEach(s=>{out+=_sessionRow(s);});
@@ -10459,24 +10696,24 @@ recoHtml+=`
 </div>
 <span style="font-size:14px;font-weight:800;color:#EF4444;">${avg.toFixed(1)}</span>
 </div>
-${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">OB negatifs: ${negList.join(' · ')}</div>`:''}
-<div style="font-size:12px;color:#F59E0B;font-weight:700;margin-bottom:6px;">RECOMMANDATIONS:</div>
+${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">${_lang==='en'?'Negative OBs':'OB negatifs'}: ${negList.join(' · ')}</div>`:''}
+<div style="font-size:12px;color:#F59E0B;font-weight:700;margin-bottom:6px;">${_lang==='en'?'RECOMMENDATIONS:':'RECOMMANDATIONS:'}</div>
 ${(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;display:flex;gap:7px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;">→</span>${rec}</div>`).join('')}
 </div>`;
 });
 
 if(!recoHtml && strong.length>0){
 recoHtml=`<div style="background:#10B98118;border:1px solid #10B98133;border-radius:9px;padding:13px;text-align:center;">
-<div style="font-size:16px;color:#10B981;font-weight:700;margin-bottom:6px;">Excellent niveau</div>
-<div style="font-size:13px;color:#94A3B8;">Aucune competence en dessous du standard. Maintenir le niveau actuel.</div>
+<div style="font-size:16px;color:#10B981;font-weight:700;margin-bottom:6px;">${_lang==='en'?'Excellent level':'Excellent niveau'}</div>
+<div style="font-size:13px;color:#94A3B8;">${_lang==='en'?'No competency below standard. Maintain current level.':'Aucune competence en dessous du standard. Maintenir le niveau actuel.'}</div>
 </div>`;
 } else if(!recoHtml){
-recoHtml=`<div style="color:var(--faint);text-align:center;padding:20px;font-size:13px;">Donnees insuffisantes pour generer des recommandations.</div>`;
+recoHtml=`<div style="color:var(--faint);text-align:center;padding:20px;font-size:13px;">${_lang==='en'?'Insufficient data to generate recommendations.':'Donnees insuffisantes pour generer des recommandations.'}</div>`;
 }
 
 return `<div style="margin-bottom:16px;">
 <div style="font-size:13px;font-weight:700;color:#3B82F6;margin-bottom:10px;padding:8px 12px;background:#3B82F611;border-radius:7px;">
-${pilotName} — Score global: ${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}
+${pilotName} — ${_lang==='en'?'Overall score':'Score global'}: ${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}
 </div>
 ${recoHtml}
 </div>`;
@@ -10521,18 +10758,18 @@ recoHtml+=`
 </div>
 <span style="font-size:15px;font-weight:800;color:#EF4444;">${avg.toFixed(1)}</span>
 </div>
-${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">OB negatifs: ${negList.join(' · ')}</div>`:''}
-<div style="font-size:11px;color:#F59E0B;font-weight:700;margin-bottom:6px;letter-spacing:0.5px;">RECOMMANDATIONS:</div>
+${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">${_lang==='en'?'Negative OBs':'OB negatifs'}: ${negList.join(' · ')}</div>`:''}
+<div style="font-size:11px;color:#F59E0B;font-weight:700;margin-bottom:6px;letter-spacing:0.5px;">${_lang==='en'?'RECOMMENDATIONS:':'RECOMMANDATIONS:'}</div>
 ${(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:5px 0;border-bottom:1px solid #1E2530;display:flex;gap:8px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;margin-top:1px;">→</span>${rec}</div>`).join('')}
 </div>`;
 });
 if(!recoHtml && strong.length>0){
 recoHtml=`<div style="background:#10B98118;border:1px solid #10B98133;border-radius:10px;padding:16px;text-align:center;">
-<div style="font-size:16px;color:#10B981;font-weight:700;margin-bottom:6px;">Excellent niveau</div>
-<div style="font-size:13px;color:#94A3B8;">Aucune competence en dessous du standard. Maintenir le niveau actuel.</div>
+<div style="font-size:16px;color:#10B981;font-weight:700;margin-bottom:6px;">${_lang==='en'?'Excellent level':'Excellent niveau'}</div>
+<div style="font-size:13px;color:#94A3B8;">${_lang==='en'?'No competency below standard. Maintain current level.':'Aucune competence en dessous du standard. Maintenir le niveau actuel.'}</div>
 </div>`;
 } else if(!recoHtml){
-recoHtml=`<div style="color:#475569;text-align:center;padding:24px;font-size:13px;">Donnees insuffisantes pour generer des recommandations.</div>`;
+recoHtml=`<div style="color:#475569;text-align:center;padding:24px;font-size:13px;">${_lang==='en'?'Insufficient data to generate recommendations.':'Donnees insuffisantes pour generer des recommandations.'}</div>`;
 }
 
 const now = new Date().toLocaleDateString('fr-FR');
@@ -10543,13 +10780,13 @@ ov.innerHTML=`
 <div style="width:100%;max-width:700px;max-height:90vh;overflow-y:auto;background:#141920;border:1px solid ${accentColor}44;border-radius:16px;padding:0;position:relative;box-shadow:0 20px 60px #000A;">
 <div style="background:${accentColor}18;border-bottom:1px solid ${accentColor}33;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:2;border-radius:16px 16px 0 0;">
 <div>
-<div style="font-size:11px;color:${accentColor};font-weight:700;letter-spacing:1.5px;margin-bottom:2px;">${isFo?'PREMIER OFFICIER':'COMMANDANT DE BORD'}</div>
+<div style="font-size:11px;color:${accentColor};font-weight:700;letter-spacing:1.5px;margin-bottom:2px;">${isFo?(_lang==='en'?'FIRST OFFICER':'PREMIER OFFICIER'):(_lang==='en'?'CAPTAIN':'COMMANDANT DE BORD')}</div>
 <div style="font-size:18px;font-weight:800;color:#F1F5F9;">${pilotName}</div>
-<div style="font-size:11px;color:#64748B;margin-top:2px;">${sessionLabel?sessionLabel+' · ':''}${now} · Score global: <span style="color:${globalAvg>0?(globalAvg>=3.5?'#10B981':'#EF4444'):'#64748B'};font-weight:700;">${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}</span></div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;">${sessionLabel?sessionLabel+' · ':''}${now} · ${_lang==='en'?'Overall score':'Score global'}: <span style="color:${globalAvg>0?(globalAvg>=3.5?'#10B981':'#EF4444'):'#64748B'};font-weight:700;">${globalAvg>0?globalAvg.toFixed(1)+'/5.0':'N/A'}</span></div>
 </div>
 <div style="display:flex;gap:8px;flex-shrink:0;">
 <button onclick="printRecoModal('${who}')" style="padding:9px 14px;background:${accentColor};border:none;color:#fff;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;">⬇ PDF</button>
-<button onclick="document.getElementById('pres-overlay').style.display='none'" style="padding:9px 14px;background:#1E2530;border:1px solid #334155;color:#94A3B8;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;">✕ Fermer</button>
+<button onclick="document.getElementById('pres-overlay').style.display='none'" style="padding:9px 14px;background:#1E2530;border:1px solid #334155;color:#94A3B8;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;">✕ ${_lang==='en'?'Close':'Fermer'}</button>
 </div>
 </div>
 <div style="padding:18px 20px;">
@@ -10607,22 +10844,22 @@ ${items.map(rec=>`<div style="font-size:14px;padding:7px 0;border-bottom:1px sol
 </div>`;
 });
 if(!rows){
-if(strong.length>0) rows=`<div style="text-align:center;padding:20px;color:#059669;font-weight:800;font-size:16px;">✓ Excellent niveau — Aucune compétence en dessous du standard.</div>`;
-else rows=`<div style="text-align:center;padding:20px;color:#64748b;font-size:15px;">Données insuffisantes pour générer des recommandations.</div>`;
+if(strong.length>0) rows=`<div style="text-align:center;padding:20px;color:#059669;font-weight:800;font-size:16px;">✓ ${_lang==='en'?'Excellent level — No competency below standard.':'Excellent niveau — Aucune compétence en dessous du standard.'}</div>`;
+else rows=`<div style="text-align:center;padding:20px;color:#64748b;font-size:15px;">${_lang==='en'?'Insufficient data to generate recommendations.':'Données insuffisantes pour générer des recommandations.'}</div>`;
 }
 
 const bodyHtml=`<div style="background:${accentColor};color:#fff;padding:22px 28px;margin-bottom:0;">
-<div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:6px;font-weight:700;">RAPPORT DE RECOMMANDATIONS CBTA — B737 NG</div>
+<div style="font-size:10px;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:6px;font-weight:700;">${_lang==='en'?'CBTA RECOMMENDATIONS REPORT — B737 NG':'RAPPORT DE RECOMMANDATIONS CBTA — B737 NG'}</div>
 <div style="font-size:26px;font-weight:900;letter-spacing:0.5px;">${pilotName}${mat?' <span style="font-size:16px;opacity:0.8;">('+mat+')</span>':''}</div>
-<div style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:6px;font-weight:600;">${sessionLabel?sessionLabel+' · ':''}${now}${globalAvg>0?' · Score global: <strong>'+globalAvg.toFixed(2)+'/5.0</strong>':''}</div>
+<div style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:6px;font-weight:600;">${sessionLabel?sessionLabel+' · ':''}${now}${globalAvg>0?' · '+(_lang==='en'?'Overall score':'Score global')+': <strong>'+globalAvg.toFixed(2)+'/5.0</strong>':''}</div>
 </div>
 <div style="background:#f1f5f9;padding:10px 28px 6px;border-bottom:1px solid #e2e8f0;">
-<span style="font-size:12px;color:#64748b;font-weight:600;">${weak.length} compétence${weak.length>1?'s':''} à renforcer</span>
+<span style="font-size:12px;color:#64748b;font-weight:600;">${weak.length} ${_lang==='en'?'competenc'+(weak.length>1?'ies':'y')+' to strengthen':'compétence'+(weak.length>1?'s':'')+' à renforcer'}</span>
 </div>
 <div style="padding:20px 24px 28px;background:#fff;">
 ${rows}
 <div style="margin-top:28px;padding-top:14px;border-top:2px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center;font-weight:500;">
-Document généré par B737 CBTA TRI Companion — Confidentiel — Usage instructeur uniquement
+${_lang==='en'?'Document generated by B737 CBTA TRI Companion — Confidential — For instructor use only':'Document généré par B737 CBTA TRI Companion — Confidentiel — Usage instructeur uniquement'}
 </div>
 </div>`;
 
@@ -10714,9 +10951,9 @@ return `
 </div>
 <table style="width:100%;border-collapse:collapse;background:#f8fafc;border-radius:8px;overflow:hidden;">
 <thead><tr style="background:#e2e8f0;">
-<th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;letter-spacing:1px;">COMPÉTENCE</th>
+<th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;letter-spacing:1px;">${_lang==='en'?'COMPETENCY':'COMPÉTENCE'}</th>
 <th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;">SCORE</th>
-<th style="padding:8px 10px;font-size:11px;color:#64748b;">MOY</th>
+<th style="padding:8px 10px;font-size:11px;color:#64748b;">${_lang==='en'?'AVG':'MOY'}</th>
 <th style="padding:8px 10px;font-size:11px;color:#64748b;">OBS</th>
 </tr></thead>
 <tbody>${rows}</tbody>
@@ -10733,13 +10970,13 @@ const csCpt=ex.cs||{};
 const gradesCpt=COMPETENCIES.filter(c=>csCpt[c.id]&&csCpt[c.id].g>0)
 .map(c=>`<span style="background:${barColor(csCpt[c.id].g)}22;color:${barColor(csCpt[c.id].g)};padding:2px 6px;border-radius:4px;font-size:11px;font-weight:700;border:1px solid ${barColor(csCpt[c.id].g)}44;">${c.label} ${csCpt[c.id].g}</span>`).join(' ');
 const temLine=ex.tem?[
-(ex.tem.threats||[]).length?`<div style="font-size:11px;color:#64748b;margin-top:3px;">⚡ Menaces: ${ex.tem.threats.map(t=>t.text).join(', ')}</div>`:'',
-(ex.tem.errors||[]).length?`<div style="font-size:11px;color:#64748b;margin-top:3px;">✗ Erreurs: ${ex.tem.errors.map(t=>t.text).join(', ')}</div>`:'',
+(ex.tem.threats||[]).length?`<div style="font-size:11px;color:#64748b;margin-top:3px;">⚡ ${_lang==='en'?'Threats':'Menaces'}: ${ex.tem.threats.map(t=>t.text).join(', ')}</div>`:'',
+(ex.tem.errors||[]).length?`<div style="font-size:11px;color:#64748b;margin-top:3px;">✗ ${_lang==='en'?'Errors':'Erreurs'}: ${ex.tem.errors.map(t=>t.text).join(', ')}</div>`:'',
 ].join(''):'';
 exRows+=`<tr style="border-bottom:1px solid #e2e8f0;">
 <td style="padding:10px;font-weight:700;color:#0f172a;font-size:13px;vertical-align:top;">${i+1}. ${sc.title}<div style="font-size:11px;color:#94a3b8;font-weight:400;">p.${sc.page}</div></td>
 <td style="padding:10px;vertical-align:top;">
-<div style="margin-bottom:5px;">${gradesCpt||'<span style="color:#94a3b8;font-size:11px;">Non évalué</span>'}</div>
+<div style="margin-bottom:5px;">${gradesCpt||`<span style="color:#94a3b8;font-size:11px;">${_lang==='en'?'Not evaluated':'Non évalué'}</span>`}</div>
 ${temLine}
 </td>
 <td style="padding:10px;text-align:center;vertical-align:top;"><span style="font-size:18px;font-weight:800;color:${pc};">${st&&st.avg>0?st.avg.toFixed(1):'-'}</span></td>
@@ -10749,8 +10986,8 @@ ${temLine}
 const conclusion = state.debConclNotes||'';
 const fname=`CBTA_${state.pilotName.replace(/[^a-zA-Z0-9]/g,'_')}_${now.toISOString().slice(0,10)}`;
 
-const html=`<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
-<title>Rapport CBTA — ${state.pilotName}</title>
+const html=`<!DOCTYPE html><html lang="${_lang}"><head><meta charset="UTF-8">
+<title>${_lang==='en'?'CBTA Report':'Rapport CBTA'} — ${state.pilotName}</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Helvetica Neue',Arial,sans-serif;color:#1e293b;background:#fff;padding:30px;max-width:800px;margin:0 auto;}
@@ -10789,47 +11026,47 @@ h2{font-size:14px;color:#475569;font-weight:500;margin-bottom:20px;}
 .print-btn{background:#0f172a;color:#fff;border:none;padding:10px 20px;border-radius:6px;font-size:13px;cursor:pointer;margin-bottom:20px;}
 </style>
 </head><body>
-<button class="print-btn" onclick="window.print()">🖨️ Imprimer / Sauvegarder en PDF</button>
+<button class="print-btn" onclick="window.print()">🖨️ ${_lang==='en'?'Print / Save as PDF':'Imprimer / Sauvegarder en PDF'}</button>
 <div class="header">
 <div>
-<h1>RAPPORT DE SESSION CBTA</h1>
+<h1>${_lang==='en'?'CBTA SESSION REPORT':'RAPPORT DE SESSION CBTA'}</h1>
 <h2>B737 NG — Instructor Training Record (TRI)</h2>
 </div>
 <div class="logo">
 QRH Rev55 · FCTM Rev25<br>
-Standard CBTA OACI<br>
+ICAO CBTA Standard<br>
 <strong>${dateStr}</strong>
 </div>
 </div>
 <div class="section">
-<div class="section-title">Informations de session</div>
+<div class="section-title">${_lang==='en'?'Session Information':'Informations de session'}</div>
 <div class="info-grid">
 <div class="info-item"><div class="info-label">Session</div><div class="info-value">${state.sessionName}</div></div>
-<div class="info-item"><div class="info-label">Instructeur</div><div class="info-value">${instrName}</div></div>
-<div class="info-item"><div class="info-label">Commandant de bord</div><div class="info-value">${state.pilotName}</div></div>
-${state.foName?`<div class="info-item"><div class="info-label">Premier Officier</div><div class="info-value">${state.foName}</div></div>`:''}
-<div class="info-item"><div class="info-label">Exercices évalués</div><div class="info-value">${closed.length}</div></div>
+<div class="info-item"><div class="info-label">${_lang==='en'?'Instructor':'Instructeur'}</div><div class="info-value">${instrName}</div></div>
+<div class="info-item"><div class="info-label">${_lang==='en'?'Captain':'Commandant de bord'}</div><div class="info-value">${state.pilotName}</div></div>
+${state.foName?`<div class="info-item"><div class="info-label">${_lang==='en'?'First Officer':'Premier Officier'}</div><div class="info-value">${state.foName}</div></div>`:''}
+<div class="info-item"><div class="info-label">${_lang==='en'?'Evaluated exercises':'Exercices évalués'}</div><div class="info-value">${closed.length}</div></div>
 </div>
 </div>
 <div class="section">
-<div class="section-title">Résultats par compétence</div>
+<div class="section-title">${_lang==='en'?'Results by competency':'Résultats par compétence'}</div>
 ${pilotSection('cs','CPT — '+state.pilotName)}
 ${state.foName?pilotSection('csfo','FO — '+state.foName):''}
 </div>
 <div class="section">
-<div class="section-title">Détail des exercices</div>
+<div class="section-title">${_lang==='en'?'Exercise detail':'Détail des exercices'}</div>
 <table style="width:100%;border-collapse:collapse;">
 <thead><tr style="background:#f1f5f9;">
-<th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;letter-spacing:1px;">EXERCICE</th>
-<th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;">ÉVALUATION</th>
-<th style="padding:8px 10px;font-size:11px;color:#64748b;">MOY</th>
+<th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;letter-spacing:1px;">${_lang==='en'?'EXERCISE':'EXERCICE'}</th>
+<th style="padding:8px 10px;text-align:left;font-size:11px;color:#64748b;">${_lang==='en'?'EVALUATION':'ÉVALUATION'}</th>
+<th style="padding:8px 10px;font-size:11px;color:#64748b;">${_lang==='en'?'AVG':'MOY'}</th>
 </tr></thead>
 <tbody>${exRows}</tbody>
 </table>
 </div>
-${conclusion?`<div class="section"><div class="section-title">Recommandations instructeur</div><div style="background:#f8fafc;border-left:4px solid #0f172a;padding:14px;border-radius:0 6px 6px 0;font-size:13px;line-height:1.6;color:#1e293b;">${conclusion}</div></div>`:''}
+${conclusion?`<div class="section"><div class="section-title">${_lang==='en'?'Instructor recommendations':'Recommandations instructeur'}</div><div style="background:#f8fafc;border-left:4px solid #0f172a;padding:14px;border-radius:0 6px 6px 0;font-size:13px;line-height:1.6;color:#1e293b;">${conclusion}</div></div>`:''}
 <div style="text-align:center;margin-top:30px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;">
-Rapport généré par B737 CBTA TRI Companion · By Cpt Bouchenafa Mohamed Amine · ${dateStr}
+${_lang==='en'?'Report generated by B737 CBTA TRI Companion · By Cpt Bouchenafa Mohamed Amine':'Rapport généré par B737 CBTA TRI Companion · By Cpt Bouchenafa Mohamed Amine'} · ${dateStr}
 </div>
 </body></html>`;
 
@@ -11007,7 +11244,7 @@ const foName=state.foName||'';
 let title='', content='';
 
 if(section==='scores'){
-  title='📊 SCORES COMPÉTENCES';
+  title=`📊 ${_lang==='en'?'COMPETENCY SCORES':'SCORES COMPÉTENCES'}`;
   function _gAvg2(csKey){let t=0,n=0;closed.forEach(ex=>Object.values(ex[csKey]||{}).filter(v=>v&&v.g>0).forEach(v=>{t+=v.g;n++;}));return n?t/n:null;}
   const gCpt=_gAvg2('cs'), gFo=foName?_gAvg2('csfo'):null;
   const rows=COMPETENCIES.map(c=>{
@@ -11038,7 +11275,7 @@ if(section==='scores'){
 )}</div>`+rows;
 }
 else if(section==='exercises'){
-  title='✈️ EXERCICES';
+  title=`✈️ ${_lang==='en'?'EXERCISES':'EXERCICES'}`;
   content=closed.map(ex=>{
     const sc=ALL_SC.find(s=>s.id===ex.sid)||{label:ex.sid,color:'#64748B'};
     const cptVals=Object.values(ex.cs||{}).filter(v=>v&&v.g>0);
@@ -11054,9 +11291,9 @@ else if(section==='exercises'){
         <span style="color:${scoreColor(cptAvg)};font-weight:700;">${pilotName}: ${cptAvg!==null?cptAvg.toFixed(1):'-'}</span>
         ${foAvg!==null?`<span style="color:${scoreColor(foAvg)};font-weight:700;">${foName}: ${foAvg.toFixed(1)}</span>`:''}
       </div>
-      ${(pos||neg)?`<div style="display:flex;gap:14px;margin-top:6px;font-size:13px;">${pos?`<span style="color:#10B981;">+${pos} positifs</span>`:''}${neg?`<span style="color:#EF4444;">−${neg} négatifs</span>`:''}</div>`:''}
+      ${(pos||neg)?`<div style="display:flex;gap:14px;margin-top:6px;font-size:13px;">${pos?`<span style="color:#10B981;">+${pos} ${_lang==='en'?'positive':'positifs'}</span>`:''}${neg?`<span style="color:#EF4444;">−${neg} ${_lang==='en'?'negative':'négatifs'}</span>`:''}</div>`:''}
     </div>`;
-  }).join('')||'<div style="color:#64748B;text-align:center;padding:40px;">Aucun exercice clôturé.</div>';
+  }).join('')||`<div style="color:#64748B;text-align:center;padding:40px;">${_lang==='en'?'No exercise closed.':'Aucun exercice clôturé.'}</div>`;
 }
 else if(section==='crm'){
   title='🤝 CRM';
@@ -11069,16 +11306,16 @@ else if(section==='crm'){
     {k:'crosscheck',label:'Cross-Check'},
     {k:'workload',label:'Workload Mgmt'},
     {k:'sa',label:'Situation Awareness'},
-    {k:'decision',label:'PSD / Décision'},
-    {k:'intervention',label:'Intervention assertive'},
-    {k:'automation',label:'Gestion automatismes'},
-    {k:'sterile',label:'Cockpit stérile'}
+    {k:'decision',label:'PSD / Decision'},
+    {k:'intervention',label:'Assertive intervention'},
+    {k:'automation',label:_lang==='en'?'Automation Mgmt':'Gestion automatismes'},
+    {k:'sterile',label:_lang==='en'?'Sterile cockpit':'Cockpit stérile'}
   ];
   const crm=state.sessionCRM||{};
   const scored=items.filter(i=>crm[i.k]);
   const nok=scored.filter(i=>crm[i.k]==='nok');
   const pct=scored.length?Math.round((scored.length-nok.length)/scored.length*100):null;
-  const lvl=pct===null?'—':pct>=85?'EXCELLENT':pct>=70?'SATISFAISANT':pct>=50?'PARTIEL':'INSUFFISANT';
+  const lvl=pct===null?'—':pct>=85?'EXCELLENT':pct>=70?(_lang==='en'?'SATISFACTORY':'SATISFAISANT'):pct>=50?(_lang==='en'?'PARTIAL':'PARTIEL'):(_lang==='en'?'INSUFFICIENT':'INSUFFISANT');
   const lvlColor=pct===null?'#64748B':pct>=85?'#10B981':pct>=70?'#3B82F6':pct>=50?'#F59E0B':'#EF4444';
   content=`<div style="text-align:center;margin-bottom:28px;">
     <div style="font-size:64px;font-weight:900;color:${lvlColor};">${pct!==null?pct+'%':'—'}</div>
@@ -11129,17 +11366,17 @@ else if(section==='tem'){
     </div></div>`;
   const pilotHdr=foName?`<div style="display:flex;justify-content:flex-end;gap:18px;padding-bottom:8px;border-bottom:1px solid #1E2530;margin-bottom:2px;"><span style="font-size:12px;font-weight:800;color:#3B82F6;">${pilotName}</span><span style="font-size:12px;font-weight:800;color:#10B981;">${foName}</span></div>`:'';
   const statsBlock=`<div style="background:#0F172A;border-radius:12px;padding:16px;margin-bottom:20px;">
-    <div style="font-size:12px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:12px;">📊 STATISTIQUES GLOBALES</div>
+    <div style="font-size:12px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:12px;">📊 ${_lang==='en'?'GLOBAL STATISTICS':'STATISTIQUES GLOBALES'}</div>
     ${pilotHdr}
-    ${sRow('▲ Menaces identifiées',stC.threats,stF.threats,'#3B82F6','#10B981')}
-    ${sRow('▲ Menaces atténuées',stC.threatsMit+' / '+stC.threats,stF.threatsMit+' / '+stF.threats,'#10B981','#10B981')}
-    ${sRow('▲ Taux atténuation',pct(stC.threatsMit,stC.threats),pct(stF.threatsMit,stF.threats),'#10B981','#10B981')}
-    ${sRow('● Erreurs identifiées',stC.errors,stF.errors,'#EF4444','#F97316')}
-    ${sRow('● Erreurs gérées',stC.errorsMit+' / '+stC.errors,stF.errorsMit+' / '+stF.errors,'#F59E0B','#F59E0B')}
-    ${sRow('● Taux gestion',pct(stC.errorsMit,stC.errors),pct(stF.errorsMit,stF.errors),'#F59E0B','#F59E0B')}
-    ${sRow('◆ UAS observés',stC.uas,stF.uas,'#F59E0B','#F59E0B')}
-    ${sRow('◆ UAS atténués',stC.uasMit+' / '+stC.uas,stF.uasMit+' / '+stF.uas,'#10B981','#10B981')}
-    ${sRow('◆ Taux atténuation UAS',pct(stC.uasMit,stC.uas),pct(stF.uasMit,stF.uas),'#10B981','#10B981')}
+    ${sRow(_lang==='en'?'▲ Threats identified':'▲ Menaces identifiées',stC.threats,stF.threats,'#3B82F6','#10B981')}
+    ${sRow(_lang==='en'?'▲ Threats mitigated':'▲ Menaces atténuées',stC.threatsMit+' / '+stC.threats,stF.threatsMit+' / '+stF.threats,'#10B981','#10B981')}
+    ${sRow(_lang==='en'?'▲ Mitigation rate':'▲ Taux atténuation',pct(stC.threatsMit,stC.threats),pct(stF.threatsMit,stF.threats),'#10B981','#10B981')}
+    ${sRow(_lang==='en'?'● Errors identified':'● Erreurs identifiées',stC.errors,stF.errors,'#EF4444','#F97316')}
+    ${sRow(_lang==='en'?'● Errors managed':'● Erreurs gérées',stC.errorsMit+' / '+stC.errors,stF.errorsMit+' / '+stF.errors,'#F59E0B','#F59E0B')}
+    ${sRow(_lang==='en'?'● Management rate':'● Taux gestion',pct(stC.errorsMit,stC.errors),pct(stF.errorsMit,stF.errors),'#F59E0B','#F59E0B')}
+    ${sRow(_lang==='en'?'◆ UAS observed':'◆ UAS observés',stC.uas,stF.uas,'#F59E0B','#F59E0B')}
+    ${sRow(_lang==='en'?'◆ UAS mitigated':'◆ UAS atténués',stC.uasMit+' / '+stC.uas,stF.uasMit+' / '+stF.uas,'#10B981','#10B981')}
+    ${sRow(_lang==='en'?'◆ UAS mitigation rate':'◆ Taux atténuation UAS',pct(stC.uasMit,stC.uas),pct(stF.uasMit,stF.uas),'#10B981','#10B981')}
     ${sRow('↩ Recovery',recTxt(recC),recTxt(recF),recColor(recC),recColor(recF))}
   </div>`;
   const mitBadge=(it)=>it.mit==='ok'?'<span style="color:#10B981;font-size:11px;font-weight:700;"> ✓</span>':it.mit==='partial'?'<span style="color:#F59E0B;font-size:11px;font-weight:700;"> ~</span>':it.mit==='no'?'<span style="color:#EF4444;font-size:11px;font-weight:700;"> ✗</span>':'';
@@ -11147,12 +11384,12 @@ else if(section==='tem'){
   const pilotTEM=(temData,label,c)=>{
     if(!(temData.threats||[]).length&&!(temData.errors||[]).length&&!(temData.uas||[]).length) return '';
     return `<div style="margin-bottom:8px;"><div style="font-size:10px;font-weight:800;color:${c};letter-spacing:2px;margin-bottom:6px;">${label}</div>
-    ${(temData.threats||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#3B82F666;margin-bottom:2px;">▲ MENACES</div>${renderList(temData.threats,'#3B82F6','▲')}</div>`:''}
-    ${(temData.errors||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#EF444466;margin-bottom:2px;">● ERREURS</div>${renderList(temData.errors,'#EF4444','●')}</div>`:''}
+    ${(temData.threats||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#3B82F666;margin-bottom:2px;">▲ ${_lang==='en'?'THREATS':'MENACES'}</div>${renderList(temData.threats,'#3B82F6','▲')}</div>`:''}
+    ${(temData.errors||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#EF444466;margin-bottom:2px;">● ${_lang==='en'?'ERRORS':'ERREURS'}</div>${renderList(temData.errors,'#EF4444','●')}</div>`:''}
     ${(temData.uas||[]).length?`<div style="margin-bottom:4px;"><div style="font-size:10px;color:#F59E0B66;margin-bottom:2px;">◆ UAS</div>${renderList(temData.uas,'#F59E0B','◆')}</div>`:''}
     </div>`;
   };
-  const recBadge=(r)=>!r||!r.managed?'':r.managed==='yes'?'<span style="color:#10B981;font-weight:700;"> ✓ Récupéré</span>':r.managed==='partial'?'<span style="color:#F59E0B;font-weight:700;"> ~ Partiel</span>':'<span style="color:#EF4444;font-weight:700;"> ✗ Non récupéré</span>';
+  const recBadge=(r)=>!r||!r.managed?'':r.managed==='yes'?`<span style="color:#10B981;font-weight:700;"> ✓ ${_lang==='en'?'Recovered':'Récupéré'}</span>`:r.managed==='partial'?`<span style="color:#F59E0B;font-weight:700;"> ~ ${_lang==='en'?'Partial':'Partiel'}</span>`:`<span style="color:#EF4444;font-weight:700;"> ✗ ${_lang==='en'?'Not recovered':'Non récupéré'}</span>`;
   const detailBlock=exDetails.map(({sc,ex,tc,tf})=>{
     const hasData=(tc.threats||[]).length||(tc.errors||[]).length||(tc.uas||[]).length||(tf.threats||[]).length||(tf.errors||[]).length||(tf.uas||[]).length;
     if(!hasData) return '';
@@ -11163,16 +11400,16 @@ else if(section==='tem'){
       ${(ex.rec&&ex.rec.managed)||(ex.recfo&&ex.recfo.managed)?`<div style="font-size:12px;color:#64748B;margin-top:6px;border-top:1px solid #1E2530;padding-top:6px;">↩ ${pilotName}${recBadge(ex.rec)}${foName?'  '+foName+recBadge(ex.recfo):''}</div>`:''}
     </div>`;
   }).filter(Boolean).join('');
-  content=closed.length?statsBlock+(detailBlock?`<div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;margin-top:4px;">📋 DÉTAIL PAR EXERCICE</div>`+detailBlock:''):'<div style="color:#64748B;text-align:center;padding:40px;">Aucun exercice clôturé.</div>';
+  content=closed.length?statsBlock+(detailBlock?`<div style="font-size:11px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;margin-top:4px;">📋 ${_lang==='en'?'EXERCISE DETAIL':'DÉTAIL PAR EXERCICE'}</div>`+detailBlock:''):`<div style="color:#64748B;text-align:center;padding:40px;">${_lang==='en'?'No closed exercise.':'Aucun exercice clôturé.'}</div>`;
 }
 else if(section==='conclusion'){
   title='📋 CONCLUSION';
   const note=state.debNotes||{};
-  content=`<div style="text-align:center;margin-bottom:28px;"><div style="font-size:64px;font-weight:900;color:#F1F5F9;">${note.finalGrade||'—'}</div><div style="font-size:18px;color:#94A3B8;">Note finale</div></div>
-  <div style="font-size:17px;color:#CBD5E1;background:#0F172A;border-radius:12px;padding:20px;line-height:1.8;">${(note.conclusion||'Aucune conclusion saisie.').replace(/\n/g,'<br>')}</div>`;
+  content=`<div style="text-align:center;margin-bottom:28px;"><div style="font-size:64px;font-weight:900;color:#F1F5F9;">${note.finalGrade||'—'}</div><div style="font-size:18px;color:#94A3B8;">${_lang==='en'?'Final grade':'Note finale'}</div></div>
+  <div style="font-size:17px;color:#CBD5E1;background:#0F172A;border-radius:12px;padding:20px;line-height:1.8;">${(note.conclusion||(_lang==='en'?'No conclusion entered.':'Aucune conclusion saisie.')).replace(/\n/g,'<br>')}</div>`;
 }
 else {
-  title='📺 DATA SHOW'; content='<div style="color:#64748B;text-align:center;padding:40px;">Aucune donnée.</div>';
+  title='📺 DATA SHOW'; content=`<div style="color:#64748B;text-align:center;padding:40px;">${_lang==='en'?'No data.':'Aucune donnée.'}</div>`;
 }
 
 let ov=document.getElementById('ds-overlay');
