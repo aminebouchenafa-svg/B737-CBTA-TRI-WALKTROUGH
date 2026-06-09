@@ -10179,53 +10179,7 @@ document.body.appendChild(popup);
 }
 }
 
-// ── LANGUE ---─────────────────────────────────────────────────────────────────
-var _lang = 'fr';
-var LANG = {
-fr: {
-startBtn: 'DEMARRER LA SESSION',
-session: 'Session / Vol', cpt: 'Commandant de Bord (CPT)',
-fo: 'Officier Pilote (FO)', instr: 'NOM DE L INSTRUCTEUR (TRI)',
-addEx: '+ AJOUTER UN EXERCICE', debrief: 'DEBRIEF →',
-close: 'Cloturer l exercice', reopen: 'Rouvrir l exercice',
-eval: 'Evaluation', ffa: 'FFA', tem: 'TEM', fac: 'Facilitation',
-threats: 'MENACES OBSERVEES', errors: 'ERREURS OBSERVEES', uas: 'ETATS INDESIRABLES (UAS)',
-rapport: '📋 RAPPORT', histoire: '📋 HISTORIQUE',
-},
-en: {
-startBtn: 'START SESSION',
-session: 'Session / Flight', cpt: 'Captain (CPT)',
-fo: 'First Officer (FO)', instr: 'INSTRUCTOR NAME (TRI)',
-addEx: '+ ADD EXERCISE', debrief: 'DEBRIEF →',
-close: 'Close exercise', reopen: 'Reopen exercise',
-eval: 'Evaluation', ffa: 'FFA', tem: 'TEM', fac: 'Facilitation',
-threats: 'OBSERVED THREATS', errors: 'OBSERVED ERRORS', uas: 'UNDESIRED STATES (UAS)',
-rapport: '📋 REPORT', histoire: '📋 HISTORY',
-}
-};
-function toggleLang(){
-_lang = _lang==='fr'?'en':'fr';
-const btn = document.getElementById('lang-btn');
-if(btn) btn.textContent = _lang==='fr'?'🇬🇧 EN':'🇫🇷 FR';
-applyLang();
-}
-function applyLang(){
-const L = LANG[_lang];
-// Page accueil
-const sessInp = document.getElementById('inp-session');
-if(sessInp) sessInp.previousElementSibling&&(sessInp.previousElementSibling.textContent=L.session);
-// Boutons session
-const addBtn = document.querySelector('#screen-session .bottom-bar .btn-primary');
-if(addBtn) addBtn.textContent = L.addEx;
-const debBtn = document.querySelector('#screen-session .btn-primary:not(.bottom-bar .btn-primary)');
-if(debBtn) debBtn.textContent = L.debrief;
-// Onglets exercice
-const tabs = document.querySelectorAll('#screen-ex .tab');
-if(tabs[0]) tabs[0].textContent = L.eval;
-if(tabs[1]) tabs[1].textContent = L.ffa;
-if(tabs[2]) tabs[2].textContent = L.tem;
-if(tabs[3]) tabs[3].textContent = L.fac;
-}
+// ── LANGUE (legacy removed — see STRINGS / setLang at top of script) ──────────
 
 // ── COMP_RECO (global scope — used by showRecoModal + generateRecommendations) ─
 const COMP_RECO = {
