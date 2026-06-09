@@ -357,12 +357,12 @@ Identifiant ou mot de passe incorrect
 <label class="form-label">MOT DE PASSE</label>
 <input id="inp-pass" class="form-input" type="password" placeholder="••••••••" autocomplete="current-password" style="color-scheme:dark;" onkeydown="if(event.key==='Enter')doLogin()"/>
 </div>
-<div style="font-size:11px;color:#334155;text-align:center;margin-bottom:18px;">Acces reserve aux instructeurs autorises</div>
+<div style="font-size:11px;color:#334155;text-align:center;margin-bottom:18px;" data-i18n="home_login_reserved">Acces reserve aux instructeurs autorises</div>
 <button class="btn btn-primary" style="width:100%;padding:14px;font-size:15px;letter-spacing:2px;" onclick="doLogin()" style="background:#F59E0B;border-color:#FBBF24;">CONNEXION</button>
 </div>
 <div style="margin-top:28px;text-align:center;">
 <div style="font-size:12px;color:#334155;">By Cpt Bouchenafa Mohamed Amine</div>
-<div style="font-size:11px;color:#1E2530;margin-top:4px;">© 2025 CBTA TRI Companion · Tous droits réservés</div>
+<div style="font-size:11px;color:#1E2530;margin-top:4px;" data-i18n="login_copyright">© 2025 CBTA TRI Companion · Tous droits réservés</div>
 </div>
 </div>
 </div>
@@ -439,8 +439,8 @@ Identifiant ou mot de passe incorrect
 </div>
 <div style="display:flex;gap:8px;margin-bottom:0;">
 <button class="btn btn-primary" style="flex:1;padding:14px;font-size:15px;letter-spacing:1px;" onclick="startSession()" data-i18n="home_start_session">DÉMARRER LA SESSION</button>
-<button style="padding:14px 16px;border-radius:10px;background:#10B98122;border:2px solid #10B981;color:#10B981;font-size:18px;cursor:pointer;flex-shrink:0;" onclick="showPlans()" title="Mes Lofts">🗂</button>
-<button style="padding:14px 16px;border-radius:10px;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:18px;cursor:pointer;flex-shrink:0;" onclick="showScenarioLib()" title="Bibliothèque de scénarios">📋</button>
+<button style="padding:14px 16px;border-radius:10px;background:#10B98122;border:2px solid #10B981;color:#10B981;font-size:18px;cursor:pointer;flex-shrink:0;" onclick="showPlans()">🗂</button>
+<button style="padding:14px 16px;border-radius:10px;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:18px;cursor:pointer;flex-shrink:0;" onclick="showScenarioLib()">📋</button>
 </div>
 <div style="display:flex;gap:8px;margin-top:8px;">
 <button class="btn" style="flex:1;padding:10px;font-size:13px;background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;" onclick="showHistory()" data-i18n="home_historique">HISTORIQUE</button>
@@ -487,9 +487,9 @@ Identifiant ou mot de passe incorrect
 </div>
 <button onclick="openGuide()" style="width:32px;height:32px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</button>
 <button onclick="toggleDarkMode()" id="dark-btn-session" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
-<button onclick="showScenarioLib()" style="width:32px;height:32px;border-radius:50%;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;" title="Bibliothèque de scénarios">📋</button>
+<button onclick="showScenarioLib()" style="width:32px;height:32px;border-radius:50%;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">📋</button>
 <button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
-<button class="btn" onclick="showBriefing()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:13px;padding:6px 9px;" title="Briefing pré-session">📋</button>
+<button class="btn" onclick="showBriefing()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:13px;padding:6px 9px;">📋</button>
 <button class="btn btn-warn" onclick="confirmReset()">↺</button>
 <button class="btn btn-primary" onclick="showDebrief()" data-i18n="deb_title">DEBRIEF →</button>
 </div>
@@ -545,8 +545,8 @@ Identifiant ou mot de passe incorrect
 <div class="scroll" id="ex-content" style="padding:13px;"></div>
 <div class="bottom-bar" style="display:flex;gap:8px;">
 <button class="btn btn-danger" style="padding:13px;font-size:13px;flex-shrink:0;" onclick="confirmDeleteEx()">🗑</button>
-<button class="btn" style="padding:13px;font-size:15px;flex-shrink:0;background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;box-shadow:0 0 10px #7C3AED33;" onclick="openDistracteur()" title="Injecter une Menace Aléatoire">🎲</button>
-<button id="btn-close-ex" class="btn btn-success" style="flex:1;padding:13px;font-size:15px;" onclick="toggleCloseEx()">Cloturer l exercice</button><!-- text set by toggleCloseEx() -->
+<button class="btn" style="padding:13px;font-size:15px;flex-shrink:0;background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;box-shadow:0 0 10px #7C3AED33;" onclick="openDistracteur()">🎲</button>
+<button id="btn-close-ex" class="btn btn-success" style="flex:1;padding:13px;font-size:15px;" onclick="toggleCloseEx()" data-i18n="exercise_close">Cloturer l exercice</button>
 </div>
 </div>
 
@@ -618,7 +618,7 @@ Identifiant ou mot de passe incorrect
 <div class="sub" id="comp-sub"></div>
 <div id="comp-hdr-info" style="font-size:10px;color:#3B82F6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
 </div>
-<button class="btn btn-success" onclick="saveComp()">Valider</button>
+<button class="btn btn-success" onclick="saveComp()" data-i18n="save_btn">Valider</button>
 </div>
 <div class="scroll" id="comp-content" style="padding:13px;"></div>
 </div>
@@ -684,7 +684,7 @@ Identifiant ou mot de passe incorrect
 <div class="title" style="color:#8B5CF6;" data-i18n="hist_title">TABLEAU DE BORD</div>
 <div class="sub" id="dashboard-sub">TRI</div>
 </div>
-<button onclick="exportHistoryJSON()" title="Sauvegarde complète de tout l'historique (1 fichier)" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;" data-i18n="backup_btn">⬇ Backup</button>
+<button onclick="exportHistoryJSON()" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;" data-i18n="backup_btn">⬇ Backup</button>
 <label style="padding:5px 10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:12px;font-weight:700;cursor:pointer;">⬆ Import<input type="file" accept=".json" style="display:none;" onchange="importHistoryJSON(this)"/></label>
 <button onclick="showImportSessionModal()" style="padding:5px 10px;border-radius:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;font-size:12px;font-weight:700;cursor:pointer;">📎</button>
 <button class="btn btn-danger" onclick="if(confirm(t('confirm_delete_all'))){localStorage.removeItem('cbta_history');showHistory();}">🗑</button>
@@ -701,7 +701,7 @@ Identifiant ou mot de passe incorrect
 <div class="topbar">
 <button class="btn" onclick="showScreen('history')">← Dashboard</button>
 <div style="flex:1;margin-left:10px;">
-<div class="title" style="color:#3B82F6;">ÉVOLUTION</div>
+<div class="title" style="color:#3B82F6;" data-i18n="evolution_title">ÉVOLUTION</div>
 <div class="sub" id="comp-pilote-name"></div>
 </div>
 </div>
@@ -712,8 +712,8 @@ Identifiant ou mot de passe incorrect
 <div class="topbar" style="background:#0A0C10;">
 <button class="btn" onclick="showScreen('debrief')">← Debrief</button>
 <div style="flex:1;margin-left:10px;">
-<div class="title" style="color:#F59E0B;">MODE PRÉSENTATION</div>
-<div class="sub">Résultats pour le pilote</div>
+<div class="title" style="color:#F59E0B;" data-i18n="pres_mode_title">MODE PRÉSENTATION</div>
+<div class="sub" data-i18n="pres_mode_sub">Résultats pour le pilote</div>
 </div>
 </div>
 <div class="scroll" id="presentation-content" style="padding:0;"></div>
@@ -722,14 +722,14 @@ Identifiant ou mot de passe incorrect
 <div id="modal-add" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
 <div class="modal-box" style="height:98vh;max-height:98vh;width:98vw;max-width:98vw;display:flex;flex-direction:column;overflow:hidden;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-shrink:0;">
-<div style="font-size:18px;font-weight:800;color:#F1F5F9;">Choisir un exercice</div>
+<div style="font-size:18px;font-weight:800;color:#F1F5F9;" data-i18n="modal_add_title">Choisir un exercice</div>
 <button class="btn" onclick="closeAddModal()" style="font-size:18px;">✕</button>
 </div>
 <div id="modal-add-timer-reminder" style="display:none;background:#F59E0B18;border:1px solid #F59E0B66;border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:12px;color:#F59E0B;font-weight:700;align-items:center;gap:8px;flex-shrink:0;">
-  ⏱ Chrono SESSION non démarré — pensez à l'activer avant le début des exercices !
+  <span data-i18n="timer_reminder_text">⏱ Chrono SESSION non démarré — pensez à l'activer avant le début des exercices !</span>
   <button onclick="toggleSessionTimer();document.getElementById('modal-add-timer-reminder').style.display='none';" style="margin-left:auto;background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:800;cursor:pointer;flex-shrink:0;">▶ START</button>
 </div>
-<input id="sc-search" class="search-input" placeholder="Rechercher: ENGINE FIRE, PRO, SA, RTO..." oninput="renderScList()" style="flex-shrink:0;font-size:15px;padding:11px 14px;"/>
+<input id="sc-search" class="search-input" data-i18n-ph="sc_search_ph" placeholder="Rechercher: ENGINE FIRE, PRO, SA, RTO..." oninput="renderScList()" style="flex-shrink:0;font-size:15px;padding:11px 14px;"/>
 <div class="filter-row" id="cat-filters" style="flex-shrink:0;gap:6px;"></div>
 <div class="filter-row" id="sys-filters" style="flex-shrink:0;display:none;gap:6px;overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px;"></div>
 <div class="filter-row" id="phase-filters" style="flex-shrink:0;gap:6px;"></div>
@@ -741,23 +741,23 @@ Identifiant ou mot de passe incorrect
 <div class="modal-overlay" id="modal-scenarios" style="display:none;">
 <div class="modal-box center" style="max-height:90vh;overflow-y:auto;padding:0;">
 <div style="padding:16px 20px;border-bottom:1px solid #1E2530;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#0F1218;z-index:1;border-radius:16px 16px 0 0;">
-<div style="font-size:15px;font-weight:800;color:#8B5CF6;letter-spacing:1px;">📋 BIBLIOTHÈQUE DE SCÉNARIOS</div>
+<div style="font-size:15px;font-weight:800;color:#8B5CF6;letter-spacing:1px;" data-i18n="scen_lib_title">📋 BIBLIOTHÈQUE DE SCÉNARIOS</div>
 <button onclick="document.getElementById('modal-scenarios').style.display='none'" style="width:30px;height:30px;border-radius:50%;background:#EF444422;border:1px solid #EF444444;color:#EF4444;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
 </div>
 <div style="padding:14px 16px;">
-<div style="font-size:11px;color:#64748B;margin-bottom:10px;font-weight:700;letter-spacing:1px;">FILTRER PAR COMPÉTENCE</div>
+<div style="font-size:11px;color:#64748B;margin-bottom:10px;font-weight:700;letter-spacing:1px;" data-i18n="scen_comp_filter_label">FILTRER PAR COMPÉTENCE</div>
 <div id="scen-comp-filters" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;"></div>
-<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-weight:700;letter-spacing:1px;">TYPE DE SÉANCE</div>
+<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-weight:700;letter-spacing:1px;" data-i18n="scen_type_label">TYPE DE SÉANCE</div>
 <div style="display:flex;gap:6px;margin-bottom:8px;">
-<button class="scen-type-btn active" onclick="setScenType('ALL',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #64748B;background:#64748B22;color:#94A3B8;">TOUT</button>
+<button class="scen-type-btn active" onclick="setScenType('ALL',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #64748B;background:#64748B22;color:#94A3B8;" data-i18n="scen_type_all">TOUT</button>
 <button class="scen-type-btn" onclick="setScenType('OPC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #FFE60066;background:transparent;color:#64748B;">OPC</button>
 <button class="scen-type-btn" onclick="setScenType('PC',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #FF61C766;background:transparent;color:#64748B;">PC</button>
 <button class="scen-type-btn" onclick="setScenType('LINE',this)" style="padding:5px 14px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #AAFF0066;background:transparent;color:#64748B;">LINE</button>
 </div>
 <div style="background:#080B10;border:1px solid #1E2530;border-radius:10px;padding:10px 12px;margin-bottom:14px;display:flex;flex-direction:column;gap:6px;">
-<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#FFE600;background:#FFE60022;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #FFE600;">OPC</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;"><b style="color:#CBD5E1;">Operator Proficiency Check</b> — Contrôle réglementaire EASA obligatoire tous les 6 mois. Inclut tous les exercices mandatory.</span></div>
-<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#FF61C7;background:#FF61C722;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #FF61C7;">PC</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;"><b style="color:#CBD5E1;">Proficiency Check CBTA</b> — Contrôle de compétences ciblé selon l'approche CBTA. Focalisé sur des compétences spécifiques à renforcer.</span></div>
-<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#AAFF00;background:#AAFF0022;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #AAFF00;">LINE</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;"><b style="color:#CBD5E1;">Line Check</b> — Contrôle en ligne opérationnel, simulation d'un vol réel avec dégradations progressives et évaluation globale.</span></div>
+<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#FFE600;background:#FFE60022;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #FFE600;">OPC</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;" data-i18n="scen_opc_desc"><b style="color:#CBD5E1;">Operator Proficiency Check</b> — Contrôle réglementaire EASA obligatoire tous les 6 mois. Inclut tous les exercices mandatory.</span></div>
+<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#FF61C7;background:#FF61C722;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #FF61C7;">PC</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;" data-i18n="scen_pc_desc"><b style="color:#CBD5E1;">Proficiency Check CBTA</b> — Contrôle de compétences ciblé selon l'approche CBTA. Focalisé sur des compétences spécifiques à renforcer.</span></div>
+<div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:10px;font-weight:800;color:#AAFF00;background:#AAFF0022;padding:2px 8px;border-radius:8px;flex-shrink:0;text-shadow:0 0 6px #AAFF00;">LINE</span><span style="font-size:11px;color:#94A3B8;line-height:1.4;" data-i18n="scen_line_desc"><b style="color:#CBD5E1;">Line Check</b> — Contrôle en ligne opérationnel, simulation d'un vol réel avec dégradations progressives et évaluation globale.</span></div>
 </div>
 <div id="scen-list" style="display:flex;flex-direction:column;gap:10px;"></div>
 </div>
@@ -768,11 +768,11 @@ Identifiant ou mot de passe incorrect
 <div id="modal-plans" class="modal-overlay" style="display:none;z-index:9200;" ontouchstart="event.stopPropagation()">
 <div class="modal-box" style="max-height:92vh;display:flex;flex-direction:column;padding:0;overflow:hidden;">
 <div style="padding:16px 20px;border-bottom:1px solid #1E2530;display:flex;align-items:center;gap:10px;position:sticky;top:0;background:#0F1218;z-index:1;border-radius:16px 16px 0 0;flex-shrink:0;">
-<div style="font-size:15px;font-weight:800;color:#10B981;letter-spacing:1px;flex:1;">🗂 MES LOFTS</div>
+<div style="font-size:15px;font-weight:800;color:#10B981;letter-spacing:1px;flex:1;" data-i18n="loft_title">🗂 MES LOFTS</div>
 <button onclick="closePlans()" style="width:30px;height:30px;border-radius:50%;background:#EF444422;border:1px solid #EF444444;color:#EF4444;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
 </div>
 <div style="padding:14px 16px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
-<button onclick="newPlan()" style="width:100%;padding:12px;border-radius:10px;background:#10B98122;border:2px solid #10B981;color:#10B981;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:14px;letter-spacing:1px;">＋ NOUVEAU LOFT</button>
+<button onclick="newPlan()" style="width:100%;padding:12px;border-radius:10px;background:#10B98122;border:2px solid #10B981;color:#10B981;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:14px;letter-spacing:1px;" data-i18n="loft_new_btn">＋ NOUVEAU LOFT</button>
 <div id="plans-list"></div>
 </div>
 </div>
@@ -785,17 +785,17 @@ Identifiant ou mot de passe incorrect
 <div id="modal-plan-edit" class="modal-overlay" style="display:none;z-index:9300;" ontouchstart="event.stopPropagation()">
 <div class="modal-box" style="max-height:92vh;display:flex;flex-direction:column;padding:0;overflow:hidden;">
 <div style="padding:16px 20px;border-bottom:1px solid #1E2530;display:flex;align-items:center;gap:10px;background:#0F1218;border-radius:16px 16px 0 0;flex-shrink:0;">
-<div style="font-size:14px;font-weight:800;color:#10B981;letter-spacing:1px;flex:1;" id="plan-edit-title">NOUVEAU PLAN</div>
+<div style="font-size:14px;font-weight:800;color:#10B981;letter-spacing:1px;flex:1;" id="plan-edit-title">NOUVEAU LOFT</div>
 <button onclick="closePlanEdit()" style="width:30px;height:30px;border-radius:50%;background:#EF444422;border:1px solid #EF444444;color:#EF4444;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">×</button>
 </div>
 <div style="padding:14px 16px;display:flex;flex-direction:column;flex:1;overflow:hidden;">
-<input id="plan-name-input" class="form-input" placeholder="Nom du plan (ex: Summer Recurrent 2026)" style="margin-bottom:12px;flex-shrink:0;"/>
+<input id="plan-name-input" class="form-input" data-i18n-ph="loft_name_ph" placeholder="Nom du plan (ex: Summer Recurrent 2026)" style="margin-bottom:12px;flex-shrink:0;"/>
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-shrink:0;">
 <div style="font-size:13px;font-weight:700;color:#64748B;flex:1;" id="plan-ex-count">0 exercice</div>
-<button onclick="openAddForPlan()" style="padding:8px 16px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:13px;font-weight:700;cursor:pointer;">＋ Ajouter</button>
+<button onclick="openAddForPlan()" style="padding:8px 16px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:13px;font-weight:700;cursor:pointer;" data-i18n="loft_add_btn">＋ Ajouter</button>
 </div>
 <div id="plan-ex-list" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:12px;"></div>
-<button onclick="savePlanEdit()" style="width:100%;padding:13px;border-radius:10px;background:#10B98122;border:2px solid #10B981;color:#10B981;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:1px;flex-shrink:0;">SAUVEGARDER LE LOFT</button>
+<button onclick="savePlanEdit()" style="width:100%;padding:13px;border-radius:10px;background:#10B98122;border:2px solid #10B981;color:#10B981;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:1px;flex-shrink:0;" data-i18n="loft_save_btn">SAUVEGARDER LE LOFT</button>
 </div>
 </div>
 </div>
@@ -2878,7 +2878,7 @@ Identifiant ou mot de passe incorrect
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
 </div><!-- end guide-content-en -->
 
-<button id="guide-close-btn" onclick="closeGuide()" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;border-radius:10px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-weight:700;cursor:pointer;letter-spacing:1px;">✕ Fermer le guide</button>
+<button id="guide-close-btn" onclick="closeGuide()" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;border-radius:10px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-weight:700;cursor:pointer;letter-spacing:1px;" data-i18n="guide_close">✕ Fermer le guide</button>
 </div>
 </div>
 
@@ -2896,7 +2896,7 @@ Identifiant ou mot de passe incorrect
 <button onclick="refTab('obs',this)" id="ref-tab-obs" style="flex:1;padding:11px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">CORE OBs</button>
 </div>
 <div id="ref-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;font-size:15px;line-height:1.7;touch-action:pan-y pinch-zoom;"></div>
-<button onclick="document.getElementById('modal-ref').style.display='none'" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:10px;flex-shrink:0;">Fermer</button>
+<button onclick="document.getElementById('modal-ref').style.display='none'" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:10px;flex-shrink:0;" data-i18n="close_btn">Fermer</button>
 </div>
 </div>
 
@@ -2915,55 +2915,55 @@ Identifiant ou mot de passe incorrect
 <div class="modal-box" style="max-height:92vh;display:flex;flex-direction:column;overflow:hidden;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-shrink:0;">
 <div>
-<div style="font-size:15px;font-weight:900;color:#8B5CF6;">📎 IMPORTER SESSION EXTERNE</div>
-<div style="font-size:11px;color:#64748B;margin-top:2px;">Rapport d'un autre instructeur</div>
+<div style="font-size:15px;font-weight:900;color:#8B5CF6;" data-i18n="import_modal_title">📎 IMPORTER SESSION EXTERNE</div>
+<div style="font-size:11px;color:#64748B;margin-top:2px;" data-i18n="import_modal_sub">Rapport d'un autre instructeur</div>
 </div>
 <button onclick="document.getElementById('modal-import-session').style.display='none'" style="width:32px;height:32px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
 <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;">
 
-<div style="font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:8px;">COMMANDANT DE BORD</div>
+<div style="font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:2px;margin-bottom:8px;" data-i18n="cpt_section">COMMANDANT DE BORD</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-<div><label class="form-label">MATRICULE CPT *</label><input id="imp-mat-cpt" class="form-input" placeholder="ex: 12345" oninput="lookupImportPilot()"/></div>
-<div><label class="form-label">NOM CPT *</label><input id="imp-name-cpt" class="form-input" placeholder="Nom Prénom"/></div>
+<div><label class="form-label" data-i18n="imp_mat_cpt_label">MATRICULE CPT *</label><input id="imp-mat-cpt" class="form-input" placeholder="ex: 12345" oninput="lookupImportPilot()"/></div>
+<div><label class="form-label" data-i18n="imp_name_cpt_label">NOM CPT *</label><input id="imp-name-cpt" class="form-input" data-i18n-ph="imp_name_ph" placeholder="Nom Prénom"/></div>
 </div>
 
-<div style="font-size:10px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:8px;">PREMIER OFFICIER (optionnel)</div>
+<div style="font-size:10px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:8px;" data-i18n="fo_section">PREMIER OFFICIER (optionnel)</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-<div><label class="form-label">MATRICULE FO</label><input id="imp-mat-fo" class="form-input" placeholder="ex: 67890"/></div>
-<div><label class="form-label">NOM FO</label><input id="imp-name-fo" class="form-input" placeholder="Nom Prénom"/></div>
+<div><label class="form-label" data-i18n="imp_mat_fo_label">MATRICULE FO</label><input id="imp-mat-fo" class="form-input" placeholder="ex: 67890"/></div>
+<div><label class="form-label" data-i18n="imp_name_fo_label">NOM FO</label><input id="imp-name-fo" class="form-input" data-i18n-ph="imp_name_ph" placeholder="Nom Prénom"/></div>
 </div>
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-<div><label class="form-label">COMPAGNIE</label><input id="imp-compagnie" class="form-input" placeholder="Air Algérie"/></div>
-<div><label class="form-label">DATE SESSION *</label><input id="imp-date" class="form-input" type="date"/></div>
+<div><label class="form-label" data-i18n="imp_company_label">COMPAGNIE</label><input id="imp-compagnie" class="form-input" placeholder="Air Algérie"/></div>
+<div><label class="form-label" data-i18n="imp_date_label">DATE SESSION *</label><input id="imp-date" class="form-input" type="date"/></div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-<div><label class="form-label">INSTRUCTEUR SOURCE *</label><input id="imp-instructor" class="form-input" placeholder="Cpt Nom Prénom"/></div>
-<div><label class="form-label">INTITULÉ SESSION</label><input id="imp-session-name" class="form-input" placeholder="TRI Check — B737"/></div>
+<div><label class="form-label" data-i18n="imp_instructor_label">INSTRUCTEUR SOURCE *</label><input id="imp-instructor" class="form-input" data-i18n-ph="imp_instructor_ph" placeholder="Cpt Nom Prénom"/></div>
+<div><label class="form-label" data-i18n="imp_session_name_label">INTITULÉ SESSION</label><input id="imp-session-name" class="form-input" placeholder="TRI Check — B737"/></div>
 </div>
 
-<div style="font-size:10px;font-weight:700;color:#F59E0B;letter-spacing:2px;margin-bottom:8px;">SCORES CPT PAR COMPÉTENCE (optionnel · 0 = non évalué)</div>
+<div style="font-size:10px;font-weight:700;color:#F59E0B;letter-spacing:2px;margin-bottom:8px;" data-i18n="comp_scores_section">SCORES CPT PAR COMPÉTENCE (optionnel · 0 = non évalué)</div>
 <div id="imp-comp-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;"></div>
 
 <div style="margin-bottom:12px;">
 <label class="form-label">NOTES / OBSERVATIONS</label>
-<textarea id="imp-notes" class="note-area" placeholder="Commentaires, contexte, observations de l'instructeur source..." style="min-height:70px;"></textarea>
+<textarea id="imp-notes" class="note-area" data-i18n-ph="imp_notes_ph" placeholder="Commentaires, contexte, observations de l'instructeur source..." style="min-height:70px;"></textarea>
 </div>
 
 <div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:10px;padding:12px;margin-bottom:6px;">
-<div style="font-size:12px;font-weight:700;color:#8B5CF6;margin-bottom:8px;">📎 RAPPORT PDF ORIGINAL (optionnel)</div>
-<div id="imp-pdf-status" style="font-size:12px;color:#64748B;margin-bottom:8px;">Aucun fichier sélectionné</div>
+<div style="font-size:12px;font-weight:700;color:#8B5CF6;margin-bottom:8px;" data-i18n="pdf_section_title">📎 RAPPORT PDF ORIGINAL (optionnel)</div>
+<div id="imp-pdf-status" style="font-size:12px;color:#64748B;margin-bottom:8px;" data-i18n="no_file_selected">Aucun fichier sélectionné</div>
 <label style="display:block;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;border-radius:9px;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;">
-📎 Choisir un PDF
+<span data-i18n="choose_pdf_btn">📎 Choisir un PDF</span>
 <input type="file" id="imp-pdf-input" accept="application/pdf,.pdf" style="display:none;" onchange="loadImportPDF(this)"/>
 </label>
-<div style="font-size:10px;color:#475569;margin-top:6px;text-align:center;">Stocké localement · Taille max recommandée : 2 Mo</div>
+<div style="font-size:10px;color:#475569;margin-top:6px;text-align:center;" data-i18n="pdf_storage_note">Stocké localement · Taille max recommandée : 2 Mo</div>
 </div>
 
 </div>
 <div style="display:flex;gap:8px;margin-top:12px;flex-shrink:0;">
-<button onclick="document.getElementById('modal-import-session').style.display='none'" class="btn" style="flex:1;">Annuler</button>
+<button onclick="document.getElementById('modal-import-session').style.display='none'" class="btn" style="flex:1;" data-i18n="cancel_btn">Annuler</button>
 <button onclick="submitImportedSession()" class="btn btn-primary" style="flex:2;padding:13px;font-size:15px;">📎 IMPORTER</button>
 </div>
 </div>
@@ -2971,11 +2971,11 @@ Identifiant ou mot de passe incorrect
 
 <div id="modal-end" style="display:none;" class="modal-overlay">
 <div class="modal-box center">
-<div style="font-size:16px;font-weight:700;color:#EF4444;margin-bottom:10px;">Fin de session</div>
-<div style="font-size:13px;color:#94A3B8;margin-bottom:18px;line-height:1.6;">Terminer la session et revenir a l accueil ?<br/><span style="font-size:11px;color:var(--faint);">Les donnees non exportees seront perdues.</span></div>
+<div style="font-size:16px;font-weight:700;color:#EF4444;margin-bottom:10px;" data-i18n="end_session_title">Fin de session</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:18px;line-height:1.6;"><span data-i18n="end_session_msg">Terminer la session et revenir à l'accueil ?</span><br/><span style="font-size:11px;color:var(--faint);" data-i18n="unsaved_warning">Les données non exportées seront perdues.</span></div>
 <div style="display:flex;gap:10px;justify-content:flex-end;">
-<button class="btn" onclick="document.getElementById('modal-end').style.display='none'">Annuler</button>
-<button class="btn btn-danger" onclick="doEndSession()">Terminer</button>
+<button class="btn" onclick="document.getElementById('modal-end').style.display='none'" data-i18n="cancel_btn">Annuler</button>
+<button class="btn btn-danger" onclick="doEndSession()" data-i18n="done_btn">Terminer</button>
 </div>
 </div>
 </div>
@@ -3057,6 +3057,7 @@ const STRINGS = {
     home_login_reserved: 'Acces reserve aux instructeurs autorises',
     home_login_btn: 'CONNEXION',
     home_rights: 'Tous droits réservés · Usage instructeur uniquement',
+    login_copyright: '© 2025 CBTA TRI Companion · Tous droits réservés',
     role_cpt: 'COMMANDANT DE BORD',
     role_fo: 'PREMIER OFFICIER',
     role_tri_check: 'TRI (INSTRUCTEUR EXAMINÉ)',
@@ -3184,6 +3185,47 @@ const STRINGS = {
     edit_session_title: 'Modifier la session',
     apply_btn: 'Appliquer',
     edit_fo_placeholder: 'Nom siège droit (laisser vide = solo)',
+    evolution_title: 'ÉVOLUTION',
+    pres_mode_title: 'MODE PRÉSENTATION',
+    pres_mode_sub: 'Résultats pour le pilote',
+    modal_add_title: 'Choisir un exercice',
+    timer_reminder_text: '⏱ Chrono SESSION non démarré — pensez à l\'activer avant le début des exercices !',
+    sc_search_ph: 'Rechercher: ENGINE FIRE, PRO, SA, RTO...',
+    scen_lib_title: '📋 BIBLIOTHÈQUE DE SCÉNARIOS',
+    scen_comp_filter_label: 'FILTRER PAR COMPÉTENCE',
+    scen_type_label: 'TYPE DE SÉANCE',
+    scen_type_all: 'TOUT',
+    scen_opc_desc: '<b style="color:#CBD5E1;">Operator Proficiency Check</b> — Contrôle réglementaire EASA obligatoire tous les 6 mois. Inclut tous les exercices mandatory.',
+    scen_pc_desc: '<b style="color:#CBD5E1;">Proficiency Check CBTA</b> — Contrôle de compétences ciblé selon l\'approche CBTA. Focalisé sur des compétences spécifiques à renforcer.',
+    scen_line_desc: '<b style="color:#CBD5E1;">Line Check</b> — Contrôle en ligne opérationnel, simulation d\'un vol réel avec dégradations progressives et évaluation globale.',
+    loft_title: '🗂 MES LOFTS',
+    loft_new_btn: '＋ NOUVEAU LOFT',
+    loft_name_ph: 'Nom du plan (ex: Summer Recurrent 2026)',
+    loft_add_btn: '＋ Ajouter',
+    loft_save_btn: 'SAUVEGARDER LE LOFT',
+    imp_mat_cpt_label: 'MATRICULE CPT *',
+    imp_name_cpt_label: 'NOM CPT *',
+    imp_mat_fo_label: 'MATRICULE FO',
+    imp_name_fo_label: 'NOM FO',
+    imp_company_label: 'COMPAGNIE',
+    imp_date_label: 'DATE SESSION *',
+    imp_instructor_label: 'INSTRUCTEUR SOURCE *',
+    imp_session_name_label: 'INTITULÉ SESSION',
+    imp_name_ph: 'Nom Prénom',
+    imp_instructor_ph: 'Cpt Nom Prénom',
+    import_modal_title: '📎 IMPORTER SESSION EXTERNE',
+    import_modal_sub: 'Rapport d\'un autre instructeur',
+    cpt_section: 'COMMANDANT DE BORD',
+    fo_section: 'PREMIER OFFICIER (optionnel)',
+    comp_scores_section: 'SCORES CPT PAR COMPÉTENCE (optionnel · 0 = non évalué)',
+    imp_notes_ph: 'Commentaires, contexte, observations de l\'instructeur source...',
+    pdf_section_title: '📎 RAPPORT PDF ORIGINAL (optionnel)',
+    no_file_selected: 'Aucun fichier sélectionné',
+    choose_pdf_btn: '📎 Choisir un PDF',
+    pdf_storage_note: 'Stocké localement · Taille max recommandée : 2 Mo',
+    end_session_title: 'Fin de session',
+    end_session_msg: 'Terminer la session et revenir à l\'accueil ?',
+    unsaved_warning: 'Les données non exportées seront perdues.',
   },
   en: {
     app_name: 'B737 CBTA TRI',
@@ -3223,6 +3265,7 @@ const STRINGS = {
     home_login_reserved: 'Access restricted to authorised instructors',
     home_login_btn: 'LOGIN',
     home_rights: 'All rights reserved · Instructor use only',
+    login_copyright: '© 2025 CBTA TRI Companion · All rights reserved',
     role_cpt: 'CAPTAIN',
     role_fo: 'FIRST OFFICER',
     role_tri_check: 'TRI (INSTRUCTOR UNDER ASSESSMENT)',
@@ -3350,6 +3393,47 @@ const STRINGS = {
     edit_session_title: 'Edit session',
     apply_btn: 'Apply',
     edit_fo_placeholder: 'Right seat name (leave empty = solo)',
+    evolution_title: 'PROGRESSION',
+    pres_mode_title: 'PRESENTATION MODE',
+    pres_mode_sub: 'Results for the pilot',
+    modal_add_title: 'Choose an exercise',
+    timer_reminder_text: '⏱ SESSION timer not started — remember to activate it before the first exercise!',
+    sc_search_ph: 'Search: ENGINE FIRE, PRO, SA, RTO...',
+    scen_lib_title: '📋 SCENARIO LIBRARY',
+    scen_comp_filter_label: 'FILTER BY COMPETENCY',
+    scen_type_label: 'SESSION TYPE',
+    scen_type_all: 'ALL',
+    scen_opc_desc: '<b style="color:#CBD5E1;">Operator Proficiency Check</b> — Mandatory EASA regulatory check every 6 months. Includes all mandatory exercises.',
+    scen_pc_desc: '<b style="color:#CBD5E1;">Proficiency Check CBTA</b> — Targeted competency check following the CBTA approach. Focused on specific competencies to reinforce.',
+    scen_line_desc: '<b style="color:#CBD5E1;">Line Check</b> — Operational line check, simulation of a real flight with progressive degradation and global assessment.',
+    loft_title: '🗂 MY LOFTS',
+    loft_new_btn: '＋ NEW LOFT',
+    loft_name_ph: 'Plan name (e.g. Summer Recurrent 2026)',
+    loft_add_btn: '＋ Add',
+    loft_save_btn: 'SAVE LOFT',
+    imp_mat_cpt_label: 'CPT MATRICULE *',
+    imp_name_cpt_label: 'CPT NAME *',
+    imp_mat_fo_label: 'FO MATRICULE',
+    imp_name_fo_label: 'FO NAME',
+    imp_company_label: 'COMPANY',
+    imp_date_label: 'SESSION DATE *',
+    imp_instructor_label: 'SOURCE INSTRUCTOR *',
+    imp_session_name_label: 'SESSION TITLE',
+    imp_name_ph: 'First Last',
+    imp_instructor_ph: 'Capt First Last',
+    import_modal_title: '📎 IMPORT EXTERNAL SESSION',
+    import_modal_sub: 'Report from another instructor',
+    cpt_section: 'CAPTAIN',
+    fo_section: 'FIRST OFFICER (optional)',
+    comp_scores_section: 'CPT SCORES BY COMPETENCY (optional · 0 = not evaluated)',
+    imp_notes_ph: 'Comments, context, observations from the source instructor...',
+    pdf_section_title: '📎 ORIGINAL PDF REPORT (optional)',
+    no_file_selected: 'No file selected',
+    choose_pdf_btn: '📎 Choose a PDF',
+    pdf_storage_note: 'Stored locally · Max recommended size: 2 MB',
+    end_session_title: 'End session',
+    end_session_msg: 'End the session and return to home?',
+    unsaved_warning: 'Unsaved data will be lost.',
   }
 };
 
@@ -4975,47 +5059,61 @@ var NNC_SYSTEMS = {
 };
 
 const SESSION_SCENARIOS=[
-{id:"opc_standard",title:"OPC Standard Complet",type:"OPC",color:"#FFE600",focus:["FPM","PRO","WLM"],
+{id:"opc_standard",title:"OPC Standard Complet",title_en:"Complete Standard OPC",type:"OPC",color:"#FFE600",focus:["FPM","PRO","WLM"],
 desc:"Session OPC 3h30 sim avec tous les exercices obligatoires, patterns standards et remise des gaz moteur en panne.",
+desc_en:"3h30 OPC sim session with all mandatory exercises, standard patterns and single-engine go-around.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"upset_recovery",min:12},{sid:"stall_recovery",min:12},{sid:"windshear_manual",min:12},{sid:"windshear_auto",min:10},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"non_ils",min:22},{sid:"go_around",min:15}]},
-{id:"opc_lvo",title:"OPC LVO — Basse Visibilité",type:"OPC",color:"#00E5FF",focus:["FPM","SA","PRO"],
+{id:"opc_lvo",title:"OPC LVO — Basse Visibilité",title_en:"OPC LVO — Low Visibility",type:"OPC",color:"#00E5FF",focus:["FPM","SA","PRO"],
 desc:"Session OPC 3h30 centrée sur les opérations par basse visibilité CAT II/III. Obligatoires inclus.",
+desc_en:"3h30 OPC session focused on low visibility CAT II/III operations. Mandatory exercises included.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"upset_recovery",min:12},{sid:"lvo_lvto",min:25},{sid:"lvo_cat2",min:25},{sid:"lvo_cat3a",min:30},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"windshear_auto",min:12}]},
-{id:"opc_rnp",title:"OPC RNP — Navigation de Précision",type:"OPC",color:"#39FF14",focus:["FPM","KNO","SA"],
+{id:"opc_rnp",title:"OPC RNP — Navigation de Précision",title_en:"OPC RNP — Precision Navigation",type:"OPC",color:"#39FF14",focus:["FPM","KNO","SA"],
 desc:"Session OPC 3h30 avec approches RNP/RNAV et RNP AR. Exercices obligatoires inclus.",
+desc_en:"3h30 OPC session with RNP/RNAV and RNP AR approaches. Mandatory exercises included.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"upset_recovery",min:12},{sid:"rnp_ar",min:30},{sid:"rnp_approach",min:25},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"gpws",min:10}]},
-{id:"wlm_sa_focus",title:"Focus WLM / SA",type:"PC",color:"#FF61C7",focus:["WLM","SA","PSD"],
+{id:"wlm_sa_focus",title:"Focus WLM / SA",title_en:"WLM / SA Focus",type:"PC",color:"#FF61C7",focus:["WLM","SA","PSD"],
 desc:"Session PC 3h30 centrée sur la gestion de charge de travail et la conscience situationnelle en situations dégradées.",
+desc_en:"3h30 PC session focused on workload management and situational awareness in degraded situations.",
 exercises:[{sid:"airspeed_unrel",min:25},{sid:"cabin_alt",min:18},{sid:"windshear_auto",min:12},{sid:"windshear_manual",min:12},{sid:"engine_fire",min:25},{sid:"nnc_loss_gen",min:20},{sid:"tcas_ra",min:10},{sid:"upset_recovery",min:12},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"non_ils",min:22},{sid:"runaway_stab",min:12}]},
-{id:"crm_ltw_focus",title:"Focus CRM / LTW",type:"PC",color:"#FF00FF",focus:["LTW","COM","PSD"],
+{id:"crm_ltw_focus",title:"Focus CRM / LTW",title_en:"CRM / LTW Focus",type:"PC",color:"#FF00FF",focus:["LTW","COM","PSD"],
 desc:"Session PC 3h30 axée sur le leadership, la communication et le travail d'équipage en environnement dégradé.",
+desc_en:"3h30 PC session focused on leadership, communication and crew coordination in degraded environment.",
 exercises:[{sid:"engine_fire",min:25},{sid:"loss_thrust_both",min:30},{sid:"cabin_alt",min:18},{sid:"windshear_manual",min:12},{sid:"runaway_stab",min:18},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"nnc_loss_gen",min:15},{sid:"airspeed_unrel",min:18}]},
-{id:"psd_kno_focus",title:"Focus PSD / KNO",type:"PC",color:"#FF6B35",focus:["PSD","KNO","SA"],
+{id:"psd_kno_focus",title:"Focus PSD / KNO",title_en:"PSD / KNO Focus",type:"PC",color:"#FF6B35",focus:["PSD","KNO","SA"],
 desc:"Session PC 3h30 dédiée à la prise de décision, la résolution de problèmes et les connaissances systèmes.",
+desc_en:"3h30 PC session dedicated to decision making, problem solving and systems knowledge.",
 exercises:[{sid:"airspeed_unrel",min:25},{sid:"runaway_stab",min:18},{sid:"emergency_desc",min:18},{sid:"nnc_loss_sys_a",min:18},{sid:"nnc_fuel_leak",min:15},{sid:"gpws",min:12},{sid:"engine_fire",min:25},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"non_ils",min:22},{sid:"cabin_alt",min:15},{sid:"nnc_loss_gen",min:15}]},
-{id:"nnc_intensive",title:"Session NNC Intensive",type:"PC",color:"#FF3A20",focus:["PRO","WLM","KNO"],
+{id:"nnc_intensive",title:"Session NNC Intensive",title_en:"Intensive NNC Session",type:"PC",color:"#FF3A20",focus:["PRO","WLM","KNO"],
 desc:"Session PC 3h30 axée sur les procédures anormales et non-normales avec CRM complet.",
+desc_en:"3h30 PC session focused on abnormal and non-normal procedures with full CRM.",
 exercises:[{sid:"rto",min:12},{sid:"nnc_eng_fail",min:25},{sid:"nnc_loss_gen",min:18},{sid:"nnc_loss_sys_a",min:18},{sid:"nnc_cargo_fwd",min:18},{sid:"cabin_alt",min:18},{sid:"engine_fire",min:25},{sid:"tcas_ra",min:10},{sid:"se_ils",min:25},{sid:"se_ldg",min:20},{sid:"nnc_fuel_leak",min:15},{sid:"runaway_stab",min:12}]},
-{id:"full_assessment",title:"Bilan Compétences Complètes",type:"LINE",color:"#AAFF00",focus:["KNO","WLM","SA","PSD","LTW","FPM","FPA","COM","PRO"],
+{id:"full_assessment",title:"Bilan Compétences Complètes",title_en:"Full Competency Assessment",type:"LINE",color:"#AAFF00",focus:["KNO","WLM","SA","PSD","LTW","FPM","FPA","COM","PRO"],
 desc:"Évaluation complète 3h30 de toutes les compétences CBTA. Line Check ou Check d'aptitude global.",
+desc_en:"Complete 3h30 assessment of all CBTA competencies. Line Check or global proficiency check.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"engine_fire",min:22},{sid:"airspeed_unrel",min:15},{sid:"cabin_alt",min:12},{sid:"windshear_manual",min:10},{sid:"upset_recovery",min:10},{sid:"tcas_ra",min:10},{sid:"lvo_cat2",min:22},{sid:"rnp_approach",min:20},{sid:"se_ils",min:22},{sid:"se_ga",min:18},{sid:"se_ldg",min:18},{sid:"non_ils",min:15}]},
-{id:"opc_upset_eme",title:"OPC Upset / Urgences",type:"OPC",color:"#FF9500",focus:["FPM","SA","WLM"],
+{id:"opc_upset_eme",title:"OPC Upset / Urgences",title_en:"OPC Upset / Emergencies",type:"OPC",color:"#FF9500",focus:["FPM","SA","WLM"],
 desc:"Session OPC 3h30 ciblée sur les situations extrêmes : UPRT, Windshear, perte moteur basse altitude.",
+desc_en:"3h30 OPC session targeting extreme situations: UPRT, Windshear, low altitude engine failure.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"upset_recovery",min:18},{sid:"stall_recovery",min:15},{sid:"windshear_manual",min:15},{sid:"windshear_auto",min:12},{sid:"gpws",min:12},{sid:"engine_fire",min:25},{sid:"rto",min:12},{sid:"tcas_ra",min:10},{sid:"se_ga",min:20},{sid:"se_ldg",min:20},{sid:"go_around",min:15},{sid:"non_ils",min:20}]},
-{id:"pc_lvo_rnp",title:"PC LVO + RNP Combiné",type:"PC",color:"#7DF9FF",focus:["FPM","KNO","PSD","SA"],
+{id:"pc_lvo_rnp",title:"PC LVO + RNP Combiné",title_en:"PC LVO + RNP Combined",type:"PC",color:"#7DF9FF",focus:["FPM","KNO","PSD","SA"],
 desc:"Proficiency Check 3h30 combinant basse visibilité et navigation de précision RNP/RNAV.",
+desc_en:"3h30 Proficiency Check combining low visibility and RNP/RNAV precision navigation.",
 exercises:[{sid:"lvo_lvto",min:25},{sid:"lvo_cat2",min:25},{sid:"lvo_cat3a",min:28},{sid:"rnp_approach",min:25},{sid:"rnp_ar",min:28},{sid:"airspeed_unrel",min:15},{sid:"tcas_ra",min:10},{sid:"se_ils",min:22},{sid:"se_ga",min:18},{sid:"engine_fire",min:20}]},
-{id:"line_check_full",title:"Line Check Opérationnel",type:"LINE",color:"#DFFF00",focus:["KNO","WLM","SA","PSD","LTW","COM","PRO"],
+{id:"line_check_full",title:"Line Check Opérationnel",title_en:"Operational Line Check",type:"LINE",color:"#DFFF00",focus:["KNO","WLM","SA","PSD","LTW","COM","PRO"],
 desc:"Simulation de Line Check 3h30 avec vol normal, dégradation progressive et évaluation CRM complète.",
+desc_en:"3h30 Line Check simulation with normal flight, progressive degradation and full CRM assessment.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"go_around",min:15},{sid:"engine_fire",min:22},{sid:"cabin_alt",min:12},{sid:"nnc_loss_gen",min:15},{sid:"tcas_ra",min:10},{sid:"lvo_cat2",min:22},{sid:"rnp_approach",min:22},{sid:"se_ils",min:22},{sid:"se_ga",min:18},{sid:"non_ils",min:20},{sid:"upset_recovery",min:10}]},
-{id:"pannes_phases_vol",title:"Pannes Progressives — Vol Complet",type:"OPC",color:"#FF4444",focus:["PSD","WLM","LTW","SA","PRO"],
+{id:"pannes_phases_vol",title:"Pannes Progressives — Vol Complet",title_en:"Progressive Failures — Complete Flight",type:"OPC",color:"#FF4444",focus:["PSD","WLM","LTW","SA","PRO"],
 desc:"Scénario réaliste de panne progressive du sol à l'atterrissage : démarrage dégradé → RTO → pannes montée → TCAS → dépressurisation croisière → emergency descent → approche RNP avec dégradation météo → go-around → panne moteur pendant remise des gaz → déroutement ILS one engine → atterrissage one engine.",
+desc_en:"Realistic progressive failure scenario from ground to landing: degraded start → RTO → climb failures → TCAS → cruise depressurisation → emergency descent → RNP approach with weather degradation → go-around → engine failure during go-around → diversion ILS one engine → one engine landing.",
 exercises:[{sid:"aborted_engine_start",min:15},{sid:"rto",min:15},{sid:"engine_fire",min:25},{sid:"tcas_ra",min:10},{sid:"cabin_alt",min:15},{sid:"emergency_desc",min:15},{sid:"rnp_approach",min:25},{sid:"go_around",min:15},{sid:"se_ga",min:20},{sid:"se_ils",min:25},{sid:"se_ldg",min:20}]},
-{id:"v1v2_circuit_lvo",title:"V1–V2 · Circuit · LVO — Scénario Complet",type:"OPC",color:"#00CCFF",focus:["FPM","PRO","KNO","SA","FPA"],
+{id:"v1v2_circuit_lvo",title:"V1–V2 · Circuit · LVO — Scénario Complet",title_en:"V1–V2 · Circuit · LVO — Complete Scenario",type:"OPC",color:"#00CCFF",focus:["FPM","PRO","KNO","SA","FPA"],
 desc:"Panne moteur entre V1 et V2 → go-around single engine → circuit → atterrissage SE → séquence LVO CAT II/III complète. Tous les mandatory moteur et LVO liquidés dans une seule session logique.",
+desc_en:"Engine failure between V1 and V2 → single engine go-around → circuit → SE landing → complete CAT II/III LVO sequence. All engine and LVO mandatory items completed in one logical session.",
 exercises:[{sid:"ef_v1v2",min:20},{sid:"se_ga",min:20},{sid:"go_around",min:15},{sid:"se_ldg",min:20},{sid:"lvo_cat2",min:25},{sid:"lvo_cat3a",min:28},{sid:"windshear_manual",min:12},{sid:"lvo_lvto",min:20}]},
-{id:"feu_urgences_deroute",title:"Feu · Urgences · Déroutement",type:"OPC",color:"#FF6B35",focus:["PSD","WLM","LTW","PRO","COM"],
+{id:"feu_urgences_deroute",title:"Feu · Urgences · Déroutement",title_en:"Fire · Emergencies · Diversion",type:"OPC",color:"#FF6B35",focus:["PSD","WLM","LTW","PRO","COM"],
 desc:"Gestion des urgences critiques par phases : RTO → feu moteur → décision déroutement → feu cargo → dépressurisation → emergency descent → fuite carburant → ILS déroutement one engine → atterrissage one engine puis ILS non-précision. Se termine par feu + procédures évacuation.",
+desc_en:"Critical emergency management by phase: RTO → engine fire → diversion decision → cargo fire → depressurisation → emergency descent → fuel leak → ILS diversion one engine → one engine landing then non-precision ILS. Ends with fire + evacuation procedures.",
 exercises:[{sid:"rto",min:12},{sid:"engine_fire",min:25},{sid:"nnc_cargo_fwd",min:18},{sid:"cabin_alt",min:15},{sid:"emergency_desc",min:15},{sid:"nnc_fuel_leak",min:15},{sid:"se_ils",min:25},{sid:"se_ldg",min:20},{sid:"non_ils",min:20}]},
 ];
 
@@ -5694,8 +5792,8 @@ state.sessionElapsed = 0;
 state.sessionRunning = false;
 window._sesAlerts    = {two:false,nearEnd:false,end:false};
 startChrono();
-if(_pendingScenarioId){const _ps=SESSION_SCENARIOS.find(x=>x.id===_pendingScenarioId);_pendingScenarioId=null;if(_ps){setTimeout(()=>{_applyScenario(_ps);showToast('📋 Scénario "'+_ps.title+'" chargé automatiquement.');},300);}}
-if(_pendingPlanId){const _pp=getPlans().find(x=>x.id===_pendingPlanId);_pendingPlanId=null;if(_pp){setTimeout(()=>{_applyPlan(_pp);showToast('🗂 Loft "'+_pp.name+'" chargé automatiquement.');},300);}}
+if(_pendingScenarioId){const _ps=SESSION_SCENARIOS.find(x=>x.id===_pendingScenarioId);_pendingScenarioId=null;if(_ps){setTimeout(()=>{_applyScenario(_ps);showToast(_lang==='en'?'📋 Scenario "'+_ps.title+'" loaded automatically.':'📋 Scénario "'+_ps.title+'" chargé automatiquement.');},300);}}
+if(_pendingPlanId){const _pp=getPlans().find(x=>x.id===_pendingPlanId);_pendingPlanId=null;if(_pp){setTimeout(()=>{_applyPlan(_pp);showToast(_lang==='en'?'🗂 Loft "'+_pp.name+'" loaded automatically.':'🗂 Loft "'+_pp.name+'" chargé automatiquement.');},300);}}
 const pilotLine = state.foName ? state.pilotName + " / " + state.foName : state.pilotName;
 document.getElementById('hdr-pilot').textContent = pilotLine;
 document.getElementById('hdr-session').textContent = state.sessionName;
@@ -6987,24 +7085,27 @@ function renderScenList(){
     const exNames=s.exercises.map(e=>{const sc=ALL_SC.find(x=>x.id===e.sid);return sc?sc.title:'?';});
     const focusHtml=s.focus.map(f=>{const c=COMPETENCIES.find(x=>x.id===f);return c?`<span style="font-size:10px;font-weight:700;color:${c.color};background:${c.color}22;padding:2px 7px;border-radius:10px;border:1px solid ${c.color}44;">${c.label}</span>`:''}).join('');
     const isPending=_pendingScenarioId===s.id;
+    const sTitle=_lang==='en'?(s.title_en||s.title):s.title;
+    const sDesc=_lang==='en'?(s.desc_en||s.desc):s.desc;
+    const loadBtnTxt=isPending?(_lang==='en'?'✅ PENDING SESSION':'✅ EN ATTENTE DE SESSION'):(_lang==='en'?'LOAD THIS SCENARIO →':'CHARGER CE SCÉNARIO →');
     return `<div style="background:#080B10;border:1px solid ${nc}44;border-radius:12px;padding:16px;border-left:4px solid ${nc};box-shadow:0 0 12px ${nc}22;">
 <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
-<div style="font-size:17px;font-weight:800;color:#F1F5F9;flex:1;text-shadow:0 0 8px ${nc}55;">${s.title}</div>
+<div style="font-size:17px;font-weight:800;color:#F1F5F9;flex:1;text-shadow:0 0 8px ${nc}55;">${sTitle}</div>
 <span style="font-size:12px;font-weight:700;color:${nc};background:${nc}22;padding:3px 10px;border-radius:10px;margin-left:8px;flex-shrink:0;">${s.type}</span>
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">${focusHtml}</div>
-<div style="font-size:14px;color:#94A3B8;margin-bottom:10px;line-height:1.6;">${s.desc}</div>
+<div style="font-size:14px;color:#94A3B8;margin-bottom:10px;line-height:1.6;">${sDesc}</div>
 <div style="font-size:13px;color:#475569;margin-bottom:10px;">
-<span style="margin-right:12px;">⏱ ${Math.floor(totalMin/60)}h${totalMin%60?String(totalMin%60).padStart(2,'0'):'00'} estimé</span>
-<span>${s.exercises.length} exercices</span>
+<span style="margin-right:12px;">⏱ ${Math.floor(totalMin/60)}h${totalMin%60?String(totalMin%60).padStart(2,'0'):'00'} ${_lang==='en'?'est.':'estimé'}</span>
+<span>${s.exercises.length} ${_lang==='en'?'exercise':'exercice'}${s.exercises.length>1?'s':''}</span>
 </div>
-<div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.8;">${exNames.slice(0,6).join(' · ')}${exNames.length>6?` · +${exNames.length-6} autres`:''}</div>
+<div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.8;">${exNames.slice(0,6).join(' · ')}${exNames.length>6?` · +${exNames.length-6} ${_lang==='en'?'more':'autres'}`:''}</div>
 <div style="display:flex;gap:8px;">
-<button onclick="event.stopPropagation();openScenEdit('${s.id}')" style="flex-shrink:0;padding:13px 16px;border-radius:8px;background:#1E253088;border:1px solid #334155;color:#94A3B8;font-size:14px;font-weight:700;cursor:pointer;" title="Personnaliser les exercices">✏️</button>
-<button onclick="loadScenario('${s.id}')" style="flex:1;padding:13px;border-radius:8px;background:${nc}22;border:1px solid ${nc};color:${nc};font-size:15px;font-weight:700;cursor:pointer;letter-spacing:1px;text-shadow:0 0 8px ${nc};box-shadow:0 0 10px ${nc}33;">${isPending?'✅ EN ATTENTE DE SESSION':'CHARGER CE SCÉNARIO →'}</button>
+<button onclick="event.stopPropagation();openScenEdit('${s.id}')" style="flex-shrink:0;padding:13px 16px;border-radius:8px;background:#1E253088;border:1px solid #334155;color:#94A3B8;font-size:14px;font-weight:700;cursor:pointer;" title="${_lang==='en'?'Customize exercises':'Personnaliser les exercices'}">✏️</button>
+<button onclick="loadScenario('${s.id}')" style="flex:1;padding:13px;border-radius:8px;background:${nc}22;border:1px solid ${nc};color:${nc};font-size:15px;font-weight:700;cursor:pointer;letter-spacing:1px;text-shadow:0 0 8px ${nc};box-shadow:0 0 10px ${nc}33;">${loadBtnTxt}</button>
 </div>
 </div>`;
-  }).join('')||'<div style="text-align:center;color:#475569;padding:20px;">Aucun scénario pour ces filtres.</div>';
+  }).join('')||`<div style="text-align:center;color:#475569;padding:20px;">${_lang==='en'?'No scenarios for these filters.':'Aucun scénario pour ces filtres.'}</div>`;
 }
 function loadScenario(id){
   const s=SESSION_SCENARIOS.find(x=>x.id===id);
@@ -7012,11 +7113,11 @@ function loadScenario(id){
   if(!state.sessionStart){
     _pendingScenarioId=id;
     document.getElementById('modal-scenarios').style.display='none';
-    showToast('✅ Scénario "'+s.title+'" prêt — il sera chargé au démarrage de la session.');
+    showToast(_lang==='en'?'✅ Scenario "'+s.title+'" ready — will load at session start.':'✅ Scénario "'+s.title+'" prêt — il sera chargé au démarrage de la session.');
     showScreen('home');
     return;
   }
-  if(state.exercises.length>0&&!confirm('Cette action remplacera les exercices actuels. Continuer ?')) return;
+  if(state.exercises.length>0&&!confirm(_lang==='en'?'This will replace current exercises. Continue?':'Cette action remplacera les exercices actuels. Continuer ?')) return;
   _applyScenario(s);
 }
 function _applyScenario(s){
@@ -7164,10 +7265,10 @@ function loadScenarioCustom(id){
     _pendingScenarioId=id;
     document.getElementById('modal-scen-edit').style.display='none';
     document.getElementById('modal-scenarios').style.display='none';
-    showToast('✅ Scénario "'+s.title+'" personnalisé prêt — il sera chargé au démarrage.');
+    showToast(_lang==='en'?'✅ Custom scenario "'+s.title+'" ready — will load at session start.':'✅ Scénario "'+s.title+'" personnalisé prêt — il sera chargé au démarrage.');
     showScreen('home'); return;
   }
-  if(state.exercises.length>0&&!confirm('Cette action remplacera les exercices actuels. Continuer ?')) return;
+  if(state.exercises.length>0&&!confirm(_lang==='en'?'This will replace current exercises. Continue?':'Cette action remplacera les exercices actuels. Continuer ?')) return;
   state.exercises=[];
   edits.filter(e=>e.enabled).forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid); if(!sc) return;
@@ -7199,7 +7300,9 @@ function renderPlansList(){
   const el = document.getElementById('plans-list');
   if(!el) return;
   if(!plans.length){
-    el.innerHTML='<div style="text-align:center;color:#475569;padding:30px 10px;font-size:14px;line-height:1.8;">Aucun loft sauvegardé.<br><span style="color:#64748B;font-size:12px;">Créez votre premier loft avec ＋ NOUVEAU LOFT</span></div>';
+    el.innerHTML=_lang==='en'
+      ?'<div style="text-align:center;color:#475569;padding:30px 10px;font-size:14px;line-height:1.8;">No saved loft.<br><span style="color:#64748B;font-size:12px;">Create your first loft with ＋ NEW LOFT</span></div>'
+      :'<div style="text-align:center;color:#475569;padding:30px 10px;font-size:14px;line-height:1.8;">Aucun loft sauvegardé.<br><span style="color:#64748B;font-size:12px;">Créez votre premier loft avec ＋ NOUVEAU LOFT</span></div>';
     return;
   }
   const LP=['#39FF14','#00E5FF','#FF6B35','#A78BFA','#FFE500','#FF2D98','#00FF9F','#F97316','#06B6D4','#EC4899'];
@@ -7210,10 +7313,10 @@ function renderPlansList(){
     const dateStr = new Date(p.createdAt).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'});
     return `<div style="background:#080B10;border:1px solid ${col}44;border-radius:12px;padding:14px;margin-bottom:10px;border-left:4px solid ${col};${isNew?'box-shadow:0 0 22px '+col+'33,0 0 6px '+col+'22;':''}">
 <div style="font-size:16px;font-weight:800;color:${col};margin-bottom:4px;${isNew?'text-shadow:0 0 12px '+col+'AA;':''}">${p.name}</div>
-<div style="font-size:11px;color:#475569;margin-bottom:8px;">${p.exIds.length} exercice${p.exIds.length>1?'s':''} · ${dateStr}</div>
+<div style="font-size:11px;color:#475569;margin-bottom:8px;">${p.exIds.length} ${_lang==='en'?'exercise':'exercice'}${p.exIds.length>1?'s':''} · ${dateStr}</div>
 <div style="font-size:12px;color:#334155;margin-bottom:12px;line-height:1.7;">${exNames.slice(0,5).join(' · ')}${exNames.length>5?' · <span style="color:'+col+';">+'+(exNames.length-5)+'</span>':''}</div>
 <div style="display:flex;gap:8px;">
-<button onclick="loadPlan('${p.id}')" style="flex:2;padding:10px;border-radius:8px;background:${col}22;border:1px solid ${col};color:${col};font-size:13px;font-weight:700;cursor:pointer;">▶ Charger</button>
+<button onclick="loadPlan('${p.id}')" style="flex:2;padding:10px;border-radius:8px;background:${col}22;border:1px solid ${col};color:${col};font-size:13px;font-weight:700;cursor:pointer;">▶ ${_lang==='en'?'Load':'Charger'}</button>
 <button onclick="editPlan('${p.id}')" style="flex:1;padding:10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:13px;font-weight:700;cursor:pointer;">✏</button>
 <button onclick="deletePlan('${p.id}')" style="flex:1;padding:10px;border-radius:8px;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:13px;font-weight:700;cursor:pointer;">🗑</button>
 </div></div>`;
@@ -7223,7 +7326,7 @@ function renderPlansList(){
 function newPlan(){
   _planEditId = null;
   _planEditExIds = [];
-  document.getElementById('plan-edit-title').textContent = 'NOUVEAU LOFT';
+  document.getElementById('plan-edit-title').textContent = _lang==='en'?'NEW LOFT':'NOUVEAU LOFT';
   document.getElementById('plan-name-input').value = '';
   renderPlanExList();
   document.getElementById('modal-plan-edit').style.display = 'flex';
@@ -7233,7 +7336,7 @@ function editPlan(id){
   if(!plan) return;
   _planEditId = id;
   _planEditExIds = [...plan.exIds];
-  document.getElementById('plan-edit-title').textContent = 'MODIFIER LE LOFT';
+  document.getElementById('plan-edit-title').textContent = _lang==='en'?'EDIT LOFT':'MODIFIER LE LOFT';
   document.getElementById('plan-name-input').value = plan.name;
   renderPlanExList();
   document.getElementById('modal-plan-edit').style.display = 'flex';
@@ -7245,10 +7348,12 @@ function closePlanEdit(){
 function renderPlanExList(){
   const cnt = document.getElementById('plan-ex-count');
   const el = document.getElementById('plan-ex-list');
-  if(cnt) cnt.textContent = _planEditExIds.length + ' exercice' + (_planEditExIds.length>1?'s':'');
+  if(cnt) cnt.textContent = _planEditExIds.length + ' ' + (_lang==='en'?'exercise':'exercice') + (_planEditExIds.length>1?'s':'');
   if(!el) return;
   if(!_planEditExIds.length){
-    el.innerHTML='<div style="text-align:center;color:#475569;padding:20px;font-size:13px;">Aucun exercice — appuyez sur ＋ Ajouter</div>';
+    el.innerHTML=_lang==='en'
+      ?'<div style="text-align:center;color:#475569;padding:20px;font-size:13px;">No exercise — tap ＋ Add</div>'
+      :'<div style="text-align:center;color:#475569;padding:20px;font-size:13px;">Aucun exercice — appuyez sur ＋ Ajouter</div>';
     return;
   }
   el.innerHTML = _planEditExIds.map((sid,i)=>{
@@ -7282,8 +7387,8 @@ function openAddForPlan(){
 }
 function savePlanEdit(){
   const name = (document.getElementById('plan-name-input').value||'').trim();
-  if(!name){ showToast('⚠️ Entrez un nom pour ce loft.'); return; }
-  if(!_planEditExIds.length){ showToast('⚠️ Ajoutez au moins un exercice.'); return; }
+  if(!name){ showToast(_lang==='en'?'⚠️ Enter a name for this loft.':'⚠️ Entrez un nom pour ce loft.'); return; }
+  if(!_planEditExIds.length){ showToast(_lang==='en'?'⚠️ Add at least one exercise.':'⚠️ Ajoutez au moins un exercice.'); return; }
   const plans = getPlans();
   if(_planEditId){
     const idx = plans.findIndex(p=>p.id===_planEditId);
@@ -7294,11 +7399,11 @@ function savePlanEdit(){
   _savePlans(plans);
   closePlanEdit();
   renderPlansList();
-  showToast('✅ Loft "'+name+'" sauvegardé !');
+  showToast('✅ Loft "'+name+'"'+(_lang==='en'?' saved!':" sauvegardé !"));
 }
 function deletePlan(id){
   const plan = getPlans().find(p=>p.id===id);
-  if(!plan||!confirm('Supprimer le loft "'+plan.name+'" ?')) return;
+  if(!plan||!confirm(_lang==='en'?'Delete loft "'+plan.name+'"?':'Supprimer le loft "'+plan.name+'" ?')) return;
   _savePlans(getPlans().filter(p=>p.id!==id));
   renderPlansList();
 }
@@ -7342,7 +7447,7 @@ function confirmTimeLimit(){
     const limEl=document.getElementById('timer-limit-val');
     if(limEl){limEl.textContent=ex.timeLimit?fmtMS(ex.timeLimit*60):'--:--';limEl.style.color=ex.timeLimit?_tlColor:'#64748B';limEl.style.textShadow=ex.timeLimit?'0 0 8px '+_tlColor+'66':'none';}
   } else {renderExList();}
-  showToast('⏱ Limite '+(ex.timeLimit?ex.timeLimit+'min':'supprimée'));
+  showToast('⏱ '+(_lang==='en'?'Limit '+(ex.timeLimit?ex.timeLimit+'min':'removed'):'Limite '+(ex.timeLimit?ex.timeLimit+'min':'supprimée')));
 }
 function closeTimeLimitModal(){document.getElementById('modal-timelimit').style.display='none';}
 
@@ -7524,11 +7629,11 @@ function loadPlan(id){
   if(!state.sessionStart){
     _pendingPlanId = id;
     closePlans();
-    showToast('🗂 Loft "'+plan.name+'" prêt — sera chargé au démarrage de la session.');
+    showToast(_lang==='en'?'🗂 Loft "'+plan.name+'" ready — will load at session start.':'🗂 Loft "'+plan.name+'" prêt — sera chargé au démarrage de la session.');
     showScreen('home');
     return;
   }
-  if(state.exercises.length>0 && !confirm('Remplacer les exercices actuels par ce loft ?')) return;
+  if(state.exercises.length>0 && !confirm(_lang==='en'?'Replace current exercises with this loft?':'Remplacer les exercices actuels par ce loft ?')) return;
   _applyPlan(plan);
 }
 function _applyPlan(plan){
@@ -7702,9 +7807,9 @@ ta.focus();
 ta.select();
 document.execCommand('copy');
 document.body.removeChild(ta);
-alert('✅ Rapport copié !\n\nCollez-le dans Mail, Messages ou Notes.');
+alert(_lang==='en'?'✅ Report copied!\n\nPaste it into Mail, Messages or Notes.':'✅ Rapport copié !\n\nCollez-le dans Mail, Messages ou Notes.');
 } catch(e){
-alert('Pour partager:\n1. Appuyez sur le bouton ⬜↑ de Safari\n2. Choisissez "Imprimer" ou "Envoyer par Mail"');
+alert(_lang==='en'?'To share:\n1. Tap the ⬜↑ button in Safari\n2. Choose "Print" or "Send by Mail"':'Pour partager:\n1. Appuyez sur le bouton ⬜↑ de Safari\n2. Choisissez "Imprimer" ou "Envoyer par Mail"');
 }
 }
 
@@ -7721,7 +7826,7 @@ const instrName = state.instructorName || state.currentUser || "TRI";
 let total=0,count=0;
 closed.forEach(ex=>{const st=exStats(ex);if(st&&st.avg>0){total+=st.avg;count++;}});
 const avg = count>0?total/count:0;
-const level = avg>=4.5?'EXEMPLAIRE':avg>=3.5?'AU-DESSUS DU STANDARD':avg>=2.5?'STANDARD':avg>=1.5?'SOUS-STANDARD':'INACCEPTABLE';
+const level = avg>=4.5?(_lang==='en'?'EXEMPLARY':'EXEMPLAIRE'):avg>=3.5?(_lang==='en'?'ABOVE STANDARD':'AU-DESSUS DU STANDARD'):avg>=2.5?'STANDARD':avg>=1.5?(_lang==='en'?'BELOW STANDARD':'SOUS-STANDARD'):(_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE');
 
 const compScores={};
 COMPETENCIES.forEach(c=>{compScores[c.id]={total:0,count:0};});
@@ -7756,13 +7861,13 @@ body+=`  ${c.label.padEnd(5)}: ${a.toFixed(1)}/5${a>=4?' ✓':a<3.5?' △':''}\n
 if(a>=4)strong.push(c.label); if(a<3.5)weak.push(c.label);
 }
 });
-if(strong.length) body+=`\nPoints forts: ${strong.join(', ')}\n`;
-if(weak.length) body+=`A consolider: ${weak.join(', ')}\n`;
+if(strong.length) body+=`\n${_lang==='en'?'Strengths':'Points forts'}: ${strong.join(', ')}\n`;
+if(weak.length) body+=`${_lang==='en'?'To reinforce':'A consolider'}: ${weak.join(', ')}\n`;
 body+=`\n`;
 
 if(temStats.threats>0){
-body+=`DONNEES TEM:\n  Menaces: ${temStats.threats} (${temStats.threatsMit} attenuees)\n`;
-body+=`  Erreurs: ${temStats.errors} (${temStats.errorsMit} gerees)\n`;
+body+=`${_lang==='en'?'TEM DATA':'DONNEES TEM'}:\n  ${_lang==='en'?'Threats':'Menaces'}: ${temStats.threats} (${temStats.threatsMit} ${_lang==='en'?'mitigated':'attenuees'})\n`;
+body+=`  ${_lang==='en'?'Errors':'Erreurs'}: ${temStats.errors} (${temStats.errorsMit} ${_lang==='en'?'managed':'gerees'})\n`;
 body+=`  UAS: ${temStats.uas}\n`;
 if(temStats.recTotal>0) body+=`  Recoveries: ${temStats.recOk}/${temStats.recTotal}\n`;
 body+=`\n`;
@@ -7815,11 +7920,11 @@ return {ct,avgs,global};
 }
 
 function levelInfo(avg){
-if(avg>=4.5)return{l:'EXEMPLAIRE',c:'#10B981'};
-if(avg>=3.5)return{l:'AU-DESSUS DU STANDARD',c:'#3B82F6'};
+if(avg>=4.5)return{l:_lang==='en'?'EXEMPLARY':'EXEMPLAIRE',c:'#10B981'};
+if(avg>=3.5)return{l:_lang==='en'?'ABOVE STANDARD':'AU-DESSUS DU STANDARD',c:'#3B82F6'};
 if(avg>=2.5)return{l:'STANDARD',c:'#F59E0B'};
-if(avg>=1.5)return{l:'SOUS-STANDARD',c:'#F97316'};
-return{l:'INACCEPTABLE',c:'#EF4444'};
+if(avg>=1.5)return{l:_lang==='en'?'BELOW STANDARD':'SOUS-STANDARD',c:'#F97316'};
+return{l:_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE',c:'#EF4444'};
 }
 function bc(avg){
 if(avg>=4.5)return'#10B981';if(avg>=3.5)return'#3B82F6';
@@ -7872,8 +7977,8 @@ return `<div style="background:#fff;border-radius:12px;border:2px solid ${pilotC
 <div>
 <div style="font-size:10px;color:${pilotColor};font-weight:700;letter-spacing:1px;margin-bottom:2px;">${csKey==='cs'?(state.pilotRole||'CPT'):( state.foRole||'FO')} — ${csKey==='cs'?(_ROLE_LABELS[state.pilotRole]||'COMMANDANT DE BORD'):(_ROLE_LABELS[state.foRole]||'PREMIER OFFICIER')}</div>
 <div style="font-size:15px;font-weight:800;color:#0f172a;">${name}</div>
-${strong.length?`<div style="font-size:11px;color:#047857;font-weight:700;margin-top:4px;">✓ Points forts: ${strong.join(', ')}</div>`:''}
-${weak.length?`<div style="font-size:11px;color:#B91C1C;font-weight:700;margin-top:2px;">△ À consolider: ${weak.join(', ')}</div>`:''}
+${strong.length?`<div style="font-size:11px;color:#047857;font-weight:700;margin-top:4px;">✓ ${_lang==='en'?'Strengths':'Points forts'}: ${strong.join(', ')}</div>`:''}
+${weak.length?`<div style="font-size:11px;color:#B91C1C;font-weight:700;margin-top:2px;">△ ${_lang==='en'?'To reinforce':'À consolider'}: ${weak.join(', ')}</div>`:''}
 </div>
 <div style="text-align:right;">
 <div style="font-size:28px;font-weight:900;color:${pilotColor};">${global.toFixed(2)}</div>
@@ -7943,15 +8048,15 @@ ${state.foName?`<div style="background:${FO_COLOR}33;border:1px solid ${FO_COLOR
 </div>
 
 <div style="padding:8px 0 20px;">
-<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">RÉSULTATS PAR COMPÉTENCE</div>
+<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'RESULTS BY COMPETENCY':'RÉSULTATS PAR COMPÉTENCE'}</div>
 ${pilotBlock('cs',(state.pilotRole||'CPT')+' — '+state.pilotName, state.pilotRole==='TRI'?'#F59E0B':state.pilotRole==='FO'?FO_COLOR:CPT_COLOR)}
 ${state.foName?pilotBlock('csfo',(state.foRole||'FO')+' — '+state.foName, state.foRole==='TRI'?'#F59E0B':state.foRole==='CPT'?CPT_COLOR:FO_COLOR):''}
 
-<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">DÉTAIL DES EXERCICES</div>
-<div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">${exRows||'<div style="padding:16px;color:#94a3b8;font-size:13px;">Aucun exercice clôturé</div>'}</div>
+<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'EXERCISE DETAILS':'DÉTAIL DES EXERCICES'}</div>
+<div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">${exRows||`<div style="padding:16px;color:#94a3b8;font-size:13px;">${_lang==='en'?'No closed exercises':'Aucun exercice clôturé'}</div>`}</div>
 
 ${conclusion?`
-<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">RECOMMANDATIONS INSTRUCTEUR</div>
+<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'INSTRUCTOR RECOMMENDATIONS':'RECOMMANDATIONS INSTRUCTEUR'}</div>
 <div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;padding:14px;font-size:13px;line-height:1.7;border-left:4px solid #0f172a;">${conclusion}</div>`:''}
 
 ${(()=>{
@@ -7964,7 +8069,7 @@ const avg = scored.length?scored.reduce((s,c)=>s+(grades[c.id]||0),0)/scored.len
 const rec = state.triRecommendation||'';
 const recColors={APTE:'#10B981',INAPTE:'#EF4444',REPORT:'#F59E0B'};
 const levelC=(v)=>v>=4.5?'#10B981':v>=3.5?'#0ea5e9':v>=2.5?'#F59E0B':v>=1.5?'#F97316':'#EF4444';
-const levelL=(v)=>v>=4.5?'EXEMPLAIRE':v>=3.5?'AU-DESSUS':v>=2.5?'STANDARD':v>=1.5?'SOUS-STANDARD':'INACCEPTABLE';
+const levelL=(v)=>v>=4.5?(_lang==='en'?'EXEMPLARY':'EXEMPLAIRE'):v>=3.5?(_lang==='en'?'ABOVE':'AU-DESSUS'):v>=2.5?'STANDARD':v>=1.5?(_lang==='en'?'BELOW STD':'SOUS-STANDARD'):(_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE');
 const cats=[...new Set(TRI_CHECK_CRITERIA.map(c=>c.cat))];
 let s='<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">BOEING INSTRUCTOR COMPETENCY FRAMEWORK</div>';
 s+='<div style="background:#fff;border-radius:12px;border:2px solid #F59E0B44;margin:0 16px;overflow:hidden;border-left:4px solid #F59E0B;">';
@@ -8106,7 +8211,7 @@ function printRapportFromHistory(idx){
   const hist = JSON.parse(localStorage.getItem('cbta_history')||'[]');
   const session = hist[idx];
   if(!session || !session.rapportHTML){
-    alert('Rapport PDF non disponible pour cette session.\n(Les sessions enregistrées avant la mise à jour ne contiennent pas le rapport complet.)');
+    alert(_lang==='en'?'PDF report not available for this session.\n(Sessions saved before the update do not contain the full report.)':'Rapport PDF non disponible pour cette session.\n(Les sessions enregistrées avant la mise à jour ne contiennent pas le rapport complet.)');
     return;
   }
   const pilot = session.pilotName || '';
@@ -8308,7 +8413,7 @@ const history=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 // Filter sessions for this pilot
 const pilotSessions=history.filter(s=>(s.pilotName||'').toLowerCase()===pilotName.toLowerCase()||(s.foName||'').toLowerCase()===pilotName.toLowerCase()).sort((a,b)=>a.date-b.date);
 if(!pilotSessions.length){
-  alert('Aucune session trouvée pour '+pilotName);
+  alert(_lang==='en'?'No session found for '+pilotName:'Aucune session trouvée pour '+pilotName);
   return;
 }
 const isFo=(s)=>(s.foName||'').toLowerCase()===pilotName.toLowerCase();
@@ -9858,7 +9963,7 @@ showScreen('home');
 }
 
 function saveSessionToHistory(){
-  if(localStorage.getItem('cbta_training')==='1'){showToast('🎭 Mode entraînement — session non enregistrée');return;}
+  if(localStorage.getItem('cbta_training')==='1'){showToast(_lang==='en'?'🎭 Training mode — session not saved':'🎭 Mode entraînement — session non enregistrée');return;}
 try {
 const closed = state.exercises.filter(e=>e.closed);
 if(!closed.length) return;
@@ -10145,7 +10250,7 @@ function showImportSessionModal(){
   const today=new Date().toISOString().slice(0,10);
   const dateEl=document.getElementById('imp-date');if(dateEl)dateEl.value=today;
   const pdfStatus=document.getElementById('imp-pdf-status');
-  if(pdfStatus)pdfStatus.textContent='Aucun fichier sélectionné';
+  if(pdfStatus)pdfStatus.textContent=t('no_file_selected');
   const pdfInput=document.getElementById('imp-pdf-input');if(pdfInput)pdfInput.value='';
   _impPdfData=null;
   const grid=document.getElementById('imp-comp-grid');
@@ -10427,51 +10532,51 @@ try {
 const hist = JSON.parse(localStorage.getItem('cbta_history')||'[]');
 const s = hist[idx]; if(!s) return;
 const score = parseFloat(s.avgScore)||0;
-const level = score>=4.5?'EXEMPLAIRE':score>=3.5?'AU-DESSUS DU STANDARD':score>=2.5?'STANDARD':score>=1.5?'SOUS-STANDARD':'INACCEPTABLE';
+const level = score>=4.5?(_lang==='en'?'EXEMPLARY':'EXEMPLAIRE'):score>=3.5?(_lang==='en'?'ABOVE STANDARD':'AU-DESSUS DU STANDARD'):score>=2.5?'STANDARD':score>=1.5?(_lang==='en'?'BELOW STANDARD':'SOUS-STANDARD'):(_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE');
 
-let body = `RAPPORT DE SESSION CBTA — B737 NG\n`;
+let body = _lang==='en'?`CBTA SESSION REPORT — B737 NG\n`:`RAPPORT DE SESSION CBTA — B737 NG\n`;
 body += `${'='.repeat(45)}\n\n`;
 body += `Session: ${s.sessionName}\n`;
 body += `Date: ${s.date} ${s.time}\n`;
-body += `Instructeur TRI: ${s.instructorName}\n`;
-body += `Commandant de Bord: ${s.pilotName}\n`;
-if(s.foName) body += `Premier Officier: ${s.foName}\n`;
-body += `Exercices évalués: ${s.exercisesCount}\n\n`;
+body += (_lang==='en'?`TRI Instructor: `:`Instructeur TRI: `)+`${s.instructorName}\n`;
+body += (_lang==='en'?`Captain: `:`Commandant de Bord: `)+`${s.pilotName}\n`;
+if(s.foName) body += (_lang==='en'?`First Officer: `:`Premier Officier: `)+`${s.foName}\n`;
+body += (_lang==='en'?`Exercises evaluated: `:`Exercices évalués: `)+`${s.exercisesCount}\n\n`;
 
-body += `SCORE GLOBAL CPT: ${s.avgScore}/5.00 — ${level}\n\n`;
+body += (_lang==='en'?`GLOBAL CPT SCORE: `:`SCORE GLOBAL CPT: `)+`${s.avgScore}/5.00 — ${level}\n\n`;
 
-body += `SCORES PAR COMPÉTENCE:\n`;
+body += (_lang==='en'?`SCORES BY COMPETENCY:\n`:`SCORES PAR COMPÉTENCE:\n`);
 COMPETENCIES.forEach(c=>{
 const avg = s.compAvgs&&s.compAvgs[c.id]?parseFloat(s.compAvgs[c.id]):null;
 if(avg) body += `  ${c.label.padEnd(5)}: ${avg.toFixed(1)}/5.0${avg>=4?'  ✓':avg<3.5?'  △':''}\n`;
 });
 body += `\n`;
 
-if(s.strong&&s.strong.length) body += `Points forts: ${s.strong.join(', ')}\n`;
-if(s.weak&&s.weak.length) body += `À consolider: ${s.weak.join(', ')}\n`;
+if(s.strong&&s.strong.length) body += (_lang==='en'?`Strengths: `:`Points forts: `)+`${s.strong.join(', ')}\n`;
+if(s.weak&&s.weak.length) body += (_lang==='en'?`To reinforce: `:`À consolider: `)+`${s.weak.join(', ')}\n`;
 body += `\n`;
 
 const temS = s.temStats||{};
 if(temS.threats>0){
-body += `DONNÉES TEM:\n`;
-body += `  Menaces: ${temS.threats} identifiées, ${temS.threatsMit} atténuées\n`;
-body += `  Erreurs: ${temS.errors} identifiées, ${temS.errorsMit} gérées\n`;
-body += `  UAS: ${temS.uas} observés\n`;
+body += (_lang==='en'?`TEM DATA:\n`:`DONNÉES TEM:\n`);
+body += _lang==='en'?`  Threats: ${temS.threats} identified, ${temS.threatsMit} mitigated\n`:`  Menaces: ${temS.threats} identifiées, ${temS.threatsMit} atténuées\n`;
+body += _lang==='en'?`  Errors: ${temS.errors} identified, ${temS.errorsMit} managed\n`:`  Erreurs: ${temS.errors} identifiées, ${temS.errorsMit} gérées\n`;
+body += _lang==='en'?`  UAS: ${temS.uas} observed\n`:`  UAS: ${temS.uas} observés\n`;
 if(temS.recTotal>0) body += `  Recoveries: ${temS.recOk}/${temS.recTotal}\n`;
 body += `\n`;
 }
 
-body += `EXERCICES ÉVALUÉS:\n`;
+body += (_lang==='en'?`EVALUATED EXERCISES:\n`:`EXERCICES ÉVALUÉS:\n`);
 (s.exercises||[]).forEach((ex,i)=>{
 body += `  ${i+1}. ${ex.title} — ${ex.avg}/5.0\n`;
 });
 body += `\n`;
 
-if(s.conclusion) body += `RECOMMANDATION INSTRUCTEUR:\n${s.conclusion}\n\n`;
-body += `${'='.repeat(45)}\nQRH B737NG Rev55 · FCTM Rev25 · CBTA OACI\nBy Cpt Bouchenafa Mohamed Amine`;
+if(s.conclusion) body += (_lang==='en'?`INSTRUCTOR RECOMMENDATION:\n`:`RECOMMANDATION INSTRUCTEUR:\n`)+`${s.conclusion}\n\n`;
+body += `${'='.repeat(45)}\nQRH B737NG Rev55 · FCTM Rev25 · CBTA ICAO\nBy Cpt Bouchenafa Mohamed Amine`;
 
-envoyerEmail(`Rapport CBTA — ${s.pilotName} — ${s.date}`, body);
-} catch(e){ alert('Erreur: '+e.message); }
+envoyerEmail((_lang==='en'?`CBTA Report — `:`Rapport CBTA — `)+`${s.pilotName} — ${s.date}`, body);
+} catch(e){ alert((_lang==='en'?'Error: ':'Erreur: ')+e.message); }
 }
 
 function envoyerEmail(sujet, corps){
@@ -10492,7 +10597,7 @@ const subjectEnc = encodeURIComponent(sujet);
 window.location.href = `mailto:?subject=${subjectEnc}`;
 // Afficher message guidage
 setTimeout(()=>{
-alert('✅ Rapport copié !\n\nMail est ouvert.\nAppuyez dans le corps du message et\nchoisissez "Coller" pour insérer le rapport complet.');
+alert(_lang==='en'?'✅ Report copied!\n\nMail is open.\nTap in the message body and\nchoose "Paste" to insert the full report.':'✅ Rapport copié !\n\nMail est ouvert.\nAppuyez dans le corps du message et\nchoisissez "Coller" pour insérer le rapport complet.');
 }, 800);
 } else {
 throw new Error('copy failed');
@@ -10786,8 +10891,8 @@ ov=document.createElement('div');
 ov.id='reco-print-overlay';
 ov.style.cssText='position:fixed;inset:0;background:#fff;z-index:99990;overflow-y:auto;-webkit-overflow-scrolling:touch;';
 ov.innerHTML=`<div style="display:flex;gap:8px;position:sticky;top:0;background:#fff;border-bottom:1px solid #e2e8f0;padding:10px 16px;z-index:2;align-items:center;">
-<button onclick="document.getElementById(\'reco-print-overlay\').remove()" style="background:#0f172a;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">← Retour</button>
-<button onclick="window.print()" style="background:${accentColor};color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">🖨 Imprimer / PDF</button>
+<button onclick="document.getElementById(\'reco-print-overlay\').remove()" style="background:#0f172a;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">${_lang==='en'?'← Back':'← Retour'}</button>
+<button onclick="window.print()" style="background:${accentColor};color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">${_lang==='en'?'🖨 Print / PDF':'🖨 Imprimer / PDF'}</button>
 </div>
 <div id="reco-print-body">${bodyHtml}</div>`;
 document.body.appendChild(ov);
@@ -11068,13 +11173,13 @@ function exportHistoryJSON(){
   a.href=url;
   a.download='cbta_backup_'+new Date().toLocaleDateString('fr-FR').replace(/\//g,'-')+'.json';
   a.click();URL.revokeObjectURL(url);
-  showToast('✅ Backup exporté — '+hist.length+' session(s), '+Object.keys(db).length+' pilote(s)');
+  showToast(_lang==='en'?'✅ Backup exported — '+hist.length+' session(s), '+Object.keys(db).length+' pilot(s)':'✅ Backup exporté — '+hist.length+' session(s), '+Object.keys(db).length+' pilote(s)');
 }
 
 function exportSessionJSON(){
   const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
   const session=hist[0];
-  if(!session){showToast('❌ Aucune session enregistrée à exporter');return;}
+  if(!session){showToast(_lang==='en'?'❌ No saved session to export':'❌ Aucune session enregistrée à exporter');return;}
   const dateStr=new Date().toISOString().slice(0,10);
   const sessName=((session.sessionName||'SESSION')+'').replace(/[^a-zA-Z0-9]/g,'_').substring(0,20);
   function _dl(mat,role){
@@ -11090,7 +11195,7 @@ function exportSessionJSON(){
   const mat2=((session.foMatricule||session.foName||'FO')+'').replace(/[^a-zA-Z0-9]/g,'_');
   _dl(mat1,'CPT');
   setTimeout(()=>_dl(mat2,'FO'),600);
-  showToast('✅ 2 fichiers générés — '+mat1+' (CPT) & '+mat2+' (FO)');
+  showToast(_lang==='en'?'✅ 2 files generated — '+mat1+' (CPT) & '+mat2+' (FO)':'✅ 2 fichiers générés — '+mat1+' (CPT) & '+mat2+' (FO)');
 }
 
 function exportPilotDossier(key,name,matricule){
@@ -11102,7 +11207,7 @@ function exportPilotDossier(key,name,matricule){
     const foK=((s.foMatricule||'').toUpperCase()||(s.foName||'').toLowerCase().trim());
     return cptK===keyUp||foK===keyUp||(s.pilotName||'').toLowerCase()===keyLow||(s.foName||'').toLowerCase()===keyLow;
   });
-  if(!pilotSessions.length){showToast('❌ Aucune session trouvée pour ce pilote');return;}
+  if(!pilotSessions.length){showToast(_lang==='en'?'❌ No session found for this pilot':'❌ Aucune session trouvée pour ce pilote');return;}
   const mat=((matricule||name||key)+'').replace(/[^a-zA-Z0-9]/g,'_');
   const dateStr=new Date().toISOString().slice(0,10);
   const fname='DOSSIER_'+mat+'_'+dateStr+'.json';
@@ -11111,7 +11216,7 @@ function exportPilotDossier(key,name,matricule){
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url;a.download=fname;a.click();URL.revokeObjectURL(url);
-  showToast('✅ Dossier '+name+' exporté — '+pilotSessions.length+' session(s)');
+  showToast(_lang==='en'?'✅ Dossier '+name+' exported — '+pilotSessions.length+' session(s)':'✅ Dossier '+name+' exporté — '+pilotSessions.length+' session(s)');
 }
 function importHistoryJSON(inp){
   const file=inp.files[0];if(!file) return;
@@ -11130,9 +11235,9 @@ function importHistoryJSON(inp){
       } else if(Array.isArray(data)){
         incoming=data;
       } else {
-        showToast('❌ Format de fichier non reconnu');return;
+        showToast(_lang==='en'?'❌ Unrecognized file format':'❌ Format de fichier non reconnu');return;
       }
-      if(!incoming.length){showToast('❌ Aucune session dans ce fichier');return;}
+      if(!incoming.length){showToast(_lang==='en'?'❌ No session in this file':'❌ Aucune session dans ce fichier');return;}
       const existing=JSON.parse(localStorage.getItem('cbta_history')||'[]');
       // Toujours fusionner — dédupliquer par date+sessionName+pilotName
       const merged=[...incoming,...existing];
@@ -11142,12 +11247,12 @@ function importHistoryJSON(inp){
       localStorage.setItem('cbta_history',JSON.stringify(deduped));
       if(data.pilotdb){const edb=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
       if(data.type==='pilot_dossier'){
-        showToast('✅ Dossier importé — '+incoming.length+' session(s) fusionnées · Total: '+deduped.length);
+        showToast(_lang==='en'?'✅ Dossier imported — '+incoming.length+' session(s) merged · Total: '+deduped.length:'✅ Dossier importé — '+incoming.length+' session(s) fusionnées · Total: '+deduped.length);
       } else {
-        showToast('✅ '+incoming.length+' session(s) importée(s) · Total: '+deduped.length);
+        showToast(_lang==='en'?'✅ '+incoming.length+' session(s) imported · Total: '+deduped.length:'✅ '+incoming.length+' session(s) importée(s) · Total: '+deduped.length);
       }
       inp.value='';renderHistContent();
-    }catch(err){showToast('❌ Erreur lecture fichier');}
+    }catch(err){showToast(_lang==='en'?'❌ File read error':'❌ Erreur lecture fichier');}
   };
   reader.readAsText(file);
 }
