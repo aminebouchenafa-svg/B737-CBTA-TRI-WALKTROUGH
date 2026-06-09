@@ -392,66 +392,69 @@ Identifiant ou mot de passe incorrect
 </div>
 <div class="home-card">
 <div style="font-size:10px;font-weight:700;letter-spacing:3px;color:#3B82F6;margin-bottom:3px;">BOEING CBTA TRI</div>
-<div style="font-size:22px;font-weight:700;color:#F1F5F9;margin-bottom:2px;">Instructor Station</div>
-<div style="font-size:13px;color:var(--mut);margin-bottom:10px;">B737NG · QRH Rev55 · FCTM Rev25</div>
+<div style="font-size:22px;font-weight:700;color:#F1F5F9;margin-bottom:2px;" data-i18n="home_session_title">Instructor Station</div>
+<div style="font-size:13px;color:var(--mut);margin-bottom:10px;" data-i18n="home_session_sub">B737NG · QRH Rev55 · FCTM Rev25</div>
 <button onclick="openGuide()" style="width:100%;padding:10px;border-radius:10px;background:#F59E0B11;border:1px solid #F59E0B44;color:#F59E0B;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;letter-spacing:1px;">
   <span style="font-size:17px;font-weight:900;background:#F59E0B22;border:1px solid #F59E0B;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;">?</span>
-  GUIDE D'UTILISATION
+  <span data-i18n="guide_btn">GUIDE D'UTILISATION</span>
 </button>
 <div style="margin-bottom:12px;">
-<label class="form-label">Session / Vol</label>
-<input id="inp-session" class="form-input" placeholder="ex: B737-800 OPC Innsbruck"/>
+<label class="form-label" data-i18n="home_session_name">Session / Vol</label>
+<input id="inp-session" class="form-input" data-i18n-ph="home_session_placeholder" placeholder="ex: B737-800 OPC Innsbruck"/>
 </div>
 <div style="margin-bottom:12px;">
-<label class="form-label" id="lbl-seat1">SIÈGE GAUCHE — COMMANDANT DE BORD</label>
+<label class="form-label" id="lbl-seat1" data-i18n="home_pilot_cpt">SIÈGE GAUCHE — COMMANDANT DE BORD</label>
 <div style="display:flex;gap:6px;margin-bottom:6px;">
 <button id="s1-cpt" onclick="setRoleSeat1('CPT',this)" style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #3B82F6;background:#3B82F622;color:#3B82F6;">CPT</button>
 <button id="s1-fo"  onclick="setRoleSeat1('FO',this)"  style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">FO</button>
 <button id="s1-tri" onclick="setRoleSeat1('TRI',this)" style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">TRI CHECK</button>
 </div>
 <div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;">
-<input id="inp-mat-cpt" class="form-input" style="flex:1;margin:0;" placeholder="Matricule" oninput="lookupPilotByMat(this.value,'cpt')"/>
+<input id="inp-mat-cpt" class="form-input" style="flex:1;margin:0;" data-i18n-ph="home_mat_placeholder" placeholder="Matricule" oninput="lookupPilotByMat(this.value,'cpt')"/>
 <div id="badge-cpt" style="padding:5px 10px;border-radius:8px;font-size:10px;font-weight:800;flex-shrink:0;background:#1E2530;color:#475569;letter-spacing:1px;">NEW</div>
 </div>
-<input id="inp-cpt" class="form-input" placeholder="Nom du stagiaire siège gauche"/>
+<input id="inp-cpt" class="form-input" data-i18n-ph="home_seat_left_placeholder" placeholder="Nom du stagiaire siège gauche"/>
 </div>
 <div style="margin-bottom:12px;">
-<label class="form-label" id="lbl-seat2">SIÈGE DROIT — PREMIER OFFICIER (optionnel)</label>
+<label class="form-label" id="lbl-seat2" data-i18n="home_pilot_fo">SIÈGE DROIT — PREMIER OFFICIER (optionnel)</label>
 <div style="display:flex;gap:6px;margin-bottom:6px;">
 <button id="s2-cpt" onclick="setRoleSeat2('CPT',this)" style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">CPT</button>
 <button id="s2-fo"  onclick="setRoleSeat2('FO',this)"  style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #10B981;background:#10B98122;color:#10B981;">FO</button>
 <button id="s2-tri" onclick="setRoleSeat2('TRI',this)" style="flex:1;padding:7px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">TRI CHECK</button>
 </div>
 <div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;">
-<input id="inp-mat-fo" class="form-input" style="flex:1;margin:0;" placeholder="Matricule" oninput="lookupPilotByMat(this.value,'fo')"/>
+<input id="inp-mat-fo" class="form-input" style="flex:1;margin:0;" data-i18n-ph="home_mat_placeholder" placeholder="Matricule" oninput="lookupPilotByMat(this.value,'fo')"/>
 <div id="badge-fo" style="padding:5px 10px;border-radius:8px;font-size:10px;font-weight:800;flex-shrink:0;background:#1E2530;color:#475569;letter-spacing:1px;">NEW</div>
 </div>
-<input id="inp-fo" class="form-input" placeholder="Nom du stagiaire siège droit (optionnel)"/>
+<input id="inp-fo" class="form-input" data-i18n-ph="home_seat_right_placeholder" placeholder="Nom du stagiaire siège droit (optionnel)"/>
 </div>
 <div style="margin-bottom:12px;">
-<label class="form-label">COMPAGNIE</label>
-<input id="inp-company" class="form-input" placeholder="ex: Air Algérie, Air France, Transavia..."/>
+<label class="form-label" data-i18n="home_company_label">COMPAGNIE</label>
+<input id="inp-company" class="form-input" data-i18n-ph="home_company_placeholder" placeholder="ex: Air Algérie, Air France, Transavia..."/>
 </div>
-<div style="font-size:12px;color:var(--mut);text-align:center;margin-bottom:16px;">Laissez siège droit vide si évaluation d'un seul stagiaire</div>
+<div style="font-size:12px;color:var(--mut);text-align:center;margin-bottom:16px;" data-i18n="home_tip">Laissez siège droit vide si évaluation d'un seul stagiaire</div>
 <div style="margin-bottom:12px;">
-<label class="form-label">NOM DE L INSTRUCTEUR (TRI)</label>
-<input id="inp-instructor" class="form-input" placeholder="ex: Cpt Bouchenafa Mohamed Amine"/>
+<label class="form-label" data-i18n="home_instructor_label">NOM DE L INSTRUCTEUR (TRI)</label>
+<input id="inp-instructor" class="form-input" data-i18n-ph="home_instructor_placeholder" placeholder="ex: Cpt Bouchenafa Mohamed Amine"/>
 </div>
 <div style="display:flex;gap:8px;margin-bottom:0;">
-<button class="btn btn-primary" style="flex:1;padding:14px;font-size:15px;letter-spacing:1px;" onclick="startSession()">DÉMARRER LA SESSION</button>
+<button class="btn btn-primary" style="flex:1;padding:14px;font-size:15px;letter-spacing:1px;" onclick="startSession()" data-i18n="home_start_session">DÉMARRER LA SESSION</button>
 <button style="padding:14px 16px;border-radius:10px;background:#10B98122;border:2px solid #10B981;color:#10B981;font-size:18px;cursor:pointer;flex-shrink:0;" onclick="showPlans()" title="Mes Lofts">🗂</button>
 <button style="padding:14px 16px;border-radius:10px;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:18px;cursor:pointer;flex-shrink:0;" onclick="showScenarioLib()" title="Bibliothèque de scénarios">📋</button>
 </div>
 <div style="display:flex;gap:8px;margin-top:8px;">
-<button class="btn" style="flex:1;padding:10px;font-size:13px;background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;" onclick="showHistory()">HISTORIQUE</button>
+<button class="btn" style="flex:1;padding:10px;font-size:13px;background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;" onclick="showHistory()" data-i18n="home_historique">HISTORIQUE</button>
 </div>
 </div>
 <div style="margin-top:24px;text-align:center;padding-bottom:10px;">
 <div style="font-size:13px;color:#FBBF24;font-weight:600;text-shadow:0 0 8px #F59E0B44;">By Cpt Bouchenafa Mohamed Amine</div>
 <div style="font-size:11px;color:#334155;margin-top:3px;">© 2025 CBTA TRI Companion · B737NG QRH Rev55 · FCTM Rev25</div>
-<div style="font-size:10px;color:#1E2530;margin-top:2px;">Tous droits réservés · Usage instructeur uniquement</div>
-<div style="margin-top:14px;display:flex;align-items:center;justify-content:center;">
-<button id="btn-training-mode" onclick="toggleTrainingMode()" style="padding:9px 22px;border-radius:20px;background:#00CCFF0D;border:2px solid #00CCFF88;color:#00CCFF;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;box-shadow:0 0 8px #00CCFF33;">🎭 MODE ENTRAÎNEMENT</button>
+<div style="font-size:10px;color:#1E2530;margin-top:2px;" data-i18n="home_rights">Tous droits réservés · Usage instructeur uniquement</div>
+<div style="margin-top:10px;display:flex;align-items:center;justify-content:center;">
+<button id="lang-toggle-btn" onclick="setLang(_lang==='fr'?'en':'fr')" style="padding:8px 16px;border-radius:20px;background:#1E2530;border:1px solid #334155;color:#F1F5F9;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;margin:0 auto;">🇬🇧 EN</button>
+</div>
+<div style="margin-top:10px;display:flex;align-items:center;justify-content:center;">
+<button id="btn-training-mode" onclick="toggleTrainingMode()" style="padding:9px 22px;border-radius:20px;background:#00CCFF0D;border:2px solid #00CCFF88;color:#00CCFF;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;box-shadow:0 0 8px #00CCFF33;" data-i18n="home_training_mode">🎭 MODE ENTRAÎNEMENT</button>
 </div>
 </div>
 </div>
@@ -459,22 +462,22 @@ Identifiant ou mot de passe incorrect
 
 <div class="screen" id="screen-briefing">
 <div class="topbar">
-<button class="btn" onclick="(state.exercises&&state.exercises.length>0)?showScreen('session'):showScreen('home')">← Retour</button>
+<button class="btn" onclick="(state.exercises&&state.exercises.length>0)?showScreen('session'):showScreen('home')" data-i18n="back_btn">← Retour</button>
 <div style="flex:1;margin-left:10px;">
-<div class="title" style="color:#F59E0B;">BRIEFING PRÉ-SESSION</div>
-<div class="sub" id="briefing-sub">Menaces à identifier avant le vol</div>
+<div class="title" style="color:#F59E0B;" data-i18n="briefing_title">BRIEFING PRÉ-SESSION</div>
+<div class="sub" id="briefing-sub" data-i18n="briefing_sub">Menaces à identifier avant le vol</div>
 </div>
 <button onclick="openGuide()" style="width:36px;height:36px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:18px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</button>
-<button class="btn" style="background:#EF444422;border-color:#EF4444;color:#EF4444;font-size:11px;" onclick="startSessionFromBriefing()">SKIP</button>
+<button class="btn" style="background:#EF444422;border-color:#EF4444;color:#EF4444;font-size:11px;" onclick="startSessionFromBriefing()" data-i18n="briefing_skip">SKIP</button>
 </div>
 <div class="scroll" id="briefing-content" style="padding:0;"></div>
 <div class="bottom-bar">
-<button class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;" onclick="startSessionFromBriefing()">✈ DÉMARRER LA SESSION</button>
+<button class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;" onclick="startSessionFromBriefing()" data-i18n="briefing_start">✈ DÉMARRER LA SESSION</button>
 </div>
 </div>
 
 <div class="screen" id="screen-session">
-<div id="training-banner" style="display:none;background:#8B5CF6;color:#fff;text-align:center;padding:5px;font-size:11px;font-weight:800;letter-spacing:2px;flex-shrink:0;">🎭 MODE ENTRAÎNEMENT — Session non enregistrée</div>
+<div id="training-banner" style="display:none;background:#8B5CF6;color:#fff;text-align:center;padding:5px;font-size:11px;font-weight:800;letter-spacing:2px;flex-shrink:0;" data-i18n="training_mode_banner">🎭 MODE ENTRAÎNEMENT — Session non enregistrée</div>
 <div class="topbar">
 <div style="flex:1;min-width:0;">
 <div class="title" id="hdr-pilot">Pilote</div>
@@ -488,11 +491,11 @@ Identifiant ou mot de passe incorrect
 <button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
 <button class="btn" onclick="showBriefing()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:13px;padding:6px 9px;" title="Briefing pré-session">📋</button>
 <button class="btn btn-warn" onclick="confirmReset()">↺</button>
-<button class="btn btn-primary" onclick="showDebrief()">DEBRIEF →</button>
+<button class="btn btn-primary" onclick="showDebrief()" data-i18n="deb_title">DEBRIEF →</button>
 </div>
 <div class="scroll" id="ex-list" style="padding:12px;"></div>
 <div class="bottom-bar">
-<button class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;" onclick="showAddModal()">+ AJOUTER UN EXERCICE</button>
+<button class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;" onclick="showAddModal()" data-i18n="exercise_add">+ AJOUTER UN EXERCICE</button>
 </div>
 </div>
 
@@ -543,17 +546,17 @@ Identifiant ou mot de passe incorrect
 <div class="bottom-bar" style="display:flex;gap:8px;">
 <button class="btn btn-danger" style="padding:13px;font-size:13px;flex-shrink:0;" onclick="confirmDeleteEx()">🗑</button>
 <button class="btn" style="padding:13px;font-size:15px;flex-shrink:0;background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;box-shadow:0 0 10px #7C3AED33;" onclick="openDistracteur()" title="Injecter une Menace Aléatoire">🎲</button>
-<button id="btn-close-ex" class="btn btn-success" style="flex:1;padding:13px;font-size:15px;" onclick="toggleCloseEx()">Cloturer l exercice</button>
+<button id="btn-close-ex" class="btn btn-success" style="flex:1;padding:13px;font-size:15px;" onclick="toggleCloseEx()">Cloturer l exercice</button><!-- text set by toggleCloseEx() -->
 </div>
 </div>
 
 <div id="modal-delete-ex" style="display:none;" class="modal-overlay">
 <div class="modal-box center">
-<div style="font-size:15px;font-weight:700;color:#EF4444;margin-bottom:10px;">Supprimer l exercice ?</div>
-<div style="font-size:13px;color:#94A3B8;margin-bottom:18px;">Cette action est irreversible.</div>
+<div style="font-size:15px;font-weight:700;color:#EF4444;margin-bottom:10px;" data-i18n="exercise_delete_title">Supprimer l exercice ?</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:18px;" data-i18n="exercise_delete_msg">Cette action est irreversible.</div>
 <div style="display:flex;gap:10px;justify-content:flex-end;">
-<button class="btn" onclick="document.getElementById('modal-delete-ex').style.display='none'">Annuler</button>
-<button class="btn btn-danger" onclick="deleteEx()">Supprimer</button>
+<button class="btn" onclick="document.getElementById('modal-delete-ex').style.display='none'" data-i18n="cancel_btn">Annuler</button>
+<button class="btn btn-danger" onclick="deleteEx()" data-i18n="delete_btn">Supprimer</button>
 </div>
 </div>
 </div>
@@ -676,20 +679,20 @@ Identifiant ou mot de passe incorrect
 
 <div class="screen" id="screen-history">
 <div class="topbar">
-<button class="btn" onclick="showScreen('home')">← Accueil</button>
+<button class="btn" onclick="showScreen('home')" data-i18n="hist_back">← Accueil</button>
 <div style="flex:1;margin-left:10px;">
-<div class="title" style="color:#8B5CF6;">TABLEAU DE BORD</div>
+<div class="title" style="color:#8B5CF6;" data-i18n="hist_title">TABLEAU DE BORD</div>
 <div class="sub" id="dashboard-sub">TRI</div>
 </div>
-<button onclick="exportHistoryJSON()" title="Sauvegarde complète de tout l'historique (1 fichier)" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;">⬇ Backup</button>
+<button onclick="exportHistoryJSON()" title="Sauvegarde complète de tout l'historique (1 fichier)" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;" data-i18n="backup_btn">⬇ Backup</button>
 <label style="padding:5px 10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:12px;font-weight:700;cursor:pointer;">⬆ Import<input type="file" accept=".json" style="display:none;" onchange="importHistoryJSON(this)"/></label>
 <button onclick="showImportSessionModal()" style="padding:5px 10px;border-radius:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;font-size:12px;font-weight:700;cursor:pointer;">📎</button>
-<button class="btn btn-danger" onclick="if(confirm('Effacer tout ?')){localStorage.removeItem('cbta_history');showHistory();}">🗑</button>
+<button class="btn btn-danger" onclick="if(confirm(t('confirm_delete_all'))){localStorage.removeItem('cbta_history');showHistory();}">🗑</button>
 </div>
 <div class="tabs">
-<button class="tab active" onclick="histTab('dashboard',this)" style="color:#F59E0B;">Dashboard</button>
-<button class="tab" onclick="histTab('sessions',this)" style="color:#8B5CF6;">Sessions</button>
-<button class="tab" onclick="histTab('pilotes',this)" style="color:#3B82F6;">Pilotes</button>
+<button class="tab active" onclick="histTab('dashboard',this)" style="color:#F59E0B;" data-i18n="hist_dashboard">Dashboard</button>
+<button class="tab" onclick="histTab('sessions',this)" style="color:#8B5CF6;" data-i18n="hist_sessions">Sessions</button>
+<button class="tab" onclick="histTab('pilotes',this)" style="color:#3B82F6;" data-i18n="hist_pilots">Pilotes</button>
 </div>
 <div class="scroll" id="history-content" style="padding:0;"></div>
 </div>
@@ -801,13 +804,13 @@ Identifiant ou mot de passe incorrect
 <div style="position:absolute;top:8%;left:0;right:0;bottom:0;background:#131820;border-radius:16px 16px 0 0;overflow-y:scroll;-webkit-overflow-scrolling:touch;">
 <div style="position:sticky;top:0;background:#131820;z-index:1;display:flex;align-items:center;justify-content:space-between;padding:18px 20px 14px;border-bottom:1px solid #1E2530;">
 <div>
-<div style="font-size:18px;font-weight:900;color:#F59E0B;">📖 GUIDE D'UTILISATION</div>
-<div style="font-size:11px;color:#94A3B8;margin-top:2px;">CBTA TRI Companion — B737 NG · v2.4</div>
+<div style="font-size:18px;font-weight:900;color:#F59E0B;" data-i18n="guide_title">📖 GUIDE D'UTILISATION</div>
+<div style="font-size:11px;color:#94A3B8;margin-top:2px;" data-i18n="guide_sub">CBTA TRI Companion — B737 NG · v2.4</div>
 </div>
 <button onclick="closeGuide()" style="width:36px;height:36px;border-radius:50%;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:20px;cursor:pointer;font-weight:700;display:flex;align-items:center;justify-content:center;">✕</button>
 </div>
 <div id="guide-scroll" style="padding:14px 20px 0;">
-
+<div id="guide-content-fr">
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!-- CHAPITRE 0 — HERO BANNER -->
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -2574,7 +2577,308 @@ Identifiant ou mot de passe incorrect
 
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
 </div>
-<button onclick="closeGuide()" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;border-radius:10px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-weight:700;cursor:pointer;letter-spacing:1px;">✕ Fermer le guide</button>
+</div><!-- end guide-content-fr -->
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ENGLISH GUIDE -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div id="guide-content-en" style="display:none;">
+
+<!-- CH 0 — HERO BANNER (EN) -->
+<div style="background:linear-gradient(135deg,#050810 0%,#0A0D1A 50%,#050810 100%);border:1px solid #3B82F630;border-radius:14px;padding:20px 16px 22px;margin-bottom:14px;text-align:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:260px;height:100px;background:radial-gradient(ellipse,#3B82F618 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="position:absolute;top:10px;right:20px;width:80px;height:80px;background:radial-gradient(circle,#8B5CF612 0%,transparent 70%);border-radius:50%;"></div>
+  <div style="position:absolute;bottom:10px;left:20px;width:60px;height:60px;background:radial-gradient(circle,#10B98110 0%,transparent 70%);border-radius:50%;"></div>
+  <div style="font-size:22px;font-weight:900;letter-spacing:5px;color:#FFFFFF;text-shadow:0 0 6px #60A5FA,0 0 18px #3B82F6,0 0 40px #3B82F688;line-height:1.2;margin-bottom:10px;">NOTE</div>
+  <div style="font-size:22px;font-weight:900;letter-spacing:5px;color:#FFFFFF;text-shadow:0 0 6px #34D399,0 0 18px #10B981,0 0 40px #10B98188;line-height:1.2;margin-bottom:10px;">ANALYZE</div>
+  <div style="font-size:22px;font-weight:900;letter-spacing:5px;color:#FFFFFF;text-shadow:0 0 6px #FCD34D,0 0 18px #F59E0B,0 0 40px #F59E0B88;line-height:1.2;margin-bottom:16px;">IMPROVE</div>
+  <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+    <div style="background:#3B82F616;border:1px solid #3B82F640;border-radius:20px;padding:3px 11px;font-size:11px;color:#3B82F6;font-weight:700;">12 chapters</div>
+    <div style="background:#10B98116;border:1px solid #10B98140;border-radius:20px;padding:3px 11px;font-size:11px;color:#10B981;font-weight:700;">~9 min</div>
+  </div>
+  <div style="border-top:1px solid #1E253088;padding-top:12px;text-align:left;">
+    <div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;text-align:center;margin-bottom:8px;">REFERENCES &amp; SOURCES</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;white-space:nowrap;">ICAO</span><span style="font-size:10px;color:#94A3B8;">Doc 9995 — Competency-Based Training &amp; Assessment (CBTA)</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;white-space:nowrap;">ICAO</span><span style="font-size:10px;color:#94A3B8;">Doc 9683 — Human Factors Training Manual (TEM)</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;white-space:nowrap;">EASA</span><span style="font-size:10px;color:#94A3B8;">Part-FCL Appendix 9 — Type Rating Proficiency Check</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;white-space:nowrap;">EASA</span><span style="font-size:10px;color:#94A3B8;">AMC/GM to Part-FCL — CBTA Grading Standards</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;">NMS CBTA TEM Pilot Observer Document</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;">737 NG Quick Reference Handbook — Rev 55</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;">737 NG Flight Crew Training Manual — Rev 25</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;white-space:nowrap;">CRM</span><span style="font-size:10px;color:#94A3B8;">FORDEC — Lufthansa Aviation Training · NITS Briefing Model</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE OF CONTENTS (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 TABLE OF CONTENTS — 12 CHAPTERS</div>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">1 · Get Started in 4 Steps</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">2 · CBTA Grading Scale</span>
+    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">3 · The 9 Competencies</span>
+    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">4 · Exercise Anatomy &amp; LOFT</span>
+    <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">5 · Scoring During the Session</span>
+    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">6 · TEM — Threats &amp; Errors</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">7 · FFA — Fly Focus Act</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">8 · CRM — Crew Resources</span>
+    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">9 · The Complete Debrief</span>
+    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">10 · Pro Tips &amp; Shortcuts</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">11 · Fair Assessment</span>
+    <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">12 · Offline Mode</span>
+  </div>
+</div>
+
+<!-- CH 1 — GET STARTED IN 4 STEPS (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">🚀 CHAPTER 1 — GET STARTED IN 4 STEPS</div>
+<div style="display:flex;flex-direction:column;gap:10px;">
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#F59E0B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#0A0C10;flex-shrink:0;">1</div><div><div style="font-size:13px;font-weight:800;color:#F1F5F9;">Install as a PWA (optional)</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;">On iPhone/iPad: Safari → Share → <strong style="color:#F1F5F9;">Add to Home Screen</strong>. On Android: Chrome → menu → Install. The app runs offline and behaves like a native app.</div></div></div>
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#10B981;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#0A0C10;flex-shrink:0;">2</div><div><div style="font-size:13px;font-weight:800;color:#F1F5F9;">Create a session</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;">Enter trainee names, staff numbers (auto-lookup from history), roles (CPT/FO/TRI), airline, and session name. Tap <strong style="color:#3B82F6;">START SESSION</strong>.</div></div></div>
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#3B82F6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#0A0C10;flex-shrink:0;">3</div><div><div style="font-size:13px;font-weight:800;color:#F1F5F9;">Add exercises &amp; grade</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;">Tap <strong style="color:#3B82F6;">+ ADD EXERCISE</strong>, search by name, competency or flight phase. Grade 1–5 per competency with + / − observable behaviors. Use the FFA, TEM and Facilitation tabs for each exercise.</div></div></div>
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#8B5CF6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#0A0C10;flex-shrink:0;">4</div><div><div style="font-size:13px;font-weight:800;color:#F1F5F9;">Debrief &amp; export</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;">Tap <strong style="color:#3B82F6;">DEBRIEF →</strong> to review scores, TEM summary, FORDEC/NITS, and generate a PDF report. Session data is automatically saved to local history.</div></div></div>
+</div>
+</div>
+
+<!-- CH 2 — CBTA GRADING SCALE (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">📊 CHAPTER 2 — CBTA GRADING SCALE</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px;">
+  <div style="background:#3B82F618;border:1px solid #3B82F655;border-radius:8px;padding:9px 10px;"><div style="font-size:28px;font-weight:900;color:#3B82F6;line-height:1;">5</div><div style="font-size:11px;font-weight:800;color:#3B82F6;">EXEMPLARY</div><div style="font-size:10px;color:#94A3B8;margin-top:3px;">Exceeds standards consistently — can serve as a model for others.</div></div>
+  <div style="background:#10B98118;border:1px solid #10B98155;border-radius:8px;padding:9px 10px;"><div style="font-size:28px;font-weight:900;color:#10B981;line-height:1;">4</div><div style="font-size:11px;font-weight:800;color:#10B981;">ABOVE STANDARD</div><div style="font-size:10px;color:#94A3B8;margin-top:3px;">Consistently meets and occasionally exceeds expected performance.</div></div>
+  <div style="background:#F59E0B18;border:1px solid #F59E0B55;border-radius:8px;padding:9px 10px;"><div style="font-size:28px;font-weight:900;color:#F59E0B;line-height:1;">3</div><div style="font-size:11px;font-weight:800;color:#F59E0B;">STANDARD</div><div style="font-size:10px;color:#94A3B8;margin-top:3px;">Meets required performance — acceptable for operational line flying.</div></div>
+  <div style="background:#F9731618;border:1px solid #F9731655;border-radius:8px;padding:9px 10px;"><div style="font-size:28px;font-weight:900;color:#F97316;line-height:1;">2</div><div style="font-size:11px;font-weight:800;color:#F97316;">BELOW STANDARD</div><div style="font-size:10px;color:#94A3B8;margin-top:3px;">Does not meet minimum requirements — additional training needed.</div></div>
+  <div style="background:#EF444418;border:1px solid #EF444455;border-radius:8px;padding:9px 10px;grid-column:1/-1;"><div style="font-size:28px;font-weight:900;color:#EF4444;line-height:1;">1</div><div style="font-size:11px;font-weight:800;color:#EF4444;">UNACCEPTABLE</div><div style="font-size:10px;color:#94A3B8;margin-top:3px;">Serious deficiency — safety risk. Cannot continue without immediate corrective training.</div></div>
+</div>
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:8px 10px;">
+  <div style="font-size:11px;font-weight:700;color:#F59E0B;margin-bottom:3px;">⚠️ EASA MINIMUM STANDARD</div>
+  <div style="font-size:11px;color:#94A3B8;">A grade of <strong style="color:#F1F5F9;">3 (Standard)</strong> or above is required on all competencies assessed during an OPC/PC. Any grade of 1 or 2 triggers a mandatory additional training requirement.</div>
+</div>
+</div>
+
+<!-- CH 3 — THE 9 COMPETENCIES (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">🧠 CHAPTER 3 — THE 9 CBTA COMPETENCIES</div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+  <div style="display:flex;gap:10px;align-items:center;background:#EF444411;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#EF4444;font-family:monospace;min-width:36px;">FPM</span><span style="font-size:12px;color:#CBD5E1;">Manual Flight Path Management — trajectory, energy, manual control</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#F9731611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#F97316;font-family:monospace;min-width:36px;">FPA</span><span style="font-size:12px;color:#CBD5E1;">Automated Flight Path Management — AP / AT / FMC / LNAV / VNAV</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#14B8A611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#14B8A6;font-family:monospace;min-width:36px;">PRO</span><span style="font-size:12px;color:#CBD5E1;">Application of Procedures — SOPs, QRH, NNCs, memory items</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#06B6D411;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#06B6D4;font-family:monospace;min-width:36px;">SA</span><span style="font-size:12px;color:#CBD5E1;">Situation Awareness — continuous awareness of aircraft, environment, people</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#8B5CF611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#8B5CF6;font-family:monospace;min-width:36px;">WLM</span><span style="font-size:12px;color:#CBD5E1;">Workload Management — prioritisation, task delegation, monitoring</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#EC489911;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#EC4899;font-family:monospace;min-width:36px;">COM</span><span style="font-size:12px;color:#CBD5E1;">Communication — ATC phraseology, crew coordination, callouts</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#10B98111;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#10B981;font-family:monospace;min-width:36px;">LTW</span><span style="font-size:12px;color:#CBD5E1;">Leadership &amp; Teamwork — assertiveness, coordination, cross-check</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#F59E0B11;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#F59E0B;font-family:monospace;min-width:36px;">PSD</span><span style="font-size:12px;color:#CBD5E1;">Problem Solving &amp; Decision Making — FORDEC, adaptability, cognitive biases</span></div>
+  <div style="display:flex;gap:10px;align-items:center;background:#3B82F611;border-radius:7px;padding:6px 9px;"><span style="font-size:13px;font-weight:900;color:#3B82F6;font-family:monospace;min-width:36px;">KNO</span><span style="font-size:12px;color:#CBD5E1;">Application of Knowledge — systems, limitations, EASA regulations</span></div>
+</div>
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:8px 10px;">
+  <div style="font-size:11px;color:#8B5CF6;font-weight:700;margin-bottom:3px;">⚡ EXPERT BADGE</div>
+  <div style="font-size:12px;color:#94A3B8;">Some exercises carry an <span style="background:#FF8C0022;border:1px solid #FF8C00;color:#FF8C00;font-size:10px;font-weight:900;padding:1px 7px;border-radius:5px;">⚡ EXPERT</span> badge — advanced procedures requiring multi-competency mastery. E.g.: ILS Raw Data, Airspeed Unreliable, RNP AR…</div>
+</div>
+</div>
+
+<!-- CH 4 — EXERCISE ANATOMY (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #8B5CF633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#8B5CF6;letter-spacing:2px;margin-bottom:10px;">📋 CHAPTER 4 — EXERCISE ANATOMY &amp; LOFT</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:10px;">Each exercise in the B737 CBTA library is structured around:</div>
+<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+  <div style="background:#3B82F611;border-left:3px solid #3B82F6;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#3B82F6;">EVALUATION TAB</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Grade 1–5 per competency for CPT and/or FO. Add positive (+) and negative (−) observable behaviors as evidence for your grade.</div></div>
+  <div style="background:#F59E0B11;border-left:3px solid #F59E0B;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#F59E0B;">FFA TAB</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">FLY — was aircraft control adequate? FOCUS — what were the priorities? ACT — were the actions appropriate and timely?</div></div>
+  <div style="background:#EF444411;border-left:3px solid #EF4444;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#EF4444;">TEM TAB</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Log threats (environmental/organisational), errors (crew deviations), and undesired aircraft states (UAS). Score recovery effectiveness.</div></div>
+  <div style="background:#8B5CF611;border-left:3px solid #8B5CF6;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#8B5CF6;">FORDEC TAB</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Mark if the crew used the FORDEC decision model or NITS briefing structure. Add CRM observations.</div></div>
+  <div style="background:#10B98111;border-left:3px solid #10B981;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;">FACILITATION TAB</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Pre-filled Boeing debrief questions for each exercise. Add your facilitation notes directly here.</div></div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:8px 10px;">
+  <div style="font-size:11px;font-weight:700;color:#10B981;margin-bottom:3px;">📚 LOFT SCENARIOS</div>
+  <div style="font-size:11px;color:#94A3B8;">Use the 🗂 button on the home screen to load a pre-built LOFT scenario. Scenarios can be customised and saved as your own training plans.</div>
+</div>
+</div>
+
+<!-- CH 5 — SCORING DURING SESSION (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #06B6D433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:10px;">⏱ CHAPTER 5 — SCORING DURING THE SESSION</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:10px;">Effective real-time grading workflow:</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#06B6D4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#0A0C10;flex-shrink:0;">1</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Start session timer</strong> before the first exercise. This tracks total session duration and individual exercise time.</div></div>
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#06B6D4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#0A0C10;flex-shrink:0;">2</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Set a time limit</strong> on each exercise card (tap the ⏱ icon) to monitor time management performance.</div></div>
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#06B6D4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#0A0C10;flex-shrink:0;">3</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Grade each competency</strong> — tap the grade button (1–5) and add observable behaviors as evidence. A pre-populated list of Boeing examples is available.</div></div>
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#06B6D4;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#0A0C10;flex-shrink:0;">4</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Close each exercise</strong> when complete. The average grade is displayed on the exercise card. Exercises can be reopened if needed.</div></div>
+  <div style="display:flex;gap:10px;align-items:flex-start;"><div style="min-width:26px;height:26px;background:#F59E0B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#0A0C10;flex-shrink:0;">!</div><div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#EF4444;">MANDATORY items</strong> (red bar) must be completed on every OPC/PC. The app highlights incomplete mandatory exercises.</div></div>
+</div>
+</div>
+
+<!-- CH 6 — TEM (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #EF444433;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#EF4444;letter-spacing:2px;margin-bottom:10px;">⚠️ CHAPTER 6 — TEM — THREAT &amp; ERROR MANAGEMENT</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:12px;">The TEM model (ICAO Doc 9683) provides a framework for identifying why deviations occur and how they are managed.</div>
+<div style="display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:12px;">
+  <div style="background:#EF444411;border:1px solid #EF444433;border-radius:8px;padding:9px 11px;"><div style="font-size:11px;font-weight:800;color:#EF4444;margin-bottom:5px;">🎯 THREATS</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">External factors that must be managed before they become errors. Examples: adverse weather, ATC instructions, airport complexity, aircraft technical issues, fatigue.</div></div>
+  <div style="background:#F9731611;border:1px solid #F9731633;border-radius:8px;padding:9px 11px;"><div style="font-size:11px;font-weight:800;color:#F97316;margin-bottom:5px;">❌ ERRORS</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Crew deviations from intentions or expectations. Examples: incorrect checklist execution, wrong FMC entry, improper automation selection.</div></div>
+  <div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:9px 11px;"><div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:5px;">✈️ UAS — UNDESIRED AIRCRAFT STATES</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Aircraft deviations resulting from errors that are not corrected. Examples: unstable approach, altitude bust, speed exceedance. The goal is to trap errors before a UAS occurs.</div></div>
+</div>
+<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:8px;padding:8px 10px;">
+  <div style="font-size:11px;font-weight:700;color:#06B6D4;margin-bottom:4px;">SCORING RECOVERY</div>
+  <div style="font-size:11px;color:#94A3B8;">For each threat/error/UAS, score the crew's recovery: ✅ <strong style="color:#10B981;">Trapped</strong> (caught before consequence) or ⚠️ <strong style="color:#F59E0B;">Managed</strong> (consequence occurred but was handled). The recovery rate is displayed in the debrief.</div>
+</div>
+</div>
+
+<!-- CH 7 — FFA (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">✈️ CHAPTER 7 — FFA — FLY FOCUS ACT</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:12px;">The FFA framework is derived from Boeing's CBTA debrief methodology. It helps structure the analysis of each exercise into three key dimensions:</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px;">
+  <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:9px 10px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#3B82F6;margin-bottom:4px;">✈</div><div style="font-size:11px;font-weight:800;color:#3B82F6;margin-bottom:4px;">FLY</div><div style="font-size:10px;color:#94A3B8;line-height:1.4;">Was aircraft control safe and accurate? Manual or automated?</div></div>
+  <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:9px 10px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#F59E0B;margin-bottom:4px;">🎯</div><div style="font-size:11px;font-weight:800;color:#F59E0B;margin-bottom:4px;">FOCUS</div><div style="font-size:10px;color:#94A3B8;line-height:1.4;">Were priorities correctly identified? Was attention well distributed?</div></div>
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 10px;text-align:center;"><div style="font-size:20px;font-weight:900;color:#10B981;margin-bottom:4px;">⚡</div><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:4px;">ACT</div><div style="font-size:10px;color:#94A3B8;line-height:1.4;">Were actions timely, appropriate, and effective?</div></div>
+</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Each element is scored on the same 1–5 CBTA scale. The FFA score contributes to the overall exercise evaluation but can also be used as a standalone coaching tool during the debrief.</div>
+</div>
+
+<!-- CH 8 — CRM (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:10px;">🤝 CHAPTER 8 — CRM — CREW RESOURCE MANAGEMENT</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:12px;">The FORDEC tab and CRM section support two key crew coordination tools:</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;">
+  <div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:8px;padding:10px 12px;">
+    <div style="font-size:12px;font-weight:800;color:#8B5CF6;margin-bottom:6px;">FORDEC — Decision Framework</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;">
+      <div style="background:#8B5CF618;border-radius:5px;padding:5px 7px;text-align:center;"><div style="font-size:14px;font-weight:900;color:#8B5CF6;">F</div><div style="font-size:9px;color:#94A3B8;">Facts</div></div>
+      <div style="background:#8B5CF618;border-radius:5px;padding:5px 7px;text-align:center;"><div style="font-size:14px;font-weight:900;color:#8B5CF6;">O</div><div style="font-size:9px;color:#94A3B8;">Options</div></div>
+      <div style="background:#8B5CF618;border-radius:5px;padding:5px 7px;text-align:center;"><div style="font-size:14px;font-weight:900;color:#8B5CF6;">R</div><div style="font-size:9px;color:#94A3B8;">Risks</div></div>
+      <div style="background:#8B5CF618;border-radius:5px;padding:5px 7px;text-align:center;"><div style="font-size:14px;font-weight:900;color:#8B5CF6;">D</div><div style="font-size:9px;color:#94A3B8;">Decision</div></div>
+      <div style="background:#8B5CF618;border-radius:5px;padding:5px 7px;text-align:center;"><div style="font-size:14px;font-weight:900;color:#8B5CF6;">E</div><div style="font-size:9px;color:#94A3B8;">Execution</div></div>
+      <div style="background:#8B5CF618;border-radius:5px;padding:5px 7px;text-align:center;"><div style="font-size:14px;font-weight:900;color:#8B5CF6;">C</div><div style="font-size:9px;color:#94A3B8;">Check</div></div>
+    </div>
+  </div>
+  <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:10px 12px;">
+    <div style="font-size:12px;font-weight:800;color:#3B82F6;margin-bottom:6px;">NITS — Crew Briefing Standard</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+      <div style="background:#3B82F618;border-radius:5px;padding:5px 7px;"><div style="font-size:12px;font-weight:800;color:#3B82F6;">N — Nature</div><div style="font-size:10px;color:#94A3B8;">What is the situation?</div></div>
+      <div style="background:#3B82F618;border-radius:5px;padding:5px 7px;"><div style="font-size:12px;font-weight:800;color:#3B82F6;">I — Intention</div><div style="font-size:10px;color:#94A3B8;">What are we going to do?</div></div>
+      <div style="background:#3B82F618;border-radius:5px;padding:5px 7px;"><div style="font-size:12px;font-weight:800;color:#3B82F6;">T — Time</div><div style="font-size:10px;color:#94A3B8;">How much time do we have?</div></div>
+      <div style="background:#3B82F618;border-radius:5px;padding:5px 7px;"><div style="font-size:12px;font-weight:800;color:#3B82F6;">S — Special</div><div style="font-size:10px;color:#94A3B8;">Any special instructions?</div></div>
+    </div>
+  </div>
+</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.5;">Mark whether FORDEC and/or NITS were applied during each exercise. A summary appears in the debrief with CRM score and observations.</div>
+</div>
+
+<!-- CH 9 — THE COMPLETE DEBRIEF (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #3B82F633;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:10px;">🎯 CHAPTER 9 — THE COMPLETE DEBRIEF</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:12px;">Tap <strong style="color:#3B82F6;">DEBRIEF →</strong> to access the full debrief interface. It is organised into tabs:</div>
+<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px;">
+  <div style="background:#3B82F611;border-left:3px solid #3B82F6;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#3B82F6;">SCORES</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Competency averages for CPT and FO with bar charts. Overall session score and EASA classification.</div></div>
+  <div style="background:#EF444411;border-left:3px solid #EF4444;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#EF4444;">TEM SUMMARY</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Total threats, errors, UAS and recovery rate for the entire session.</div></div>
+  <div style="background:#8B5CF611;border-left:3px solid #8B5CF6;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#8B5CF6;">FORDEC / NITS</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">CRM summary — how often structured decision-making and briefing tools were applied.</div></div>
+  <div style="background:#F59E0B11;border-left:3px solid #F59E0B;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#F59E0B;">EXERCISES</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Exercise-by-exercise breakdown with individual competency grades and observable behaviors.</div></div>
+  <div style="background:#10B98111;border-left:3px solid #10B981;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;">CONCLUSION</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Strengths, areas for improvement, root causes, and final recommendation (PASS / ADDITIONAL TRAINING / FAIL).</div></div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:8px 10px;">
+  <div style="font-size:11px;font-weight:700;color:#10B981;margin-bottom:3px;">📄 PDF REPORT</div>
+  <div style="font-size:11px;color:#94A3B8;">Tap <strong style="color:#F1F5F9;">PDF</strong> in the debrief to generate a printable report. Includes all competency scores, TEM summary, observable behaviors, and conclusion. Also available as email or JSON export.</div>
+</div>
+</div>
+
+<!-- CH 10 — PRO TIPS (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">💡 CHAPTER 10 — PRO TIPS &amp; SHORTCUTS</div>
+<div style="display:flex;flex-direction:column;gap:7px;">
+  <div style="background:#F59E0B11;border:1px solid #F59E0B22;border-radius:7px;padding:7px 10px;"><div style="font-size:11px;font-weight:700;color:#F59E0B;margin-bottom:3px;">🔢 STAFF NUMBER LOOKUP</div><div style="font-size:11px;color:#94A3B8;">Enter a staff number in the home screen — if the pilot has previous sessions in history, their name auto-fills.</div></div>
+  <div style="background:#3B82F611;border:1px solid #3B82F622;border-radius:7px;padding:7px 10px;"><div style="font-size:11px;font-weight:700;color:#3B82F6;margin-bottom:3px;">🎲 RANDOM DISTRACTOR</div><div style="font-size:11px;color:#94A3B8;">Tap the 🎲 button during an exercise to inject a random TEM threat — great for testing crew response to unexpected events.</div></div>
+  <div style="background:#10B98111;border:1px solid #10B98122;border-radius:7px;padding:7px 10px;"><div style="font-size:11px;font-weight:700;color:#10B981;margin-bottom:3px;">↻ SECOND ATTEMPT</div><div style="font-size:11px;color:#94A3B8;">If a trainee needs to retry an exercise, tap the second attempt button. Original scores are preserved and a 2 badge appears on the exercise card.</div></div>
+  <div style="background:#8B5CF611;border:1px solid #8B5CF622;border-radius:7px;padding:7px 10px;"><div style="font-size:11px;font-weight:700;color:#8B5CF6;margin-bottom:3px;">📊 PRESENTATION MODE</div><div style="font-size:11px;color:#94A3B8;">In the debrief, tap PRESENTATION to display a clean results screen — designed to be shown directly to the trainee during the debrief briefing.</div></div>
+  <div style="background:#EF444411;border:1px solid #EF444422;border-radius:7px;padding:7px 10px;"><div style="font-size:11px;font-weight:700;color:#EF4444;margin-bottom:3px;">⚡ FONT SIZE</div><div style="font-size:11px;color:#94A3B8;">Use A- / A / A+ / A++ buttons in the home topbar to adjust font size for visibility in simulator lighting conditions.</div></div>
+</div>
+</div>
+
+<!-- CH 11 — FAIR ASSESSMENT (EN) -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B33;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">⚖️ CHAPTER 11 — FAIR ASSESSMENT</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:12px;">CBTA requires evidence-based, objective grading. Avoid the following common biases:</div>
+<div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px;">
+  <div style="background:#EF444411;border-left:3px solid #EF4444;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#EF4444;">Halo effect</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">A good overall impression inflates scores across all competencies. Grade each competency independently based on observed behaviors.</div></div>
+  <div style="background:#F9731611;border-left:3px solid #F97316;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#F97316;">Recency bias</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Performance at the end of the session influences the overall assessment disproportionately. Review notes from the entire session.</div></div>
+  <div style="background:#F59E0B11;border-left:3px solid #F59E0B;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#F59E0B;">Central tendency</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Reluctance to use extreme scores (1 or 5). Use the full scale: a grade of 5 should be assigned when the trainee genuinely exceeds standards.</div></div>
+  <div style="background:#8B5CF611;border-left:3px solid #8B5CF6;border-radius:0 6px 6px 0;padding:7px 10px;"><div style="font-size:11px;font-weight:800;color:#8B5CF6;">Leniency bias</div><div style="font-size:11px;color:#94A3B8;margin-top:2px;">Tendency to grade more leniently than performance warrants — especially with known trainees. Use observable behaviors as objective evidence.</div></div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:8px 10px;">
+  <div style="font-size:11px;font-weight:700;color:#10B981;margin-bottom:3px;">✅ BEST PRACTICE</div>
+  <div style="font-size:11px;color:#94A3B8;">Record observable behaviors in real time using the + / − buttons. These form the evidence base for your grades and the debrief discussion. A grade without evidence is not CBTA-compliant.</div>
+</div>
+</div>
+
+<!-- CH 12 — OFFLINE MODE (EN) -->
+<div class="guide-sec" style="background:#141B26;border:2px solid #06B6D455;border-radius:10px;padding:12px 14px;margin-bottom:12px;position:relative;overflow:hidden;">
+<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:6px;text-shadow:0 0 10px #06B6D466;">📡 CHAPTER 12 — OFFLINE MODE</div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:14px;">The app works <strong style="color:#F1F5F9;">100% offline</strong> after the first visit with a connection — ideal for simulator environments where wifi is unavailable or unreliable.</div>
+<div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:10px;">⚡ ACTIVATION — ONE TIME ONLY</div>
+  <div style="display:flex;gap:10px;align-items:flex-start;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#06B6D4;font-size:13px;font-weight:900;color:#0A0C10;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+    <div>
+      <div style="font-size:12px;font-weight:800;color:#F1F5F9;margin-bottom:2px;">Open the app once with a connection</div>
+      <div style="font-size:12px;color:#94A3B8;line-height:1.4;">Visit the GitHub Pages URL once on Safari (iPhone) or Chrome (Android). The app caches automatically in the background — this is silent and automatic.</div>
+    </div>
+  </div>
+</div>
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">✅ IN THE SIMULATOR — NO CONNECTION NEEDED</div>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:13px;flex-shrink:0;">✓</span><div style="font-size:12px;color:#94A3B8;line-height:1.4;">Turn off wifi or enable <strong style="color:#F1F5F9;">Airplane Mode</strong> — the app opens exactly as normal</div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:13px;flex-shrink:0;">✓</span><div style="font-size:12px;color:#94A3B8;line-height:1.4;">All features available: exercises, grading, debrief, guide</div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:13px;flex-shrink:0;">✓</span><div style="font-size:12px;color:#94A3B8;line-height:1.4;">Session data saved locally on device — never lost</div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#10B981;font-size:13px;flex-shrink:0;">✓</span><div style="font-size:12px;color:#94A3B8;line-height:1.4;">PDF generation and export work fully offline</div></div>
+  </div>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+  <div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:8px;padding:10px 12px;">
+    <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1px;margin-bottom:5px;">🧪 TEST BEFORE THE EXAM DAY</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;">1. Open app with wifi<br/>2. Disable wifi<br/>3. Close and reopen the app<br/><strong style="color:#10B981;">→ If it loads = offline operational ✓</strong></div>
+  </div>
+  <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:10px 12px;">
+    <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1px;margin-bottom:5px;">🔄 AUTOMATIC UPDATES</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;">When a new version is published, the app updates silently in the background on the next connection. No action required.</div>
+  </div>
+</div>
+</div>
+
+<!-- SOURCES & REFERENCES (EN) -->
+<div class="guide-sec" style="background:#141B26;border:2px solid #475569;border-radius:10px;padding:12px 14px;margin-bottom:12px;margin-top:4px;">
+<div style="font-size:13px;font-weight:800;color:#94A3B8;letter-spacing:2px;margin-bottom:12px;">📚 SOURCES &amp; REFERENCES</div>
+<div style="margin-bottom:14px;">
+  <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:8px;">✅ OFFICIAL SOURCES — VALIDATED CONTENT</div>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">ICAO Doc 9995 — CBTA Manual</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Framework for the 9 competencies, definitions, and observable behaviors. Normative basis for all CBTA assessment in this app.</div></div>
+    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">EASA Part-FCL — Appendix 9</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Regulatory requirements for OPC, PC and Line Checks. Session types, mandatory exercises and frequencies.</div></div>
+    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">EASA AMC/GM to Part-FCL — CBTA</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Grading scale 1→5 (UNACCEPTABLE to EXEMPLARY) and competency assessment criteria.</div></div>
+    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">ICAO Doc 9683 — Human Factors Training Manual</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">TEM framework (Threat and Error Management) — threats, errors, undesired aircraft states.</div></div>
+    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">FORDEC — Lufthansa Aviation Training</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Crew decision-making model. CRM standard adopted by the global aviation industry.</div></div>
+    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">NITS — Commercial Aviation CRM Standard</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Crew briefing model (Nature · Intention · Time · Special Instructions). Industry standard.</div></div>
+  </div>
+</div>
+<div style="margin-bottom:14px;">
+  <div style="font-size:10px;font-weight:900;color:#F59E0B;letter-spacing:2px;margin-bottom:8px;">⚠️ AI-GENERATED CONTENT — TO BE VALIDATED</div>
+  <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-radius:7px;padding:9px 11px;">
+    <div style="display:flex;flex-direction:column;gap:5px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;flex-shrink:0;">•</span><div style="font-size:11px;color:#94A3B8;line-height:1.4;"><strong style="color:#F1F5F9;">Scenario composition</strong> — exercises, order, estimated durations. Not derived from an official Boeing document.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;flex-shrink:0;">•</span><div style="font-size:11px;color:#94A3B8;line-height:1.4;"><strong style="color:#F1F5F9;">B737 contextual examples</strong> (green/red bullets in grading) — based on general type knowledge, not extracted from the FCTM or Boeing CBTA package.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;flex-shrink:0;">•</span><div style="font-size:11px;color:#94A3B8;line-height:1.4;"><strong style="color:#F1F5F9;">Exercise descriptions and FFA criteria</strong> — free-form wording inspired by Boeing standards, not copied from the FCTM.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;flex-shrink:0;">•</span><div style="font-size:11px;color:#94A3B8;line-height:1.4;"><strong style="color:#F1F5F9;">Training plan recommendations</strong> — pedagogical logic generated by AI.</div></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="color:#F59E0B;flex-shrink:0;">•</span><div style="font-size:11px;color:#94A3B8;line-height:1.4;"><strong style="color:#F1F5F9;">Guide text</strong> — written by AI based on published standards, not normative.</div></div>
+    </div>
+  </div>
+</div>
+<div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:9px 11px;">
+  <div style="font-size:10px;font-weight:900;color:#EF4444;letter-spacing:1.5px;margin-bottom:5px;">⚖️ REGULATORY DISCLAIMER</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.5;">This application is a <strong style="color:#F1F5F9;">TRI support tool</strong> — it does not replace the official Boeing CBTA Package, QRH, FCTM or your operator's OM-D. All B737-specific content must be validated by the TRI against documents approved by the competent authority before operational use. <strong style="color:#F1F5F9;">Responsibility for the assessment remains with the instructor.</strong></div>
+</div>
+</div>
+
+<div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
+</div><!-- end guide-content-en -->
+
+<button id="guide-close-btn" onclick="closeGuide()" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;border-radius:10px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-weight:700;cursor:pointer;letter-spacing:1px;">✕ Fermer le guide</button>
 </div>
 </div>
 
@@ -2598,11 +2902,11 @@ Identifiant ou mot de passe incorrect
 
 <div id="modal-confirm" style="display:none;" class="modal-overlay">
 <div class="modal-box center">
-<div style="font-size:15px;font-weight:700;color:var(--yellow);margin-bottom:10px;">Reset session</div>
-<div style="font-size:13px;color:#94A3B8;margin-bottom:18px;">Effacer tous les exercices ?</div>
+<div style="font-size:15px;font-weight:700;color:var(--yellow);margin-bottom:10px;" data-i18n="modal_reset_title">Reset session</div>
+<div style="font-size:13px;color:#94A3B8;margin-bottom:18px;" data-i18n="modal_reset_msg">Effacer tous les exercices ?</div>
 <div style="display:flex;gap:10px;justify-content:flex-end;">
-<button class="btn" onclick="closeConfirm()">Annuler</button>
-<button class="btn btn-danger" onclick="doReset()">Effacer</button>
+<button class="btn" onclick="closeConfirm()" data-i18n="cancel_btn">Annuler</button>
+<button class="btn btn-danger" onclick="doReset()" data-i18n="delete_btn">Effacer</button>
 </div>
 </div>
 </div>
@@ -2687,7 +2991,7 @@ Identifiant ou mot de passe incorrect
 <input id="edit-session-name" class="form-input"/>
 </div>
 <div style="margin-bottom:12px;">
-<label class="form-label" id="edit-lbl-seat1">SIÈGE GAUCHE</label>
+<label class="form-label" id="edit-lbl-seat1" data-i18n="role_seat_left">SIÈGE GAUCHE</label>
 <div style="display:flex;gap:6px;margin-bottom:6px;">
 <button id="es1-cpt" onclick="setEditRole(1,'CPT',this)" style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #3B82F6;background:#3B82F622;color:#3B82F6;">CPT</button>
 <button id="es1-fo"  onclick="setEditRole(1,'FO',this)"  style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">FO</button>
@@ -2696,7 +3000,7 @@ Identifiant ou mot de passe incorrect
 <input id="edit-pilot-name" class="form-input" placeholder="Nom siège gauche"/>
 </div>
 <div style="margin-bottom:16px;">
-<label class="form-label" id="edit-lbl-seat2">SIÈGE DROIT (optionnel)</label>
+<label class="form-label" id="edit-lbl-seat2" data-i18n="home_pilot_fo">SIÈGE DROIT (optionnel)</label>
 <div style="display:flex;gap:6px;margin-bottom:6px;">
 <button id="es2-cpt" onclick="setEditRole(2,'CPT',this)" style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">CPT</button>
 <button id="es2-fo"  onclick="setEditRole(2,'FO',this)"  style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #10B981;background:#10B98122;color:#10B981;">FO</button>
@@ -2711,6 +3015,380 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 <script>
+// ── LANGUAGE SYSTEM ─────────────────────────────────────────────────────────
+let _lang = localStorage.getItem('cbta_lang') || 'fr';
+
+const STRINGS = {
+  fr: {
+    app_name: 'B737 CBTA TRI',
+    app_subtitle: 'Instructor Station',
+    guide_btn: 'GUIDE D\'UTILISATION',
+    close_btn: 'Fermer',
+    save_btn: 'Enregistrer',
+    cancel_btn: 'Annuler',
+    delete_btn: 'Supprimer',
+    confirm_btn: 'Confirmer',
+    back_btn: '← Accueil',
+    start_btn: 'Démarrer',
+    next_btn: 'Suivant',
+    done_btn: 'Terminer',
+    export_btn: 'Exporter',
+    import_btn: 'Importer',
+    backup_btn: '⬇ Backup',
+    home_session_title: 'Instructor Station',
+    home_session_sub: 'B737NG · QRH Rev55 · FCTM Rev25',
+    home_pilot_cpt: 'SIÈGE GAUCHE — COMMANDANT DE BORD',
+    home_pilot_fo: 'SIÈGE DROIT — PREMIER OFFICIER (optionnel)',
+    home_session_name: 'Session / Vol',
+    home_start_session: 'DÉMARRER LA SESSION',
+    home_tip: 'Laissez siège droit vide si évaluation d\'un seul stagiaire',
+    home_scenario_lib: 'Bibliothèque de scénarios',
+    home_load_scenario: 'Charger un scénario',
+    home_training_mode: '🎭 MODE ENTRAÎNEMENT',
+    home_historique: 'HISTORIQUE',
+    home_company_label: 'COMPAGNIE',
+    home_instructor_label: 'NOM DE L INSTRUCTEUR (TRI)',
+    home_company_placeholder: 'ex: Air Algérie, Air France, Transavia...',
+    home_instructor_placeholder: 'ex: Cpt Bouchenafa Mohamed Amine',
+    home_session_placeholder: 'ex: B737-800 OPC Innsbruck',
+    home_seat_left_placeholder: 'Nom du stagiaire siège gauche',
+    home_seat_right_placeholder: 'Nom du stagiaire siège droit (optionnel)',
+    home_mat_placeholder: 'Matricule',
+    home_login_reserved: 'Acces reserve aux instructeurs autorises',
+    home_login_btn: 'CONNEXION',
+    home_rights: 'Tous droits réservés · Usage instructeur uniquement',
+    role_cpt: 'COMMANDANT DE BORD',
+    role_fo: 'PREMIER OFFICIER',
+    role_tri_check: 'TRI (INSTRUCTEUR EXAMINÉ)',
+    role_seat_left: 'SIÈGE GAUCHE',
+    role_seat_right: 'SIÈGE DROIT',
+    session_title: 'Session',
+    exercise_list: 'Liste exercices',
+    exercise_close: 'Cloturer l exercice',
+    exercise_reopen: 'Rouvrir l exercice',
+    exercise_mandatory: 'MANDATORY ITEMS',
+    exercise_attempt: '↻ 2ème ESSAI',
+    exercise_attempt2: 'Qui refait l\'exercice ?',
+    exercise_time_limit: 'TIME LIMIT',
+    exercise_saving: 'En cours',
+    exercise_phase: 'Phase',
+    exercise_notes: 'Notes',
+    exercise_facnotes: 'Notes facilitation',
+    exercise_add: '+ AJOUTER UN EXERCICE',
+    exercise_delete_title: 'Supprimer l exercice ?',
+    exercise_delete_msg: 'Cette action est irreversible.',
+    exercise_no_exo: 'Aucun exercice',
+    exercise_no_exo_sub: 'Appuyez sur + pour commencer',
+    comp_kno: 'Application des Connaissances',
+    comp_wlm: 'Gestion de la Charge de Travail',
+    comp_sa: 'Conscience Situationnelle',
+    comp_psd: 'Résolution de Problèmes & Décision',
+    comp_ltw: 'Leadership & Travail en Équipe',
+    comp_fpm: 'Gestion Manuelle de la Trajectoire',
+    comp_fpa: 'Gestion Automatisée de la Trajectoire',
+    comp_com: 'Communication',
+    comp_pro: 'Application des Procédures',
+    grade_1: 'INACCEPTABLE',
+    grade_2: 'SOUS-STANDARD',
+    grade_3: 'STANDARD',
+    grade_4: 'AU-DESSUS',
+    grade_5: 'EXEMPLAIRE',
+    grade_na: 'N/A',
+    grade_auto: 'AUTO',
+    grade_instructor_final: 'NOTE INSTRUCTEUR FINALE',
+    grade_label_1: 'INACCEPTABLE',
+    grade_label_2: 'SOUS-STANDARD',
+    grade_label_3: 'STANDARD',
+    grade_label_4: 'AU-DESSUS DU STANDARD',
+    grade_label_5: 'EXEMPLAIRE',
+    deb_title: 'DEBRIEF →',
+    deb_summary: 'Résumé',
+    deb_strengths: 'Points forts',
+    deb_improvements: 'À améliorer',
+    deb_conclusion: 'Conclusion',
+    deb_generate: 'Générer débrief',
+    deb_print: 'PDF',
+    deb_email: 'EMAIL',
+    deb_json: 'JSON',
+    deb_close_session: 'FIN DE SESSION',
+    hist_title: 'TABLEAU DE BORD',
+    hist_dashboard: 'Dashboard',
+    hist_sessions: 'Sessions',
+    hist_pilots: 'Pilotes',
+    hist_no_sessions: 'Aucune session enregistrée',
+    hist_no_pilots: 'Aucun pilote',
+    hist_sessions_count: 'Sessions',
+    hist_avg_grade: 'Moy. flotte',
+    hist_back: '← Accueil',
+    hist_export_dossier: '📦 Exporter',
+    tem_title: 'TEM — MENACES & ERREURS',
+    tem_threats: 'Menaces',
+    tem_errors: 'Erreurs',
+    tem_uas: 'États indésirables (UAS)',
+    tem_add_threat: '+ Menace',
+    tem_add_error: '+ Erreur',
+    tem_add_uas: '+ UAS',
+    ffa_title: 'FFA — FLY FOCUS ACT',
+    ffa_subtitle: 'Fly Focus Act',
+    fordec_title: 'FORDEC',
+    fordec_f: 'Faits',
+    fordec_o: 'Options',
+    fordec_r: 'Risques',
+    fordec_d: 'Décision',
+    fordec_e: 'Exécution',
+    fordec_c: 'Check',
+    nits_title: 'NITS',
+    nits_n: 'Nature',
+    nits_i: 'Intention',
+    nits_t: 'Time',
+    nits_s: 'Special instructions',
+    obs_boeing: 'Observables Boeing',
+    obs_examples: 'Exemples',
+    obs_add_positive: '+ Ajouter point positif',
+    obs_add_negative: '+ Ajouter point négatif',
+    obs_press_to_add: 'Appuyez pour ajouter',
+    confirm_delete_all: 'Effacer tout ?',
+    confirm_erase: 'Effacer tous les exercices ?',
+    mandatory_badge: 'MANDATORY',
+    optional_badge: 'TRAINING',
+    lvo_badge: 'LVO',
+    rnp_badge: 'RNP',
+    training_mode_banner: '🎭 MODE ENTRAÎNEMENT — Session non enregistrée',
+    briefing_title: 'BRIEFING PRÉ-SESSION',
+    briefing_sub: 'Menaces à identifier avant le vol',
+    briefing_start: '✈ DÉMARRER LA SESSION',
+    briefing_skip: 'SKIP',
+    modal_reset_title: 'Reset session',
+    modal_reset_msg: 'Effacer tous les exercices ?',
+    pilot_search_placeholder: '🔍 Rechercher par matricule ou nom...',
+    cl_exemplaire: 'EXEMPLAIRE',
+    cl_au_dessus: 'AU-DESSUS DU STANDARD',
+    cl_standard: 'STANDARD',
+    cl_sous_standard: 'SOUS-STANDARD',
+    cl_inacceptable: 'INACCEPTABLE',
+    sessions_sub_tri: 'TRI',
+    exercices_label: 'Exercices',
+    moy_globale: 'moy. globale',
+    a_consolider: '△ À consolider: ',
+    progression: '↑ Progression',
+    regression: '↓ Régression',
+    premiere_session: '1re session',
+    guide_title: '📖 GUIDE D\'UTILISATION',
+    guide_sub: 'CBTA TRI Companion — B737 NG · v2.4',
+    guide_close: '✕ Fermer le guide',
+    second_attempt_cancel: 'Annuler',
+  },
+  en: {
+    app_name: 'B737 CBTA TRI',
+    app_subtitle: 'Instructor Station',
+    guide_btn: 'USER GUIDE',
+    close_btn: 'Close',
+    save_btn: 'Save',
+    cancel_btn: 'Cancel',
+    delete_btn: 'Delete',
+    confirm_btn: 'Confirm',
+    back_btn: '← Home',
+    start_btn: 'Start',
+    next_btn: 'Next',
+    done_btn: 'Done',
+    export_btn: 'Export',
+    import_btn: 'Import',
+    backup_btn: '⬇ Backup',
+    home_session_title: 'Instructor Station',
+    home_session_sub: 'B737NG · QRH Rev55 · FCTM Rev25',
+    home_pilot_cpt: 'LEFT SEAT — CAPTAIN',
+    home_pilot_fo: 'RIGHT SEAT — FIRST OFFICER (optional)',
+    home_session_name: 'Session / Flight',
+    home_start_session: 'START SESSION',
+    home_tip: 'Leave right seat empty for single-pilot assessment',
+    home_scenario_lib: 'Scenario Library',
+    home_load_scenario: 'Load scenario',
+    home_training_mode: '🎭 TRAINING MODE',
+    home_historique: 'HISTORY',
+    home_company_label: 'AIRLINE',
+    home_instructor_label: 'INSTRUCTOR NAME (TRI)',
+    home_company_placeholder: 'e.g. Air Algérie, Air France, Transavia...',
+    home_instructor_placeholder: 'e.g. Cpt Bouchenafa Mohamed Amine',
+    home_session_placeholder: 'e.g. B737-800 OPC Innsbruck',
+    home_seat_left_placeholder: 'Trainee name — left seat',
+    home_seat_right_placeholder: 'Trainee name — right seat (optional)',
+    home_mat_placeholder: 'Staff No.',
+    home_login_reserved: 'Access restricted to authorised instructors',
+    home_login_btn: 'LOGIN',
+    home_rights: 'All rights reserved · Instructor use only',
+    role_cpt: 'CAPTAIN',
+    role_fo: 'FIRST OFFICER',
+    role_tri_check: 'TRI (INSTRUCTOR UNDER ASSESSMENT)',
+    role_seat_left: 'LEFT SEAT',
+    role_seat_right: 'RIGHT SEAT',
+    session_title: 'Session',
+    exercise_list: 'Exercise list',
+    exercise_close: 'Close exercise',
+    exercise_reopen: 'Reopen exercise',
+    exercise_mandatory: 'MANDATORY ITEMS',
+    exercise_attempt: '↻ 2nd ATTEMPT',
+    exercise_attempt2: 'Who retakes the exercise?',
+    exercise_time_limit: 'TIME LIMIT',
+    exercise_saving: 'In progress',
+    exercise_phase: 'Phase',
+    exercise_notes: 'Notes',
+    exercise_facnotes: 'Facilitation notes',
+    exercise_add: '+ ADD EXERCISE',
+    exercise_delete_title: 'Delete exercise?',
+    exercise_delete_msg: 'This action cannot be undone.',
+    exercise_no_exo: 'No exercises',
+    exercise_no_exo_sub: 'Tap + to begin',
+    comp_kno: 'Application of Knowledge',
+    comp_wlm: 'Workload Management',
+    comp_sa: 'Situation Awareness',
+    comp_psd: 'Problem Solving & Decision Making',
+    comp_ltw: 'Leadership & Teamwork',
+    comp_fpm: 'Manual Flight Path Management',
+    comp_fpa: 'Automated Flight Path Management',
+    comp_com: 'Communication',
+    comp_pro: 'Application of Procedures',
+    grade_1: 'UNACCEPTABLE',
+    grade_2: 'BELOW STANDARD',
+    grade_3: 'STANDARD',
+    grade_4: 'ABOVE STANDARD',
+    grade_5: 'EXEMPLARY',
+    grade_na: 'N/A',
+    grade_auto: 'AUTO',
+    grade_instructor_final: 'INSTRUCTOR FINAL GRADE',
+    grade_label_1: 'UNACCEPTABLE',
+    grade_label_2: 'BELOW STANDARD',
+    grade_label_3: 'STANDARD',
+    grade_label_4: 'ABOVE STANDARD',
+    grade_label_5: 'EXEMPLARY',
+    deb_title: 'DEBRIEF →',
+    deb_summary: 'Summary',
+    deb_strengths: 'Strengths',
+    deb_improvements: 'Areas for improvement',
+    deb_conclusion: 'Conclusion',
+    deb_generate: 'Generate debrief',
+    deb_print: 'PDF',
+    deb_email: 'EMAIL',
+    deb_json: 'JSON',
+    deb_close_session: 'END SESSION',
+    hist_title: 'DASHBOARD',
+    hist_dashboard: 'Dashboard',
+    hist_sessions: 'Sessions',
+    hist_pilots: 'Pilots',
+    hist_no_sessions: 'No sessions recorded',
+    hist_no_pilots: 'No pilots',
+    hist_sessions_count: 'Sessions',
+    hist_avg_grade: 'Fleet avg.',
+    hist_back: '← Home',
+    hist_export_dossier: '📦 Export',
+    tem_title: 'TEM — THREATS & ERRORS',
+    tem_threats: 'Threats',
+    tem_errors: 'Errors',
+    tem_uas: 'Undesired Aircraft States (UAS)',
+    tem_add_threat: '+ Threat',
+    tem_add_error: '+ Error',
+    tem_add_uas: '+ UAS',
+    ffa_title: 'FFA — FLY FOCUS ACT',
+    ffa_subtitle: 'Fly Focus Act',
+    fordec_title: 'FORDEC',
+    fordec_f: 'Facts',
+    fordec_o: 'Options',
+    fordec_r: 'Risks',
+    fordec_d: 'Decision',
+    fordec_e: 'Execution',
+    fordec_c: 'Check',
+    nits_title: 'NITS',
+    nits_n: 'Nature',
+    nits_i: 'Intention',
+    nits_t: 'Time',
+    nits_s: 'Special instructions',
+    obs_boeing: 'Boeing Observable Behaviors',
+    obs_examples: 'Examples',
+    obs_add_positive: '+ Add positive observation',
+    obs_add_negative: '+ Add negative observation',
+    obs_press_to_add: 'Tap to add',
+    confirm_delete_all: 'Delete all?',
+    confirm_erase: 'Erase all exercises?',
+    mandatory_badge: 'MANDATORY',
+    optional_badge: 'TRAINING',
+    lvo_badge: 'LVO',
+    rnp_badge: 'RNP',
+    training_mode_banner: '🎭 TRAINING MODE — Session not recorded',
+    briefing_title: 'PRE-SESSION BRIEFING',
+    briefing_sub: 'Identify threats before the flight',
+    briefing_start: '✈ START SESSION',
+    briefing_skip: 'SKIP',
+    modal_reset_title: 'Reset session',
+    modal_reset_msg: 'Erase all exercises?',
+    pilot_search_placeholder: '🔍 Search by staff number or name...',
+    cl_exemplaire: 'EXEMPLARY',
+    cl_au_dessus: 'ABOVE STANDARD',
+    cl_standard: 'STANDARD',
+    cl_sous_standard: 'BELOW STANDARD',
+    cl_inacceptable: 'UNACCEPTABLE',
+    sessions_sub_tri: 'TRI',
+    exercices_label: 'Exercises',
+    moy_globale: 'overall avg.',
+    a_consolider: '△ To reinforce: ',
+    progression: '↑ Improving',
+    regression: '↓ Declining',
+    premiere_session: '1st session',
+    guide_title: '📖 USER GUIDE',
+    guide_sub: 'CBTA TRI Companion — B737 NG · v2.4',
+    guide_close: '✕ Close guide',
+    second_attempt_cancel: 'Cancel',
+  }
+};
+
+function t(k) {
+  return (STRINGS[_lang] || STRINGS.fr)[k] || k;
+}
+
+function setLang(l) {
+  _lang = l;
+  localStorage.setItem('cbta_lang', l);
+  const btn = document.getElementById('lang-toggle-btn');
+  if(btn) btn.innerHTML = l === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    const s = t(k);
+    if(s !== undefined) el.innerHTML = s;
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    const s = t(k);
+    if(s !== undefined) el.placeholder = s;
+  });
+  const gfr = document.getElementById('guide-content-fr');
+  const gen = document.getElementById('guide-content-en');
+  if(gfr) gfr.style.display = l === 'fr' ? '' : 'none';
+  if(gen) gen.style.display = l === 'en' ? '' : 'none';
+  const gcBtn = document.getElementById('guide-close-btn');
+  if(gcBtn) gcBtn.innerHTML = l === 'fr' ? '✕ Fermer le guide' : '✕ Close guide';
+  if(typeof GL !== 'undefined') {
+    GL[1] = t('grade_1'); GL[2] = t('grade_2'); GL[3] = t('grade_3');
+    GL[4] = t('grade_4'); GL[5] = t('grade_5');
+  }
+  if(typeof _ROLE_LABELS !== 'undefined') {
+    _ROLE_LABELS.CPT = t('role_cpt');
+    _ROLE_LABELS.FO = t('role_fo');
+    _ROLE_LABELS.TRI = t('role_tri_check');
+  }
+  renderActiveScreen();
+}
+
+function renderActiveScreen() {
+  const screens = document.querySelectorAll('.screen');
+  let activeId = null;
+  screens.forEach(s => {
+    const ds = s.style.display;
+    if(ds === 'flex' || ds === 'block') activeId = s.id;
+  });
+  if(!activeId) return;
+  if(activeId === 'screen-session') { if(typeof renderExList === 'function') renderExList(); }
+  else if(activeId === 'screen-history') { if(typeof renderHistContent === 'function') renderHistContent(); }
+  else if(activeId === 'screen-debrief') { if(typeof renderDebContent === 'function') renderDebContent(); }
+}
+
 const SC = [
 {id:"aborted_engine_start",title:"ABORTED ENGINE START",page:"8.2",cat:"MEMORY",pri:"HIGH",
 phase:["TAKEOFF"],keys:["PRO","WLM","LTW","COM"],
@@ -4373,7 +5051,7 @@ const COMPETENCIES = [
 
 // ── GRADE CONFIG ---───────────────────────────────────────────────────────────
 const GC = ["","#EF4444","#F97316","#F59E0B","#10B981","#3B82F6"];
-const GL = ["","INACCEPTABLE","SOUS-STANDARD","STANDARD","AU-DESSUS","EXEMPLAIRE"];
+const GL = ["","INACCEPTABLE","SOUS-STANDARD","STANDARD","AU-DESSUS","EXEMPLAIRE"]; // updated by setLang()
 const catC = {MEMORY:"#EF4444",MANEUVER:"#F97316","FLIGHT PATTERN":"#10B981",NNC:"#A855F7",LVO:"#EC4899",RNP:"#0EA5E9"};
 const PHASE_COLORS={"ALL":"#64748B","TAKEOFF":"#FFE600","CLIMB":"#39FF14","CRUISE":"#00E5FF","DESCENT":"#FF9500","APPROACH":"#FF61C7","LANDING":"#AAFF00"};
 
@@ -4714,7 +5392,7 @@ function setRoleSeat1(r, el){
     b.style.background='transparent'; b.style.color='#64748B'; b.style.borderColor='#334155';
   });
   el.style.background=_ROLE_COLORS[r]+'22'; el.style.color=_ROLE_COLORS[r]; el.style.borderColor=_ROLE_COLORS[r];
-  document.getElementById('lbl-seat1').textContent='SIÈGE GAUCHE — '+_ROLE_LABELS[r];
+  document.getElementById('lbl-seat1').textContent=t('role_seat_left')+' — '+_ROLE_LABELS[r];
 }
 function setRoleSeat2(r, el){
   _s2Role = r;
@@ -4723,7 +5401,7 @@ function setRoleSeat2(r, el){
     b.style.background='transparent'; b.style.color='#64748B'; b.style.borderColor='#334155';
   });
   el.style.background=_ROLE_COLORS[r]+'22'; el.style.color=_ROLE_COLORS[r]; el.style.borderColor=_ROLE_COLORS[r];
-  document.getElementById('lbl-seat2').textContent='SIÈGE DROIT — '+_ROLE_LABELS[r];
+  document.getElementById('lbl-seat2').textContent=t('role_seat_right')+' — '+_ROLE_LABELS[r];
   const foInput = document.getElementById('inp-fo');
   if(foInput && !foInput.value.trim()){
     foInput.value = r;
@@ -4742,8 +5420,8 @@ function setEditRole(seat, r, el){
     b.style.background='transparent'; b.style.color='#64748B'; b.style.borderColor='#334155';
   });
   el.style.background=_ROLE_COLORS[r]+'22'; el.style.color=_ROLE_COLORS[r]; el.style.borderColor=_ROLE_COLORS[r];
-  if(seat===1){ _es1Role=r; document.getElementById('edit-lbl-seat1').textContent='SIÈGE GAUCHE — '+_ROLE_LABELS[r]; }
-  else { _es2Role=r; document.getElementById('edit-lbl-seat2').textContent='SIÈGE DROIT — '+_ROLE_LABELS[r]; }
+  if(seat===1){ _es1Role=r; document.getElementById('edit-lbl-seat1').textContent=t('role_seat_left')+' — '+_ROLE_LABELS[r]; }
+  else { _es2Role=r; document.getElementById('edit-lbl-seat2').textContent=t('role_seat_right')+' — '+_ROLE_LABELS[r]; }
 }
 function showEditSession(){
   // Pre-fill current values
@@ -4765,8 +5443,8 @@ function showEditSession(){
   if(_es2Role==='FO') activateBtn('es2-fo','FO');
   else if(_es2Role==='CPT') activateBtn('es2-cpt','CPT');
   else activateBtn('es2-tri','TRI');
-  document.getElementById('edit-lbl-seat1').textContent='SIÈGE GAUCHE — '+(_ROLE_LABELS[_es1Role]||'COMMANDANT DE BORD');
-  document.getElementById('edit-lbl-seat2').textContent='SIÈGE DROIT — '+(_ROLE_LABELS[_es2Role]||'PREMIER OFFICIER');
+  document.getElementById('edit-lbl-seat1').textContent=t('role_seat_left')+' — '+(_ROLE_LABELS[_es1Role]||t('role_cpt'));
+  document.getElementById('edit-lbl-seat2').textContent=t('role_seat_right')+' — '+(_ROLE_LABELS[_es2Role]||t('role_fo'));
   document.getElementById('modal-edit-session').style.display='flex';
 }
 function saveEditSession(){
@@ -5010,11 +5688,7 @@ const exs = state.exercises;
 
 const el = document.getElementById('ex-list');
 if(!exs.length){
-el.innerHTML = `<div style="text-align:center;color:var(--faint);padding:50px 20px;">
-<div style="font-size:40px;margin-bottom:14px;"></div>
-<div style="font-size:15px;color:#94A3B8;margin-bottom:6px;">Aucun exercice</div>
-<div style="font-size:13px;color:var(--mut);margin-bottom:20px;">Appuyez sur + pour commencer</div>
-<div class="card" style="text-align:left;font-size:var(--fs);color:#94A3B8;line-height:2.2;">
+const howToFr = `<div class="card" style="text-align:left;font-size:var(--fs);color:#94A3B8;line-height:2.2;">
 <div style="font-weight:700;color:#F1F5F9;margin-bottom:12px;font-size:var(--fsl);">Comment utiliser :</div>
 <div>1. <span style="color:#8B5CF6;font-weight:700;">📋</span> Charger un scénario (<span style="color:#8B5CF6;font-weight:700;">✏️</span> pour personnaliser) ou <span style="color:#3B82F6;font-weight:700;">+</span> ajouter un exercice manuellement</div>
 <div>2. Sélectionner les compétences, noter <span style="color:#F59E0B;font-weight:700;">1–5</span> + observables <span style="color:#10B981;font-weight:700;">+</span>/<span style="color:#EF4444;font-weight:700;">−</span></div>
@@ -5023,7 +5697,22 @@ el.innerHTML = `<div style="text-align:center;color:var(--faint);padding:50px 20
 <div>5. <span style="color:#06B6D4;font-weight:700;">⏱</span> Fixer une time limit sur la carte pour suivre le Time Management</div>
 <div>6. <span style="color:#10B981;font-weight:700;">Clôturer</span> l'exercice puis en ajouter un autre</div>
 <div>7. <span style="color:#3B82F6;font-weight:700;">DEBRIEF</span> → scores, FORDEC/NITS, Time Management, Questionnaire, CRM</div>
-</div>
+</div>`;
+const howToEn = `<div class="card" style="text-align:left;font-size:var(--fs);color:#94A3B8;line-height:2.2;">
+<div style="font-weight:700;color:#F1F5F9;margin-bottom:12px;font-size:var(--fsl);">How to use:</div>
+<div>1. <span style="color:#8B5CF6;font-weight:700;">📋</span> Load a scenario (<span style="color:#8B5CF6;font-weight:700;">✏️</span> to customise) or <span style="color:#3B82F6;font-weight:700;">+</span> add an exercise manually</div>
+<div>2. Select competencies, grade <span style="color:#F59E0B;font-weight:700;">1–5</span> + observable behaviors <span style="color:#10B981;font-weight:700;">+</span>/<span style="color:#EF4444;font-weight:700;">−</span></div>
+<div>3. Fill in the <span style="color:#F59E0B;font-weight:700;">FFA</span>, <span style="color:#EF4444;font-weight:700;">TEM</span> and <span style="color:#10B981;font-weight:700;">Facilitation</span> tabs</div>
+<div>4. <span style="color:#8B5CF6;font-weight:700;">FORDEC</span> tab — check if the crew used FORDEC and/or a NITS briefing</div>
+<div>5. <span style="color:#06B6D4;font-weight:700;">⏱</span> Set a time limit on the exercise card to monitor Time Management</div>
+<div>6. <span style="color:#10B981;font-weight:700;">Close</span> the exercise, then add the next one</div>
+<div>7. <span style="color:#3B82F6;font-weight:700;">DEBRIEF</span> → scores, FORDEC/NITS, Time Management, Questionnaire, CRM</div>
+</div>`;
+el.innerHTML = `<div style="text-align:center;color:var(--faint);padding:50px 20px;">
+<div style="font-size:40px;margin-bottom:14px;"></div>
+<div style="font-size:15px;color:#94A3B8;margin-bottom:6px;">${t('exercise_no_exo')}</div>
+<div style="font-size:13px;color:var(--mut);margin-bottom:20px;">${t('exercise_no_exo_sub')}</div>
+${_lang==='en'?howToEn:howToFr}
 </div>`;
 return;
 }
@@ -5068,7 +5757,7 @@ const headerColor = sysColor || pc;
 const cc = catC[sc.cat]||"#64748B";
 const avgHtml = ex.closed && st ?
 `<div style="font-size:20px;font-weight:800;color:${GC[Math.round(st.avg)] || '#64748B'}">${st.avg.toFixed(1)}</div>` :
-`<span class="chip" style="background:#F59E0B18;border:1px solid #F59E0B33;color:#F59E0B;">EN COURS</span>`;
+`<span class="chip" style="background:#F59E0B18;border:1px solid #F59E0B33;color:#F59E0B;">${t('exercise_saving')}</span>`;
 const keysHtml = sc.keys.slice(0,5).map(k=>{
 const c=COMPETENCIES.find(x=>x.id===k);
 const cd=(ex.cs||{})[k]||(ex.csfo||{})[k];
@@ -5128,7 +5817,7 @@ if(wasOpen && ex.timeLimit && ex.openedAt){
 }
 ex.closed = !ex.closed;
 const btn = document.getElementById('btn-close-ex');
-btn.textContent = ex.closed ? "Rouvrir l exercice" : "Cloturer l exercice";
+btn.textContent = ex.closed ? t('exercise_reopen') : t('exercise_close');
 btn.className = ex.closed ? "btn btn-warn" : "btn btn-success";
 btn.style.width="100%"; btn.style.padding="13px"; btn.style.fontSize="15px";
 renderExView();
@@ -5151,15 +5840,15 @@ function doSecondAttempt(){
   overlay.style.display = 'flex';
   overlay.innerHTML = `
   <div class="modal-box" style="max-width:300px;">
-    <div style="font-size:15px;font-weight:800;color:#F59E0B;margin-bottom:6px;">↻ 2ème ESSAI</div>
-    <div style="font-size:13px;color:#94A3B8;margin-bottom:16px;">Qui refait l'exercice ?<br><span style="font-size:11px;">Les notes de l'autre pilote sont conservées.</span></div>
+    <div style="font-size:15px;font-weight:800;color:#F59E0B;margin-bottom:6px;">${t('exercise_attempt')}</div>
+    <div style="font-size:13px;color:#94A3B8;margin-bottom:16px;">${t('exercise_attempt2')}<br><span style="font-size:11px;">${_lang==='en'?'The other pilot\'s grades are kept.':'Les notes de l\'autre pilote sont conservées.'}</span></div>
     <button style="width:100%;padding:12px;margin-bottom:8px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #3B82F6;background:#3B82F622;color:#3B82F6;" onclick="this.closest('.modal-overlay').remove();_doSecondAttemptForPilot('cpt')">
       ${state.pilotRole||'CPT'} — ${state.pilotName}
     </button>
     <button style="width:100%;padding:12px;margin-bottom:14px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #10B981;background:#10B98122;color:#10B981;" onclick="this.closest('.modal-overlay').remove();_doSecondAttemptForPilot('fo')">
       ${state.foRole||'FO'} — ${state.foName}
     </button>
-    <button style="width:100%;padding:8px;border-radius:8px;font-size:13px;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;" onclick="this.closest('.modal-overlay').remove()">Annuler</button>
+    <button style="width:100%;padding:8px;border-radius:8px;font-size:13px;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;" onclick="this.closest('.modal-overlay').remove()">${t('cancel_btn')}</button>
   </div>`;
   document.body.appendChild(overlay);
 }
@@ -5230,7 +5919,7 @@ const badge = document.getElementById('ex-avg-badge');
 if(st){ badge.style.display='block'; document.getElementById('ex-avg-val').textContent=st.avg.toFixed(1); document.getElementById('ex-avg-val').style.color=GC[Math.round(st.avg)]||'#64748B'; }
 else badge.style.display='none';
 const btn = document.getElementById('btn-close-ex');
-btn.textContent = ex.closed ? "Rouvrir l exercice" : "Cloturer l exercice";
+btn.textContent = ex.closed ? t('exercise_reopen') : t('exercise_close');
 btn.className = ex.closed ? "btn btn-warn" : "btn btn-success";
 btn.style.width="100%"; btn.style.padding="13px"; btn.style.fontSize="15px";
 // M/T toggle and 2nd attempt
@@ -8961,13 +9650,13 @@ else if(_histTab==='pilotes') renderPilotesList();
 }
 
 function cc(v){return v>=4.5?'#10B981':v>=3.5?'#3B82F6':v>=2.5?'#F59E0B':v>=1.5?'#F97316':'#EF4444';}
-function cl(v){return v>=4.5?'EXEMPLAIRE':v>=3.5?'AU-DESSUS DU STANDARD':v>=2.5?'STANDARD':v>=1.5?'SOUS-STANDARD':'INACCEPTABLE';}
+function cl(v){return v>=4.5?t('cl_exemplaire'):v>=3.5?t('cl_au_dessus'):v>=2.5?t('cl_standard'):v>=1.5?t('cl_sous_standard'):t('cl_inacceptable');}
 
 function renderDashboard(){
 const el=document.getElementById('history-content');
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 if(!hist.length){
-el.innerHTML='<div style="text-align:center;padding:50px;color:#64748B;"><div style="font-size:40px;margin-bottom:12px;">📊</div><div style="font-size:14px;">Aucune session enregistrée</div><div style="font-size:12px;color:#334155;margin-top:6px;">Les sessions apparaissent après chaque FIN</div></div>';
+el.innerHTML='<div style="text-align:center;padding:50px;color:#64748B;"><div style="font-size:40px;margin-bottom:12px;">📊</div><div style="font-size:14px;">'+t('hist_no_sessions')+'</div></div>';
 return;
 }
 const allScores=hist.map(s=>parseFloat(s.avgScore)||0).filter(v=>v>0);
@@ -9036,7 +9725,7 @@ el.innerHTML=h;
 function renderSessionsList(){
 const el=document.getElementById('history-content');
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
-if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">Aucune session</div>';return;}
+if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">'+t('hist_no_sessions')+'</div>';return;}
 let h='<div style="padding:14px;">';
 hist.forEach((s,i)=>{
 const sc=parseFloat(s.avgScore)||0;
@@ -9215,7 +9904,7 @@ function viewImportedPDF(idx){
 function renderPilotesList(){
 const el=document.getElementById('history-content');
 const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
-if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">Aucun pilote</div>';return;}
+if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">'+t('hist_no_pilots')+'</div>';return;}
 const pilotes={};
 function _addPilot(key,name,matricule,company,sc,compAvgs,session){
   if(!key) return;
@@ -9240,10 +9929,10 @@ hist.forEach(s=>{
 });
 // Search bar
 let h='<div style="padding:14px;">';
-h+='<div style="display:flex;gap:8px;margin-bottom:14px;"><input id="pilot-search" class="form-input" style="margin:0;" placeholder="🔍 Rechercher par matricule ou nom..." oninput="filterPilotCards(this.value)"/></div>';
+h+='<div style="display:flex;gap:8px;margin-bottom:14px;"><input id="pilot-search" class="form-input" style="margin:0;" placeholder="'+t('pilot_search_placeholder')+'" oninput="filterPilotCards(this.value)"/></div>';
 Object.entries(pilotes).forEach(([key,p])=>{
 const avg=p.scores.length?p.scores.reduce((a,b)=>a+b,0)/p.scores.length:0;
-const trend=p.scores.length>=2?(p.scores[p.scores.length-1]>p.scores[0]?'↑ Progression':'↓ Régression'):'1re session';
+const trend=p.scores.length>=2?(p.scores[p.scores.length-1]>p.scores[0]?t('progression'):t('regression')):t('premiere_session');
 const tc=trend.includes('↑')?'#10B981':trend.includes('↓')?'#EF4444':'#64748B';
 const weak=COMPETENCIES.filter(c=>{const a=p.ct[c.id].n>0?p.ct[c.id].t/p.ct[c.id].n:0;return a>0&&a<3.5;}).map(c=>c.label);
 const escapedKey=key.replace(/'/g,"\\'");
@@ -9255,8 +9944,8 @@ else if(p.company) h+='<div style="font-size:11px;color:#64748B;margin-top:1px;"
 h+='<div style="font-size:11px;color:#64748B;">'+p.sessions.length+' session'+(p.sessions.length>1?'s':'')+' · dern. '+(p.sessions[0]&&p.sessions[0].date?p.sessions[0].date:'')+'</div>';
 h+='<div style="font-size:12px;color:'+tc+';font-weight:700;margin-top:2px;">'+trend+'</div></div>';
 h+='<div style="text-align:right;"><div style="font-size:26px;font-weight:900;color:'+cc(avg)+';">'+avg.toFixed(2)+'</div>';
-h+='<div style="font-size:9px;color:#64748B;">moy. globale</div></div></div>';
-if(weak.length) h+='<div style="padding:6px 14px;border-top:1px solid #1E2530;background:#EF444408;"><div style="font-size:10px;color:#EF4444;">△ À consolider: '+weak.join(', ')+'</div></div>';
+h+='<div style="font-size:9px;color:#64748B;">'+t('moy_globale')+'</div></div></div>';
+if(weak.length) h+='<div style="padding:6px 14px;border-top:1px solid #1E2530;background:#EF444408;"><div style="font-size:10px;color:#EF4444;">'+t('a_consolider')+weak.join(', ')+'</div></div>';
 // XP bars
 const xpHtml=(()=>{
   function xpLevel(xp){return xp>=20?{lbl:'EXPERT',icon:'⚡',col:'#FF8C00'}:xp>=12?{lbl:'AVANCÉ',icon:'🔥',col:'#10B981'}:xp>=6?{lbl:'CONFIRMÉ',icon:'⭐',col:'#3B82F6'}:xp>=2?{lbl:'STANDARD',icon:'🌿',col:'#64748B'}:{lbl:'ROOKIE',icon:'🌱',col:'#475569'};}
@@ -10588,6 +11277,18 @@ function showPresentation(){
   el.style.display='block';
   el.onclick=function(){el.style.display='none';};
 }
+
+// ── LANGUAGE INIT ────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  // Apply saved language on load
+  if(_lang === 'en') {
+    setLang('en');
+  } else {
+    // FR default — just update the toggle button initial state
+    const btn = document.getElementById('lang-toggle-btn');
+    if(btn) btn.innerHTML = '🇬🇧 EN';
+  }
+});
 
 </script>
 
