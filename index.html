@@ -10225,17 +10225,22 @@ function exportSessionJSON(){
   const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
   const session=hist[0];
   if(!session){showToast('❌ Aucune session enregistrée à exporter');return;}
-  const mat1=((session.pilotMatricule||session.pilotName||'CPT')+'').replace(/[^a-zA-Z0-9]/g,'_');
-  const mat2=((session.foMatricule||session.foName||'FO')+'').replace(/[^a-zA-Z0-9]/g,'_');
   const dateStr=new Date().toISOString().slice(0,10);
   const sessName=((session.sessionName||'SESSION')+'').replace(/[^a-zA-Z0-9]/g,'_').substring(0,20);
-  const fname=mat1+'_'+mat2+'_'+dateStr+'_'+sessName+'.json';
-  const data={version:1,type:'session',exported:new Date().toISOString(),session};
-  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=fname;a.click();URL.revokeObjectURL(url);
-  showToast('✅ Session exportée — '+fname);
+  function _dl(mat,role){
+    const fname=mat+'_'+dateStr+'_'+sessName+'_'+role+'.json';
+    const data={version:1,type:'session',exported:new Date().toISOString(),pilot:{name:role==='CPT'?session.pilotName:session.foName,matricule:mat,role},session};
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download=fname;a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  const mat1=((session.pilotMatricule||session.pilotName||'CPT')+'').replace(/[^a-zA-Z0-9]/g,'_');
+  const mat2=((session.foMatricule||session.foName||'FO')+'').replace(/[^a-zA-Z0-9]/g,'_');
+  _dl(mat1,'CPT');
+  setTimeout(()=>_dl(mat2,'FO'),600);
+  showToast('✅ 2 fichiers générés — '+mat1+' (CPT) & '+mat2+' (FO)');
 }
 
 function exportPilotDossier(key,name,matricule){
