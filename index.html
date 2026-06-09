@@ -510,7 +510,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <div id="ex-avg-badge" style="text-align:center;margin-right:6px;display:none;">
 <div style="font-size:22px;font-weight:800;" id="ex-avg-val">-</div>
-<div style="font-size:9px;color:var(--mut);">MOY</div>
+<div style="font-size:9px;color:var(--mut);" data-i18n="avg_label">MOY</div>
 </div>
 <div id="ex-mand-btns" style="display:flex;gap:5px;"></div>
 <button onclick="toggleDarkMode()" id="dark-btn-ex" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
@@ -592,12 +592,12 @@ Identifiant ou mot de passe incorrect
 <div style="width:100%;max-width:480px;max-height:92vh;display:flex;flex-direction:column;padding:22px 18px 16px;position:relative;">
 <div style="text-align:center;margin-bottom:14px;flex-shrink:0;">
 <div style="font-size:10px;letter-spacing:6px;color:#EF444455;font-weight:800;margin-bottom:6px;">⚠ SIMULATION TEM</div>
-<div style="font-size:22px;font-weight:900;color:#EF4444;text-shadow:0 0 20px #EF4444,0 0 40px #EF444455;letter-spacing:3px;margin-bottom:6px;">MENACE ALÉATOIRE</div>
-<button onclick="injectDistracteur(Math.floor(Math.random()*DISTRACTEURS.length))" style="width:100%;padding:11px;border-radius:12px;background:#EF444422;border:2px solid #EF444488;color:#EF4444;font-size:14px;font-weight:900;cursor:pointer;letter-spacing:2px;margin-bottom:4px;">🎲 INJECTION ALÉATOIRE</button>
-<div style="font-size:11px;color:#334155;margin-top:4px;">ou choisir ci-dessous</div>
+<div style="font-size:22px;font-weight:900;color:#EF4444;text-shadow:0 0 20px #EF4444,0 0 40px #EF444455;letter-spacing:3px;margin-bottom:6px;" data-i18n="tem_random_title">MENACE ALÉATOIRE</div>
+<button onclick="injectDistracteur(Math.floor(Math.random()*DISTRACTEURS.length))" style="width:100%;padding:11px;border-radius:12px;background:#EF444422;border:2px solid #EF444488;color:#EF4444;font-size:14px;font-weight:900;cursor:pointer;letter-spacing:2px;margin-bottom:4px;" data-i18n="tem_random_inject">🎲 INJECTION ALÉATOIRE</button>
+<div style="font-size:11px;color:#334155;margin-top:4px;" data-i18n="tem_random_or">ou choisir ci-dessous</div>
 </div>
 <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;gap:8px;margin-bottom:12px;padding-right:2px;" id="dist-list"></div>
-<button onclick="closeDistracteur()" style="width:100%;padding:12px;border-radius:12px;background:#0F1218;border:1px solid #1E2530;color:#475569;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;">ANNULER</button>
+<button onclick="closeDistracteur()" style="width:100%;padding:12px;border-radius:12px;background:#0F1218;border:1px solid #1E2530;color:#475569;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0;" data-i18n="cancel_btn">ANNULER</button>
 </div>
 </div>
 
@@ -2983,7 +2983,7 @@ Identifiant ou mot de passe incorrect
 <div id="modal-edit-session" style="display:none;" class="modal-overlay" ontouchstart="event.stopPropagation()">
 <div class="modal-box" style="width:92%;max-width:420px;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-<div style="font-size:15px;font-weight:800;color:#F1F5F9;">Modifier la session</div>
+<div style="font-size:15px;font-weight:800;color:#F1F5F9;" data-i18n="edit_session_title">Modifier la session</div>
 <button class="btn" onclick="document.getElementById('modal-edit-session').style.display='none'" style="padding:6px 10px;">✕</button>
 </div>
 <div style="margin-bottom:12px;">
@@ -3006,11 +3006,11 @@ Identifiant ou mot de passe incorrect
 <button id="es2-fo"  onclick="setEditRole(2,'FO',this)"  style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #10B981;background:#10B98122;color:#10B981;">FO</button>
 <button id="es2-tri" onclick="setEditRole(2,'TRI',this)" style="flex:1;padding:6px;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid #334155;background:transparent;color:#64748B;">TRI CHECK</button>
 </div>
-<input id="edit-fo-name" class="form-input" placeholder="Nom siège droit (laisser vide = solo)"/>
+<input id="edit-fo-name" class="form-input" data-i18n-ph="edit_fo_placeholder" placeholder="Nom siège droit (laisser vide = solo)"/>
 </div>
 <div style="display:flex;gap:10px;">
-<button class="btn" style="flex:1;" onclick="document.getElementById('modal-edit-session').style.display='none'">Annuler</button>
-<button class="btn btn-primary" style="flex:1;" onclick="saveEditSession()">Appliquer</button>
+<button class="btn" style="flex:1;" onclick="document.getElementById('modal-edit-session').style.display='none'" data-i18n="cancel_btn">Annuler</button>
+<button class="btn btn-primary" style="flex:1;" onclick="saveEditSession()" data-i18n="apply_btn">Appliquer</button>
 </div>
 </div>
 </div>
@@ -3177,6 +3177,13 @@ const STRINGS = {
     guide_sub: 'CBTA TRI Companion — B737 NG · v2.4',
     guide_close: '✕ Fermer le guide',
     second_attempt_cancel: 'Annuler',
+    avg_label: 'MOY',
+    tem_random_title: 'MENACE ALÉATOIRE',
+    tem_random_inject: '🎲 INJECTION ALÉATOIRE',
+    tem_random_or: 'ou choisir ci-dessous',
+    edit_session_title: 'Modifier la session',
+    apply_btn: 'Appliquer',
+    edit_fo_placeholder: 'Nom siège droit (laisser vide = solo)',
   },
   en: {
     app_name: 'B737 CBTA TRI',
@@ -3336,6 +3343,13 @@ const STRINGS = {
     guide_sub: 'CBTA TRI Companion — B737 NG · v2.4',
     guide_close: '✕ Close guide',
     second_attempt_cancel: 'Cancel',
+    avg_label: 'AVG',
+    tem_random_title: 'RANDOM THREAT',
+    tem_random_inject: '🎲 RANDOM INJECTION',
+    tem_random_or: 'or choose below',
+    edit_session_title: 'Edit session',
+    apply_btn: 'Apply',
+    edit_fo_placeholder: 'Right seat name (leave empty = solo)',
   }
 };
 
@@ -4660,7 +4674,14 @@ var ALL_SC = SC.concat(NNC);
 
 // ── UAS GLOBAUX ICAO/LOSA (liste standard) ---─────────────────────────────────
 // Menaces et erreurs globales supplémentaires
-var THREATS_GLOBAL_EXTRA = [
+var THREATS_GLOBAL_EXTRA = _lang==='en' ? [
+"Unanticipated weather degradation","In-flight icing","Severe turbulence",
+"Windshear detected","TCAS traffic","Sudden technical failure",
+"Contaminated runway","Conflicting runway traffic","Bird strike",
+"Radio communication failure","Sudden visibility degradation",
+"Ambiguous ATC instruction","Terrain / CFIT proximity","Unexpected fuel shortage",
+"Multiple system failure","Cabin medical emergency",
+] : [
 "Météo dégradée non anticipée","Givrage en vol","Turbulences sévères",
 "Windshear détecté","Traffic TCAS","Panne technique soudaine",
 "Piste contaminée","Vis-à-vis piste occupée","Bird strike",
@@ -4668,7 +4689,15 @@ var THREATS_GLOBAL_EXTRA = [
 "Instruction ATC ambiguë","Terrain / CFIT proximity","Panne carburant inattendue",
 "Défaillance multiple systèmes","Urgence médicale cabine",
 ];
-var ERRORS_GLOBAL_EXTRA = [
+var ERRORS_GLOBAL_EXTRA = _lang==='en' ? [
+"Memory items not applied","Checklist omitted or incomplete",
+"Wrong engine identified","Insufficient briefing","Callout not performed",
+"Incorrect automation mode","FMC mis-programmed","Navigation source not verified",
+"Speed restriction not respected","Fuel not verified",
+"Stabilisation criteria not respected","Late go-around","Incorrect ATC communication",
+"Absent PF/PM coordination","Altitude crossing not respected",
+"Incorrect configuration for phase","Aircraft limitation exceeded",
+] : [
 "Memory items non appliqués","Checklist omise ou incomplète",
 "Mauvais moteur identifié","Briefing insuffisant","Callout non effectué",
 "Mode automation incorrect","FMC mal programmé","Source navigation non vérifiée",
@@ -4678,7 +4707,42 @@ var ERRORS_GLOBAL_EXTRA = [
 "Configuration incorrecte pour la phase","Dépassement limitation avion",
 ];
 
-var UAS_GLOBAL = [
+var UAS_GLOBAL = _lang==='en' ? [
+// Track / Position
+"Lateral track deviation (off centreline)",
+"Vertical track deviation (altitude not maintained)",
+"Involuntary heading deviation",
+"Failure to intercept localizer / glidepath",
+"Unstabilised approach continued",
+// Speed / Energy
+"Abnormal speed (too fast / too slow)",
+"VMO / MMO exceedance",
+"Speed below Vref or Vapp",
+"Abnormal energy state (too high / too low)",
+"Incorrect configuration for phase of flight",
+// Altitude
+"Altitude not respected (ATC clearance)",
+"Unauthorised descent / climb",
+"GPWS / Terrain proximity not managed",
+// Attitude
+"Unusual attitude",
+"Excessive bank angle",
+"Excessive rate of descent",
+// Systems
+"Incorrect system configuration",
+"Incorrect automation mode engaged",
+"FMC mis-programmed and used",
+"Unreliable navigation source used",
+// Runway / Ground
+"Runway centreline deviation (takeoff / landing)",
+"Long / short landing",
+"Possible runway excursion",
+"Reject V1 exceedance",
+// Communication / Procedure
+"ATC clearance not respected",
+"Speed restriction exceeded",
+"Checklist incomplete or forgotten",
+] : [
 // Trajectoire / Position
 "Deviation de trajectoire laterale (hors axe)",
 "Deviation de trajectoire verticale (altitude non tenue)",
@@ -6044,7 +6108,7 @@ if(mandDiv){
     ? '<button onclick="toggleMandatory()" style="padding:8px 18px;border-radius:8px;font-size:15px;font-weight:900;cursor:pointer;border:2px solid #EF4444;background:#EF444433;color:#EF4444;letter-spacing:1px;">● M</button>'
     : '<button onclick="toggleMandatory()" style="padding:8px 18px;border-radius:8px;font-size:15px;font-weight:900;cursor:pointer;border:2px solid #3B82F6;background:#3B82F633;color:#3B82F6;letter-spacing:1px;">● T</button>';
   const redoHtml = (ex.mandatory && ex.closed && ex.attempt===1)
-    ? '<button onclick="doSecondAttempt()" style="padding:8px 14px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #F59E0B;background:#F59E0B33;color:#F59E0B;">↻ 2ème ESSAI</button>'
+    ? '<button onclick="doSecondAttempt()" style="padding:8px 14px;border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #F59E0B;background:#F59E0B33;color:#F59E0B;">'+t('exercise_attempt')+'</button>'
     : '';
   mandDiv.innerHTML = mandBtnHtml + redoHtml;
 }
@@ -6074,7 +6138,7 @@ if(state.foName){
   if(allScores.length){
     const gAvg=allScores.reduce((s,v)=>s+v.g,0)/allScores.length;
     collectiveHtml=`<div style="background:#0d1a2e;border:1px solid #33415566;border-radius:8px;padding:7px 13px;margin-top:-10px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;">
-<span style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1.5px;">MOY. COLLECTIVE EXERCICE</span>
+<span style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1.5px;">${_lang==='en'?'EXERCISE COLLECTIVE AVG':'MOY. COLLECTIVE EXERCICE'}</span>
 <span style="font-size:22px;font-weight:900;color:${GC[Math.round(gAvg)]||'#64748B'};">${gAvg.toFixed(1)}</span>
 </div>`;
   }
@@ -7285,73 +7349,105 @@ function closeTimeLimitModal(){document.getElementById('modal-timelimit').style.
 // ── MENACE ALÉATOIRE ───────────────────────────────────────────────────────
 const DISTRACTEURS=[
   // ── ATC ──────────────────────────────────────────────────────────────────
-  {id:'atc_deroute',icon:'🎙',cat:'ATC',color:'#3B82F6',
-   title:'Clairance déroutement',
+  {id:'atc_deroute',icon:'🎙',cat:'ATC',cat_en:'ATC',color:'#3B82F6',
+   title:'Clairance déroutement',title_en:'Diversion clearance',
    desc:'Déroutement inattendu — vecteur radar vers terrain alternatif. Fréquence approche à contacter. Confirmer carburant suffisant.',
-   tem:'ATC: clairance déroutement immédiate — gestion priorités/CRM en cours de procédure'},
-  {id:'atc_radio',icon:'📻',cat:'ATC',color:'#3B82F6',
-   title:'Perte communication radio',
+   desc_en:'Unexpected diversion — radar vector to alternate airport. Approach frequency to contact. Confirm fuel sufficient.',
+   tem:'ATC: clairance déroutement immédiate — gestion priorités/CRM en cours de procédure',
+   tem_en:'ATC: immediate diversion clearance — priority/CRM management during ongoing procedure'},
+  {id:'atc_radio',icon:'📻',cat:'ATC',cat_en:'ATC',color:'#3B82F6',
+   title:'Perte communication radio',title_en:'Radio communication loss',
    desc:'Plus de réponse ATC sur deux fréquences. Procédure NORDO — squawk 7600. Continuer ou déroutement?',
-   tem:'ATC: perte communication radio (NORDO) — procédure 7600, SA espace aérien'},
-  {id:'atc_tcas',icon:'⚠️',cat:'ATC',color:'#8B5CF6',
-   title:'TCAS RA inattendu',
+   desc_en:'No ATC response on two frequencies. NORDO procedure — squawk 7600. Continue or divert?',
+   tem:'ATC: perte communication radio (NORDO) — procédure 7600, SA espace aérien',
+   tem_en:'ATC: radio communication loss (NORDO) — 7600 procedure, airspace SA'},
+  {id:'atc_tcas',icon:'⚠️',cat:'ATC',cat_en:'ATC',color:'#8B5CF6',
+   title:'TCAS RA inattendu',title_en:'Unexpected TCAS RA',
    desc:'TCAS: "CLIMB CLIMB" — trafic croisé non annoncé par ATC. Suivi RA obligatoire. Confirmer avec ATC.',
-   tem:'TCAS: RA inattendu en phase de vol — suivi RA vs instruction ATC, WLM/SA'},
-  {id:'atc_piste',icon:'🛬',cat:'ATC',color:'#3B82F6',
-   title:'Piste obstruée — remise de gaz',
+   desc_en:'TCAS: "CLIMB CLIMB" — crossing traffic not announced by ATC. RA compliance mandatory. Confirm with ATC.',
+   tem:'TCAS: RA inattendu en phase de vol — suivi RA vs instruction ATC, WLM/SA',
+   tem_en:'TCAS: unexpected RA in flight — RA compliance vs ATC instruction, WLM/SA'},
+  {id:'atc_piste',icon:'🛬',cat:'ATC',cat_en:'ATC',color:'#3B82F6',
+   title:'Piste obstruée — remise de gaz',title_en:'Runway blocked — go-around',
    desc:'TWR: "Go around, aircraft on runway." Remise de gaz immédiate. Coordination ATC pour retour approche.',
-   tem:'ATC: piste obstruée signalée en courte finale — remise de gaz non prévue, WLM'},
-  // ── CABINE ───────────────────────────────────────────────────────────────
-  {id:'cabine_medical',icon:'🚨',cat:'CABINE',color:'#F59E0B',
-   title:'Urgence médicale passager',
+   desc_en:'TWR: "Go around, aircraft on runway." Immediate go-around. ATC coordination for return approach.',
+   tem:'ATC: piste obstruée signalée en courte finale — remise de gaz non prévue, WLM',
+   tem_en:'ATC: runway blocked on short final — unplanned go-around, WLM'},
+  // ── CABIN ────────────────────────────────────────────────────────────────
+  {id:'cabine_medical',icon:'🚨',cat:'CABINE',cat_en:'CABIN',color:'#F59E0B',
+   title:'Urgence médicale passager',title_en:'Passenger medical emergency',
    desc:'Passager inconscient en cabine. Chef de cabine demande défibrillateur et assistance. Décision diversion à prendre.',
-   tem:'Cabine: urgence médicale passager — WLM/SA avec procédure simultanée, décision diversion'},
-  {id:'cabine_porte',icon:'🚪',cat:'CABINE',color:'#EC4899',
-   title:'Porte non armée signalée',
+   desc_en:'Unconscious passenger in cabin. Cabin crew requests defibrillator and assistance. Diversion decision required.',
+   tem:'Cabine: urgence médicale passager — WLM/SA avec procédure simultanée, décision diversion',
+   tem_en:'Cabin: passenger medical emergency — WLM/SA with simultaneous procedure, diversion decision'},
+  {id:'cabine_porte',icon:'🚪',cat:'CABINE',cat_en:'CABIN',color:'#EC4899',
+   title:'Porte non armée signalée',title_en:'Door reported unarmed',
    desc:'Chef de cabine: porte 2L voyant ARMED éteint — signalé en finale. Confirmation requise avant atterrissage.',
-   tem:'Rapport cabine: porte 2L signalée non armée en finale — interruption procédure/CRM'},
-  {id:'cabine_fumee',icon:'💨',cat:'CABINE',color:'#F97316',
-   title:'Fumée signalée en cabine',
+   desc_en:'Cabin crew: door 2L ARMED light out — reported on final. Confirmation required before landing.',
+   tem:'Rapport cabine: porte 2L signalée non armée en finale — interruption procédure/CRM',
+   tem_en:'Cabin report: door 2L unarmed on final — procedure interruption/CRM'},
+  {id:'cabine_fumee',icon:'💨',cat:'CABINE',cat_en:'CABIN',color:'#F97316',
+   title:'Fumée signalée en cabine',title_en:'Smoke reported in cabin',
    desc:'Chef de cabine: fumée légère perçue dans zone économique arrière. Source non identifiée. Diversion?',
-   tem:'Cabine: fumée signalée zone arrière — SA/WLM, décision diversion vs continuation'},
-  {id:'cabine_pax',icon:'🆘',cat:'CABINE',color:'#EF4444',
-   title:'Passager perturbateur',
+   desc_en:'Cabin crew: light smoke perceived in rear economy zone. Source not identified. Divert?',
+   tem:'Cabine: fumée signalée zone arrière — SA/WLM, décision diversion vs continuation',
+   tem_en:'Cabin: smoke reported rear zone — SA/WLM, diversion vs continuation decision'},
+  {id:'cabine_pax',icon:'🆘',cat:'CABINE',cat_en:'CABIN',color:'#EF4444',
+   title:'Passager perturbateur',title_en:'Disruptive passenger',
    desc:'Passager menaçant — chef de cabine demande intervention. Squawk 7500 envisagé. Coordination avec ATC.',
-   tem:'Cabine: passager perturbateur/menaçant — décision sqwk 7500, CRM/COM ATC'},
-  // ── MÉTÉO & PISTE ─────────────────────────────────────────────────────────
-  {id:'meteo_dega',icon:'⛈',cat:'MÉTÉO',color:'#10B981',
-   title:'Dégagement indisponible',
+   desc_en:'Threatening passenger — cabin crew requests intervention. Squawk 7500 considered. Coordination with ATC.',
+   tem:'Cabine: passager perturbateur/menaçant — décision sqwk 7500, CRM/COM ATC',
+   tem_en:'Cabin: disruptive/threatening passenger — sqwk 7500 decision, CRM/COM ATC'},
+  // ── WEATHER & RUNWAY ─────────────────────────────────────────────────────
+  {id:'meteo_dega',icon:'⛈',cat:'MÉTÉO',cat_en:'WEATHER',color:'#10B981',
+   title:'Dégagement indisponible',title_en:'Alternate unavailable',
    desc:'Brouillard soudain sur terrain de dégagement — RVR en dessous des minima. Alternative suivante à +45min. Carburant limité.',
-   tem:'Météo: dégagement indisponible à la dernière minute — SA critique carburant/alternates'},
-  {id:'meteo_cisaillement',icon:'💨',cat:'MÉTÉO',color:'#10B981',
-   title:'Cisaillement vent signalé',
+   desc_en:'Sudden fog at alternate — RVR below minima. Next alternate at +45min. Fuel limited.',
+   tem:'Météo: dégagement indisponible à la dernière minute — SA critique carburant/alternates',
+   tem_en:'Weather: alternate unavailable at last minute — critical fuel/alternate SA'},
+  {id:'meteo_cisaillement',icon:'💨',cat:'MÉTÉO',cat_en:'WEATHER',color:'#10B981',
+   title:'Cisaillement vent signalé',title_en:'Windshear reported',
    desc:'PIREP précédent: windshear à 400ft finale — perte de vitesse 20kt. Décision approcher ou dégager?',
-   tem:'Météo: windshear signalé sur finale par trafic précédent — SA/décision go-around'},
-  {id:'meteo_piste',icon:'🧊',cat:'PISTE',color:'#06B6D4',
-   title:'Contamination piste',
+   desc_en:'Previous PIREP: windshear at 400ft final — 20kt speed loss. Decision to approach or go around?',
+   tem:'Météo: windshear signalé sur finale par trafic précédent — SA/décision go-around',
+   tem_en:'Weather: windshear reported on final by preceding traffic — SA/go-around decision'},
+  {id:'meteo_piste',icon:'🧊',cat:'PISTE',cat_en:'RUNWAY',color:'#06B6D4',
+   title:'Contamination piste',title_en:'Runway contamination',
    desc:'Braking action rapportée POOR — piste contaminée. Cartes performance non recalculées. Atterrir ou attendre?',
-   tem:'Piste: contamination signalée, braking action POOR — performance atterrissage non recalculée'},
-  {id:'meteo_givrage',icon:'❄️',cat:'MÉTÉO',color:'#06B6D4',
-   title:'Givrage non anticipé',
+   desc_en:'Braking action reported POOR — contaminated runway. Performance charts not recalculated. Land or hold?',
+   tem:'Piste: contamination signalée, braking action POOR — performance atterrissage non recalculée',
+   tem_en:'Runway: contamination reported, braking action POOR — landing performance not recalculated'},
+  {id:'meteo_givrage',icon:'❄️',cat:'MÉTÉO',cat_en:'WEATHER',color:'#06B6D4',
+   title:'Givrage non anticipé',title_en:'Unanticipated icing',
    desc:'Givre modéré à sévère rencontré — non prévu par ATIS. Anti-ice moteurs activé. Impact carburant.',
-   tem:'Météo: givrage modéré à sévère non anticipé — activation anti-ice, SA carburant/performance'},
-  // ── TECHNIQUE ─────────────────────────────────────────────────────────────
-  {id:'tech_fuel',icon:'⛽',cat:'SYSTÈME',color:'#A78BFA',
-   title:'Déséquilibre carburant',
+   desc_en:'Moderate to severe icing encountered — not forecast by ATIS. Engine anti-ice activated. Fuel impact.',
+   tem:'Météo: givrage modéré à sévère non anticipé — activation anti-ice, SA carburant/performance',
+   tem_en:'Weather: unanticipated moderate to severe icing — anti-ice activation, fuel/performance SA'},
+  // ── SYSTEMS ───────────────────────────────────────────────────────────────
+  {id:'tech_fuel',icon:'⛽',cat:'SYSTÈME',cat_en:'SYSTEM',color:'#A78BFA',
+   title:'Déséquilibre carburant',title_en:'Fuel imbalance',
    desc:'ECAM FUEL IMBAL détecté — différence croissante entre les réservoirs. Procédure balance fuel.',
-   tem:'Système: déséquilibre carburant ECAM — procédure balance fuel pendant phase de vol'},
-  {id:'tech_pressu',icon:'🌡',cat:'SYSTÈME',color:'#A78BFA',
-   title:'Pressurisation anormale',
+   desc_en:'ECAM FUEL IMBAL detected — growing difference between tanks. Balance fuel procedure.',
+   tem:'Système: déséquilibre carburant ECAM — procédure balance fuel pendant phase de vol',
+   tem_en:'System: ECAM fuel imbalance — balance fuel procedure during flight phase'},
+  {id:'tech_pressu',icon:'🌡',cat:'SYSTÈME',cat_en:'SYSTEM',color:'#A78BFA',
+   title:'Pressurisation anormale',title_en:'Abnormal pressurisation',
    desc:'ECAM CABIN ALTITUDE — indication pression cabine anormale. Descente urgente envisagée? Procédure.',
-   tem:'Système: indication pressurisation anormale — SA altitude cabine, décision descente urgente'},
-  {id:'tech_feu_cargo',icon:'🔥',cat:'SYSTÈME',color:'#EF4444',
-   title:'Alarme feu cargo',
+   desc_en:'ECAM CABIN ALTITUDE — abnormal cabin pressure indication. Emergency descent considered? Procedure.',
+   tem:'Système: indication pressurisation anormale — SA altitude cabine, décision descente urgente',
+   tem_en:'System: abnormal pressurisation indication — cabin altitude SA, emergency descent decision'},
+  {id:'tech_feu_cargo',icon:'🔥',cat:'SYSTÈME',cat_en:'SYSTEM',color:'#EF4444',
+   title:'Alarme feu cargo',title_en:'Cargo fire warning',
    desc:'ECAM FWD CARGO FIRE — alarme feu soute avant. Procédure NNC cargo fire. Diversion immédiate.',
-   tem:'Système: alarme feu cargo — procédure NNC en cours, diversion immédiate, WLM critique'},
-  {id:'tech_bird',icon:'🐦',cat:'SYSTÈME',color:'#F59E0B',
-   title:'Impact oiseau signalé',
+   desc_en:'ECAM FWD CARGO FIRE — forward cargo hold fire alarm. NNC cargo fire procedure. Immediate diversion.',
+   tem:'Système: alarme feu cargo — procédure NNC en cours, diversion immédiate, WLM critique',
+   tem_en:'System: cargo fire alarm — NNC procedure in progress, immediate diversion, critical WLM'},
+  {id:'tech_bird',icon:'🐦',cat:'SYSTÈME',cat_en:'SYSTEM',color:'#F59E0B',
+   title:'Impact oiseau signalé',title_en:'Bird strike reported',
    desc:'Impact oiseau perçu au décollage ou en approche. Paramètres moteur à surveiller. Continuer ou retour?',
-   tem:'Système: bird strike perçu — vérification paramètres moteur, décision poursuite/retour'},
+   desc_en:'Bird strike perceived on takeoff or approach. Engine parameters to monitor. Continue or return?',
+   tem:'Système: bird strike perçu — vérification paramètres moteur, décision poursuite/retour',
+   tem_en:'System: bird strike perceived — engine parameter check, continue/return decision'},
 ];
 
 function openDistracteur(){
@@ -7363,14 +7459,14 @@ function openDistracteur(){
     dl.innerHTML=cats.map(cat=>{
       const group=DISTRACTEURS.filter(d=>d.cat===cat);
       const col=group[0].color;
-      return `<div style="font-size:9px;letter-spacing:3px;font-weight:900;color:${col};margin-top:4px;margin-bottom:2px;padding-left:4px;">${cat}</div>`
+      return `<div style="font-size:9px;letter-spacing:3px;font-weight:900;color:${col};margin-top:4px;margin-bottom:2px;padding-left:4px;">${_lang==='en'?(group[0].cat_en||cat):cat}</div>`
         +group.map((d,_)=>{const i=DISTRACTEURS.indexOf(d);return `
       <div onclick="injectDistracteur(${i})" style="background:#0A0C12;border:1px solid ${d.color}33;border-left:3px solid ${d.color};border-radius:10px;padding:11px 14px;cursor:pointer;" ontouchstart="this.style.background='${d.color}11'" ontouchend="this.style.background='#0A0C12'">
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:4px;">
           <span style="font-size:19px;">${d.icon}</span>
-          <div style="font-size:14px;font-weight:800;color:#F1F5F9;">${d.title}</div>
+          <div style="font-size:14px;font-weight:800;color:#F1F5F9;">${_lang==='en'?(d.title_en||d.title):d.title}</div>
         </div>
-        <div style="font-size:11px;color:#64748B;line-height:1.4;padding-left:28px;">${d.desc}</div>
+        <div style="font-size:11px;color:#64748B;line-height:1.4;padding-left:28px;">${_lang==='en'?(d.desc_en||d.desc):d.desc}</div>
       </div>`;}).join('');
     }).join('');
   }
@@ -7382,7 +7478,7 @@ function injectDistracteur(i){
   closeDistracteur();
   // Add to BOTH CPT and FO TEM — distractor is a crew-wide threat
   const ex=state.exercises[state.activeIdx];
-  const text=d.icon+' [DISTRACTEUR '+d.cat+'] '+d.tem;
+  const text=d.icon+' ['+((_lang==='en'?'DISTRACTOR':'DISTRACTEUR')+' '+(_lang==='en'?(d.cat_en||d.cat):d.cat))+'] '+(_lang==='en'?(d.tem_en||d.tem):d.tem);
   const ts=new Date().toTimeString().slice(0,5);
   ['tem','temfo'].forEach(tk=>{
     if(!ex[tk]) ex[tk]={threats:[],errors:[],uas:[]};
@@ -7398,11 +7494,11 @@ function injectDistracteur(i){
   const desc=document.getElementById('dist-alert-desc');
   if(al&&inner&&badge&&title&&desc){
     badge.style.color=d.color;
-    badge.textContent='⚠ '+d.cat+' — MENACE INJECTÉE';
+    badge.textContent='⚠ '+(_lang==='en'?(d.cat_en||d.cat):d.cat)+' — '+(_lang==='en'?'THREAT INJECTED':'MENACE INJECTÉE');
     title.style.color=d.color;
     title.style.textShadow='0 0 20px '+d.color+',0 0 40px '+d.color+'66';
-    title.textContent=d.icon+' '+d.title;
-    desc.textContent=d.desc;
+    title.textContent=d.icon+' '+(_lang==='en'?(d.title_en||d.title):d.title);
+    desc.textContent=_lang==='en'?(d.desc_en||d.desc):d.desc;
     inner.style.background=d.color+'11';
     inner.style.backdropFilter='blur(4px)';
     inner.style.borderRadius='16px';
@@ -7414,7 +7510,7 @@ function injectDistracteur(i){
     al.style.background=d.color+'18';
     setTimeout(()=>{al.style.display='none';al.style.pointerEvents='none';},2800);
   }
-  showToast(d.icon+' '+d.cat+' injecté — TEM mis à jour');
+  showToast(d.icon+' '+(_lang==='en'?(d.cat_en||d.cat):d.cat)+(_lang==='en'?' injected — TEM updated':' injecté — TEM mis à jour'));
 }
 
 function closeDistracteur(){
@@ -8153,7 +8249,7 @@ if(collectiveAvg>0){
   const ac=gc(collectiveAvg);
   center=`<circle cx="${CX}" cy="${CY}" r="24" fill="#090C12" stroke="${ac}" stroke-width="2.5"/>`;
   center+=`<text x="${CX}" y="${CY-4}" text-anchor="middle" font-size="15" font-weight="900" fill="${ac}">${collectiveAvg.toFixed(1)}</text>`;
-  center+=`<text x="${CX}" y="${CY+10}" text-anchor="middle" font-size="7" fill="#475569" letter-spacing="1.5">${hasFo?'COLLECTIF':'MOY'}</text>`;
+  center+=`<text x="${CX}" y="${CY+10}" text-anchor="middle" font-size="7" fill="#475569" letter-spacing="1.5">${hasFo?(_lang==='en'?'COMBINED':'COLLECTIF'):(_lang==='en'?'AVG':'MOY')}</text>`;
 }
 // Legend: circle = CPT, diamond = FO
 const LY=H-14;
@@ -10420,123 +10516,33 @@ document.body.appendChild(popup);
 
 // ── COMP_RECO (global scope — used by showRecoModal + generateRecommendations) ─
 const COMP_RECO = {
-PRO: {
-title:"Procedures et conformite",
-reco:[
-"Insister sur la lecture challenge-and-response des checklists en simulateur.",
-"Entrainement specifique QRH non-normaux: sequences de memory items a froid.",
-"Evaluer la connaissance des SOP lors des briefings avant chaque phase.",
-"Exercice dedie: panne injectee sans annonce - evaluer l application spontanee des procedures.",
-"Consolidation approfondie: memorisation integrale des emergency procedures prioritaires.",
-"Revue systematique des dernieres revisions SOP avec analyse des changements operationnels.",
-"Simulation scenario multi-pannes: gerer deux procedures non-normales simultanees.",
-"Evaluation QRH chrono: executer une procedure critique sous contrainte de temps et de stress."
-]
-},
-KNO:{
-title:"Connaissances systemes et regulations",
-reco:[
-"Programme d etude personnalise sur les systemes hydraulique, electrique et pressuristation.",
-"QCM hebdomadaire sur les limitations FCOM et les MEL applicables.",
-"Revision des differences B737-700/800/900 si applicable.",
-"Entrainement sur la logique EICAS: identification rapide des alertes.",
-"Approfondissement des systemes moteur FADEC: logique de controle et protections.",
-"Etude approfondie des interdependances systemes: hydraulique/commandes de vol/train.",
-"Revue complete des limitations operationnelles: VMO/MMO, altitude max, masse maxi.",
-"Exercice de diagnostic panne systeme sans aide: identifier la cause racine par la logique."
-]
-},
-WLM:{
-title:"Gestion de la charge de travail",
-reco:[
-"Exercices de priorisation: injecter plusieurs pannes simultanees et evaluer la hierarchisation.",
-"Travailler le buy-me-time et la delegation efficace au PM.",
-"Scenarios de haute charge: approche de precision + meteo limite + panne systeme.",
-"Debriefing axe sur les moments de surcharge identifies: analyser les declencheurs.",
-"Entrainement a la detection precoce des signaux de surcharge: auto-monitoring en temps reel.",
-"Scenarios avec interruptions multiples: evaluer la capacite a reprendre la tache principale.",
-"Travail sur la communication sous pression: messages courts, clairs, priorises.",
-"Exercice: refus d autorisation ATC inattendu en finale - evaluer la gestion immediate."
-]
-},
-SA:{
-title:"Conscience situationnelle",
-reco:[
-"Exercices FORDEC en temps reel: verbaliser la SA toutes les 5 minutes en croisiere.",
-"Scenarios CFIT et ALAR: travailler la detection precoce des derives d energie.",
-"Entrainement au monitoring croise: PM doit challenger activement le PF.",
-"Injecter des distracteurs (ATC, cabine) pour evaluer la robustesse de la SA.",
-"Scenarios de degradation progressive: panne partielle + meteo + nuit pour tester la SA.",
-"Exercice de projection situationnelle: anticiper les contraintes des 10 prochaines minutes.",
-"Travail sur les trappes a SA: illusions sensorielles, gradient de terrain masque.",
-"Debriefing a partir des enregistrements QAR: identifier les moments de perte de SA."
-]
-},
-PSD:{
-title:"Prise de decision et resolution de problemes",
-reco:[
-"Utiliser le modele FORDEC systematiquement pour toute decision non-normale.",
-"Scenarios open-ended sans procedure definie: evaluer l adaptabilite.",
-"Travailler les biais cognitifs: confirmation bias, plan continuation bias.",
-"Debriefs axes sur le POURQUOI de chaque decision: reconstruction du raisonnement.",
-"Mise en situation critique: evaluer la decision de Go-Around tardif face a pression temporelle.",
-"Entrainement aux decisions sous incertitude: donnees partielles, systemes degrades.",
-"Scenarios de diversion urgente: evaluer la rapidite et la qualite de la prise de decision.",
-"Debriefing par simulation mentale: rejouer la situation avec des hypotheses differentes."
-]
-},
-LTW:{
-title:"Leadership et travail d equipe",
-reco:[
-"Jeux de role: alterner CPT et FO pour developper l empathie inter-roles.",
-"Scenarios de desaccord: evaluer la resolution constructive des conflits.",
-"Travailler l assertivite du FO face a un CPT commettant une erreur deliberee.",
-"Exercices de briefing: evaluer la qualite de la communication pre-vol.",
-"Simulation equipage sous stress: evaluer le maintien de la coordination en situation critique.",
-"Exercice de feedback constructif immediat: pratique du debriefing entre pilotes post-scenario.",
-"Scenarios de fatigue simulee: evaluer le maintien du leadership en fin de vol long.",
-"Mise en situation: prise de commandement d urgence - evaluer l initiative et la gestion de crise."
-]
-},
-FPM:{
-title:"Gestion manuelle de la trajectoire",
-reco:[
-"Sessions de vol manuel pur: desengager AP et AT des le depart et jusqu a l atterrissage.",
-"Exercices de precision: ILS manual, VOR/DME manual, approche visuelle de nuit.",
-"Travailler l etat energetique: reconnaissances precoces des deviations vitesse/pente.",
-"Scenarios crosswind limite: evaluer la precision du controle axe et du flare.",
-"Consolidation vol manuel en turbulences: maintien de la trajectoire sous perturbations.",
-"Exercices de precision extreme: maintien altitude +/- 50ft, cap +/- 2 degres sur 20 min.",
-"Simulation UPRT: recovery depuis attitude non usuelle, controle manuel hors envelope.",
-"Travail sur la transition AP OFF en approche: gestion des transitoires de trajectoire."
-]
-},
-FPA:{
-title:"Gestion de l automation",
-reco:[
-"Entrainement intensif FMA: annonces systematiques de chaque changement de mode.",
-"Scenarios de degradation d automation: passer du mode complet au mode partiel.",
-"Travailler les transitions VNAV/LNAV/VS: identification des modes inattendus.",
-"Exercices FMC: programmation d un changement de route en croisiere sous pression temps.",
-"Scenarios de surprise automation: evaluer la reaction a un mode non commande.",
-"Entrainement automation partielle: IAN, FMC failure, reversion modes basiques.",
-"Exercice de monitoring FMA en continu: detecter immediatement tout mode non prevu.",
-"Simulation panne FMC en croisiere: transition manuelle vers modes conventionnels."
-]
-},
-COM:{
-title:"Communication",
-reco:[
-"Entrainement phraseologie OACI: enregistrement et ecoute critique des communications ATC.",
-"Exercices de readback: insister sur la confirmation systematique des autorisations.",
-"Travailler la communication CRM interne: annonces PF/PM standardisees.",
-"Scenarios de communication degradee: simuler parasites radio et mauvaise intelligibilite.",
-"Exercice de communication sous pression: transmettre MAYDAY/PAN correctement et calmement.",
-"Travail sur la communication inter-equipage: messages assertifs sans ambiguite en urgence.",
-"Scenarios de confusion ATC: evaluer la gestion d un clearance ambigu ou contradictoire.",
-"Entrainement a la communication avec cabine: coordination urgence evacuation/decompression."
-]
-}
+PRO:{title:"Procedures et conformite",title_en:"Procedures & Compliance",
+reco:["Insister sur la lecture challenge-and-response des checklists en simulateur.","Entrainement specifique QRH non-normaux: sequences de memory items a froid.","Evaluer la connaissance des SOP lors des briefings avant chaque phase.","Exercice dedie: panne injectee sans annonce - evaluer l application spontanee des procedures.","Consolidation approfondie: memorisation integrale des emergency procedures prioritaires.","Revue systematique des dernieres revisions SOP avec analyse des changements operationnels.","Simulation scenario multi-pannes: gerer deux procedures non-normales simultanees.","Evaluation QRH chrono: executer une procedure critique sous contrainte de temps et de stress."],
+reco_en:["Reinforce challenge-and-response checklist reading in simulator sessions.","Specific QRH abnormal training: cold memory item sequences without prompting.","Assess SOP knowledge during briefings before each phase.","Dedicated exercise: injected failure without announcement — assess spontaneous procedure application.","In-depth consolidation: complete memorisation of priority emergency procedures.","Systematic review of latest SOP revisions with analysis of operational changes.","Multi-failure scenario simulation: manage two simultaneous abnormal procedures.","Timed QRH assessment: execute a critical procedure under time pressure and stress."]},
+KNO:{title:"Connaissances systemes et regulations",title_en:"Systems Knowledge & Regulations",
+reco:["Programme d etude personnalise sur les systemes hydraulique, electrique et pressuristation.","QCM hebdomadaire sur les limitations FCOM et les MEL applicables.","Revision des differences B737-700/800/900 si applicable.","Entrainement sur la logique EICAS: identification rapide des alertes.","Approfondissement des systemes moteur FADEC: logique de controle et protections.","Etude approfondie des interdependances systemes: hydraulique/commandes de vol/train.","Revue complete des limitations operationnelles: VMO/MMO, altitude max, masse maxi.","Exercice de diagnostic panne systeme sans aide: identifier la cause racine par la logique."],
+reco_en:["Personalised study program on hydraulic, electrical and pressurisation systems.","Weekly MCQ on FCOM limitations and applicable MEL.","Review of B737-700/800/900 differences if applicable.","Training on EICAS logic: rapid identification of alerts.","In-depth study of FADEC engine systems: control logic and protections.","Thorough study of system interdependencies: hydraulic/flight controls/landing gear.","Complete review of operational limitations: VMO/MMO, max altitude, max weight.","System fault diagnosis exercise without aid: identify root cause through logic."]},
+WLM:{title:"Gestion de la charge de travail",title_en:"Workload Management",
+reco:["Exercices de priorisation: injecter plusieurs pannes simultanees et evaluer la hierarchisation.","Travailler le buy-me-time et la delegation efficace au PM.","Scenarios de haute charge: approche de precision + meteo limite + panne systeme.","Debriefing axe sur les moments de surcharge identifies: analyser les declencheurs.","Entrainement a la detection precoce des signaux de surcharge: auto-monitoring en temps reel.","Scenarios avec interruptions multiples: evaluer la capacite a reprendre la tache principale.","Travail sur la communication sous pression: messages courts, clairs, priorises.","Exercice: refus d autorisation ATC inattendu en finale - evaluer la gestion immediate."],
+reco_en:["Prioritisation exercises: inject multiple simultaneous failures and assess task hierarchy.","Work on buy-me-time and effective PM delegation.","High-workload scenarios: precision approach + limiting weather + system failure.","Debrief focused on identified overload moments: analyse the triggers.","Training in early detection of overload signals: real-time self-monitoring.","Scenarios with multiple interruptions: assess ability to resume the primary task.","Communication under pressure: short, clear, prioritised messages.","Exercise: unexpected ATC clearance refusal on final — assess immediate management."]},
+SA:{title:"Conscience situationnelle",title_en:"Situation Awareness",
+reco:["Exercices FORDEC en temps reel: verbaliser la SA toutes les 5 minutes en croisiere.","Scenarios CFIT et ALAR: travailler la detection precoce des derives d energie.","Entrainement au monitoring croise: PM doit challenger activement le PF.","Injecter des distracteurs (ATC, cabine) pour evaluer la robustesse de la SA.","Scenarios de degradation progressive: panne partielle + meteo + nuit pour tester la SA.","Exercice de projection situationnelle: anticiper les contraintes des 10 prochaines minutes.","Travail sur les trappes a SA: illusions sensorielles, gradient de terrain masque.","Debriefing a partir des enregistrements QAR: identifier les moments de perte de SA."],
+reco_en:["Real-time FORDEC exercises: verbalise SA every 5 minutes in cruise.","CFIT and ALAR scenarios: work on early detection of energy deviations.","Cross-monitoring training: PM must actively challenge the PF.","Inject distractors (ATC, cabin) to assess SA robustness.","Progressive degradation scenarios: partial failure + weather + night to test SA.","Situational projection exercise: anticipate constraints for the next 10 minutes.","Work on SA traps: sensory illusions, masked terrain gradient.","Debrief from QAR recordings: identify moments of SA loss."]},
+PSD:{title:"Prise de decision et resolution de problemes",title_en:"Problem Solving & Decision Making",
+reco:["Utiliser le modele FORDEC systematiquement pour toute decision non-normale.","Scenarios open-ended sans procedure definie: evaluer l adaptabilite.","Travailler les biais cognitifs: confirmation bias, plan continuation bias.","Debriefs axes sur le POURQUOI de chaque decision: reconstruction du raisonnement.","Mise en situation critique: evaluer la decision de Go-Around tardif face a pression temporelle.","Entrainement aux decisions sous incertitude: donnees partielles, systemes degrades.","Scenarios de diversion urgente: evaluer la rapidite et la qualite de la prise de decision.","Debriefing par simulation mentale: rejouer la situation avec des hypotheses differentes."],
+reco_en:["Systematically apply the FORDEC model for every abnormal decision.","Open-ended scenarios without defined procedure: assess adaptability.","Work on cognitive biases: confirmation bias, plan continuation bias.","Debriefs focused on WHY of each decision: reconstruct the reasoning.","Critical simulation: assess late Go-Around decision under time pressure.","Training in decisions under uncertainty: partial data, degraded systems.","Urgent diversion scenarios: assess speed and quality of decision-making.","Mental simulation debrief: replay the situation with different hypotheses."]},
+LTW:{title:"Leadership et travail d equipe",title_en:"Leadership & Teamwork",
+reco:["Jeux de role: alterner CPT et FO pour developper l empathie inter-roles.","Scenarios de desaccord: evaluer la resolution constructive des conflits.","Travailler l assertivite du FO face a un CPT commettant une erreur deliberee.","Exercices de briefing: evaluer la qualite de la communication pre-vol.","Simulation equipage sous stress: evaluer le maintien de la coordination en situation critique.","Exercice de feedback constructif immediat: pratique du debriefing entre pilotes post-scenario.","Scenarios de fatigue simulee: evaluer le maintien du leadership en fin de vol long.","Mise en situation: prise de commandement d urgence - evaluer l initiative et la gestion de crise."],
+reco_en:["Role-play: alternate CPT and FO to develop inter-role empathy.","Disagreement scenarios: assess constructive conflict resolution.","Work on FO assertiveness when CPT deliberately makes an error.","Briefing exercises: assess quality of pre-flight communication.","Crew simulation under stress: assess maintenance of coordination in critical situations.","Immediate constructive feedback exercise: practise inter-pilot debrief post-scenario.","Simulated fatigue scenarios: assess leadership maintenance at end of long flight.","Simulation: emergency command takeover — assess initiative and crisis management."]},
+FPM:{title:"Gestion manuelle de la trajectoire",title_en:"Manual Flight Path Management",
+reco:["Sessions de vol manuel pur: desengager AP et AT des le depart et jusqu a l atterrissage.","Exercices de precision: ILS manual, VOR/DME manual, approche visuelle de nuit.","Travailler l etat energetique: reconnaissances precoces des deviations vitesse/pente.","Scenarios crosswind limite: evaluer la precision du controle axe et du flare.","Consolidation vol manuel en turbulences: maintien de la trajectoire sous perturbations.","Exercices de precision extreme: maintien altitude +/- 50ft, cap +/- 2 degres sur 20 min.","Simulation UPRT: recovery depuis attitude non usuelle, controle manuel hors envelope.","Travail sur la transition AP OFF en approche: gestion des transitoires de trajectoire."],
+reco_en:["Pure manual flight sessions: disconnect AP and AT from departure to landing.","Precision exercises: manual ILS, manual VOR/DME, visual night approach.","Work on energy state: early recognition of speed/glidepath deviations.","Crosswind limit scenarios: assess precision of centreline control and flare.","Manual flight consolidation in turbulence: maintain flight path under perturbations.","Extreme precision exercises: maintain altitude +/-50ft, heading +/-2 deg for 20 min.","UPRT simulation: recovery from unusual attitude, manual control outside envelope.","Work on AP OFF transition on approach: manage flight path transients."]},
+FPA:{title:"Gestion de l automation",title_en:"Automated Flight Path Management",
+reco:["Entrainement intensif FMA: annonces systematiques de chaque changement de mode.","Scenarios de degradation d automation: passer du mode complet au mode partiel.","Travailler les transitions VNAV/LNAV/VS: identification des modes inattendus.","Exercices FMC: programmation d un changement de route en croisiere sous pression temps.","Scenarios de surprise automation: evaluer la reaction a un mode non commande.","Entrainement automation partielle: IAN, FMC failure, reversion modes basiques.","Exercice de monitoring FMA en continu: detecter immediatement tout mode non prevu.","Simulation panne FMC en croisiere: transition manuelle vers modes conventionnels."],
+reco_en:["Intensive FMA training: systematic callouts for every mode change.","Automation degradation scenarios: transition from full automation to partial mode.","Work on VNAV/LNAV/VS transitions: identification of unexpected modes.","FMC exercises: programme a route change in cruise under time pressure.","Automation surprise scenarios: assess reaction to an uncommanded mode.","Partial automation training: IAN, FMC failure, reversion to basic modes.","Continuous FMA monitoring exercise: immediately detect any unexpected mode.","FMC failure simulation in cruise: manual transition to conventional modes."]},
+COM:{title:"Communication",title_en:"Communication",
+reco:["Entrainement phraseologie OACI: enregistrement et ecoute critique des communications ATC.","Exercices de readback: insister sur la confirmation systematique des autorisations.","Travailler la communication CRM interne: annonces PF/PM standardisees.","Scenarios de communication degradee: simuler parasites radio et mauvaise intelligibilite.","Exercice de communication sous pression: transmettre MAYDAY/PAN correctement et calmement.","Travail sur la communication inter-equipage: messages assertifs sans ambiguite en urgence.","Scenarios de confusion ATC: evaluer la gestion d un clearance ambigu ou contradictoire.","Entrainement a la communication avec cabine: coordination urgence evacuation/decompression."],
+reco_en:["ICAO phraseology training: record and critically review ATC communications.","Readback exercises: enforce systematic confirmation of clearances.","Work on internal CRM communication: standardised PF/PM callouts.","Degraded communication scenarios: simulate radio interference and poor intelligibility.","Communication under pressure exercise: transmit MAYDAY/PAN correctly and calmly.","Work on inter-crew communication: assertive, unambiguous messages in emergency.","ATC confusion scenarios: assess management of an ambiguous or contradictory clearance.","Training in communication with cabin crew: emergency evacuation/decompression coordination."]}
 };
 
 // ── RECOMMENDATIONS ENGINE ---────────────────────────────────────────────────
@@ -10562,123 +10568,33 @@ const strong=COMPETENCIES.filter(c=>avgs[c.id]>=4);
 const globalAvg=Object.values(avgs).filter(v=>v>0).reduce((s,v,_,a)=>s+v/a.length,0);
 
 const COMP_RECO = {
-PRO: {
-title:"Procedures et conformite",
-reco:[
-"Insister sur la lecture challenge-and-response des checklists en simulateur.",
-"Entrainement specifique QRH non-normaux: sequences de memory items a froid.",
-"Evaluer la connaissance des SOP lors des briefings avant chaque phase.",
-"Exercice dedie: panne injectee sans annonce - evaluer l application spontanee des procedures.",
-"Consolidation approfondie: memorisation integrale des emergency procedures prioritaires.",
-"Revue systematique des dernieres revisions SOP avec analyse des changements operationnels.",
-"Simulation scenario multi-pannes: gerer deux procedures non-normales simultanees.",
-"Evaluation QRH chrono: executer une procedure critique sous contrainte de temps et de stress."
-]
-},
-KNO:{
-title:"Connaissances systemes et regulations",
-reco:[
-"Programme d etude personnalise sur les systemes hydraulique, electrique et pressuristation.",
-"QCM hebdomadaire sur les limitations FCOM et les MEL applicables.",
-"Revision des differences B737-700/800/900 si applicable.",
-"Entrainement sur la logique EICAS: identification rapide des alertes.",
-"Approfondissement des systemes moteur FADEC: logique de controle et protections.",
-"Etude approfondie des interdependances systemes: hydraulique/commandes de vol/train.",
-"Revue complete des limitations operationnelles: VMO/MMO, altitude max, masse maxi.",
-"Exercice de diagnostic panne systeme sans aide: identifier la cause racine par la logique."
-]
-},
-WLM:{
-title:"Gestion de la charge de travail",
-reco:[
-"Exercices de priorisation: injecter plusieurs pannes simultanees et evaluer la hierarchisation.",
-"Travailler le buy-me-time et la delegation efficace au PM.",
-"Scenarios de haute charge: approche de precision + meteo limite + panne systeme.",
-"Debriefing axe sur les moments de surcharge identifies: analyser les declencheurs.",
-"Entrainement a la detection precoce des signaux de surcharge: auto-monitoring en temps reel.",
-"Scenarios avec interruptions multiples: evaluer la capacite a reprendre la tache principale.",
-"Travail sur la communication sous pression: messages courts, clairs, priorises.",
-"Exercice: refus d autorisation ATC inattendu en finale - evaluer la gestion immediate."
-]
-},
-SA:{
-title:"Conscience situationnelle",
-reco:[
-"Exercices FORDEC en temps reel: verbaliser la SA toutes les 5 minutes en croisiere.",
-"Scenarios CFIT et ALAR: travailler la detection precoce des derives d energie.",
-"Entrainement au monitoring croise: PM doit challenger activement le PF.",
-"Injecter des distracteurs (ATC, cabine) pour evaluer la robustesse de la SA.",
-"Scenarios de degradation progressive: panne partielle + meteo + nuit pour tester la SA.",
-"Exercice de projection situationnelle: anticiper les contraintes des 10 prochaines minutes.",
-"Travail sur les trappes a SA: illusions sensorielles, gradient de terrain masque.",
-"Debriefing a partir des enregistrements QAR: identifier les moments de perte de SA."
-]
-},
-PSD:{
-title:"Prise de decision et resolution de problemes",
-reco:[
-"Utiliser le modele FORDEC systematiquement pour toute decision non-normale.",
-"Scenarios open-ended sans procedure definie: evaluer l adaptabilite.",
-"Travailler les biais cognitifs: confirmation bias, plan continuation bias.",
-"Debriefs axes sur le POURQUOI de chaque decision: reconstruction du raisonnement.",
-"Mise en situation critique: evaluer la decision de Go-Around tardif face a pression temporelle.",
-"Entrainement aux decisions sous incertitude: donnees partielles, systemes degrades.",
-"Scenarios de diversion urgente: evaluer la rapidite et la qualite de la prise de decision.",
-"Debriefing par simulation mentale: rejouer la situation avec des hypotheses differentes."
-]
-},
-LTW:{
-title:"Leadership et travail d equipe",
-reco:[
-"Jeux de role: alterner CPT et FO pour developper l empathie inter-roles.",
-"Scenarios de desaccord: evaluer la resolution constructive des conflits.",
-"Travailler l assertivite du FO face a un CPT commettant une erreur deliberee.",
-"Exercices de briefing: evaluer la qualite de la communication pre-vol.",
-"Simulation equipage sous stress: evaluer le maintien de la coordination en situation critique.",
-"Exercice de feedback constructif immediat: pratique du debriefing entre pilotes post-scenario.",
-"Scenarios de fatigue simulee: evaluer le maintien du leadership en fin de vol long.",
-"Mise en situation: prise de commandement d urgence - evaluer l initiative et la gestion de crise."
-]
-},
-FPM:{
-title:"Gestion manuelle de la trajectoire",
-reco:[
-"Sessions de vol manuel pur: desengager AP et AT des le depart et jusqu a l atterrissage.",
-"Exercices de precision: ILS manual, VOR/DME manual, approche visuelle de nuit.",
-"Travailler l etat energetique: reconnaissances precoces des deviations vitesse/pente.",
-"Scenarios crosswind limite: evaluer la precision du controle axe et du flare.",
-"Consolidation vol manuel en turbulences: maintien de la trajectoire sous perturbations.",
-"Exercices de precision extreme: maintien altitude +/- 50ft, cap +/- 2 degres sur 20 min.",
-"Simulation UPRT: recovery depuis attitude non usuelle, controle manuel hors envelope.",
-"Travail sur la transition AP OFF en approche: gestion des transitoires de trajectoire."
-]
-},
-FPA:{
-title:"Gestion de l automation",
-reco:[
-"Entrainement intensif FMA: annonces systematiques de chaque changement de mode.",
-"Scenarios de degradation d automation: passer du mode complet au mode partiel.",
-"Travailler les transitions VNAV/LNAV/VS: identification des modes inattendus.",
-"Exercices FMC: programmation d un changement de route en croisiere sous pression temps.",
-"Scenarios de surprise automation: evaluer la reaction a un mode non commande.",
-"Entrainement automation partielle: IAN, FMC failure, reversion modes basiques.",
-"Exercice de monitoring FMA en continu: detecter immediatement tout mode non prevu.",
-"Simulation panne FMC en croisiere: transition manuelle vers modes conventionnels."
-]
-},
-COM:{
-title:"Communication",
-reco:[
-"Entrainement phraseologie OACI: enregistrement et ecoute critique des communications ATC.",
-"Exercices de readback: insister sur la confirmation systematique des autorisations.",
-"Travailler la communication CRM interne: annonces PF/PM standardisees.",
-"Scenarios de communication degradee: simuler parasites radio et mauvaise intelligibilite.",
-"Exercice de communication sous pression: transmettre MAYDAY/PAN correctement et calmement.",
-"Travail sur la communication inter-equipage: messages assertifs sans ambiguite en urgence.",
-"Scenarios de confusion ATC: evaluer la gestion d un clearance ambigu ou contradictoire.",
-"Entrainement a la communication avec cabine: coordination urgence evacuation/decompression."
-]
-}
+PRO:{title:"Procedures et conformite",title_en:"Procedures & Compliance",
+reco:["Insister sur la lecture challenge-and-response des checklists en simulateur.","Entrainement specifique QRH non-normaux: sequences de memory items a froid.","Evaluer la connaissance des SOP lors des briefings avant chaque phase.","Exercice dedie: panne injectee sans annonce - evaluer l application spontanee des procedures.","Consolidation approfondie: memorisation integrale des emergency procedures prioritaires.","Revue systematique des dernieres revisions SOP avec analyse des changements operationnels.","Simulation scenario multi-pannes: gerer deux procedures non-normales simultanees.","Evaluation QRH chrono: executer une procedure critique sous contrainte de temps et de stress."],
+reco_en:["Reinforce challenge-and-response checklist reading in simulator sessions.","Specific QRH abnormal training: cold memory item sequences without prompting.","Assess SOP knowledge during briefings before each phase.","Dedicated exercise: injected failure without announcement — assess spontaneous procedure application.","In-depth consolidation: complete memorisation of priority emergency procedures.","Systematic review of latest SOP revisions with analysis of operational changes.","Multi-failure scenario simulation: manage two simultaneous abnormal procedures.","Timed QRH assessment: execute a critical procedure under time pressure and stress."]},
+KNO:{title:"Connaissances systemes et regulations",title_en:"Systems Knowledge & Regulations",
+reco:["Programme d etude personnalise sur les systemes hydraulique, electrique et pressuristation.","QCM hebdomadaire sur les limitations FCOM et les MEL applicables.","Revision des differences B737-700/800/900 si applicable.","Entrainement sur la logique EICAS: identification rapide des alertes.","Approfondissement des systemes moteur FADEC: logique de controle et protections.","Etude approfondie des interdependances systemes: hydraulique/commandes de vol/train.","Revue complete des limitations operationnelles: VMO/MMO, altitude max, masse maxi.","Exercice de diagnostic panne systeme sans aide: identifier la cause racine par la logique."],
+reco_en:["Personalised study program on hydraulic, electrical and pressurisation systems.","Weekly MCQ on FCOM limitations and applicable MEL.","Review of B737-700/800/900 differences if applicable.","Training on EICAS logic: rapid identification of alerts.","In-depth study of FADEC engine systems: control logic and protections.","Thorough study of system interdependencies: hydraulic/flight controls/landing gear.","Complete review of operational limitations: VMO/MMO, max altitude, max weight.","System fault diagnosis exercise without aid: identify root cause through logic."]},
+WLM:{title:"Gestion de la charge de travail",title_en:"Workload Management",
+reco:["Exercices de priorisation: injecter plusieurs pannes simultanees et evaluer la hierarchisation.","Travailler le buy-me-time et la delegation efficace au PM.","Scenarios de haute charge: approche de precision + meteo limite + panne systeme.","Debriefing axe sur les moments de surcharge identifies: analyser les declencheurs.","Entrainement a la detection precoce des signaux de surcharge: auto-monitoring en temps reel.","Scenarios avec interruptions multiples: evaluer la capacite a reprendre la tache principale.","Travail sur la communication sous pression: messages courts, clairs, priorises.","Exercice: refus d autorisation ATC inattendu en finale - evaluer la gestion immediate."],
+reco_en:["Prioritisation exercises: inject multiple simultaneous failures and assess task hierarchy.","Work on buy-me-time and effective PM delegation.","High-workload scenarios: precision approach + limiting weather + system failure.","Debrief focused on identified overload moments: analyse the triggers.","Training in early detection of overload signals: real-time self-monitoring.","Scenarios with multiple interruptions: assess ability to resume the primary task.","Communication under pressure: short, clear, prioritised messages.","Exercise: unexpected ATC clearance refusal on final — assess immediate management."]},
+SA:{title:"Conscience situationnelle",title_en:"Situation Awareness",
+reco:["Exercices FORDEC en temps reel: verbaliser la SA toutes les 5 minutes en croisiere.","Scenarios CFIT et ALAR: travailler la detection precoce des derives d energie.","Entrainement au monitoring croise: PM doit challenger activement le PF.","Injecter des distracteurs (ATC, cabine) pour evaluer la robustesse de la SA.","Scenarios de degradation progressive: panne partielle + meteo + nuit pour tester la SA.","Exercice de projection situationnelle: anticiper les contraintes des 10 prochaines minutes.","Travail sur les trappes a SA: illusions sensorielles, gradient de terrain masque.","Debriefing a partir des enregistrements QAR: identifier les moments de perte de SA."],
+reco_en:["Real-time FORDEC exercises: verbalise SA every 5 minutes in cruise.","CFIT and ALAR scenarios: work on early detection of energy deviations.","Cross-monitoring training: PM must actively challenge the PF.","Inject distractors (ATC, cabin) to assess SA robustness.","Progressive degradation scenarios: partial failure + weather + night to test SA.","Situational projection exercise: anticipate constraints for the next 10 minutes.","Work on SA traps: sensory illusions, masked terrain gradient.","Debrief from QAR recordings: identify moments of SA loss."]},
+PSD:{title:"Prise de decision et resolution de problemes",title_en:"Problem Solving & Decision Making",
+reco:["Utiliser le modele FORDEC systematiquement pour toute decision non-normale.","Scenarios open-ended sans procedure definie: evaluer l adaptabilite.","Travailler les biais cognitifs: confirmation bias, plan continuation bias.","Debriefs axes sur le POURQUOI de chaque decision: reconstruction du raisonnement.","Mise en situation critique: evaluer la decision de Go-Around tardif face a pression temporelle.","Entrainement aux decisions sous incertitude: donnees partielles, systemes degrades.","Scenarios de diversion urgente: evaluer la rapidite et la qualite de la prise de decision.","Debriefing par simulation mentale: rejouer la situation avec des hypotheses differentes."],
+reco_en:["Systematically apply the FORDEC model for every abnormal decision.","Open-ended scenarios without defined procedure: assess adaptability.","Work on cognitive biases: confirmation bias, plan continuation bias.","Debriefs focused on WHY of each decision: reconstruct the reasoning.","Critical simulation: assess late Go-Around decision under time pressure.","Training in decisions under uncertainty: partial data, degraded systems.","Urgent diversion scenarios: assess speed and quality of decision-making.","Mental simulation debrief: replay the situation with different hypotheses."]},
+LTW:{title:"Leadership et travail d equipe",title_en:"Leadership & Teamwork",
+reco:["Jeux de role: alterner CPT et FO pour developper l empathie inter-roles.","Scenarios de desaccord: evaluer la resolution constructive des conflits.","Travailler l assertivite du FO face a un CPT commettant une erreur deliberee.","Exercices de briefing: evaluer la qualite de la communication pre-vol.","Simulation equipage sous stress: evaluer le maintien de la coordination en situation critique.","Exercice de feedback constructif immediat: pratique du debriefing entre pilotes post-scenario.","Scenarios de fatigue simulee: evaluer le maintien du leadership en fin de vol long.","Mise en situation: prise de commandement d urgence - evaluer l initiative et la gestion de crise."],
+reco_en:["Role-play: alternate CPT and FO to develop inter-role empathy.","Disagreement scenarios: assess constructive conflict resolution.","Work on FO assertiveness when CPT deliberately makes an error.","Briefing exercises: assess quality of pre-flight communication.","Crew simulation under stress: assess maintenance of coordination in critical situations.","Immediate constructive feedback exercise: practise inter-pilot debrief post-scenario.","Simulated fatigue scenarios: assess leadership maintenance at end of long flight.","Simulation: emergency command takeover — assess initiative and crisis management."]},
+FPM:{title:"Gestion manuelle de la trajectoire",title_en:"Manual Flight Path Management",
+reco:["Sessions de vol manuel pur: desengager AP et AT des le depart et jusqu a l atterrissage.","Exercices de precision: ILS manual, VOR/DME manual, approche visuelle de nuit.","Travailler l etat energetique: reconnaissances precoces des deviations vitesse/pente.","Scenarios crosswind limite: evaluer la precision du controle axe et du flare.","Consolidation vol manuel en turbulences: maintien de la trajectoire sous perturbations.","Exercices de precision extreme: maintien altitude +/- 50ft, cap +/- 2 degres sur 20 min.","Simulation UPRT: recovery depuis attitude non usuelle, controle manuel hors envelope.","Travail sur la transition AP OFF en approche: gestion des transitoires de trajectoire."],
+reco_en:["Pure manual flight sessions: disconnect AP and AT from departure to landing.","Precision exercises: manual ILS, manual VOR/DME, visual night approach.","Work on energy state: early recognition of speed/glidepath deviations.","Crosswind limit scenarios: assess precision of centreline control and flare.","Manual flight consolidation in turbulence: maintain flight path under perturbations.","Extreme precision exercises: maintain altitude +/-50ft, heading +/-2 deg for 20 min.","UPRT simulation: recovery from unusual attitude, manual control outside envelope.","Work on AP OFF transition on approach: manage flight path transients."]},
+FPA:{title:"Gestion de l automation",title_en:"Automated Flight Path Management",
+reco:["Entrainement intensif FMA: annonces systematiques de chaque changement de mode.","Scenarios de degradation d automation: passer du mode complet au mode partiel.","Travailler les transitions VNAV/LNAV/VS: identification des modes inattendus.","Exercices FMC: programmation d un changement de route en croisiere sous pression temps.","Scenarios de surprise automation: evaluer la reaction a un mode non commande.","Entrainement automation partielle: IAN, FMC failure, reversion modes basiques.","Exercice de monitoring FMA en continu: detecter immediatement tout mode non prevu.","Simulation panne FMC en croisiere: transition manuelle vers modes conventionnels."],
+reco_en:["Intensive FMA training: systematic callouts for every mode change.","Automation degradation scenarios: transition from full automation to partial mode.","Work on VNAV/LNAV/VS transitions: identification of unexpected modes.","FMC exercises: programme a route change in cruise under time pressure.","Automation surprise scenarios: assess reaction to an uncommanded mode.","Partial automation training: IAN, FMC failure, reversion to basic modes.","Continuous FMA monitoring exercise: immediately detect any unexpected mode.","FMC failure simulation in cruise: manual transition to conventional modes."]},
+COM:{title:"Communication",title_en:"Communication",
+reco:["Entrainement phraseologie OACI: enregistrement et ecoute critique des communications ATC.","Exercices de readback: insister sur la confirmation systematique des autorisations.","Travailler la communication CRM interne: annonces PF/PM standardisees.","Scenarios de communication degradee: simuler parasites radio et mauvaise intelligibilite.","Exercice de communication sous pression: transmettre MAYDAY/PAN correctement et calmement.","Travail sur la communication inter-equipage: messages assertifs sans ambiguite en urgence.","Scenarios de confusion ATC: evaluer la gestion d un clearance ambigu ou contradictoire.","Entrainement a la communication avec cabine: coordination urgence evacuation/decompression."],
+reco_en:["ICAO phraseology training: record and critically review ATC communications.","Readback exercises: enforce systematic confirmation of clearances.","Work on internal CRM communication: standardised PF/PM callouts.","Degraded communication scenarios: simulate radio interference and poor intelligibility.","Communication under pressure exercise: transmit MAYDAY/PAN correctly and calmly.","Work on inter-crew communication: assertive, unambiguous messages in emergency.","ATC confusion scenarios: assess management of an ambiguous or contradictory clearance.","Training in communication with cabin crew: emergency evacuation/decompression coordination."]}
 };
 
 let recoHtml='';
@@ -10698,7 +10614,7 @@ recoHtml+=`
 </div>
 ${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">${_lang==='en'?'Negative OBs':'OB negatifs'}: ${negList.join(' · ')}</div>`:''}
 <div style="font-size:12px;color:#F59E0B;font-weight:700;margin-bottom:6px;">${_lang==='en'?'RECOMMENDATIONS:':'RECOMMANDATIONS:'}</div>
-${(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;display:flex;gap:7px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;">→</span>${rec}</div>`).join('')}
+${(avg<2.5?(_lang==='en'?r.reco_en:r.reco).slice(4,8):(_lang==='en'?r.reco_en:r.reco).slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E2530;display:flex;gap:7px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;">→</span>${rec}</div>`).join('')}
 </div>`;
 });
 
@@ -10760,7 +10676,7 @@ recoHtml+=`
 </div>
 ${negList.length?`<div style="font-size:11px;color:#64748B;margin-bottom:8px;font-style:italic;">${_lang==='en'?'Negative OBs':'OB negatifs'}: ${negList.join(' · ')}</div>`:''}
 <div style="font-size:11px;color:#F59E0B;font-weight:700;margin-bottom:6px;letter-spacing:0.5px;">${_lang==='en'?'RECOMMENDATIONS:':'RECOMMANDATIONS:'}</div>
-${(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:5px 0;border-bottom:1px solid #1E2530;display:flex;gap:8px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;margin-top:1px;">→</span>${rec}</div>`).join('')}
+${(avg<2.5?(_lang==='en'?r.reco_en:r.reco).slice(4,8):(_lang==='en'?r.reco_en:r.reco).slice(0,4)).map(rec=>`<div style="font-size:13px;color:#CBD5E1;padding:5px 0;border-bottom:1px solid #1E2530;display:flex;gap:8px;line-height:1.5;"><span style="color:${c.color};flex-shrink:0;margin-top:1px;">→</span>${rec}</div>`).join('')}
 </div>`;
 });
 if(!recoHtml && strong.length>0){
@@ -10828,7 +10744,7 @@ const r=COMP_RECO[c.id];
 if(!r) return;
 const avg=avgs[c.id];
 const negList=ct[c.id].negObs.slice(0,3);
-const items=(avg<2.5?r.reco.slice(4,8):r.reco.slice(0,4));
+const items=(avg<2.5?(_lang==='en'?r.reco_en:r.reco).slice(4,8):(_lang==='en'?r.reco_en:r.reco).slice(0,4));
 const cc=c.color||'#EF4444';
 rows+=`<div style="border:1px solid ${cc}55;border-left:5px solid ${cc};border-radius:10px;padding:16px;margin-bottom:16px;page-break-inside:avoid;background:#FAFBFF;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
