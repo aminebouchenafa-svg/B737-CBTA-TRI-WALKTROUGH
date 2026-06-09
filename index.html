@@ -334,7 +334,7 @@ body.light-mode .card [style*="color:#94A3B8"],body.light-mode .modal-box [style
     <div id="ses-float-val" style="font-family:ui-monospace,monospace;font-size:17px;font-weight:900;color:#10B981;letter-spacing:2px;line-height:1.1;">00:00:00</div>
   </div>
   <button id="btn-ses-float" onclick="toggleSessionTimer()" style="padding:3px 10px;border-radius:12px;background:transparent;border:1px solid #10B981;color:#10B981;font-size:13px;font-weight:900;cursor:pointer;letter-spacing:1px;flex-shrink:0;">▶</button>
-  <div id="ses-float-reminder" style="display:none;font-size:11px;color:#F59E0B;font-weight:700;margin-left:4px;">⚠️ N'oubliez pas de démarrer le chrono !</div>
+  <div id="ses-float-reminder" style="display:none;font-size:11px;color:#F59E0B;font-weight:700;margin-left:4px;" data-i18n="float_timer_reminder">⚠️ N'oubliez pas de démarrer le chrono !</div>
 </div>
 
 <div class="screen active" id="screen-login">
@@ -670,7 +670,7 @@ Identifiant ou mot de passe incorrect
 <button class="btn" onclick="showScreen('debrief')">← Debrief</button>
 <div style="flex:1;margin-left:10px;">
 <div class="title" style="color:#3B82F6;">PROFICIENCY CHECK</div>
-<div class="sub">Air Algérie — B737 NG</div>
+<div class="sub" id="profcheck-sub">B737 NG</div>
 </div>
 <button class="btn btn-primary" onclick="printProfCheck()" style="font-size:11px;padding:6px 10px;">🖨️ PDF</button>
 </div>
@@ -3186,6 +3186,7 @@ const STRINGS = {
     apply_btn: 'Appliquer',
     edit_fo_placeholder: 'Nom siège droit (laisser vide = solo)',
     evolution_title: 'ÉVOLUTION',
+    float_timer_reminder: '⚠️ N\'oubliez pas de démarrer le chrono !',
     pres_mode_title: 'MODE PRÉSENTATION',
     pres_mode_sub: 'Résultats pour le pilote',
     modal_add_title: 'Choisir un exercice',
@@ -3394,6 +3395,7 @@ const STRINGS = {
     apply_btn: 'Apply',
     edit_fo_placeholder: 'Right seat name (leave empty = solo)',
     evolution_title: 'PROGRESSION',
+    float_timer_reminder: '⚠️ Don\'t forget to start the timer!',
     pres_mode_title: 'PRESENTATION MODE',
     pres_mode_sub: 'Results for the pilot',
     modal_add_title: 'Choose an exercise',
@@ -9247,6 +9249,8 @@ function showProfCheck(){
     }
   });
   renderProfCheck();
+  const pcsub=document.getElementById('profcheck-sub');
+  if(pcsub) pcsub.textContent=(state.company||'')+(state.company?' — ':'')+'B737 NG';
   showScreen('profcheck');
 }
 
