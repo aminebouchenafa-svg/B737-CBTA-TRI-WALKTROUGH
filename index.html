@@ -657,6 +657,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <button class="btn" style="background:#3B82F622;border-color:#3B82F6;color:#3B82F6;font-size:11px;padding:6px 10px;" onclick="printRapport()">🖨️<br>PDF</button>
 <button class="btn" style="background:#10B98122;border-color:#10B981;color:#10B981;font-size:11px;padding:6px 10px;" onclick="envoyerRapportEmailActuel()">✉ EMAIL</button>
+<button class="btn" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:11px;padding:6px 10px;" onclick="exportSessionJSON()">📦<br>JSON</button>
 </div>
 <div id="rapport-content" style="padding:0;background:#fff;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;"></div>
 </div>
@@ -9230,7 +9231,7 @@ const xpHtml=(()=>{
     +'</div>'+rows+'</div>';
 })();
 h+=xpHtml;
-h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;"><button onclick="showComparaisonPilote(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📈 VOIR DOSSIER COMPLET</button><button onclick="showPilotProgression(\''+p.name.replace(/'/g,"\\'")+'\')" style="padding:8px 12px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">📈 Progression</button></div>';
+h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;flex-wrap:wrap;"><button onclick="showComparaisonPilote(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;min-width:120px;">📈 DOSSIER COMPLET</button><button onclick="showPilotProgression(\''+p.name.replace(/'/g,"\\'")+'\')" style="padding:8px 12px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">📈 Courbe</button><button onclick="exportPilotDossier(\''+escapedKey+'\',\''+p.name.replace(/'/g,"\\'")+'\',\''+p.matricule.replace(/'/g,"\\'")+'\')" style="padding:8px 12px;background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">📦 Exporter</button></div>';
 h+='</div>';
 });
 h+='</div>';
@@ -10219,29 +10220,76 @@ function exportHistoryJSON(){
   a.click();URL.revokeObjectURL(url);
   showToast('✅ Backup exporté — '+hist.length+' session(s), '+Object.keys(db).length+' pilote(s)');
 }
+
+function exportSessionJSON(){
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const session=hist[0];
+  if(!session){showToast('❌ Aucune session enregistrée à exporter');return;}
+  const mat1=((session.pilotMatricule||session.pilotName||'CPT')+'').replace(/[^a-zA-Z0-9]/g,'_');
+  const mat2=((session.foMatricule||session.foName||'FO')+'').replace(/[^a-zA-Z0-9]/g,'_');
+  const dateStr=new Date().toISOString().slice(0,10);
+  const sessName=((session.sessionName||'SESSION')+'').replace(/[^a-zA-Z0-9]/g,'_').substring(0,20);
+  const fname=mat1+'_'+mat2+'_'+dateStr+'_'+sessName+'.json';
+  const data={version:1,type:'session',exported:new Date().toISOString(),session};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=fname;a.click();URL.revokeObjectURL(url);
+  showToast('✅ Session exportée — '+fname);
+}
+
+function exportPilotDossier(key,name,matricule){
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const keyUp=key.toUpperCase();
+  const keyLow=key.toLowerCase();
+  const pilotSessions=hist.filter(s=>{
+    const cptK=((s.pilotMatricule||'').toUpperCase()||(s.pilotName||'').toLowerCase().trim());
+    const foK=((s.foMatricule||'').toUpperCase()||(s.foName||'').toLowerCase().trim());
+    return cptK===keyUp||foK===keyUp||(s.pilotName||'').toLowerCase()===keyLow||(s.foName||'').toLowerCase()===keyLow;
+  });
+  if(!pilotSessions.length){showToast('❌ Aucune session trouvée pour ce pilote');return;}
+  const mat=((matricule||name||key)+'').replace(/[^a-zA-Z0-9]/g,'_');
+  const dateStr=new Date().toISOString().slice(0,10);
+  const fname='DOSSIER_'+mat+'_'+dateStr+'.json';
+  const data={version:1,type:'pilot_dossier',exported:new Date().toISOString(),pilot:{name,matricule,key},history:pilotSessions};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=fname;a.click();URL.revokeObjectURL(url);
+  showToast('✅ Dossier '+name+' exporté — '+pilotSessions.length+' session(s)');
+}
 function importHistoryJSON(inp){
   const file=inp.files[0];if(!file) return;
   const reader=new FileReader();
   reader.onload=function(e){
     try{
       const data=JSON.parse(e.target.result);
-      const incoming=data.history||data;
-      if(!Array.isArray(incoming)){showToast('❌ Fichier invalide');return;}
-      const existing=JSON.parse(localStorage.getItem('cbta_history')||'[]');
-      if(!confirm('Importer '+incoming.length+' session(s) ?\n\nFUSIONNER avec les '+existing.length+' sessions existantes ?\n\n(Annuler = remplacer)')){
-        // Replace
-        localStorage.setItem('cbta_history',JSON.stringify(incoming));
-        if(data.pilotdb) localStorage.setItem('cbta_pilotdb',JSON.stringify(data.pilotdb));
-        showToast('✅ '+incoming.length+' sessions importées (remplacement)');
+      // Détection du format : session unique, dossier pilote, ou backup complet
+      let incoming=[];
+      if(data.type==='session'&&data.session){
+        incoming=[data.session];
+      } else if(data.type==='pilot_dossier'&&Array.isArray(data.history)){
+        incoming=data.history;
+      } else if(Array.isArray(data.history)){
+        incoming=data.history;
+      } else if(Array.isArray(data)){
+        incoming=data;
       } else {
-        // Merge: combine and deduplicate by date+sessionName+pilotName
-        const merged=[...incoming,...existing];
-        const seen=new Set();
-        const deduped=merged.filter(s=>{const k=(s.date||'')+(s.sessionName||'')+(s.pilotName||'');if(seen.has(k))return false;seen.add(k);return true;});
-        deduped.sort((a,b)=>new Date(b.date)-new Date(a.date));
-        localStorage.setItem('cbta_history',JSON.stringify(deduped));
-        if(data.pilotdb){const edb=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
-        showToast('✅ Fusion : '+deduped.length+' sessions au total');
+        showToast('❌ Format de fichier non reconnu');return;
+      }
+      if(!incoming.length){showToast('❌ Aucune session dans ce fichier');return;}
+      const existing=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+      // Toujours fusionner — dédupliquer par date+sessionName+pilotName
+      const merged=[...incoming,...existing];
+      const seen=new Set();
+      const deduped=merged.filter(s=>{const k=(s.date||'')+(s.time||'')+(s.sessionName||'')+(s.pilotName||'');if(seen.has(k))return false;seen.add(k);return true;});
+      deduped.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      localStorage.setItem('cbta_history',JSON.stringify(deduped));
+      if(data.pilotdb){const edb=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
+      if(data.type==='pilot_dossier'){
+        showToast('✅ Dossier importé — '+incoming.length+' session(s) fusionnées · Total: '+deduped.length);
+      } else {
+        showToast('✅ '+incoming.length+' session(s) importée(s) · Total: '+deduped.length);
       }
       inp.value='';renderHistContent();
     }catch(err){showToast('❌ Erreur lecture fichier');}
