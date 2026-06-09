@@ -681,7 +681,7 @@ Identifiant ou mot de passe incorrect
 <div class="title" style="color:#8B5CF6;">TABLEAU DE BORD</div>
 <div class="sub" id="dashboard-sub">TRI</div>
 </div>
-<button onclick="exportHistoryJSON()" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;">⬇ Export</button>
+<button onclick="exportHistoryJSON()" title="Sauvegarde complète de tout l'historique (1 fichier)" style="padding:5px 10px;border-radius:8px;background:#10B98122;border:1px solid #10B981;color:#10B981;font-size:12px;font-weight:700;cursor:pointer;">⬇ Backup</button>
 <label style="padding:5px 10px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:12px;font-weight:700;cursor:pointer;">⬆ Import<input type="file" accept=".json" style="display:none;" onchange="importHistoryJSON(this)"/></label>
 <button onclick="showImportSessionModal()" style="padding:5px 10px;border-radius:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;font-size:12px;font-weight:700;cursor:pointer;">📎</button>
 <button class="btn btn-danger" onclick="if(confirm('Effacer tout ?')){localStorage.removeItem('cbta_history');showHistory();}">🗑</button>
