@@ -7972,11 +7972,10 @@ ${ex.fordec?'<span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8
 }
 
 function exStats(ex){
-const all = Object.assign({}, ex.cs||{}, ex.csfo||{});
-const scored = Object.values(all).filter(v=>v&&v.g>0);
+const scored = [...Object.values(ex.cs||{}),...Object.values(ex.csfo||{})].filter(v=>v&&v.g>0);
 if(!scored.length) return null;
 const avg = scored.reduce((s,v)=>s+v.g,0)/scored.length;
-const allObs = Object.values(all).flatMap(v=>v?(v.obs||[]):[]);
+const allObs = scored.flatMap(v=>(v.obs||[]));
 return {avg:Math.round(avg*10)/10, pos:allObs.filter(o=>o.s==="+").length, neg:allObs.filter(o=>o.s==="-").length};
 }
 
@@ -8154,7 +8153,7 @@ if(state.foName){
 
 const condHtml = sc.cat==='NNC' && sc.condition ? `
 <div style="background:#0d1a2e;border:1px solid #8B5CF644;border-left:3px solid #8B5CF6;border-radius:8px;padding:10px 13px;margin-bottom:12px;">
-<div class="section-lbl" style="color:#8B5CF6;margin-bottom:5px;">CONDITION DE RECONNAISSANCE</div>
+<div class="section-lbl" style="color:#8B5CF6;margin-bottom:5px;">${_lang==='en'?'RECOGNITION CONDITION':'CONDITION DE RECONNAISSANCE'}</div>
 <div style="font-size:14px;color:#CBD5E1;line-height:1.6;">${sc.condition}</div>
 </div>` : '';
 const memHtml = (sc.mem||[]).length ? `
@@ -8190,11 +8189,11 @@ ${pipsHtml}
 
 const notesVal = ex.notes||'';
 el.innerHTML = pilotTabsHtml + collectiveHtml + condHtml + memHtml +
-`<div class="section-lbl">COMPETENCES — Tap pour evaluer</div>
+`<div class="section-lbl">${_lang==='en'?'COMPETENCIES — Tap to evaluate':'COMPETENCES — Tap pour evaluer'}</div>
 <div class="comp-grid">${compGrid}</div>
 <div style="margin-bottom:14px;">
-<div class="section-lbl" style="color:#F59E0B;">📝 MES NOTES PRIVÉES (non incluses dans le rapport)</div>
-<textarea class="note-area" placeholder="Notes de conduite du débriefing — privées, pour votre usage uniquement..." onchange="saveNotes(this.value)">${notesVal}</textarea>
+<div class="section-lbl" style="color:#F59E0B;">📝 ${_lang==='en'?'MY PRIVATE NOTES (not included in report)':'MES NOTES PRIVÉES (non incluses dans le rapport)'}</div>
+<textarea class="note-area" placeholder="${_lang==='en'?'Private debrief notes — for your use only...':'Notes de conduite du débriefing — privées, pour votre usage uniquement...'}" onchange="saveNotes(this.value)">${notesVal}</textarea>
 </div>`;
 }
 
@@ -8232,7 +8231,7 @@ const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
 const infoBox = `<div style="background:#0F1020;border:1px solid #8B5CF644;border-radius:9px;padding:11px 13px;margin-bottom:16px;">
 <div class="section-lbl" style="color:#8B5CF6;">${_lang==='en'?'FOR THIS SCENARIO':'POUR CE SCENARIO'}</div>
 <div style="font-size:14px;color:#CBD5E1;line-height:1.6;">${(_lang==='en'&&sc.ffaD_en?sc.ffaD_en:sc.ffaD)||sc.condition||''}</div>
-${!sc.ffa&&sc.ffa!==undefined?`<div style="margin-top:8px;font-size:12px;color:#F59E0B;">${_lang==='en'?'This scenario does not use the classic FFA sequence.':'Ce scenario n utilise pas la sequence FFA classique.'}</div>`:''}
+${!sc.ffa&&sc.ffa!==undefined&&!((_lang==='en'?sc.ffaD_en:null)||sc.ffaD)?`<div style="margin-top:8px;font-size:12px;color:#F59E0B;">${_lang==='en'?'This scenario does not use the classic FFA sequence.':'Ce scenario n utilise pas la sequence FFA classique.'}</div>`:''}
 </div>`;
 
 const tagsHtml = sc.ffa ? tags.map(tag=>{
