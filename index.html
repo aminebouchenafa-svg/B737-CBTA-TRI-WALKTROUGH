@@ -4848,6 +4848,70 @@ function setLang(l) {
     _ROLE_LABELS.FO = t('role_fo');
     _ROLE_LABELS.TRI = t('role_tri_check');
   }
+  // Reinit language-dependent arrays so TEM chips and UAS reflect current lang
+  if(typeof THREATS_GLOBAL_EXTRA !== 'undefined'){
+    THREATS_GLOBAL_EXTRA = _lang==='en' ? [
+      "Unanticipated weather degradation","In-flight icing","Severe turbulence",
+      "Windshear detected","TCAS traffic","Sudden technical failure",
+      "Contaminated runway","Conflicting runway traffic","Bird strike",
+      "Radio communication failure","Sudden visibility degradation",
+      "Ambiguous ATC instruction","Terrain / CFIT proximity","Unexpected fuel shortage",
+      "Multiple system failure","Cabin medical emergency",
+    ] : [
+      "Météo dégradée non anticipée","Givrage en vol","Turbulences sévères",
+      "Windshear détecté","Traffic TCAS","Panne technique soudaine",
+      "Piste contaminée","Vis-à-vis piste occupée","Bird strike",
+      "Panne communication radio","Dégradation visibilité soudaine",
+      "Instruction ATC ambiguë","Terrain / CFIT proximity","Panne carburant inattendue",
+      "Défaillance multiple systèmes","Urgence médicale cabine",
+    ];
+    ERRORS_GLOBAL_EXTRA = _lang==='en' ? [
+      "Memory items not applied","Checklist omitted or incomplete",
+      "Wrong engine identified","Insufficient briefing","Callout not performed",
+      "Incorrect automation mode","FMC mis-programmed","Navigation source not verified",
+      "Speed restriction not respected","Fuel not verified",
+      "Stabilisation criteria not respected","Late go-around","Incorrect ATC communication",
+      "Absent PF/PM coordination","Altitude crossing not respected",
+      "Incorrect configuration for phase","Aircraft limitation exceeded",
+    ] : [
+      "Memory items non appliqués","Checklist omise ou incomplète",
+      "Mauvais moteur identifié","Briefing insuffisant","Callout non effectué",
+      "Mode automation incorrect","FMC mal programmé","Source navigation non vérifiée",
+      "Restriction vitesse non respectée","Carburant non vérifié",
+      "Stabilisation non respectée","Go-around tardif","Communication ATC incorrecte",
+      "Coordination PF/PM absente","Altitude crossing non respectée",
+      "Configuration incorrecte pour la phase","Dépassement limitation avion",
+    ];
+    UAS_GLOBAL = _lang==='en' ? [
+      "Lateral track deviation (off centreline)","Vertical track deviation (altitude not maintained)",
+      "Involuntary heading deviation","Failure to intercept localizer / glidepath",
+      "Unstabilised approach continued","Abnormal speed (too fast / too slow)",
+      "VMO / MMO exceedance","Speed below Vref or Vapp",
+      "Abnormal energy state (too high / too low)","Incorrect configuration for phase of flight",
+      "Altitude not respected (ATC clearance)","Unauthorised descent / climb",
+      "GPWS / Terrain proximity not managed","Unusual attitude",
+      "Excessive bank angle","Excessive rate of descent",
+      "Incorrect system configuration","Incorrect automation mode engaged",
+      "FMC mis-programmed and used","Unreliable navigation source used",
+      "Runway centreline deviation (takeoff / landing)","Long / short landing",
+      "Possible runway excursion","Reject V1 exceedance",
+      "ATC clearance not respected","Speed restriction exceeded","Checklist incomplete or forgotten",
+    ] : [
+      "Deviation de trajectoire laterale (hors axe)","Deviation de trajectoire verticale (altitude non tenue)",
+      "Deviation de cap involontaire","Non-interception du localizer / glide",
+      "Approche non stabilisee poursuivie","Vitesse anormale (trop rapide / trop lente)",
+      "Depassement Vmo / Mmo","Vitesse sous Vref ou Vapp",
+      "Energie anormale (trop haute / trop basse)","Configuration incorrecte pour la phase de vol",
+      "Altitude non respectee (clearance ATC)","Descente / montee non autorisee",
+      "GPWS / Terrain proximity non geree","Assiette inhabituelle (unusual attitude)",
+      "Inclinaison excessive","Taux de descente excessif",
+      "Configuration systeme incorrecte","Mode automation incorrect engage",
+      "FMC mal programme utilise","Source de navigation non fiable utilisee",
+      "Deviation axe de piste (decollage / atterrissage)","Atterrissage long / court",
+      "Excursion de piste possible","Depassement V1 lors d un reject",
+      "Clearance ATC non respectee","Restriction de vitesse depassee","Checklist incomplete ou oubliee",
+    ];
+  }
   renderActiveScreen();
 }
 
@@ -4901,6 +4965,7 @@ fac_en:["Was the bilateral confirmation of the APU fire made?","Was the confirm-
 {id:"cabin_alt",title:"CABIN ALTITUDE WARNING / Rapid Depress.",page:"2.1",cat:"MEMORY",pri:"CRITICAL",
 phase:["CLIMB","CRUISE"],keys:["PRO","COM","SA","WLM","FPM"],
 mem:["Don oxygen masks regulators 100% (CREW)","Establish crew communications (CREW)","Pressurization mode selector MAN (PM)","Outflow VALVE Hold CLOSE until fully closed (PM)","Si incontrôlable: PASS OXYGEN ON + Emergency Descent p.0.1 (CREW)"],
+mem_en:["Don oxygen masks regulators 100% (CREW)","Establish crew communications (CREW)","Pressurization mode selector MAN (PM)","Outflow VALVE Hold CLOSE until fully closed (PM)","If uncontrollable: PASS OXYGEN ON + Emergency Descent p.0.1 (CREW)"],
 ffa:true,ffaD:"FLY: maintenir trajectoire + preparer descente urgence. FOCUS: cabin altitude controlable? ACT: masques + pressurisation manuelle.",
 ffaD_en:"FLY: maintain trajectory + prepare emergency descent. FOCUS: is cabin altitude controllable? ACT: masks + manual pressurisation.",
 tT:["Depressurisation rapide","Hypoxie imminente","Pression incontrôlable"],
@@ -4923,6 +4988,7 @@ fac_en:["Were the cabin PA and ATC contact done in parallel?","Was the target al
 {id:"engine_fire",title:"ENGINE FIRE / Severe Damage / Separation",page:"8.10",cat:"MEMORY",pri:"CRITICAL",
 phase:["TAKEOFF","CLIMB","CRUISE","DESCENT","APPROACH"],keys:["PRO","FPM","FPA","WLM","LTW","COM"],
 mem:["A/T DISENGAGE (PF)","Thrust lever affected: Confirm CLOSE (PF)","Engine start lever affected: Confirm CUTOFF (PM)","Engine fire switch: Confirm PULL (PM)","Si illumine: rotate stop, hold 1 sec (PM)"],
+mem_en:["A/T DISENGAGE (PF)","Thrust lever affected: Confirm CLOSE (PF)","Engine start lever affected: Confirm CUTOFF (PM)","Engine fire switch: Confirm PULL (PM)","If illuminated: rotate to stop, hold 1 sec (PM)"],
 ffa:true,ffaD:"FLY: maintenir trajectoire + vitesse AVANT tout. FOCUS: identifier moteur affecte + EICAS. ACT: memory items QRH dans l ordre.",
 ffaD_en:"FLY: maintain trajectory + speed FIRST. FOCUS: identify affected engine + EICAS. ACT: memory items QRH in order.",
 tT:["Incendie moteur","FIRE WARN bell","Vibrations elevees","Engine separation"],
@@ -4945,6 +5011,7 @@ fac_en:["What was the first indication (sound, vibration, EICAS)?","Was the thru
 {id:"engine_overheat",title:"ENGINE OVERHEAT",page:"8.36",cat:"MEMORY",pri:"HIGH",
 phase:["CLIMB","CRUISE","DESCENT"],keys:["PRO","SA","KNO","WLM"],
 mem:["Si ENG OVERHEAT light: vérifier fire switch illumine","Thrust lever affected: Confirm RETARD (PF)","Si lumiere s eteint: step 3 | Si reste: ENGINE FIRE procedure"],
+mem_en:["If ENG OVERHEAT light: check fire switch illuminated","Thrust lever affected: Confirm RETARD (PF)","If light extinguishes: step 3 | If remains: ENGINE FIRE procedure"],
 ffa:false,ffaD:"Distinguer ENGINE OVERHEAT de ENGINE FIRE. ENG OVERHEAT = potentiellement controlable avec reduction de poussee.",
 ffaD_en:"Distinguish ENGINE OVERHEAT from ENGINE FIRE. ENG OVERHEAT = potentially controllable with thrust reduction.",
 tT:["Surchauffe moteur","ENG OVERHEAT light","EGT elevee"],
@@ -4956,6 +5023,7 @@ fac_en:["Was the ENGINE FIRE vs ENGINE OVERHEAT distinction made correctly?","Wa
 {id:"loss_thrust_both",title:"LOSS OF THRUST - BOTH ENGINES",page:"7.6",cat:"MEMORY",pri:"CRITICAL",
 phase:["CLIMB","CRUISE","DESCENT"],keys:["PSD","FPM","PRO","WLM","LTW"],
 mem:["ENGINE START switches both FLT (PM)","Engine start levers both CUTOFF (PM)","Quand EGT baisse: Engine start levers both IDLE (PM)","At/above FL270: 275kt | Below FL270: 300kt (PF)"],
+mem_en:["ENGINE START switches both FLT (PM)","Engine start levers both CUTOFF (PM)","When EGT decreases: Engine start levers both IDLE (PM)","At/above FL270: 275kt | Below FL270: 300kt (PF)"],
 ffa:true,ffaD:"FLY: maintenir trajectoire de planeur (vitesse optimale 300kt). FOCUS: temps disponible + terrain + aerodromes. ACT: redemarrage moteur + APU en parallele.",
 ffaD_en:"FLY: maintain glide path (optimal speed 300kt). FOCUS: time available + terrain + airfields. ACT: engine restart + APU in parallel.",
 tT:["Double panne moteur","Both ENG FAIL"],
@@ -4979,6 +5047,7 @@ fac_en:["Was the column held FIRMLY before any other action?","How did you diagn
 {id:"stall_recovery",title:"APPROACH TO STALL / STALL RECOVERY",page:"MAN.1.1",cat:"MANEUVER",pri:"CRITICAL",
 phase:["CLIMB","CRUISE","DESCENT","APPROACH"],keys:["FPM","SA","PSD","WLM"],
 mem:["Control column Hold firmly (PF)","AP + A/T DISENGAGE (PF)","Nose-down elevator: reduire AoA jusqu arret buffet/stick shaker (PF)","Roll shortest direction: wings level si necessaire (PF)","Advance thrust levers as needed (PF)","Retract speedbrakes (PF)"],
+mem_en:["Control column Hold firmly (PF)","AP + A/T DISENGAGE (PF)","Nose-down elevator: reduce AoA until buffet/stick shaker stops (PF)","Roll shortest direction: wings level if required (PF)","Advance thrust levers as needed (PF)","Retract speedbrakes (PF)"],
 ffa:true,ffaD:"FLY: nose-down IMMEDIAT pour reduire AoA - AVANT poussee. FOCUS: airspeed + altitude + trend terrain. ACT: wings level + thrust + speedbrakes.",
 ffaD_en:"FLY: IMMEDIATE nose-down to reduce AoA — BEFORE thrust. FOCUS: airspeed + altitude + terrain trend. ACT: wings level + thrust + speedbrakes.",
 tT:["Stick shaker / buffet","Vitesse basse","Givrage","Configuration inadequate"],
@@ -5001,6 +5070,7 @@ fac_en:["Which GPWS sounded first — was the reaction immediate?","Was the 20de
 {id:"rto",title:"REJECTED TAKEOFF (RTO)",page:"MAN.1.2",cat:"MANEUVER",pri:"CRITICAL",
 phase:["TAKEOFF"],keys:["FPM","PSD","LTW","WLM","PRO"],
 mem:["Captain: REJECT - annonce claire","Thrust levers CLOSE + A/T DISCONNECT (CPT)","SPEED BRAKE lever UP (CPT)","Maximum wheel brakes ou RTO autobrake (CPT)","Reverse thrust maximum (CPT)"],
+mem_en:["Captain: REJECT — clear callout","Thrust levers CLOSE + A/T DISCONNECT (CPT)","SPEED BRAKE lever UP (CPT)","Maximum wheel brakes OR RTO autobrake (CPT)","Reverse thrust maximum (CPT)"],
 ffa:false,ffaD:"N/A - Le RTO est lui-meme la manoeuvre. Decision AVANT V1. Actions simultanees: thrust idle + speedbrake + max brakes + reverse.",
 ffaD_en:"N/A - The RTO is the manoeuvre itself. Decision BEFORE V1. Simultaneous actions: thrust idle + speedbrake + max brakes + reverse.",
 tT:["Engine fire/failure","Predictive windshear","Takeoff config warning"],
@@ -5012,6 +5082,7 @@ fac_en:["Was the decision made BEFORE V1 — on what criterion?","Was the REJECT
 {id:"tcas_ra",title:"TRAFFIC AVOIDANCE (TCAS RA)",page:"MAN.1.7",cat:"MANEUVER",pri:"HIGH",
 phase:["CLIMB","CRUISE","DESCENT","APPROACH"],keys:["FPM","FPA","SA","LTW","COM"],
 mem:["AP DISENGAGE (PF)","A/T DISENGAGE (PF)","Ajuster pitch + thrust pour satisfaire le RA command (PF)","Maintenir lateral flight path (PF)"],
+mem_en:["AP DISENGAGE (PF)","A/T DISENGAGE (PF)","Adjust pitch + thrust to satisfy the RA command (PF)","Maintain lateral flight path (PF)"],
 ffa:false,ffaD:"N/A - Le RA EST la directive. AP+A/T deconnectes, ajuster pitch+thrust pour satisfaire le RA. COMPLY with RA meme si conflit ATC. Ne pas suivre DESCEND RA sous 1000ft AGL.",
 ffaD_en:"N/A - The RA IS the directive. AP+AT disconnected, adjust pitch+thrust to satisfy the RA. COMPLY with RA even if conflicting with ATC. Do not follow DESCEND RA below 1000ft AGL.",
 tT:["TCAS RA","Trafic conflictuel","Separation reduite"],
@@ -5023,6 +5094,7 @@ fac_en:["Was the RA followed IMMEDIATELY?","Was there a RA vs ATC conflict — h
 {id:"upset_recovery",title:"UPSET RECOVERY",page:"MAN.1.15",cat:"MANEUVER",pri:"CRITICAL",advanced:true,
 phase:["CLIMB","CRUISE","DESCENT"],keys:["FPM","SA","PSD","WLM"],
 mem:["AP + A/T DISENGAGE si engage","Reconnaitre et confirmer l upset (bank > 45deg ou pitch anormal)","Nose high: wings level + nose down + thrust si necessaire","Nose low: bank < 60deg, reduce thrust, pull pour recover"],
+mem_en:["AP + A/T DISENGAGE if engaged","Recognise and confirm the upset (bank > 45deg or abnormal pitch)","Nose high: wings level + nose down + thrust if required","Nose low: bank < 60deg, reduce thrust, pull to recover"],
 ffa:true,ffaD:"FLY: controler les gouvernes avec precision. FOCUS: attitude + altitude + vitesse. ACT: sequence de recuperation selon type upset (nose high vs nose low).",
 ffaD_en:"FLY: control surfaces with precision. FOCUS: attitude + altitude + speed. ACT: recovery sequence according to upset type (nose high vs nose low).",
 tT:["TCAS maneuver","Turbulence severe","Perte de SA"],
@@ -5068,6 +5140,7 @@ fac_en:["Was the runway kept in sight throughout the circling?","Were circling s
 {id:"go_around",title:"GO AROUND / MISSED APPROACH",page:"FP.2",cat:"FLIGHT PATTERN",pri:"HIGH",
 phase:["APPROACH","LANDING"],keys:["FPM","FPA","WLM","LTW","COM"],
 mem:["TO/GA switches PUSH (PF)","FLAP lever UP one increment (PF)","Positive rate GEAR UP (PF)","AP engage si necessaire (PF)","Suivre missed approach procedure (CREW)"],
+mem_en:["TO/GA switches PUSH (PF)","FLAP lever UP one increment (PF)","Positive rate GEAR UP (PF)","AP engage if required (PF)","Follow missed approach procedure (CREW)"],
 ffa:true,ffaD:"FLY: TO/GA + retrait flaps progressif + roues rentrees. FOCUS: trajectoire missed approach + ATC. ACT: configurer pour montee + communiquer.",
 ffaD_en:"FLY: TO/GA + progressive flap retraction + gear up. FOCUS: missed approach trajectory + ATC. ACT: configure for climb + communicate.",
 tT:["Remise des gaz tardive","Piste non degagee","Conditions meteorologiques","Traffic non separe"],
@@ -5287,6 +5360,7 @@ items:[
 phase:["TAKEOFF","CLIMB"],system:"ENGINES",condition:"ENGINE FAILURE ABOVE V1 — CONTINUE TAKEOFF",
 keys:["FPM","PRO","WLM","SA","LTW","COM"],
 mem:["Contrôle directionnel — pied en fonction de la perte de poussée (PF)","Rotation à Vr — assiette cible 12-13° (2-3° sous le normal 15°) (PF)","Taux de rotation réduit 1,5-2,5°/sec — demi-degré de moins qu'un décollage normal (PF)","Après liftoff — ajuster assiette pour maintenir vitesse désirée (PF)","Appliquer pied + aileron — maintenir cap et ailes à plat (PF)","Pied centré → manche centré — configuration minimum traînée (PF)","Taux positif → TRAIN RENTRÉ (PF/PM)","Altitude accélération → NNC Panne Moteur / Arrêt Moteur (PF/PM)"],
+mem_en:["Directional control — rudder as required for thrust loss (PF)","Rotation at Vr — target pitch 12-13° (2-3° below normal 15°) (PF)","Reduced rotation rate 1.5-2.5°/sec — half degree less than normal takeoff (PF)","After liftoff — adjust pitch to maintain desired speed (PF)","Apply rudder + aileron — maintain heading and wings level (PF)","Rudder centered → yoke centered — minimum drag configuration (PF)","Positive rate → GEAR UP (PF/PM)","Acceleration altitude → NNC Engine Failure / Engine Shutdown (PF/PM)"],
 items:["Briefing décollage incluant procédure panne moteur","V1 — continuer décollage","Taux positif — train rentré","Actions mémoire si feu / dommage grave","Montée sur trajectoire de départ","NNC — Panne Moteur / Arrêt Moteur"]},
 {id:"se_ils",title:"SINGLE ENGINE ILS",page:"MAN.2.2",cat:"MANDATORY",pri:"CRITICAL",
 phase:["APPROACH","LANDING"],system:"ENGINES / ILS",condition:"ONE ENGINE INOPERATIVE — ILS APPROACH TO LAND",
@@ -5297,6 +5371,7 @@ items:["Briefing approche OEI","Interception et suivi ILS","Configuration finale
 phase:["APPROACH"],system:"ENGINES",condition:"GO-AROUND WITH ONE ENGINE INOPERATIVE",
 keys:["FPM","PRO","WLM","SA","LTW"],
 mem:["TO/GA — TO/GA (PF)","Vérifier que la poussée augmente (PM)","Volets 15 ou volets 1 si approche volets 15 — 1 moteur (PF)","Vérifier assiette remise des gaz (PF)","Vérifier ou ajuster la poussée (PM)","Taux positif — TRAIN RENTRÉ (PF/PM)","Contrôle lacet — pied + compensation gouverne de direction (PF)","Pression pied requise même avec compensation totale (PF)","400 ft — vérifier LNAV ou sélectionner mode roulis (PF/PM)","Vérifier altitude de dégagement sélectionnée (PM)","Volets prévus / vitesse de manœuvre → LVL CHG ou VNAV (PF)","Poussée CON — 1 moteur (PM)","MCT quand volets rentrés à la position souhaitée (PF/PM)"],
+mem_en:["TO/GA — TO/GA (PF)","Verify thrust increasing (PM)","Flaps 15 or flaps 1 if approach flaps 15 — 1 engine (PF)","Verify go-around pitch attitude (PF)","Verify or adjust thrust (PM)","Positive rate — GEAR UP (PF/PM)","Yaw control — rudder + rudder trim (PF)","Rudder pedal force required even with full trim (PF)","400 ft — verify LNAV or select roll mode (PF/PM)","Verify missed approach altitude selected (PM)","Target speed / maneuver speed → LVL CHG or VNAV (PF)","CON thrust — 1 engine (PM)","MCT when flaps retracted to desired position (PF/PM)"],
 items:["Annonce remise des gaz OEI","Poussée TO/GA — rotation 15°","Taux positif — train rentré","Accélération à Vapp+10 minimum","Rentrée volets progressive","Montée altitude accélération","Suivi procédure départ OEI"]},
 {id:"se_ldg",title:"SINGLE ENGINE LANDING",page:"MAN.2.4",cat:"MANDATORY",pri:"CRITICAL",advanced:true,
 phase:["APPROACH","LANDING"],system:"ENGINES",condition:"LANDING WITH ONE ENGINE INOPERATIVE",
@@ -8156,10 +8231,11 @@ const condHtml = sc.cat==='NNC' && sc.condition ? `
 <div class="section-lbl" style="color:#8B5CF6;margin-bottom:5px;">${_lang==='en'?'RECOGNITION CONDITION':'CONDITION DE RECONNAISSANCE'}</div>
 <div style="font-size:14px;color:#CBD5E1;line-height:1.6;">${sc.condition}</div>
 </div>` : '';
-const memHtml = (sc.mem||[]).length ? `
+const _memArr = (_lang==='en'&&sc.mem_en?sc.mem_en:sc.mem)||[];
+const memHtml = _memArr.length ? `
 <div class="mem-box">
 <div class="section-lbl" style="color:#EF4444;">MEMORY ITEMS</div>
-${(sc.mem||[]).map((m,i)=>`<div class="mem-item"><span class="mem-num">${i+1}</span><span>${m}</span></div>`).join('')}
+${_memArr.map((m,i)=>`<div class="mem-item"><span class="mem-num">${i+1}</span><span>${m}</span></div>`).join('')}
 </div>` : '';
 
 const csKey = state.activePilot==="cpt"?"cs":"csfo";
@@ -10920,7 +10996,20 @@ const rcHtml = closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
 const rcKey='ex_'+i;
 const selected = state.debRootCauses[rcKey]||[];
-const rcBtns = ROOT_CAUSES.map(rc=>`<button class="rc-btn ${selected.includes(rc)?'active':''}" onclick="toggleRC('${rcKey}','${rc}')">${rc}</button>`).join('');
+const _rcList = _lang==='en' ? [
+  "Confirmation bias","Cognitive overload / Tunnel vision",
+  "Lack of PF/PM leadership clarity","Progressive SA loss",
+  "Startle effect / Surprise","Fixation / Channelized attention",
+  "Fatigue / Stress","Poor initial planning",
+  "Absence of cross-check","Deficient communication"
+] : [
+  "Biais de confirmation","Surcharge cognitive / Effet tunnel",
+  "Manque de clarte leadership PF/PM","Perte de SA progressive",
+  "Startle effect / Surprise","Fixation / Channelized attention",
+  "Fatigue / Stress","Mauvaise planification initiale",
+  "Absence de cross-check","Communication insuffisante"
+];
+const rcBtns = _rcList.map(rc=>`<button class="rc-btn ${selected.includes(rc)?'active':''}" onclick="toggleRC('${rcKey}','${rc}')">${rc}</button>`).join('');
 return `<div class="card" style="margin-bottom:12px;">
 <div style="font-size:14px;font-weight:700;color:#F1F5F9;margin-bottom:4px;">${sc.title}</div>
 <div class="section-lbl" style="color:#F59E0B;margin-bottom:8px;">${_lang==='en'?'ROOT CAUSES identified':'ROOT CAUSES identifiees'}</div>
