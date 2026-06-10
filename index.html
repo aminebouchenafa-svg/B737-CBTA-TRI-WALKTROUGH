@@ -8051,7 +8051,7 @@ function openEx(i){
 state.activeIdx = i;
 state.activePilot = "cpt";
 state.currentExTab = "eval";
-if(!state.exercises[i].openedAt) state.exercises[i].openedAt = Date.now();
+// Timer does NOT auto-start — user taps ▶ START manually
 renderExView();
 showScreen('ex');
 document.querySelectorAll('.tab').forEach((t,idx)=>{if(idx<4)t.className='tab'+(idx===0?' active':'');});
@@ -10421,23 +10421,28 @@ return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;">${grid}
 function showPilotProgression(pilotName){
 const history=JSON.parse(localStorage.getItem('cbta_history')||'[]');
 // Filter sessions for this pilot
-const pilotSessions=history.filter(s=>(s.pilotName||'').toLowerCase()===pilotName.toLowerCase()||(s.foName||'').toLowerCase()===pilotName.toLowerCase()).sort((a,b)=>a.date-b.date);
+const pilotSessions=history.filter(s=>(s.pilotName||'').toLowerCase()===pilotName.toLowerCase()||(s.foName||'').toLowerCase()===pilotName.toLowerCase()).sort((a,b)=>{
+  const pa=(a.date||'').split('/').reverse().join('');
+  const pb=(b.date||'').split('/').reverse().join('');
+  return pa.localeCompare(pb);
+});
 if(!pilotSessions.length){
   alert(_lang==='en'?'No session found for '+pilotName:'Aucune session trouvée pour '+pilotName);
   return;
 }
 const isFo=(s)=>(s.foName||'').toLowerCase()===pilotName.toLowerCase();
 const sessions=pilotSessions.map((s,i)=>{
-  const csKey=isFo(s)?'csfo':'cs';
-  const closed=(s.exercises||[]).filter(e=>e.closed);
+  // Use pre-computed compAvgs/compAvgsFo saved in history (ex.cs is not stored)
+  const avgs=isFo(s)?(s.compAvgsFo||{}):(s.compAvgs||{});
   const scores={};
   COMPETENCIES.forEach(c=>{
-    let t=0,n=0;
-    closed.forEach(ex=>{const v=(ex[csKey]||{})[c.id];if(v&&v.g>0){t+=v.g;n++;}});
-    scores[c.id]=n?Math.round(t/n*10)/10:null;
+    const v=avgs[c.id]?parseFloat(avgs[c.id]):null;
+    scores[c.id]=(v&&v>0)?v:null;
   });
-  const d=s.date?new Date(s.date):new Date();
-  return {label:d.toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}), scores, sessionName:s.sessionName||('S'+(i+1))};
+  // Parse "DD/MM/YYYY" (FR locale) safely
+  const parts=(s.date||'').split('/');
+  const lbl=parts.length>=2?parts[0]+'/'+parts[1]:(s.date||('S'+(i+1)));
+  return {label:lbl, scores, sessionName:s.sessionName||('S'+(i+1))};
 });
 // Build overlay
 let ov=document.getElementById('prog-overlay');
@@ -12376,8 +12381,12 @@ h+='</div></div>';
 h+='<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:8px;">'+(_lang==='en'?'3 LATEST SESSIONS':'3 DERNIÈRES SESSIONS')+'</div>';
 hist.slice(0,3).forEach(s=>{
 const sc=parseFloat(s.avgScore)||0;
+const r1=s.pilotRole||'CPT', r2=s.foRole||'FO';
+const c1=r1==='TRI'?'#F59E0B':r1==='FO'?'#10B981':'#3B82F6';
+const c2=r2==='TRI'?'#F59E0B':'#10B981';
 h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:8px;padding:10px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">';
-h+='<div><div style="font-size:12px;font-weight:700;color:#F1F5F9;">CPT '+s.pilotName+'</div><div style="font-size:10px;color:#64748B;">'+s.date+' · '+s.sessionName+'</div></div>';
+h+='<div><div style="font-size:12px;font-weight:700;color:#F1F5F9;"><span style="color:'+c1+';">'+r1+'</span> '+s.pilotName+(s.foName?' <span style="color:#475569;font-weight:400;">·</span> <span style="color:'+c2+';">'+r2+'</span> '+s.foName:'')+'</div>';
+h+='<div style="font-size:10px;color:#64748B;">'+s.date+' · '+s.sessionName+'</div></div>';
 h+='<div style="font-size:20px;font-weight:900;color:'+cc(sc)+';">'+s.avgScore+'</div></div>';
 });
 h+='</div>';
@@ -12669,9 +12678,10 @@ const sessions=hist.map((s,histIdx)=>{
   if(cAvgs){const v=Object.values(cAvgs).filter(x=>x&&parseFloat(x)>0).map(parseFloat);sc=v.length?v.reduce((a,b)=>a+b,0)/v.length:0;}
   if(!sc&&isCpt) sc=parseFloat(s.avgScore)||0;
   return {...s,_sc:sc,_avgs:cAvgs,_histIdx:histIdx};
-}).filter(s=>s&&s._sc>0).reverse();
-const seen=new Set();
-const uniq=sessions.filter(s=>{const k=s.date+s.sessionName;if(seen.has(k))return false;seen.add(k);return true;});
+}).filter(s=>s!==null).reverse();
+// Deduplicate by history index (unique per save) — not by date+name which fails same-day sessions
+const seenIdx=new Set();
+const uniq=sessions.filter(s=>{if(seenIdx.has(s._histIdx))return false;seenIdx.add(s._histIdx);return true;});
 document.getElementById('comp-pilote-name').textContent=(name||key);
 const el=document.getElementById('comparaison-content');
 // Pilot info header
