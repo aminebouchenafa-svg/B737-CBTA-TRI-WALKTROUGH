@@ -7308,6 +7308,11 @@ const COMPETENCIES_EN = [
 // ── GRADE CONFIG ---───────────────────────────────────────────────────────────
 const GC = ["","#EF4444","#F97316","#F59E0B","#10B981","#3B82F6"];
 const GL = ["","INACCEPTABLE","SOUS-STANDARD","STANDARD","AU-DESSUS","EXEMPLAIRE"]; // updated by setLang()
+// Boeing CBTA rubric word pictures (Figure 29)
+const GRADE_WORDS = {
+  en: ["",["rarely","unsafe"],["occasionally","minimal"],["adequately","standard"],["regularly","effectively"],["always","exemplary"]],
+  fr: ["",["rarement","inacceptable"],["parfois","minimal"],["adéquat","standard"],["régulièrement","efficace"],["toujours","exemplaire"]]
+};
 const catC = {MEMORY:"#EF4444",MANEUVER:"#F97316","FLIGHT PATTERN":"#10B981",NNC:"#A855F7",LVO:"#EC4899",RNP:"#0EA5E9"};
 const PHASE_COLORS={"ALL":"#64748B","TAKEOFF":"#FFE600","CLIMB":"#39FF14","CRUISE":"#00E5FF","DESCENT":"#FF9500","APPROACH":"#FF61C7","LANDING":"#AAFF00"};
 
@@ -8766,8 +8771,15 @@ showScreen('comp');
 
 function renderCompContent(comp){
 const ac = state.activeComp;
-const gradeHtml = [1,2,3,4,5].map(n=>`
-<button class="grade-btn ${ac.g===n?'active-'+n:''}" onclick="setGrade(${n})">${n}</button>`).join('');
+const gWords = GRADE_WORDS[_lang] || GRADE_WORDS.fr;
+const gradeHtml = [1,2,3,4,5].map(n=>{
+const w = gWords[n];
+return `<button class="grade-btn ${ac.g===n?'active-'+n:''}" onclick="setGrade(${n})" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:9px 2px;">
+<span style="font-size:var(--fsxl);font-weight:800;line-height:1;">${n}</span>
+<span style="font-size:8px;font-weight:600;opacity:0.7;line-height:1.3;text-align:center;">${w[0]}</span>
+<span style="font-size:8px;font-weight:600;opacity:0.7;line-height:1.3;text-align:center;">${w[1]}</span>
+</button>`;
+}).join('');
 const gradeLbl = ac.g>0 ? `<div style="font-size:14px;color:${GC[ac.g]};text-align:center;margin-top:8px;font-weight:700;letter-spacing:1px;">${GL[ac.g]}</div>`:'';
 
 // Calcul grading auto basé sur OB
