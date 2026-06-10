@@ -11276,6 +11276,86 @@ function showProfCheck(){
   showScreen('profcheck');
 }
 
+function _buildObsRefHtml(){
+var CDEFS=[
+{id:'PRO',color:'#14B8A6',
+titleEn:'Application of Procedures',titleFr:'Application des Procédures',
+objEn:'Identifies and applies appropriate procedures in accordance with published operating instructions and applicable regulations.',
+objFr:'Identifie et applique les procédures appropriées conformément aux instructions d\'exploitation publiées et réglementations applicables.'},
+{id:'COM',color:'#EC4899',
+titleEn:'Communication',titleFr:'Communication',
+objEn:'Communicates by appropriate means in the operational environment, in both normal and non-normal situations.',
+objFr:'Communique par les moyens appropriés dans l\'environnement opérationnel, en situations normales et non-normales.'},
+{id:'FPA',color:'#F97316',
+titleEn:'Flight Path Management, Automation',titleFr:'Gestion de la Trajectoire – Automatisation',
+objEn:'Controls the flight path through automation.',
+objFr:'Contrôle la trajectoire de vol via l\'automatisation.'},
+{id:'FPM',color:'#EF4444',
+titleEn:'Flight Path Management, Manual',titleFr:'Gestion de la Trajectoire – Pilotage Manuel',
+objEn:'Controls the flight path through manual control.',
+objFr:'Contrôle la trajectoire de vol par pilotage manuel.'},
+{id:'KNO',color:'#3B82F6',
+titleEn:'Application of Knowledge',titleFr:'Connaissances',
+objEn:'Demonstrates knowledge and understanding of relevant information, operating instructions, aircraft systems, and the operating environment.',
+objFr:'Démontre des connaissances des informations pertinentes, instructions d\'exploitation, systèmes aéronef et environnement opérationnel.'},
+{id:'LTW',color:'#10B981',
+titleEn:'Leadership and Teamwork',titleFr:'Leadership & Travail en Équipe',
+objEn:'Influences others to contribute to a shared purpose. Collaborates to accomplish the goals of the team.',
+objFr:'Influence les autres vers un objectif commun. Collabore pour atteindre les buts de l\'équipe.'},
+{id:'PSD',color:'#F59E0B',
+titleEn:'Problem Solving and Decision-Making',titleFr:'Résolution de Problèmes & Décision',
+objEn:'Identifies precursors, mitigates problems and makes decisions.',
+objFr:'Identifie les précurseurs, atténue les problèmes et prend des décisions.'},
+{id:'SA',color:'#06B6D4',
+titleEn:'Situation Awareness',titleFr:'Conscience Situationnelle',
+objEn:'Perceives, comprehends and manages information and anticipates its effect on the operation.',
+objFr:'Perçoit, comprend et gère les informations pour anticiper leur effet sur l\'opération.'},
+{id:'WLM',color:'#8B5CF6',
+titleEn:'Workload Management',titleFr:'Gestion de la Charge de Travail',
+objEn:'Maintains available workload capacity by prioritizing and distributing tasks using appropriate resources.',
+objFr:'Maintient la capacité de travail disponible en priorisant et distribuant les tâches avec les ressources appropriées.'}
+];
+var comps=CDEFS.map(function(d){
+var cFr=COMPETENCIES.find(function(c){return c.id===d.id;});
+var cEn=COMPETENCIES_EN.find(function(c){return c.id===d.id;});
+var obsArr=_lang==='en'?(cEn?cEn.obs:[]):(cFr?cFr.obs.map(function(o){return o.text;}):[]);
+return {id:d.id,color:d.color,title:_lang==='en'?d.titleEn:d.titleFr,obj:_lang==='en'?d.objEn:d.objFr,obs:obsArr};
+});
+window._OBS_COMPS=comps;
+var backLbl=_lang==='en'?'← Back':'← Retour';
+var gridBtns=comps.map(function(c){
+return '<button onclick="showObsDetail(\''+c.id+'\')" style="padding:14px 6px;border-radius:12px;border:2px solid '+c.color+'55;background:'+c.color+'11;cursor:pointer;text-align:center;width:100%;">'
++'<div style="font-size:22px;font-weight:900;color:'+c.color+';font-family:ui-monospace,monospace;margin-bottom:4px;">'+c.id+'</div>'
++'<div style="font-size:11px;color:#94A3B8;line-height:1.3;">'+c.title+'</div>'
++'</button>';
+}).join('');
+var detailDivs=comps.map(function(c){
+return '<div id="obs-comp-'+c.id+'" style="display:none;">'
++'<div style="border-left:4px solid '+c.color+';padding-left:14px;margin-bottom:16px;">'
++'<div style="font-size:26px;font-weight:900;color:'+c.color+';font-family:ui-monospace,monospace;">'+c.id+'</div>'
++'<div style="font-size:18px;font-weight:700;color:#F1F5F9;margin-top:2px;">'+c.title+'</div>'
++'<div style="font-size:14px;color:#64748B;font-style:italic;margin-top:8px;line-height:1.5;">'+c.obj+'</div>'
++'</div>'
++c.obs.map(function(o,i){
+return '<div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #1E2530;">'
++'<span style="font-size:15px;color:'+c.color+';font-weight:800;flex-shrink:0;min-width:50px;font-family:monospace;">OB '+(i+1)+'</span>'
++'<span style="font-size:17px;color:#CBD5E1;line-height:1.5;">'+o+'</span>'
++'</div>';
+}).join('')
++'</div>';
+}).join('');
+return '<div id="obs-nav" style="padding:4px 0;">'
++'<div id="obs-grid-view"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">'+gridBtns+'</div></div>'
++'<div id="obs-detail-view" style="display:none;">'
++'<div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;">'
++'<button onclick="hideObsDetail()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:1px solid #334155;background:#1E2530;color:#94A3B8;font-size:15px;cursor:pointer;">'+backLbl+'</button>'
++'<button id="obs-detail-ds-btn" onclick="" style="display:inline-flex;align-items:center;gap:5px;padding:9px 14px;border-radius:8px;border:2px solid #8B5CF6;background:#8B5CF622;color:#8B5CF6;font-size:14px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button>'
++'</div>'
++detailDivs
++'</div>'
++'</div>';
+}
+
 const _REF_CONTENT = {
 tem:`<div style="padding:4px 0;">
 <div style="background:#0F1718;border:2px solid #F59E0B44;border-radius:10px;padding:14px;margin-bottom:10px;">
@@ -11310,51 +11390,7 @@ tem:`<div style="padding:4px 0;">
 <div><div style="font-size:12px;font-weight:700;color:#F59E0B;margin-bottom:4px;">💬 DEBRIEFING GUIDE</div><div style="font-size:13px;color:#94A3B8;line-height:1.7;">→ Were safety margins compromised at any time?<br/>→ Were standards, policies or tasks compromised?<br/>→ What events prompted unresolved questions?<br/>→ In which areas could pilots have performed at a higher level?</div></div>
 </div>
 </div>`,
-obs:(function(){
-const comps=[
-{id:'PRO',color:'#14B8A6',title:'Application of Procedures',obj:'Identifies and applies appropriate procedures in accordance with published operating instructions and applicable regulations.',obs:['Identifies where to find procedures and regulations','Applies relevant operating instructions and techniques in a timely manner','Follows SOP unless a higher degree of safety dictates an appropriate deviation','Operates airplane systems and associated equipment correctly','Monitors aircraft systems status','Complies with applicable regulations','Applies relevant procedural knowledge of automation']},
-{id:'COM',color:'#EC4899',title:'Communication',obj:'Communicates by appropriate means in the operational environment, in both normal and non-normal situations.',obs:['Determines that the recipient is ready and able to receive information','Selects appropriately what, when, how and with whom to communicate','Conveys messages clearly, accurately and concisely','Ensures recipient demonstrates understanding of important information','Listens actively and demonstrates understanding when receiving information','Asks relevant and effective questions','Uses appropriate escalation to resolve identified deviations','Adheres to standard radiotelephony phraseology and procedures','Accurately reads, interprets and responds to datalink messages in English']},
-{id:'FPA',color:'#F97316',title:'Flight Path Management, Automation',obj:'Controls the flight path through automation.',obs:['Uses appropriate flight management, guidance systems and automation','Monitors and detects deviations from the intended flight path','Manages the flight path safely to achieve optimum operational performance','Maintains intended flight path during flight using automation while managing other tasks','Selects appropriate level and mode of automation considering phase of flight and workload','Effectively monitors automation, including engagement and automatic mode transitions']},
-{id:'FPM',color:'#EF4444',title:'Flight Path Management, Manual',obj:'Controls the flight path through manual control.',obs:['Controls the airplane manually with accuracy and smoothness as appropriate to the situation','Monitors and detects deviations from the intended flight path','Manages the airplane using attitude, speed and thrust and navigational or visual information','Manages the flight path safely to achieve optimum operational performance','Maintains intended flight path during manual flight while managing other tasks','Uses appropriate flight management and guidance systems as applicable','Effectively monitors automation including automatic mode transitions']},
-{id:'KNO',color:'#3B82F6',title:'Application of Knowledge',obj:'Demonstrates knowledge and understanding of relevant information, operating instructions, aircraft systems, and the operating environment.',obs:['Demonstrates practical knowledge of limitations in systems and their interaction','Demonstrates required knowledge of published operating instructions','Demonstrates knowledge of the operating environment: ATC, routings, weather, airports','Demonstrates applicable knowledge of applicable legislation','Knows where to source required information','Demonstrates a positive interest in acquiring knowledge','Is able to apply knowledge effectively']},
-{id:'LTW',color:'#10B981',title:'Leadership and Teamwork',obj:'Influences others to contribute to a shared purpose. Collaborates to accomplish the goals of the team.',obs:['Encourages team participation and open communication','Demonstrates initiative and provides direction when required','Engages others in planning','Considers inputs from others','Gives and receives feedback constructively','Addresses and resolves conflicts and disagreements in a constructive manner','Exercises decisive leadership when required','Accepts responsibility for decisions and actions','Carries out instructions when directed','Applies effective intervention strategies to resolve identified deviations','Manages cultural and language challenges, as applicable']},
-{id:'PSD',color:'#F59E0B',title:'Problem Solving and Decision-Making',obj:'Identifies precursors, mitigates problems and makes decisions.',obs:['Identifies, assesses and manages threats and errors in a timely manner','Seeks accurate and adequate information from appropriate sources','Identifies and verifies what and why things have gone wrong, if appropriate','Perseveres in working through problems while prioritizing safety','Identifies and considers appropriate options','Applies appropriate and timely decision-making techniques','Monitors, reviews and adapts decisions as required','Adapts when faced with situations where no guidance or procedure exists','Verifies that tasks are completed to the expected outcome','Demonstrates resilience when encountering an unexpected event']},
-{id:'SA',color:'#06B6D4',title:'Situation Awareness',obj:'Perceives, comprehends and manages information and anticipates its effect on the operation.',obs:['Monitors and assesses the state of the airplane and its systems','Monitors and assesses the airplane energy state and anticipated flight path','Monitors and assesses the external environment and how it may affect the operation','Validates the accuracy of information and checks for gross errors','Maintains awareness of the people involved in or affected by the operation','Develops and gives assistance','Responds to indications of reduced situational awareness']},
-{id:'WLM',color:'#8B5CF6',title:'Workload Management',obj:'Maintains available workload capacity by prioritizing and distributing tasks using appropriate resources.',obs:['Demonstrates control in all situations','Plans, prioritizes and schedules appropriate tasks effectively','Tasks others efficiently when carrying out tasks','Offers and gives assistance','Delegates tasks','Manages time and cross-checks actions conscientiously','Seeks and accepts assistance when appropriate','Manages and recovers from interruptions, distractions, variations and failures effectively while performing tasks']}
-];
-window._OBS_COMPS=comps;
-var gridBtns=comps.map(function(c){
-return '<button onclick="showObsDetail(\''+c.id+'\')" style="padding:14px 6px;border-radius:12px;border:2px solid '+c.color+'55;background:'+c.color+'11;cursor:pointer;text-align:center;width:100%;">'
-+'<div style="font-size:22px;font-weight:900;color:'+c.color+';font-family:ui-monospace,monospace;margin-bottom:4px;">'+c.id+'</div>'
-+'<div style="font-size:11px;color:#94A3B8;line-height:1.3;">'+c.title+'</div>'
-+'</button>';
-}).join('');
-var detailDivs=comps.map(function(c){
-return '<div id="obs-comp-'+c.id+'" style="display:none;">'
-+'<div style="border-left:4px solid '+c.color+';padding-left:14px;margin-bottom:16px;">'
-+'<div style="font-size:26px;font-weight:900;color:'+c.color+';font-family:ui-monospace,monospace;">'+c.id+'</div>'
-+'<div style="font-size:18px;font-weight:700;color:#F1F5F9;margin-top:2px;">'+c.title+'</div>'
-+'<div style="font-size:14px;color:#64748B;font-style:italic;margin-top:8px;line-height:1.5;">'+c.obj+'</div>'
-+'</div>'
-+c.obs.map(function(o,i){
-return '<div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #1E2530;">'
-+'<span style="font-size:15px;color:'+c.color+';font-weight:800;flex-shrink:0;min-width:50px;font-family:monospace;">OB '+(i+1)+'</span>'
-+'<span style="font-size:17px;color:#CBD5E1;line-height:1.5;">'+o+'</span>'
-+'</div>';
-}).join('')
-+'</div>';
-}).join('');
-return '<div id="obs-nav" style="padding:4px 0;">'
-+'<div id="obs-grid-view"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">'+gridBtns+'</div></div>'
-+'<div id="obs-detail-view" style="display:none;">'
-+'<div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;">'
-+'<button onclick="hideObsDetail()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:1px solid #334155;background:#1E2530;color:#94A3B8;font-size:15px;cursor:pointer;">← Back</button>'
-+'<button id="obs-detail-ds-btn" onclick="" style="display:inline-flex;align-items:center;gap:5px;padding:9px 14px;border-radius:8px;border:2px solid #8B5CF6;background:#8B5CF622;color:#8B5CF6;font-size:14px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button>'
-+'</div>'
-+detailDivs
-+'</div>'
-+'</div>';
-})()
+obs:_buildObsRefHtml()
 };
 var _curRefTab='tem';
 function refTab(tab,el){
@@ -11367,7 +11403,7 @@ function refTab(tab,el){
   el.style.borderWidth='2px';
   el.style.color=tab==='tem'?'#F59E0B':'#06B6D4';
   var rc=document.getElementById('ref-content');
-  if(rc)rc.innerHTML=_REF_CONTENT[tab]||'';
+  if(rc)rc.innerHTML = tab==='obs' ? _buildObsRefHtml() : (_REF_CONTENT[tab]||'');
 }
 function showObsDetail(id){
   var gv=document.getElementById('obs-grid-view');
@@ -11393,6 +11429,7 @@ function hideObsDetail(){
 var _rdsState={level:'tem',compId:null,obIdx:0};
 function showRefDS(tab){
   _rdsState={level:tab==='obs'?'grid':'tem',compId:null,obIdx:0};
+  if(tab==='obs') _buildObsRefHtml(); // refresh _OBS_COMPS with current language
   var m=document.getElementById('modal-ref-ds');
   if(m){m.style.display='flex';}
   _renderRefDS();
