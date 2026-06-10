@@ -514,7 +514,7 @@ Identifiant ou mot de passe incorrect
 </div>
 <div id="ex-mand-btns" style="display:flex;gap:5px;"></div>
 <button onclick="toggleDarkMode()" id="dark-btn-ex" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
-<button class="btn" onclick="backToList()">Liste</button>
+<button class="btn" onclick="backToList()" data-i18n="back_list">Liste</button>
 </div>
 <div class="tabs">
 <button class="tab active" onclick="exTab('eval',this)" style="color:#3B82F6;">Evaluation</button>
@@ -625,7 +625,7 @@ Identifiant ou mot de passe incorrect
 
 <div class="screen" id="screen-debrief">
 <div class="topbar">
-<button class="btn" onclick="showScreen('session')">← Liste</button>
+<button class="btn" onclick="showScreen('session')" data-i18n="back_list_arrow">← Liste</button>
 <div style="flex:1;margin-left:10px;min-width:0;">
 <div class="title">DEBRIEF</div>
 <div class="sub" id="deb-sub"></div>
@@ -3551,7 +3551,7 @@ Identifiant ou mot de passe incorrect
 <div style="background:#0A0D1A;border:1px solid #F59E0B44;border-radius:9px;padding:12px;margin-bottom:12px;">
   <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">🤖 SUGGESTED GRADING — HOW IT WORKS</div>
   <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:12px;">
-    After checking observables, the app displays a <strong style="color:#F59E0B;">suggested grade in orange</strong>. This is not an automatic decision — it is a starting point for your reflection. <strong style="color:#F1F5F9;">You remain the sole judge.</strong>
+    After checking observables, the app displays a <strong style="color:#F59E0B;">suggested grade in orange</strong>. This is not an automatic decision — it is a starting point for your reflection. <strong style="color:#F1F5F9;">You are the only one to judge.</strong>
   </div>
 
   <div style="font-size:11px;font-weight:800;color:#CBD5E1;letter-spacing:1px;margin-bottom:8px;">TWO MODES DEPENDING ON HOW YOU GRADE:</div>
@@ -4612,6 +4612,8 @@ const STRINGS = {
     end_session_title: 'Fin de session',
     end_session_msg: 'Terminer la session et revenir à l\'accueil ?',
     unsaved_warning: 'Les données non exportées seront perdues.',
+    back_list: 'Liste',
+    back_list_arrow: '← Liste',
   },
   en: {
     app_name: 'B737 CBTA TRI',
@@ -4821,6 +4823,8 @@ const STRINGS = {
     end_session_title: 'End session',
     end_session_msg: 'End the session and return to home?',
     unsaved_warning: 'Unsaved data will be lost.',
+    back_list: 'List',
+    back_list_arrow: '← List',
   }
 };
 
@@ -7309,76 +7313,76 @@ const PHASE_COLORS={"ALL":"#64748B","TAKEOFF":"#FFE600","CLIMB":"#39FF14","CRUIS
 
 const OBS_EXAMPLES={
   KNO:[
-    {text:_lang==='en'?"Does not recall B737 VMO/MMO limits":"Ne cite pas les limites VMO/MMO du B737",s:"-"},
-    {text:_lang==='en'?"Unable to explain GPWS/EGPWS operation":"Incapable d'expliquer fonctionnement GPWS/EGPWS",s:"-"},
-    {text:_lang==='en'?"Unfamiliar with FCOM/QRH engine failure procedures":"Méconnaît les procédures FCOM/QRH en panne moteur",s:"-"},
-    {text:_lang==='en'?"Correctly recalls FCOM cabin depressurization procedure":"Cite correctement la procédure FCOM décompression cabine",s:"+"},
-    {text:_lang==='en'?"Knows alternate minima and fuel policies":"Connaît les minima alternates et politiques carburant",s:"+"},
-    {text:_lang==='en'?"Accurately explains hydraulic system interaction":"Explique l'interaction systèmes hydrauliques avec précision",s:"+"},
+    {en:"Does not recall B737 VMO/MMO limits",fr:"Ne cite pas les limites VMO/MMO du B737",s:"-"},
+    {en:"Unable to explain GPWS/EGPWS operation",fr:"Incapable d'expliquer fonctionnement GPWS/EGPWS",s:"-"},
+    {en:"Unfamiliar with FCOM/QRH engine failure procedures",fr:"Méconnaît les procédures FCOM/QRH en panne moteur",s:"-"},
+    {en:"Correctly recalls FCOM cabin depressurization procedure",fr:"Cite correctement la procédure FCOM décompression cabine",s:"+"},
+    {en:"Knows alternate minima and fuel policies",fr:"Connaît les minima alternates et politiques carburant",s:"+"},
+    {en:"Accurately explains hydraulic system interaction",fr:"Explique l'interaction systèmes hydrauliques avec précision",s:"+"},
   ],
   WLM:[
-    {text:_lang==='en'?"Stacks tasks without prioritization on final":"Accumule les tâches sans priorisation en finale",s:"-"},
-    {text:_lang==='en'?"Does not delegate radio during a failure":"Ne délègue pas la radio lors d'une panne",s:"-"},
-    {text:_lang==='en'?"Loses aircraft monitoring during secondary task":"Perd le monitoring avion pendant une tâche secondaire",s:"-"},
-    {text:_lang==='en'?"Delegates QRH checklist to F/O during hydraulic management":"Délègue la checklist QRH au F/O pendant gestion hydraulique",s:"+"},
-    {text:_lang==='en'?"Clear PASS briefing before critical phase":"Briefing PASS clair avant la phase critique",s:"+"},
-    {text:_lang==='en'?"Manages radio interruption without impact on flying":"Gère l'interruption radio sans impact sur le pilotage",s:"+"},
+    {en:"Stacks tasks without prioritization on final",fr:"Accumule les tâches sans priorisation en finale",s:"-"},
+    {en:"Does not delegate radio during a failure",fr:"Ne délègue pas la radio lors d'une panne",s:"-"},
+    {en:"Loses aircraft monitoring during secondary task",fr:"Perd le monitoring avion pendant une tâche secondaire",s:"-"},
+    {en:"Delegates QRH checklist to F/O during hydraulic management",fr:"Délègue la checklist QRH au F/O pendant gestion hydraulique",s:"+"},
+    {en:"Clear PASS briefing before critical phase",fr:"Briefing PASS clair avant la phase critique",s:"+"},
+    {en:"Manages radio interruption without impact on flying",fr:"Gère l'interruption radio sans impact sur le pilotage",s:"+"},
   ],
   SA:[
-    {text:_lang==='en'?"No callout on +15 kt speed deviation on approach":"Pas de callout sur déviation de vitesse +15 kt en approche",s:"-"},
-    {text:_lang==='en'?"Loses aircraft position awareness during ECAM":"Perd conscience de la position avion lors d'un ECAM",s:"-"},
-    {text:_lang==='en'?"Misses low energy trend on PAPI":"Ne voit pas la tendance énergie basse sur le PAPI",s:"-"},
-    {text:_lang==='en'?"Proactive TREND +10 callout on final approach":"Callout TREND +10 proactif lors de l'approche finale",s:"+"},
-    {text:_lang==='en'?"Detects energy variation after automatic level-off":"Détecte variation d'énergie après nivellement automatique",s:"+"},
-    {text:_lang==='en'?"Permanent system state awareness during multi-tasking":"Conscience permanente de l'état systèmes en multi-tâche",s:"+"},
+    {en:"No callout on +15 kt speed deviation on approach",fr:"Pas de callout sur déviation de vitesse +15 kt en approche",s:"-"},
+    {en:"Loses aircraft position awareness during ECAM",fr:"Perd conscience de la position avion lors d'un ECAM",s:"-"},
+    {en:"Misses low energy trend on PAPI",fr:"Ne voit pas la tendance énergie basse sur le PAPI",s:"-"},
+    {en:"Proactive TREND +10 callout on final approach",fr:"Callout TREND +10 proactif lors de l'approche finale",s:"+"},
+    {en:"Detects energy variation after automatic level-off",fr:"Détecte variation d'énergie après nivellement automatique",s:"+"},
+    {en:"Permanent system state awareness during multi-tasking",fr:"Conscience permanente de l'état systèmes en multi-tâche",s:"+"},
   ],
   PSD:[
-    {text:_lang==='en'?"FORDEC not applied — decision made without consulting F/O":"FORDEC non appliqué — décision prise sans consulter le F/O",s:"-"},
-    {text:_lang==='en'?"Continues approach despite deteriorating weather (time pressure)":"Continue l'approche malgré météo dégradée (pression temps)",s:"-"},
-    {text:_lang==='en'?"Fixation on failure without reassessing overall situation":"Fixation sur une panne sans réévaluer la situation globale",s:"-"},
-    {text:_lang==='en'?"Structured FORDEC before engine diversion decision":"FORDEC structuré avant décision déroutement moteur",s:"+"},
-    {text:_lang==='en'?"Go-around decided early without hesitation after ILS deviation":"GO-AROUND décidé tôt sans hésitation après écart ILS",s:"+"},
-    {text:_lang==='en'?"Revises initial decision after ATIS weather update":"Révise la décision initiale après mise à jour météo ATIS",s:"+"},
+    {en:"FORDEC not applied — decision made without consulting F/O",fr:"FORDEC non appliqué — décision prise sans consulter le F/O",s:"-"},
+    {en:"Continues approach despite deteriorating weather (time pressure)",fr:"Continue l'approche malgré météo dégradée (pression temps)",s:"-"},
+    {en:"Fixation on failure without reassessing overall situation",fr:"Fixation sur une panne sans réévaluer la situation globale",s:"-"},
+    {en:"Structured FORDEC before engine diversion decision",fr:"FORDEC structuré avant décision déroutement moteur",s:"+"},
+    {en:"Go-around decided early without hesitation after ILS deviation",fr:"GO-AROUND décidé tôt sans hésitation après écart ILS",s:"+"},
+    {en:"Revises initial decision after ATIS weather update",fr:"Révise la décision initiale après mise à jour météo ATIS",s:"+"},
   ],
   LTW:[
-    {text:_lang==='en'?"F/O not included in engine failure departure briefing":"Pas d'inclusion du F/O dans le briefing départ panne",s:"-"},
-    {text:_lang==='en'?"Orders given without crew feedback or confirmation":"Ordres donnés sans feedback ni confirmation d'équipage",s:"-"},
-    {text:_lang==='en'?"Ignores F/O suggestion without explanation":"Ignore la suggestion du F/O sans explication",s:"-"},
-    {text:_lang==='en'?"Complete NITS brief before task delegation to F/O":"Brief NITS complet avant délégation tâche au F/O",s:"+"},
-    {text:_lang==='en'?"Incorporates F/O suggestion constructively":"Intègre la suggestion du F/O de façon constructive",s:"+"},
-    {text:_lang==='en'?"Decisive leadership during diversion — crew kept informed":"Leadership décisif lors du déroutement — équipage informé",s:"+"},
+    {en:"F/O not included in engine failure departure briefing",fr:"Pas d'inclusion du F/O dans le briefing départ panne",s:"-"},
+    {en:"Orders given without crew feedback or confirmation",fr:"Ordres donnés sans feedback ni confirmation d'équipage",s:"-"},
+    {en:"Ignores F/O suggestion without explanation",fr:"Ignore la suggestion du F/O sans explication",s:"-"},
+    {en:"Complete NITS brief before task delegation to F/O",fr:"Brief NITS complet avant délégation tâche au F/O",s:"+"},
+    {en:"Incorporates F/O suggestion constructively",fr:"Intègre la suggestion du F/O de façon constructive",s:"+"},
+    {en:"Decisive leadership during diversion — crew kept informed",fr:"Leadership décisif lors du déroutement — équipage informé",s:"+"},
   ],
   FPM:[
-    {text:_lang==='en'?"200 ft overshoot in manual during go-around":"Dépassement de 200 ft en manuel lors remise de gaz",s:"-"},
-    {text:_lang==='en'?"Speed not stabilized below 500 ft AAL":"Vitesse non stabilisée sous 500 ft AAL",s:"-"},
-    {text:_lang==='en'?"1/2 dot LOC drift uncorrected on approach":"Dérive 1/2 dot LOC non corrigée en approche",s:"-"},
-    {text:_lang==='en'?"Precise ILS centerline maintained manually to threshold":"Maintien axe ILS précis en manuel jusqu'au seuil",s:"+"},
-    {text:_lang==='en'?"Effective symmetric control after engine failure":"Contrôle symétrique efficace après panne moteur",s:"+"},
-    {text:_lang==='en'?"Smooth and announced manual/auto transitions":"Transitions manuel/auto fluides et annoncées",s:"+"},
+    {en:"200 ft overshoot in manual during go-around",fr:"Dépassement de 200 ft en manuel lors remise de gaz",s:"-"},
+    {en:"Speed not stabilized below 500 ft AAL",fr:"Vitesse non stabilisée sous 500 ft AAL",s:"-"},
+    {en:"1/2 dot LOC drift uncorrected on approach",fr:"Dérive 1/2 dot LOC non corrigée en approche",s:"-"},
+    {en:"Precise ILS centerline maintained manually to threshold",fr:"Maintien axe ILS précis en manuel jusqu'au seuil",s:"+"},
+    {en:"Effective symmetric control after engine failure",fr:"Contrôle symétrique efficace après panne moteur",s:"+"},
+    {en:"Smooth and announced manual/auto transitions",fr:"Transitions manuel/auto fluides et annoncées",s:"+"},
   ],
   FPA:[
-    {text:_lang==='en'?"FMA mode not called out after automatic change":"Mode FMA non annoncé après changement automatique",s:"-"},
-    {text:_lang==='en'?"ILS intercept in V/S instead of APP mode":"Interception ILS en V/S au lieu de APP mode",s:"-"},
-    {text:_lang==='en'?"LNAV not armed — route deviation undetected":"LNAV non armé — déviation route non détectée",s:"-"},
-    {text:_lang==='en'?"Correctly calls out FMA at each mode change":"Annonce FMA correctement à chaque changement de mode",s:"+"},
-    {text:_lang==='en'?"Appropriate automation downgrade during emergency":"Rétrogradation d'automatisation appropriée lors urgence",s:"+"},
-    {text:_lang==='en'?"Automation level selection appropriate to workload":"Sélection niveau automation adapté à la charge de travail",s:"+"},
+    {en:"FMA mode not called out after automatic change",fr:"Mode FMA non annoncé après changement automatique",s:"-"},
+    {en:"ILS intercept in V/S instead of APP mode",fr:"Interception ILS en V/S au lieu de APP mode",s:"-"},
+    {en:"LNAV not armed — route deviation undetected",fr:"LNAV non armé — déviation route non détectée",s:"-"},
+    {en:"Correctly calls out FMA at each mode change",fr:"Annonce FMA correctement à chaque changement de mode",s:"+"},
+    {en:"Appropriate automation downgrade during emergency",fr:"Rétrogradation d'automatisation appropriée lors urgence",s:"+"},
+    {en:"Automation level selection appropriate to workload",fr:"Sélection niveau automation adapté à la charge de travail",s:"+"},
   ],
   COM:[
-    {text:_lang==='en'?"No complete readback after complex ATC clearance":"Pas de readback complet après clairance ATC complexe",s:"-"},
-    {text:_lang==='en'?"Unclear radio transmission — ATC misunderstanding":"Transmission radio peu claire — incompréhension ATC",s:"-"},
-    {text:_lang==='en'?"Does not confirm F/O understanding after briefing":"Ne confirme pas la compréhension du F/O après briefing",s:"-"},
-    {text:_lang==='en'?"Complete and precise readback of ILS clearance":"Readback complet et précis de la clairance ILS",s:"+"},
-    {text:_lang==='en'?"Closed loop on each critical PM action":"Loop fermée sur chaque action critique du PM",s:"+"},
-    {text:_lang==='en'?"Proactive communication before each phase transition":"Communication proactive avant chaque transition de phase",s:"+"},
+    {en:"No complete readback after complex ATC clearance",fr:"Pas de readback complet après clairance ATC complexe",s:"-"},
+    {en:"Unclear radio transmission — ATC misunderstanding",fr:"Transmission radio peu claire — incompréhension ATC",s:"-"},
+    {en:"Does not confirm F/O understanding after briefing",fr:"Ne confirme pas la compréhension du F/O après briefing",s:"-"},
+    {en:"Complete and precise readback of ILS clearance",fr:"Readback complet et précis de la clairance ILS",s:"+"},
+    {en:"Closed loop on each critical PM action",fr:"Loop fermée sur chaque action critique du PM",s:"+"},
+    {en:"Proactive communication before each phase transition",fr:"Communication proactive avant chaque transition de phase",s:"+"},
   ],
   PRO:[
-    {text:_lang==='en'?"Skips checklist step under workload":"Saute une étape checklist sous charge de travail",s:"-"},
-    {text:_lang==='en'?"Uses memory instead of QRH for NNC procedure":"Utilise mémoire au lieu du QRH pour procédure NNC",s:"-"},
-    {text:_lang==='en'?"Abnormal procedure executed without PM callout":"Procédure anormale exécutée sans annonce au PM",s:"-"},
-    {text:_lang==='en'?"QRH followed rigorously step by step":"QRH suivi rigoureusement étape par étape",s:"+"},
-    {text:_lang==='en'?"SOP followed in all circumstances including emergency":"SOP respectées en toutes circonstances y compris urgence",s:"+"},
-    {text:_lang==='en'?"Complete FCOM checklist even under high workload":"Checklist FCOM complète même sous forte charge de travail",s:"+"},
+    {en:"Skips checklist step under workload",fr:"Saute une étape checklist sous charge de travail",s:"-"},
+    {en:"Uses memory instead of QRH for NNC procedure",fr:"Utilise mémoire au lieu du QRH pour procédure NNC",s:"-"},
+    {en:"Abnormal procedure executed without PM callout",fr:"Procédure anormale exécutée sans annonce au PM",s:"-"},
+    {en:"QRH followed rigorously step by step",fr:"QRH suivi rigoureusement étape par étape",s:"+"},
+    {en:"SOP followed in all circumstances including emergency",fr:"SOP respectées en toutes circonstances y compris urgence",s:"+"},
+    {en:"Complete FCOM checklist even under high workload",fr:"Checklist FCOM complète même sous forte charge de travail",s:"+"},
   ],
 };
 
@@ -8822,7 +8826,8 @@ const added=ac.obs.find(o=>o.id===qid);
 const active=added&&added.s===ex.s;
 const col=ex.s==='+'?'#10B981':'#EF4444';
 const activeStyle=active?`background:${col}22;border:1px solid ${col};color:${col};box-shadow:0 0 8px ${col}44;`:`background:#0F1218;border:1px solid #1E293B;color:#475569;`;
-return `<button onclick="addQuickObs('${comp.id}',${i})" style="${activeStyle}border-radius:16px;padding:5px 12px;font-size:11px;cursor:pointer;line-height:1.4;text-align:left;">${ex.s==='+'?'<span style="color:#10B981;font-weight:900;">+</span>':'<span style="color:#EF4444;font-weight:900;">−</span>'} ${ex.text}</button>`;
+const exText=_lang==='en'?(ex.en||ex.text||''):(ex.fr||ex.text||'');
+return `<button onclick="addQuickObs('${comp.id}',${i})" style="${activeStyle}border-radius:16px;padding:5px 12px;font-size:11px;cursor:pointer;line-height:1.4;text-align:left;">${ex.s==='+'?'<span style="color:#10B981;font-weight:900;">+</span>':'<span style="color:#EF4444;font-weight:900;">−</span>'} ${exText}</button>`;
 }).join('')}
 </div>` : '';
 
@@ -8854,7 +8859,8 @@ function addQuickObs(cid,i){
 const ex=(OBS_EXAMPLES[cid]||[])[i];
 if(!ex) return;
 const qid='q_'+cid+'_'+i;
-toggleOB(qid,ex.text,ex.s);
+const exText=_lang==='en'?(ex.en||ex.text||''):(ex.fr||ex.text||'');
+toggleOB(qid,exText,ex.s);
 }
 function toggleOB(id,text,sign){
 const obs = state.activeComp.obs;
@@ -10315,7 +10321,7 @@ const cptColor=(_ROLE_COLORS&&state.pilotRole)?(_ROLE_COLORS[state.pilotRole]||'
 const foColor=(_ROLE_COLORS&&state.foRole)?(_ROLE_COLORS[state.foRole]||'#10B981'):'#10B981';
 const COMPS=COMPETENCIES.map(c=>({id:c.id,label:c.label,color:c.color}));
 const N=COMPS.length;
-const CX=160,CY=155,R=108,W=320,H=318;
+const CX=150,CY=148,R=94,W=300,H=300;
 const angle=(i)=>(Math.PI*2/N)*i-Math.PI/2;
 const pt=(i,v)=>{const a=angle(i),rv=R*(v/5);return[CX+rv*Math.cos(a),CY+rv*Math.sin(a)];};
 // True arc ring: circular arcs between spoke tips → convex outward like a real spider web
@@ -10858,7 +10864,8 @@ ${facNotes}
 function getFacilitationQuestions(ex){
   const sc = ALL_SC.find(s=>s.id===ex.sid)||{};
   const cat = sc.cat||'';
-  // Use exercise's own facilitation questions if available
+  // Use exercise's own facilitation questions if available — prefer _en in English mode
+  if(_lang==='en' && sc.fac_en && sc.fac_en.length) return sc.fac_en;
   if(sc.fac && sc.fac.length) return sc.fac;
   const baseQ = _lang==='en'?[
     "How do you evaluate your overall performance on this exercise?",
@@ -11354,7 +11361,10 @@ return '<div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid
 return '<div id="obs-nav" style="padding:4px 0;">'
 +'<div id="obs-grid-view"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">'+gridBtns+'</div></div>'
 +'<div id="obs-detail-view" style="display:none;">'
-+'<button onclick="hideObsDetail()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:1px solid #334155;background:#1E2530;color:#94A3B8;font-size:15px;cursor:pointer;margin-bottom:16px;">← Retour</button>'
++'<div style="display:flex;gap:8px;margin-bottom:16px;align-items:center;">'
++'<button onclick="hideObsDetail()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:1px solid #334155;background:#1E2530;color:#94A3B8;font-size:15px;cursor:pointer;">← Back</button>'
++'<button id="obs-detail-ds-btn" onclick="" style="display:inline-flex;align-items:center;gap:5px;padding:9px 14px;border-radius:8px;border:2px solid #8B5CF6;background:#8B5CF622;color:#8B5CF6;font-size:14px;font-weight:700;cursor:pointer;">📺 DATA SHOW</button>'
++'</div>'
 +detailDivs
 +'</div>'
 +'</div>';
@@ -11381,6 +11391,8 @@ function showObsDetail(id){
   document.querySelectorAll('[id^="obs-comp-"]').forEach(function(el){el.style.display='none';});
   var el=document.getElementById('obs-comp-'+id);
   if(el)el.style.display='block';
+  var dsBtn=document.getElementById('obs-detail-ds-btn');
+  if(dsBtn)dsBtn.onclick=function(){rdsComp(id);};
   var rc=document.getElementById('ref-content');
   if(rc)rc.scrollTop=0;
 }
@@ -11487,6 +11499,19 @@ function _rdsTemHtml(){
   +'<div style="background:#0A1520;border:2px solid #EF444444;border-radius:14px;padding:16px;">'
   +'<div style="font-size:14px;font-weight:900;color:#EF4444;letter-spacing:3px;text-align:center;margin-bottom:14px;">ERRORS</div>'
   +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'+eCards+'</div></div>'
+  +'<div style="background:#0A1520;border:2px solid #10B98144;border-radius:14px;padding:16px;">'
+  +'<div style="font-size:14px;font-weight:900;color:#10B981;letter-spacing:3px;text-align:center;margin-bottom:14px;">BRIEFING &amp; DEBRIEFING GUIDE</div>'
+  +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
+  +'<div style="background:#0D1623;border-radius:10px;padding:14px;border-left:3px solid #3B82F6;">'
+  +'<div style="font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">✈ TAKEOFF BRIEFING</div>'
+  +'<div style="font-size:13px;color:#94A3B8;line-height:1.7;">→ Taxi Path, Runway, Intersection<br/>→ Route: Clearance, Flight Plan, FMC RTE Crosscheck<br/>→ Return to Airport: Emergency, Takeoff Alternate<br/>→ Takeoff Performance: Data Valid, Config<br/>→ PM Duties, Noise Abatement, Engine Failure Plan</div></div>'
+  +'<div style="background:#0D1623;border-radius:10px;padding:14px;border-left:3px solid #8B5CF6;">'
+  +'<div style="font-size:12px;font-weight:800;color:#8B5CF6;letter-spacing:1.5px;margin-bottom:8px;">🛬 APPROACH BRIEFING</div>'
+  +'<div style="font-size:13px;color:#94A3B8;line-height:1.7;">→ Weather, FMC Programming, NOTAMs<br/>→ Flaps, VREF & Bugs, STAR & Routing<br/>→ Automation: Approach Mode, Minimums, MCP ALT<br/>→ Missed Approach, Alternate, Fuel<br/>→ Landing Runway, TDZ, Exit, Taxi, Autobrake<br/>→ PM Duties, Arrival Missed Approach Plan</div></div>'
+  +'<div style="background:#0D1623;border-radius:10px;padding:14px;border-left:3px solid #F59E0B;grid-column:span 2;">'
+  +'<div style="font-size:12px;font-weight:800;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">💬 DEBRIEFING GUIDE</div>'
+  +'<div style="font-size:13px;color:#94A3B8;line-height:1.7;">→ Were safety margins compromised at any time? &nbsp;&nbsp; → Were standards, policies or tasks compromised?<br/>→ What events prompted unresolved questions? &nbsp;&nbsp; → In which areas could pilots have performed at a higher level?</div></div>'
+  +'</div></div>'
   +'</div>';
 }
 function _rdsGridHtml(){
@@ -12301,9 +12326,9 @@ h+='<div style="background:#0F1218;border:1px solid #1E2530;border-radius:10px;p
 h+='<div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:10px;">'+(_lang==='en'?'COMPETENCIES — FLEET':'COMPÉTENCES — FLOTTE')+'</div>';
 cAvgs.forEach(c=>{
 h+='<div style="display:flex;align-items:center;gap:8px;padding:5px 0;">';
-h+='<div style="width:38px;font-size:11px;font-weight:700;color:'+cc(c.avg)+';">'+c.label+'</div>';
-h+='<div style="flex:1;background:#1E2530;border-radius:4px;height:10px;overflow:hidden;"><div style="background:'+cc(c.avg)+';height:100%;width:'+(c.avg/5*100)+'%;border-radius:4px;"></div></div>';
-h+='<div style="width:30px;font-size:12px;font-weight:800;color:'+cc(c.avg)+';text-align:right;">'+c.avg.toFixed(1)+'</div></div>';
+h+='<div style="width:38px;font-size:11px;font-weight:700;color:'+(c.color||cc(c.avg))+';">'+c.label+'</div>';
+h+='<div style="flex:1;background:#1E2530;border-radius:4px;height:10px;overflow:hidden;"><div style="background:'+(c.color||cc(c.avg))+';height:100%;width:'+(c.avg/5*100)+'%;border-radius:4px;"></div></div>';
+h+='<div style="width:30px;font-size:12px;font-weight:800;color:'+(c.color||cc(c.avg))+';text-align:right;">'+c.avg.toFixed(1)+'</div></div>';
 });
 h+='</div>';
 // Points forts/faibles flotte
