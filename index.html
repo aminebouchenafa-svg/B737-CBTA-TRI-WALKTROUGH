@@ -12357,7 +12357,11 @@ function renderProfCheck(){
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">DATE</div><input type="date" value="'+(pc.date||'')+'" onchange="state.profCheck.date=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">POSITION</div>';
   h+='<div style="display:flex;gap:5px;">';
-  ['CAPT','FO','F/E'].forEach(function(p){var a=pc.position===p;h+='<button onclick="state.profCheck.position=\''+p+'\';renderProfCheck()" style="flex:1;padding:7px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid '+(a?'#3B82F6':'#334155')+';background:'+(a?'#3B82F622':'transparent')+';color:'+(a?'#3B82F6':'#64748B')+';">'+p+'</button>';});
+  ['CAPT','FO','TRI','F/E'].forEach(function(p){
+    var a=pc.position===p;
+    var pCol=p==='FO'?'#10B981':p==='TRI'?'#F59E0B':'#3B82F6';
+    h+='<button onclick="state.profCheck.position=\''+p+'\';state.profCheck.signatures={tri:\'\',pilot:\'\'};renderProfCheck()" style="flex:1;padding:7px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid '+(a?pCol+'BB':pCol+'33')+';background:'+(a?pCol+'22':'transparent')+';color:'+(a?pCol:pCol+'88')+';">'+p+'</button>';
+  });
   h+='</div></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">'+(_lang==='en'?'PILOT NAME':'NOM DU PILOTE')+'</div><input type="text" value="'+(pc.pilotName||'')+'" onchange="state.profCheck.pilotName=this.value" placeholder="'+(_lang==='en'?'Full name':'Nom complet')+'" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">STAFF ID</div><input type="text" value="'+(pc.staffId||'')+'" onchange="state.profCheck.staffId=this.value" placeholder="Staff ID" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
