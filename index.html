@@ -11939,7 +11939,7 @@ if(!state.profCheck) state.profCheck = {
 };
 
 function showProfCheck(){
-  if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},lvoDate:'',remarks:'',result:'',coExaminer:''};
+  if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},lvoDate:'',remarks:'',result:'',coExaminer:'',signatures:{tri:'',pilot:''}};
   if(!state.profCheck.pilotName) state.profCheck.pilotName = state.pilotName||'';
   if(!state.profCheck.date) state.profCheck.date = new Date().toISOString().slice(0,10);
   if(!state.profCheck.grades) state.profCheck.grades={};
@@ -12401,15 +12401,45 @@ function renderProfCheck(){
   h+='<button onclick="setPCResult(\'UNSATISFACTORY\')" style="padding:16px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;border:2px solid '+(res==='UNSATISFACTORY'?'#EF4444':'#EF444444')+';background:'+(res==='UNSATISFACTORY'?'#EF444433':'transparent')+';color:'+(res==='UNSATISFACTORY'?'#EF4444':'#EF444488')+';">UNSATISFACTORY</button>';
   h+='</div></div>';
 
+  // Signature pads
+  if(!state.profCheck.signatures) state.profCheck.signatures={tri:'',pilot:''};
+  var pcSigs=state.profCheck.signatures;
+  var pcInst=pc.coExaminer||state.instructorName||'TRI';
+  var pcPilot=pc.pilotName||state.pilotName||'—';
+  h+='<div style="background:#0F1218;border:1px solid #334155;border-radius:10px;padding:12px;margin-top:14px;">';
+  h+='<div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1.5px;margin-bottom:10px;">✍️ '+(_lang==='en'?'DIGITAL SIGNATURES':'SIGNATURES NUMÉRIQUES')+'</div>';
+  // TRI — amber
+  h+='<div style="border:1px solid #F59E0B33;border-radius:8px;overflow:hidden;margin-bottom:8px;">';
+  h+='<div style="background:#F59E0B11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
+  h+='<div><div style="font-size:9px;font-weight:800;color:#F59E0B;letter-spacing:1px;">TRI / '+(_lang==='en'?'EXAMINER':'EXAMINATEUR')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcInst+'</div></div>';
+  h+='<button onclick="clearSigPadPC(\'tri\')" style="padding:3px 8px;border-radius:5px;border:1px solid #F59E0B44;background:transparent;color:#F59E0B;font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
+  h+='<div style="background:#F8FAFC;padding:4px;position:relative;">';
+  h+='<canvas id="sig-canvas-pc-tri" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>';
+  if(!pcSigs.tri) h+='<div id="sig-pc-hint-tri" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ TRI — '+(_lang==='en'?'sign here':'signez ici')+'</div>';
+  h+='</div></div>';
+  // Pilot — blue
+  h+='<div style="border:1px solid #3B82F633;border-radius:8px;overflow:hidden;">';
+  h+='<div style="background:#3B82F611;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
+  h+='<div><div style="font-size:9px;font-weight:800;color:#3B82F6;letter-spacing:1px;">'+(pc.position||'CPT')+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcPilot+'</div></div>';
+  h+='<button onclick="clearSigPadPC(\'pilot\')" style="padding:3px 8px;border-radius:5px;border:1px solid #3B82F644;background:transparent;color:#3B82F6;font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
+  h+='<div style="background:#F8FAFC;padding:4px;position:relative;">';
+  h+='<canvas id="sig-canvas-pc-pilot" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>';
+  if(!pcSigs.pilot) h+='<div id="sig-pc-hint-pilot" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ '+pcPilot+' — '+(_lang==='en'?'sign here':'signez ici')+'</div>';
+  h+='</div></div>';
+  h+='<div style="font-size:10px;color:#475569;margin-top:8px;text-align:center;font-style:italic;">'+(_lang==='en'?'Draw with finger or stylus — signatures included in printed PDF':'Dessinez avec le doigt ou stylet — inclus dans le PDF imprimé')+'</div>';
+  h+='</div>';
+
   // Spacer
   h+='<div style="height:20px;"></div>';
 
   document.getElementById('profcheck-content').innerHTML = h;
+  setTimeout(function(){['tri','pilot'].forEach(function(k){initSigPadPC(k);});},0);
 }
 
 function printProfCheck(){
   const pc = state.profCheck || {};
   const grades = pc.grades || {};
+  const pcSigs = pc.signatures || {};
   const GRADE_COLORS = {'5':'#10B981','4':'#3B82F6','3':'#F59E0B','2':'#F97316','1':'#EF4444','/':'#64748B'};
 
   function gradeCell(id){
@@ -12497,8 +12527,16 @@ function printProfCheck(){
     +'</div>'
     +'</div>'
     +'<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
-    +'<div style="border-top:2px solid #0f172a;padding-top:6px;text-align:center;font-size:10px;color:#64748b;">Signature du pilote</div>'
-    +'<div style="border-top:2px solid #0f172a;padding-top:6px;text-align:center;font-size:10px;color:#64748b;">Signature TRI / SFI</div>'
+    +'<div style="border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;padding:8px;">'
+    +'<div style="font-size:9px;color:#64748b;font-weight:700;text-align:center;margin-bottom:6px;">'+(pc.position||'CPT')+' / STAGIAIRE</div>'
+    +(pcSigs.pilot?'<img src="'+pcSigs.pilot+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:1px solid #bbb;"></div>')
+    +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.pilotName||'')+'</div>'
+    +'</div>'
+    +'<div style="border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;padding:8px;">'
+    +'<div style="font-size:9px;color:#64748b;font-weight:700;text-align:center;margin-bottom:6px;">TRI / SFI</div>'
+    +(pcSigs.tri?'<img src="'+pcSigs.tri+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:1px solid #bbb;"></div>')
+    +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.coExaminer||state.instructorName||'')+'</div>'
+    +'</div>'
     +'</div>'
     +'<div style="margin-top:20px;text-align:center;font-size:9px;color:#94a3b8;">REF. D.O.A — TRAINING DEPARTMENT · © AIR ALGÉRIE — All Rights Reserved</div>'
     +'</div>'
@@ -13284,7 +13322,7 @@ function renderDebRapport(el){
         <button onclick="clearSigPad('${s.key}')" style="padding:3px 8px;border-radius:5px;border:1px solid ${s.color}44;background:transparent;color:${s.color};font-size:9px;font-weight:800;cursor:pointer;">✕ ${_lang==='en'?'CLEAR':'EFFACER'}</button>
       </div>
       <div style="background:#F8FAFC;padding:4px;position:relative;">
-        <canvas id="sig-canvas-${s.key}" style="width:100%;height:90px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>
+        <canvas id="sig-canvas-${s.key}" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>
         ${state.rapportSignatures[s.key]?'':'<div id="sig-hint-'+s.key+'" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ '+(s.key==='tri'?(_lang==='en'?'TRI — sign here':'TRI — signez ici'):(_lang==='en'?'Trainee — sign here':'Stagiaire — signez ici'))+'</div>'}
       </div>
     </div>`).join('')}
@@ -13369,6 +13407,56 @@ function clearSigPad(key){
     ctx.fillRect(0,0,canvas.width/dpr,canvas.height/dpr);
   }
   const hint=document.getElementById('sig-hint-'+key);
+  if(hint) hint.style.display='block';
+}
+
+function initSigPadPC(key){
+  const canvas=document.getElementById('sig-canvas-pc-'+key);
+  if(!canvas) return;
+  if(!state.profCheck) return;
+  if(!state.profCheck.signatures) state.profCheck.signatures={tri:'',pilot:''};
+  const dpr=window.devicePixelRatio||1;
+  const rect=canvas.getBoundingClientRect();
+  canvas.width=Math.round(rect.width*dpr)||600;
+  canvas.height=Math.round(rect.height*dpr)||300;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  ctx.strokeStyle='#0f172a'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.fillStyle='#F8FAFC'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  if(state.profCheck.signatures[key]){
+    const img=new Image();
+    img.onload=function(){ctx.drawImage(img,0,0,rect.width,rect.height);};
+    img.src=state.profCheck.signatures[key];
+    const hint=document.getElementById('sig-pc-hint-'+key);
+    if(hint) hint.style.display='none';
+  }
+  let drawing=false;
+  function getXY(e){const r=canvas.getBoundingClientRect();const src=e.touches?e.touches[0]:e;return {x:src.clientX-r.left,y:src.clientY-r.top};}
+  function onStart(e){e.preventDefault();drawing=true;const p=getXY(e);ctx.beginPath();ctx.moveTo(p.x,p.y);const h=document.getElementById('sig-pc-hint-'+key);if(h)h.style.display='none';}
+  function onMove(e){e.preventDefault();if(!drawing)return;const p=getXY(e);ctx.lineTo(p.x,p.y);ctx.stroke();}
+  function onEnd(){if(!drawing)return;drawing=false;state.profCheck.signatures[key]=canvas.toDataURL('image/png');}
+  canvas.addEventListener('mousedown',onStart);
+  canvas.addEventListener('mousemove',onMove);
+  canvas.addEventListener('mouseup',onEnd);
+  canvas.addEventListener('mouseleave',onEnd);
+  canvas.addEventListener('touchstart',onStart,{passive:false});
+  canvas.addEventListener('touchmove',onMove,{passive:false});
+  canvas.addEventListener('touchend',onEnd,{passive:false});
+}
+
+function clearSigPadPC(key){
+  if(!state.profCheck) return;
+  if(!state.profCheck.signatures) state.profCheck.signatures={tri:'',pilot:''};
+  state.profCheck.signatures[key]='';
+  const canvas=document.getElementById('sig-canvas-pc-'+key);
+  if(canvas){
+    const dpr=window.devicePixelRatio||1;
+    const ctx=canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width/dpr,canvas.height/dpr);
+    ctx.fillStyle='#F8FAFC';
+    ctx.fillRect(0,0,canvas.width/dpr,canvas.height/dpr);
+  }
+  const hint=document.getElementById('sig-pc-hint-'+key);
   if(hint) hint.style.display='block';
 }
 
