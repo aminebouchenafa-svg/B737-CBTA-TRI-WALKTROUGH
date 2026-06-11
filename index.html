@@ -8342,32 +8342,33 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
 </div>
 <div style="padding:10px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
   <div>
-    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'HEADWIND / TAILWIND':'VENT DE FACE/ARRIÈRE'}</div>
+    <div style="font-size:12px;font-weight:800;color:#84CC16;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'HEADWIND / TAILWIND':'VENT DE FACE/ARRIÈRE'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.wind||''}" oninput="state.sessionMeteo.wind=this.value" />
-      <span style="color:#94A3B8;font-size:12px;">kt</span>
+      <input id="meteo-wind-input" class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #84CC16;box-shadow:0 0 10px #84CC1655,0 0 3px #84CC16AA;background:#84CC160D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.wind||''}" oninput="state.sessionMeteo.wind=this.value;updateMeteoDisplay()" />
+      <span style="color:#84CC16;font-size:13px;font-weight:700;">kt</span>
     </div>
+    <div id="meteo-tw-warn" style="font-size:9px;color:#84CC1677;margin-top:3px;font-style:italic;">${_lang==='en'?'Max tailwind: 10 kt':'Max vent arrière: 10 kt'}</div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:4px;" id="meteo-xw-label">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}${_xwLimit!==null&&_xwLimit!==undefined&&_rcCond?` <span style="color:#F59E0B;font-size:9px;">(MAX ${_xwLimit}kt)</span>`:(_xwNA?` <span style="color:#EF4444;font-size:9px;">N/A</span>`:'')}</div>
+    <div style="font-size:12px;font-weight:800;color:#06B6D4;letter-spacing:1px;margin-bottom:4px;" id="meteo-xw-label">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}${_xwLimit!==null&&_xwLimit!==undefined&&_rcCond?` <span style="color:#F59E0B;font-size:9px;">(MAX ${_xwLimit}kt)</span>`:(_xwNA?` <span style="color:#EF4444;font-size:9px;">N/A</span>`:'')}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input id="meteo-xw-input" class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value;updateMeteoDisplay()" />
-      <span style="color:#94A3B8;font-size:12px;">kt</span>
+      <input id="meteo-xw-input" class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #06B6D4;box-shadow:0 0 10px #06B6D455,0 0 3px #06B6D4AA;background:#06B6D40D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value;updateMeteoDisplay()" />
+      <span style="color:#06B6D4;font-size:13px;font-weight:700;">kt</span>
     </div>
     <div id="meteo-xw-warn"></div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CEILING':'PLAFOND'}</div>
+    <div style="font-size:12px;font-weight:800;color:#F472B6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CEILING':'PLAFOND'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value;updateMeteoDisplay()" />
-      <span style="color:#94A3B8;font-size:12px;">ft</span>
+      <input class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #F472B6;box-shadow:0 0 10px #F472B655,0 0 3px #F472B6AA;background:#F472B60D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value;updateMeteoDisplay()" />
+      <span style="color:#F472B6;font-size:13px;font-weight:700;">ft</span>
     </div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'VISIBILITY / RVR':'VISIBILITÉ / RVR'}</div>
+    <div style="font-size:12px;font-weight:800;color:#10B981;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'VISIBILITY / RVR':'VISIBILITÉ / RVR'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value;updateMeteoDisplay()" />
-      <span style="color:#94A3B8;font-size:12px;">m</span>
+      <input class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #10B981;box-shadow:0 0 10px #10B98155,0 0 3px #10B981AA;background:#10B9810D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value;updateMeteoDisplay()" />
+      <span style="color:#10B981;font-size:13px;font-weight:700;">m</span>
     </div>
   </div>
 </div>
@@ -8390,6 +8391,44 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
     }).join('')}
   </div>
   <div style="margin-top:6px;font-size:9px;color:#475569;font-style:italic;">${_lang==='en'?'Source: Boeing FCT 737 NG — demonstrated max crosswind':'Source: Boeing FCT 737 NG — vent traversier max démontré'}</div>
+</div>
+<div style="padding:0 14px 12px;">
+  <div onclick="var b=document.getElementById('rcam-body');b.style.display=b.style.display==='none'?'block':'none';" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 0;border-top:1px solid #1E2530;">
+    <span style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:1px;flex:1;">📊 RCAM — ${_lang==='en'?'RUNWAY CONDITION ASSESSMENT MATRIX':'MATRICE ÉTAT DE PISTE'}</span>
+    <span style="font-size:10px;color:#475569;">▾</span>
+  </div>
+  <div id="rcam-body" style="display:none;">
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <thead>
+        <tr style="background:#0F1218;">
+          <th style="padding:5px 7px;text-align:center;color:#94A3B8;font-size:10px;border-bottom:1px solid #1E2530;width:32px;">RCC</th>
+          <th style="padding:5px 7px;text-align:left;color:#94A3B8;font-size:10px;border-bottom:1px solid #1E2530;">${_lang==='en'?'CONDITION':'ÉTAT'}</th>
+          <th style="padding:5px 7px;text-align:center;color:#84CC16;font-size:10px;border-bottom:1px solid #1E2530;">XW T/O</th>
+          <th style="padding:5px 7px;text-align:center;color:#F472B6;font-size:10px;border-bottom:1px solid #1E2530;">XW LDG</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${[
+          {rcc:'6',col:'#10B981',qual:_lang==='en'?'DRY':'PISTE SÈCHE',desc:_lang==='en'?'Dry runway':'Piste sèche',to:'36/33*',ldg:'36/33*'},
+          {rcc:'5',col:'#10B981',qual:'BON',desc:_lang==='en'?'Frost · Wet · Slush ≤3mm · Dry/Wet snow':'Givre · Humide · Gadoue ≤3mm · Neige sèche/mouillée',to:'25',ldg:'36/33*'},
+          {rcc:'4',col:'#84CC16',qual:_lang==='en'?'GOOD–MED':'BON à MOYEN',desc:_lang==='en'?'Compacted snow ≤-15°C OAT':'Neige compactée ≤-15°C OAT',to:'22',ldg:'30'},
+          {rcc:'3',col:'#F59E0B',qual:_lang==='en'?'MEDIUM':'MOYEN',desc:_lang==='en'?'Wet/slippery · Snow >3mm · Compacted >-15°C':'Glissante mouillée · Neige >3mm · Compactée >-15°C',to:'20',ldg:'25'},
+          {rcc:'2',col:'#F97316',qual:_lang==='en'?'MED–POOR':'MOYEN à MAUVAIS',desc:_lang==='en'?'Water or slush >3mm':'Eau ou gadoue >3mm',to:'15',ldg:'17'},
+          {rcc:'1',col:'#EF4444',qual:_lang==='en'?'POOR':'MAUVAIS',desc:_lang==='en'?'Ice':'Glace',to:'13',ldg:'15'},
+          {rcc:'0',col:'#64748B',qual:'NIL',desc:_lang==='en'?'Wet ice · Water on compacted snow · Snow on ice':'Glace mouillée · Eau sur neige compactée · Neige sur glace',to:'NIL',ldg:'NIL'},
+        ].map(r=>`<tr style="border-bottom:1px solid #1E253044;">
+          <td style="padding:5px 7px;text-align:center;font-weight:900;font-size:13px;color:${r.col};">${r.rcc}</td>
+          <td style="padding:5px 7px;">
+            <div style="font-size:9px;font-weight:800;color:${r.col};letter-spacing:0.5px;">${r.qual}</div>
+            <div style="font-size:9px;color:#64748B;line-height:1.3;">${r.desc}</div>
+          </td>
+          <td style="padding:5px 7px;text-align:center;font-weight:800;font-size:12px;color:${r.rcc==='0'?'#EF4444':'#84CC16'};">${r.to}</td>
+          <td style="padding:5px 7px;text-align:center;font-weight:800;font-size:12px;color:${r.rcc==='0'?'#EF4444':'#F472B6'};">${r.ldg}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div style="margin-top:5px;font-size:9px;color:#64748B;font-style:italic;">* 36/33 kt avec winglets · ${_lang==='en'?'Tailwind max: 10 kt':'Vent arrière max: 10 kt'}</div>
+  </div>
 </div>
 </div>`;
 
@@ -8500,12 +8539,27 @@ function updateMeteoDisplay(){
   const exc=lim!==null&&lim!==undefined&&xv>0&&xv>lim;
   const na=co!==''&&lim===null;
   const wi=document.getElementById('meteo-xw-input');
-  if(wi){wi.style.borderColor=exc?'#EF4444':'';wi.style.color=exc?'#EF4444':'';}
+  if(wi){
+    wi.style.borderColor=exc?'#EF4444':'#06B6D4';
+    wi.style.boxShadow=exc?'0 0 10px #EF444455,0 0 3px #EF4444AA':'0 0 10px #06B6D455,0 0 3px #06B6D4AA';
+    wi.style.color=exc?'#EF4444':'';
+  }
   const ww=document.getElementById('meteo-xw-warn');
   if(ww){
     if(exc) ww.innerHTML=`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">⚠️ ${_lang==='en'?'EXCEEDS limit ('+lim+'kt) — OPS NOT ALLOWED':'DÉPASSE limite ('+lim+'kt) — OPS INTERDITES'}</div>`;
     else if(na) ww.innerHTML=`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">🚫 ${_lang==='en'?'NIL BRAKING — Operations NOT authorized':'FREINAGE NUL — Opérations NON autorisées'}</div>`;
     else ww.innerHTML='';
+  }
+  // Tailwind warning (>10 kt)
+  const wv=parseInt(state.sessionMeteo.wind)||0;
+  const twEl=document.getElementById('meteo-tw-warn');
+  const windIn=document.getElementById('meteo-wind-input');
+  if(wv>10){
+    if(twEl) twEl.innerHTML=`<span style="color:#EF4444;font-weight:700;">⚠️ ${_lang==='en'?'TAILWIND EXCEEDS 10 kt — NOT AUTHORIZED':'VENT ARRIÈRE > 10 kt — NON AUTORISÉ'}</span>`;
+    if(windIn){ windIn.style.borderColor='#EF4444'; windIn.style.boxShadow='0 0 10px #EF444455,0 0 3px #EF4444AA'; windIn.style.color='#EF4444'; }
+  } else {
+    if(twEl) twEl.innerHTML=`<span style="color:#84CC1677;font-style:italic;">${_lang==='en'?'Max tailwind: 10 kt':'Max vent arrière: 10 kt'}</span>`;
+    if(windIn){ windIn.style.borderColor='#84CC16'; windIn.style.boxShadow='0 0 10px #84CC1655,0 0 3px #84CC16AA'; windIn.style.color=''; }
   }
 }
 
@@ -8875,25 +8929,25 @@ if(!ex[biKey]) ex[biKey]={};
 const biHtml = `<div style="background:#0F1218;border:1px solid #A78BFA33;border-radius:10px;overflow:hidden;margin-bottom:14px;">
 <div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="padding:10px 14px;background:#151B26;display:flex;align-items:center;gap:8px;cursor:pointer;">
   <span style="font-size:14px;">📋</span>
-  <span style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1px;flex:1;">${_lang==='en'?'BEHAVIORAL INDICATORS':'INDICATEURS COMPORTEMENTAUX'}</span>
-  <span style="font-size:11px;color:#475569;">${_lang==='en'?'tap to expand':'appuyer pour ouvrir'} ▾</span>
+  <span style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:1px;flex:1;">${_lang==='en'?'BEHAVIORAL INDICATORS':'INDICATEURS COMPORTEMENTAUX'}</span>
+  <span style="font-size:12px;color:#475569;">${_lang==='en'?'tap to expand':'appuyer pour ouvrir'} ▾</span>
 </div>
 <div style="display:none;">
 ${COMPETENCIES.map(c=>{
   const bis=BEHAVIORAL_INDICATORS[c.id]||[];
   const checked=bis.filter(b=>(ex[biKey][b.id])).length;
   return `<div style="border-top:1px solid #1E2530;">
-    <div style="padding:8px 14px;background:${c.color}11;display:flex;align-items:center;gap:8px;">
-      <span style="font-size:11px;font-weight:800;color:${c.color};">${c.label}</span>
-      <span style="font-size:10px;color:${checked>0?c.color:'#475569'};">${checked}/${bis.length}</span>
+    <div style="padding:9px 14px;background:${c.color}11;display:flex;align-items:center;gap:8px;">
+      <span style="font-size:13px;font-weight:800;color:${c.color};">${c.label}</span>
+      <span style="font-size:12px;color:${checked>0?c.color:'#475569'};">${checked}/${bis.length}</span>
     </div>
     ${bis.map(b=>{
       const isChecked=!!(ex[biKey][b.id]);
-      return `<div style="display:flex;align-items:flex-start;gap:10px;padding:7px 14px;border-bottom:1px solid #1E253066;cursor:pointer;" onclick="toggleBI('${biKey}','${b.id}',this)">
-        <div style="width:18px;height:18px;border-radius:4px;border:2px solid ${isChecked?c.color:'#334155'};background:${isChecked?c.color+'33':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
-          ${isChecked?`<span style="color:${c.color};font-size:11px;">✓</span>`:''}
+      return `<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 14px;border-bottom:1px solid #1E253066;cursor:pointer;" onclick="toggleBI('${biKey}','${b.id}',this)">
+        <div style="width:20px;height:20px;border-radius:4px;border:2px solid ${isChecked?c.color:'#334155'};background:${isChecked?c.color+'33':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+          ${isChecked?`<span style="color:${c.color};font-size:13px;">✓</span>`:''}
         </div>
-        <div style="font-size:12px;color:${isChecked?'#F1F5F9':'#94A3B8'};line-height:1.4;">${_lang==='en'?b.en:b.fr}</div>
+        <div style="font-size:14px;color:${isChecked?'#F1F5F9':'#94A3B8'};line-height:1.4;">${_lang==='en'?b.en:b.fr}</div>
       </div>`;
     }).join('')}
   </div>`;

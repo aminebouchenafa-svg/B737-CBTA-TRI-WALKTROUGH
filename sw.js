@@ -1,4 +1,4 @@
-const CACHE = 'b737-cbta-v34';
+const CACHE = 'b737-cbta-v35';
 const ASSETS = ['./index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
