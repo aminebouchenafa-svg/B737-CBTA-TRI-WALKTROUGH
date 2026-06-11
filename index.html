@@ -12406,22 +12406,27 @@ function renderProfCheck(){
   var pcSigs=state.profCheck.signatures;
   var pcInst=pc.coExaminer||state.instructorName||'TRI';
   var pcPilot=pc.pilotName||state.pilotName||'—';
+  // Trainee color depends on position being evaluated
+  var pcPos=pc.position||'CAPT';
+  var pilotCol=pcPos==='FO'?'#10B981':pcPos==='TRI'?'#F59E0B':'#3B82F6';
+  // Examiner always violet
+  var examCol='#8B5CF6';
   h+='<div style="background:#0F1218;border:1px solid #334155;border-radius:10px;padding:12px;margin-top:14px;">';
   h+='<div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1.5px;margin-bottom:10px;">✍️ '+(_lang==='en'?'DIGITAL SIGNATURES':'SIGNATURES NUMÉRIQUES')+'</div>';
-  // TRI — amber
-  h+='<div style="border:1px solid #F59E0B33;border-radius:8px;overflow:hidden;margin-bottom:8px;">';
-  h+='<div style="background:#F59E0B11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
-  h+='<div><div style="font-size:9px;font-weight:800;color:#F59E0B;letter-spacing:1px;">TRI / '+(_lang==='en'?'EXAMINER':'EXAMINATEUR')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcInst+'</div></div>';
-  h+='<button onclick="clearSigPadPC(\'tri\')" style="padding:3px 8px;border-radius:5px;border:1px solid #F59E0B44;background:transparent;color:#F59E0B;font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
+  // Examinateur — violet
+  h+='<div style="border:1px solid '+examCol+'33;border-radius:8px;overflow:hidden;margin-bottom:8px;">';
+  h+='<div style="background:'+examCol+'11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
+  h+='<div><div style="font-size:9px;font-weight:800;color:'+examCol+';letter-spacing:1px;">TRI / SFI — '+(_lang==='en'?'EXAMINER':'EXAMINATEUR')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcInst+'</div></div>';
+  h+='<button onclick="clearSigPadPC(\'tri\')" style="padding:3px 8px;border-radius:5px;border:1px solid '+examCol+'44;background:transparent;color:'+examCol+';font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
   h+='<div style="background:#F8FAFC;padding:4px;position:relative;">';
   h+='<canvas id="sig-canvas-pc-tri" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>';
-  if(!pcSigs.tri) h+='<div id="sig-pc-hint-tri" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ TRI — '+(_lang==='en'?'sign here':'signez ici')+'</div>';
+  if(!pcSigs.tri) h+='<div id="sig-pc-hint-tri" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ TRI/SFI — '+(_lang==='en'?'sign here':'signez ici')+'</div>';
   h+='</div></div>';
-  // Pilot — blue
-  h+='<div style="border:1px solid #3B82F633;border-radius:8px;overflow:hidden;">';
-  h+='<div style="background:#3B82F611;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
-  h+='<div><div style="font-size:9px;font-weight:800;color:#3B82F6;letter-spacing:1px;">'+(pc.position||'CPT')+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcPilot+'</div></div>';
-  h+='<button onclick="clearSigPadPC(\'pilot\')" style="padding:3px 8px;border-radius:5px;border:1px solid #3B82F644;background:transparent;color:#3B82F6;font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
+  // Stagiaire — couleur selon poste (CAPT=bleu, FO=vert, TRI=amber)
+  h+='<div style="border:1px solid '+pilotCol+'33;border-radius:8px;overflow:hidden;">';
+  h+='<div style="background:'+pilotCol+'11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
+  h+='<div><div style="font-size:9px;font-weight:800;color:'+pilotCol+';letter-spacing:1px;">'+pcPos+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcPilot+'</div></div>';
+  h+='<button onclick="clearSigPadPC(\'pilot\')" style="padding:3px 8px;border-radius:5px;border:1px solid '+pilotCol+'44;background:transparent;color:'+pilotCol+';font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
   h+='<div style="background:#F8FAFC;padding:4px;position:relative;">';
   h+='<canvas id="sig-canvas-pc-pilot" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>';
   if(!pcSigs.pilot) h+='<div id="sig-pc-hint-pilot" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ '+pcPilot+' — '+(_lang==='en'?'sign here':'signez ici')+'</div>';
@@ -12526,18 +12531,23 @@ function printProfCheck(){
     +'<div style="font-size:13px;font-weight:700;">'+(pc.coExaminer||state.instructorName||'')+'</div>'
     +'</div>'
     +'</div>'
-    +'<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
-    +'<div style="border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;padding:8px;">'
-    +'<div style="font-size:9px;color:#64748b;font-weight:700;text-align:center;margin-bottom:6px;">'+(pc.position||'CPT')+' / STAGIAIRE</div>'
-    +(pcSigs.pilot?'<img src="'+pcSigs.pilot+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:1px solid #bbb;"></div>')
-    +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.pilotName||'')+'</div>'
-    +'</div>'
-    +'<div style="border:1px solid #e2e8f0;border-radius:6px;overflow:hidden;padding:8px;">'
-    +'<div style="font-size:9px;color:#64748b;font-weight:700;text-align:center;margin-bottom:6px;">TRI / SFI</div>'
-    +(pcSigs.tri?'<img src="'+pcSigs.tri+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:1px solid #bbb;"></div>')
-    +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.coExaminer||state.instructorName||'')+'</div>'
-    +'</div>'
-    +'</div>'
+    +(function(){
+        var ppPos=pc.position||'CAPT';
+        var ppPilotCol=ppPos==='FO'?'#10B981':ppPos==='TRI'?'#F59E0B':'#3B82F6';
+        var ppExamCol='#8B5CF6';
+        return '<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
+          +'<div style="border:2px solid '+ppPilotCol+'44;border-radius:6px;overflow:hidden;padding:8px;">'
+          +'<div style="font-size:9px;color:'+ppPilotCol+';font-weight:700;text-align:center;margin-bottom:6px;">'+ppPos+' / STAGIAIRE</div>'
+          +(pcSigs.pilot?'<img src="'+pcSigs.pilot+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:2px solid '+ppPilotCol+'44;"></div>')
+          +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.pilotName||'')+'</div>'
+          +'</div>'
+          +'<div style="border:2px solid '+ppExamCol+'44;border-radius:6px;overflow:hidden;padding:8px;">'
+          +'<div style="font-size:9px;color:'+ppExamCol+';font-weight:700;text-align:center;margin-bottom:6px;">TRI / SFI — EXAMINATEUR</div>'
+          +(pcSigs.tri?'<img src="'+pcSigs.tri+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:2px solid '+ppExamCol+'44;"></div>')
+          +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.coExaminer||state.instructorName||'')+'</div>'
+          +'</div>'
+          +'</div>';
+      })()
     +'<div style="margin-top:20px;text-align:center;font-size:9px;color:#94a3b8;">REF. D.O.A — TRAINING DEPARTMENT · © AIR ALGÉRIE — All Rights Reserved</div>'
     +'</div>'
     +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},600);};<\/scr'+'ipt>'
