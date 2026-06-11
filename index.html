@@ -8152,6 +8152,8 @@ triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
 profCheck: null,
 interventions:[], flags:[], voiceNotes:[],
 sessionObjectives:{},
+pilotObjectives:{},
+foObjectives:{},
 sessionMeteo:{crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''},
 loftNotes:{events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}},
 rapportNotes:'',
@@ -8802,25 +8804,34 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
 </div>
 </div>`;
 
-// Build session objectives HTML
+// Build session objectives HTML — per-pilot panels
 const objColors={maintain:'#3B82F6',acquire:'#F59E0B',improve:'#10B981'};
 const objLabels=_lang==='en'
   ?{maintain:'MAINTAIN',acquire:'ACQUIRE',improve:'IMPROVE'}
   :{maintain:'MAINTENIR',acquire:'ACQUÉRIR',improve:'AMÉLIORER'};
-const objHtml = `<div style="background:#0F1218;border:1px solid #A78BFA44;border-radius:12px;overflow:hidden;margin-bottom:12px;">
-<div style="padding:10px 14px;background:#151B26;font-size:11px;font-weight:700;color:#A78BFA;letter-spacing:1px;">${_lang==='en'?'🎯 SESSION OBJECTIVES — EBT':'🎯 OBJECTIFS DE SÉANCE — EBT'}</div>
-<div style="padding:10px 14px;display:flex;flex-direction:column;gap:8px;">
-${COMPETENCIES.map(c=>{
-  const obj=state.sessionObjectives[c.id]||null;
-  return `<div style="display:flex;align-items:center;gap:8px;">
-    <span style="font-size:11px;font-weight:800;color:${c.color};width:42px;flex-shrink:0;">${c.label}</span>
-    <div style="display:flex;gap:4px;flex:1;">
-      ${['maintain','acquire','improve'].map(ot=>`
-        <button onclick="setSessionObjective('${c.id}','${ot}')" style="flex:1;padding:4px 2px;border-radius:5px;border:1px solid ${obj===ot?objColors[ot]:objColors[ot]+'44'};background:${obj===ot?objColors[ot]+'33':'transparent'};color:${obj===ot?objColors[ot]:'#475569'};font-size:9px;font-weight:800;cursor:pointer;">${objLabels[ot]}</button>
-      `).join('')}
+function _buildObjPanel(pilotKey, pilotName, pilotRole, pilotColor){
+  const objectives = state[pilotKey==='fo'?'foObjectives':'pilotObjectives']||{};
+  return `<div style="flex:1;min-width:0;">
+    <div style="padding:6px 10px;background:#151B26;border-bottom:1px solid ${pilotColor}33;font-size:10px;font-weight:800;color:${pilotColor};letter-spacing:1px;">${pilotRole} — ${pilotName}</div>
+    <div style="padding:8px 10px;display:flex;flex-direction:column;gap:6px;">
+    ${COMPETENCIES.map(c=>{
+      const obj=objectives[c.id]||null;
+      return `<div style="display:flex;align-items:center;gap:5px;">
+        <span style="font-size:10px;font-weight:800;color:${c.color};width:36px;flex-shrink:0;">${c.label}</span>
+        <div style="display:flex;gap:2px;flex:1;">
+          ${['maintain','acquire','improve'].map(ot=>`<button onclick="setSessionObjective('${c.id}','${ot}','${pilotKey}')" style="flex:1;padding:3px 1px;border-radius:4px;border:1px solid ${obj===ot?objColors[ot]:objColors[ot]+'44'};background:${obj===ot?objColors[ot]+'22':'transparent'};color:${obj===ot?objColors[ot]:'#475569'};font-size:8px;font-weight:800;cursor:pointer;">${objLabels[ot]}</button>`).join('')}
+        </div>
+      </div>`;
+    }).join('')}
     </div>
   </div>`;
-}).join('')}
+}
+const _hasFo=!!state.foName;
+const objHtml = `<div style="background:#0F1218;border:1px solid #A78BFA44;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+<div style="padding:9px 14px;background:#151B26;font-size:11px;font-weight:700;color:#A78BFA;letter-spacing:1px;">${_lang==='en'?'🎯 SESSION OBJECTIVES — EBT':'🎯 OBJECTIFS DE SÉANCE — EBT'}</div>
+<div style="display:flex;">
+  ${_buildObjPanel('pilot', state.pilotName||c1, state.pilotRole||'CPT', c1)}
+  ${_hasFo?`<div style="width:1px;background:#1E2530;flex-shrink:0;"></div>`+_buildObjPanel('fo', state.foName, state.foRole||'FO', c2):''}
 </div>
 </div>`;
 
@@ -8938,11 +8949,13 @@ if(!state.briefingFacNotes) state.briefingFacNotes={};
 state.briefingFacNotes[i]=val;
 }
 
-function setSessionObjective(compId, objType){
-  if(state.sessionObjectives[compId]===objType){
-    delete state.sessionObjectives[compId];
+function setSessionObjective(compId, objType, pilot){
+  const key = pilot==='fo' ? 'foObjectives' : 'pilotObjectives';
+  if(!state[key]) state[key]={};
+  if(state[key][compId]===objType){
+    delete state[key][compId];
   } else {
-    state.sessionObjectives[compId]=objType;
+    state[key][compId]=objType;
   }
   showBriefing();
 }
@@ -11802,7 +11815,38 @@ const radarHtml=`<div style="padding:14px 14px 4px;">
   <div style="background:#0F1218;border-radius:10px;padding:10px;overflow:hidden;">${buildRadarSVG(cptMap,foMap,state.pilotName||'CPT',state.foName||'FO')}</div>
   <div style="background:#0F1218;border-radius:10px;padding:10px 12px;margin-top:8px;">${scoreTableHeader}${scoreTableRows}</div>
 </div>`;
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + cptSection + foSection;
+// EBT objectives bilan
+const _objLbls=_lang==='en'?{maintain:'MAINTAIN',acquire:'ACQUIRE',improve:'IMPROVE'}:{maintain:'MAINTENIR',acquire:'ACQUÉRIR',improve:'AMÉLIORER'};
+const _objCols={maintain:'#3B82F6',acquire:'#F59E0B',improve:'#10B981'};
+function _ebtBilan(objectives, compMap, pilotName, pilotRole, pilotColor){
+  const entries=Object.entries(objectives||{}).filter(([cid])=>COMPETENCIES.find(c=>c.id===cid));
+  if(!entries.length) return '';
+  const rows=entries.map(([cid,objType])=>{
+    const comp=COMPETENCIES.find(c=>c.id===cid);
+    const score=compMap[cid]||0;
+    let verdict, vc;
+    if(!score){verdict=_lang==='en'?'NOT EVALUATED':'NON ÉVALUÉ';vc='#475569';}
+    else if(score>=3.5){verdict=_lang==='en'?'ACHIEVED ✓':'ATTEINT ✓';vc='#10B981';}
+    else if(score>=3.0){verdict=_lang==='en'?'PARTIAL ⚡':'PARTIEL ⚡';vc='#F59E0B';}
+    else{verdict=_lang==='en'?'NOT ACHIEVED ✗':'NON ATTEINT ✗';vc='#EF4444';}
+    const barW=score?Math.round(score/5*100):0;
+    return `<div style="display:flex;align-items:center;gap:7px;padding:6px 10px;border-bottom:1px solid #1E2530;">
+      <span style="font-size:10px;font-weight:800;color:${comp.color};width:36px;flex-shrink:0;">${comp.label}</span>
+      <span style="font-size:8px;font-weight:800;color:${_objCols[objType]};background:${_objCols[objType]}22;border:1px solid ${_objCols[objType]}44;border-radius:4px;padding:1px 5px;white-space:nowrap;flex-shrink:0;">${_objLbls[objType]}</span>
+      <div style="flex:1;height:4px;background:#1E2530;border-radius:2px;overflow:hidden;"><div style="height:4px;background:${vc};width:${barW}%;border-radius:2px;transition:width .3s;"></div></div>
+      <span style="font-size:12px;font-weight:900;color:${vc};width:28px;text-align:right;flex-shrink:0;">${score?score.toFixed(1):'-'}</span>
+      <span style="font-size:9px;font-weight:900;color:${vc};min-width:88px;text-align:right;flex-shrink:0;">${verdict}</span>
+    </div>`;
+  }).join('');
+  return `<div style="padding:10px 14px 4px;">
+    <div style="font-size:10px;font-weight:800;color:${pilotColor};letter-spacing:2px;margin-bottom:6px;">🎯 ${_lang==='en'?'EBT OBJECTIVES':'OBJECTIFS EBT'} — ${pilotRole} ${pilotName}</div>
+    <div style="background:#0F1218;border:1px solid ${pilotColor}33;border-radius:8px;overflow:hidden;">${rows}</div>
+  </div>`;
+}
+const _ebtP=_ebtBilan(state.pilotObjectives,cptMap,state.pilotName||'',state.pilotRole||'CPT',c1);
+const _ebtF=foMap?_ebtBilan(state.foObjectives,foMap,state.foName||'',state.foRole||'FO',c2):'';
+const ebtBilanHtml=(_ebtP||_ebtF)?`<div style="background:#0F121822;border-top:1px solid #A78BFA33;"><div style="font-size:9px;font-weight:900;color:#A78BFA;letter-spacing:2px;padding:10px 14px 0;">${_lang==='en'?'EBT SESSION OBJECTIVES — RESULTS':'OBJECTIFS EBT — BILAN DE SÉANCE'}</div>${_ebtP}${_ebtF}</div>`:'';
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + ebtBilanHtml + cptSection + foSection;
 }
 
 function renderDebExercises(el){
@@ -14022,6 +14066,8 @@ state.interventions=[];
 state.flags=[];
 state.voiceNotes=[];
 state.sessionObjectives={};
+state.pilotObjectives={};
+state.foObjectives={};
 state.sessionMeteo={crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''};
 state.loftCompareMode=false;
 state.loftNotes={events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}};
