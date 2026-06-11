@@ -13271,9 +13271,9 @@ function renderDebRapport(el){
   <div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1.5px;margin-bottom:10px;">✍️ ${_lang==='en'?'DIGITAL SIGNATURES':'SIGNATURES NUMÉRIQUES'}</div>
   <div style="display:flex;flex-direction:column;gap:10px;">
     ${[
-      {key:'tri',label:_lang==='en'?'TRI / INSTRUCTOR':'TRI / INSTRUCTEUR',name:instructor,color:'#3B82F6'},
-      {key:'cpt',label:(state.pilotRole||'CPT')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.pilotName||'—',color:'#10B981'},
-      ...(state.foName?[{key:'fo',label:(state.foRole||'FO')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.foName,color:'#F59E0B'}]:[])
+      {key:'tri',label:_lang==='en'?'TRI / INSTRUCTOR':'TRI / INSTRUCTEUR',name:instructor,color:'#F59E0B'},
+      {key:'cpt',label:(state.pilotRole||'CPT')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.pilotName||'—',color:'#3B82F6'},
+      ...(state.foName?[{key:'fo',label:(state.foRole||'FO')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.foName,color:'#10B981'}]:[])
     ].map(s=>`
     <div style="border:1px solid ${s.color}33;border-radius:8px;overflow:hidden;">
       <div style="background:${s.color}11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
