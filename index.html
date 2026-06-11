@@ -11853,19 +11853,19 @@ if(tmExs.length){
     const sc=ALL_SC.find(s=>s.id===e.sid);
     const d=e.timeDeltaSec; const m=Math.abs(Math.round(d/60));
     const c=d>=0?'#10B981':'#EF4444';
-    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} <span style="color:#64748B;">(${_lang==='en'?'limit':'limite'} ${e.timeLimit}min)</span></span><span style="font-size:12px;font-weight:900;color:${c};">${d>=0?'G':'L'}:${m}min</span></div>`;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} <span style="color:#64748B;">(${_lang==='en'?'limit':'limite'} ${e.timeLimit}min)</span></span><span style="font-size:12px;font-weight:900;color:${c};">${d>=0?'S':'L'}:${m}min</span></div>`;
   }).join('');
   const avgDelta = totalDelta/tmExs.length;
   const avgMin = Math.abs(Math.round(avgDelta/60));
   tmHtml=`<div style="background:${tmBg};border:1px solid ${tmBorder};border-radius:9px;padding:10px 12px;margin-bottom:14px;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
     <div style="font-size:12px;font-weight:800;color:${tmColor};letter-spacing:1px;">⏱ TIME MANAGEMENT — ${tmExs.length} ${_lang==='en'?'exercise':'exercice'}${tmExs.length>1?'s':''}</div>
-    <div style="font-size:18px;font-weight:900;color:${tmColor};text-shadow:0 0 6px ${tmColor}66;">${gained?'G':'L'}:${totalMin}min</div>
+    <div style="font-size:18px;font-weight:900;color:${tmColor};text-shadow:0 0 6px ${tmColor}66;">${gained?'S':'L'}:${totalMin}min</div>
   </div>
   <div style="margin-bottom:6px;">${rows}</div>
   <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid ${tmBorder};margin-top:2px;">
     <span style="font-size:11px;font-weight:700;color:#94A3B8;">${_lang==='en'?'Average per exercise':'Moyenne par exercice'}</span>
-    <span style="font-size:13px;font-weight:900;color:${tmColor};">${gained?'G':'L'}:${avgMin}min</span>
+    <span style="font-size:13px;font-weight:900;color:${tmColor};">${gained?'S':'L'}:${avgMin}min</span>
   </div>
   ${recoHtml}
   </div>`;
