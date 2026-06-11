@@ -11846,7 +11846,39 @@ function _ebtBilan(objectives, compMap, pilotName, pilotRole, pilotColor){
 const _ebtP=_ebtBilan(state.pilotObjectives,cptMap,state.pilotName||'',state.pilotRole||'CPT',c1);
 const _ebtF=foMap?_ebtBilan(state.foObjectives,foMap,state.foName||'',state.foRole||'FO',c2):'';
 const ebtBilanHtml=(_ebtP||_ebtF)?`<div style="background:#0F121822;border-top:1px solid #A78BFA33;"><div style="font-size:9px;font-weight:900;color:#A78BFA;letter-spacing:2px;padding:10px 14px 0;">${_lang==='en'?'EBT SESSION OBJECTIVES — RESULTS':'OBJECTIFS EBT — BILAN DE SÉANCE'}</div>${_ebtP}${_ebtF}</div>`:'';
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + ebtBilanHtml + cptSection + foSection;
+// BI observed behaviors summary
+function _buildBISummary(biKey,pilotName,pilotRole,pilotColor){
+  const biCounts={};
+  closed.forEach(ex=>{Object.entries(ex[biKey]||{}).forEach(([id,v])=>{if(v) biCounts[id]=(biCounts[id]||0)+1;});});
+  if(!Object.keys(biCounts).length) return '';
+  const compSections=COMPETENCIES.map(c=>{
+    const allBis=BEHAVIORAL_INDICATORS[c.id]||[];
+    const checkedBis=allBis.filter(b=>biCounts[b.id]);
+    if(!checkedBis.length) return '';
+    const rows=checkedBis.map(b=>{
+      const cnt=biCounts[b.id];
+      return `<div style="display:flex;align-items:flex-start;gap:8px;padding:5px 12px;border-bottom:1px solid #1E253044;">
+        <span style="color:${c.color};font-size:14px;flex-shrink:0;line-height:1.3;">✓</span>
+        <span style="font-size:12px;color:#CBD5E1;line-height:1.4;flex:1;">${_lang==='en'?b.en:b.fr}</span>
+        ${cnt>1?`<span style="font-size:9px;font-weight:800;color:${c.color};background:${c.color}22;border:1px solid ${c.color}44;border-radius:10px;padding:1px 6px;flex-shrink:0;white-space:nowrap;">${cnt}×</span>`:''}
+      </div>`;
+    }).join('');
+    return `<div style="border-top:1px solid #1E2530;">
+      <div style="padding:6px 10px;background:${c.color}0A;display:flex;align-items:center;gap:6px;">
+        <span style="font-size:11px;font-weight:800;color:${c.color};">${c.label}</span>
+        <span style="font-size:10px;color:${c.color}88;">${checkedBis.length}/${allBis.length} ${_lang==='en'?'observed':'observés'}</span>
+      </div>${rows}</div>`;
+  }).filter(s=>s).join('');
+  if(!compSections) return '';
+  return `<div style="padding:10px 14px 4px;">
+    <div style="font-size:10px;font-weight:800;color:${pilotColor};letter-spacing:2px;margin-bottom:6px;">📋 ${_lang==='en'?'OBSERVED BEHAVIORS':'COMPORTEMENTS OBSERVÉS'} — ${pilotRole} ${pilotName}</div>
+    <div style="background:#0F1218;border:1px solid ${pilotColor}33;border-radius:8px;overflow:hidden;">${compSections}</div>
+  </div>`;
+}
+const _biP=_buildBISummary('bi',state.pilotName||'',state.pilotRole||'CPT',c1);
+const _biF=foMap?_buildBISummary('bifo',state.foName||'',state.foRole||'FO',c2):'';
+const biSummaryHtml=(_biP||_biF)?`<div style="background:#0F121822;border-top:1px solid #33415544;margin-top:4px;"><div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;padding:10px 14px 0;">${_lang==='en'?'BEHAVIORAL INDICATORS — SESSION EVIDENCE':'INDICATEURS COMPORTEMENTAUX — PREUVES SÉANCE'}</div>${_biP}${_biF}</div>`:'';
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + ebtBilanHtml + cptSection + foSection + biSummaryHtml;
 }
 
 function renderDebExercises(el){
