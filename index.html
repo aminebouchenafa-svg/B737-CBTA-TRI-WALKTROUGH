@@ -9363,6 +9363,8 @@ ${_memArr.map((m,i)=>`<div class="mem-item"><span class="mem-num">${i+1}</span><
 const csKey = state.activePilot==="cpt"?"cs":"csfo";
 const cs = ex[csKey]||{};
 
+const biKey = state.activePilot==='cpt'?'bi':'bifo';
+if(!ex[biKey]) ex[biKey]={};
 const compGrid = COMPETENCIES.map(c=>{
 const isKey = sc.keys.includes(c.id);
 const cd = cs[c.id]||{g:0,obs:[]};
@@ -9371,9 +9373,12 @@ const neg=(cd.obs||[]).filter(o=>o.s==="-").length;
 const pipsHtml = cd.g>0 ?
 `<span style="font-size:16px;font-weight:800;color:${GC[cd.g]};">${cd.g}</span>` :
 `<div class="pips">${[1,2,3,4,5].map(i=>`<div class="pip" style="--pip-color:${c.color};"></div>`).join('')}</div>`;
+const _cardBis=BEHAVIORAL_INDICATORS[c.id]||[];
+const _cardBiCount=_cardBis.filter(b=>ex[biKey][b.id]).length;
+const biBadge=_cardBiCount>0?`<span style="font-size:9px;font-weight:800;color:${c.color};background:${c.color}22;border:1px solid ${c.color}44;border-radius:8px;padding:1px 5px;margin-left:2px;">📋${_cardBiCount}</span>`:'';
 return `<div class="comp-card${isKey?' key':''}" style="--key-color:${c.color};${isKey?'border-color:'+c.color+'44;background:'+c.color+'0A;':''}" onclick="openComp('${c.id}')">
 ${isKey?`<div class="top-bar" style="background:${c.color};"></div>`:''}
-<div class="comp-label" style="color:${c.color};opacity:${isKey?1:0.65};">${c.label}</div>
+<div class="comp-label" style="color:${c.color};opacity:${isKey?1:0.65};">${c.label}${biBadge}</div>
 <div class="comp-full" style="opacity:${isKey?1:0.65};">${c.full}</div>
 <div class="comp-stats">
 <div style="display:flex;gap:5px;">
@@ -9386,42 +9391,10 @@ ${pipsHtml}
 }).join('');
 
 const notesVal = ex.notes||'';
-// Build BI checklist
-const biKey = state.activePilot==='cpt'?'bi':'bifo';
-if(!ex[biKey]) ex[biKey]={};
-const biHtml = `<div style="background:#0F1218;border:1px solid #A78BFA33;border-radius:10px;overflow:hidden;margin-bottom:14px;">
-<div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="padding:10px 14px;background:#151B26;display:flex;align-items:center;gap:8px;cursor:pointer;">
-  <span style="font-size:14px;">📋</span>
-  <span style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:1px;flex:1;">${_lang==='en'?'BEHAVIORAL INDICATORS':'INDICATEURS COMPORTEMENTAUX'}</span>
-  <span style="font-size:12px;color:#475569;">${_lang==='en'?'tap to expand':'appuyer pour ouvrir'} ▾</span>
-</div>
-<div style="display:none;">
-${COMPETENCIES.map(c=>{
-  const bis=BEHAVIORAL_INDICATORS[c.id]||[];
-  const checked=bis.filter(b=>(ex[biKey][b.id])).length;
-  return `<div style="border-top:1px solid #1E2530;">
-    <div style="padding:9px 14px;background:${c.color}11;display:flex;align-items:center;gap:8px;">
-      <span style="font-size:13px;font-weight:800;color:${c.color};">${c.label}</span>
-      <span style="font-size:12px;color:${checked>0?c.color:'#475569'};">${checked}/${bis.length}</span>
-    </div>
-    ${bis.map(b=>{
-      const isChecked=!!(ex[biKey][b.id]);
-      return `<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 14px;border-bottom:1px solid #1E253066;cursor:pointer;" onclick="toggleBI('${biKey}','${b.id}',this)">
-        <div style="width:20px;height:20px;border-radius:4px;border:2px solid ${isChecked?c.color:'#334155'};background:${isChecked?c.color+'33':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
-          ${isChecked?`<span style="color:${c.color};font-size:13px;">✓</span>`:''}
-        </div>
-        <div style="font-size:14px;color:${isChecked?'#F1F5F9':'#94A3B8'};line-height:1.4;">${_lang==='en'?b.en:b.fr}</div>
-      </div>`;
-    }).join('')}
-  </div>`;
-}).join('')}
-</div>
-</div>`;
 
 el.innerHTML = pilotTabsHtml + collectiveHtml + condHtml + memHtml +
 `<div class="section-lbl">${_lang==='en'?'COMPETENCIES — Tap to evaluate':'COMPETENCES — Tap pour evaluer'}</div>
 <div class="comp-grid">${compGrid}</div>
-${biHtml}
 <div style="margin-bottom:14px;">
 <div class="section-lbl" style="color:#F59E0B;">📝 ${_lang==='en'?'MY PRIVATE NOTES (not included in report)':'MES NOTES PRIVÉES (non incluses dans le rapport)'}</div>
 <textarea class="note-area" placeholder="${_lang==='en'?'Private debrief notes — for your use only...':'Notes de conduite du débriefing — privées, pour votre usage uniquement...'}" onchange="saveNotes(this.value)">${notesVal}</textarea>
@@ -9454,6 +9427,15 @@ function toggleBI(biKey, biId, row){
   }
   const txt=row.querySelector('div:last-child');
   if(txt) txt.style.color=checked?'#F1F5F9':'#94A3B8';
+}
+
+function toggleBIInComp(biId, compId){
+  const ex = state.exercises[state.activeIdx];
+  const biKey = state.activePilot==='cpt'?'bi':'bifo';
+  if(!ex[biKey]) ex[biKey]={};
+  ex[biKey][biId] = !ex[biKey][biId];
+  const comp = COMPETENCIES.find(c=>c.id===compId);
+  if(comp) renderCompContent(comp);
 }
 
 function renderFFATab(ex,sc,el){
@@ -10005,7 +9987,42 @@ return `<button onclick="addQuickObs('${comp.id}',${i})" style="${activeStyle}bo
 }).join('')}
 </div>` : '';
 
+// ── BI section for this competency ──────────────────────────────────────────
+const biKey = state.activePilot==='cpt'?'bi':'bifo';
+const _biEx = state.exercises[state.activeIdx];
+if(!_biEx[biKey]) _biEx[biKey]={};
+const _bis = BEHAVIORAL_INDICATORS[comp.id]||[];
+const _biChecked = _bis.filter(b=>_biEx[biKey][b.id]).length;
+const _biPilotLbl = state.activePilot==='cpt'
+  ? (state.pilotRole||'CPT')+(state.pilotName?' — '+state.pilotName:'')
+  : (state.foRole||'FO')+(state.foName?' — '+state.foName:'');
+const _biPilotColor = state.activePilot==='cpt'
+  ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6')
+  : (_ROLE_COLORS[state.foRole]||'#10B981');
+const biSectionHtml = _bis.length ? `
+<div style="margin-bottom:20px;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+    <div style="font-size:10px;font-weight:900;color:${comp.color};letter-spacing:1.5px;">📋 ${_lang==='en'?'BEHAVIORAL INDICATORS':'INDICATEURS COMPORTEMENTAUX'}</div>
+    <span style="font-size:11px;font-weight:800;color:${_biChecked>0?comp.color:'#475569'};background:${comp.color}${_biChecked>0?'22':'11'};border:1px solid ${comp.color}${_biChecked>0?'55':'22'};border-radius:10px;padding:2px 8px;">${_biChecked}/${_bis.length}</span>
+    <span style="font-size:10px;color:${_biPilotColor};font-weight:600;">${_biPilotLbl}</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    ${_bis.map(b=>{
+      const isCh=!!(_biEx[biKey][b.id]);
+      const biTxt=_lang==='en'?b.en:b.fr;
+      return `<div onclick="toggleBIInComp('${b.id}','${comp.id}')" style="display:flex;align-items:flex-start;gap:12px;padding:12px 13px;background:${isCh?comp.color+'18':'#0F1218'};border-radius:8px;border:1.5px solid ${isCh?comp.color+'77':'#1E2530'};cursor:pointer;${isCh?'box-shadow:0 0 8px '+comp.color+'33;':''}">
+        <div style="width:28px;height:28px;border-radius:6px;border:2px solid ${isCh?comp.color:'#334155'};background:${isCh?comp.color+'44':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+          ${isCh?`<span style="color:${comp.color};font-size:16px;font-weight:900;">✓</span>`:''}
+        </div>
+        <div style="font-size:15px;color:${isCh?'#F1F5F9':'#94A3B8'};line-height:1.45;font-weight:${isCh?'600':'400'};">${biTxt}</div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>
+<div style="height:1px;background:#1E2530;margin-bottom:18px;"></div>` : '';
+
 document.getElementById('comp-content').innerHTML = `
+${biSectionHtml}
 <div style="margin-bottom:18px;">
 <div class="section-lbl">${_lang==='en'?'CBTA GRADE (1 TO 5)':'GRADE CBTA (1 À 5)'}</div>
 <div class="grade-row">${gradeHtml}</div>
