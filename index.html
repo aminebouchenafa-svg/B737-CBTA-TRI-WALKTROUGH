@@ -2130,19 +2130,65 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Météo FCT / LVO -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ DONNÉES MÉTÉO — LIMITES FCT &amp; LVO</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Sélectionnez l'état de piste (<strong style="color:#3B82F6;">TALPA/RCC</strong> ou <strong style="color:#A78BFA;">Non-TALPA</strong>) → la limite de vent traversier Boeing FCT 737 NG s'affiche en temps réel. Alerte rouge si la valeur saisie dépasse la limite.</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC6 — Sec : 36kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC5 — Bon : 25kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC4 — Bon-Med : 22kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC3 — Moyen : 20kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC2 — Med-Méd : 15kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC1 — Méd : 13kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC0 — NIL : N/A</span>
+<div style="background:#0F1218;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🌬️ DONNÉES MÉTÉO — SAISIE &amp; LIMITES FCT</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Les 4 cases de saisie météo sont codées en <strong style="color:#F1F5F9;">couleurs néon</strong> avec halo lumineux pour une identification immédiate :</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <div style="background:#84CC160D;border:1.5px solid #84CC1655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#84CC16;margin-bottom:2px;">🟢 VENT DE FACE/ARRIÈRE</div>
+      <div style="font-size:10px;color:#64748B;">Lime · Max vent arrière : <strong style="color:#EF4444;">10 kt</strong> — alerte rouge automatique si dépassé</div>
+    </div>
+    <div style="background:#06B6D40D;border:1.5px solid #06B6D455;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#06B6D4;margin-bottom:2px;">🔵 VENT TRAVERSIER</div>
+      <div style="font-size:10px;color:#64748B;">Cyan · Alerte rouge si limite FCT dépassée</div>
+    </div>
+    <div style="background:#F472B60D;border:1.5px solid #F472B655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#F472B6;margin-bottom:2px;">🌸 PLAFOND</div>
+      <div style="font-size:10px;color:#64748B;">Rose · Saisissez en ft · Calcul LVO auto</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#10B981;margin-bottom:2px;">🟩 VISIBILITÉ / RVR</div>
+      <div style="font-size:10px;color:#64748B;">Vert · Saisissez en m · Calcul LVO auto</div>
+    </div>
   </div>
-  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">LVO AUTOMATIQUE :</div>
+  <div style="font-size:11px;font-weight:800;color:#F59E0B;margin-bottom:6px;">📊 RCAM — MATRICE ÉTAT DE PISTE (Boeing FCT 737 NG) :</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Sélectionnez le mode (<strong style="color:#3B82F6;">TALPA/RCC</strong> ou <strong style="color:#A78BFA;">Non-TALPA</strong>) puis l'état de piste → la limite XW s'affiche. La table RCAM complète est accessible en dépliante dans l'app.</div>
+  <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:1px;border:1px solid #1E2530;border-radius:6px;overflow:hidden;font-size:10px;margin-bottom:6px;">
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">RCC</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">ÉTAT</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#84CC16;text-align:center;">XW T/O</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#F472B6;text-align:center;">XW LDG</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">6</div>
+    <div style="background:#10B98111;padding:4px 7px;color:#94A3B8;">Piste sèche</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">36/33*</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">5</div>
+    <div style="background:#10B98108;padding:4px 7px;color:#94A3B8;">BON — Givre · Humide · Neige sèche</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">25</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:900;color:#84CC16;text-align:center;">4</div>
+    <div style="background:#84CC1608;padding:4px 7px;color:#94A3B8;">BON à MOYEN — Neige compactée ≤-15°C</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">22</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">30</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:900;color:#F59E0B;text-align:center;">3</div>
+    <div style="background:#F59E0B08;padding:4px 7px;color:#94A3B8;">MOYEN — Glissante mouillée · Neige >3mm</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">20</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">25</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:900;color:#F97316;text-align:center;">2</div>
+    <div style="background:#F9731608;padding:4px 7px;color:#94A3B8;">MOYEN à MAUVAIS — Eau/gadoue >3mm</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">15</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">17</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:900;color:#EF4444;text-align:center;">1</div>
+    <div style="background:#EF444408;padding:4px 7px;color:#94A3B8;">MAUVAIS — Glace</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">13</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">15</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:900;color:#64748B;text-align:center;">0</div>
+    <div style="background:#64748B08;padding:4px 7px;color:#94A3B8;">NIL — Glace mouillée · Neige sur glace</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+  </div>
+  <div style="font-size:9px;color:#475569;font-style:italic;margin-bottom:8px;">* 36/33 kt avec winglets · Source: Boeing FCT 737 NG</div>
+  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">🔍 LVO AUTOMATIQUE :</div>
   <div style="display:flex;flex-direction:column;gap:3px;">
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#10B981;min-width:90px;">NORMAL/CAT I</span><span style="font-size:10px;color:#64748B;">RVR ≥ 550m &amp; plafond ≥ 200ft</span></div>
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#06B6D4;min-width:90px;">LVP PREP</span><span style="font-size:10px;color:#64748B;">RVR &lt; 550m ou plafond &lt; 200ft</span></div>
@@ -2174,8 +2220,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 RAPPORT EXAMINATEUR</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Onglet <strong style="color:#10B981;">Rapport</strong> dans le débrief — format Boeing/EASA officiel avec : résultat global SATISFAISANT/INSATISFAISANT, tableau des exercices, scores par compétence, remarques instructeur, signatures. Bouton impression PDF intégré.</div>
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 RAPPORT EXAMINATEUR &amp; SIGNATURES NUMÉRIQUES</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Onglet <strong style="color:#10B981;">Rapport</strong> dans le débrief — format Boeing/EASA officiel avec : résultat global SATISFAISANT/INSATISFAISANT, tableau des exercices, scores par compétence, remarques instructeur.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Pads de signature numérique (doigt ou stylet) :</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI / INST.</span><span style="font-size:10px;color:#64748B;">Violet — instructeur qui conduit la séance</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CPT</span><span style="font-size:10px;color:#64748B;">Bleu — stagiaire Commandant de Bord</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO</span><span style="font-size:10px;color:#64748B;">Vert — stagiaire OPL</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Les signatures sont incluses dans le PDF imprimé. Bouton EFFACER disponible sous chaque pad.</div>
+</div>
+
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">✅ PROFICIENCY CHECK — CONTRÔLE DE COMPÉTENCES</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Bouton <strong style="color:#F59E0B;">PROF CHECK</strong> dans la barre de navigation — formulaire indépendant du débrief pour les contrôles réglementaires (OPC/PC). Remplissez les items mandatory, LVO, LOFT et RHS avec les notes 1→5. Résultat SATISFACTORY / UNSATISFACTORY.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Signatures numériques Proficiency Check :</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI/SFI</span><span style="font-size:10px;color:#64748B;">Violet — examinateur qui conduit le check</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CAPT évalué</span><span style="font-size:10px;color:#64748B;">Bleu — stagiaire Commandant de Bord</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO évalué</span><span style="font-size:10px;color:#64748B;">Vert — stagiaire OPL</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B66;color:#F59E0B;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI CHECK</span><span style="font-size:10px;color:#64748B;">Amber — un TRI évalué en TRI Check</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Les signatures s'effacent automatiquement si vous changez de poste. Incluses dans le PDF imprimé.</div>
 </div>
 
 <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;">
@@ -3974,19 +4040,65 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Weather FCT / LVO -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ WEATHER DATA — FCT LIMITS &amp; LVO</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Select runway condition (<strong style="color:#3B82F6;">TALPA/RCC</strong> or <strong style="color:#A78BFA;">Non-TALPA</strong>) → the Boeing FCT 737 NG crosswind limit displays in real time. Red alert if the entered value exceeds the limit.</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC6 — Dry : 36kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC5 — Good : 25kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC4 — G-Med : 22kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC3 — Medium : 20kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC2 — M-Poor : 15kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC1 — Poor : 13kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC0 — NIL : N/A</span>
+<div style="background:#0F1218;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🌬️ WEATHER DATA — ENTRY &amp; FCT LIMITS</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">The 4 weather input fields are color-coded in <strong style="color:#F1F5F9;">neon colors</strong> with glow halos for instant identification:</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <div style="background:#84CC160D;border:1.5px solid #84CC1655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#84CC16;margin-bottom:2px;">🟢 HEADWIND / TAILWIND</div>
+      <div style="font-size:10px;color:#64748B;">Lime · Max tailwind: <strong style="color:#EF4444;">10 kt</strong> — automatic red alert if exceeded</div>
+    </div>
+    <div style="background:#06B6D40D;border:1.5px solid #06B6D455;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#06B6D4;margin-bottom:2px;">🔵 CROSSWIND</div>
+      <div style="font-size:10px;color:#64748B;">Cyan · Red alert if FCT limit exceeded</div>
+    </div>
+    <div style="background:#F472B60D;border:1.5px solid #F472B655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#F472B6;margin-bottom:2px;">🌸 CEILING</div>
+      <div style="font-size:10px;color:#64748B;">Rose · Enter in ft · Auto LVO detection</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#10B981;margin-bottom:2px;">🟩 VISIBILITY / RVR</div>
+      <div style="font-size:10px;color:#64748B;">Green · Enter in m · Auto LVO detection</div>
+    </div>
   </div>
-  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">LVO AUTO-DETECTION:</div>
+  <div style="font-size:11px;font-weight:800;color:#F59E0B;margin-bottom:6px;">📊 RCAM — RUNWAY CONDITION ASSESSMENT MATRIX (Boeing FCT 737 NG):</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Select mode (<strong style="color:#3B82F6;">TALPA/RCC</strong> or <strong style="color:#A78BFA;">Non-TALPA</strong>) then runway condition → the XW limit is shown. The full RCAM table is available as a collapsible panel in the app.</div>
+  <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:1px;border:1px solid #1E2530;border-radius:6px;overflow:hidden;font-size:10px;margin-bottom:6px;">
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">RCC</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">CONDITION</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#84CC16;text-align:center;">XW T/O</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#F472B6;text-align:center;">XW LDG</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">6</div>
+    <div style="background:#10B98111;padding:4px 7px;color:#94A3B8;">Dry runway</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">36/33*</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">5</div>
+    <div style="background:#10B98108;padding:4px 7px;color:#94A3B8;">GOOD — Frost · Wet · Dry/wet snow</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">25</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:900;color:#84CC16;text-align:center;">4</div>
+    <div style="background:#84CC1608;padding:4px 7px;color:#94A3B8;">GOOD–MED — Compacted snow ≤-15°C</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">22</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">30</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:900;color:#F59E0B;text-align:center;">3</div>
+    <div style="background:#F59E0B08;padding:4px 7px;color:#94A3B8;">MEDIUM — Wet/slippery · Snow >3mm</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">20</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">25</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:900;color:#F97316;text-align:center;">2</div>
+    <div style="background:#F9731608;padding:4px 7px;color:#94A3B8;">MED–POOR — Water/slush >3mm</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">15</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">17</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:900;color:#EF4444;text-align:center;">1</div>
+    <div style="background:#EF444408;padding:4px 7px;color:#94A3B8;">POOR — Ice</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">13</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">15</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:900;color:#64748B;text-align:center;">0</div>
+    <div style="background:#64748B08;padding:4px 7px;color:#94A3B8;">NIL — Wet ice · Snow on ice</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+  </div>
+  <div style="font-size:9px;color:#475569;font-style:italic;margin-bottom:8px;">* 36/33 kt with winglets · Source: Boeing FCT 737 NG</div>
+  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">🔍 LVO AUTO-DETECTION:</div>
   <div style="display:flex;flex-direction:column;gap:3px;">
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#10B981;min-width:90px;">NORMAL/CAT I</span><span style="font-size:10px;color:#64748B;">RVR ≥ 550m &amp; ceiling ≥ 200ft</span></div>
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#06B6D4;min-width:90px;">LVP PREP</span><span style="font-size:10px;color:#64748B;">RVR &lt; 550m or ceiling &lt; 200ft</span></div>
@@ -4018,8 +4130,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 EXAMINER'S REPORT</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;"><strong style="color:#10B981;">Rapport</strong> tab in the debrief — Boeing/EASA official format with: global result SATISFACTORY/UNSATISFACTORY, exercises table, competency scores, instructor remarks, signatures. Built-in PDF print button.</div>
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 EXAMINER'S REPORT &amp; DIGITAL SIGNATURES</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;"><strong style="color:#10B981;">Rapport</strong> tab in the debrief — Boeing/EASA official format with: global result SATISFACTORY/UNSATISFACTORY, exercises table, competency scores, instructor remarks.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Digital signature pads (finger or stylus):</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI / INST.</span><span style="font-size:10px;color:#64748B;">Violet — instructor conducting the session</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CPT</span><span style="font-size:10px;color:#64748B;">Blue — Captain trainee</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO</span><span style="font-size:10px;color:#64748B;">Green — First Officer trainee</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Signatures are embedded in the printed PDF. CLEAR button available under each pad.</div>
+</div>
+
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">✅ PROFICIENCY CHECK</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;"><strong style="color:#F59E0B;">PROF CHECK</strong> button in the navigation bar — standalone form for regulatory checks (OPC/PC). Fill in mandatory, LVO, LOFT and RHS items with grades 1→5. Result: SATISFACTORY / UNSATISFACTORY.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Proficiency Check digital signatures:</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI/SFI</span><span style="font-size:10px;color:#64748B;">Violet — examiner conducting the check</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CAPT assessed</span><span style="font-size:10px;color:#64748B;">Blue — Captain being evaluated</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO assessed</span><span style="font-size:10px;color:#64748B;">Green — First Officer being evaluated</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B66;color:#F59E0B;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI CHECK</span><span style="font-size:10px;color:#64748B;">Amber — a TRI being assessed in a TRI Check</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Signatures auto-clear when switching position. Embedded in printed PDF.</div>
 </div>
 
 <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;">
