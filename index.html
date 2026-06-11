@@ -7784,7 +7784,8 @@ interventions:[], flags:[], voiceNotes:[],
 sessionObjectives:{},
 sessionMeteo:{crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''},
 loftNotes:{events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}},
-rapportNotes:''
+rapportNotes:'',
+rapportSignatures:{tri:'',cpt:'',fo:''}
 };
 
 // ── CHRONOMETER ---───────────────────────────────────────────────────────────
@@ -13266,26 +13267,126 @@ function renderDebRapport(el){
   <textarea id="rapport-notes-area" class="note-area" style="height:80px;" placeholder="${_lang==='en'?'Official remarks for the record...':'Remarques officielles pour le dossier...'}" onchange="state.rapportNotes=this.value">${state.rapportNotes||''}</textarea>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
-  <div style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:14px;text-align:center;">
-    <div style="font-size:10px;color:#475569;margin-bottom:20px;">${_lang==='en'?'INSTRUCTOR SIGNATURE':'SIGNATURE INSTRUCTEUR'}</div>
-    <div style="border-top:1px solid #334155;padding-top:6px;font-size:11px;color:#94A3B8;">${instructor}</div>
+<div style="background:#0F1218;border:1px solid #334155;border-radius:10px;padding:12px;margin-bottom:10px;">
+  <div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1.5px;margin-bottom:10px;">✍️ ${_lang==='en'?'DIGITAL SIGNATURES':'SIGNATURES NUMÉRIQUES'}</div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    ${[
+      {key:'tri',label:_lang==='en'?'TRI / INSTRUCTOR':'TRI / INSTRUCTEUR',name:instructor,color:'#3B82F6'},
+      {key:'cpt',label:(state.pilotRole||'CPT')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.pilotName||'—',color:'#10B981'},
+      ...(state.foName?[{key:'fo',label:(state.foRole||'FO')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.foName,color:'#F59E0B'}]:[])
+    ].map(s=>`
+    <div style="border:1px solid ${s.color}33;border-radius:8px;overflow:hidden;">
+      <div style="background:${s.color}11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:9px;font-weight:800;color:${s.color};letter-spacing:1px;">${s.label}</div>
+          <div style="font-size:11px;color:#F1F5F9;font-weight:700;">${s.name}</div>
+        </div>
+        <button onclick="clearSigPad('${s.key}')" style="padding:3px 8px;border-radius:5px;border:1px solid ${s.color}44;background:transparent;color:${s.color};font-size:9px;font-weight:800;cursor:pointer;">✕ ${_lang==='en'?'CLEAR':'EFFACER'}</button>
+      </div>
+      <div style="background:#F8FAFC;padding:4px;position:relative;">
+        <canvas id="sig-canvas-${s.key}" style="width:100%;height:90px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>
+        ${state.rapportSignatures[s.key]?'':'<div id="sig-hint-'+s.key+'" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ '+(s.key==='tri'?(_lang==='en'?'TRI — sign here':'TRI — signez ici'):(_lang==='en'?'Trainee — sign here':'Stagiaire — signez ici'))+'</div>'}
+      </div>
+    </div>`).join('')}
   </div>
-  <div style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:14px;text-align:center;">
-    <div style="font-size:10px;color:#475569;margin-bottom:20px;">${_lang==='en'?'TRAINEE SIGNATURE':'SIGNATURE STAGIAIRE'}</div>
-    <div style="border-top:1px solid #334155;padding-top:6px;font-size:11px;color:#94A3B8;">${state.pilotName||'—'}</div>
-  </div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;text-align:center;font-style:italic;">${_lang==='en'?'Draw your signature with your finger or stylus':'Dessinez votre signature avec le doigt ou le stylet'}</div>
 </div>
 
-<button onclick="printDebRapport()" style="width:100%;padding:13px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;">🖨️ ${_lang==='en'?'PRINT / PDF':'IMPRIMER / PDF'}</button>
+<button onclick="printDebRapport()" style="width:100%;padding:13px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:6px;">🖨️ ${_lang==='en'?'PRINT / PDF':'IMPRIMER / PDF'}</button>
 `;
+setTimeout(()=>{
+  ['tri','cpt','fo'].forEach(k=>initSigPad(k));
+},0);
+}
+
+function initSigPad(key){
+  const canvas = document.getElementById('sig-canvas-'+key);
+  if(!canvas) return;
+  const dpr = window.devicePixelRatio||1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.round(rect.width*dpr)||600;
+  canvas.height = Math.round(rect.height*dpr)||180;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  ctx.strokeStyle='#0f172a';
+  ctx.lineWidth=2.5;
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.fillStyle='#F8FAFC';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  // Restore existing signature
+  if(state.rapportSignatures[key]){
+    const img=new Image();
+    img.onload=()=>{ctx.drawImage(img,0,0,rect.width,rect.height);};
+    img.src=state.rapportSignatures[key];
+    const hint=document.getElementById('sig-hint-'+key);
+    if(hint) hint.style.display='none';
+  }
+  let drawing=false;
+  function getXY(e){
+    const r=canvas.getBoundingClientRect();
+    const src=e.touches?e.touches[0]:e;
+    return {x:src.clientX-r.left, y:src.clientY-r.top};
+  }
+  function onStart(e){
+    e.preventDefault();
+    drawing=true;
+    const p=getXY(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+    const hint=document.getElementById('sig-hint-'+key);
+    if(hint) hint.style.display='none';
+  }
+  function onMove(e){
+    e.preventDefault();
+    if(!drawing) return;
+    const p=getXY(e);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+  }
+  function onEnd(e){
+    if(!drawing) return;
+    drawing=false;
+    state.rapportSignatures[key]=canvas.toDataURL('image/png');
+  }
+  canvas.addEventListener('mousedown',onStart);
+  canvas.addEventListener('mousemove',onMove);
+  canvas.addEventListener('mouseup',onEnd);
+  canvas.addEventListener('mouseleave',onEnd);
+  canvas.addEventListener('touchstart',onStart,{passive:false});
+  canvas.addEventListener('touchmove',onMove,{passive:false});
+  canvas.addEventListener('touchend',onEnd,{passive:false});
+}
+
+function clearSigPad(key){
+  state.rapportSignatures[key]='';
+  const canvas=document.getElementById('sig-canvas-'+key);
+  if(canvas){
+    const dpr=window.devicePixelRatio||1;
+    const ctx=canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width/dpr,canvas.height/dpr);
+    ctx.fillStyle='#F8FAFC';
+    ctx.fillRect(0,0,canvas.width/dpr,canvas.height/dpr);
+  }
+  const hint=document.getElementById('sig-hint-'+key);
+  if(hint) hint.style.display='block';
 }
 
 function printDebRapport(){
   const rapDiv = document.getElementById('deb-content');
   if(!rapDiv) return;
-  const html = rapDiv.innerHTML;
-  const w = window.open('','_blank','width=800,height=900');
+  let html = rapDiv.innerHTML;
+  // Replace canvas elements with captured signature images for print
+  ['tri','cpt','fo'].forEach(key=>{
+    const sig=state.rapportSignatures[key]||'';
+    const re=new RegExp('<canvas[^>]*id="sig-canvas-'+key+'"[^>]*>\\s*</canvas>','gi');
+    html=html.replace(re, sig
+      ? `<img src="${sig}" style="max-width:100%;height:80px;display:block;object-fit:contain;" />`
+      : `<div style="border-top:1px solid #bbb;height:60px;margin-top:10px;"></div>`);
+  });
+  // Hide hint divs and buttons in print
+  html=html.replace(/<div[^>]*id="sig-hint-[^"]*"[^>]*>.*?<\/div>/gi,'');
+  const w=window.open('','_blank','width=800,height=900');
   if(!w) return;
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Rapport CBTA</title>
   <style>*{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
@@ -13294,10 +13395,11 @@ function printDebRapport(){
   .section-lbl{font-size:11px;font-weight:800;letter-spacing:2px;color:#374151;}
   input,textarea{display:none;}
   button{display:none;}
+  canvas{display:none;}
   @media print{@page{margin:15mm;size:A4;}}
   </style></head><body>${html}</body></html>`);
   w.document.close();
-  setTimeout(()=>w.print(),600);
+  setTimeout(()=>w.print(),800);
 }
 
 // ── TNA (Training Needs Analysis) ────────────────────────────────────────────
@@ -13398,6 +13500,7 @@ state.sessionMeteo={crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode
 state.loftCompareMode=false;
 state.loftNotes={events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}};
 state.rapportNotes='';
+state.rapportSignatures={tri:'',cpt:'',fo:''};
 if(window._mediaRec&&window._mediaRec.state==='recording'){window._mediaRec.stop();}
 if(window._recTimer){clearInterval(window._recTimer);window._recTimer=null;}
 state.sessionStart=null;
