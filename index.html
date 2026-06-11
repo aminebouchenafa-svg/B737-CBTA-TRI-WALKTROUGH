@@ -12355,37 +12355,67 @@ function addFlag(){
 }
 
 function startVoiceNote(){
-  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SpeechRec){ showToast(_lang==='en'?'Voice recognition not available on this device':'Reconnaissance vocale non disponible sur cet appareil'); return; }
   const btn = document.getElementById('mic-btn');
-  if(window._voiceRec){
-    window._voiceRec.stop();
-    window._voiceRec=null;
-    if(btn){ btn.style.background='#8B5CF622'; btn.style.boxShadow=''; }
+
+  // Stop if already recording
+  if(window._mediaRec && window._mediaRec.state==='recording'){
+    window._mediaRec.stop();
     return;
   }
-  const rec = new SpeechRec();
-  rec.lang = _lang==='fr'?'fr-FR':'en-US';
-  rec.interimResults=false;
-  rec.maxAlternatives=1;
-  if(btn){ btn.style.background='#8B5CF655'; btn.style.boxShadow='0 0 10px #8B5CF6'; }
-  rec.onresult=(e)=>{
-    const text = e.results[0][0].transcript;
-    const ex = state.exercises[state.activeIdx];
-    const ts = Date.now();
-    const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
-    state.voiceNotes.push({text, exName: ex?ex.title:'?', ts, elapsed});
-    updateInterventionBar();
-    showToast('🎙 '+text);
-  };
-  rec.onerror=(e)=>{ showToast(_lang==='en'?'Voice error: '+e.error:'Erreur voix: '+e.error); };
-  rec.onend=()=>{
-    window._voiceRec=null;
-    if(btn){ btn.style.background='#8B5CF622'; btn.style.boxShadow=''; }
-  };
-  window._voiceRec=rec;
-  rec.start();
-  showToast(_lang==='en'?'🎙 Listening...':'🎙 Enregistrement...');
+
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    showToast(_lang==='en'?'Audio not supported on this device':'Audio non supporté sur cet appareil');
+    return;
+  }
+
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    const mime = MediaRecorder.isTypeSupported('audio/mp4') ? 'audio/mp4'
+               : MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? 'audio/webm;codecs=opus'
+               : MediaRecorder.isTypeSupported('audio/webm') ? 'audio/webm' : '';
+    const rec = new MediaRecorder(stream, mime?{mimeType:mime}:{});
+    const chunks=[];
+
+    rec.ondataavailable=e=>{ if(e.data&&e.data.size>0) chunks.push(e.data); };
+
+    rec.onstop=()=>{
+      stream.getTracks().forEach(t=>t.stop());
+      clearInterval(window._recTimer); window._recTimer=null;
+      const finalMime = mime||'audio/mp4';
+      const blob = new Blob(chunks,{type:finalMime});
+      const reader = new FileReader();
+      reader.onload=()=>{
+        const ex=state.exercises[state.activeIdx];
+        const ts=Date.now();
+        const elapsed=state.sessionStart?Math.round((ts-state.sessionStart)/1000):0;
+        const duration=Math.round((Date.now()-window._recStartTime)/1000);
+        state.voiceNotes.push({audioData:reader.result, mimeType:finalMime, exName:ex?ex.title:'?', ts, elapsed, duration});
+        updateInterventionBar();
+        showToast(_lang==='en'?`🎙 Saved (${duration}s)`:`🎙 Sauvegardé (${duration}s)`);
+        if(btn){
+          btn.style.background='#8B5CF622'; btn.style.boxShadow='';
+          btn.innerHTML='🎙 VOICE<br><span style="font-size:15px;font-weight:900;" id="cnt-voice">'+state.voiceNotes.length+'</span>';
+        }
+      };
+      reader.readAsDataURL(blob);
+      window._mediaRec=null;
+    };
+
+    window._mediaRec=rec;
+    window._recStartTime=Date.now();
+    rec.start(1000);
+
+    if(btn){ btn.style.background='#EF444433'; btn.style.boxShadow='0 0 12px #EF4444'; }
+    showToast(_lang==='en'?'🎙 Recording… tap again to stop':'🎙 Enregistrement… appuyez pour arrêter');
+
+    window._recTimer=setInterval(()=>{
+      const sec=Math.round((Date.now()-window._recStartTime)/1000);
+      const m=Math.floor(sec/60),s=sec%60;
+      if(btn) btn.innerHTML=`⏺ ${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}<br><span style="font-size:9px;font-weight:700;color:#EF4444;">STOP</span>`;
+    },1000);
+
+  }).catch(()=>{
+    showToast(_lang==='en'?'Microphone access denied':'Accès microphone refusé');
+  });
 }
 
 function fmtElapsed(sec){
@@ -12423,10 +12453,19 @@ function renderDebEvents(el){
     </div>`).join('');
 
   const voiceRows = state.voiceNotes.map((v,i)=>`
-    <div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
-      <span style="color:#8B5CF6;font-size:14px;">🎙</span>
-      <span style="font-size:11px;color:#8B5CF6;font-weight:700;font-family:monospace;flex-shrink:0;">${fmtElapsed(v.elapsed)}</span>
-      <div style="flex:1;"><div style="font-size:10px;color:#475569;margin-bottom:2px;">${v.exName}</div><div style="font-size:13px;color:#F1F5F9;line-height:1.5;">"${v.text}"</div></div>
+    <div style="padding:8px 0;border-bottom:1px solid #1E2530;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="color:#8B5CF6;font-size:14px;">🎙</span>
+        <span style="font-size:11px;color:#8B5CF6;font-weight:700;font-family:monospace;">${fmtElapsed(v.elapsed)}</span>
+        <div style="flex:1;">
+          <div style="font-size:11px;font-weight:700;color:#CBD5E1;">${v.exName}</div>
+          ${v.duration?`<div style="font-size:10px;color:#475569;">${v.duration}s</div>`:''}
+        </div>
+      </div>
+      ${v.audioData
+        ? `<audio controls src="${v.audioData}" style="width:100%;height:36px;border-radius:6px;accent-color:#8B5CF6;"></audio>`
+        : `<div style="font-size:12px;color:#F1F5F9;font-style:italic;">"${v.text||''}"</div>`
+      }
     </div>`).join('');
 
   el.innerHTML=`
@@ -12507,6 +12546,8 @@ state.profCheck=null;
 state.interventions=[];
 state.flags=[];
 state.voiceNotes=[];
+if(window._mediaRec&&window._mediaRec.state==='recording'){window._mediaRec.stop();}
+if(window._recTimer){clearInterval(window._recTimer);window._recTimer=null;}
 state.sessionStart=null;
 document.getElementById('inp-session').value='';
 document.getElementById('inp-cpt').value='';
