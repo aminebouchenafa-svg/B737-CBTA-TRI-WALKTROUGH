@@ -8358,22 +8358,29 @@ const sections = [
 const sectHtml = sections.map(({k,l,c,icon,sug})=>{
 const items = tem[k]||[];
 const sugHtml = sug.map((t)=>`<span class="tem-sug" style="background:${c}11;border:1px solid ${c}33;color:${c};font-size:var(--fss);padding:6px 12px;" onclick="addTEM('${k}','${t.replace(/'/g,"\\'")}')">${t}</span>`).join('');
-const itemsHtml = items.map((it,i)=>`<div class="tem-item" style="background:${c}18;color:var(--text);font-size:var(--fs);padding:10px 12px;">
-<span>${icon} ${it.text}${it.ts?`<span style="margin-left:8px;font-size:10px;color:#475569;font-family:monospace;font-weight:700;">⏱${it.ts}</span>`:''}</span>
+const itemsHtml = items.map((it,i)=>{
+const ic=it.injected&&it.color?it.color:c;
+return `<div class="tem-item" style="background:${ic}22;border-left:3px solid ${ic};color:var(--text);font-size:var(--fs);padding:10px 12px;">
+<span style="color:${ic};font-weight:${it.injected?'800':'400'};">${it.injected?'🎲 ':icon+' '}${it.text}${it.ts?`<span style="margin-left:8px;font-size:10px;color:#475569;font-family:monospace;font-weight:700;">⏱${it.ts}</span>`:''}</span>
 <button onclick="removeTEM('${k}',${i})" style="background:none;border:none;color:#EF4444;font-size:18px;cursor:pointer;">x</button>
-</div>`).join('');
+</div>`;
+}).join('');
 
 // Section mitigation pour chaque item
 const mitigHtml = items.length ? `<div style="margin-top:8px;margin-bottom:4px;">
-<div style="font-size:var(--fsxs);font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">✓ ${_lang==='en'?'COUNTERMEASURES (MITIGATION)':'CONTRE-MESURES (MITIGATION)'}</div>
-${items.map((it,i)=>`<div class="tem-mitg-item" style="background:#10B98111;border:1px solid #10B98133;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
-<div class="tem-mitg-desc" style="font-size:var(--fss);color:#94A3B8;margin-bottom:6px;">${it.text}</div>
+<div style="font-size:var(--fsxs);font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">✓ ${_lang==='en'?'MITIGATION':'CONTRE-MESURES'}</div>
+${items.map((it,i)=>{
+const mc=it.injected&&it.color?it.color:'#10B981';
+const tc=it.injected&&it.color?it.color:'#94A3B8';
+return `<div class="tem-mitg-item" style="background:${mc}11;border:1px solid ${mc}33;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
+<div class="tem-mitg-desc" style="font-size:var(--fss);color:${tc};font-weight:${it.injected?'700':'400'};margin-bottom:6px;">${it.injected?'🎲 ':''}${it.text}</div>
 <div style="display:flex;gap:8px;align-items:center;">
 <button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'var(--bord)'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'✓ Managed':'✓ Gérée'}</button>
 <button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'var(--bord)'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'~ Partial':'~ Partielle'}</button>
 <button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'var(--bord)'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'✗ Unmanaged':'✗ Non gérée'}</button>
 </div>
-</div>`).join('')}
+</div>`;
+}).join('')}
 </div>` : '';
 
 return `<div style="margin-bottom:20px;">
@@ -9598,7 +9605,7 @@ function injectDistracteur(i){
   ['tem','temfo'].forEach(tk=>{
     if(!ex[tk]) ex[tk]={threats:[],errors:[],uas:[]};
     if(!ex[tk].threats) ex[tk].threats=[];
-    if(!ex[tk].threats.some(x=>x.text===text)) ex[tk].threats.push({text,ts});
+    if(!ex[tk].threats.some(x=>x.text===text)) ex[tk].threats.push({text,ts,injected:true,color:d.color});
   });
   renderExContent();
   // Show dramatic alert overlay
