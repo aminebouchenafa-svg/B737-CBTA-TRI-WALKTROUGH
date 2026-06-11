@@ -2070,11 +2070,47 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- CHAPITRE 14 — OUTILS CLINIQUES AVANCÉS -->
+<!-- CHAPITRE 14 — EBT, CBTA ET OUTILS CLINIQUES AVANCÉS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:2px solid #06B6D455;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">🏥 CHAPITRE 14 — OUTILS CLINIQUES AVANCÉS (EBT)</div>
+<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">🏥 CHAPITRE 14 — EBT, CBTA ET OUTILS CLINIQUES AVANCÉS</div>
 
+<!-- EBT vs CBTA -->
+<div style="background:#0F1218;border:1px solid #F59E0B44;border-radius:9px;padding:12px 13px;margin-bottom:10px;">
+  <div style="font-size:12px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:10px;">⚖️ CBTA VS EBT — QUELLE DIFFÉRENCE ?</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+    <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:7px;padding:9px 10px;">
+      <div style="font-size:11px;font-weight:800;color:#3B82F6;margin-bottom:5px;">📐 CBTA</div>
+      <div style="font-size:10px;font-weight:700;color:#3B82F6;margin-bottom:3px;">Competency-Based Training &amp; Assessment</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Cadre réglementaire OACI. La formation est structurée autour de <strong style="color:#F1F5F9;">compétences démontrables</strong> plutôt que d'heures de vol. On évalue ce que le pilote <em>sait faire</em>, pas combien de temps il a passé à le faire.</div>
+      <div style="margin-top:6px;font-size:10px;color:#64748B;font-style:italic;">Question CBTA : "Le pilote démontre-t-il la compétence SA au niveau 4 ?"</div>
+    </div>
+    <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:7px;padding:9px 10px;">
+      <div style="font-size:11px;font-weight:800;color:#06B6D4;margin-bottom:5px;">🔬 EBT</div>
+      <div style="font-size:10px;font-weight:700;color:#06B6D4;margin-bottom:3px;">Evidence-Based Training</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Méthode Boeing/IATA. Les scénarios de formation sont construits à partir de <strong style="color:#F1F5F9;">données de sécurité réelles</strong> (accidents, incidents FOQA, ASAP). On s'entraîne sur ce qui tue, pas sur ce qui est facile.</div>
+      <div style="margin-top:6px;font-size:10px;color:#64748B;font-style:italic;">Question EBT : "Quelles compétences ont défailli dans les 10 derniers accidents similaires ?"</div>
+    </div>
+  </div>
+  <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:6px;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.5;">
+    <strong style="color:#F59E0B;">Résumé :</strong> CBTA est le <em>cadre général</em> (évaluer par compétences) — EBT est la <em>méthode</em> qui dit quels scénarios choisir et quels comportements observer. Cette app utilise les 9 compétences CBTA avec la logique EBT : les indicateurs comportementaux (BI) viennent des données d'accidents Boeing.
+  </div>
+</div>
+
+<!-- Comment utiliser avec exemples -->
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:12px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">🎓 COMMENT UTILISER — WORKFLOW COMPLET</div>
+  <div style="display:flex;flex-direction:column;gap:7px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#3B82F6;background:#3B82F622;border:1px solid #3B82F655;border-radius:5px;padding:2px 7px;flex-shrink:0;">1</span><div><div style="font-size:11px;font-weight:800;color:#3B82F6;margin-bottom:2px;">BRIEFING PRÉ-SESSION</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Définissez les objectifs EBT (MAINTENIR/ACQUÉRIR/AMÉLIORER) par compétence. Ex : WLM=AMÉLIORER si le pilote sature en charge élevée. Saisissez les données météo → l'app calcule la limite Boeing FCT et la catégorie LVO.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#8B5CF6;background:#8B5CF622;border:1px solid #8B5CF655;border-radius:5px;padding:2px 7px;flex-shrink:0;">2</span><div><div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:2px;">PENDANT L'EXERCICE</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Utilisez les boutons d'intervention (ASK/REC/CTL/FLAG) pour tracer vos actions en temps réel. Dans l'onglet Evaluation → cochez les indicateurs comportementaux (BI) observés. Ex : pour SA, cochez "Annonce les contraintes de temps" si vous le voyez.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1px solid #F59E0B55;border-radius:5px;padding:2px 7px;flex-shrink:0;">3</span><div><div style="font-size:11px;font-weight:800;color:#F59E0B;margin-bottom:2px;">DÉBRIEF — ONGLET LOFT</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Phase 2 : montrez la page auto-évaluation au stagiaire (1→5 par compétence). Appuyez "VOIR MON ÉVALUATION" → comparaison côte à côte. Les cases rouges (écart ≥ 2) sont vos points de débrief prioritaires.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#06B6D4;background:#06B6D422;border:1px solid #06B6D455;border-radius:5px;padding:2px 7px;flex-shrink:0;">4</span><div><div style="font-size:11px;font-weight:800;color:#06B6D4;margin-bottom:2px;">DÉBRIEF — ONGLET CRM</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Vérifiez les taux FORDEC et NITS. Vert ≥80% = bonne habitude. Rouge &lt;40% = axe de travail. Ex : "Tu n'as appliqué FORDEC que sur 1 des 4 exercices avec décision critique — insuffisant pour un check."</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#10B981;background:#10B98122;border:1px solid #10B98155;border-radius:5px;padding:2px 7px;flex-shrink:0;">5</span><div><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">RAPPORT EXAMINATEUR</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Onglet Rapport → résultat global SATISFAISANT/INSATISFAISANT, scores par compétence, cases ATPL + OPS. Bouton impression PDF pour le dossier Boeing.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#EF4444;background:#EF444422;border:1px solid #EF444455;border-radius:5px;padding:2px 7px;flex-shrink:0;">6</span><div><div style="font-size:11px;font-weight:800;color:#EF4444;margin-bottom:2px;">HISTORIQUE — TNA</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Fiche pilote → TNA : analyse des 5 dernières sessions. Si SA est en déficit sur 3 sessions consécutives → besoin de formation identifié. Planifiez un exercice LOFT ciblé SA.</div></div></div>
+  </div>
+</div>
+
+<!-- Objectifs de séance EBT -->
 <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
   <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🎯 OBJECTIFS DE SÉANCE (EBT)</div>
   <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Dans le briefing pré-session, définissez l'objectif pour chaque compétence ciblée :</div>
@@ -2086,22 +2122,47 @@ Identifiant ou mot de passe incorrect
   <div style="font-size:11px;color:#64748B;">→ Ces objectifs guident votre évaluation pendant la séance. Consultez-les en débrief pour valider l'atteinte des objectifs.</div>
 </div>
 
+<!-- Météo FCT / LVO -->
 <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ DONNÉES MÉTÉO CLÉS</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Saisissez le vent traversier, plafond, visibilité et vent de face avant la session. L'app affiche automatiquement un avertissement si le vent traversier dépasse la limite B737 (29 kt).</div>
+  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ DONNÉES MÉTÉO — LIMITES FCT &amp; LVO</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Sélectionnez l'état de piste (<strong style="color:#3B82F6;">TALPA/RCC</strong> ou <strong style="color:#A78BFA;">Non-TALPA</strong>) → la limite de vent traversier Boeing FCT 737 NG s'affiche en temps réel. Alerte rouge si la valeur saisie dépasse la limite.</div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC6 — Sec : 36kt</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC5 — Bon : 25kt</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC4 — Bon-Med : 22kt</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC3 — Moyen : 20kt</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC2 — Med-Méd : 15kt</span>
+    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC1 — Méd : 13kt</span>
+    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC0 — NIL : N/A</span>
+  </div>
+  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">LVO AUTOMATIQUE :</div>
+  <div style="display:flex;flex-direction:column;gap:3px;">
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#10B981;min-width:90px;">NORMAL/CAT I</span><span style="font-size:10px;color:#64748B;">RVR ≥ 550m &amp; plafond ≥ 200ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#06B6D4;min-width:90px;">LVP PREP</span><span style="font-size:10px;color:#64748B;">RVR &lt; 550m ou plafond &lt; 200ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#F59E0B;min-width:90px;">CAT II</span><span style="font-size:10px;color:#64748B;">RVR &lt; 400m / DH &lt; 100ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#F97316;min-width:90px;">CAT IIIA</span><span style="font-size:10px;color:#64748B;">RVR &lt; 300m / DH &lt; 100ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#EF4444;min-width:90px;">CAT IIIB</span><span style="font-size:10px;color:#64748B;">RVR &lt; 175m / DH &lt; 50ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#EF4444;min-width:90px;">CAT IIIC</span><span style="font-size:10px;color:#64748B;">RVR ≈ 0m / Sans DH</span></div>
+  </div>
 </div>
 
+<!-- Indicateurs comportementaux -->
 <div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 INDICATEURS COMPORTEMENTAUX (BI)</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Dans chaque exercice → onglet Evaluation → section <strong style="color:#A78BFA;">INDICATEURS COMPORTEMENTAUX</strong>. Liste cochable de 4-5 indicateurs par compétence (Boeing CBTA). Cochez les indicateurs observés pendant l'exercice pour une évaluation plus précise et documentée.</div>
-  <div style="font-size:11px;color:#64748B;">→ Données distinctes CPT et FO.</div>
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 INDICATEURS COMPORTEMENTAUX (BI) — POURQUOI ?</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">La note (1→5) dit <em>combien</em> le pilote maîtrise — les BI disent <em>ce qu'on a vu concrètement</em>. C'est l'EBT : pas "SA=3" mais "SA=3 parce qu'il n'a pas annoncé la contrainte carburant avant la dégradation météo".</div>
+  <div style="font-size:11px;color:#64748B;font-style:italic;">→ Exercice → Evaluation → INDICATEURS COMPORTEMENTAUX ▾ → cochez les comportements observés pour CPT et FO séparément.</div>
 </div>
 
+<!-- LOFT Structuré -->
 <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🏥 DÉBRIEF LOFT STRUCTURÉ</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Onglet <strong style="color:#06B6D4;">LOFT</strong> dans le débrief — 6 phases :</div>
-  <div style="display:flex;flex-direction:column;gap:4px;">
-    ${['Phase 1 — Événements clés','Phase 2 — Auto-évaluation pilote (1→5 par compétence)','Phase 3 — Analyse TEM (lien onglet TEM)','Phase 4 — Analyse CRM (lien onglet CRM)','Phase 5 — 3 Points d\'apprentissage','Phase 6 — Plan d\'action prochaine session'].map((p,i)=>`<div style="font-size:11px;color:#94A3B8;">• ${p}</div>`).join('')}
+  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🏥 DÉBRIEF LOFT STRUCTURÉ — 6 PHASES</div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#3B82F6;">Phase 1 — Événements clés :</strong> résumé chronologique du vol (zone de texte libre).</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#F59E0B;">Phase 2 — Auto-évaluation pilote :</strong> montrez l'écran au stagiaire → il s'évalue (1→5 par compétence) → appuyez "VOIR MON ÉVALUATION" → comparaison côte à côte. Cas rouges = points prioritaires de débrief.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#3B82F6;">Phase 3 — Analyse TEM :</strong> lien direct vers l'onglet TEM pour les menaces/erreurs.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#8B5CF6;">Phase 4 — Analyse CRM :</strong> lien direct vers l'onglet CRM pour les taux FORDEC/NITS.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#10B981;">Phase 5 — 3 Points d'apprentissage :</strong> les 3 enseignements concrets à retenir de la session. Formulés avec le stagiaire. Exemples : "Anticiper la contrainte carburant avant le step-down", "Appliquer FORDEC avant toute décision anormale", "Briefer le PM avant toute remise de gaz". Ces points deviennent la base de la prochaine session.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#EF4444;">Phase 6 — Plan d'action :</strong> actions concrètes à préparer avant la prochaine session. Exemples : "Pratiquer des approches manuelles sans AP", "Revoir les procédures CAT IIIA", "Travailler la communication CPT-FO en anormaux". Ce plan est la référence pour le prochain TRI lors du suivi du pilote.</div>
   </div>
 </div>
 
@@ -3853,11 +3914,47 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
-<!-- CHAPTER 14 — ADVANCED CLINICAL TOOLS -->
+<!-- CHAPTER 14 — EBT, CBTA AND ADVANCED CLINICAL TOOLS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:2px solid #06B6D455;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">🏥 CHAPTER 14 — ADVANCED CLINICAL TOOLS (EBT)</div>
+<div style="font-size:13px;font-weight:800;color:#06B6D4;letter-spacing:2px;margin-bottom:12px;">🏥 CHAPTER 14 — EBT, CBTA &amp; ADVANCED CLINICAL TOOLS</div>
 
+<!-- EBT vs CBTA -->
+<div style="background:#0F1218;border:1px solid #F59E0B44;border-radius:9px;padding:12px 13px;margin-bottom:10px;">
+  <div style="font-size:12px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:10px;">⚖️ CBTA VS EBT — WHAT IS THE DIFFERENCE?</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+    <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:7px;padding:9px 10px;">
+      <div style="font-size:11px;font-weight:800;color:#3B82F6;margin-bottom:5px;">📐 CBTA</div>
+      <div style="font-size:10px;font-weight:700;color:#3B82F6;margin-bottom:3px;">Competency-Based Training &amp; Assessment</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">ICAO regulatory framework. Training is structured around <strong style="color:#F1F5F9;">demonstrable competencies</strong> rather than flight hours. We assess what the pilot <em>can do</em>, not how long they spent doing it.</div>
+      <div style="margin-top:6px;font-size:10px;color:#64748B;font-style:italic;">CBTA question: "Does the pilot demonstrate SA competency at level 4?"</div>
+    </div>
+    <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:7px;padding:9px 10px;">
+      <div style="font-size:11px;font-weight:800;color:#06B6D4;margin-bottom:5px;">🔬 EBT</div>
+      <div style="font-size:10px;font-weight:700;color:#06B6D4;margin-bottom:3px;">Evidence-Based Training</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Boeing/IATA methodology. Training scenarios are built from <strong style="color:#F1F5F9;">real safety data</strong> (accidents, incidents, FOQA, ASAP). We train on what kills, not on what is easy.</div>
+      <div style="margin-top:6px;font-size:10px;color:#64748B;font-style:italic;">EBT question: "Which competencies failed in the last 10 similar accidents?"</div>
+    </div>
+  </div>
+  <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:6px;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.5;">
+    <strong style="color:#F59E0B;">Summary:</strong> CBTA is the <em>general framework</em> (assess by competencies) — EBT is the <em>method</em> that drives which scenarios to choose and which behaviors to observe. This app uses the 9 CBTA competencies with EBT logic: behavioral indicators (BI) come from Boeing accident data.
+  </div>
+</div>
+
+<!-- How to use -->
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:12px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">🎓 HOW TO USE — COMPLETE WORKFLOW</div>
+  <div style="display:flex;flex-direction:column;gap:7px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#3B82F6;background:#3B82F622;border:1px solid #3B82F655;border-radius:5px;padding:2px 7px;flex-shrink:0;">1</span><div><div style="font-size:11px;font-weight:800;color:#3B82F6;margin-bottom:2px;">PRE-SESSION BRIEFING</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Set EBT objectives (MAINTAIN/ACQUIRE/IMPROVE) per competency. Ex: WLM=IMPROVE if the pilot tends to saturate under high workload. Enter weather data → the app auto-computes the Boeing FCT limit and LVO category.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#8B5CF6;background:#8B5CF622;border:1px solid #8B5CF655;border-radius:5px;padding:2px 7px;flex-shrink:0;">2</span><div><div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:2px;">DURING THE EXERCISE</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Use the intervention buttons (ASK/REC/CTL/FLAG) to log your actions in real time. In the Evaluation tab → check the behavioral indicators (BI) observed. Ex: for SA, check "Announces time constraints" if you see it.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1px solid #F59E0B55;border-radius:5px;padding:2px 7px;flex-shrink:0;">3</span><div><div style="font-size:11px;font-weight:800;color:#F59E0B;margin-bottom:2px;">DEBRIEF — LOFT TAB</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Phase 2: show the self-assessment page to the trainee (1→5 per competency). Press "SHOW MY GRADES" → side-by-side comparison. Red cells (gap ≥ 2) are your priority debrief points.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#06B6D4;background:#06B6D422;border:1px solid #06B6D455;border-radius:5px;padding:2px 7px;flex-shrink:0;">4</span><div><div style="font-size:11px;font-weight:800;color:#06B6D4;margin-bottom:2px;">DEBRIEF — CRM TAB</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Check FORDEC and NITS rates. Green ≥80% = good habit. Red &lt;40% = area for work. Ex: "You only applied FORDEC on 1 of 4 exercises with a critical decision — insufficient for a check."</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#10B981;background:#10B98122;border:1px solid #10B98155;border-radius:5px;padding:2px 7px;flex-shrink:0;">5</span><div><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">EXAMINER'S REPORT</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Rapport tab → global result SATISFACTORY/UNSATISFACTORY, competency scores, ATPL + OPS boxes. PDF print button for the Boeing file.</div></div></div>
+    <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:11px;font-weight:900;color:#EF4444;background:#EF444422;border:1px solid #EF444455;border-radius:5px;padding:2px 7px;flex-shrink:0;">6</span><div><div style="font-size:11px;font-weight:800;color:#EF4444;margin-bottom:2px;">HISTORY — TNA</div><div style="font-size:11px;color:#94A3B8;line-height:1.5;">Pilot profile → TNA: analysis of the last 5 sessions. If SA is in deficit across 3 consecutive sessions → identified training need. Plan a targeted SA LOFT exercise.</div></div></div>
+  </div>
+</div>
+
+<!-- Session objectives -->
 <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
   <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🎯 SESSION OBJECTIVES (EBT)</div>
   <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">In the pre-session briefing, set the objective for each targeted competency:</div>
@@ -3869,22 +3966,47 @@ Identifiant ou mot de passe incorrect
   <div style="font-size:11px;color:#64748B;">→ These objectives guide your assessment during the session. Review them in the debrief to validate whether objectives were met.</div>
 </div>
 
+<!-- Weather FCT / LVO -->
 <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ KEY WEATHER DATA</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Enter crosswind, ceiling, visibility and headwind before the session. The app automatically shows a warning if crosswind exceeds the B737 limit (29 kt).</div>
+  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ WEATHER DATA — FCT LIMITS &amp; LVO</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Select runway condition (<strong style="color:#3B82F6;">TALPA/RCC</strong> or <strong style="color:#A78BFA;">Non-TALPA</strong>) → the Boeing FCT 737 NG crosswind limit displays in real time. Red alert if the entered value exceeds the limit.</div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC6 — Dry : 36kt</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC5 — Good : 25kt</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC4 — G-Med : 22kt</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC3 — Medium : 20kt</span>
+    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC2 — M-Poor : 15kt</span>
+    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC1 — Poor : 13kt</span>
+    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC0 — NIL : N/A</span>
+  </div>
+  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">LVO AUTO-DETECTION:</div>
+  <div style="display:flex;flex-direction:column;gap:3px;">
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#10B981;min-width:90px;">NORMAL/CAT I</span><span style="font-size:10px;color:#64748B;">RVR ≥ 550m &amp; ceiling ≥ 200ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#06B6D4;min-width:90px;">LVP PREP</span><span style="font-size:10px;color:#64748B;">RVR &lt; 550m or ceiling &lt; 200ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#F59E0B;min-width:90px;">CAT II</span><span style="font-size:10px;color:#64748B;">RVR &lt; 400m / DH &lt; 100ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#F97316;min-width:90px;">CAT IIIA</span><span style="font-size:10px;color:#64748B;">RVR &lt; 300m / DH &lt; 100ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#EF4444;min-width:90px;">CAT IIIB</span><span style="font-size:10px;color:#64748B;">RVR &lt; 175m / DH &lt; 50ft</span></div>
+    <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#EF4444;min-width:90px;">CAT IIIC</span><span style="font-size:10px;color:#64748B;">RVR ≈ 0m / No DH</span></div>
+  </div>
 </div>
 
+<!-- Behavioral indicators -->
 <div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 BEHAVIORAL INDICATORS (BI)</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">In each exercise → Evaluation tab → <strong style="color:#A78BFA;">BEHAVIORAL INDICATORS</strong> section. A checkable list of 4–5 Boeing CBTA indicators per competency. Check off observed indicators during the exercise for more precise, documented assessment.</div>
-  <div style="font-size:11px;color:#64748B;">→ Separate data tracked for CPT and FO.</div>
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 BEHAVIORAL INDICATORS (BI) — WHY?</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">The grade (1→5) says <em>how much</em> the pilot masters — BI says <em>what was concretely observed</em>. That is EBT: not "SA=3" but "SA=3 because he did not announce the fuel constraint before the weather degradation".</div>
+  <div style="font-size:11px;color:#64748B;font-style:italic;">→ Exercise → Evaluation → BEHAVIORAL INDICATORS ▾ → check observed behaviors for CPT and FO separately.</div>
 </div>
 
+<!-- LOFT Structured debrief -->
 <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🏥 STRUCTURED LOFT DEBRIEF</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;"><strong style="color:#06B6D4;">LOFT</strong> tab in the debrief — 6 phases:</div>
-  <div style="display:flex;flex-direction:column;gap:4px;">
-    ${['Phase 1 — Key events','Phase 2 — Pilot self-assessment (1→5 per competency)','Phase 3 — TEM analysis (linked to TEM tab)','Phase 4 — CRM analysis (linked to CRM tab)','Phase 5 — 3 Key learning points','Phase 6 — Action plan for next session'].map(p=>`<div style="font-size:11px;color:#94A3B8;">• ${p}</div>`).join('')}
+  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🏥 STRUCTURED LOFT DEBRIEF — 6 PHASES</div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#3B82F6;">Phase 1 — Key events:</strong> chronological flight summary (free text area).</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#F59E0B;">Phase 2 — Pilot self-assessment:</strong> show the screen to the trainee → they rate themselves (1→5 per competency) → press "SHOW MY GRADES" → side-by-side comparison. Red cells = priority debrief points.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#3B82F6;">Phase 3 — TEM analysis:</strong> direct link to the TEM tab for threats/errors.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#8B5CF6;">Phase 4 — CRM analysis:</strong> direct link to the CRM tab for FORDEC/NITS rates.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#10B981;">Phase 5 — 3 Learning points:</strong> the 3 concrete takeaways from the session. Formulated jointly with the trainee. Examples: "Anticipate fuel constraint before step-down", "Apply FORDEC before any abnormal decision", "Brief the PM before every go-around". These points become the foundation for the next session.</div>
+    <div style="font-size:11px;color:#94A3B8;">• <strong style="color:#EF4444;">Phase 6 — Action plan:</strong> concrete actions to prepare before the next session. Examples: "Practice manual approaches without AP", "Review CAT IIIA procedures", "Work on CPT-FO communication during abnormals". This plan is the reference for the next TRI in pilot follow-up.</div>
   </div>
 </div>
 
@@ -8208,7 +8330,7 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
 <div style="padding:10px 14px;background:#151B26;display:flex;align-items:center;gap:10px;">
   <span style="font-size:20px;">🌬️</span>
   <div style="font-size:var(--fss);font-weight:700;color:#F1F5F9;letter-spacing:1px;flex:1;">${_lang==='en'?'KEY WEATHER DATA':'DONNÉES MÉTÉO CLÉS'}</div>
-  ${_lvoInfo?`<span style="font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px;background:${_lvoInfo.color}22;border:1px solid ${_lvoInfo.color}88;color:${_lvoInfo.color};">${_lvoInfo.cat}</span>`:''}
+  <span id="meteo-lvo-badge"></span>
 </div>
 <div style="padding:10px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
   <div>
@@ -8219,34 +8341,29 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
     </div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:${_xwExceeds?'#EF4444':'#EF4444'};letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}${_xwLimit!==null&&_xwLimit!==undefined&&_rcCond?` <span style="color:#F59E0B;font-size:9px;">(MAX ${_xwLimit}kt)</span>`:(_xwNA?` <span style="color:#EF4444;font-size:9px;">N/A</span>`:'')}</div>
+    <div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:4px;" id="meteo-xw-label">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}${_xwLimit!==null&&_xwLimit!==undefined&&_rcCond?` <span style="color:#F59E0B;font-size:9px;">(MAX ${_xwLimit}kt)</span>`:(_xwNA?` <span style="color:#EF4444;font-size:9px;">N/A</span>`:'')}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;${_xwExceeds?'border-color:#EF4444;color:#EF4444;':''}" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value;showBriefing()" />
+      <input id="meteo-xw-input" class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value;updateMeteoDisplay()" />
       <span style="color:#94A3B8;font-size:12px;">kt</span>
     </div>
-    ${_xwExceeds?`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">⚠️ ${_lang==='en'?'EXCEEDS limit ('+_xwLimit+'kt) — OPS NOT ALLOWED':'DÉPASSE limite ('+_xwLimit+'kt) — OPS INTERDITES'}</div>`:''}
-    ${_xwNA?`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">🚫 ${_lang==='en'?'NIL BRAKING — Operations NOT authorized':'FREINAGE NUL — Opérations NON autorisées'}</div>`:''}
+    <div id="meteo-xw-warn"></div>
   </div>
   <div>
     <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CEILING':'PLAFOND'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value;showBriefing()" />
+      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value;updateMeteoDisplay()" />
       <span style="color:#94A3B8;font-size:12px;">ft</span>
     </div>
   </div>
   <div>
     <div style="font-size:10px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'VISIBILITY / RVR':'VISIBILITÉ / RVR'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value;showBriefing()" />
+      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value;updateMeteoDisplay()" />
       <span style="color:#94A3B8;font-size:12px;">m</span>
     </div>
   </div>
 </div>
-${_lvoInfo?`<div style="margin:0 10px 10px;padding:8px 10px;border-radius:8px;background:${_lvoInfo.color}11;border:1px solid ${_lvoInfo.color}44;display:flex;align-items:center;gap:8px;">
-  <span style="font-size:18px;">${_lvoInfo.color==='#10B981'?'✅':(_lvoInfo.color==='#06B6D4'?'🔵':(_lvoInfo.color==='#F59E0B'?'🟡':'🔴'))}</span>
-  <div style="flex:1;"><div style="font-size:11px;font-weight:800;color:${_lvoInfo.color};">${_lvoInfo.cat}</div><div style="font-size:10px;color:#94A3B8;">${_lvoInfo.desc}</div></div>
-  ${(_lvoInfo.cat!==(_lang==='en'?'NORMAL / CAT I':'NORMAL / CAT I')&&_lvoInfo.cat!=='LVP PREP'&&_lvoInfo.cat!==(_lang==='en'?'NORMAL / CAT I':'NORMAL / CAT I'))?`<div style="font-size:9px;color:#EF4444;font-weight:700;text-align:right;">LVO PROCEDURES<br>REQUIRED</div>`:''}
-</div>`:''}
+<div id="meteo-lvo-detail" style="display:none;margin:0 10px 10px;padding:8px 10px;border-radius:8px;border:1px solid transparent;"></div>
 <div style="padding:10px 14px;border-top:1px solid #1E2530;">
   <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
     <div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1px;flex:1;">${_lang==='en'?'RUNWAY CONDITION (FCT B737 NG)':'ÉTAT PISTE (FCT B737 NG)'}</div>
@@ -8337,6 +8454,51 @@ ${objHtml}
 </div>
 </div>`;
 showScreen('briefing');
+setTimeout(updateMeteoDisplay,0);
+}
+
+function updateMeteoDisplay(){
+  const XWND_T={6:36,5:25,4:22,3:20,2:15,1:13,0:null};
+  const XWND_N={dry:36,wet:25,snow:25,slush:15,ice:15};
+  // LVO detection
+  const rv=parseInt(state.sessionMeteo.visibility)||9999;
+  const ce=parseInt(state.sessionMeteo.ceiling)||9999;
+  const hm=!!(state.sessionMeteo.visibility||state.sessionMeteo.ceiling);
+  let lvo=null;
+  if(hm){
+    if(rv<75) lvo={cat:'CAT IIIC',c:'#EF4444',d:_lang==='en'?'RVR≈0m — No DH':'RVR≈0m — Sans DH'};
+    else if(rv<175||ce<50) lvo={cat:'CAT IIIB',c:'#EF4444',d:_lang==='en'?'RVR 75–175m / DH<50ft':'RVR 75–175m / DH<50ft'};
+    else if(rv<300||ce<100) lvo={cat:'CAT IIIA',c:'#F97316',d:_lang==='en'?'RVR 200–300m / DH<100ft':'RVR 200–300m / DH<100ft'};
+    else if(rv<400) lvo={cat:'CAT II',c:'#F59E0B',d:_lang==='en'?'RVR 300–400m / DH<100ft':'RVR 300–400m / DH<100ft'};
+    else if(rv<550||ce<200) lvo={cat:'LVP PREP',c:'#06B6D4',d:_lang==='en'?'RVR<550m or ceiling<200ft':'RVR<550m ou plafond<200ft'};
+    else lvo={cat:'NORMAL / CAT I',c:'#10B981',d:_lang==='en'?'Standard operations':'Opérations standard'};
+  }
+  const bd=document.getElementById('meteo-lvo-badge');
+  if(bd) bd.innerHTML=lvo?`<span style="font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px;background:${lvo.c}22;border:1px solid ${lvo.c}88;color:${lvo.c};">${lvo.cat}</span>`:'';
+  const dd=document.getElementById('meteo-lvo-detail');
+  if(dd){
+    if(lvo){
+      const isLVO=lvo.cat!=='NORMAL / CAT I';
+      dd.style.cssText=`margin:0 10px 10px;padding:8px 10px;border-radius:8px;background:${lvo.c}11;border:1px solid ${lvo.c}44;display:flex;align-items:center;gap:8px;`;
+      dd.innerHTML=`<span style="font-size:18px;">${lvo.c==='#10B981'?'✅':(lvo.c==='#06B6D4'?'🔵':(lvo.c==='#F59E0B'?'🟡':'🔴'))}</span><div style="flex:1;"><div style="font-size:11px;font-weight:800;color:${lvo.c};">${lvo.cat}</div><div style="font-size:10px;color:#94A3B8;">${lvo.d}</div></div>${isLVO&&lvo.cat!=='LVP PREP'?'<div style="font-size:9px;color:#EF4444;font-weight:700;text-align:right;">LVO PROCEDURES<br>REQUIRED</div>':''}`;
+    } else { dd.style.display='none'; dd.innerHTML=''; }
+  }
+  // Crosswind warning
+  const md=state.sessionMeteo.runwayCondMode||'talpa';
+  const co=state.sessionMeteo.runwayCond||'';
+  let lim=null;
+  if(co) lim=md==='talpa'?XWND_T[parseInt(co)]:XWND_N[co];
+  const xv=parseInt(state.sessionMeteo.crosswind)||0;
+  const exc=lim!==null&&lim!==undefined&&xv>0&&xv>lim;
+  const na=co!==''&&lim===null;
+  const wi=document.getElementById('meteo-xw-input');
+  if(wi){wi.style.borderColor=exc?'#EF4444':'';wi.style.color=exc?'#EF4444':'';}
+  const ww=document.getElementById('meteo-xw-warn');
+  if(ww){
+    if(exc) ww.innerHTML=`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">⚠️ ${_lang==='en'?'EXCEEDS limit ('+lim+'kt) — OPS NOT ALLOWED':'DÉPASSE limite ('+lim+'kt) — OPS INTERDITES'}</div>`;
+    else if(na) ww.innerHTML=`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">🚫 ${_lang==='en'?'NIL BRAKING — Operations NOT authorized':'FREINAGE NUL — Opérations NON autorisées'}</div>`;
+    else ww.innerHTML='';
+  }
 }
 
 function saveBriefFacNote(i,val){
@@ -11286,8 +11448,8 @@ const fdTotal=closed.filter(e=>e.fordec).length;
 const ntTotal=closed.filter(e=>e.nits).length;
 const fdPct=closed.length?fdTotal/closed.length:0;
 const ntPct=closed.length?ntTotal/closed.length:0;
-const fdColor=fdPct===1?'#8B5CF6':fdPct>=0.5?'#F59E0B':fdPct>0?'#EF4444':'#475569';
-const ntColor=ntPct===1?'#3B82F6':ntPct>=0.5?'#F59E0B':ntPct>0?'#EF4444':'#475569';
+const fdColor=fdPct>=0.8?'#10B981':fdPct>=0.4?'#F59E0B':fdPct>0?'#EF4444':'#475569';
+const ntColor=ntPct>=0.8?'#10B981':ntPct>=0.4?'#F59E0B':ntPct>0?'#EF4444':'#475569';
 const crmSummaryHtml=`<div style="display:flex;gap:8px;margin-bottom:14px;">
   <div style="flex:1;background:${fdColor}15;border:2px solid ${fdColor}44;border-radius:10px;padding:10px 12px;">
     <div style="font-size:11px;font-weight:900;color:${fdColor};letter-spacing:1.5px;margin-bottom:3px;">FORDEC</div>
