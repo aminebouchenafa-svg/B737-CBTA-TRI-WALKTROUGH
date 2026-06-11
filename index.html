@@ -8670,6 +8670,8 @@ showBriefing();
 }
 
 function showBriefing(){
+const c1=_ROLE_COLORS[state.pilotRole]||'#3B82F6';
+const c2=_ROLE_COLORS[state.foRole]||'#10B981';
 const threats = _lang==='en' ? [
 {id:'wx',icon:'🌩️',label:'WEATHER',items:['Windshear','Icing','Reduced visibility','Thunderstorm / CB on route']},
 {id:'notam',icon:'📋',label:'NOTAMs / ATIS',items:['Runway / ILS NOTAM','Special procedures','Airspace restrictions','ATIS received and analyzed']},
