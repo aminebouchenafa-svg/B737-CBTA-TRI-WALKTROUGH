@@ -7653,7 +7653,7 @@ triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
 profCheck: null,
 interventions:[], flags:[], voiceNotes:[],
 sessionObjectives:{},
-sessionMeteo:{crosswind:'',ceiling:'',visibility:'',wind:''},
+sessionMeteo:{crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''},
 loftNotes:{events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}},
 rapportNotes:''
 };
@@ -8160,11 +8160,55 @@ ${facBriefing.map((q,i)=>`<div style="padding:10px 14px;border-bottom:1px solid 
 </div>`).join('')}
 </div>`;
 
+// ─── Crosswind limit helpers (Boeing FCT 737 NG) ─────────────────────────
+const _XWIND_TALPA = {6:36,5:25,4:22,3:20,2:15,1:13,0:null};
+const _XWIND_NOTALPA = {dry:36,wet:25,snow:25,slush:15,ice:15};
+const _rcMode = state.sessionMeteo.runwayCondMode||'talpa';
+const _rcCond = state.sessionMeteo.runwayCond||'';
+const _xwLimit = (()=>{
+  if(!_rcCond) return null;
+  if(_rcMode==='talpa') return _XWIND_TALPA[parseInt(_rcCond)];
+  return _XWIND_NOTALPA[_rcCond];
+})();
+const _xwVal = parseInt(state.sessionMeteo.crosswind)||0;
+const _xwExceeds = _xwLimit!==null && _xwLimit!==undefined && _xwVal>0 && _xwVal>_xwLimit;
+const _xwNA = _rcCond!=='' && _xwLimit===null;
+
+// ─── LVO category helper (B737 NG FCT / EASA OPS) ────────────────────────
+const _rvr = parseInt(state.sessionMeteo.visibility)||9999;
+const _ceil = parseInt(state.sessionMeteo.ceiling)||9999;
+const _hasMeteo = !!(state.sessionMeteo.visibility||state.sessionMeteo.ceiling);
+const _lvoInfo = (()=>{
+  if(!_hasMeteo) return null;
+  if(_rvr < 75) return {cat:'CAT IIIC',color:'#EF4444',desc:_lang==='en'?'RVR ≈ 0m — No DH':'RVR ≈ 0m — Sans DH'};
+  if(_rvr < 175 || _ceil < 50) return {cat:'CAT IIIB',color:'#EF4444',desc:_lang==='en'?'RVR 75–175m / DH<50ft':'RVR 75–175m / DH<50ft'};
+  if(_rvr < 300 || _ceil < 100) return {cat:'CAT IIIA',color:'#F97316',desc:_lang==='en'?'RVR 200–300m / DH<100ft':'RVR 200–300m / DH<100ft'};
+  if(_rvr < 400) return {cat:'CAT II',color:'#F59E0B',desc:_lang==='en'?'RVR 300–400m / DH<100ft':'RVR 300–400m / DH<100ft'};
+  if(_rvr < 550 || _ceil < 200) return {cat:'LVP PREP',color:'#06B6D4',desc:_lang==='en'?'RVR<550m or ceiling<200ft':'RVR<550m ou plafond<200ft'};
+  return {cat:_lang==='en'?'NORMAL / CAT I':'NORMAL / CAT I',color:'#10B981',desc:_lang==='en'?'Standard operations':'Opérations standard'};
+})();
+
+const _rcTalpaRows = [
+  {k:'6',l:'RCC 6',d:'Dry — 36kt'},{k:'5',l:'RCC 5',d:'Good — 25kt'},
+  {k:'4',l:'RCC 4',d:'G-Med — 22kt'},{k:'3',l:'RCC 3',d:'Med — 20kt'},
+  {k:'2',l:'RCC 2',d:'M-Poor — 15kt'},{k:'1',l:'RCC 1',d:'Poor — 13kt'},
+  {k:'0',l:'RCC 0',d:'NIL — N/A'},
+];
+const _rcNTRows = [
+  {k:'dry',l:_lang==='en'?'DRY':'SEC',d:'36kt'},
+  {k:'wet',l:_lang==='en'?'WET':'MOUILLÉ',d:'25kt'},
+  {k:'snow',l:_lang==='en'?'SNOW':'NEIGE',d:'25kt'},
+  {k:'slush',l:_lang==='en'?'SLUSH/H₂O':'SLUSH/EAU',d:'15kt'},
+  {k:'ice',l:_lang==='en'?'ICE':'GLACE',d:'15kt'},
+];
+const _rcRows = _rcMode==='talpa' ? _rcTalpaRows : _rcNTRows;
+
 // Build meteo inputs HTML
 const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;border-radius:12px;overflow:hidden;margin-bottom:12px;">
 <div style="padding:10px 14px;background:#151B26;display:flex;align-items:center;gap:10px;">
   <span style="font-size:20px;">🌬️</span>
-  <div style="font-size:var(--fss);font-weight:700;color:#F1F5F9;letter-spacing:1px;">${_lang==='en'?'KEY WEATHER DATA':'DONNÉES MÉTÉO CLÉS'}</div>
+  <div style="font-size:var(--fss);font-weight:700;color:#F1F5F9;letter-spacing:1px;flex:1;">${_lang==='en'?'KEY WEATHER DATA':'DONNÉES MÉTÉO CLÉS'}</div>
+  ${_lvoInfo?`<span style="font-size:10px;font-weight:800;padding:3px 8px;border-radius:5px;background:${_lvoInfo.color}22;border:1px solid ${_lvoInfo.color}88;color:${_lvoInfo.color};">${_lvoInfo.cat}</span>`:''}
 </div>
 <div style="padding:10px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
   <div>
@@ -8175,27 +8219,52 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
     </div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}</div>
+    <div style="font-size:10px;font-weight:800;color:${_xwExceeds?'#EF4444':'#EF4444'};letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}${_xwLimit!==null&&_xwLimit!==undefined&&_rcCond?` <span style="color:#F59E0B;font-size:9px;">(MAX ${_xwLimit}kt)</span>`:(_xwNA?` <span style="color:#EF4444;font-size:9px;">N/A</span>`:'')}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value" />
+      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;${_xwExceeds?'border-color:#EF4444;color:#EF4444;':''}" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value;showBriefing()" />
       <span style="color:#94A3B8;font-size:12px;">kt</span>
     </div>
-    ${(state.sessionMeteo.crosswind&&parseInt(state.sessionMeteo.crosswind)>29)?'<div style="font-size:10px;color:#EF4444;margin-top:3px;">⚠️ '+(_lang==='en'?'Exceeds B737 XWind limit (29kt)':'Dépasse limite XWind B737 (29kt)')+'</div>':''}
+    ${_xwExceeds?`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">⚠️ ${_lang==='en'?'EXCEEDS limit ('+_xwLimit+'kt) — OPS NOT ALLOWED':'DÉPASSE limite ('+_xwLimit+'kt) — OPS INTERDITES'}</div>`:''}
+    ${_xwNA?`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">🚫 ${_lang==='en'?'NIL BRAKING — Operations NOT authorized':'FREINAGE NUL — Opérations NON autorisées'}</div>`:''}
   </div>
   <div>
     <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CEILING':'PLAFOND'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value" />
+      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value;showBriefing()" />
       <span style="color:#94A3B8;font-size:12px;">ft</span>
     </div>
   </div>
   <div>
     <div style="font-size:10px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'VISIBILITY / RVR':'VISIBILITÉ / RVR'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value" />
+      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value;showBriefing()" />
       <span style="color:#94A3B8;font-size:12px;">m</span>
     </div>
   </div>
+</div>
+${_lvoInfo?`<div style="margin:0 10px 10px;padding:8px 10px;border-radius:8px;background:${_lvoInfo.color}11;border:1px solid ${_lvoInfo.color}44;display:flex;align-items:center;gap:8px;">
+  <span style="font-size:18px;">${_lvoInfo.color==='#10B981'?'✅':(_lvoInfo.color==='#06B6D4'?'🔵':(_lvoInfo.color==='#F59E0B'?'🟡':'🔴'))}</span>
+  <div style="flex:1;"><div style="font-size:11px;font-weight:800;color:${_lvoInfo.color};">${_lvoInfo.cat}</div><div style="font-size:10px;color:#94A3B8;">${_lvoInfo.desc}</div></div>
+  ${(_lvoInfo.cat!==(_lang==='en'?'NORMAL / CAT I':'NORMAL / CAT I')&&_lvoInfo.cat!=='LVP PREP'&&_lvoInfo.cat!==(_lang==='en'?'NORMAL / CAT I':'NORMAL / CAT I'))?`<div style="font-size:9px;color:#EF4444;font-weight:700;text-align:right;">LVO PROCEDURES<br>REQUIRED</div>`:''}
+</div>`:''}
+<div style="padding:10px 14px;border-top:1px solid #1E2530;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+    <div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1px;flex:1;">${_lang==='en'?'RUNWAY CONDITION (FCT B737 NG)':'ÉTAT PISTE (FCT B737 NG)'}</div>
+    <button onclick="state.sessionMeteo.runwayCondMode='talpa';state.sessionMeteo.runwayCond='';showBriefing()" style="padding:3px 8px;border-radius:5px;border:1px solid ${_rcMode==='talpa'?'#3B82F6':'#1E2530'};background:${_rcMode==='talpa'?'#3B82F622':'transparent'};color:${_rcMode==='talpa'?'#3B82F6':'#475569'};font-size:9px;font-weight:800;cursor:pointer;">TALPA/RCC</button>
+    <button onclick="state.sessionMeteo.runwayCondMode='notalpa';state.sessionMeteo.runwayCond='';showBriefing()" style="padding:3px 8px;border-radius:5px;border:1px solid ${_rcMode==='notalpa'?'#A78BFA':'#1E2530'};background:${_rcMode==='notalpa'?'#A78BFA22':'transparent'};color:${_rcMode==='notalpa'?'#A78BFA':'#475569'};font-size:9px;font-weight:800;cursor:pointer;">Non-TALPA</button>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;">
+    ${_rcRows.map(rc=>{
+      const lim = _rcMode==='talpa' ? _XWIND_TALPA[parseInt(rc.k)] : _XWIND_NOTALPA[rc.k];
+      const sel = _rcCond===rc.k;
+      const limColor = lim===null?'#EF4444':(lim>=25?'#10B981':(lim>=15?'#F59E0B':'#EF4444'));
+      return `<button onclick="state.sessionMeteo.runwayCond='${rc.k}';showBriefing()" style="padding:4px 7px;border-radius:6px;border:2px solid ${sel?(limColor):(limColor+'44')};background:${sel?limColor+'22':'transparent'};color:${sel?limColor:'#64748B'};font-size:9px;font-weight:800;cursor:pointer;text-align:center;min-width:52px;">
+        <div>${rc.l}</div>
+        <div style="font-size:8px;opacity:0.85;">${lim===null?'N/A':lim+'kt'}</div>
+      </button>`;
+    }).join('')}
+  </div>
+  <div style="margin-top:6px;font-size:9px;color:#475569;font-style:italic;">${_lang==='en'?'Source: Boeing FCT 737 NG — demonstrated max crosswind':'Source: Boeing FCT 737 NG — vent traversier max démontré'}</div>
 </div>
 </div>`;
 
@@ -12811,45 +12880,109 @@ function renderDebLOFT(el){
   const pilotLabel = (state.pilotRole||'CPT')+' — '+state.pilotName;
   const foLabel = state.foName ? ((state.foRole||'FO')+' — '+state.foName) : null;
 
-  const selfAssessHtml = (key, label, color) => `
-    <div style="background:${color}11;border:1px solid ${color}33;border-radius:9px;padding:10px 12px;margin-bottom:10px;">
-      <div style="font-size:10px;font-weight:800;color:${color};letter-spacing:1px;margin-bottom:8px;">${label}</div>
-      ${COMPS.map(c=>{
-        const val=(ln[key]&&ln[key][c.id])||0;
-        return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-          <span style="font-size:10px;font-weight:700;color:${c.color};width:38px;">${c.label}</span>
-          <div style="display:flex;gap:4px;flex:1;">${[1,2,3,4,5].map(v=>`
-            <button onclick="setLoftSelfAssess('${key}','${c.id}',${v})" style="flex:1;padding:5px 0;border-radius:4px;border:1px solid ${val===v?GC[v]:GC[v]+'33'};background:${val===v?GC[v]+'33':'transparent'};color:${val===v?GC[v]:'#334155'};font-size:11px;font-weight:800;cursor:pointer;">${v}</button>
-          `).join('')}</div>
-          ${val>0?`<span style="font-size:11px;font-weight:800;color:${GC[val]};">${val}</span>`:''}
-        </div>`;
-      }).join('')}
-    </div>`;
+  // Compute instructor's actual averages from closed exercises
+  function instrAvgs(csKey){
+    const ct={};
+    COMPETENCIES.forEach(c=>{ct[c.id]={total:0,count:0};});
+    (state.exercises||[]).filter(e=>e.closed).forEach(ex=>{
+      const cs=ex[csKey]||{};
+      Object.entries(cs).forEach(([cid,cd])=>{if(cd&&cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}});
+    });
+    const avgs={};
+    COMPETENCIES.forEach(c=>{avgs[c.id]=ct[c.id].count>0?parseFloat((ct[c.id].total/ct[c.id].count).toFixed(1)):0;});
+    return avgs;
+  }
+
+  const cptAvgs = instrAvgs('cs');
+  const foAvgs  = state.foName ? instrAvgs('csfo') : null;
+  const compareMode = state.loftCompareMode||false;
+
+  // Phase 2 — self-assessment panel (for pilot)
+  const selfPanel = (key, label, roleColor, iAvgs) => {
+    if(!compareMode){
+      // PILOT VIEW — just the self-assessment buttons
+      return `<div style="background:${roleColor}11;border:1px solid ${roleColor}33;border-radius:9px;padding:12px;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:800;color:${roleColor};letter-spacing:1px;margin-bottom:10px;">👤 ${label}</div>
+        ${COMPS.map(c=>{
+          const val=(ln[key]&&ln[key][c.id])||0;
+          return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <span style="font-size:10px;font-weight:800;color:${c.color};width:40px;flex-shrink:0;">${c.label}</span>
+            <div style="display:flex;gap:4px;flex:1;">
+              ${[1,2,3,4,5].map(v=>`<button onclick="setLoftSelfAssess('${key}','${c.id}',${v})" style="flex:1;padding:7px 0;border-radius:5px;border:1px solid ${val===v?GC[v]:GC[v]+'44'};background:${val===v?GC[v]+'33':'transparent'};color:${val===v?GC[v]:'#334155'};font-size:12px;font-weight:900;cursor:pointer;">${v}</button>`).join('')}
+            </div>
+            ${val>0?`<span style="font-size:13px;font-weight:900;color:${GC[val]};width:20px;text-align:right;">${val}</span>`:'<span style="width:20px;"></span>'}
+          </div>`;
+        }).join('')}
+      </div>`;
+    } else {
+      // COMPARISON VIEW — pilot vs instructor side by side
+      return `<div style="background:${roleColor}11;border:1px solid ${roleColor}33;border-radius:9px;padding:12px;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:800;color:${roleColor};letter-spacing:1px;margin-bottom:10px;">👤 ${label}</div>
+        <div style="display:grid;grid-template-columns:40px 1fr 1fr 1fr;gap:0;margin-bottom:6px;">
+          <div></div>
+          <div style="font-size:9px;font-weight:800;color:#64748B;text-align:center;padding:4px;">PILOTE</div>
+          <div style="font-size:9px;font-weight:800;color:#64748B;text-align:center;padding:4px;">INSTRUCTEUR</div>
+          <div style="font-size:9px;font-weight:800;color:#64748B;text-align:center;padding:4px;">ÉCART</div>
+        </div>
+        ${COMPS.map(c=>{
+          const pVal=(ln[key]&&ln[key][c.id])||0;
+          const iVal=iAvgs[c.id]||0;
+          const diff=pVal>0&&iVal>0?Math.abs(pVal-iVal):null;
+          const diffColor=diff===null?'#475569':diff===0?'#10B981':diff===1?'#F59E0B':'#EF4444';
+          const diffLabel=diff===null?'—':diff===0?'✓':diff===1?'+1':'+'+Math.round(diff);
+          const bg=diff!==null&&diff>=2?'#EF444411':diff===1?'#F59E0B08':'transparent';
+          return `<div style="display:grid;grid-template-columns:40px 1fr 1fr 1fr;gap:0;padding:5px 0;border-bottom:1px solid #1E2530;background:${bg};border-radius:4px;margin-bottom:2px;">
+            <span style="font-size:10px;font-weight:800;color:${c.color};align-self:center;">${c.label}</span>
+            <div style="text-align:center;">
+              ${pVal>0?`<span style="font-size:18px;font-weight:900;color:${GC[pVal]};">${pVal}</span>`:'<span style="color:#334155;font-size:14px;">—</span>'}
+            </div>
+            <div style="text-align:center;">
+              ${iVal>0?`<span style="font-size:18px;font-weight:900;color:${GC[Math.round(iVal)]};">${iVal}</span>`:'<span style="color:#334155;font-size:14px;">—</span>'}
+            </div>
+            <div style="text-align:center;">
+              <span style="font-size:13px;font-weight:800;color:${diffColor};">${diffLabel}</span>
+            </div>
+          </div>`;
+        }).join('')}
+        <div style="display:flex;gap:10px;margin-top:8px;font-size:10px;color:#475569;">
+          <span>🟢 Accord</span><span>🟡 Écart 1pt</span><span>🔴 Écart ≥2pts</span>
+        </div>
+      </div>`;
+    }
+  };
 
   el.innerHTML = `
 <div class="card" style="margin-bottom:12px;border-left:3px solid #06B6D4;">
   <div class="section-lbl" style="color:#06B6D4;margin-bottom:10px;">${_lang==='en'?'PHASE 1 — KEY EVENTS':'PHASE 1 — ÉVÉNEMENTS CLÉS'}</div>
-  <textarea class="note-area" style="height:80px;" placeholder="${_lang==='en'?'List the main events of the session (threats, errors, decisions, key moments)...':'Listez les événements principaux de la session (menaces, erreurs, décisions, moments-clés)...'}" onchange="state.loftNotes.events=this.value">${ln.events||''}</textarea>
+  <textarea class="note-area" style="height:80px;" placeholder="${_lang==='en'?'List the main events of the session...':'Événements principaux de la session...'}" onchange="state.loftNotes.events=this.value">${ln.events||''}</textarea>
 </div>
 
 <div class="card" style="margin-bottom:12px;border-left:3px solid #3B82F6;">
-  <div class="section-lbl" style="color:#3B82F6;margin-bottom:10px;">${_lang==='en'?'PHASE 2 — SELF-ASSESSMENT':'PHASE 2 — AUTO-ÉVALUATION'}</div>
-  ${selfAssessHtml('selfAssessCpt', pilotLabel, '#3B82F6')}
-  ${foLabel ? selfAssessHtml('selfAssessFo', foLabel, '#10B981') : ''}
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <div class="section-lbl" style="color:#3B82F6;margin:0;">${_lang==='en'?'PHASE 2 — SELF-ASSESSMENT':'PHASE 2 — AUTO-ÉVALUATION'}</div>
+    ${!compareMode
+      ? `<button onclick="state.loftCompareMode=true;renderDebContent()" style="padding:8px 14px;border-radius:8px;background:#3B82F622;border:2px solid #3B82F6;color:#3B82F6;font-size:11px;font-weight:800;cursor:pointer;">👁 ${_lang==='en'?'SHOW MY GRADES':'VOIR MON ÉVALUATION'}</button>`
+      : `<button onclick="state.loftCompareMode=false;renderDebContent()" style="padding:8px 14px;border-radius:8px;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:11px;font-weight:800;cursor:pointer;">✎ ${_lang==='en'?'BACK TO SELF-ASSESS':'RETOUR AUTO-EVAL'}</button>`
+    }
+  </div>
+  ${!compareMode?`<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:7px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:#F59E0B;">📋 ${_lang==='en'?'Show this page to the trainee — ask them to rate each competency 1 to 5, then press "SHOW MY GRADES"':'Montrez cette page au stagiaire — demandez-lui de noter chaque compétence de 1 à 5, puis appuyez sur "VOIR MON ÉVALUATION"'}</div>`:''}
+  ${compareMode?`<div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:8px 12px;margin-bottom:10px;font-size:11px;color:#10B981;">✓ ${_lang==='en'?'Comparison mode — your grades (Instructor) vs trainee self-assessment (Pilot). Red = gap ≥ 2 points → key discussion point':'Mode comparaison — vos notes (Instructeur) vs auto-évaluation (Pilote). Rouge = écart ≥ 2pts → point de discussion prioritaire'}</div>`:''}
+  ${selfPanel('selfAssessCpt', pilotLabel, '#3B82F6', cptAvgs)}
+  ${foLabel ? selfPanel('selfAssessFo', foLabel, '#10B981', foAvgs||{}) : ''}
 </div>
 
 <div class="card" style="margin-bottom:12px;border-left:3px solid #EF4444;">
   <div class="section-lbl" style="color:#EF4444;margin-bottom:8px;">${_lang==='en'?'PHASE 3 — TEM ANALYSIS':'PHASE 3 — ANALYSE TEM'}</div>
-  <div style="font-size:12px;color:#94A3B8;">${_lang==='en'?'→ See TEM tab for detailed threat/error data':'→ Voir onglet TEM pour les données menaces/erreurs détaillées'}</div>
+  <div style="font-size:12px;color:#94A3B8;">${_lang==='en'?'→ See TEM tab for detailed threat/error data':'→ Voir onglet TEM pour les données menaces/erreurs'}</div>
 </div>
 
 <div class="card" style="margin-bottom:12px;border-left:3px solid #8B5CF6;">
   <div class="section-lbl" style="color:#8B5CF6;margin-bottom:8px;">${_lang==='en'?'PHASE 4 — CRM ANALYSIS':'PHASE 4 — ANALYSE CRM'}</div>
-  <div style="font-size:12px;color:#94A3B8;">${_lang==='en'?'→ See CRM tab for crew resource management analysis':'→ Voir onglet CRM pour l\'analyse des ressources équipage'}</div>
+  <div style="font-size:12px;color:#94A3B8;">${_lang==='en'?'→ See CRM tab for crew resource management analysis':'→ Voir onglet CRM pour l\'analyse CRM'}</div>
 </div>
 
 <div class="card" style="margin-bottom:12px;border-left:3px solid #F59E0B;">
-  <div class="section-lbl" style="color:#F59E0B;margin-bottom:10px;">${_lang==='en'?'PHASE 5 — KEY LEARNING POINTS (3 max)':'PHASE 5 — POINTS D\'APPRENTISSAGE (3 max)'}</div>
+  <div class="section-lbl" style="color:#F59E0B;margin-bottom:10px;">${_lang==='en'?'PHASE 5 — KEY LEARNING POINTS':'PHASE 5 — POINTS D\'APPRENTISSAGE'}</div>
   ${[0,1,2].map(i=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:8px;">
     <div style="width:24px;height:24px;border-radius:50%;background:#F59E0B;color:#0A0C10;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i+1}</div>
     <input class="form-input" style="flex:1;" placeholder="${_lang==='en'?'Learning point '+(i+1)+'...':'Point d\'apprentissage '+(i+1)+'...'}" value="${(ln.learningPoints&&ln.learningPoints[i])||''}" onchange="state.loftNotes.learningPoints[${i}]=this.value"/>
@@ -13092,7 +13225,8 @@ state.interventions=[];
 state.flags=[];
 state.voiceNotes=[];
 state.sessionObjectives={};
-state.sessionMeteo={crosswind:'',ceiling:'',visibility:'',wind:''};
+state.sessionMeteo={crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''};
+state.loftCompareMode=false;
 state.loftNotes={events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}};
 state.rapportNotes='';
 if(window._mediaRec&&window._mediaRec.state==='recording'){window._mediaRec.stop();}
