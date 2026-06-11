@@ -13324,8 +13324,8 @@ function renderDebRapport(el){
   <div style="display:flex;flex-direction:column;gap:10px;">
     ${[
       {key:'tri',label:_lang==='en'?'TRI / INSTRUCTOR':'TRI / INSTRUCTEUR',name:instructor,color:'#8B5CF6'},
-      {key:'cpt',label:(state.pilotRole||'CPT')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.pilotName||'—',color:'#3B82F6'},
-      ...(state.foName?[{key:'fo',label:(state.foRole||'FO')+' — '+_lang==='en'?'TRAINEE':'STAGIAIRE',name:state.foName,color:'#10B981'}]:[])
+      {key:'cpt',label:(state.pilotRole||'CPT')+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE'),name:state.pilotName||'—',color:(state.pilotRole||'CPT')==='TRI'?'#F59E0B':(state.pilotRole||'CPT')==='FO'?'#10B981':'#3B82F6'},
+      ...(state.foName?[{key:'fo',label:(state.foRole||'FO')+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE'),name:state.foName,color:(state.foRole||'FO')==='TRI'?'#F59E0B':(state.foRole||'FO')==='FO'?'#10B981':'#3B82F6'}]:[])
     ].map(s=>`
     <div style="border:1px solid ${s.color}33;border-radius:8px;overflow:hidden;">
       <div style="background:${s.color}11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
