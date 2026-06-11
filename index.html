@@ -542,6 +542,25 @@ Identifiant ou mot de passe incorrect
     <div id="timer-limit-val" style="font-family:ui-monospace,monospace;font-size:22px;font-weight:900;color:#64748B;letter-spacing:2px;min-width:52px;text-align:center;transition:color 0.2s,text-shadow 0.2s;">--:--</div>
   </div>
 </div>
+<!-- Intervention Model Bar -->
+<div id="intervention-bar" style="display:flex;gap:4px;padding:5px 10px;background:#050810;border-bottom:1px solid #1E2530;flex-shrink:0;align-items:stretch;">
+  <button onclick="addIntervention('ask')" style="flex:1;padding:5px 2px;border-radius:7px;background:#10B98122;border:1px solid #10B98188;color:#10B981;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟢 ASK<br><span id="cnt-ask" style="font-size:15px;font-weight:900;">0</span></button>
+  <button onclick="addIntervention('recommend')" style="flex:1;padding:5px 2px;border-radius:7px;background:#F9731622;border:1px solid #F9731688;color:#F97316;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟠 REC<br><span id="cnt-recommend" style="font-size:15px;font-weight:900;">0</span></button>
+  <button onclick="addIntervention('takectl')" style="flex:1;padding:5px 2px;border-radius:7px;background:#EF444422;border:1px solid #EF444488;color:#EF4444;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🔴 CTL<br><span id="cnt-takectl" style="font-size:15px;font-weight:900;">0</span></button>
+  <button onclick="showFlagModal()" style="flex-shrink:0;padding:5px 10px;border-radius:7px;background:#F59E0B22;border:1px solid #F59E0B88;color:#F59E0B;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;">🚩 FLAG<br><span id="cnt-flags" style="font-size:15px;font-weight:900;">0</span></button>
+  <button onclick="startVoiceNote()" id="mic-btn" style="flex-shrink:0;padding:5px 10px;border-radius:7px;background:#8B5CF622;border:1px solid #8B5CF688;color:#8B5CF6;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;">🎙 VOICE<br><span style="font-size:15px;font-weight:900;" id="cnt-voice">0</span></button>
+</div>
+<!-- Flag quick modal -->
+<div id="modal-flag" style="display:none;position:fixed;inset:0;z-index:9200;background:#000000AA;align-items:center;justify-content:center;">
+  <div style="background:#0F1520;border:2px solid #F59E0B;border-radius:14px;padding:20px;margin:20px;width:calc(100% - 40px);max-width:400px;">
+    <div style="font-size:14px;font-weight:800;color:#F59E0B;margin-bottom:12px;">🚩 FLAG — <span id="flag-modal-ex" style="color:#CBD5E1;font-weight:700;"></span></div>
+    <input id="flag-input" class="form-input" style="width:100%;font-size:14px;margin-bottom:12px;" placeholder="Note rapide (optionnel)..."/>
+    <div style="display:flex;gap:8px;">
+      <button onclick="addFlag()" style="flex:1;padding:11px;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;">🚩 MARQUER</button>
+      <button onclick="document.getElementById('modal-flag').style.display='none'" style="padding:11px 18px;background:transparent;border:1px solid #334155;color:#64748B;border-radius:8px;font-size:13px;cursor:pointer;">✕</button>
+    </div>
+  </div>
+</div>
 <div class="scroll" id="ex-content" style="padding:13px;"></div>
 <div class="bottom-bar" style="display:flex;gap:8px;">
 <button class="btn btn-danger" style="padding:13px;font-size:13px;flex-shrink:0;" onclick="confirmDeleteEx()">🗑</button>
@@ -645,6 +664,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab" onclick="debTab('crm',this)" style="color:#8B5CF6;">CRM</button>
 <button class="tab" onclick="debTab('questionnaire',this)">Questionnaire</button>
 <button class="tab" id="deb-tab-tricheck" onclick="debTab('tricheck',this)" style="color:#F59E0B;display:none;">TRI CHECK</button>
+<button class="tab" id="deb-tab-events" onclick="debTab('events',this)" style="color:#F59E0B;">Events</button>
 <button class="tab" onclick="debTab('conclusion',this)">Conclusion</button>
 </div>
 <div class="scroll" id="deb-content" style="padding:14px;"></div>
@@ -848,7 +868,7 @@ Identifiant ou mot de passe incorrect
 <!-- SOMMAIRE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — VOS 12 CHAPITRES</div>
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — 13 CHAPITRES</div>
   <div style="display:flex;flex-direction:column;gap:6px;">
     <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">1 · Démarrage en 4 étapes</span>
     <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">2 · Grille de notation CBTA</span>
@@ -863,6 +883,7 @@ Identifiant ou mot de passe incorrect
     <span style="background:#F59E0B22;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">10 · Astuces Pro &amp; Raccourcis</span>
     <span style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">⚖️ 11 · Notation Juste</span>
     <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">📡 12 · Mode Offline</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">🆕 13 · Nouvelles Fonctions</span>
   </div>
 </div>
 
@@ -1999,6 +2020,53 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPITRE 13 — NOUVELLES FONCTIONS -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="guide-sec" style="background:#141B26;border:2px solid #10B98155;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🆕 CHAPITRE 13 — NOUVELLES FONCTIONS</div>
+
+<!-- Intervention Model Tracker -->
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Barre d'interventions permanente visible pendant chaque exercice. Enregistre chaque action de l'instructeur avec horodatage et nom de l'exercice.</div>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#94A3B8;">Question posée au stagiaire — intervention douce</span></div>
+    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟠 REC</span><span style="font-size:12px;color:#94A3B8;">Recommandation verbale — guidage actif</span></div>
+    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🔴 CTL</span><span style="font-size:12px;color:#94A3B8;">Prise de contrôle — intervention physique</span></div>
+  </div>
+  <div style="margin-top:8px;font-size:11px;color:#64748B;">→ Les compteurs sont visibles en temps réel. L'onglet <strong style="color:#F59E0B;">Events</strong> du débrief affiche la chronologie complète.</div>
+</div>
+
+<!-- Flag / Marqueur -->
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">🚩 MARQUEUR D'ÉVÉNEMENT (FLAG)</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Marque instantanément un moment-clé de la séance avec une note optionnelle. Idéal pour signaler une erreur, une bonne décision ou tout événement à revoir pendant le débrief.</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Utilisation :</strong> Appuyer sur <strong style="color:#F59E0B;">🚩 FLAG</strong> → saisir une note rapide (optionnel) → <strong style="color:#F59E0B;">MARQUER</strong>. Le marqueur est enregistré avec le temps écoulé et l'exercice en cours.</div>
+</div>
+
+<!-- Voice Notes -->
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#8B5CF6;letter-spacing:1.5px;margin-bottom:8px;">🎙 NOTES VOCALES</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Dictée vocale hands-free pendant la séance. L'app utilise la reconnaissance vocale du système (Safari/Chrome). Le texte reconnu est sauvegardé automatiquement avec horodatage.</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Utilisation :</strong> Appuyer sur <strong style="color:#8B5CF6;">🎙 VOICE</strong> → parler → l'app transcrit et sauvegarde. Appuyer à nouveau pour arrêter. <em>Note : nécessite l'autorisation micro sur l'appareil.</em></div>
+</div>
+
+<!-- Conclusion Templates -->
+<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;">
+  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">📝 MODÈLES DE CONCLUSION</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">5 modèles de conclusion pré-rédigés disponibles dans l'onglet <strong style="color:#F1F5F9;">Conclusion</strong> du débrief. Un clic applique le texte dans la zone de note libre.</div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;">
+    <span style="background:#3B82F622;color:#3B82F6;border:1px solid #3B82F666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">EXEMPLAIRE</span>
+    <span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">AU-DESSUS</span>
+    <span style="background:#F59E0B22;color:#F59E0B;border:1px solid #F59E0B66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">STANDARD</span>
+    <span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">SOUS-STANDARD</span>
+    <span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">INSATISFAISANT</span>
+  </div>
+  <div style="margin-top:8px;font-size:11px;color:#64748B;">→ Le texte peut être modifié librement après application du modèle.</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
 <!-- RÉFÉRENCE RAPIDE — SECTIONS COMPACTES -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#0A0D1A;border:1px solid #334155;border-radius:10px;padding:10px 14px;margin-bottom:8px;margin-top:4px;">
@@ -2606,7 +2674,7 @@ Identifiant ou mot de passe incorrect
 <!-- TABLE OF CONTENTS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 TABLE OF CONTENTS — YOUR 12 CHAPTERS</div>
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 TABLE OF CONTENTS — 13 CHAPTERS</div>
   <div style="display:flex;flex-direction:column;gap:6px;">
     <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">1 · 4-Step Quick Start</span>
     <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">2 · CBTA Grading Scale</span>
@@ -2621,6 +2689,7 @@ Identifiant ou mot de passe incorrect
     <span style="background:#F59E0B22;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">10 · Pro Tips &amp; Shortcuts</span>
     <span style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">⚖️ 11 · Fair Grading</span>
     <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">📡 12 · Offline Mode</span>
+    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">🆕 13 · New Features</span>
   </div>
 </div>
 
@@ -3687,6 +3756,53 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 13 — NEW FEATURES -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="guide-sec" style="background:#141B26;border:2px solid #10B98155;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+<div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🆕 CHAPTER 13 — NEW FEATURES</div>
+
+<!-- Intervention Model Tracker -->
+<div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">A permanent intervention bar visible during every exercise. Records each instructor action with a timestamp and exercise name.</div>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#94A3B8;">Question posed to the trainee — soft intervention</span></div>
+    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟠 REC</span><span style="font-size:12px;color:#94A3B8;">Verbal recommendation — active guidance</span></div>
+    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🔴 CTL</span><span style="font-size:12px;color:#94A3B8;">Taking control — physical intervention</span></div>
+  </div>
+  <div style="margin-top:8px;font-size:11px;color:#64748B;">→ Counters are updated in real time. The <strong style="color:#F59E0B;">Events</strong> tab in the debrief shows the full timeline.</div>
+</div>
+
+<!-- Flag / Event Marker -->
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">🚩 EVENT FLAG</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Instantly marks a key moment during the session with an optional note. Ideal for flagging an error, a good decision, or any event to revisit during the debrief.</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Usage:</strong> Tap <strong style="color:#F59E0B;">🚩 FLAG</strong> → enter a quick note (optional) → <strong style="color:#F59E0B;">MARK</strong>. The flag is saved with elapsed time and the current exercise name.</div>
+</div>
+
+<!-- Voice Notes -->
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#8B5CF6;letter-spacing:1.5px;margin-bottom:8px;">🎙 VOICE NOTES</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Hands-free voice dictation during the session. The app uses the device's built-in speech recognition (Safari/Chrome). Transcribed text is saved automatically with a timestamp.</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Usage:</strong> Tap <strong style="color:#8B5CF6;">🎙 VOICE</strong> → speak → the app transcribes and saves. Tap again to stop. <em>Note: requires microphone permission on the device.</em></div>
+</div>
+
+<!-- Conclusion Templates -->
+<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;">
+  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">📝 CONCLUSION TEMPLATES</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">5 pre-written conclusion templates available in the <strong style="color:#F1F5F9;">Conclusion</strong> tab of the debrief. One tap applies the text to the free-note area.</div>
+  <div style="display:flex;flex-wrap:wrap;gap:5px;">
+    <span style="background:#3B82F622;color:#3B82F6;border:1px solid #3B82F666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">EXEMPLARY</span>
+    <span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">ABOVE STANDARD</span>
+    <span style="background:#F59E0B22;color:#F59E0B;border:1px solid #F59E0B66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">STANDARD</span>
+    <span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">BELOW STANDARD</span>
+    <span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">UNACCEPTABLE</span>
+  </div>
+  <div style="margin-top:8px;font-size:11px;color:#64748B;">→ The text can be freely edited after applying a template.</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
 <!-- QUICK REFERENCE — COMPACT SECTIONS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#0A0D1A;border:1px solid #334155;border-radius:10px;padding:10px 14px;margin-bottom:8px;margin-top:4px;">
@@ -4466,11 +4582,21 @@ const STRINGS = {
     deb_strengths: 'Points forts',
     deb_improvements: 'À améliorer',
     deb_conclusion: 'Conclusion',
+    deb_events: 'Events',
     deb_generate: 'Générer débrief',
     deb_print: 'PDF',
     deb_email: 'EMAIL',
     deb_json: 'JSON',
     deb_close_session: 'FIN DE SESSION',
+    int_ask: 'ASK', int_recommend: 'RECOMMANDER', int_takectl: 'PRENDRE CTL',
+    int_flag: 'MARQUEUR', int_voice: 'NOTE VOCALE',
+    tpl_exemplary: 'EXEMPLAIRE', tpl_above: 'AU-DESSUS', tpl_standard: 'STANDARD',
+    tpl_below: 'SOUS-STANDARD', tpl_unsat: 'INSATISFAISANT',
+    tpl_text_5: 'Performance exemplaire. Le pilote a démontré une maîtrise totale des compétences évaluées avec une gestion proactive des menaces et des prises de décision de haute qualité. Aptitude confirmée. Prochaine session : OPC standard.',
+    tpl_text_4: 'Performance au-dessus du standard. Les compétences clés sont bien maîtrisées avec quelques axes d\'amélioration mineurs. Bon niveau CRM. Qualification recommandée. Continuer à renforcer les compétences identifiées.',
+    tpl_text_3: 'Performance standard. Le pilote répond aux exigences minimales avec une maîtrise acceptable des procédures. Quelques points à consolider. Qualification accordée sous réserve de suivi lors de la prochaine session.',
+    tpl_text_2: 'Performance sous-standard. Des lacunes significatives ont été observées. Une attention particulière est requise sur les points faibles identifiés. Une session supplémentaire est recommandée avant nouvelle évaluation.',
+    tpl_text_1: 'Performance insatisfaisante. Le pilote n\'a pas atteint les standards minimaux requis. Une requalification complète est nécessaire avec un plan de formation adapté. 2ème tentative requise.',
     hist_title: 'TABLEAU DE BORD',
     hist_dashboard: 'Dashboard',
     hist_sessions: 'Sessions',
@@ -4799,6 +4925,16 @@ const STRINGS = {
     unsaved_warning: 'Unsaved data will be lost.',
     back_list: 'List',
     back_list_arrow: '← List',
+    deb_events: 'Events',
+    int_ask: 'ASK', int_recommend: 'RECOMMEND', int_takectl: 'TAKE CONTROL',
+    int_flag: 'FLAG', int_voice: 'VOICE NOTE',
+    tpl_exemplary: 'EXEMPLARY', tpl_above: 'ABOVE STANDARD', tpl_standard: 'STANDARD',
+    tpl_below: 'BELOW STANDARD', tpl_unsat: 'UNACCEPTABLE',
+    tpl_text_5: 'Exemplary performance. The pilot demonstrated outstanding mastery of all assessed competencies with proactive threat management and high-quality decision-making. Proficiency confirmed. Next session: standard OPC.',
+    tpl_text_4: 'Above-standard performance. Key competencies are well-mastered with minor improvement areas. Good CRM level. Qualification recommended. Continue reinforcing identified competencies.',
+    tpl_text_3: 'Standard performance. The pilot meets minimum requirements with acceptable mastery of procedures. A few points to consolidate. Qualification granted subject to monitoring during the next session.',
+    tpl_text_2: 'Below-standard performance. Significant gaps were observed. Specific attention is required on identified weaknesses. An additional session is recommended before re-assessment.',
+    tpl_text_1: 'Unsatisfactory performance. The pilot did not meet the minimum required standards. A full requalification is necessary with an adapted training plan. 2nd attempt required.',
   }
 };
 
@@ -7418,7 +7554,8 @@ currentExTab:"eval", currentDebTab:"scores",
 catFilter:"ALL", phaseFilter:"ALL",
 debRootCauses:{}, debNotes:{}, debConclNotes:"", sessionCRM:{}, sessionCRMNotes:"",
 triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
-profCheck: null
+profCheck: null,
+interventions:[], flags:[], voiceNotes:[]
 };
 
 // ── CHRONOMETER ---───────────────────────────────────────────────────────────
@@ -10291,6 +10428,7 @@ else if(tab==="tem") renderDebTEM(el);
 else if(tab==="crm") renderDebCRM(el);
 else if(tab==="questionnaire") renderDebQuestionnaire(el);
 else if(tab==="tricheck") renderDebTRICheck(el);
+else if(tab==="events") renderDebEvents(el);
 else if(tab==="conclusion") renderDebConclusion(el);
 }
 
@@ -12156,12 +12294,189 @@ ${foSt&&foSt.globalAvg>0?`<button onclick="showRecoModal('fo')" style="width:100
 
 <div class="card" style="margin-bottom:12px;">
 <div class="section-lbl" style="margin-bottom:8px;">${_lang==='en'?'INSTRUCTOR FREE NOTE':'NOTE LIBRE INSTRUCTEUR'}</div>
-<textarea class="note-area" style="height:90px;" placeholder="${_lang==='en'?'Recommendation for next session, points to work on line, qualification decision...':'Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification...'}" onchange="state.debConclNotes=this.value">${state.debConclNotes}</textarea>
+<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+${[
+  {key:'tpl_text_5',label:t('tpl_exemplary'),color:'#3B82F6'},
+  {key:'tpl_text_4',label:t('tpl_above'),color:'#10B981'},
+  {key:'tpl_text_3',label:t('tpl_standard'),color:'#F59E0B'},
+  {key:'tpl_text_2',label:t('tpl_below'),color:'#F97316'},
+  {key:'tpl_text_1',label:t('tpl_unsat'),color:'#EF4444'},
+].map(tp=>`<button onclick="applyConclTemplate('${tp.key}')" style="flex:1;min-width:80px;padding:6px 4px;border-radius:7px;background:${tp.color}22;border:1px solid ${tp.color}88;color:${tp.color};font-size:9px;font-weight:800;cursor:pointer;letter-spacing:0.5px;">${tp.label}</button>`).join('')}
+</div>
+<textarea id="concl-note-area" class="note-area" style="height:90px;" placeholder="${_lang==='en'?'Recommendation for next session, points to work on line, qualification decision...':'Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification...'}" onchange="state.debConclNotes=this.value">${state.debConclNotes}</textarea>
 </div>
 
 <div style="text-align:center;font-size:12px;color:var(--mut);padding:10px 0;">
 B737 NG CBTA TRI · QRH Rev55 · FCTM Rev25
 </div>`;
+}
+
+// ── INTERVENTION MODEL ──────────────────────────────────────────────────────
+function addIntervention(type){
+  const ex = state.exercises[state.activeIdx];
+  const exName = ex ? ex.title : '?';
+  const ts = Date.now();
+  const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
+  state.interventions.push({type, exName, ts, elapsed});
+  updateInterventionBar();
+  const colors={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
+  const labels={ask:'ASK',recommend:'REC',takectl:'CTL'};
+  showToast(`${labels[type]||type} — ${exName}`);
+}
+
+function updateInterventionBar(){
+  const counts={ask:0,recommend:0,takectl:0};
+  state.interventions.forEach(i=>{ if(counts[i.type]!==undefined) counts[i.type]++; });
+  const eAsk=document.getElementById('cnt-ask');       if(eAsk) eAsk.textContent=counts.ask;
+  const eRec=document.getElementById('cnt-recommend'); if(eRec) eRec.textContent=counts.recommend;
+  const eCtl=document.getElementById('cnt-takectl');   if(eCtl) eCtl.textContent=counts.takectl;
+  const eFlag=document.getElementById('cnt-flags');    if(eFlag) eFlag.textContent=state.flags.length;
+  const eVoice=document.getElementById('cnt-voice');   if(eVoice) eVoice.textContent=state.voiceNotes.length;
+}
+
+function showFlagModal(){
+  const ex = state.exercises[state.activeIdx];
+  const el = document.getElementById('flag-modal-ex');
+  if(el) el.textContent = ex ? ex.title : '—';
+  document.getElementById('flag-input').value='';
+  document.getElementById('modal-flag').style.display='flex';
+  setTimeout(()=>document.getElementById('flag-input').focus(),100);
+}
+
+function addFlag(){
+  const note = document.getElementById('flag-input').value.trim();
+  const ex = state.exercises[state.activeIdx];
+  const ts = Date.now();
+  const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
+  state.flags.push({note, exName: ex?ex.title:'?', ts, elapsed});
+  document.getElementById('modal-flag').style.display='none';
+  updateInterventionBar();
+  showToast('🚩 '+(note||(_lang==='en'?'Flag added':'Marqueur ajouté')));
+}
+
+function startVoiceNote(){
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SpeechRec){ showToast(_lang==='en'?'Voice recognition not available on this device':'Reconnaissance vocale non disponible sur cet appareil'); return; }
+  const btn = document.getElementById('mic-btn');
+  if(window._voiceRec){
+    window._voiceRec.stop();
+    window._voiceRec=null;
+    if(btn){ btn.style.background='#8B5CF622'; btn.style.boxShadow=''; }
+    return;
+  }
+  const rec = new SpeechRec();
+  rec.lang = _lang==='fr'?'fr-FR':'en-US';
+  rec.interimResults=false;
+  rec.maxAlternatives=1;
+  if(btn){ btn.style.background='#8B5CF655'; btn.style.boxShadow='0 0 10px #8B5CF6'; }
+  rec.onresult=(e)=>{
+    const text = e.results[0][0].transcript;
+    const ex = state.exercises[state.activeIdx];
+    const ts = Date.now();
+    const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
+    state.voiceNotes.push({text, exName: ex?ex.title:'?', ts, elapsed});
+    updateInterventionBar();
+    showToast('🎙 '+text);
+  };
+  rec.onerror=(e)=>{ showToast(_lang==='en'?'Voice error: '+e.error:'Erreur voix: '+e.error); };
+  rec.onend=()=>{
+    window._voiceRec=null;
+    if(btn){ btn.style.background='#8B5CF622'; btn.style.boxShadow=''; }
+  };
+  window._voiceRec=rec;
+  rec.start();
+  showToast(_lang==='en'?'🎙 Listening...':'🎙 Enregistrement...');
+}
+
+function fmtElapsed(sec){
+  if(!sec&&sec!==0) return '--:--';
+  const m=Math.floor(sec/60), s=sec%60;
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function renderDebEvents(el){
+  const totalInt = state.interventions.length;
+  const totalFlags = state.flags.length;
+  const totalVoice = state.voiceNotes.length;
+  const counts={ask:0,recommend:0,takectl:0};
+  state.interventions.forEach(i=>{if(counts[i.type]!==undefined) counts[i.type]++;});
+
+  const intColorsMap={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
+  const intLabelMap={
+    ask: _lang==='en'?'ASK':'ASK',
+    recommend: _lang==='en'?'RECOMMEND':'RECOMMANDER',
+    takectl: _lang==='en'?'TAKE CONTROL':'PRENDRE CTL'
+  };
+
+  const intRows = state.interventions.map((iv,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
+      <span style="background:${intColorsMap[iv.type]||'#3B82F6'}22;color:${intColorsMap[iv.type]||'#3B82F6'};border:1px solid ${intColorsMap[iv.type]||'#3B82F6'}66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 7px;">${intLabelMap[iv.type]||iv.type}</span>
+      <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;">${fmtElapsed(iv.elapsed)}</span>
+      <span style="font-size:12px;color:#CBD5E1;flex:1;">${iv.exName}</span>
+    </div>`).join('');
+
+  const flagRows = state.flags.map((f,i)=>`
+    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
+      <span style="color:#F59E0B;font-size:14px;">🚩</span>
+      <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;">${fmtElapsed(f.elapsed)}</span>
+      <span style="font-size:12px;color:#CBD5E1;flex:1;">${f.exName}${f.note?' — '+f.note:''}</span>
+    </div>`).join('');
+
+  const voiceRows = state.voiceNotes.map((v,i)=>`
+    <div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
+      <span style="color:#8B5CF6;font-size:14px;">🎙</span>
+      <span style="font-size:11px;color:#8B5CF6;font-weight:700;font-family:monospace;flex-shrink:0;">${fmtElapsed(v.elapsed)}</span>
+      <div style="flex:1;"><div style="font-size:10px;color:#475569;margin-bottom:2px;">${v.exName}</div><div style="font-size:13px;color:#F1F5F9;line-height:1.5;">"${v.text}"</div></div>
+    </div>`).join('');
+
+  el.innerHTML=`
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+  <div class="card" style="text-align:center;border-top:3px solid #10B981;">
+    <div style="font-size:24px;font-weight:900;color:#10B981;">${counts.ask}</div>
+    <div style="font-size:10px;color:#10B981;font-weight:700;">ASK</div>
+  </div>
+  <div class="card" style="text-align:center;border-top:3px solid #F97316;">
+    <div style="font-size:24px;font-weight:900;color:#F97316;">${counts.recommend}</div>
+    <div style="font-size:10px;color:#F97316;font-weight:700;">${_lang==='en'?'RECOMMEND':'REC'}</div>
+  </div>
+  <div class="card" style="text-align:center;border-top:3px solid #EF4444;">
+    <div style="font-size:24px;font-weight:900;color:#EF4444;">${counts.takectl}</div>
+    <div style="font-size:10px;color:#EF4444;font-weight:700;">${_lang==='en'?'TAKE CTL':'PRENDRE CTL'}</div>
+  </div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+  <div class="card" style="text-align:center;border-top:3px solid #F59E0B;">
+    <div style="font-size:24px;font-weight:900;color:#F59E0B;">${totalFlags}</div>
+    <div style="font-size:10px;color:#F59E0B;font-weight:700;">${_lang==='en'?'FLAGS':'MARQUEURS'}</div>
+  </div>
+  <div class="card" style="text-align:center;border-top:3px solid #8B5CF6;">
+    <div style="font-size:24px;font-weight:900;color:#8B5CF6;">${totalVoice}</div>
+    <div style="font-size:10px;color:#8B5CF6;font-weight:700;">${_lang==='en'?'VOICE NOTES':'NOTES VOCALES'}</div>
+  </div>
+</div>
+
+${totalInt>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #3B82F6;">
+  <div class="section-lbl" style="color:#3B82F6;margin-bottom:8px;">${_lang==='en'?'INSTRUCTOR INTERVENTIONS':'INTERVENTIONS INSTRUCTEUR'} (${totalInt})</div>
+  ${intRows}
+</div>`:`<div class="card" style="margin-bottom:12px;text-align:center;color:#475569;font-size:13px;">${_lang==='en'?'No interventions recorded yet.':'Aucune intervention enregistrée.'}</div>`}
+
+${totalFlags>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #F59E0B;">
+  <div class="section-lbl" style="color:#F59E0B;margin-bottom:8px;">${_lang==='en'?'EVENT FLAGS':'MARQUEURS D\'ÉVÉNEMENTS'} (${totalFlags})</div>
+  ${flagRows}
+</div>`:''}
+
+${totalVoice>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #8B5CF6;">
+  <div class="section-lbl" style="color:#8B5CF6;margin-bottom:8px;">${_lang==='en'?'VOICE NOTES':'NOTES VOCALES'} (${totalVoice})</div>
+  ${voiceRows}
+</div>`:''}
+`;
+}
+
+function applyConclTemplate(key){
+  const txt = t(key);
+  state.debConclNotes = txt;
+  const el = document.getElementById('concl-note-area');
+  if(el){ el.value=txt; el.dispatchEvent(new Event('change')); }
 }
 
 function endSession(){
@@ -12189,6 +12504,9 @@ state.triCheckNotes="";
 state.triRecommendation="";
 state.triCheckObs={};
 state.profCheck=null;
+state.interventions=[];
+state.flags=[];
+state.voiceNotes=[];
 state.sessionStart=null;
 document.getElementById('inp-session').value='';
 document.getElementById('inp-cpt').value='';
