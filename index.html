@@ -2104,15 +2104,36 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Objectifs de séance EBT -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🎯 OBJECTIFS DE SÉANCE (EBT)</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Dans le briefing pré-session, définissez l'objectif pour chaque compétence ciblée :</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
-    <span style="background:#3B82F622;color:#3B82F6;border:1px solid #3B82F666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">MAINTENIR</span>
-    <span style="background:#F59E0B22;color:#F59E0B;border:1px solid #F59E0B66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">ACQUÉRIR</span>
-    <span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">AMÉLIORER</span>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA22,inset 0 0 6px #A78BFA0A;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">🎯 OBJECTIFS DE SÉANCE — EBT PAR PILOTE</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Dans le briefing, <strong style="color:#F1F5F9;">deux panneaux côte à côte</strong> — un pour le CPT, un pour le FO. Chaque pilote a ses propres objectifs indépendants sur les 9 compétences CBTA.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+    <div style="background:#3B82F60D;border:1.5px solid #3B82F655;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #3B82F622;">
+      <div style="font-size:9px;font-weight:900;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">MAINTENIR</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">La compétence est au niveau — on veille à ce qu'elle reste stable</div>
+    </div>
+    <div style="background:#F59E0B0D;border:1.5px solid #F59E0B55;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #F59E0B22;">
+      <div style="font-size:9px;font-weight:900;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">ACQUÉRIR</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">Compétence nouvelle — première mise en situation réelle</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #10B98122;">
+      <div style="font-size:9px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:4px;">AMÉLIORER</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">La compétence est en déficit — séance de progression ciblée</div>
+    </div>
+    <div style="background:#0F121899;border:1px solid #1E2530;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:9px;font-weight:900;color:#475569;letter-spacing:1px;margin-bottom:4px;">NON COCHÉ</div>
+      <div style="font-size:10px;color:#475569;line-height:1.4;">Pas d'objectif spécifique pour cette compétence</div>
+    </div>
   </div>
-  <div style="font-size:11px;color:#64748B;">→ Ces objectifs guident votre évaluation pendant la séance. Consultez-les en débrief pour valider l'atteinte des objectifs.</div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📊 BILAN AUTOMATIQUE EN DÉBRIEF (onglet SCORES) :</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#10B981;background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #10B98155;">ATTEINT ✓</span><span style="font-size:10px;color:#64748B;">Score ≥ 3.5 — objectif rempli</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #F59E0B55;">PARTIEL ⚡</span><span style="font-size:10px;color:#64748B;">Score 3.0–3.4 — progressif mais incomplet</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#EF4444;background:#EF444422;border:1px solid #EF444444;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #EF444455;">NON ATTEINT ✗</span><span style="font-size:10px;color:#64748B;">Score &lt; 3.0 — axe de travail prioritaire</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ Ex : CPT avec SA=AMÉLIORER et WLM=AMÉLIORER · FO avec KNO=ACQUÉRIR et FPA=AMÉLIORER — deux bilans séparés en débrief.</div>
 </div>
 
 <!-- Météo FCT / LVO -->
@@ -2186,10 +2207,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Indicateurs comportementaux -->
-<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 INDICATEURS COMPORTEMENTAUX (BI) — POURQUOI ?</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">La note (1→5) dit <em>combien</em> le pilote maîtrise — les BI disent <em>ce qu'on a vu concrètement</em>. C'est l'EBT : pas "SA=3" mais "SA=3 parce qu'il n'a pas annoncé la contrainte carburant avant la dégradation météo".</div>
-  <div style="font-size:11px;color:#64748B;font-style:italic;">→ Exercice → Evaluation → INDICATEURS COMPORTEMENTAUX ▾ → cochez les comportements observés pour CPT et FO séparément.</div>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA1A,inset 0 0 6px #A78BFA08;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">📋 INDICATEURS COMPORTEMENTAUX (BI) — COMMENT ÇA MARCHE ?</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">La note (1→5) dit <em>combien</em> le pilote maîtrise — les BI disent <em>ce qu'on a vu concrètement</em>. Pas "SA=3" mais "SA=3 parce qu'il n'a pas annoncé la contrainte carburant avant la dégradation météo".</div>
+  <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#10B98122;border:1px solid #10B98144;color:#10B981;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #10B98144;">PENDANT</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;">Exercice → Évaluation → <strong style="color:#F1F5F9;">INDICATEURS COMPORTEMENTAUX ▾</strong> → cochez <strong style="color:#10B981;">ce que vous VOYEZ</strong> pour CPT et FO séparément. Pas besoin de tout cocher — seulement les comportements observés.</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #3B82F644;">DÉBRIEF</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;">Onglet <strong style="color:#3B82F6;">SCORES</strong> → section <strong style="color:#F1F5F9;">COMPORTEMENTS OBSERVÉS</strong> en bas de page. Tous les BI cochés sur la séance sont regroupés par compétence et par pilote.</span>
+    </div>
+  </div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📖 LECTURE DU BILAN BI :</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="color:#10B981;font-size:14px;">✓</span><span style="font-size:10px;color:#94A3B8;flex:1;">Comportement observé au moins une fois</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#A78BFA;background:#A78BFA22;border:1px solid #A78BFA44;border-radius:10px;padding:1px 6px;flex-shrink:0;box-shadow:0 0 4px #A78BFA44;">2×</span><span style="font-size:10px;color:#94A3B8;flex:1;">Badge fréquence — comportement observé dans 2 exercices ou plus → point fort récurrent</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:10px;color:#64748B;">KNO 3/5</span><span style="font-size:10px;color:#94A3B8;flex:1;">3 des 5 comportements KNO ont été observés sur la séance</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ Les BI ne modifient pas la note 1→5 — ils sont vos preuves observationnelles pour argumenter les grades en débrief.</div>
 </div>
 
 <!-- LOFT Structuré -->
@@ -4122,15 +4161,36 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Session objectives -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🎯 SESSION OBJECTIVES (EBT)</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">In the pre-session briefing, set the objective for each targeted competency:</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
-    <span style="background:#3B82F622;color:#3B82F6;border:1px solid #3B82F666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">MAINTAIN</span>
-    <span style="background:#F59E0B22;color:#F59E0B;border:1px solid #F59E0B66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">ACQUIRE</span>
-    <span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">IMPROVE</span>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA22,inset 0 0 6px #A78BFA0A;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">🎯 SESSION OBJECTIVES — EBT PER PILOT</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">In the briefing, <strong style="color:#F1F5F9;">two side-by-side panels</strong> — one for CPT, one for FO. Each pilot has independent objectives across the 9 CBTA competencies.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+    <div style="background:#3B82F60D;border:1.5px solid #3B82F655;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #3B82F622;">
+      <div style="font-size:9px;font-weight:900;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">MAINTAIN</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">Competency is at level — ensure it stays stable</div>
+    </div>
+    <div style="background:#F59E0B0D;border:1.5px solid #F59E0B55;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #F59E0B22;">
+      <div style="font-size:9px;font-weight:900;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">ACQUIRE</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">New competency — first real exposure</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #10B98122;">
+      <div style="font-size:9px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:4px;">IMPROVE</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">Competency in deficit — targeted development session</div>
+    </div>
+    <div style="background:#0F121899;border:1px solid #1E2530;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:9px;font-weight:900;color:#475569;letter-spacing:1px;margin-bottom:4px;">NOT SET</div>
+      <div style="font-size:10px;color:#475569;line-height:1.4;">No specific objective for this competency</div>
+    </div>
   </div>
-  <div style="font-size:11px;color:#64748B;">→ These objectives guide your assessment during the session. Review them in the debrief to validate whether objectives were met.</div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📊 AUTO RESULTS IN DEBRIEF (SCORES tab):</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#10B981;background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #10B98155;">ACHIEVED ✓</span><span style="font-size:10px;color:#64748B;">Score ≥ 3.5 — objective met</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #F59E0B55;">PARTIAL ⚡</span><span style="font-size:10px;color:#64748B;">Score 3.0–3.4 — progressing but incomplete</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#EF4444;background:#EF444422;border:1px solid #EF444444;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #EF444455;">NOT ACHIEVED ✗</span><span style="font-size:10px;color:#64748B;">Score &lt; 3.0 — priority area for next session</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ Ex: CPT with SA=IMPROVE and WLM=IMPROVE · FO with KNO=ACQUIRE and FPA=IMPROVE — two separate results in debrief.</div>
 </div>
 
 <!-- Weather FCT / LVO -->
@@ -4204,10 +4264,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Behavioral indicators -->
-<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 BEHAVIORAL INDICATORS (BI) — WHY?</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">The grade (1→5) says <em>how much</em> the pilot masters — BI says <em>what was concretely observed</em>. That is EBT: not "SA=3" but "SA=3 because he did not announce the fuel constraint before the weather degradation".</div>
-  <div style="font-size:11px;color:#64748B;font-style:italic;">→ Exercise → Evaluation → BEHAVIORAL INDICATORS ▾ → check observed behaviors for CPT and FO separately.</div>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA1A,inset 0 0 6px #A78BFA08;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">📋 BEHAVIORAL INDICATORS (BI) — HOW IT WORKS</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">The grade (1→5) says <em>how much</em> the pilot masters — BI says <em>what was concretely observed</em>. Not "SA=3" but "SA=3 because he didn't announce the fuel constraint before the weather degradation".</div>
+  <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#10B98122;border:1px solid #10B98144;color:#10B981;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #10B98144;">DURING</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;">Exercise → Evaluation → <strong style="color:#F1F5F9;">BEHAVIORAL INDICATORS ▾</strong> → check <strong style="color:#10B981;">what you SEE</strong> for CPT and FO separately. No need to check everything — only observed behaviors.</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #3B82F644;">DEBRIEF</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;"><strong style="color:#3B82F6;">SCORES</strong> tab → <strong style="color:#F1F5F9;">OBSERVED BEHAVIORS</strong> section at the bottom. All BIs checked during the session are grouped by competency and pilot.</span>
+    </div>
+  </div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📖 READING THE BI SUMMARY:</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="color:#10B981;font-size:14px;">✓</span><span style="font-size:10px;color:#94A3B8;flex:1;">Behavior observed at least once</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#A78BFA;background:#A78BFA22;border:1px solid #A78BFA44;border-radius:10px;padding:1px 6px;flex-shrink:0;box-shadow:0 0 4px #A78BFA44;">2×</span><span style="font-size:10px;color:#94A3B8;flex:1;">Frequency badge — behavior seen in 2+ exercises → recurring strength</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:10px;color:#64748B;">KNO 3/5</span><span style="font-size:10px;color:#94A3B8;flex:1;">3 of 5 KNO behaviors were observed across the session</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ BIs do not change the 1→5 grade — they are your observational evidence to back up grades in the debrief conversation.</div>
 </div>
 
 <!-- LOFT Structured debrief -->
