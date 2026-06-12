@@ -568,6 +568,18 @@ Identifiant ou mot de passe incorrect
     </div>
   </div>
 </div>
+<!-- Intervention quick modal -->
+<div id="modal-intervention" style="display:none;position:fixed;inset:0;z-index:9200;background:#000000AA;align-items:center;justify-content:center;">
+  <div id="int-modal-box" style="background:#0F1520;border:2px solid #10B981;border-radius:14px;padding:20px;margin:20px;width:calc(100% - 40px);max-width:400px;">
+    <div id="int-modal-title" style="font-size:14px;font-weight:800;color:#10B981;margin-bottom:4px;"></div>
+    <div id="int-modal-ex" style="font-size:11px;color:#64748B;margin-bottom:12px;"></div>
+    <input id="int-modal-input" class="form-input" style="width:100%;font-size:14px;margin-bottom:12px;" placeholder="Contexte optionnel — ex: 'V1 call manquant'..."/>
+    <div style="display:flex;gap:8px;">
+      <button id="int-modal-save" onclick="saveIntervention()" style="flex:1;padding:11px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;">ENREGISTRER</button>
+      <button onclick="document.getElementById('modal-intervention').style.display='none'" style="padding:11px 18px;background:transparent;border:1px solid #334155;color:#64748B;border-radius:8px;font-size:13px;cursor:pointer;">✕</button>
+    </div>
+  </div>
+</div>
 <div class="scroll" id="ex-content" style="padding:13px;"></div>
 <div class="bottom-bar" style="display:flex;gap:8px;">
 <button class="btn btn-danger" style="padding:13px;font-size:13px;flex-shrink:0;" onclick="confirmDeleteEx()">🗑</button>
@@ -13601,16 +13613,47 @@ B737 NG CBTA TRI · QRH Rev55 · FCTM Rev25
 }
 
 // ── INTERVENTION MODEL ──────────────────────────────────────────────────────
+const _intColors={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
+const _intEmoji={ask:'🟢',recommend:'🟠',takectl:'🔴'};
+
 function addIntervention(type){
   const ex = state.exercises[state.activeIdx];
-  const exName = ex ? ex.title : '?';
+  const sc = ex ? ALL_SC.find(s=>s.id===ex.sid) : null;
+  const exName = sc ? sc.title : (ex ? '?' : '—');
+  const col = _intColors[type]||'#3B82F6';
+  const emoji = _intEmoji[type]||'';
+  const labelMap = _lang==='en'
+    ? {ask:'ASK',recommend:'RECOMMEND',takectl:'TAKE CONTROL'}
+    : {ask:'ASK',recommend:'RECOMMANDER',takectl:'PRENDRE CTL'};
+  const label = labelMap[type]||type;
+  // Open modal
+  const box = document.getElementById('int-modal-box');
+  if(box){ box.style.border='2px solid '+col; }
+  const title = document.getElementById('int-modal-title');
+  if(title){ title.textContent=emoji+' '+label; title.style.color=col; }
+  const exEl = document.getElementById('int-modal-ex');
+  if(exEl){ exEl.textContent=exName; }
+  const inp = document.getElementById('int-modal-input');
+  if(inp){ inp.value=''; }
+  const saveBtn = document.getElementById('int-modal-save');
+  if(saveBtn){ saveBtn.style.background=col+'22'; saveBtn.style.borderColor=col; saveBtn.style.color=col; }
+  window._pendingIntType = type;
+  window._pendingIntExName = exName;
+  document.getElementById('modal-intervention').style.display='flex';
+  setTimeout(()=>{ if(inp) inp.focus(); },100);
+}
+
+function saveIntervention(){
+  const type = window._pendingIntType;
+  const exName = window._pendingIntExName||'?';
+  const note = (document.getElementById('int-modal-input').value||'').trim();
   const ts = Date.now();
   const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
-  state.interventions.push({type, exName, ts, elapsed});
+  state.interventions.push({type, exName, note, ts, elapsed});
+  document.getElementById('modal-intervention').style.display='none';
   updateInterventionBar();
-  const colors={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
   const labels={ask:'ASK',recommend:'REC',takectl:'CTL'};
-  showToast(`${labels[type]||type} — ${exName}`);
+  showToast(`${_intEmoji[type]||''} ${labels[type]||type}${note?' — '+note:' — '+exName}`);
 }
 
 function updateInterventionBar(){
@@ -13625,8 +13668,9 @@ function updateInterventionBar(){
 
 function showFlagModal(){
   const ex = state.exercises[state.activeIdx];
+  const sc = ex ? ALL_SC.find(s=>s.id===ex.sid) : null;
   const el = document.getElementById('flag-modal-ex');
-  if(el) el.textContent = ex ? ex.title : '—';
+  if(el) el.textContent = sc ? sc.title : '—';
   document.getElementById('flag-input').value='';
   document.getElementById('modal-flag').style.display='flex';
   setTimeout(()=>document.getElementById('flag-input').focus(),100);
@@ -13635,9 +13679,10 @@ function showFlagModal(){
 function addFlag(){
   const note = document.getElementById('flag-input').value.trim();
   const ex = state.exercises[state.activeIdx];
+  const sc = ex ? ALL_SC.find(s=>s.id===ex.sid) : null;
   const ts = Date.now();
   const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
-  state.flags.push({note, exName: ex?ex.title:'?', ts, elapsed});
+  state.flags.push({note, exName: sc?sc.title:'?', ts, elapsed});
   document.getElementById('modal-flag').style.display='none';
   updateInterventionBar();
   showToast('🚩 '+(note||(_lang==='en'?'Flag added':'Marqueur ajouté')));
@@ -13674,10 +13719,11 @@ function startVoiceNote(){
       const reader = new FileReader();
       reader.onload=()=>{
         const ex=state.exercises[state.activeIdx];
+        const _vsc=ex?ALL_SC.find(s=>s.id===ex.sid):null;
         const ts=Date.now();
         const elapsed=state.sessionStart?Math.round((ts-state.sessionStart)/1000):0;
         const duration=Math.round((Date.now()-window._recStartTime)/1000);
-        state.voiceNotes.push({audioData:reader.result, mimeType:finalMime, exName:ex?ex.title:'?', ts, elapsed, duration});
+        state.voiceNotes.push({audioData:reader.result, mimeType:finalMime, exName:_vsc?_vsc.title:'?', ts, elapsed, duration});
         updateInterventionBar();
         showToast(_lang==='en'?`🎙 Saved (${duration}s)`:`🎙 Sauvegardé (${duration}s)`);
         if(btn){
@@ -13727,12 +13773,17 @@ function renderDebEvents(el){
     takectl: _lang==='en'?'TAKE CONTROL':'PRENDRE CTL'
   };
 
-  const intRows = state.interventions.map((iv,i)=>`
-    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
-      <span style="background:${intColorsMap[iv.type]||'#3B82F6'}22;color:${intColorsMap[iv.type]||'#3B82F6'};border:1px solid ${intColorsMap[iv.type]||'#3B82F6'}66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 7px;">${intLabelMap[iv.type]||iv.type}</span>
-      <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;">${fmtElapsed(iv.elapsed)}</span>
-      <span style="font-size:12px;color:#CBD5E1;flex:1;">${iv.exName}</span>
-    </div>`).join('');
+  const intRows = state.interventions.map((iv,i)=>{
+    const col=intColorsMap[iv.type]||'#3B82F6';
+    return `<div style="padding:7px 0;border-bottom:1px solid #1E2530;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="background:${col}22;color:${col};border:1px solid ${col}66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 7px;flex-shrink:0;">${intLabelMap[iv.type]||iv.type}</span>
+        <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;flex-shrink:0;">${fmtElapsed(iv.elapsed)}</span>
+        <span style="font-size:12px;color:#94A3B8;">${iv.exName}</span>
+      </div>
+      ${iv.note?`<div style="font-size:12px;color:#F1F5F9;margin-top:3px;padding-left:4px;border-left:2px solid ${col}55;font-style:italic;">"${iv.note}"</div>`:''}
+    </div>`;
+  }).join('');
 
   const flagRows = state.flags.map((f,i)=>`
     <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
