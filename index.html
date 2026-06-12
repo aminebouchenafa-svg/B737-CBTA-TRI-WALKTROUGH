@@ -8017,6 +8017,23 @@ exercises:[{sid:"ef_v1v2",min:20},{sid:"se_ga",min:20},{sid:"go_around",min:15},
 desc:"Gestion des urgences critiques par phases : RTO → feu moteur → décision déroutement → feu cargo → dépressurisation → emergency descent → fuite carburant → ILS déroutement one engine → atterrissage one engine puis ILS non-précision. Se termine par feu + procédures évacuation.",
 desc_en:"Critical emergency management by phase: RTO → engine fire → diversion decision → cargo fire → depressurisation → emergency descent → fuel leak → ILS diversion one engine → one engine landing then non-precision ILS. Ends with fire + evacuation procedures.",
 exercises:[{sid:"rto",min:12},{sid:"engine_fire",min:25},{sid:"nnc_cargo_fwd",min:18},{sid:"cabin_alt",min:15},{sid:"emergency_desc",min:15},{sid:"nnc_fuel_leak",min:15},{sid:"se_ils",min:25},{sid:"se_ldg",min:20},{sid:"non_ils",min:20}]},
+{id:"cpt_psd_sa_wlm_eval",title:"Évaluation CPT — PSD · SA · WLM · PRO · COM · LTW",title_en:"CPT Assessment — PSD · SA · WLM · PRO · COM · LTW",type:"PC",color:"#84CC16",focus:["PSD","SA","WLM","PRO","COM","LTW"],
+desc:"Session PC ciblée sur les faiblesses identifiées : PSD, SA, WLM, PRO, COM et LTW. 12 exercices progressifs couvrant toutes les phases de vol — décollage → montée → croisière → descente → approche → atterrissage — pour exposer les comportements clés sous charge croissante et en environnement dégradé.",
+desc_en:"PC session targeting identified weaknesses: PSD, SA, WLM, PRO, COM and LTW. 12 progressive exercises covering all flight phases — takeoff → climb → cruise → descent → approach → landing — to expose key behaviors under increasing workload and degraded environment.",
+exercises:[
+{sid:"rto",min:15},
+{sid:"ef_v1v2",min:20},
+{sid:"engine_fire",min:25},
+{sid:"tcas_ra",min:10},
+{sid:"airspeed_unrel",min:20},
+{sid:"cabin_alt",min:15},
+{sid:"emergency_desc",min:15},
+{sid:"windshear_manual",min:15},
+{sid:"gpws",min:12},
+{sid:"go_around",min:15},
+{sid:"se_ils",min:22},
+{sid:"se_ldg",min:18}
+]},
 ];
 
 const COMPETENCIES = [
