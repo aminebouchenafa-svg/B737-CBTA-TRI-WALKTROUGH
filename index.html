@@ -9375,7 +9375,7 @@ const pipsHtml = cd.g>0 ?
 `<div class="pips">${[1,2,3,4,5].map(i=>`<div class="pip" style="--pip-color:${c.color};"></div>`).join('')}</div>`;
 const _cardBis=BEHAVIORAL_INDICATORS[c.id]||[];
 const _cardBiCount=_cardBis.filter(b=>ex[biKey][b.id]).length;
-const biBadge=_cardBiCount>0?`<span style="font-size:9px;font-weight:800;color:${c.color};background:${c.color}22;border:1px solid ${c.color}44;border-radius:8px;padding:1px 5px;margin-left:2px;">📋${_cardBiCount}</span>`:'';
+const biBadge=_cardBiCount>0?`<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:${c.color};background:${c.color}22;border:1.5px solid ${c.color}99;border-radius:50%;margin-left:4px;box-shadow:0 0 7px ${c.color}88,0 0 2px ${c.color}CC;line-height:1;vertical-align:middle;">${_cardBiCount}</span>`:'';
 return `<div class="comp-card${isKey?' key':''}" style="--key-color:${c.color};${isKey?'border-color:'+c.color+'44;background:'+c.color+'0A;':''}" onclick="openComp('${c.id}')">
 ${isKey?`<div class="top-bar" style="background:${c.color};"></div>`:''}
 <div class="comp-label" style="color:${c.color};opacity:${isKey?1:0.65};">${c.label}${biBadge}</div>
