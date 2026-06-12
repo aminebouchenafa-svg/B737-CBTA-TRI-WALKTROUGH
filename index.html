@@ -1268,6 +1268,60 @@ Identifiant ou mot de passe incorrect
   <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">✍ CHAPITRE 5 — SCORER PENDANT LA SÉANCE</div>
   <div style="font-size:12px;color:#64748B;margin-bottom:10px;">Le scoring en temps réel c'est le coeur de l'app. Voici les 5 sous-étapes dans l'ordre.</div>
 
+  <!-- Anatomie carte compétence -->
+  <div style="background:#10B9810D;border:1.5px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:14px;box-shadow:0 0 12px #10B9811A;">
+    <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:10px;">LIRE LA CARTE COMPÉTENCE</div>
+    <!-- Maquette carte -->
+    <div style="background:#0A0E15;border:2px solid #F59E0B66;border-radius:9px;overflow:hidden;margin-bottom:12px;max-width:220px;">
+      <div style="height:3px;background:#F59E0B;"></div>
+      <div style="padding:10px 11px 8px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+          <span style="font-size:18px;font-weight:900;color:#F59E0B;">PSD</span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 7px #F59E0B88,0 0 2px #F59E0BCC;line-height:1;">2</span>
+        </div>
+        <div style="font-size:9px;color:#64748B;margin-bottom:8px;line-height:1.2;">Problem Solving &amp; Decision Making</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;gap:6px;">
+            <span style="font-size:12px;color:#10B981;font-weight:700;">+4</span>
+            <span style="font-size:12px;color:#EF4444;font-weight:700;">-2</span>
+          </div>
+          <span style="font-size:17px;font-weight:800;color:#3B82F6;">4</span>
+        </div>
+      </div>
+    </div>
+    <!-- Légende -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 5px #F59E0B88;flex-shrink:0;margin-top:1px;">2</span>
+        <div style="font-size:12px;color:#CBD5E1;line-height:1.4;"><span style="color:#F59E0B;font-weight:700;">Badge BI</span> — nombre d'indicateurs comportementaux cochés pour cette compétence. Visible seulement si au moins 1 coché. Tap la carte → les BI s'affichent en grand en haut de l'écran.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#10B981;min-width:18px;text-align:center;">+4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">OB positifs</span> — comportements observables confirmés (+)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#EF4444;min-width:18px;text-align:center;">-2</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#EF4444;font-weight:700;">OB négatifs</span> — comportements observables en défaut (−)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#3B82F6;min-width:18px;text-align:center;">4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#3B82F6;font-weight:700;">Note CBTA</span> — note attribuée de 1 à 5. Absente = pas encore noté (5 points gris).</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;gap:2px;min-width:18px;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+        </div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#64748B;font-weight:700;">Points gris</span> — compétence pas encore notée</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="height:3px;width:18px;border-radius:2px;background:#F59E0B;flex-shrink:0;"></div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#F59E0B;font-weight:700;">Barre colorée</span> en haut = compétence-clé de cet exercice</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Sous-étape 1 -->
   <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
     <div style="width:26px;height:26px;border-radius:50%;background:#10B981;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
@@ -3394,6 +3448,60 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#141B26;border:1px solid #10B98144;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
   <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">✍ CHAPTER 5 — SCORING DURING THE SESSION</div>
   <div style="font-size:12px;color:#64748B;margin-bottom:10px;">Real-time scoring is the heart of the app. Here are the 5 sub-steps in order.</div>
+
+  <!-- Competency card anatomy -->
+  <div style="background:#10B9810D;border:1.5px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:14px;box-shadow:0 0 12px #10B9811A;">
+    <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:10px;">READING THE COMPETENCY CARD</div>
+    <!-- Card mockup -->
+    <div style="background:#0A0E15;border:2px solid #F59E0B66;border-radius:9px;overflow:hidden;margin-bottom:12px;max-width:220px;">
+      <div style="height:3px;background:#F59E0B;"></div>
+      <div style="padding:10px 11px 8px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+          <span style="font-size:18px;font-weight:900;color:#F59E0B;">PSD</span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 7px #F59E0B88,0 0 2px #F59E0BCC;line-height:1;">2</span>
+        </div>
+        <div style="font-size:9px;color:#64748B;margin-bottom:8px;line-height:1.2;">Problem Solving &amp; Decision Making</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;gap:6px;">
+            <span style="font-size:12px;color:#10B981;font-weight:700;">+4</span>
+            <span style="font-size:12px;color:#EF4444;font-weight:700;">-2</span>
+          </div>
+          <span style="font-size:17px;font-weight:800;color:#3B82F6;">4</span>
+        </div>
+      </div>
+    </div>
+    <!-- Legend -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 5px #F59E0B88;flex-shrink:0;margin-top:1px;">2</span>
+        <div style="font-size:12px;color:#CBD5E1;line-height:1.4;"><span style="color:#F59E0B;font-weight:700;">BI badge</span> — number of behavioral indicators checked for this competency. Only visible when at least 1 is checked. Tap the card → BIs appear large at the top of the screen.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#10B981;min-width:18px;text-align:center;">+4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">Positive OBs</span> — observable behaviors confirmed (+)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#EF4444;min-width:18px;text-align:center;">-2</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#EF4444;font-weight:700;">Negative OBs</span> — observable behaviors with deficiency (−)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#3B82F6;min-width:18px;text-align:center;">4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#3B82F6;font-weight:700;">CBTA Grade</span> — assigned grade 1 to 5. Missing = not yet graded (5 grey dots).</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;gap:2px;min-width:18px;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+        </div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#64748B;font-weight:700;">Grey dots</span> — competency not yet graded</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="height:3px;width:18px;border-radius:2px;background:#F59E0B;flex-shrink:0;"></div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#F59E0B;font-weight:700;">Colored top bar</span> = key competency for this exercise</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Sub-step 1 -->
   <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
