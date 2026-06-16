@@ -15942,6 +15942,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <script>
 if('serviceWorker' in navigator){
+  var _swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function(){
+    if(_swRefreshing) return;
+    _swRefreshing = true;
+    window.location.reload();
+  });
   window.addEventListener('load',()=>{
     navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{
       reg.update();
