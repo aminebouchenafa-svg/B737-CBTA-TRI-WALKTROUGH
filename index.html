@@ -588,6 +588,15 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 
+<!-- PDF in-app overlay (iOS PWA fallback — never leaves the app) -->
+<div id="pdf-overlay" style="display:none;position:fixed;inset:0;z-index:9500;flex-direction:column;background:#f8fafc;">
+  <div style="display:flex;gap:10px;align-items:center;padding:10px 14px;background:#ffffff;border-bottom:2px solid #e2e8f0;flex-shrink:0;">
+    <button onclick="closePdfOverlay()" style="background:#f1f5f9;color:#0f172a;border:2px solid #e2e8f0;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">← Retour</button>
+    <button onclick="document.getElementById('pdf-iframe').contentWindow.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">🖨️ Imprimer / PDF</button>
+  </div>
+  <iframe id="pdf-iframe" style="flex:1;border:none;width:100%;background:#f8fafc;" sandbox="allow-scripts allow-same-origin allow-modals allow-popups"></iframe>
+</div>
+
 <div id="modal-delete-ex" style="display:none;" class="modal-overlay">
 <div class="modal-box center">
 <div style="font-size:15px;font-weight:700;color:#EF4444;margin-bottom:10px;" data-i18n="exercise_delete_title">Supprimer l exercice ?</div>
@@ -11547,16 +11556,27 @@ function printRapport(){
     +'</body></html>';
 
   try{
-    // Opens a new tab — works on desktop and Android Chrome
     const w = window.open('','_blank');
-    if(w){
+    if(w && !w.closed){
       w.document.write(fullPage);
       w.document.close();
       return;
     }
   }catch(e){}
-  // iOS PWA fallback: navigate current tab to a data URL
-  window.location.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(fullPage);
+  // iOS PWA fallback: in-app iframe overlay (never leaves the app)
+  _showPdfOverlay(fullPage);
+}
+
+function closePdfOverlay(){
+  document.getElementById('pdf-overlay').style.display='none';
+  const f=document.getElementById('pdf-iframe');
+  f.srcdoc='';
+}
+
+function _showPdfOverlay(html){
+  const f=document.getElementById('pdf-iframe');
+  f.srcdoc=html;
+  document.getElementById('pdf-overlay').style.display='flex';
 }
 
 function printRapportFromHistory(idx){
@@ -11587,9 +11607,9 @@ function printRapportFromHistory(idx){
     +'</body></html>';
   try{
     const w = window.open('','_blank');
-    if(w){ w.document.write(fullPage); w.document.close(); return; }
+    if(w && !w.closed){ w.document.write(fullPage); w.document.close(); return; }
   }catch(e){}
-  window.location.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(fullPage);
+  _showPdfOverlay(fullPage);
 }
 
 function ouvrirRapportSafari(){
@@ -11605,9 +11625,7 @@ const page = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
 + rapHtml
 +'</body></html>';
 
-// Utiliser data: URL — fonctionne dans les PWA iOS
-const dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(page);
-window.location.href = dataUrl;
+_showPdfOverlay(page);
 }
 
 function debTab(tab,el){
@@ -13293,9 +13311,9 @@ function printProfCheck(){
 
   try{
     const w = window.open('','_blank');
-    if(w){ w.document.write(html); w.document.close(); return; }
+    if(w && !w.closed){ w.document.write(html); w.document.close(); return; }
   }catch(e){}
-  window.location.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+  _showPdfOverlay(html);
 }
 
 function renderDebConclusion(el){
