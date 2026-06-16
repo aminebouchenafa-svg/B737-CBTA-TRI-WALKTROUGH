@@ -11551,19 +11551,8 @@ function printRapport(){
     +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
     +'</div>'
     +rapHtml
-    // Auto-trigger print after images have had time to load
-    +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},800);};<\/scr'+'ipt>'
     +'</body></html>';
 
-  try{
-    const w = window.open('','_blank');
-    if(w && !w.closed){
-      w.document.write(fullPage);
-      w.document.close();
-      return;
-    }
-  }catch(e){}
-  // iOS PWA fallback: in-app iframe overlay (never leaves the app)
   _showPdfOverlay(fullPage);
 }
 
@@ -11603,12 +11592,7 @@ function printRapportFromHistory(idx){
     +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
     +'</div>'
     +session.rapportHTML
-    +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},800);};<\/scr'+'ipt>'
     +'</body></html>';
-  try{
-    const w = window.open('','_blank');
-    if(w && !w.closed){ w.document.write(fullPage); w.document.close(); return; }
-  }catch(e){}
   _showPdfOverlay(fullPage);
 }
 
@@ -13309,10 +13293,6 @@ function printProfCheck(){
     +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},600);};<\/scr'+'ipt>'
     +'</body></html>';
 
-  try{
-    const w = window.open('','_blank');
-    if(w && !w.closed){ w.document.write(html); w.document.close(); return; }
-  }catch(e){}
   _showPdfOverlay(html);
 }
 
