@@ -590,9 +590,10 @@ Identifiant ou mot de passe incorrect
 
 <!-- PDF in-app overlay (iOS PWA fallback — never leaves the app) -->
 <div id="pdf-overlay" style="display:none;position:fixed;inset:0;z-index:9500;flex-direction:column;background:#f8fafc;">
-  <div style="display:flex;gap:10px;align-items:center;padding:10px 14px;background:#ffffff;border-bottom:2px solid #e2e8f0;flex-shrink:0;">
+  <div style="display:flex;gap:8px;align-items:center;padding:10px 14px;background:#ffffff;border-bottom:2px solid #e2e8f0;flex-shrink:0;flex-wrap:wrap;">
     <button onclick="closePdfOverlay()" style="background:#f1f5f9;color:#0f172a;border:2px solid #e2e8f0;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">← Retour</button>
-    <button onclick="document.getElementById('pdf-iframe').contentWindow.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">🖨️ Imprimer / PDF</button>
+    <button onclick="printOverlayContent()" style="background:#0f172a;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">🖨️ Imprimer</button>
+    <button onclick="shareOverlayFile()" style="background:#3B82F6;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">📥 Sauvegarder</button>
   </div>
   <iframe id="pdf-iframe" style="flex:1;border:none;width:100%;background:#f8fafc;"></iframe>
 </div>
@@ -11599,18 +11600,53 @@ function printRapport(){
   _showPdfOverlay(fullPage);
 }
 
+var _overlayBlobUrl=null;
+var _overlayHtml=null;
+
 function closePdfOverlay(){
   document.getElementById('pdf-overlay').style.display='none';
   const f=document.getElementById('pdf-iframe');
   f.removeAttribute('srcdoc');
   f.src='about:blank';
+  if(_overlayBlobUrl){try{URL.revokeObjectURL(_overlayBlobUrl);}catch(e){}_overlayBlobUrl=null;}
+  _overlayHtml=null;
 }
 
 function _showPdfOverlay(html){
-  const f=document.getElementById('pdf-iframe');
-  f.removeAttribute('src');
-  f.srcdoc=html;
+  _overlayHtml=html;
+  if(_overlayBlobUrl){try{URL.revokeObjectURL(_overlayBlobUrl);}catch(e){}}
+  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  _overlayBlobUrl=URL.createObjectURL(blob);
+  var f=document.getElementById('pdf-iframe');
+  f.removeAttribute('srcdoc');
+  f.src=_overlayBlobUrl;
   document.getElementById('pdf-overlay').style.display='flex';
+}
+
+function printOverlayContent(){
+  var f=document.getElementById('pdf-iframe');
+  try{f.contentWindow.print();}catch(e){window.print();}
+}
+
+function shareOverlayFile(){
+  var html=_overlayHtml;
+  if(!html){
+    var f=document.getElementById('pdf-iframe');
+    try{html=f.contentDocument.documentElement.outerHTML;}catch(e){}
+  }
+  if(!html){alert('Aucun contenu à sauvegarder.');return;}
+  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  var file=new File([blob],'rapport-cbta.html',{type:'text/html'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){
+    navigator.share({files:[file],title:'Rapport CBTA'}).catch(function(){});
+  } else {
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');
+    a.href=url;a.download='rapport-cbta.html';
+    document.body.appendChild(a);a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url);},5000);
+  }
 }
 
 function printRapportFromHistory(idx){
