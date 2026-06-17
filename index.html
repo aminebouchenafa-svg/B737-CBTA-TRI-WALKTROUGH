@@ -713,6 +713,11 @@ Identifiant ou mot de passe incorrect
 <button class="btn" style="background:#10B98122;border-color:#10B981;color:#10B981;font-size:11px;padding:6px 10px;" onclick="envoyerRapportEmailActuel()">✉ EMAIL</button>
 <button class="btn" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:11px;padding:6px 10px;" onclick="exportSessionJSON()">📦<br>JSON</button>
 </div>
+<div id="rapport-filter-bar" style="display:flex;gap:6px;padding:8px 12px;background:#0f172a;border-bottom:1px solid #1e293b;flex-shrink:0;">
+<button data-filter="all" onclick="showRapport('all')" style="flex:1;padding:8px 6px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;border:2px solid #3B82F6;background:#3B82F6;color:#fff;">ÉQUIPAGE</button>
+<button data-filter="cpt" onclick="showRapport('cpt')" style="flex:1;padding:8px 6px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;border:2px solid #334155;background:#1e293b;color:#94a3b8;">CPT SEUL</button>
+<button data-filter="fo" onclick="showRapport('fo')" style="flex:1;padding:8px 6px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;border:2px solid #334155;background:#1e293b;color:#94a3b8;">FO SEUL</button>
+</div>
 <div id="rapport-content" style="padding:0;background:#fff;overflow-y:auto;flex:1;-webkit-overflow-scrolling:touch;"></div>
 </div>
 
@@ -11293,7 +11298,8 @@ envoyerEmail(`Rapport CBTA — ${state.pilotName} — ${dateStr}`, body);
 
 // Generates the full rapport HTML string from current state — no DOM side-effects.
 // Returns {html, dateStr} so callers can use both.
-function buildRapportHTML(){
+function buildRapportHTML(filter){
+if(!filter) filter='all';
 const closed = state.exercises.filter(e=>e.closed);
 const now = new Date();
 const dateStr = now.toLocaleDateString('fr-FR')+' '+now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
@@ -11419,8 +11425,8 @@ return `<div style="padding:14px 16px;border-bottom:1px solid #f1f5f9;">
 </div>
 <div style="font-size:22px;font-weight:900;color:${color};">${st&&st.avg>0?st.avg.toFixed(1):'-'}</div>
 </div>
-${gradesCpt?`<div style="margin-bottom:4px;"><span style="font-size:10px;color:${CPT_COLOR};font-weight:700;margin-right:6px;">CPT</span>${gradesCpt}</div>`:''}
-${gradesFo?`<div style="margin-bottom:4px;"><span style="font-size:10px;color:${FO_COLOR};font-weight:700;margin-right:6px;">FO</span>${gradesFo}</div>`:''}
+${filter!=='fo'&&gradesCpt?`<div style="margin-bottom:4px;"><span style="font-size:10px;color:${CPT_COLOR};font-weight:700;margin-right:6px;">${state.pilotRole||'CPT'}</span>${gradesCpt}</div>`:''}
+${filter!=='cpt'&&gradesFo?`<div style="margin-bottom:4px;"><span style="font-size:10px;color:${FO_COLOR};font-weight:700;margin-right:6px;">${state.foRole||'FO'}</span>${gradesFo}</div>`:''}
 </div>`;
 }).join('');
 
@@ -11428,8 +11434,9 @@ const conclusion = state.debConclNotes||'';
 const html = `
 <div style="font-family:-apple-system,sans-serif;color:#1e293b;background:#f8fafc;min-height:100%;">
 <div style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1e40af 100%);padding:24px 16px 20px;color:#fff;">
-<div style="font-size:10px;letter-spacing:3px;color:#93c5fd;margin-bottom:6px;">RAPPORT DE SESSION CBTA</div>
+<div style="font-size:10px;letter-spacing:3px;color:#93c5fd;margin-bottom:6px;">RAPPORT DE SESSION CBTA${filter==='cpt'?' — '+(state.pilotRole||'CPT'):filter==='fo'?' — '+(state.foRole||'FO'):''}</div>
 <div style="font-size:22px;font-weight:900;margin-bottom:2px;">B737 NG — TRI</div>
+${filter!=='all'?'<div style="display:inline-block;padding:3px 10px;border-radius:6px;background:#F59E0B33;color:#F59E0B;font-size:11px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">RAPPORT INDIVIDUEL — '+(filter==='cpt'?(state.pilotName):(state.foName))+'</div>':''}
 <div style="font-size:13px;color:#93c5fd;margin-bottom:16px;">${dateStr}</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
 <div style="background:#ffffff15;border-radius:10px;padding:10px 12px;">
@@ -11440,11 +11447,11 @@ const html = `
 <div style="font-size:9px;color:#93c5fd;letter-spacing:1px;margin-bottom:3px;">INSTRUCTEUR</div>
 <div style="font-size:13px;font-weight:700;">${instrName}</div>
 </div>
-<div style="background:${CPT_COLOR}33;border:1px solid ${CPT_COLOR}55;border-radius:10px;padding:10px 12px;">
-<div style="font-size:9px;color:${CPT_COLOR};letter-spacing:1px;margin-bottom:3px;">CPT</div>
+${filter!=='fo'?`<div style="background:${CPT_COLOR}33;border:1px solid ${CPT_COLOR}55;border-radius:10px;padding:10px 12px;">
+<div style="font-size:9px;color:${CPT_COLOR};letter-spacing:1px;margin-bottom:3px;">${state.pilotRole||'CPT'}</div>
 <div style="font-size:13px;font-weight:800;color:#fff;">${state.pilotName}</div>
-</div>
-${state.foName?`<div style="background:${FO_COLOR}33;border:1px solid ${FO_COLOR}55;border-radius:10px;padding:10px 12px;"><div style="font-size:9px;color:${FO_COLOR};letter-spacing:1px;margin-bottom:3px;">FO</div><div style="font-size:13px;font-weight:800;color:#fff;">${state.foName}</div></div>`:''}
+</div>`:''}
+${filter!=='cpt'&&state.foName?`<div style="background:${FO_COLOR}33;border:1px solid ${FO_COLOR}55;border-radius:10px;padding:10px 12px;"><div style="font-size:9px;color:${FO_COLOR};letter-spacing:1px;margin-bottom:3px;">${state.foRole||'FO'}</div><div style="font-size:13px;font-weight:800;color:#fff;">${state.foName}</div></div>`:''}
 <div style="background:#ffffff15;border-radius:10px;padding:10px 12px;">
 <div style="font-size:9px;color:#93c5fd;letter-spacing:1px;margin-bottom:3px;">EXERCICES</div>
 <div style="font-size:22px;font-weight:900;color:#60a5fa;">${closed.length}</div>
@@ -11454,8 +11461,8 @@ ${state.foName?`<div style="background:${FO_COLOR}33;border:1px solid ${FO_COLOR
 
 <div style="padding:8px 0 20px;">
 <div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'RESULTS BY COMPETENCY':'RÉSULTATS PAR COMPÉTENCE'}</div>
-${pilotBlock('cs',(state.pilotRole||'CPT')+' — '+state.pilotName, state.pilotRole==='TRI'?'#F59E0B':state.pilotRole==='FO'?FO_COLOR:CPT_COLOR)}
-${state.foName?pilotBlock('csfo',(state.foRole||'FO')+' — '+state.foName, state.foRole==='TRI'?'#F59E0B':state.foRole==='CPT'?CPT_COLOR:FO_COLOR):''}
+${filter!=='fo'?pilotBlock('cs',(state.pilotRole||'CPT')+' — '+state.pilotName, state.pilotRole==='TRI'?'#F59E0B':state.pilotRole==='FO'?FO_COLOR:CPT_COLOR):''}
+${filter!=='cpt'&&state.foName?pilotBlock('csfo',(state.foRole||'FO')+' — '+state.foName, state.foRole==='TRI'?'#F59E0B':state.foRole==='CPT'?CPT_COLOR:FO_COLOR):''}
 
 <div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'EXERCISE DETAILS':'DÉTAIL DES EXERCICES'}</div>
 <div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">${exRows||`<div style="padding:16px;color:#94a3b8;font-size:13px;">${_lang==='en'?'No closed exercises':'Aucun exercice clôturé'}</div>`}</div>
@@ -11467,6 +11474,8 @@ ${conclusion?`
 ${(()=>{
 const hasTRI = state.pilotRole==='TRI'||state.foRole==='TRI';
 if(!hasTRI) return '';
+if(filter==='cpt'&&state.pilotRole!=='TRI') return '';
+if(filter==='fo'&&state.foRole!=='TRI') return '';
 const triName = state.pilotRole==='TRI'?state.pilotName:state.foName;
 const grades = state.triCheckGrades||{};
 const scored = TRI_CHECK_CRITERIA.filter(c=>grades[c.id]>0);
@@ -11565,14 +11574,29 @@ Standard CBTA OACI · By Cpt Bouchenafa Mohamed Amine
 return {html, dateStr};
 }
 
-function showRapport(){
-const {html, dateStr} = buildRapportHTML();
+function showRapport(filter){
+if(!filter) filter='all';
+const {html, dateStr} = buildRapportHTML(filter);
 document.getElementById('rapport-content').innerHTML = html;
-document.getElementById('rpt-sub').textContent = state.pilotName + ' · ' + dateStr;
+var subLabel = filter==='cpt'?state.pilotName:filter==='fo'?state.foName:(state.pilotName+(state.foName?' & '+state.foName:''));
+document.getElementById('rpt-sub').textContent = subLabel + ' · ' + dateStr;
 window._rapportHTML = html;
 window._rapportDateStr = dateStr;
-window._rapportPilot = state.pilotName;
+window._rapportPilot = subLabel;
+window._rapportFilter = filter;
+_updateRapportFilterBtns(filter);
 showScreen('rapport');
+}
+function _updateRapportFilterBtns(filter){
+  var bar=document.getElementById('rapport-filter-bar');
+  if(!bar) return;
+  bar.querySelectorAll('button').forEach(function(b){
+    var f=b.getAttribute('data-filter');
+    if(f===filter){b.style.background='#3B82F6';b.style.color='#fff';b.style.borderColor='#3B82F6';}
+    else{b.style.background='#1e293b';b.style.color='#94a3b8';b.style.borderColor='#334155';}
+  });
+  var foBtn=bar.querySelector('[data-filter="fo"]');
+  if(foBtn) foBtn.style.display=state.foName?'inline-block':'none';
 }
 
 function printRapport(){
