@@ -1,5 +1,5 @@
-const CACHE = 'b737-cbta-v58';
-const ASSETS = ['./index.html', './manifest.json'];
+const CACHE = 'score-v1';
+const ASSETS = ['./index.html', './manifest.json', './score-logo.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
