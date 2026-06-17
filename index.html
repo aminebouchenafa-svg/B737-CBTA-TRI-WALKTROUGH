@@ -295,6 +295,13 @@ body.light-mode .concl-box{background:#FAFAFA!important;border:2px solid #DDD8CC
 body.light-mode .concl-text{color:#374151!important;}
 body.light-mode .concl-crm-item{color:#374151!important;border-bottom:1px solid #DDD8CC!important;}
 body.light-mode .guide-sec{background:#F7F9FC!important;border-color:#DDD8CC!important;}
+.guide-sec{font-size:13.5px!important;}
+.guide-sec [style*="font-size:9px"]{font-size:11px!important;}
+.guide-sec [style*="font-size:10px"]{font-size:12px!important;}
+.guide-sec [style*="font-size:11px"]{font-size:13px!important;}
+.guide-sec [style*="font-size:12px"]{font-size:14px!important;}
+.guide-sec [style*="font-size:13px"]{font-size:15px!important;}
+.guide-sec [style*="font-size:28px"]{font-size:32px!important;}
 body.light-mode .guide-sec div[style*="color:#CBD5E1"]{color:#374151!important;}
 body.light-mode .guide-sec span[style*="color:#CBD5E1"]{color:#374151!important;}
 body.light-mode .guide-sec div[style*="color:#94A3B8"]{color:#4B5563!important;}
@@ -561,12 +568,33 @@ Identifiant ou mot de passe incorrect
     </div>
   </div>
 </div>
+<!-- Intervention quick modal -->
+<div id="modal-intervention" style="display:none;position:fixed;inset:0;z-index:9200;background:#000000AA;align-items:center;justify-content:center;">
+  <div id="int-modal-box" style="background:#0F1520;border:2px solid #10B981;border-radius:14px;padding:20px;margin:20px;width:calc(100% - 40px);max-width:400px;">
+    <div id="int-modal-title" style="font-size:14px;font-weight:800;color:#10B981;margin-bottom:4px;"></div>
+    <div id="int-modal-ex" style="font-size:11px;color:#64748B;margin-bottom:12px;"></div>
+    <input id="int-modal-input" class="form-input" style="width:100%;font-size:14px;margin-bottom:12px;" placeholder="Contexte optionnel — ex: 'V1 call manquant'..."/>
+    <div style="display:flex;gap:8px;">
+      <button id="int-modal-save" onclick="saveIntervention()" style="flex:1;padding:11px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;">ENREGISTRER</button>
+      <button onclick="document.getElementById('modal-intervention').style.display='none'" style="padding:11px 18px;background:transparent;border:1px solid #334155;color:#64748B;border-radius:8px;font-size:13px;cursor:pointer;">✕</button>
+    </div>
+  </div>
+</div>
 <div class="scroll" id="ex-content" style="padding:13px;"></div>
 <div class="bottom-bar" style="display:flex;gap:8px;">
 <button class="btn btn-danger" style="padding:13px;font-size:13px;flex-shrink:0;" onclick="confirmDeleteEx()">🗑</button>
 <button class="btn" style="padding:13px;font-size:15px;flex-shrink:0;background:#7C3AED22;border:1px solid #7C3AED88;color:#A78BFA;box-shadow:0 0 10px #7C3AED33;" onclick="openDistracteur()">🎲</button>
 <button id="btn-close-ex" class="btn btn-success" style="flex:1;padding:13px;font-size:15px;" onclick="toggleCloseEx()" data-i18n="exercise_close">Cloturer l exercice</button>
 </div>
+</div>
+
+<!-- PDF in-app overlay (iOS PWA fallback — never leaves the app) -->
+<div id="pdf-overlay" style="display:none;position:fixed;inset:0;z-index:9500;flex-direction:column;background:#f8fafc;">
+  <div style="display:flex;gap:10px;align-items:center;padding:10px 14px;background:#ffffff;border-bottom:2px solid #e2e8f0;flex-shrink:0;">
+    <button onclick="closePdfOverlay()" style="background:#f1f5f9;color:#0f172a;border:2px solid #e2e8f0;padding:10px 18px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">← Retour</button>
+    <button onclick="document.getElementById('pdf-iframe').contentWindow.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;">🖨️ Imprimer / PDF</button>
+  </div>
+  <iframe id="pdf-iframe" style="flex:1;border:none;width:100%;background:#f8fafc;"></iframe>
 </div>
 
 <div id="modal-delete-ex" style="display:none;" class="modal-overlay">
@@ -849,20 +877,6 @@ Identifiant ou mot de passe incorrect
   <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
     <div style="background:#3B82F616;border:1px solid #3B82F640;border-radius:20px;padding:3px 11px;font-size:11px;color:#3B82F6;font-weight:700;">12 chapitres</div>
     <div style="background:#10B98116;border:1px solid #10B98140;border-radius:20px;padding:3px 11px;font-size:11px;color:#10B981;font-weight:700;">~9 min</div>
-  </div>
-  <!-- References -->
-  <div style="border-top:1px solid #1E253088;padding-top:12px;text-align:left;">
-    <div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;text-align:center;margin-bottom:8px;">RÉFÉRENCES &amp; SOURCES</div>
-    <div style="display:flex;flex-direction:column;gap:4px;">
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;white-space:nowrap;">ICAO</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">Doc 9995 — Competency-Based Training &amp; Assessment (CBTA)</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;white-space:nowrap;">ICAO</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">Doc 9683 — Human Factors Training Manual (TEM)</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;white-space:nowrap;">EASA</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">Part-FCL Appendix 9 — Type Rating Proficiency Check</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;white-space:nowrap;">EASA</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">AMC/GM to Part-FCL — CBTA Grading Standards</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">NMS CBTA TEM Pilot Observer Document</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">737 NG Quick Reference Handbook — Rev 55</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">737 NG Flight Crew Training Manual — Rev 25</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;white-space:nowrap;">CRM</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">FORDEC — Lufthansa Aviation Training · NITS Briefing Model</span></div>
-    </div>
   </div>
 </div>
 
@@ -1274,6 +1288,60 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#141B26;border:1px solid #10B98144;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
   <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">✍ CHAPITRE 5 — SCORER PENDANT LA SÉANCE</div>
   <div style="font-size:12px;color:#64748B;margin-bottom:10px;">Le scoring en temps réel c'est le coeur de l'app. Voici les 5 sous-étapes dans l'ordre.</div>
+
+  <!-- Anatomie carte compétence -->
+  <div style="background:#10B9810D;border:1.5px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:14px;box-shadow:0 0 12px #10B9811A;">
+    <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:10px;">LIRE LA CARTE COMPÉTENCE</div>
+    <!-- Maquette carte -->
+    <div style="background:#0A0E15;border:2px solid #F59E0B66;border-radius:9px;overflow:hidden;margin-bottom:12px;max-width:220px;">
+      <div style="height:3px;background:#F59E0B;"></div>
+      <div style="padding:10px 11px 8px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+          <span style="font-size:18px;font-weight:900;color:#F59E0B;">PSD</span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 7px #F59E0B88,0 0 2px #F59E0BCC;line-height:1;">2</span>
+        </div>
+        <div style="font-size:9px;color:#64748B;margin-bottom:8px;line-height:1.2;">Problem Solving &amp; Decision Making</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;gap:6px;">
+            <span style="font-size:12px;color:#10B981;font-weight:700;">+4</span>
+            <span style="font-size:12px;color:#EF4444;font-weight:700;">-2</span>
+          </div>
+          <span style="font-size:17px;font-weight:800;color:#3B82F6;">4</span>
+        </div>
+      </div>
+    </div>
+    <!-- Légende -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 5px #F59E0B88;flex-shrink:0;margin-top:1px;">2</span>
+        <div style="font-size:12px;color:#CBD5E1;line-height:1.4;"><span style="color:#F59E0B;font-weight:700;">Badge BI</span> — nombre d'indicateurs comportementaux cochés pour cette compétence. Visible seulement si au moins 1 coché. Tap la carte → les BI s'affichent en grand en haut de l'écran.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#10B981;min-width:18px;text-align:center;">+4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">OB positifs</span> — comportements observables confirmés (+)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#EF4444;min-width:18px;text-align:center;">-2</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#EF4444;font-weight:700;">OB négatifs</span> — comportements observables en défaut (−)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#3B82F6;min-width:18px;text-align:center;">4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#3B82F6;font-weight:700;">Note CBTA</span> — note attribuée de 1 à 5. Absente = pas encore noté (5 points gris).</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;gap:2px;min-width:18px;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+        </div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#64748B;font-weight:700;">Points gris</span> — compétence pas encore notée</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="height:3px;width:18px;border-radius:2px;background:#F59E0B;flex-shrink:0;"></div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#F59E0B;font-weight:700;">Barre colorée</span> en haut = compétence-clé de cet exercice</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Sous-étape 1 -->
   <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
@@ -2111,31 +2179,98 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Objectifs de séance EBT -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🎯 OBJECTIFS DE SÉANCE (EBT)</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Dans le briefing pré-session, définissez l'objectif pour chaque compétence ciblée :</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
-    <span style="background:#3B82F622;color:#3B82F6;border:1px solid #3B82F666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">MAINTENIR</span>
-    <span style="background:#F59E0B22;color:#F59E0B;border:1px solid #F59E0B66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">ACQUÉRIR</span>
-    <span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">AMÉLIORER</span>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA22,inset 0 0 6px #A78BFA0A;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">🎯 OBJECTIFS DE SÉANCE — EBT PAR PILOTE</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Dans le briefing, <strong style="color:#F1F5F9;">deux panneaux côte à côte</strong> — un pour le CPT, un pour le FO. Chaque pilote a ses propres objectifs indépendants sur les 9 compétences CBTA.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+    <div style="background:#3B82F60D;border:1.5px solid #3B82F655;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #3B82F622;">
+      <div style="font-size:9px;font-weight:900;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">MAINTENIR</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">La compétence est au niveau — on veille à ce qu'elle reste stable</div>
+    </div>
+    <div style="background:#F59E0B0D;border:1.5px solid #F59E0B55;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #F59E0B22;">
+      <div style="font-size:9px;font-weight:900;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">ACQUÉRIR</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">Compétence nouvelle — première mise en situation réelle</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #10B98122;">
+      <div style="font-size:9px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:4px;">AMÉLIORER</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">La compétence est en déficit — séance de progression ciblée</div>
+    </div>
+    <div style="background:#0F121899;border:1px solid #1E2530;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:9px;font-weight:900;color:#475569;letter-spacing:1px;margin-bottom:4px;">NON COCHÉ</div>
+      <div style="font-size:10px;color:#475569;line-height:1.4;">Pas d'objectif spécifique pour cette compétence</div>
+    </div>
   </div>
-  <div style="font-size:11px;color:#64748B;">→ Ces objectifs guident votre évaluation pendant la séance. Consultez-les en débrief pour valider l'atteinte des objectifs.</div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📊 BILAN AUTOMATIQUE EN DÉBRIEF (onglet SCORES) :</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#10B981;background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #10B98155;">ATTEINT ✓</span><span style="font-size:10px;color:#64748B;">Score ≥ 3.5 — objectif rempli</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #F59E0B55;">PARTIEL ⚡</span><span style="font-size:10px;color:#64748B;">Score 3.0–3.4 — progressif mais incomplet</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#EF4444;background:#EF444422;border:1px solid #EF444444;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #EF444455;">NON ATTEINT ✗</span><span style="font-size:10px;color:#64748B;">Score &lt; 3.0 — axe de travail prioritaire</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ Ex : CPT avec SA=AMÉLIORER et WLM=AMÉLIORER · FO avec KNO=ACQUÉRIR et FPA=AMÉLIORER — deux bilans séparés en débrief.</div>
 </div>
 
 <!-- Météo FCT / LVO -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ DONNÉES MÉTÉO — LIMITES FCT &amp; LVO</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Sélectionnez l'état de piste (<strong style="color:#3B82F6;">TALPA/RCC</strong> ou <strong style="color:#A78BFA;">Non-TALPA</strong>) → la limite de vent traversier Boeing FCT 737 NG s'affiche en temps réel. Alerte rouge si la valeur saisie dépasse la limite.</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC6 — Sec : 36kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC5 — Bon : 25kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC4 — Bon-Med : 22kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC3 — Moyen : 20kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC2 — Med-Méd : 15kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC1 — Méd : 13kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC0 — NIL : N/A</span>
+<div style="background:#0F1218;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🌬️ DONNÉES MÉTÉO — SAISIE &amp; LIMITES FCT</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Les 4 cases de saisie météo sont codées en <strong style="color:#F1F5F9;">couleurs néon</strong> avec halo lumineux pour une identification immédiate :</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <div style="background:#84CC160D;border:1.5px solid #84CC1655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#84CC16;margin-bottom:2px;">🟢 VENT DE FACE/ARRIÈRE</div>
+      <div style="font-size:10px;color:#64748B;">Lime · Max vent arrière : <strong style="color:#EF4444;">10 kt</strong> — alerte rouge automatique si dépassé</div>
+    </div>
+    <div style="background:#06B6D40D;border:1.5px solid #06B6D455;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#06B6D4;margin-bottom:2px;">🔵 VENT TRAVERSIER</div>
+      <div style="font-size:10px;color:#64748B;">Cyan · Alerte rouge si limite FCT dépassée</div>
+    </div>
+    <div style="background:#F472B60D;border:1.5px solid #F472B655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#F472B6;margin-bottom:2px;">🌸 PLAFOND</div>
+      <div style="font-size:10px;color:#64748B;">Rose · Saisissez en ft · Calcul LVO auto</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#10B981;margin-bottom:2px;">🟩 VISIBILITÉ / RVR</div>
+      <div style="font-size:10px;color:#64748B;">Vert · Saisissez en m · Calcul LVO auto</div>
+    </div>
   </div>
-  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">LVO AUTOMATIQUE :</div>
+  <div style="font-size:11px;font-weight:800;color:#F59E0B;margin-bottom:6px;">📊 RCAM — MATRICE ÉTAT DE PISTE (Boeing FCT 737 NG) :</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Sélectionnez le mode (<strong style="color:#3B82F6;">TALPA/RCC</strong> ou <strong style="color:#A78BFA;">Non-TALPA</strong>) puis l'état de piste → la limite XW s'affiche. La table RCAM complète est accessible en dépliante dans l'app.</div>
+  <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:1px;border:1px solid #1E2530;border-radius:6px;overflow:hidden;font-size:10px;margin-bottom:6px;">
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">RCC</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">ÉTAT</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#84CC16;text-align:center;">XW T/O</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#F472B6;text-align:center;">XW LDG</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">6</div>
+    <div style="background:#10B98111;padding:4px 7px;color:#94A3B8;">Piste sèche</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">36/33*</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">5</div>
+    <div style="background:#10B98108;padding:4px 7px;color:#94A3B8;">BON — Givre · Humide · Neige sèche</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">25</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:900;color:#84CC16;text-align:center;">4</div>
+    <div style="background:#84CC1608;padding:4px 7px;color:#94A3B8;">BON à MOYEN — Neige compactée ≤-15°C</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">22</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">30</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:900;color:#F59E0B;text-align:center;">3</div>
+    <div style="background:#F59E0B08;padding:4px 7px;color:#94A3B8;">MOYEN — Glissante mouillée · Neige >3mm</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">20</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">25</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:900;color:#F97316;text-align:center;">2</div>
+    <div style="background:#F9731608;padding:4px 7px;color:#94A3B8;">MOYEN à MAUVAIS — Eau/gadoue >3mm</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">15</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">17</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:900;color:#EF4444;text-align:center;">1</div>
+    <div style="background:#EF444408;padding:4px 7px;color:#94A3B8;">MAUVAIS — Glace</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">13</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">15</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:900;color:#64748B;text-align:center;">0</div>
+    <div style="background:#64748B08;padding:4px 7px;color:#94A3B8;">NIL — Glace mouillée · Neige sur glace</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+  </div>
+  <div style="font-size:9px;color:#475569;font-style:italic;margin-bottom:8px;">* 36/33 kt avec winglets · Source: Boeing FCT 737 NG</div>
+  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">🔍 LVO AUTOMATIQUE :</div>
   <div style="display:flex;flex-direction:column;gap:3px;">
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#10B981;min-width:90px;">NORMAL/CAT I</span><span style="font-size:10px;color:#64748B;">RVR ≥ 550m &amp; plafond ≥ 200ft</span></div>
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#06B6D4;min-width:90px;">LVP PREP</span><span style="font-size:10px;color:#64748B;">RVR &lt; 550m ou plafond &lt; 200ft</span></div>
@@ -2147,10 +2282,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Indicateurs comportementaux -->
-<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 INDICATEURS COMPORTEMENTAUX (BI) — POURQUOI ?</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">La note (1→5) dit <em>combien</em> le pilote maîtrise — les BI disent <em>ce qu'on a vu concrètement</em>. C'est l'EBT : pas "SA=3" mais "SA=3 parce qu'il n'a pas annoncé la contrainte carburant avant la dégradation météo".</div>
-  <div style="font-size:11px;color:#64748B;font-style:italic;">→ Exercice → Evaluation → INDICATEURS COMPORTEMENTAUX ▾ → cochez les comportements observés pour CPT et FO séparément.</div>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA1A,inset 0 0 6px #A78BFA08;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">📋 INDICATEURS COMPORTEMENTAUX (BI) — COMMENT ÇA MARCHE ?</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">La note (1→5) dit <em>combien</em> le pilote maîtrise — les BI disent <em>ce qu'on a vu concrètement</em>. Pas "SA=3" mais "SA=3 parce qu'il n'a pas annoncé la contrainte carburant avant la dégradation météo".</div>
+  <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#10B98122;border:1px solid #10B98144;color:#10B981;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #10B98144;">PENDANT</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;">Exercice → Évaluation → <strong style="color:#F1F5F9;">INDICATEURS COMPORTEMENTAUX ▾</strong> → cochez <strong style="color:#10B981;">ce que vous VOYEZ</strong> pour CPT et FO séparément. Pas besoin de tout cocher — seulement les comportements observés.</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #3B82F644;">DÉBRIEF</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;">Onglet <strong style="color:#3B82F6;">SCORES</strong> → section <strong style="color:#F1F5F9;">COMPORTEMENTS OBSERVÉS</strong> en bas de page. Tous les BI cochés sur la séance sont regroupés par compétence et par pilote.</span>
+    </div>
+  </div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📖 LECTURE DU BILAN BI :</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="color:#10B981;font-size:14px;">✓</span><span style="font-size:10px;color:#94A3B8;flex:1;">Comportement observé au moins une fois</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#A78BFA;background:#A78BFA22;border:1px solid #A78BFA44;border-radius:10px;padding:1px 6px;flex-shrink:0;box-shadow:0 0 4px #A78BFA44;">2×</span><span style="font-size:10px;color:#94A3B8;flex:1;">Badge fréquence — comportement observé dans 2 exercices ou plus → point fort récurrent</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:10px;color:#64748B;">KNO 3/5</span><span style="font-size:10px;color:#94A3B8;flex:1;">3 des 5 comportements KNO ont été observés sur la séance</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ Les BI ne modifient pas la note 1→5 — ils sont vos preuves observationnelles pour argumenter les grades en débrief.</div>
 </div>
 
 <!-- LOFT Structuré -->
@@ -2167,8 +2320,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 RAPPORT EXAMINATEUR</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;">Onglet <strong style="color:#10B981;">Rapport</strong> dans le débrief — format Boeing/EASA officiel avec : résultat global SATISFAISANT/INSATISFAISANT, tableau des exercices, scores par compétence, remarques instructeur, signatures. Bouton impression PDF intégré.</div>
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 RAPPORT EXAMINATEUR &amp; SIGNATURES NUMÉRIQUES</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Onglet <strong style="color:#10B981;">Rapport</strong> dans le débrief — format Boeing/EASA officiel avec : résultat global SATISFAISANT/INSATISFAISANT, tableau des exercices, scores par compétence, remarques instructeur.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Pads de signature numérique (doigt ou stylet) :</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI / INST.</span><span style="font-size:10px;color:#64748B;">Violet — instructeur qui conduit la séance</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CPT</span><span style="font-size:10px;color:#64748B;">Bleu — stagiaire Commandant de Bord</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO</span><span style="font-size:10px;color:#64748B;">Vert — stagiaire OPL</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Les signatures sont incluses dans le PDF imprimé. Bouton EFFACER disponible sous chaque pad.</div>
+</div>
+
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">✅ PROFICIENCY CHECK — CONTRÔLE DE COMPÉTENCES</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Bouton <strong style="color:#F59E0B;">PROF CHECK</strong> dans la barre de navigation — formulaire indépendant du débrief pour les contrôles réglementaires (OPC/PC). Remplissez les items mandatory, LVO, LOFT et RHS avec les notes 1→5. Résultat SATISFACTORY / UNSATISFACTORY.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Signatures numériques Proficiency Check :</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI/SFI</span><span style="font-size:10px;color:#64748B;">Violet — examinateur qui conduit le check</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CAPT évalué</span><span style="font-size:10px;color:#64748B;">Bleu — stagiaire Commandant de Bord</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO évalué</span><span style="font-size:10px;color:#64748B;">Vert — stagiaire OPL</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B66;color:#F59E0B;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI CHECK</span><span style="font-size:10px;color:#64748B;">Amber — un TRI évalué en TRI Check</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Les signatures s'effacent automatiquement si vous changez de poste. Incluses dans le PDF imprimé.</div>
 </div>
 
 <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;">
@@ -2699,36 +2872,158 @@ Identifiant ou mot de passe incorrect
 <!-- SOURCES & RÉFÉRENCES -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:2px solid #475569;border-radius:10px;padding:12px 14px;margin-bottom:12px;margin-top:4px;">
-<div style="font-size:13px;font-weight:800;color:#94A3B8;letter-spacing:2px;margin-bottom:12px;">📚 SOURCES &amp; RÉFÉRENCES</div>
+<div style="font-size:13px;font-weight:800;color:#94A3B8;letter-spacing:2px;margin-bottom:14px;">📚 SOURCES &amp; RÉFÉRENCES COMPLÈTES</div>
 
-<!-- Sources officielles -->
-<div style="margin-bottom:14px;">
-  <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:8px;">✅ SOURCES OFFICIELLES — CONTENU VALIDÉ</div>
-  <div style="display:flex;flex-direction:column;gap:6px;">
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
-      <div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">ICAO Doc 9995 — Manuel CBTA</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Cadre des 9 compétences, définitions et observable behaviors. Base normative de toute l'évaluation CBTA dans cette app.</div>
+<!-- Légende couleurs -->
+<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;padding:8px 10px;background:#0F1218;border-radius:8px;border:1px solid #1E2530;">
+  <span style="font-size:9px;font-weight:800;color:#64748B;letter-spacing:1px;width:100%;margin-bottom:4px;">CODE COULEUR :</span>
+  <span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#10B981;">ICAO</span>
+  <span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span>
+  <span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span>
+  <span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#8B5CF6;">CRM/MÉTHODES</span>
+  <span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#06B6D4;">DONNÉES SÉCU</span>
+  <span style="background:#F9731622;border:1px solid #F9731644;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#F97316;">DOCS OPS</span>
+</div>
+
+<!-- ICAO -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#10B981,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;">ICAO / OACI — RÉGLEMENTATION INTERNATIONALE</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#10B981);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#10B98108;border:1px solid #10B98133;border-left:3px solid #10B981;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;">ICAO</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">Doc 9995 — Manuel CBTA</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Cadre normatif des 9 compétences CBTA, définitions et observable behaviors. Fondement de toute l'évaluation dans cette app.</div>
     </div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
-      <div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">EASA Part-FCL — Appendix 9</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Exigences réglementaires pour les OPC, PC et Line Checks. Types de séances, exercices obligatoires et fréquences.</div>
+    <div style="background:#10B98108;border:1px solid #10B98133;border-left:3px solid #10B981;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;">ICAO</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">Doc 9683 — Human Factors Training Manual</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Cadre TEM (Threat &amp; Error Management) — menaces, erreurs et états indésirables avion (UAS). Base du modèle LOSA.</div>
     </div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
-      <div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">EASA AMC/GM to Part-FCL — CBTA</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Grille de notation 1→5 (INACCEPTABLE à EXEMPLAIRE) et critères d'évaluation des compétences.</div>
+  </div>
+</div>
+
+<!-- EASA -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#3B82F6,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#3B82F6;letter-spacing:2px;">EASA — RÉGLEMENTATION EUROPÉENNE</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#3B82F6);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">Part-FCL Appendix 9</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Exigences réglementaires pour les OPC, PC et TRI Checks. Exercices obligatoires, fréquences et critères de validation.</div>
     </div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
-      <div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">ICAO Doc 9683 — Human Factors Training Manual</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Cadre TEM (Threat and Error Management) — menaces, erreurs, états indésirables avion.</div>
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">AMC/GM to Part-FCL — CBTA Grading Standards</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Grille officielle 1→5 (INACCEPTABLE → EXEMPLAIRE), critères d'évaluation des compétences et indicateurs comportementaux.</div>
     </div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
-      <div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">FORDEC — Lufthansa Aviation Training</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Modèle de prise de décision en équipage. Standard CRM adopté par l'industrie aéronautique mondiale.</div>
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">ORO.FC.115 — Qualification TRI/SFI</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Exigences pour les instructeurs sur simulateur. Maintien de qualification, supervision et responsabilité de l'évaluation.</div>
     </div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
-      <div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">NITS — Standard CRM Aviation Commerciale</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Modèle de briefing équipage (Nature · Intention · Time · Special Instructions). Standard industrie.</div>
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">NOTECHS — Non-Technical Skills Framework</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">12 items comportementaux CRM évalués en OPC/PC. Pass mark NOTECHS : <strong style="color:#F1F5F9;">70 %</strong>. Intégrés dans le calcul CRM de l'app.</div>
     </div>
+  </div>
+</div>
+
+<!-- BOEING -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#F59E0B,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#F59E0B;letter-spacing:2px;">BOEING / IATA — DOCUMENTS TECHNIQUES</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#F59E0B);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">NMS CBTA TEM Pilot Observer Document</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Document officiel Boeing de référence pour les observateurs CBTA. Grilles d'observation et indicateurs comportementaux par compétence.</div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FCT 737 NG — Flight Crew Training</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Limites XW démontrées (TALPA/RCC), RCAM, LVO procedures. Source de toutes les limites météo de l'app. <em style="color:#F59E0B;">* 36/33 kt avec winglets.</em></div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">QRH Rev 55 — Quick Reference Handbook</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Procédures mémoire, listes de vérification et limitations B737 NG. Base des exercices NNC et des items mandatory.</div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FCTM Rev 25 — Flight Crew Training Manual</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Techniques de pilotage, philosophie des procédures et bonnes pratiques Boeing B737 NG.</div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING/IATA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">EBT — Evidence-Based Training</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Méthodologie de construction des scénarios à partir de données réelles (accidents, FOQA, ASAP). Les indicateurs comportementaux de l'app en sont issus.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CRM/MÉTHODES -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#8B5CF6,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">CRM &amp; MÉTHODES PÉDAGOGIQUES</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#8B5CF6);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">CRM</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FORDEC — Lufthansa Aviation Training</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Facts · Options · Risks &amp; Benefits · Decision · Execution · Check. Standard de prise de décision en équipage adopté dans l'aviation commerciale mondiale.</div>
+    </div>
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">CRM</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">NITS — Standard Briefing Aviation Commerciale</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Nature · Intention · Time · Special Instructions. Modèle de briefing équipage structuré, standard industrie.</div>
+    </div>
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">MODÈLE</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">TEM — Threat &amp; Error Management (ICAO)</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Identification des menaces avant vol, gestion des erreurs équipage et récupération des UAS. Onglet TEM de l'app.</div>
+    </div>
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">MODÈLE</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FFA — Fly, Focus, Act (ICAO)</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Filtre de conscience situationnelle OACI : priorisation Fly → Focus → Act. Intégré dans l'onglet Évaluation de chaque exercice.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DONNÉES SÉCURITÉ -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#06B6D4,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#06B6D4;letter-spacing:2px;">DONNÉES DE SÉCURITÉ &amp; ANALYSE</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#06B6D4);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#06B6D408;border:1px solid #06B6D433;border-left:3px solid #06B6D4;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#06B6D4;">SÉCU</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FOQA — Flight Operations Quality Assurance</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Données d'enregistrements de vol analysées pour identifier les déviations récurrentes. Source des scénarios EBT à fort risque.</div>
+    </div>
+    <div style="background:#06B6D408;border:1px solid #06B6D433;border-left:3px solid #06B6D4;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#06B6D4;">SÉCU</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">ASAP — Aviation Safety Action Program</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Rapports volontaires d'incidents équipage. Complète le FOQA en capturant les facteurs humains non visibles sur l'enregistreur.</div>
+    </div>
+    <div style="background:#06B6D408;border:1px solid #06B6D433;border-left:3px solid #06B6D4;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#06B6D4;">ICAO</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">LOSA — Line Operations Safety Audit</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Audit de sécurité en ligne réelle (ICAO). Identifie les menaces et erreurs en conditions normales d'exploitation. Alimente le TNA.</div>
+    </div>
+  </div>
+</div>
+
+<!-- DOCS OPÉRATIONNELS -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#F97316,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#F97316;letter-spacing:2px;">DOCUMENTS OPÉRATIONNELS</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#F97316);"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">SOP</div><div style="font-size:10px;color:#64748B;">Standard Operating Procedures — B737 NG</div></div>
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">NNC</div><div style="font-size:10px;color:#64748B;">Non-Normal Checklists — B737 NG QRH</div></div>
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">AOM</div><div style="font-size:10px;color:#64748B;">Aircraft Operating Manual</div></div>
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">OM-D</div><div style="font-size:10px;color:#64748B;">Operations Manual — Section D (opérateur)</div></div>
   </div>
 </div>
 
@@ -2763,20 +3058,6 @@ Identifiant ou mot de passe incorrect
   <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
     <div style="background:#3B82F616;border:1px solid #3B82F640;border-radius:20px;padding:3px 11px;font-size:11px;color:#3B82F6;font-weight:700;">12 chapters</div>
     <div style="background:#10B98116;border:1px solid #10B98140;border-radius:20px;padding:3px 11px;font-size:11px;color:#10B981;font-weight:700;">~9 min</div>
-  </div>
-  <!-- References -->
-  <div style="border-top:1px solid #1E253088;padding-top:12px;text-align:left;">
-    <div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;text-align:center;margin-bottom:8px;">REFERENCES &amp; SOURCES</div>
-    <div style="display:flex;flex-direction:column;gap:4px;">
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;white-space:nowrap;">ICAO</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">Doc 9995 — Competency-Based Training &amp; Assessment (CBTA)</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;white-space:nowrap;">ICAO</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">Doc 9683 — Human Factors Training Manual (TEM)</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;white-space:nowrap;">EASA</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">Part-FCL Appendix 9 — Type Rating Proficiency Check</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;white-space:nowrap;">EASA</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">AMC/GM to Part-FCL — CBTA Grading Standards</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">NMS CBTA TEM Pilot Observer Document</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">737 NG Quick Reference Handbook — Rev 55</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;white-space:nowrap;">BOEING</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">737 NG Flight Crew Training Manual — Rev 25</span></div>
-      <div style="display:flex;gap:6px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;white-space:nowrap;">CRM</span><span style="font-size:10px;color:#94A3B8;line-height:1.3;">FORDEC — Lufthansa Aviation Training · NITS Briefing Model</span></div>
-    </div>
   </div>
 </div>
 
@@ -3188,6 +3469,60 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#141B26;border:1px solid #10B98144;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
   <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">✍ CHAPTER 5 — SCORING DURING THE SESSION</div>
   <div style="font-size:12px;color:#64748B;margin-bottom:10px;">Real-time scoring is the heart of the app. Here are the 5 sub-steps in order.</div>
+
+  <!-- Competency card anatomy -->
+  <div style="background:#10B9810D;border:1.5px solid #10B98133;border-radius:10px;padding:12px 14px;margin-bottom:14px;box-shadow:0 0 12px #10B9811A;">
+    <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:10px;">READING THE COMPETENCY CARD</div>
+    <!-- Card mockup -->
+    <div style="background:#0A0E15;border:2px solid #F59E0B66;border-radius:9px;overflow:hidden;margin-bottom:12px;max-width:220px;">
+      <div style="height:3px;background:#F59E0B;"></div>
+      <div style="padding:10px 11px 8px;">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+          <span style="font-size:18px;font-weight:900;color:#F59E0B;">PSD</span>
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 7px #F59E0B88,0 0 2px #F59E0BCC;line-height:1;">2</span>
+        </div>
+        <div style="font-size:9px;color:#64748B;margin-bottom:8px;line-height:1.2;">Problem Solving &amp; Decision Making</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="display:flex;gap:6px;">
+            <span style="font-size:12px;color:#10B981;font-weight:700;">+4</span>
+            <span style="font-size:12px;color:#EF4444;font-weight:700;">-2</span>
+          </div>
+          <span style="font-size:17px;font-weight:800;color:#3B82F6;">4</span>
+        </div>
+      </div>
+    </div>
+    <!-- Legend -->
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1.5px solid #F59E0B99;border-radius:50%;box-shadow:0 0 5px #F59E0B88;flex-shrink:0;margin-top:1px;">2</span>
+        <div style="font-size:12px;color:#CBD5E1;line-height:1.4;"><span style="color:#F59E0B;font-weight:700;">BI badge</span> — number of behavioral indicators checked for this competency. Only visible when at least 1 is checked. Tap the card → BIs appear large at the top of the screen.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#10B981;min-width:18px;text-align:center;">+4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#10B981;font-weight:700;">Positive OBs</span> — observable behaviors confirmed (+)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#EF4444;min-width:18px;text-align:center;">-2</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#EF4444;font-weight:700;">Negative OBs</span> — observable behaviors with deficiency (−)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:13px;font-weight:800;color:#3B82F6;min-width:18px;text-align:center;">4</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#3B82F6;font-weight:700;">CBTA Grade</span> — assigned grade 1 to 5. Missing = not yet graded (5 grey dots).</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="display:flex;gap:2px;min-width:18px;">
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+          <div style="width:5px;height:5px;border-radius:50%;background:#334155;"></div>
+        </div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#64748B;font-weight:700;">Grey dots</span> — competency not yet graded</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="height:3px;width:18px;border-radius:2px;background:#F59E0B;flex-shrink:0;"></div>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#F59E0B;font-weight:700;">Colored top bar</span> = key competency for this exercise</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Sub-step 1 -->
   <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
@@ -3955,31 +4290,98 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Session objectives -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🎯 SESSION OBJECTIVES (EBT)</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">In the pre-session briefing, set the objective for each targeted competency:</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px;">
-    <span style="background:#3B82F622;color:#3B82F6;border:1px solid #3B82F666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">MAINTAIN</span>
-    <span style="background:#F59E0B22;color:#F59E0B;border:1px solid #F59E0B66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">ACQUIRE</span>
-    <span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">IMPROVE</span>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA22,inset 0 0 6px #A78BFA0A;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">🎯 SESSION OBJECTIVES — EBT PER PILOT</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">In the briefing, <strong style="color:#F1F5F9;">two side-by-side panels</strong> — one for CPT, one for FO. Each pilot has independent objectives across the 9 CBTA competencies.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;">
+    <div style="background:#3B82F60D;border:1.5px solid #3B82F655;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #3B82F622;">
+      <div style="font-size:9px;font-weight:900;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">MAINTAIN</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">Competency is at level — ensure it stays stable</div>
+    </div>
+    <div style="background:#F59E0B0D;border:1.5px solid #F59E0B55;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #F59E0B22;">
+      <div style="font-size:9px;font-weight:900;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">ACQUIRE</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">New competency — first real exposure</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;box-shadow:0 0 8px #10B98122;">
+      <div style="font-size:9px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:4px;">IMPROVE</div>
+      <div style="font-size:10px;color:#64748B;line-height:1.4;">Competency in deficit — targeted development session</div>
+    </div>
+    <div style="background:#0F121899;border:1px solid #1E2530;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:9px;font-weight:900;color:#475569;letter-spacing:1px;margin-bottom:4px;">NOT SET</div>
+      <div style="font-size:10px;color:#475569;line-height:1.4;">No specific objective for this competency</div>
+    </div>
   </div>
-  <div style="font-size:11px;color:#64748B;">→ These objectives guide your assessment during the session. Review them in the debrief to validate whether objectives were met.</div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📊 AUTO RESULTS IN DEBRIEF (SCORES tab):</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#10B981;background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #10B98155;">ACHIEVED ✓</span><span style="font-size:10px;color:#64748B;">Score ≥ 3.5 — objective met</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#F59E0B;background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #F59E0B55;">PARTIAL ⚡</span><span style="font-size:10px;color:#64748B;">Score 3.0–3.4 — progressing but incomplete</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:900;color:#EF4444;background:#EF444422;border:1px solid #EF444444;border-radius:4px;padding:1px 6px;box-shadow:0 0 5px #EF444455;">NOT ACHIEVED ✗</span><span style="font-size:10px;color:#64748B;">Score &lt; 3.0 — priority area for next session</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ Ex: CPT with SA=IMPROVE and WLM=IMPROVE · FO with KNO=ACQUIRE and FPA=IMPROVE — two separate results in debrief.</div>
 </div>
 
 <!-- Weather FCT / LVO -->
-<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">🌬️ WEATHER DATA — FCT LIMITS &amp; LVO</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Select runway condition (<strong style="color:#3B82F6;">TALPA/RCC</strong> or <strong style="color:#A78BFA;">Non-TALPA</strong>) → the Boeing FCT 737 NG crosswind limit displays in real time. Red alert if the entered value exceeds the limit.</div>
-  <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC6 — Dry : 36kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC5 — Good : 25kt</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC4 — G-Med : 22kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC3 — Medium : 20kt</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC2 — M-Poor : 15kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC1 — Poor : 13kt</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;border-radius:5px;font-size:9px;font-weight:700;padding:2px 7px;">RCC0 — NIL : N/A</span>
+<div style="background:#0F1218;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:1.5px;margin-bottom:8px;">🌬️ WEATHER DATA — ENTRY &amp; FCT LIMITS</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">The 4 weather input fields are color-coded in <strong style="color:#F1F5F9;">neon colors</strong> with glow halos for instant identification:</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+    <div style="background:#84CC160D;border:1.5px solid #84CC1655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#84CC16;margin-bottom:2px;">🟢 HEADWIND / TAILWIND</div>
+      <div style="font-size:10px;color:#64748B;">Lime · Max tailwind: <strong style="color:#EF4444;">10 kt</strong> — automatic red alert if exceeded</div>
+    </div>
+    <div style="background:#06B6D40D;border:1.5px solid #06B6D455;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#06B6D4;margin-bottom:2px;">🔵 CROSSWIND</div>
+      <div style="font-size:10px;color:#64748B;">Cyan · Red alert if FCT limit exceeded</div>
+    </div>
+    <div style="background:#F472B60D;border:1.5px solid #F472B655;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#F472B6;margin-bottom:2px;">🌸 CEILING</div>
+      <div style="font-size:10px;color:#64748B;">Rose · Enter in ft · Auto LVO detection</div>
+    </div>
+    <div style="background:#10B9810D;border:1.5px solid #10B98155;border-radius:7px;padding:7px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#10B981;margin-bottom:2px;">🟩 VISIBILITY / RVR</div>
+      <div style="font-size:10px;color:#64748B;">Green · Enter in m · Auto LVO detection</div>
+    </div>
   </div>
-  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">LVO AUTO-DETECTION:</div>
+  <div style="font-size:11px;font-weight:800;color:#F59E0B;margin-bottom:6px;">📊 RCAM — RUNWAY CONDITION ASSESSMENT MATRIX (Boeing FCT 737 NG):</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Select mode (<strong style="color:#3B82F6;">TALPA/RCC</strong> or <strong style="color:#A78BFA;">Non-TALPA</strong>) then runway condition → the XW limit is shown. The full RCAM table is available as a collapsible panel in the app.</div>
+  <div style="display:grid;grid-template-columns:auto 1fr auto auto;gap:1px;border:1px solid #1E2530;border-radius:6px;overflow:hidden;font-size:10px;margin-bottom:6px;">
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">RCC</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#94A3B8;">CONDITION</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#84CC16;text-align:center;">XW T/O</div>
+    <div style="background:#141920;padding:4px 7px;font-weight:700;color:#F472B6;text-align:center;">XW LDG</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">6</div>
+    <div style="background:#10B98111;padding:4px 7px;color:#94A3B8;">Dry runway</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">36/33*</div>
+    <div style="background:#10B98111;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:900;color:#10B981;text-align:center;">5</div>
+    <div style="background:#10B98108;padding:4px 7px;color:#94A3B8;">GOOD — Frost · Wet · Dry/wet snow</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">25</div>
+    <div style="background:#10B98108;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">36/33*</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:900;color:#84CC16;text-align:center;">4</div>
+    <div style="background:#84CC1608;padding:4px 7px;color:#94A3B8;">GOOD–MED — Compacted snow ≤-15°C</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">22</div>
+    <div style="background:#84CC1608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">30</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:900;color:#F59E0B;text-align:center;">3</div>
+    <div style="background:#F59E0B08;padding:4px 7px;color:#94A3B8;">MEDIUM — Wet/slippery · Snow >3mm</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">20</div>
+    <div style="background:#F59E0B08;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">25</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:900;color:#F97316;text-align:center;">2</div>
+    <div style="background:#F9731608;padding:4px 7px;color:#94A3B8;">MED–POOR — Water/slush >3mm</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">15</div>
+    <div style="background:#F9731608;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">17</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:900;color:#EF4444;text-align:center;">1</div>
+    <div style="background:#EF444408;padding:4px 7px;color:#94A3B8;">POOR — Ice</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#84CC16;text-align:center;">13</div>
+    <div style="background:#EF444408;padding:4px 7px;font-weight:800;color:#F472B6;text-align:center;">15</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:900;color:#64748B;text-align:center;">0</div>
+    <div style="background:#64748B08;padding:4px 7px;color:#94A3B8;">NIL — Wet ice · Snow on ice</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+    <div style="background:#64748B08;padding:4px 7px;font-weight:800;color:#EF4444;text-align:center;">NIL</div>
+  </div>
+  <div style="font-size:9px;color:#475569;font-style:italic;margin-bottom:8px;">* 36/33 kt with winglets · Source: Boeing FCT 737 NG</div>
+  <div style="font-size:11px;font-weight:800;color:#8B5CF6;margin-bottom:4px;">🔍 LVO AUTO-DETECTION:</div>
   <div style="display:flex;flex-direction:column;gap:3px;">
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#10B981;min-width:90px;">NORMAL/CAT I</span><span style="font-size:10px;color:#64748B;">RVR ≥ 550m &amp; ceiling ≥ 200ft</span></div>
     <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#06B6D4;min-width:90px;">LVP PREP</span><span style="font-size:10px;color:#64748B;">RVR &lt; 550m or ceiling &lt; 200ft</span></div>
@@ -3991,10 +4393,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- Behavioral indicators -->
-<div style="background:#A78BFA11;border:1px solid #A78BFA33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">📋 BEHAVIORAL INDICATORS (BI) — WHY?</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">The grade (1→5) says <em>how much</em> the pilot masters — BI says <em>what was concretely observed</em>. That is EBT: not "SA=3" but "SA=3 because he did not announce the fuel constraint before the weather degradation".</div>
-  <div style="font-size:11px;color:#64748B;font-style:italic;">→ Exercise → Evaluation → BEHAVIORAL INDICATORS ▾ → check observed behaviors for CPT and FO separately.</div>
+<div style="background:#A78BFA0D;border:1.5px solid #A78BFA44;border-radius:9px;padding:11px 13px;margin-bottom:10px;box-shadow:0 0 12px #A78BFA1A,inset 0 0 6px #A78BFA08;">
+  <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;text-shadow:0 0 8px #A78BFA88;">📋 BEHAVIORAL INDICATORS (BI) — HOW IT WORKS</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">The grade (1→5) says <em>how much</em> the pilot masters — BI says <em>what was concretely observed</em>. Not "SA=3" but "SA=3 because he didn't announce the fuel constraint before the weather degradation".</div>
+  <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:8px;">
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#10B98122;border:1px solid #10B98144;color:#10B981;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #10B98144;">DURING</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;">Exercise → Evaluation → <strong style="color:#F1F5F9;">BEHAVIORAL INDICATORS ▾</strong> → check <strong style="color:#10B981;">what you SEE</strong> for CPT and FO separately. No need to check everything — only observed behaviors.</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-start;">
+      <span style="background:#3B82F622;border:1px solid #3B82F644;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:900;padding:2px 7px;flex-shrink:0;box-shadow:0 0 5px #3B82F644;">DEBRIEF</span>
+      <span style="font-size:11px;color:#94A3B8;line-height:1.4;"><strong style="color:#3B82F6;">SCORES</strong> tab → <strong style="color:#F1F5F9;">OBSERVED BEHAVIORS</strong> section at the bottom. All BIs checked during the session are grouped by competency and pilot.</span>
+    </div>
+  </div>
+  <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;margin-bottom:6px;">
+    <div style="font-size:10px;font-weight:800;color:#F1F5F9;margin-bottom:5px;">📖 READING THE BI SUMMARY:</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="color:#10B981;font-size:14px;">✓</span><span style="font-size:10px;color:#94A3B8;flex:1;">Behavior observed at least once</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:9px;font-weight:800;color:#A78BFA;background:#A78BFA22;border:1px solid #A78BFA44;border-radius:10px;padding:1px 6px;flex-shrink:0;box-shadow:0 0 4px #A78BFA44;">2×</span><span style="font-size:10px;color:#94A3B8;flex:1;">Frequency badge — behavior seen in 2+ exercises → recurring strength</span></div>
+      <div style="display:flex;gap:6px;align-items:center;"><span style="font-size:10px;color:#64748B;">KNO 3/5</span><span style="font-size:10px;color:#94A3B8;flex:1;">3 of 5 KNO behaviors were observed across the session</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#475569;font-style:italic;">→ BIs do not change the 1→5 grade — they are your observational evidence to back up grades in the debrief conversation.</div>
 </div>
 
 <!-- LOFT Structured debrief -->
@@ -4011,8 +4431,28 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 EXAMINER'S REPORT</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;"><strong style="color:#10B981;">Rapport</strong> tab in the debrief — Boeing/EASA official format with: global result SATISFACTORY/UNSATISFACTORY, exercises table, competency scores, instructor remarks, signatures. Built-in PDF print button.</div>
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📄 EXAMINER'S REPORT &amp; DIGITAL SIGNATURES</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;"><strong style="color:#10B981;">Rapport</strong> tab in the debrief — Boeing/EASA official format with: global result SATISFACTORY/UNSATISFACTORY, exercises table, competency scores, instructor remarks.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Digital signature pads (finger or stylus):</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI / INST.</span><span style="font-size:10px;color:#64748B;">Violet — instructor conducting the session</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CPT</span><span style="font-size:10px;color:#64748B;">Blue — Captain trainee</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO</span><span style="font-size:10px;color:#64748B;">Green — First Officer trainee</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Signatures are embedded in the printed PDF. CLEAR button available under each pad.</div>
+</div>
+
+<div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">✅ PROFICIENCY CHECK</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.6;margin-bottom:6px;"><strong style="color:#F59E0B;">PROF CHECK</strong> button in the navigation bar — standalone form for regulatory checks (OPC/PC). Fill in mandatory, LVO, LOFT and RHS items with grades 1→5. Result: SATISFACTORY / UNSATISFACTORY.</div>
+  <div style="font-size:11px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">✍️ Proficiency Check digital signatures:</div>
+  <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:6px;">
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#8B5CF622;border:1px solid #8B5CF666;color:#8B5CF6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI/SFI</span><span style="font-size:10px;color:#64748B;">Violet — examiner conducting the check</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#3B82F622;border:1px solid #3B82F666;color:#3B82F6;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">CAPT assessed</span><span style="font-size:10px;color:#64748B;">Blue — Captain being evaluated</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#10B98122;border:1px solid #10B98166;color:#10B981;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">FO assessed</span><span style="font-size:10px;color:#64748B;">Green — First Officer being evaluated</span></div>
+    <div style="display:flex;gap:7px;align-items:center;"><span style="background:#F59E0B22;border:1px solid #F59E0B66;color:#F59E0B;border-radius:4px;font-size:9px;font-weight:800;padding:1px 7px;flex-shrink:0;">TRI CHECK</span><span style="font-size:10px;color:#64748B;">Amber — a TRI being assessed in a TRI Check</span></div>
+  </div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;">Signatures auto-clear when switching position. Embedded in printed PDF.</div>
 </div>
 
 <div style="background:#06B6D411;border:1px solid #06B6D433;border-radius:9px;padding:11px 13px;">
@@ -4540,18 +4980,162 @@ Identifiant ou mot de passe incorrect
 
 <!-- SOURCES & REFERENCES (EN) -->
 <div class="guide-sec" style="background:#141B26;border:2px solid #475569;border-radius:10px;padding:12px 14px;margin-bottom:12px;margin-top:4px;">
-<div style="font-size:13px;font-weight:800;color:#94A3B8;letter-spacing:2px;margin-bottom:12px;">📚 SOURCES &amp; REFERENCES</div>
-<div style="margin-bottom:14px;">
-  <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:8px;">✅ OFFICIAL SOURCES — VALIDATED CONTENT</div>
-  <div style="display:flex;flex-direction:column;gap:6px;">
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">ICAO Doc 9995 — CBTA Manual</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Framework for the 9 competencies, definitions, and observable behaviors. Normative basis for all CBTA assessment in this app.</div></div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">EASA Part-FCL — Appendix 9</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Regulatory requirements for OPC, PC and Line Checks. Session types, mandatory exercises and frequencies.</div></div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">EASA AMC/GM to Part-FCL — CBTA</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Grading scale 1→5 (UNACCEPTABLE to EXEMPLARY) and competency assessment criteria.</div></div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">ICAO Doc 9683 — Human Factors Training Manual</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">TEM framework (Threat and Error Management) — threats, errors, undesired aircraft states.</div></div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">FORDEC — Lufthansa Aviation Training</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Crew decision-making model. CRM standard adopted by the global aviation industry.</div></div>
-    <div style="background:#10B98108;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;"><div style="font-size:11px;font-weight:800;color:#10B981;margin-bottom:2px;">NITS — Commercial Aviation CRM Standard</div><div style="font-size:11px;color:#94A3B8;line-height:1.4;">Crew briefing model (Nature · Intention · Time · Special Instructions). Industry standard.</div></div>
+<div style="font-size:13px;font-weight:800;color:#94A3B8;letter-spacing:2px;margin-bottom:14px;">📚 COMPLETE SOURCES &amp; REFERENCES</div>
+
+<!-- Color legend -->
+<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;padding:8px 10px;background:#0F1218;border-radius:8px;border:1px solid #1E2530;">
+  <span style="font-size:9px;font-weight:800;color:#64748B;letter-spacing:1px;width:100%;margin-bottom:4px;">COLOR CODE:</span>
+  <span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#10B981;">ICAO</span>
+  <span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span>
+  <span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span>
+  <span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#8B5CF6;">CRM/METHODS</span>
+  <span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#06B6D4;">SAFETY DATA</span>
+  <span style="background:#F9731622;border:1px solid #F9731644;border-radius:4px;padding:1px 7px;font-size:9px;font-weight:800;color:#F97316;">OPS DOCS</span>
+</div>
+
+<!-- ICAO -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#10B981,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;">ICAO — INTERNATIONAL REGULATION</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#10B981);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#10B98108;border:1px solid #10B98133;border-left:3px solid #10B981;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;">ICAO</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">Doc 9995 — CBTA Manual</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Normative framework for the 9 CBTA competencies, definitions and observable behaviors. Basis for all assessment in this app.</div>
+    </div>
+    <div style="background:#10B98108;border:1px solid #10B98133;border-left:3px solid #10B981;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#10B98122;border:1px solid #10B98144;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#10B981;">ICAO</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">Doc 9683 — Human Factors Training Manual</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">TEM framework (Threat &amp; Error Management) — threats, errors and undesired aircraft states. Basis for the LOSA model.</div>
+    </div>
   </div>
 </div>
+
+<!-- EASA -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#3B82F6,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#3B82F6;letter-spacing:2px;">EASA — EUROPEAN REGULATION</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#3B82F6);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">Part-FCL Appendix 9</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Regulatory requirements for OPC, PC and TRI Checks. Mandatory exercises, frequencies and validation criteria.</div>
+    </div>
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">AMC/GM to Part-FCL — CBTA Grading Standards</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Official scale 1→5 (UNACCEPTABLE → EXEMPLARY), competency assessment criteria and behavioral indicators.</div>
+    </div>
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">ORO.FC.115 — TRI/SFI Qualification</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Requirements for simulator instructors. Qualification maintenance, oversight and assessment responsibility.</div>
+    </div>
+    <div style="background:#3B82F608;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#3B82F622;border:1px solid #3B82F644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#3B82F6;">EASA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">NOTECHS — Non-Technical Skills Framework</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">12 CRM behavioral items assessed in OPC/PC. NOTECHS pass mark: <strong style="color:#F1F5F9;">70%</strong>. Integrated in the app's CRM calculation.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BOEING -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#F59E0B,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#F59E0B;letter-spacing:2px;">BOEING / IATA — TECHNICAL DOCUMENTS</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#F59E0B);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">NMS CBTA TEM Pilot Observer Document</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Official Boeing reference for CBTA observers. Observation grids and behavioral indicators per competency.</div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FCT 737 NG — Flight Crew Training</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Demonstrated XW limits (TALPA/RCC), RCAM, LVO procedures. Source of all weather limits in the app. <em style="color:#F59E0B;">* 36/33 kt with winglets.</em></div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">QRH Rev 55 — Quick Reference Handbook</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Memory items, checklists and B737 NG limitations. Basis for NNC exercises and mandatory items.</div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FCTM Rev 25 — Flight Crew Training Manual</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Piloting techniques, procedures philosophy and Boeing B737 NG best practices.</div>
+    </div>
+    <div style="background:#F59E0B08;border:1px solid #F59E0B33;border-left:3px solid #F59E0B;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#F59E0B22;border:1px solid #F59E0B44;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#F59E0B;">BOEING/IATA</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">EBT — Evidence-Based Training</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Scenario-building methodology from real data (accidents, FOQA, ASAP). The app's behavioral indicators are derived from this.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CRM/METHODS -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#8B5CF6,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#8B5CF6;letter-spacing:2px;">CRM &amp; TRAINING METHODS</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#8B5CF6);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">CRM</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FORDEC — Lufthansa Aviation Training</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Facts · Options · Risks &amp; Benefits · Decision · Execution · Check. Crew decision-making standard adopted globally in commercial aviation.</div>
+    </div>
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">CRM</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">NITS — Commercial Aviation Briefing Standard</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Nature · Intention · Time · Special Instructions. Structured crew briefing model, industry standard.</div>
+    </div>
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">MODEL</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">TEM — Threat &amp; Error Management (ICAO)</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Pre-flight threat identification, crew error management and UAS recovery. App TEM tab.</div>
+    </div>
+    <div style="background:#8B5CF608;border:1px solid #8B5CF633;border-left:3px solid #8B5CF6;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#8B5CF622;border:1px solid #8B5CF644;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#8B5CF6;">MODEL</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FFA — Fly, Focus, Act (ICAO)</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">ICAO situational awareness filter: Fly → Focus → Act prioritization. Integrated in each exercise's Evaluation tab.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SAFETY DATA -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#06B6D4,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#06B6D4;letter-spacing:2px;">SAFETY DATA &amp; ANALYSIS</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#06B6D4);"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:5px;">
+    <div style="background:#06B6D408;border:1px solid #06B6D433;border-left:3px solid #06B6D4;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#06B6D4;">SAFETY</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">FOQA — Flight Operations Quality Assurance</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Flight recorder data analyzed to identify recurring deviations. Source of high-risk EBT scenarios.</div>
+    </div>
+    <div style="background:#06B6D408;border:1px solid #06B6D433;border-left:3px solid #06B6D4;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#06B6D4;">SAFETY</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">ASAP — Aviation Safety Action Program</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Voluntary crew incident reports. Complements FOQA by capturing human factors not visible on flight recorders.</div>
+    </div>
+    <div style="background:#06B6D408;border:1px solid #06B6D433;border-left:3px solid #06B6D4;border-radius:0 7px 7px 0;padding:8px 10px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><span style="background:#06B6D422;border:1px solid #06B6D444;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;color:#06B6D4;">ICAO</span><span style="font-size:11px;font-weight:800;color:#F1F5F9;">LOSA — Line Operations Safety Audit</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.4;">Real-line safety audit (ICAO). Identifies threats and errors under normal operating conditions. Feeds the TNA analysis.</div>
+    </div>
+  </div>
+</div>
+
+<!-- OPS DOCS -->
+<div style="margin-bottom:12px;">
+  <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,#F97316,transparent);"></div>
+    <span style="font-size:10px;font-weight:900;color:#F97316;letter-spacing:2px;">OPERATIONAL DOCUMENTS</span>
+    <div style="height:2px;flex:1;background:linear-gradient(90deg,transparent,#F97316);"></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">SOP</div><div style="font-size:10px;color:#64748B;">Standard Operating Procedures — B737 NG</div></div>
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">NNC</div><div style="font-size:10px;color:#64748B;">Non-Normal Checklists — B737 NG QRH</div></div>
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">AOM</div><div style="font-size:10px;color:#64748B;">Aircraft Operating Manual</div></div>
+    <div style="background:#F9731608;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 7px 7px 0;padding:7px 9px;"><div style="font-size:10px;font-weight:800;color:#F97316;margin-bottom:2px;">OM-D</div><div style="font-size:10px;color:#64748B;">Operations Manual — Section D (operator)</div></div>
+  </div>
+</div>
+
+<!-- Disclaimer -->
 <div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:9px 11px;">
   <div style="font-size:10px;font-weight:900;color:#EF4444;letter-spacing:1.5px;margin-bottom:5px;">⚖️ REGULATORY DISCLAIMER</div>
   <div style="font-size:11px;color:#94A3B8;line-height:1.5;">This application is a <strong style="color:#F1F5F9;">TRI support tool</strong> — it does not replace the official Boeing CBTA Package, QRH, FCTM or your operator's OM-D. All B737-specific content must be validated by the TRI against documents approved by the competent authority before operational use. <strong style="color:#F1F5F9;">Responsibility for the assessment remains with the instructor.</strong></div>
@@ -4708,6 +5292,49 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 <script>
+// ── IndexedDB for large PDF storage ──
+const _PDFDB_NAME='cbta_pdfstore';
+const _PDFDB_VER=1;
+const _PDFDB_STORE='pdfs';
+function _openPdfDB(){
+  return new Promise(function(resolve,reject){
+    var rq=indexedDB.open(_PDFDB_NAME,_PDFDB_VER);
+    rq.onupgradeneeded=function(e){e.target.result.createObjectStore(_PDFDB_STORE);};
+    rq.onsuccess=function(e){resolve(e.target.result);};
+    rq.onerror=function(){reject(rq.error);};
+  });
+}
+function _savePdfToDB(key,dataUrl){
+  return _openPdfDB().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction(_PDFDB_STORE,'readwrite');
+      tx.objectStore(_PDFDB_STORE).put(dataUrl,key);
+      tx.oncomplete=function(){resolve();};
+      tx.onerror=function(){reject(tx.error);};
+    });
+  });
+}
+function _getPdfFromDB(key){
+  return _openPdfDB().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction(_PDFDB_STORE,'readonly');
+      var rq=tx.objectStore(_PDFDB_STORE).get(key);
+      rq.onsuccess=function(){resolve(rq.result||null);};
+      rq.onerror=function(){reject(rq.error);};
+    });
+  });
+}
+function _deletePdfFromDB(key){
+  return _openPdfDB().then(function(db){
+    return new Promise(function(resolve,reject){
+      var tx=db.transaction(_PDFDB_STORE,'readwrite');
+      tx.objectStore(_PDFDB_STORE).delete(key);
+      tx.oncomplete=function(){resolve();};
+      tx.onerror=function(){reject(tx.error);};
+    });
+  });
+}
+
 // ── LANGUAGE SYSTEM ─────────────────────────────────────────────────────────
 let _lang = localStorage.getItem('cbta_lang') || 'fr';
 
@@ -7442,6 +8069,23 @@ exercises:[{sid:"ef_v1v2",min:20},{sid:"se_ga",min:20},{sid:"go_around",min:15},
 desc:"Gestion des urgences critiques par phases : RTO → feu moteur → décision déroutement → feu cargo → dépressurisation → emergency descent → fuite carburant → ILS déroutement one engine → atterrissage one engine puis ILS non-précision. Se termine par feu + procédures évacuation.",
 desc_en:"Critical emergency management by phase: RTO → engine fire → diversion decision → cargo fire → depressurisation → emergency descent → fuel leak → ILS diversion one engine → one engine landing then non-precision ILS. Ends with fire + evacuation procedures.",
 exercises:[{sid:"rto",min:12},{sid:"engine_fire",min:25},{sid:"nnc_cargo_fwd",min:18},{sid:"cabin_alt",min:15},{sid:"emergency_desc",min:15},{sid:"nnc_fuel_leak",min:15},{sid:"se_ils",min:25},{sid:"se_ldg",min:20},{sid:"non_ils",min:20}]},
+{id:"cpt_psd_sa_wlm_eval",title:"Évaluation CPT — PSD · SA · WLM · PRO · COM · LTW",title_en:"CPT Assessment — PSD · SA · WLM · PRO · COM · LTW",type:"PC",color:"#84CC16",focus:["PSD","SA","WLM","PRO","COM","LTW"],
+desc:"Session PC ciblée sur les faiblesses identifiées : PSD, SA, WLM, PRO, COM et LTW. 12 exercices progressifs couvrant toutes les phases de vol — décollage → montée → croisière → descente → approche → atterrissage — pour exposer les comportements clés sous charge croissante et en environnement dégradé.",
+desc_en:"PC session targeting identified weaknesses: PSD, SA, WLM, PRO, COM and LTW. 12 progressive exercises covering all flight phases — takeoff → climb → cruise → descent → approach → landing — to expose key behaviors under increasing workload and degraded environment.",
+exercises:[
+{sid:"rto",min:15},
+{sid:"ef_v1v2",min:20},
+{sid:"engine_fire",min:25},
+{sid:"tcas_ra",min:10},
+{sid:"airspeed_unrel",min:20},
+{sid:"cabin_alt",min:15},
+{sid:"emergency_desc",min:15},
+{sid:"windshear_manual",min:15},
+{sid:"gpws",min:12},
+{sid:"go_around",min:15},
+{sid:"se_ils",min:22},
+{sid:"se_ldg",min:18}
+]},
 ];
 
 const COMPETENCIES = [
@@ -7775,9 +8419,12 @@ triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
 profCheck: null,
 interventions:[], flags:[], voiceNotes:[],
 sessionObjectives:{},
+pilotObjectives:{},
+foObjectives:{},
 sessionMeteo:{crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''},
 loftNotes:{events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}},
-rapportNotes:''
+rapportNotes:'',
+rapportSignatures:{tri:'',cpt:'',fo:''}
 };
 
 // ── CHRONOMETER ---───────────────────────────────────────────────────────────
@@ -8212,6 +8859,8 @@ showBriefing();
 }
 
 function showBriefing(){
+const c1=_ROLE_COLORS[state.pilotRole]||'#3B82F6';
+const c2=_ROLE_COLORS[state.foRole]||'#10B981';
 const threats = _lang==='en' ? [
 {id:'wx',icon:'🌩️',label:'WEATHER',items:['Windshear','Icing','Reduced visibility','Thunderstorm / CB on route']},
 {id:'notam',icon:'📋',label:'NOTAMs / ATIS',items:['Runway / ILS NOTAM','Special procedures','Airspace restrictions','ATIS received and analyzed']},
@@ -8334,32 +8983,33 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
 </div>
 <div style="padding:10px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
   <div>
-    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'HEADWIND / TAILWIND':'VENT DE FACE/ARRIÈRE'}</div>
+    <div style="font-size:12px;font-weight:800;color:#84CC16;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'HEADWIND / TAILWIND':'VENT DE FACE/ARRIÈRE'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.wind||''}" oninput="state.sessionMeteo.wind=this.value" />
-      <span style="color:#94A3B8;font-size:12px;">kt</span>
+      <input id="meteo-wind-input" class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #84CC16;box-shadow:0 0 10px #84CC1655,0 0 3px #84CC16AA;background:#84CC160D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.wind||''}" oninput="state.sessionMeteo.wind=this.value;updateMeteoDisplay()" />
+      <span style="color:#84CC16;font-size:13px;font-weight:700;">kt</span>
     </div>
+    <div id="meteo-tw-warn" style="font-size:9px;color:#84CC1677;margin-top:3px;font-style:italic;">${_lang==='en'?'Max tailwind: 10 kt':'Max vent arrière: 10 kt'}</div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:4px;" id="meteo-xw-label">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}${_xwLimit!==null&&_xwLimit!==undefined&&_rcCond?` <span style="color:#F59E0B;font-size:9px;">(MAX ${_xwLimit}kt)</span>`:(_xwNA?` <span style="color:#EF4444;font-size:9px;">N/A</span>`:'')}</div>
+    <div style="font-size:12px;font-weight:800;color:#06B6D4;letter-spacing:1px;margin-bottom:4px;" id="meteo-xw-label">${_lang==='en'?'CROSSWIND':'VENT TRAVERSIER'}${_xwLimit!==null&&_xwLimit!==undefined&&_rcCond?` <span style="color:#F59E0B;font-size:9px;">(MAX ${_xwLimit}kt)</span>`:(_xwNA?` <span style="color:#EF4444;font-size:9px;">N/A</span>`:'')}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input id="meteo-xw-input" class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value;updateMeteoDisplay()" />
-      <span style="color:#94A3B8;font-size:12px;">kt</span>
+      <input id="meteo-xw-input" class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #06B6D4;box-shadow:0 0 10px #06B6D455,0 0 3px #06B6D4AA;background:#06B6D40D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.crosswind||''}" oninput="state.sessionMeteo.crosswind=this.value;updateMeteoDisplay()" />
+      <span style="color:#06B6D4;font-size:13px;font-weight:700;">kt</span>
     </div>
     <div id="meteo-xw-warn"></div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CEILING':'PLAFOND'}</div>
+    <div style="font-size:12px;font-weight:800;color:#F472B6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'CEILING':'PLAFOND'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value;updateMeteoDisplay()" />
-      <span style="color:#94A3B8;font-size:12px;">ft</span>
+      <input class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #F472B6;box-shadow:0 0 10px #F472B655,0 0 3px #F472B6AA;background:#F472B60D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.ceiling||''}" oninput="state.sessionMeteo.ceiling=this.value;updateMeteoDisplay()" />
+      <span style="color:#F472B6;font-size:13px;font-weight:700;">ft</span>
     </div>
   </div>
   <div>
-    <div style="font-size:10px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'VISIBILITY / RVR':'VISIBILITÉ / RVR'}</div>
+    <div style="font-size:12px;font-weight:800;color:#10B981;letter-spacing:1px;margin-bottom:4px;">${_lang==='en'?'VISIBILITY / RVR':'VISIBILITÉ / RVR'}</div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <input class="form-input" style="flex:1;text-align:center;font-size:15px;font-weight:700;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value;updateMeteoDisplay()" />
-      <span style="color:#94A3B8;font-size:12px;">m</span>
+      <input class="form-input" style="flex:1;text-align:center;font-size:18px;font-weight:700;border:1.5px solid #10B981;box-shadow:0 0 10px #10B98155,0 0 3px #10B981AA;background:#10B9810D;color:#F1F5F9;" type="number" placeholder="0" value="${state.sessionMeteo.visibility||''}" oninput="state.sessionMeteo.visibility=this.value;updateMeteoDisplay()" />
+      <span style="color:#10B981;font-size:13px;font-weight:700;">m</span>
     </div>
   </div>
 </div>
@@ -8383,27 +9033,74 @@ const meteoHtml = `<div style="background:#0F1218;border:1px solid #3B82F644;bor
   </div>
   <div style="margin-top:6px;font-size:9px;color:#475569;font-style:italic;">${_lang==='en'?'Source: Boeing FCT 737 NG — demonstrated max crosswind':'Source: Boeing FCT 737 NG — vent traversier max démontré'}</div>
 </div>
+<div style="padding:0 14px 12px;">
+  <div onclick="var b=document.getElementById('rcam-body');b.style.display=b.style.display==='none'?'block':'none';" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 0;border-top:1px solid #1E2530;">
+    <span style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:1px;flex:1;">📊 RCAM — ${_lang==='en'?'RUNWAY CONDITION ASSESSMENT MATRIX':'MATRICE ÉTAT DE PISTE'}</span>
+    <span style="font-size:10px;color:#475569;">▾</span>
+  </div>
+  <div id="rcam-body" style="display:none;">
+    <table style="width:100%;border-collapse:collapse;font-size:11px;">
+      <thead>
+        <tr style="background:#0F1218;">
+          <th style="padding:5px 7px;text-align:center;color:#94A3B8;font-size:10px;border-bottom:1px solid #1E2530;width:32px;">RCC</th>
+          <th style="padding:5px 7px;text-align:left;color:#94A3B8;font-size:10px;border-bottom:1px solid #1E2530;">${_lang==='en'?'CONDITION':'ÉTAT'}</th>
+          <th style="padding:5px 7px;text-align:center;color:#84CC16;font-size:10px;border-bottom:1px solid #1E2530;">XW T/O</th>
+          <th style="padding:5px 7px;text-align:center;color:#F472B6;font-size:10px;border-bottom:1px solid #1E2530;">XW LDG</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${[
+          {rcc:'6',col:'#10B981',qual:_lang==='en'?'DRY':'PISTE SÈCHE',desc:_lang==='en'?'Dry runway':'Piste sèche',to:'36/33*',ldg:'36/33*'},
+          {rcc:'5',col:'#10B981',qual:'BON',desc:_lang==='en'?'Frost · Wet · Slush ≤3mm · Dry/Wet snow':'Givre · Humide · Gadoue ≤3mm · Neige sèche/mouillée',to:'25',ldg:'36/33*'},
+          {rcc:'4',col:'#84CC16',qual:_lang==='en'?'GOOD–MED':'BON à MOYEN',desc:_lang==='en'?'Compacted snow ≤-15°C OAT':'Neige compactée ≤-15°C OAT',to:'22',ldg:'30'},
+          {rcc:'3',col:'#F59E0B',qual:_lang==='en'?'MEDIUM':'MOYEN',desc:_lang==='en'?'Wet/slippery · Snow >3mm · Compacted >-15°C':'Glissante mouillée · Neige >3mm · Compactée >-15°C',to:'20',ldg:'25'},
+          {rcc:'2',col:'#F97316',qual:_lang==='en'?'MED–POOR':'MOYEN à MAUVAIS',desc:_lang==='en'?'Water or slush >3mm':'Eau ou gadoue >3mm',to:'15',ldg:'17'},
+          {rcc:'1',col:'#EF4444',qual:_lang==='en'?'POOR':'MAUVAIS',desc:_lang==='en'?'Ice':'Glace',to:'13',ldg:'15'},
+          {rcc:'0',col:'#64748B',qual:'NIL',desc:_lang==='en'?'Wet ice · Water on compacted snow · Snow on ice':'Glace mouillée · Eau sur neige compactée · Neige sur glace',to:'NIL',ldg:'NIL'},
+        ].map(r=>`<tr style="border-bottom:1px solid #1E253044;">
+          <td style="padding:5px 7px;text-align:center;font-weight:900;font-size:13px;color:${r.col};">${r.rcc}</td>
+          <td style="padding:5px 7px;">
+            <div style="font-size:9px;font-weight:800;color:${r.col};letter-spacing:0.5px;">${r.qual}</div>
+            <div style="font-size:9px;color:#64748B;line-height:1.3;">${r.desc}</div>
+          </td>
+          <td style="padding:5px 7px;text-align:center;font-weight:800;font-size:12px;color:${r.rcc==='0'?'#EF4444':'#84CC16'};">${r.to}</td>
+          <td style="padding:5px 7px;text-align:center;font-weight:800;font-size:12px;color:${r.rcc==='0'?'#EF4444':'#F472B6'};">${r.ldg}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div style="margin-top:5px;font-size:9px;color:#64748B;font-style:italic;">* 36/33 kt avec winglets · ${_lang==='en'?'Tailwind max: 10 kt':'Vent arrière max: 10 kt'}</div>
+  </div>
+</div>
 </div>`;
 
-// Build session objectives HTML
+// Build session objectives HTML — per-pilot panels
 const objColors={maintain:'#3B82F6',acquire:'#F59E0B',improve:'#10B981'};
 const objLabels=_lang==='en'
   ?{maintain:'MAINTAIN',acquire:'ACQUIRE',improve:'IMPROVE'}
   :{maintain:'MAINTENIR',acquire:'ACQUÉRIR',improve:'AMÉLIORER'};
-const objHtml = `<div style="background:#0F1218;border:1px solid #A78BFA44;border-radius:12px;overflow:hidden;margin-bottom:12px;">
-<div style="padding:10px 14px;background:#151B26;font-size:11px;font-weight:700;color:#A78BFA;letter-spacing:1px;">${_lang==='en'?'🎯 SESSION OBJECTIVES — EBT':'🎯 OBJECTIFS DE SÉANCE — EBT'}</div>
-<div style="padding:10px 14px;display:flex;flex-direction:column;gap:8px;">
-${COMPETENCIES.map(c=>{
-  const obj=state.sessionObjectives[c.id]||null;
-  return `<div style="display:flex;align-items:center;gap:8px;">
-    <span style="font-size:11px;font-weight:800;color:${c.color};width:42px;flex-shrink:0;">${c.label}</span>
-    <div style="display:flex;gap:4px;flex:1;">
-      ${['maintain','acquire','improve'].map(ot=>`
-        <button onclick="setSessionObjective('${c.id}','${ot}')" style="flex:1;padding:4px 2px;border-radius:5px;border:1px solid ${obj===ot?objColors[ot]:objColors[ot]+'44'};background:${obj===ot?objColors[ot]+'33':'transparent'};color:${obj===ot?objColors[ot]:'#475569'};font-size:9px;font-weight:800;cursor:pointer;">${objLabels[ot]}</button>
-      `).join('')}
+function _buildObjPanel(pilotKey, pilotName, pilotRole, pilotColor){
+  const objectives = state[pilotKey==='fo'?'foObjectives':'pilotObjectives']||{};
+  return `<div style="flex:1;min-width:0;">
+    <div style="padding:6px 10px;background:#151B26;border-bottom:1px solid ${pilotColor}33;font-size:10px;font-weight:800;color:${pilotColor};letter-spacing:1px;">${pilotRole} — ${pilotName}</div>
+    <div style="padding:8px 10px;display:flex;flex-direction:column;gap:6px;">
+    ${COMPETENCIES.map(c=>{
+      const obj=objectives[c.id]||null;
+      return `<div style="display:flex;align-items:center;gap:5px;">
+        <span style="font-size:10px;font-weight:800;color:${c.color};width:36px;flex-shrink:0;">${c.label}</span>
+        <div style="display:flex;gap:2px;flex:1;">
+          ${['maintain','acquire','improve'].map(ot=>`<button onclick="setSessionObjective('${c.id}','${ot}','${pilotKey}')" style="flex:1;padding:3px 1px;border-radius:4px;border:1px solid ${obj===ot?objColors[ot]:objColors[ot]+'44'};background:${obj===ot?objColors[ot]+'22':'transparent'};color:${obj===ot?objColors[ot]:'#475569'};font-size:8px;font-weight:800;cursor:pointer;">${objLabels[ot]}</button>`).join('')}
+        </div>
+      </div>`;
+    }).join('')}
     </div>
   </div>`;
-}).join('')}
+}
+const _hasFo=!!state.foName;
+const objHtml = `<div style="background:#0F1218;border:1px solid #A78BFA44;border-radius:12px;overflow:hidden;margin-bottom:12px;">
+<div style="padding:9px 14px;background:#151B26;font-size:11px;font-weight:700;color:#A78BFA;letter-spacing:1px;">${_lang==='en'?'🎯 SESSION OBJECTIVES — EBT':'🎯 OBJECTIFS DE SÉANCE — EBT'}</div>
+<div style="display:flex;">
+  ${_buildObjPanel('pilot', state.pilotName||c1, state.pilotRole||'CPT', c1)}
+  ${_hasFo?`<div style="width:1px;background:#1E2530;flex-shrink:0;"></div>`+_buildObjPanel('fo', state.foName, state.foRole||'FO', c2):''}
 </div>
 </div>`;
 
@@ -8492,12 +9189,27 @@ function updateMeteoDisplay(){
   const exc=lim!==null&&lim!==undefined&&xv>0&&xv>lim;
   const na=co!==''&&lim===null;
   const wi=document.getElementById('meteo-xw-input');
-  if(wi){wi.style.borderColor=exc?'#EF4444':'';wi.style.color=exc?'#EF4444':'';}
+  if(wi){
+    wi.style.borderColor=exc?'#EF4444':'#06B6D4';
+    wi.style.boxShadow=exc?'0 0 10px #EF444455,0 0 3px #EF4444AA':'0 0 10px #06B6D455,0 0 3px #06B6D4AA';
+    wi.style.color=exc?'#EF4444':'';
+  }
   const ww=document.getElementById('meteo-xw-warn');
   if(ww){
     if(exc) ww.innerHTML=`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">⚠️ ${_lang==='en'?'EXCEEDS limit ('+lim+'kt) — OPS NOT ALLOWED':'DÉPASSE limite ('+lim+'kt) — OPS INTERDITES'}</div>`;
     else if(na) ww.innerHTML=`<div style="font-size:10px;color:#EF4444;margin-top:3px;font-weight:700;">🚫 ${_lang==='en'?'NIL BRAKING — Operations NOT authorized':'FREINAGE NUL — Opérations NON autorisées'}</div>`;
     else ww.innerHTML='';
+  }
+  // Tailwind warning (>10 kt)
+  const wv=parseInt(state.sessionMeteo.wind)||0;
+  const twEl=document.getElementById('meteo-tw-warn');
+  const windIn=document.getElementById('meteo-wind-input');
+  if(wv>10){
+    if(twEl) twEl.innerHTML=`<span style="color:#EF4444;font-weight:700;">⚠️ ${_lang==='en'?'TAILWIND EXCEEDS 10 kt — NOT AUTHORIZED':'VENT ARRIÈRE > 10 kt — NON AUTORISÉ'}</span>`;
+    if(windIn){ windIn.style.borderColor='#EF4444'; windIn.style.boxShadow='0 0 10px #EF444455,0 0 3px #EF4444AA'; windIn.style.color='#EF4444'; }
+  } else {
+    if(twEl) twEl.innerHTML=`<span style="color:#84CC1677;font-style:italic;">${_lang==='en'?'Max tailwind: 10 kt':'Max vent arrière: 10 kt'}</span>`;
+    if(windIn){ windIn.style.borderColor='#84CC16'; windIn.style.boxShadow='0 0 10px #84CC1655,0 0 3px #84CC16AA'; windIn.style.color=''; }
   }
 }
 
@@ -8506,11 +9218,13 @@ if(!state.briefingFacNotes) state.briefingFacNotes={};
 state.briefingFacNotes[i]=val;
 }
 
-function setSessionObjective(compId, objType){
-  if(state.sessionObjectives[compId]===objType){
-    delete state.sessionObjectives[compId];
+function setSessionObjective(compId, objType, pilot){
+  const key = pilot==='fo' ? 'foObjectives' : 'pilotObjectives';
+  if(!state[key]) state[key]={};
+  if(state[key][compId]===objType){
+    delete state[key][compId];
   } else {
-    state.sessionObjectives[compId]=objType;
+    state[key][compId]=objType;
   }
   showBriefing();
 }
@@ -8838,6 +9552,8 @@ ${_memArr.map((m,i)=>`<div class="mem-item"><span class="mem-num">${i+1}</span><
 const csKey = state.activePilot==="cpt"?"cs":"csfo";
 const cs = ex[csKey]||{};
 
+const biKey = state.activePilot==='cpt'?'bi':'bifo';
+if(!ex[biKey]) ex[biKey]={};
 const compGrid = COMPETENCIES.map(c=>{
 const isKey = sc.keys.includes(c.id);
 const cd = cs[c.id]||{g:0,obs:[]};
@@ -8846,9 +9562,12 @@ const neg=(cd.obs||[]).filter(o=>o.s==="-").length;
 const pipsHtml = cd.g>0 ?
 `<span style="font-size:16px;font-weight:800;color:${GC[cd.g]};">${cd.g}</span>` :
 `<div class="pips">${[1,2,3,4,5].map(i=>`<div class="pip" style="--pip-color:${c.color};"></div>`).join('')}</div>`;
+const _cardBis=BEHAVIORAL_INDICATORS[c.id]||[];
+const _cardBiCount=_cardBis.filter(b=>ex[biKey][b.id]).length;
+const biBadge=_cardBiCount>0?`<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:${c.color};background:${c.color}22;border:1.5px solid ${c.color}99;border-radius:50%;margin-left:4px;box-shadow:0 0 7px ${c.color}88,0 0 2px ${c.color}CC;line-height:1;vertical-align:middle;">${_cardBiCount}</span>`:'';
 return `<div class="comp-card${isKey?' key':''}" style="--key-color:${c.color};${isKey?'border-color:'+c.color+'44;background:'+c.color+'0A;':''}" onclick="openComp('${c.id}')">
 ${isKey?`<div class="top-bar" style="background:${c.color};"></div>`:''}
-<div class="comp-label" style="color:${c.color};opacity:${isKey?1:0.65};">${c.label}</div>
+<div class="comp-label" style="color:${c.color};opacity:${isKey?1:0.65};">${c.label}${biBadge}</div>
 <div class="comp-full" style="opacity:${isKey?1:0.65};">${c.full}</div>
 <div class="comp-stats">
 <div style="display:flex;gap:5px;">
@@ -8861,42 +9580,10 @@ ${pipsHtml}
 }).join('');
 
 const notesVal = ex.notes||'';
-// Build BI checklist
-const biKey = state.activePilot==='cpt'?'bi':'bifo';
-if(!ex[biKey]) ex[biKey]={};
-const biHtml = `<div style="background:#0F1218;border:1px solid #A78BFA33;border-radius:10px;overflow:hidden;margin-bottom:14px;">
-<div onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="padding:10px 14px;background:#151B26;display:flex;align-items:center;gap:8px;cursor:pointer;">
-  <span style="font-size:14px;">📋</span>
-  <span style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1px;flex:1;">${_lang==='en'?'BEHAVIORAL INDICATORS':'INDICATEURS COMPORTEMENTAUX'}</span>
-  <span style="font-size:11px;color:#475569;">${_lang==='en'?'tap to expand':'appuyer pour ouvrir'} ▾</span>
-</div>
-<div style="display:none;">
-${COMPETENCIES.map(c=>{
-  const bis=BEHAVIORAL_INDICATORS[c.id]||[];
-  const checked=bis.filter(b=>(ex[biKey][b.id])).length;
-  return `<div style="border-top:1px solid #1E2530;">
-    <div style="padding:8px 14px;background:${c.color}11;display:flex;align-items:center;gap:8px;">
-      <span style="font-size:11px;font-weight:800;color:${c.color};">${c.label}</span>
-      <span style="font-size:10px;color:${checked>0?c.color:'#475569'};">${checked}/${bis.length}</span>
-    </div>
-    ${bis.map(b=>{
-      const isChecked=!!(ex[biKey][b.id]);
-      return `<div style="display:flex;align-items:flex-start;gap:10px;padding:7px 14px;border-bottom:1px solid #1E253066;cursor:pointer;" onclick="toggleBI('${biKey}','${b.id}',this)">
-        <div style="width:18px;height:18px;border-radius:4px;border:2px solid ${isChecked?c.color:'#334155'};background:${isChecked?c.color+'33':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
-          ${isChecked?`<span style="color:${c.color};font-size:11px;">✓</span>`:''}
-        </div>
-        <div style="font-size:12px;color:${isChecked?'#F1F5F9':'#94A3B8'};line-height:1.4;">${_lang==='en'?b.en:b.fr}</div>
-      </div>`;
-    }).join('')}
-  </div>`;
-}).join('')}
-</div>
-</div>`;
 
 el.innerHTML = pilotTabsHtml + collectiveHtml + condHtml + memHtml +
 `<div class="section-lbl">${_lang==='en'?'COMPETENCIES — Tap to evaluate':'COMPETENCES — Tap pour evaluer'}</div>
 <div class="comp-grid">${compGrid}</div>
-${biHtml}
 <div style="margin-bottom:14px;">
 <div class="section-lbl" style="color:#F59E0B;">📝 ${_lang==='en'?'MY PRIVATE NOTES (not included in report)':'MES NOTES PRIVÉES (non incluses dans le rapport)'}</div>
 <textarea class="note-area" placeholder="${_lang==='en'?'Private debrief notes — for your use only...':'Notes de conduite du débriefing — privées, pour votre usage uniquement...'}" onchange="saveNotes(this.value)">${notesVal}</textarea>
@@ -8929,6 +9616,15 @@ function toggleBI(biKey, biId, row){
   }
   const txt=row.querySelector('div:last-child');
   if(txt) txt.style.color=checked?'#F1F5F9':'#94A3B8';
+}
+
+function toggleBIInComp(biId, compId){
+  const ex = state.exercises[state.activeIdx];
+  const biKey = state.activePilot==='cpt'?'bi':'bifo';
+  if(!ex[biKey]) ex[biKey]={};
+  ex[biKey][biId] = !ex[biKey][biId];
+  const comp = COMPETENCIES.find(c=>c.id===compId);
+  if(comp) renderCompContent(comp);
 }
 
 function renderFFATab(ex,sc,el){
@@ -9480,7 +10176,42 @@ return `<button onclick="addQuickObs('${comp.id}',${i})" style="${activeStyle}bo
 }).join('')}
 </div>` : '';
 
+// ── BI section for this competency ──────────────────────────────────────────
+const biKey = state.activePilot==='cpt'?'bi':'bifo';
+const _biEx = state.exercises[state.activeIdx];
+if(!_biEx[biKey]) _biEx[biKey]={};
+const _bis = BEHAVIORAL_INDICATORS[comp.id]||[];
+const _biChecked = _bis.filter(b=>_biEx[biKey][b.id]).length;
+const _biPilotLbl = state.activePilot==='cpt'
+  ? (state.pilotRole||'CPT')+(state.pilotName?' — '+state.pilotName:'')
+  : (state.foRole||'FO')+(state.foName?' — '+state.foName:'');
+const _biPilotColor = state.activePilot==='cpt'
+  ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6')
+  : (_ROLE_COLORS[state.foRole]||'#10B981');
+const biSectionHtml = _bis.length ? `
+<div style="margin-bottom:20px;">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;">
+    <div style="font-size:10px;font-weight:900;color:${comp.color};letter-spacing:1.5px;">📋 ${_lang==='en'?'BEHAVIORAL INDICATORS':'INDICATEURS COMPORTEMENTAUX'}</div>
+    <span style="font-size:11px;font-weight:800;color:${_biChecked>0?comp.color:'#475569'};background:${comp.color}${_biChecked>0?'22':'11'};border:1px solid ${comp.color}${_biChecked>0?'55':'22'};border-radius:10px;padding:2px 8px;">${_biChecked}/${_bis.length}</span>
+    <span style="font-size:10px;color:${_biPilotColor};font-weight:600;">${_biPilotLbl}</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    ${_bis.map(b=>{
+      const isCh=!!(_biEx[biKey][b.id]);
+      const biTxt=_lang==='en'?b.en:b.fr;
+      return `<div onclick="toggleBIInComp('${b.id}','${comp.id}')" style="display:flex;align-items:flex-start;gap:12px;padding:12px 13px;background:${isCh?comp.color+'18':'#0F1218'};border-radius:8px;border:1.5px solid ${isCh?comp.color+'77':'#1E2530'};cursor:pointer;${isCh?'box-shadow:0 0 8px '+comp.color+'33;':''}">
+        <div style="width:28px;height:28px;border-radius:6px;border:2px solid ${isCh?comp.color:'#334155'};background:${isCh?comp.color+'44':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+          ${isCh?`<span style="color:${comp.color};font-size:16px;font-weight:900;">✓</span>`:''}
+        </div>
+        <div style="font-size:15px;color:${isCh?'#F1F5F9':'#94A3B8'};line-height:1.45;font-weight:${isCh?'600':'400'};">${biTxt}</div>
+      </div>`;
+    }).join('')}
+  </div>
+</div>
+<div style="height:1px;background:#1E2530;margin-bottom:18px;"></div>` : '';
+
 document.getElementById('comp-content').innerHTML = `
+${biSectionHtml}
 <div style="margin-bottom:18px;">
 <div class="section-lbl">${_lang==='en'?'CBTA GRADE (1 TO 5)':'GRADE CBTA (1 À 5)'}</div>
 <div class="grade-row">${gradeHtml}</div>
@@ -10863,21 +11594,23 @@ function printRapport(){
     +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
     +'</div>'
     +rapHtml
-    // Auto-trigger print after images have had time to load
-    +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},800);};<\/scr'+'ipt>'
     +'</body></html>';
 
-  try{
-    // Opens a new tab — works on desktop and Android Chrome
-    const w = window.open('','_blank');
-    if(w){
-      w.document.write(fullPage);
-      w.document.close();
-      return;
-    }
-  }catch(e){}
-  // iOS PWA fallback: navigate current tab to a data URL
-  window.location.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(fullPage);
+  _showPdfOverlay(fullPage);
+}
+
+function closePdfOverlay(){
+  document.getElementById('pdf-overlay').style.display='none';
+  const f=document.getElementById('pdf-iframe');
+  f.removeAttribute('srcdoc');
+  f.src='about:blank';
+}
+
+function _showPdfOverlay(html){
+  const f=document.getElementById('pdf-iframe');
+  f.removeAttribute('src');
+  f.srcdoc=html;
+  document.getElementById('pdf-overlay').style.display='flex';
 }
 
 function printRapportFromHistory(idx){
@@ -10904,13 +11637,8 @@ function printRapportFromHistory(idx){
     +'<button onclick="window.print()" style="background:#0f172a;color:#fff;border:none;padding:10px 24px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;">&#128424;&#65039; Imprimer / PDF</button>'
     +'</div>'
     +session.rapportHTML
-    +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},800);};<\/scr'+'ipt>'
     +'</body></html>';
-  try{
-    const w = window.open('','_blank');
-    if(w){ w.document.write(fullPage); w.document.close(); return; }
-  }catch(e){}
-  window.location.href = 'data:text/html;charset=utf-8,'+encodeURIComponent(fullPage);
+  _showPdfOverlay(fullPage);
 }
 
 function ouvrirRapportSafari(){
@@ -10926,9 +11654,7 @@ const page = '<!DOCTYPE html><html><head><meta charset="UTF-8">'
 + rapHtml
 +'</body></html>';
 
-// Utiliser data: URL — fonctionne dans les PWA iOS
-const dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(page);
-window.location.href = dataUrl;
+_showPdfOverlay(page);
 }
 
 function debTab(tab,el){
@@ -11370,7 +12096,70 @@ const radarHtml=`<div style="padding:14px 14px 4px;">
   <div style="background:#0F1218;border-radius:10px;padding:10px;overflow:hidden;">${buildRadarSVG(cptMap,foMap,state.pilotName||'CPT',state.foName||'FO')}</div>
   <div style="background:#0F1218;border-radius:10px;padding:10px 12px;margin-top:8px;">${scoreTableHeader}${scoreTableRows}</div>
 </div>`;
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + cptSection + foSection;
+// EBT objectives bilan
+const _objLbls=_lang==='en'?{maintain:'MAINTAIN',acquire:'ACQUIRE',improve:'IMPROVE'}:{maintain:'MAINTENIR',acquire:'ACQUÉRIR',improve:'AMÉLIORER'};
+const _objCols={maintain:'#3B82F6',acquire:'#F59E0B',improve:'#10B981'};
+function _ebtBilan(objectives, compMap, pilotName, pilotRole, pilotColor){
+  const entries=Object.entries(objectives||{}).filter(([cid])=>COMPETENCIES.find(c=>c.id===cid));
+  if(!entries.length) return '';
+  const rows=entries.map(([cid,objType])=>{
+    const comp=COMPETENCIES.find(c=>c.id===cid);
+    const score=compMap[cid]||0;
+    let verdict, vc;
+    if(!score){verdict=_lang==='en'?'NOT EVALUATED':'NON ÉVALUÉ';vc='#475569';}
+    else if(score>=3.5){verdict=_lang==='en'?'ACHIEVED ✓':'ATTEINT ✓';vc='#10B981';}
+    else if(score>=3.0){verdict=_lang==='en'?'PARTIAL ⚡':'PARTIEL ⚡';vc='#F59E0B';}
+    else{verdict=_lang==='en'?'NOT ACHIEVED ✗':'NON ATTEINT ✗';vc='#EF4444';}
+    const barW=score?Math.round(score/5*100):0;
+    return `<div style="display:flex;align-items:center;gap:7px;padding:6px 10px;border-bottom:1px solid #1E2530;">
+      <span style="font-size:10px;font-weight:800;color:${comp.color};width:36px;flex-shrink:0;">${comp.label}</span>
+      <span style="font-size:8px;font-weight:800;color:${_objCols[objType]};background:${_objCols[objType]}22;border:1px solid ${_objCols[objType]}44;border-radius:4px;padding:1px 5px;white-space:nowrap;flex-shrink:0;">${_objLbls[objType]}</span>
+      <div style="flex:1;height:4px;background:#1E2530;border-radius:2px;overflow:hidden;"><div style="height:4px;background:${vc};width:${barW}%;border-radius:2px;transition:width .3s;"></div></div>
+      <span style="font-size:12px;font-weight:900;color:${vc};width:28px;text-align:right;flex-shrink:0;">${score?score.toFixed(1):'-'}</span>
+      <span style="font-size:9px;font-weight:900;color:${vc};min-width:88px;text-align:right;flex-shrink:0;">${verdict}</span>
+    </div>`;
+  }).join('');
+  return `<div style="padding:10px 14px 4px;">
+    <div style="font-size:10px;font-weight:800;color:${pilotColor};letter-spacing:2px;margin-bottom:6px;">🎯 ${_lang==='en'?'EBT OBJECTIVES':'OBJECTIFS EBT'} — ${pilotRole} ${pilotName}</div>
+    <div style="background:#0F1218;border:1px solid ${pilotColor}33;border-radius:8px;overflow:hidden;">${rows}</div>
+  </div>`;
+}
+const _ebtP=_ebtBilan(state.pilotObjectives,cptMap,state.pilotName||'',state.pilotRole||'CPT',c1);
+const _ebtF=foMap?_ebtBilan(state.foObjectives,foMap,state.foName||'',state.foRole||'FO',c2):'';
+const ebtBilanHtml=(_ebtP||_ebtF)?`<div style="background:#0F121822;border-top:1px solid #A78BFA33;"><div style="font-size:9px;font-weight:900;color:#A78BFA;letter-spacing:2px;padding:10px 14px 0;">${_lang==='en'?'EBT SESSION OBJECTIVES — RESULTS':'OBJECTIFS EBT — BILAN DE SÉANCE'}</div>${_ebtP}${_ebtF}</div>`:'';
+// BI observed behaviors summary
+function _buildBISummary(biKey,pilotName,pilotRole,pilotColor){
+  const biCounts={};
+  closed.forEach(ex=>{Object.entries(ex[biKey]||{}).forEach(([id,v])=>{if(v) biCounts[id]=(biCounts[id]||0)+1;});});
+  if(!Object.keys(biCounts).length) return '';
+  const compSections=COMPETENCIES.map(c=>{
+    const allBis=BEHAVIORAL_INDICATORS[c.id]||[];
+    const checkedBis=allBis.filter(b=>biCounts[b.id]);
+    if(!checkedBis.length) return '';
+    const rows=checkedBis.map(b=>{
+      const cnt=biCounts[b.id];
+      return `<div style="display:flex;align-items:flex-start;gap:8px;padding:5px 12px;border-bottom:1px solid #1E253044;">
+        <span style="color:${c.color};font-size:14px;flex-shrink:0;line-height:1.3;">✓</span>
+        <span style="font-size:12px;color:#CBD5E1;line-height:1.4;flex:1;">${_lang==='en'?b.en:b.fr}</span>
+        ${cnt>1?`<span style="font-size:9px;font-weight:800;color:${c.color};background:${c.color}22;border:1px solid ${c.color}44;border-radius:10px;padding:1px 6px;flex-shrink:0;white-space:nowrap;">${cnt}×</span>`:''}
+      </div>`;
+    }).join('');
+    return `<div style="border-top:1px solid #1E2530;">
+      <div style="padding:6px 10px;background:${c.color}0A;display:flex;align-items:center;gap:6px;">
+        <span style="font-size:11px;font-weight:800;color:${c.color};">${c.label}</span>
+        <span style="font-size:10px;color:${c.color}88;">${checkedBis.length}/${allBis.length} ${_lang==='en'?'observed':'observés'}</span>
+      </div>${rows}</div>`;
+  }).filter(s=>s).join('');
+  if(!compSections) return '';
+  return `<div style="padding:10px 14px 4px;">
+    <div style="font-size:10px;font-weight:800;color:${pilotColor};letter-spacing:2px;margin-bottom:6px;">📋 ${_lang==='en'?'OBSERVED BEHAVIORS':'COMPORTEMENTS OBSERVÉS'} — ${pilotRole} ${pilotName}</div>
+    <div style="background:#0F1218;border:1px solid ${pilotColor}33;border-radius:8px;overflow:hidden;">${compSections}</div>
+  </div>`;
+}
+const _biP=_buildBISummary('bi',state.pilotName||'',state.pilotRole||'CPT',c1);
+const _biF=foMap?_buildBISummary('bifo',state.foName||'',state.foRole||'FO',c2):'';
+const biSummaryHtml=(_biP||_biF)?`<div style="background:#0F121822;border-top:1px solid #33415544;margin-top:4px;"><div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;padding:10px 14px 0;">${_lang==='en'?'BEHAVIORAL INDICATORS — SESSION EVIDENCE':'INDICATEURS COMPORTEMENTAUX — PREUVES SÉANCE'}</div>${_biP}${_biF}</div>`:'';
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + ebtBilanHtml + cptSection + foSection + biSummaryHtml;
 }
 
 function renderDebExercises(el){
@@ -11421,19 +12210,19 @@ if(tmExs.length){
     const sc=ALL_SC.find(s=>s.id===e.sid);
     const d=e.timeDeltaSec; const m=Math.abs(Math.round(d/60));
     const c=d>=0?'#10B981':'#EF4444';
-    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} <span style="color:#64748B;">(${_lang==='en'?'limit':'limite'} ${e.timeLimit}min)</span></span><span style="font-size:12px;font-weight:900;color:${c};">${d>=0?'G':'L'}:${m}min</span></div>`;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;">${sc?sc.title:'?'} <span style="color:#64748B;">(${_lang==='en'?'limit':'limite'} ${e.timeLimit}min)</span></span><span style="font-size:12px;font-weight:900;color:${c};">${d>=0?'S':'L'}:${m}min</span></div>`;
   }).join('');
   const avgDelta = totalDelta/tmExs.length;
   const avgMin = Math.abs(Math.round(avgDelta/60));
   tmHtml=`<div style="background:${tmBg};border:1px solid ${tmBorder};border-radius:9px;padding:10px 12px;margin-bottom:14px;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">
     <div style="font-size:12px;font-weight:800;color:${tmColor};letter-spacing:1px;">⏱ TIME MANAGEMENT — ${tmExs.length} ${_lang==='en'?'exercise':'exercice'}${tmExs.length>1?'s':''}</div>
-    <div style="font-size:18px;font-weight:900;color:${tmColor};text-shadow:0 0 6px ${tmColor}66;">${gained?'G':'L'}:${totalMin}min</div>
+    <div style="font-size:18px;font-weight:900;color:${tmColor};text-shadow:0 0 6px ${tmColor}66;">${gained?'S':'L'}:${totalMin}min</div>
   </div>
   <div style="margin-bottom:6px;">${rows}</div>
   <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid ${tmBorder};margin-top:2px;">
     <span style="font-size:11px;font-weight:700;color:#94A3B8;">${_lang==='en'?'Average per exercise':'Moyenne par exercice'}</span>
-    <span style="font-size:13px;font-weight:900;color:${tmColor};">${gained?'G':'L'}:${avgMin}min</span>
+    <span style="font-size:13px;font-weight:900;color:${tmColor};">${gained?'S':'L'}:${avgMin}min</span>
   </div>
   ${recoHtml}
   </div>`;
@@ -11931,7 +12720,7 @@ if(!state.profCheck) state.profCheck = {
 };
 
 function showProfCheck(){
-  if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},lvoDate:'',remarks:'',result:'',coExaminer:''};
+  if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},lvoDate:'',remarks:'',result:'',coExaminer:'',signatures:{tri:'',pilot:''}};
   if(!state.profCheck.pilotName) state.profCheck.pilotName = state.pilotName||'';
   if(!state.profCheck.date) state.profCheck.date = new Date().toISOString().slice(0,10);
   if(!state.profCheck.grades) state.profCheck.grades={};
@@ -12349,7 +13138,11 @@ function renderProfCheck(){
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">DATE</div><input type="date" value="'+(pc.date||'')+'" onchange="state.profCheck.date=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">POSITION</div>';
   h+='<div style="display:flex;gap:5px;">';
-  ['CAPT','FO','F/E'].forEach(function(p){var a=pc.position===p;h+='<button onclick="state.profCheck.position=\''+p+'\';renderProfCheck()" style="flex:1;padding:7px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid '+(a?'#3B82F6':'#334155')+';background:'+(a?'#3B82F622':'transparent')+';color:'+(a?'#3B82F6':'#64748B')+';">'+p+'</button>';});
+  ['CAPT','FO','TRI','F/E'].forEach(function(p){
+    var a=pc.position===p;
+    var pCol=p==='FO'?'#10B981':p==='TRI'?'#F59E0B':'#3B82F6';
+    h+='<button onclick="state.profCheck.position=\''+p+'\';state.profCheck.signatures={tri:\'\',pilot:\'\'};renderProfCheck()" style="flex:1;padding:7px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid '+(a?pCol+'BB':pCol+'33')+';background:'+(a?pCol+'22':'transparent')+';color:'+(a?pCol:pCol+'88')+';">'+p+'</button>';
+  });
   h+='</div></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">'+(_lang==='en'?'PILOT NAME':'NOM DU PILOTE')+'</div><input type="text" value="'+(pc.pilotName||'')+'" onchange="state.profCheck.pilotName=this.value" placeholder="'+(_lang==='en'?'Full name':'Nom complet')+'" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">STAFF ID</div><input type="text" value="'+(pc.staffId||'')+'" onchange="state.profCheck.staffId=this.value" placeholder="Staff ID" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
@@ -12393,15 +13186,50 @@ function renderProfCheck(){
   h+='<button onclick="setPCResult(\'UNSATISFACTORY\')" style="padding:16px;border-radius:10px;font-size:14px;font-weight:900;cursor:pointer;border:2px solid '+(res==='UNSATISFACTORY'?'#EF4444':'#EF444444')+';background:'+(res==='UNSATISFACTORY'?'#EF444433':'transparent')+';color:'+(res==='UNSATISFACTORY'?'#EF4444':'#EF444488')+';">UNSATISFACTORY</button>';
   h+='</div></div>';
 
+  // Signature pads
+  if(!state.profCheck.signatures) state.profCheck.signatures={tri:'',pilot:''};
+  var pcSigs=state.profCheck.signatures;
+  var pcInst=pc.coExaminer||state.instructorName||'TRI';
+  var pcPilot=pc.pilotName||state.pilotName||'—';
+  // Trainee color depends on position being evaluated
+  var pcPos=pc.position||'CAPT';
+  var pilotCol=pcPos==='FO'?'#10B981':pcPos==='TRI'?'#F59E0B':'#3B82F6';
+  // Examiner always violet
+  var examCol='#8B5CF6';
+  h+='<div style="background:#0F1218;border:1px solid #334155;border-radius:10px;padding:12px;margin-top:14px;">';
+  h+='<div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1.5px;margin-bottom:10px;">✍️ '+(_lang==='en'?'DIGITAL SIGNATURES':'SIGNATURES NUMÉRIQUES')+'</div>';
+  // Examinateur — violet
+  h+='<div style="border:1px solid '+examCol+'33;border-radius:8px;overflow:hidden;margin-bottom:8px;">';
+  h+='<div style="background:'+examCol+'11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
+  h+='<div><div style="font-size:9px;font-weight:800;color:'+examCol+';letter-spacing:1px;">TRI / SFI — '+(_lang==='en'?'EXAMINER':'EXAMINATEUR')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcInst+'</div></div>';
+  h+='<button onclick="clearSigPadPC(\'tri\')" style="padding:3px 8px;border-radius:5px;border:1px solid '+examCol+'44;background:transparent;color:'+examCol+';font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
+  h+='<div style="background:#F8FAFC;padding:4px;position:relative;">';
+  h+='<canvas id="sig-canvas-pc-tri" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>';
+  if(!pcSigs.tri) h+='<div id="sig-pc-hint-tri" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ TRI/SFI — '+(_lang==='en'?'sign here':'signez ici')+'</div>';
+  h+='</div></div>';
+  // Stagiaire — couleur selon poste (CAPT=bleu, FO=vert, TRI=amber)
+  h+='<div style="border:1px solid '+pilotCol+'33;border-radius:8px;overflow:hidden;">';
+  h+='<div style="background:'+pilotCol+'11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">';
+  h+='<div><div style="font-size:9px;font-weight:800;color:'+pilotCol+';letter-spacing:1px;">'+pcPos+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE')+'</div><div style="font-size:11px;color:#F1F5F9;font-weight:700;">'+pcPilot+'</div></div>';
+  h+='<button onclick="clearSigPadPC(\'pilot\')" style="padding:3px 8px;border-radius:5px;border:1px solid '+pilotCol+'44;background:transparent;color:'+pilotCol+';font-size:9px;font-weight:800;cursor:pointer;">✕ '+(_lang==='en'?'CLEAR':'EFFACER')+'</button></div>';
+  h+='<div style="background:#F8FAFC;padding:4px;position:relative;">';
+  h+='<canvas id="sig-canvas-pc-pilot" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>';
+  if(!pcSigs.pilot) h+='<div id="sig-pc-hint-pilot" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ '+pcPilot+' — '+(_lang==='en'?'sign here':'signez ici')+'</div>';
+  h+='</div></div>';
+  h+='<div style="font-size:10px;color:#475569;margin-top:8px;text-align:center;font-style:italic;">'+(_lang==='en'?'Draw with finger or stylus — signatures included in printed PDF':'Dessinez avec le doigt ou stylet — inclus dans le PDF imprimé')+'</div>';
+  h+='</div>';
+
   // Spacer
   h+='<div style="height:20px;"></div>';
 
   document.getElementById('profcheck-content').innerHTML = h;
+  setTimeout(function(){['tri','pilot'].forEach(function(k){initSigPadPC(k);});},0);
 }
 
 function printProfCheck(){
   const pc = state.profCheck || {};
   const grades = pc.grades || {};
+  const pcSigs = pc.signatures || {};
   const GRADE_COLORS = {'5':'#10B981','4':'#3B82F6','3':'#F59E0B','2':'#F97316','1':'#EF4444','/':'#64748B'};
 
   function gradeCell(id){
@@ -12488,20 +13316,29 @@ function printProfCheck(){
     +'<div style="font-size:13px;font-weight:700;">'+(pc.coExaminer||state.instructorName||'')+'</div>'
     +'</div>'
     +'</div>'
-    +'<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
-    +'<div style="border-top:2px solid #0f172a;padding-top:6px;text-align:center;font-size:10px;color:#64748b;">Signature du pilote</div>'
-    +'<div style="border-top:2px solid #0f172a;padding-top:6px;text-align:center;font-size:10px;color:#64748b;">Signature TRI / SFI</div>'
-    +'</div>'
+    +(function(){
+        var ppPos=pc.position||'CAPT';
+        var ppPilotCol=ppPos==='FO'?'#10B981':ppPos==='TRI'?'#F59E0B':'#3B82F6';
+        var ppExamCol='#8B5CF6';
+        return '<div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">'
+          +'<div style="border:2px solid '+ppPilotCol+'44;border-radius:6px;overflow:hidden;padding:8px;">'
+          +'<div style="font-size:9px;color:'+ppPilotCol+';font-weight:700;text-align:center;margin-bottom:6px;">'+ppPos+' / STAGIAIRE</div>'
+          +(pcSigs.pilot?'<img src="'+pcSigs.pilot+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:2px solid '+ppPilotCol+'44;"></div>')
+          +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.pilotName||'')+'</div>'
+          +'</div>'
+          +'<div style="border:2px solid '+ppExamCol+'44;border-radius:6px;overflow:hidden;padding:8px;">'
+          +'<div style="font-size:9px;color:'+ppExamCol+';font-weight:700;text-align:center;margin-bottom:6px;">TRI / SFI — EXAMINATEUR</div>'
+          +(pcSigs.tri?'<img src="'+pcSigs.tri+'" style="width:100%;height:80px;object-fit:contain;display:block;"/>':'<div style="height:80px;border-top:2px solid '+ppExamCol+'44;"></div>')
+          +'<div style="font-size:10px;font-weight:700;text-align:center;margin-top:4px;">'+(pc.coExaminer||state.instructorName||'')+'</div>'
+          +'</div>'
+          +'</div>';
+      })()
     +'<div style="margin-top:20px;text-align:center;font-size:9px;color:#94a3b8;">REF. D.O.A — TRAINING DEPARTMENT · © AIR ALGÉRIE — All Rights Reserved</div>'
     +'</div>'
     +'<scr'+'ipt>window.onload=function(){setTimeout(function(){window.print();},600);};<\/scr'+'ipt>'
     +'</body></html>';
 
-  try{
-    const w = window.open('','_blank');
-    if(w){ w.document.write(html); w.document.close(); return; }
-  }catch(e){}
-  window.location.href='data:text/html;charset=utf-8,'+encodeURIComponent(html);
+  _showPdfOverlay(html);
 }
 
 function renderDebConclusion(el){
@@ -12836,16 +13673,47 @@ B737 NG CBTA TRI · QRH Rev55 · FCTM Rev25
 }
 
 // ── INTERVENTION MODEL ──────────────────────────────────────────────────────
+const _intColors={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
+const _intEmoji={ask:'🟢',recommend:'🟠',takectl:'🔴'};
+
 function addIntervention(type){
   const ex = state.exercises[state.activeIdx];
-  const exName = ex ? ex.title : '?';
+  const sc = ex ? ALL_SC.find(s=>s.id===ex.sid) : null;
+  const exName = sc ? sc.title : (ex ? '?' : '—');
+  const col = _intColors[type]||'#3B82F6';
+  const emoji = _intEmoji[type]||'';
+  const labelMap = _lang==='en'
+    ? {ask:'ASK',recommend:'RECOMMEND',takectl:'TAKE CONTROL'}
+    : {ask:'ASK',recommend:'RECOMMANDER',takectl:'PRENDRE CTL'};
+  const label = labelMap[type]||type;
+  // Open modal
+  const box = document.getElementById('int-modal-box');
+  if(box){ box.style.border='2px solid '+col; }
+  const title = document.getElementById('int-modal-title');
+  if(title){ title.textContent=emoji+' '+label; title.style.color=col; }
+  const exEl = document.getElementById('int-modal-ex');
+  if(exEl){ exEl.textContent=exName; }
+  const inp = document.getElementById('int-modal-input');
+  if(inp){ inp.value=''; }
+  const saveBtn = document.getElementById('int-modal-save');
+  if(saveBtn){ saveBtn.style.background=col+'22'; saveBtn.style.borderColor=col; saveBtn.style.color=col; }
+  window._pendingIntType = type;
+  window._pendingIntExName = exName;
+  document.getElementById('modal-intervention').style.display='flex';
+  setTimeout(()=>{ if(inp) inp.focus(); },100);
+}
+
+function saveIntervention(){
+  const type = window._pendingIntType;
+  const exName = window._pendingIntExName||'?';
+  const note = (document.getElementById('int-modal-input').value||'').trim();
   const ts = Date.now();
   const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
-  state.interventions.push({type, exName, ts, elapsed});
+  state.interventions.push({type, exName, note, ts, elapsed});
+  document.getElementById('modal-intervention').style.display='none';
   updateInterventionBar();
-  const colors={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
   const labels={ask:'ASK',recommend:'REC',takectl:'CTL'};
-  showToast(`${labels[type]||type} — ${exName}`);
+  showToast(`${_intEmoji[type]||''} ${labels[type]||type}${note?' — '+note:' — '+exName}`);
 }
 
 function updateInterventionBar(){
@@ -12860,8 +13728,9 @@ function updateInterventionBar(){
 
 function showFlagModal(){
   const ex = state.exercises[state.activeIdx];
+  const sc = ex ? ALL_SC.find(s=>s.id===ex.sid) : null;
   const el = document.getElementById('flag-modal-ex');
-  if(el) el.textContent = ex ? ex.title : '—';
+  if(el) el.textContent = sc ? sc.title : '—';
   document.getElementById('flag-input').value='';
   document.getElementById('modal-flag').style.display='flex';
   setTimeout(()=>document.getElementById('flag-input').focus(),100);
@@ -12870,9 +13739,10 @@ function showFlagModal(){
 function addFlag(){
   const note = document.getElementById('flag-input').value.trim();
   const ex = state.exercises[state.activeIdx];
+  const sc = ex ? ALL_SC.find(s=>s.id===ex.sid) : null;
   const ts = Date.now();
   const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
-  state.flags.push({note, exName: ex?ex.title:'?', ts, elapsed});
+  state.flags.push({note, exName: sc?sc.title:'?', ts, elapsed});
   document.getElementById('modal-flag').style.display='none';
   updateInterventionBar();
   showToast('🚩 '+(note||(_lang==='en'?'Flag added':'Marqueur ajouté')));
@@ -12909,10 +13779,11 @@ function startVoiceNote(){
       const reader = new FileReader();
       reader.onload=()=>{
         const ex=state.exercises[state.activeIdx];
+        const _vsc=ex?ALL_SC.find(s=>s.id===ex.sid):null;
         const ts=Date.now();
         const elapsed=state.sessionStart?Math.round((ts-state.sessionStart)/1000):0;
         const duration=Math.round((Date.now()-window._recStartTime)/1000);
-        state.voiceNotes.push({audioData:reader.result, mimeType:finalMime, exName:ex?ex.title:'?', ts, elapsed, duration});
+        state.voiceNotes.push({audioData:reader.result, mimeType:finalMime, exName:_vsc?_vsc.title:'?', ts, elapsed, duration});
         updateInterventionBar();
         showToast(_lang==='en'?`🎙 Saved (${duration}s)`:`🎙 Sauvegardé (${duration}s)`);
         if(btn){
@@ -12962,12 +13833,17 @@ function renderDebEvents(el){
     takectl: _lang==='en'?'TAKE CONTROL':'PRENDRE CTL'
   };
 
-  const intRows = state.interventions.map((iv,i)=>`
-    <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
-      <span style="background:${intColorsMap[iv.type]||'#3B82F6'}22;color:${intColorsMap[iv.type]||'#3B82F6'};border:1px solid ${intColorsMap[iv.type]||'#3B82F6'}66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 7px;">${intLabelMap[iv.type]||iv.type}</span>
-      <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;">${fmtElapsed(iv.elapsed)}</span>
-      <span style="font-size:12px;color:#CBD5E1;flex:1;">${iv.exName}</span>
-    </div>`).join('');
+  const intRows = state.interventions.map((iv,i)=>{
+    const col=intColorsMap[iv.type]||'#3B82F6';
+    return `<div style="padding:7px 0;border-bottom:1px solid #1E2530;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="background:${col}22;color:${col};border:1px solid ${col}66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 7px;flex-shrink:0;">${intLabelMap[iv.type]||iv.type}</span>
+        <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;flex-shrink:0;">${fmtElapsed(iv.elapsed)}</span>
+        <span style="font-size:12px;color:#94A3B8;">${iv.exName}</span>
+      </div>
+      ${iv.note?`<div style="font-size:12px;color:#F1F5F9;margin-top:3px;padding-left:4px;border-left:2px solid ${col}55;font-style:italic;">"${iv.note}"</div>`:''}
+    </div>`;
+  }).join('');
 
   const flagRows = state.flags.map((f,i)=>`
     <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
@@ -13259,26 +14135,176 @@ function renderDebRapport(el){
   <textarea id="rapport-notes-area" class="note-area" style="height:80px;" placeholder="${_lang==='en'?'Official remarks for the record...':'Remarques officielles pour le dossier...'}" onchange="state.rapportNotes=this.value">${state.rapportNotes||''}</textarea>
 </div>
 
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
-  <div style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:14px;text-align:center;">
-    <div style="font-size:10px;color:#475569;margin-bottom:20px;">${_lang==='en'?'INSTRUCTOR SIGNATURE':'SIGNATURE INSTRUCTEUR'}</div>
-    <div style="border-top:1px solid #334155;padding-top:6px;font-size:11px;color:#94A3B8;">${instructor}</div>
+<div style="background:#0F1218;border:1px solid #334155;border-radius:10px;padding:12px;margin-bottom:10px;">
+  <div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:1.5px;margin-bottom:10px;">✍️ ${_lang==='en'?'DIGITAL SIGNATURES':'SIGNATURES NUMÉRIQUES'}</div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    ${[
+      {key:'tri',label:_lang==='en'?'TRI / INSTRUCTOR':'TRI / INSTRUCTEUR',name:instructor,color:'#8B5CF6'},
+      {key:'cpt',label:(state.pilotRole||'CPT')+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE'),name:state.pilotName||'—',color:(state.pilotRole||'CPT')==='TRI'?'#F59E0B':(state.pilotRole||'CPT')==='FO'?'#10B981':'#3B82F6'},
+      ...(state.foName?[{key:'fo',label:(state.foRole||'FO')+' — '+(_lang==='en'?'TRAINEE':'STAGIAIRE'),name:state.foName,color:(state.foRole||'FO')==='TRI'?'#F59E0B':(state.foRole||'FO')==='FO'?'#10B981':'#3B82F6'}]:[])
+    ].map(s=>`
+    <div style="border:1px solid ${s.color}33;border-radius:8px;overflow:hidden;">
+      <div style="background:${s.color}11;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-size:9px;font-weight:800;color:${s.color};letter-spacing:1px;">${s.label}</div>
+          <div style="font-size:11px;color:#F1F5F9;font-weight:700;">${s.name}</div>
+        </div>
+        <button onclick="clearSigPad('${s.key}')" style="padding:3px 8px;border-radius:5px;border:1px solid ${s.color}44;background:transparent;color:${s.color};font-size:9px;font-weight:800;cursor:pointer;">✕ ${_lang==='en'?'CLEAR':'EFFACER'}</button>
+      </div>
+      <div style="background:#F8FAFC;padding:4px;position:relative;">
+        <canvas id="sig-canvas-${s.key}" style="width:100%;height:150px;display:block;touch-action:none;cursor:crosshair;border-radius:4px;"></canvas>
+        ${state.rapportSignatures[s.key]?'':'<div id="sig-hint-'+s.key+'" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;color:#94A3B8;pointer-events:none;white-space:nowrap;">✍️ '+(s.key==='tri'?(_lang==='en'?'TRI — sign here':'TRI — signez ici'):(_lang==='en'?'Trainee — sign here':'Stagiaire — signez ici'))+'</div>'}
+      </div>
+    </div>`).join('')}
   </div>
-  <div style="background:#0F1218;border:1px solid #334155;border-radius:8px;padding:14px;text-align:center;">
-    <div style="font-size:10px;color:#475569;margin-bottom:20px;">${_lang==='en'?'TRAINEE SIGNATURE':'SIGNATURE STAGIAIRE'}</div>
-    <div style="border-top:1px solid #334155;padding-top:6px;font-size:11px;color:#94A3B8;">${state.pilotName||'—'}</div>
-  </div>
+  <div style="font-size:10px;color:#475569;margin-top:8px;text-align:center;font-style:italic;">${_lang==='en'?'Draw your signature with your finger or stylus':'Dessinez votre signature avec le doigt ou le stylet'}</div>
 </div>
 
-<button onclick="printDebRapport()" style="width:100%;padding:13px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;">🖨️ ${_lang==='en'?'PRINT / PDF':'IMPRIMER / PDF'}</button>
+<button onclick="printDebRapport()" style="width:100%;padding:13px;background:#10B98122;border:2px solid #10B981;color:#10B981;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;margin-bottom:6px;">🖨️ ${_lang==='en'?'PRINT / PDF':'IMPRIMER / PDF'}</button>
 `;
+setTimeout(()=>{
+  ['tri','cpt','fo'].forEach(k=>initSigPad(k));
+},0);
+}
+
+function initSigPad(key){
+  const canvas = document.getElementById('sig-canvas-'+key);
+  if(!canvas) return;
+  const dpr = window.devicePixelRatio||1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = Math.round(rect.width*dpr)||600;
+  canvas.height = Math.round(rect.height*dpr)||180;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  ctx.strokeStyle='#0f172a';
+  ctx.lineWidth=2.5;
+  ctx.lineCap='round';
+  ctx.lineJoin='round';
+  ctx.fillStyle='#F8FAFC';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  // Restore existing signature
+  if(state.rapportSignatures[key]){
+    const img=new Image();
+    img.onload=()=>{ctx.drawImage(img,0,0,rect.width,rect.height);};
+    img.src=state.rapportSignatures[key];
+    const hint=document.getElementById('sig-hint-'+key);
+    if(hint) hint.style.display='none';
+  }
+  let drawing=false;
+  function getXY(e){
+    const r=canvas.getBoundingClientRect();
+    const src=e.touches?e.touches[0]:e;
+    return {x:src.clientX-r.left, y:src.clientY-r.top};
+  }
+  function onStart(e){
+    e.preventDefault();
+    drawing=true;
+    const p=getXY(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+    const hint=document.getElementById('sig-hint-'+key);
+    if(hint) hint.style.display='none';
+  }
+  function onMove(e){
+    e.preventDefault();
+    if(!drawing) return;
+    const p=getXY(e);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+  }
+  function onEnd(e){
+    if(!drawing) return;
+    drawing=false;
+    state.rapportSignatures[key]=canvas.toDataURL('image/png');
+  }
+  canvas.addEventListener('mousedown',onStart);
+  canvas.addEventListener('mousemove',onMove);
+  canvas.addEventListener('mouseup',onEnd);
+  canvas.addEventListener('mouseleave',onEnd);
+  canvas.addEventListener('touchstart',onStart,{passive:false});
+  canvas.addEventListener('touchmove',onMove,{passive:false});
+  canvas.addEventListener('touchend',onEnd,{passive:false});
+}
+
+function clearSigPad(key){
+  state.rapportSignatures[key]='';
+  const canvas=document.getElementById('sig-canvas-'+key);
+  if(canvas){
+    const dpr=window.devicePixelRatio||1;
+    const ctx=canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width/dpr,canvas.height/dpr);
+    ctx.fillStyle='#F8FAFC';
+    ctx.fillRect(0,0,canvas.width/dpr,canvas.height/dpr);
+  }
+  const hint=document.getElementById('sig-hint-'+key);
+  if(hint) hint.style.display='block';
+}
+
+function initSigPadPC(key){
+  const canvas=document.getElementById('sig-canvas-pc-'+key);
+  if(!canvas) return;
+  if(!state.profCheck) return;
+  if(!state.profCheck.signatures) state.profCheck.signatures={tri:'',pilot:''};
+  const dpr=window.devicePixelRatio||1;
+  const rect=canvas.getBoundingClientRect();
+  canvas.width=Math.round(rect.width*dpr)||600;
+  canvas.height=Math.round(rect.height*dpr)||300;
+  const ctx=canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  ctx.strokeStyle='#0f172a'; ctx.lineWidth=2.5; ctx.lineCap='round'; ctx.lineJoin='round';
+  ctx.fillStyle='#F8FAFC'; ctx.fillRect(0,0,canvas.width,canvas.height);
+  if(state.profCheck.signatures[key]){
+    const img=new Image();
+    img.onload=function(){ctx.drawImage(img,0,0,rect.width,rect.height);};
+    img.src=state.profCheck.signatures[key];
+    const hint=document.getElementById('sig-pc-hint-'+key);
+    if(hint) hint.style.display='none';
+  }
+  let drawing=false;
+  function getXY(e){const r=canvas.getBoundingClientRect();const src=e.touches?e.touches[0]:e;return {x:src.clientX-r.left,y:src.clientY-r.top};}
+  function onStart(e){e.preventDefault();drawing=true;const p=getXY(e);ctx.beginPath();ctx.moveTo(p.x,p.y);const h=document.getElementById('sig-pc-hint-'+key);if(h)h.style.display='none';}
+  function onMove(e){e.preventDefault();if(!drawing)return;const p=getXY(e);ctx.lineTo(p.x,p.y);ctx.stroke();}
+  function onEnd(){if(!drawing)return;drawing=false;state.profCheck.signatures[key]=canvas.toDataURL('image/png');}
+  canvas.addEventListener('mousedown',onStart);
+  canvas.addEventListener('mousemove',onMove);
+  canvas.addEventListener('mouseup',onEnd);
+  canvas.addEventListener('mouseleave',onEnd);
+  canvas.addEventListener('touchstart',onStart,{passive:false});
+  canvas.addEventListener('touchmove',onMove,{passive:false});
+  canvas.addEventListener('touchend',onEnd,{passive:false});
+}
+
+function clearSigPadPC(key){
+  if(!state.profCheck) return;
+  if(!state.profCheck.signatures) state.profCheck.signatures={tri:'',pilot:''};
+  state.profCheck.signatures[key]='';
+  const canvas=document.getElementById('sig-canvas-pc-'+key);
+  if(canvas){
+    const dpr=window.devicePixelRatio||1;
+    const ctx=canvas.getContext('2d');
+    ctx.clearRect(0,0,canvas.width/dpr,canvas.height/dpr);
+    ctx.fillStyle='#F8FAFC';
+    ctx.fillRect(0,0,canvas.width/dpr,canvas.height/dpr);
+  }
+  const hint=document.getElementById('sig-pc-hint-'+key);
+  if(hint) hint.style.display='block';
 }
 
 function printDebRapport(){
   const rapDiv = document.getElementById('deb-content');
   if(!rapDiv) return;
-  const html = rapDiv.innerHTML;
-  const w = window.open('','_blank','width=800,height=900');
+  let html = rapDiv.innerHTML;
+  // Replace canvas elements with captured signature images for print
+  ['tri','cpt','fo'].forEach(key=>{
+    const sig=state.rapportSignatures[key]||'';
+    const re=new RegExp('<canvas[^>]*id="sig-canvas-'+key+'"[^>]*>\\s*</canvas>','gi');
+    html=html.replace(re, sig
+      ? `<img src="${sig}" style="max-width:100%;height:80px;display:block;object-fit:contain;" />`
+      : `<div style="border-top:1px solid #bbb;height:60px;margin-top:10px;"></div>`);
+  });
+  // Hide hint divs and buttons in print
+  html=html.replace(/<div[^>]*id="sig-hint-[^"]*"[^>]*>.*?<\/div>/gi,'');
+  const w=window.open('','_blank','width=800,height=900');
   if(!w) return;
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Rapport CBTA</title>
   <style>*{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
@@ -13287,10 +14313,11 @@ function printDebRapport(){
   .section-lbl{font-size:11px;font-weight:800;letter-spacing:2px;color:#374151;}
   input,textarea{display:none;}
   button{display:none;}
+  canvas{display:none;}
   @media print{@page{margin:15mm;size:A4;}}
   </style></head><body>${html}</body></html>`);
   w.document.close();
-  setTimeout(()=>w.print(),600);
+  setTimeout(()=>w.print(),800);
 }
 
 // ── TNA (Training Needs Analysis) ────────────────────────────────────────────
@@ -13387,10 +14414,13 @@ state.interventions=[];
 state.flags=[];
 state.voiceNotes=[];
 state.sessionObjectives={};
+state.pilotObjectives={};
+state.foObjectives={};
 state.sessionMeteo={crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''};
 state.loftCompareMode=false;
 state.loftNotes={events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}};
 state.rapportNotes='';
+state.rapportSignatures={tri:'',cpt:'',fo:''};
 if(window._mediaRec&&window._mediaRec.state==='recording'){window._mediaRec.stop();}
 if(window._recTimer){clearInterval(window._recTimer);window._recTimer=null;}
 state.sessionStart=null;
@@ -13677,7 +14707,7 @@ h+='</div>';
 }
 h+='<div style="padding:8px 14px;border-top:1px solid #1E2530;display:flex;gap:8px;">';
 if(isImported){
-  if(s.importedPDF) h+='<button onclick="viewImportedPDF('+i+')" style="flex:2;padding:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📄 VOIR PDF</button>';
+  if(s.importedPDF||s.hasPDF) h+='<button onclick="viewImportedPDF('+i+')" style="flex:2;padding:8px;background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">📄 VOIR PDF</button>';
 }else{
   h+='<button onclick="printRapportFromHistory('+i+')" style="flex:1;padding:8px;background:#0f172a44;border:1px solid #475569;color:#F1F5F9;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">&#128424;&#65039; PDF</button>';
   h+='<button onclick="envoyerRapportEmail('+i+')" style="flex:1;padding:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;">✉ EMAIL</button>';
@@ -13753,8 +14783,12 @@ function submitImportedSession(){
     if(v>0){compAvgs[c.id]=v.toString();scoreSum+=v;scoreCount++;}
   });
   const avgScore=scoreCount>0?(scoreSum/scoreCount).toFixed(2):'0.00';
+  var pdfKey=null;
+  if(_impPdfData){
+    pdfKey='pdf_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);
+  }
   const session={
-    imported:true,importedPDF:_impPdfData||null,
+    imported:true,hasPDF:!!pdfKey,pdfKey:pdfKey,
     date:dateVal,time:'--:--',
     pilotMatricule:matCpt,pilotName:nameCpt,pilotRole:'CPT',
     foName:nameFo||null,foMatricule:matFo||null,foRole:nameFo?'FO':null,
@@ -13762,28 +14796,56 @@ function submitImportedSession(){
     avgScore,compAvgs,compAvgsFo:{},
     notes,exercises:[],strong:[],weak:[],sessionCRM:{},sessionCRMNotes:''
   };
-  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
-  hist.unshift(session);
-  localStorage.setItem('cbta_history',JSON.stringify(hist));
-  updatePilotDB(session);
-  _impPdfData=null;
-  document.getElementById('modal-import-session').style.display='none';
-  showHistory();
-  document.querySelectorAll('#screen-history .tab').forEach(t=>{
-    t.classList.remove('active');
-    if(t.textContent.includes('Sessions'))t.classList.add('active');
-  });
-  _histTab='sessions';
-  renderSessionsList();
+  var _finishImport=function(){
+    const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+    hist.unshift(session);
+    localStorage.setItem('cbta_history',JSON.stringify(hist));
+    updatePilotDB(session);
+    _impPdfData=null;
+    document.getElementById('modal-import-session').style.display='none';
+    showHistory();
+    document.querySelectorAll('#screen-history .tab').forEach(t=>{
+      t.classList.remove('active');
+      if(t.textContent.includes('Sessions'))t.classList.add('active');
+    });
+    _histTab='sessions';
+    renderSessionsList();
+  };
+  if(pdfKey&&_impPdfData){
+    _savePdfToDB(pdfKey,_impPdfData).then(_finishImport).catch(function(err){
+      console.error('PDF DB save error',err);
+      session.importedPDF=_impPdfData;
+      session.hasPDF=true;session.pdfKey=null;
+      _finishImport();
+    });
+  } else {
+    _finishImport();
+  }
 }
 function viewImportedPDF(idx){
   const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
   const s=hist[idx];
-  if(!s||!s.importedPDF){alert(_lang==='en'?'No PDF for this session.':'Aucun PDF pour cette session.');return;}
-  const win=window.open('','_blank');
-  if(!win){alert(_lang==='en'?'Popup blocked — allow popups for this site.':'Popup bloqué — autorisez les popups pour ce site.');return;}
-  win.document.write('<html><head><title>'+(_lang==='en'?'Imported report':'Rapport importé')+'</title></head><body style="margin:0;background:#000;"><iframe src="'+s.importedPDF+'" style="width:100%;height:100vh;border:0;"></iframe></body></html>');
-  win.document.close();
+  if(!s||((!s.hasPDF)&&(!s.importedPDF))){alert(_lang==='en'?'No PDF for this session.':'Aucun PDF pour cette session.');return;}
+  var _showPdf=function(dataUrl){
+    var f=document.getElementById('pdf-iframe');
+    f.removeAttribute('srcdoc');
+    f.src=dataUrl;
+    document.getElementById('pdf-overlay').style.display='flex';
+  };
+  if(s.pdfKey){
+    _getPdfFromDB(s.pdfKey).then(function(data){
+      if(data){_showPdf(data);}
+      else if(s.importedPDF){_showPdf(s.importedPDF);}
+      else{alert(_lang==='en'?'PDF not found.':'PDF introuvable.');}
+    }).catch(function(){
+      if(s.importedPDF){_showPdf(s.importedPDF);}
+      else{alert(_lang==='en'?'PDF read error.':'Erreur lecture PDF.');}
+    });
+  } else if(s.importedPDF){
+    _showPdf(s.importedPDF);
+  } else {
+    alert(_lang==='en'?'No PDF for this session.':'Aucun PDF pour cette session.');
+  }
 }
 
 function renderPilotesList(){
@@ -14956,7 +16018,45 @@ document.addEventListener('DOMContentLoaded', () => {
 <div id="pres-overlay" style="display:none;position:fixed;inset:0;z-index:99999;overflow-y:auto;-webkit-overflow-scrolling:touch;"></div>
 
 <script>
+(function _migratePdfsToIDB(){
+  try{
+    var hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+    var changed=false;
+    var pending=[];
+    hist.forEach(function(s,i){
+      if(s.importedPDF&&!s.pdfKey){
+        var key='pdf_migrated_'+i+'_'+Date.now();
+        pending.push({idx:i,key:key,data:s.importedPDF});
+      }
+    });
+    if(!pending.length)return;
+    _openPdfDB().then(function(db){
+      var tx=db.transaction(_PDFDB_STORE,'readwrite');
+      var store=tx.objectStore(_PDFDB_STORE);
+      pending.forEach(function(p){store.put(p.data,p.key);});
+      tx.oncomplete=function(){
+        var h2=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+        pending.forEach(function(p){
+          if(h2[p.idx]){
+            h2[p.idx].pdfKey=p.key;
+            h2[p.idx].hasPDF=true;
+            delete h2[p.idx].importedPDF;
+          }
+        });
+        localStorage.setItem('cbta_history',JSON.stringify(h2));
+      };
+    }).catch(function(e){console.warn('PDF migration skipped',e);});
+  }catch(e){console.warn('PDF migration error',e);}
+})();
+</script>
+<script>
 if('serviceWorker' in navigator){
+  var _swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function(){
+    if(_swRefreshing) return;
+    _swRefreshing = true;
+    window.location.reload();
+  });
   window.addEventListener('load',()=>{
     navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{
       reg.update();
