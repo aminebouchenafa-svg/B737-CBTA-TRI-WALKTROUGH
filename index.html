@@ -11609,6 +11609,7 @@ function closePdfOverlay(){
   f.removeAttribute('srcdoc');
   f.src='about:blank';
   if(_overlayBlobUrl){try{URL.revokeObjectURL(_overlayBlobUrl);}catch(e){}_overlayBlobUrl=null;}
+  if(_viewPdfBlobUrl){try{URL.revokeObjectURL(_viewPdfBlobUrl);}catch(e){}_viewPdfBlobUrl=null;}
   _overlayHtml=null;
 }
 
@@ -14858,14 +14859,32 @@ function submitImportedSession(){
     _finishImport();
   }
 }
+function _dataUrlToBlob(dataUrl){
+  var parts=dataUrl.split(',');
+  var mimeMatch=parts[0].match(/:(.*?);/);
+  var mime=mimeMatch?mimeMatch[1]:'application/pdf';
+  var b64=atob(parts[1]);
+  var arr=new Uint8Array(b64.length);
+  for(var i=0;i<b64.length;i++)arr[i]=b64.charCodeAt(i);
+  return new Blob([arr],{type:mime});
+}
+
+var _viewPdfBlobUrl=null;
 function viewImportedPDF(idx){
   const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
   const s=hist[idx];
   if(!s||((!s.hasPDF)&&(!s.importedPDF))){alert(_lang==='en'?'No PDF for this session.':'Aucun PDF pour cette session.');return;}
   var _showPdf=function(dataUrl){
+    if(_viewPdfBlobUrl){try{URL.revokeObjectURL(_viewPdfBlobUrl);}catch(e){}_viewPdfBlobUrl=null;}
     var f=document.getElementById('pdf-iframe');
     f.removeAttribute('srcdoc');
-    f.src=dataUrl;
+    try{
+      var blob=_dataUrlToBlob(dataUrl);
+      _viewPdfBlobUrl=URL.createObjectURL(blob);
+      f.src=_viewPdfBlobUrl;
+    }catch(e){
+      f.src=dataUrl;
+    }
     document.getElementById('pdf-overlay').style.display='flex';
   };
   if(s.pdfKey){
