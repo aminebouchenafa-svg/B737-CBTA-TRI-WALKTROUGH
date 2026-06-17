@@ -5233,10 +5233,10 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:12px;font-weight:700;color:#8B5CF6;margin-bottom:8px;" data-i18n="pdf_section_title">📎 RAPPORT PDF ORIGINAL (optionnel)</div>
 <div id="imp-pdf-status" style="font-size:12px;color:#64748B;margin-bottom:8px;" data-i18n="no_file_selected">Aucun fichier sélectionné</div>
 <label style="display:block;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;border-radius:9px;padding:10px;text-align:center;font-size:13px;font-weight:700;cursor:pointer;">
-<span data-i18n="choose_pdf_btn">📎 Choisir un PDF</span>
-<input type="file" id="imp-pdf-input" accept="application/pdf,.pdf" style="display:none;" onchange="loadImportPDF(this)"/>
+<span data-i18n="choose_pdf_btn">📎 Choisir un fichier (PDF / HTML)</span>
+<input type="file" id="imp-pdf-input" accept="application/pdf,.pdf,text/html,.html,.htm" style="display:none;" onchange="loadImportPDF(this)"/>
 </label>
-<div style="font-size:10px;color:#475569;margin-top:6px;text-align:center;" data-i18n="pdf_storage_note">Stocké localement · Taille max recommandée : 2 Mo</div>
+<div style="font-size:10px;color:#475569;margin-top:6px;text-align:center;" data-i18n="pdf_storage_note">Stocké localement · Taille max recommandée : 5 Mo</div>
 </div>
 
 </div>
@@ -14757,6 +14757,7 @@ el.innerHTML=h;
 }
 
 let _impPdfData=null;
+let _impFileType=null;
 function showImportSessionModal(){
   ['imp-mat-cpt','imp-name-cpt','imp-mat-fo','imp-name-fo','imp-compagnie','imp-instructor','imp-session-name','imp-notes'].forEach(id=>{
     const el=document.getElementById(id);if(el)el.value='';
@@ -14766,7 +14767,7 @@ function showImportSessionModal(){
   const pdfStatus=document.getElementById('imp-pdf-status');
   if(pdfStatus)pdfStatus.textContent=t('no_file_selected');
   const pdfInput=document.getElementById('imp-pdf-input');if(pdfInput)pdfInput.value='';
-  _impPdfData=null;
+  _impPdfData=null;_impFileType=null;
   const grid=document.getElementById('imp-comp-grid');
   if(grid){
     const _opts=_lang==='en'
@@ -14793,14 +14794,18 @@ function loadImportPDF(input){
   const statusEl=document.getElementById('imp-pdf-status');
   const sizeMB=(file.size/1024/1024).toFixed(2);
   statusEl.innerHTML='<span style="color:#F59E0B;">'+(_lang==='en'?'Loading...':'Chargement...')+'</span>';
+  var isHtml=file.name.match(/\.html?$/i)||file.type==='text/html';
+  _impFileType=isHtml?'html':'pdf';
   const reader=new FileReader();
   reader.onload=function(e){
     _impPdfData=e.target.result;
     const warnColor=file.size>2*1024*1024?'#F59E0B':'#10B981';
-    statusEl.innerHTML='<span style="color:'+warnColor+';">✓ '+file.name+' ('+sizeMB+' Mo)</span>'+(file.size>5*1024*1024?'<br><span style="font-size:10px;color:#EF4444;">⚠ '+(_lang==='en'?'Very large file':'Fichier très volumineux')+'</span>':'');
+    var icon=isHtml?'📄':'📎';
+    statusEl.innerHTML='<span style="color:'+warnColor+';">✓ '+icon+' '+file.name+' ('+sizeMB+' Mo)</span>'+(file.size>5*1024*1024?'<br><span style="font-size:10px;color:#EF4444;">⚠ '+(_lang==='en'?'Very large file':'Fichier très volumineux')+'</span>':'');
   };
-  reader.onerror=function(){statusEl.innerHTML='<span style="color:#EF4444;">'+(_lang==='en'?'Read error.':'Erreur de lecture.')+'</span>';_impPdfData=null;};
-  reader.readAsDataURL(file);
+  reader.onerror=function(){statusEl.innerHTML='<span style="color:#EF4444;">'+(_lang==='en'?'Read error.':'Erreur de lecture.')+'</span>';_impPdfData=null;_impFileType=null;};
+  if(isHtml){reader.readAsText(file);}
+  else{reader.readAsDataURL(file);}
 }
 function submitImportedSession(){
   const matCpt=(document.getElementById('imp-mat-cpt').value||'').trim();
@@ -14825,7 +14830,7 @@ function submitImportedSession(){
     pdfKey='pdf_'+Date.now()+'_'+Math.random().toString(36).slice(2,8);
   }
   const session={
-    imported:true,hasPDF:!!pdfKey,pdfKey:pdfKey,
+    imported:true,hasPDF:!!pdfKey,pdfKey:pdfKey,pdfType:_impFileType||'pdf',
     date:dateVal,time:'--:--',
     pilotMatricule:matCpt,pilotName:nameCpt,pilotRole:'CPT',
     foName:nameFo||null,foMatricule:matFo||null,foRole:nameFo?'FO':null,
@@ -14838,7 +14843,7 @@ function submitImportedSession(){
     hist.unshift(session);
     localStorage.setItem('cbta_history',JSON.stringify(hist));
     updatePilotDB(session);
-    _impPdfData=null;
+    _impPdfData=null;_impFileType=null;
     document.getElementById('modal-import-session').style.display='none';
     showHistory();
     document.querySelectorAll('#screen-history .tab').forEach(t=>{
@@ -14873,33 +14878,41 @@ var _viewPdfBlobUrl=null;
 function viewImportedPDF(idx){
   const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
   const s=hist[idx];
-  if(!s||((!s.hasPDF)&&(!s.importedPDF))){alert(_lang==='en'?'No PDF for this session.':'Aucun PDF pour cette session.');return;}
-  var _showPdf=function(dataUrl){
+  if(!s||((!s.hasPDF)&&(!s.importedPDF))){alert(_lang==='en'?'No file for this session.':'Aucun fichier pour cette session.');return;}
+  var fileType=s.pdfType||'pdf';
+  var _showFile=function(data){
     if(_viewPdfBlobUrl){try{URL.revokeObjectURL(_viewPdfBlobUrl);}catch(e){}_viewPdfBlobUrl=null;}
     var f=document.getElementById('pdf-iframe');
     f.removeAttribute('srcdoc');
-    try{
-      var blob=_dataUrlToBlob(dataUrl);
+    if(fileType==='html'){
+      _overlayHtml=data;
+      var blob=new Blob([data],{type:'text/html;charset=utf-8'});
       _viewPdfBlobUrl=URL.createObjectURL(blob);
       f.src=_viewPdfBlobUrl;
-    }catch(e){
-      f.src=dataUrl;
+    } else {
+      try{
+        var blob=_dataUrlToBlob(data);
+        _viewPdfBlobUrl=URL.createObjectURL(blob);
+        f.src=_viewPdfBlobUrl;
+      }catch(e){
+        f.src=data;
+      }
     }
     document.getElementById('pdf-overlay').style.display='flex';
   };
   if(s.pdfKey){
     _getPdfFromDB(s.pdfKey).then(function(data){
-      if(data){_showPdf(data);}
-      else if(s.importedPDF){_showPdf(s.importedPDF);}
-      else{alert(_lang==='en'?'PDF not found.':'PDF introuvable.');}
+      if(data){_showFile(data);}
+      else if(s.importedPDF){_showFile(s.importedPDF);}
+      else{alert(_lang==='en'?'File not found.':'Fichier introuvable.');}
     }).catch(function(){
-      if(s.importedPDF){_showPdf(s.importedPDF);}
-      else{alert(_lang==='en'?'PDF read error.':'Erreur lecture PDF.');}
+      if(s.importedPDF){_showFile(s.importedPDF);}
+      else{alert(_lang==='en'?'File read error.':'Erreur lecture fichier.');}
     });
   } else if(s.importedPDF){
-    _showPdf(s.importedPDF);
+    _showFile(s.importedPDF);
   } else {
-    alert(_lang==='en'?'No PDF for this session.':'Aucun PDF pour cette session.');
+    alert(_lang==='en'?'No file for this session.':'Aucun fichier pour cette session.');
   }
 }
 
