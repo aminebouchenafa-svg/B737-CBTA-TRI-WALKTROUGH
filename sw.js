@@ -1,5 +1,5 @@
-const CACHE = 'score-v3';
-const ASSETS = ['./index.html', './manifest.json', './score-logo.png'];
+const CACHE = 'score-v4';
+const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-gold.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
