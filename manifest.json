@@ -1,7 +1,7 @@
 {
-  "name": "SCORE — Pilot Instructor Suite",
+  "name": "SCORE CBTA — Competency Intelligence Platform",
   "short_name": "SCORE",
-  "description": "Safety, Competency, Operational Reporting for Evaluation — CBTA B737NG Pilot Instructor Suite",
+  "description": "Safety, Competency, Operational Reporting for Evaluation — CBTA B737NG Competency Intelligence Platform",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0A0C10",
