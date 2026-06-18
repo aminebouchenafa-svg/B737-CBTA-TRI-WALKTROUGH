@@ -11587,8 +11587,10 @@ const stampLabel = {1:'INSUFFISANT',2:'SOUS-STANDARD',3:'STANDARD',4:'COMPÉTENT
 const stampColor = {1:'#EF4444',2:'#F97316',3:'#F59E0B',4:'#10B981',5:'#3B82F6'};
 return stampImg ? `
 <div style="text-align:center;padding:20px 16px 8px;">
-  <img src="${stampImg}" style="width:90px;height:90px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.15);" />
-  <div style="font-size:11px;font-weight:800;color:${stampColor[stampLevel]};letter-spacing:2px;margin-top:6px;">${stampLabel[stampLevel]}</div>
+  <div style="display:inline-block;width:100px;height:100px;border-radius:50%;background:#ffffff;box-shadow:0 4px 16px rgba(0,0,0,0.12);overflow:hidden;padding:5px;">
+    <img src="${stampImg}" style="width:90px;height:90px;border-radius:50%;object-fit:cover;" />
+  </div>
+  <div style="font-size:11px;font-weight:800;color:${stampColor[stampLevel]};letter-spacing:2px;margin-top:8px;">${stampLabel[stampLevel]}</div>
   <div style="font-size:10px;color:#94a3b8;margin-top:2px;">${avgForStamp.toFixed(2)} / 5.00</div>
 </div>` : '';
 })()}
