@@ -11442,9 +11442,10 @@ ${filter!=='cpt'&&gradesFo?`<div style="margin-bottom:4px;"><span style="font-si
 const conclusion = state.debConclNotes||'';
 const html = `
 <div style="font-family:-apple-system,sans-serif;color:#1e293b;background:#f8fafc;min-height:100%;">
-<div style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1e40af 100%);padding:24px 16px 20px;color:#fff;">
+<div style="background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 60%,#1e40af 100%);padding:24px 16px 20px;color:#fff;position:relative;">
+<img src="${STAMP_B64.brand}" style="position:absolute;top:14px;right:14px;width:56px;height:56px;opacity:0.8;" />
 <div style="font-size:10px;letter-spacing:3px;color:#93c5fd;margin-bottom:6px;">RAPPORT DE SESSION CBTA${filter==='cpt'?' — '+(state.pilotRole||'CPT'):filter==='fo'?' — '+(state.foRole||'FO'):''}</div>
-<div style="font-size:22px;font-weight:900;margin-bottom:2px;">B737 NG — TRI</div>
+<div style="font-size:22px;font-weight:900;margin-bottom:2px;">SCORE CBTA</div>
 ${filter!=='all'?'<div style="display:inline-block;padding:3px 10px;border-radius:6px;background:#F59E0B33;color:#F59E0B;font-size:11px;font-weight:800;letter-spacing:1px;margin-bottom:6px;">RAPPORT INDIVIDUEL — '+(filter==='cpt'?(state.pilotName):(state.foName))+'</div>':''}
 <div style="font-size:13px;color:#93c5fd;margin-bottom:16px;">${dateStr}</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
