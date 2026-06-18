@@ -1,4 +1,4 @@
-const CACHE = 'score-v2';
+const CACHE = 'score-v3';
 const ASSETS = ['./index.html', './manifest.json', './score-logo.png'];
 
 self.addEventListener('install', e => {
