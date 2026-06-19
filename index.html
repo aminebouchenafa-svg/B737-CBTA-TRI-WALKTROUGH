@@ -416,6 +416,7 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;">
 <input id="inp-mat-cpt" class="form-input" style="flex:1;margin:0;" data-i18n-ph="home_mat_placeholder" placeholder="Matricule" oninput="lookupPilotByMat(this.value,'cpt')"/>
 <div id="badge-cpt" style="padding:5px 10px;border-radius:8px;font-size:10px;font-weight:800;flex-shrink:0;background:#1E2530;color:#475569;letter-spacing:1px;">NEW</div>
+<button id="btn-fiche-cpt" onclick="showPilotCard('cpt')" style="display:none;padding:5px 8px;border-radius:8px;font-size:9px;font-weight:800;flex-shrink:0;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;cursor:pointer;letter-spacing:1px;">📋 FICHE</button>
 </div>
 <input id="inp-cpt" class="form-input" data-i18n-ph="home_seat_left_placeholder" placeholder="Nom du stagiaire siège gauche"/>
 </div>
@@ -429,6 +430,7 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:6px;margin-bottom:6px;align-items:center;">
 <input id="inp-mat-fo" class="form-input" style="flex:1;margin:0;" data-i18n-ph="home_mat_placeholder" placeholder="Matricule" oninput="lookupPilotByMat(this.value,'fo')"/>
 <div id="badge-fo" style="padding:5px 10px;border-radius:8px;font-size:10px;font-weight:800;flex-shrink:0;background:#1E2530;color:#475569;letter-spacing:1px;">NEW</div>
+<button id="btn-fiche-fo" onclick="showPilotCard('fo')" style="display:none;padding:5px 8px;border-radius:8px;font-size:9px;font-weight:800;flex-shrink:0;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;cursor:pointer;letter-spacing:1px;">📋 FICHE</button>
 </div>
 <input id="inp-fo" class="form-input" data-i18n-ph="home_seat_right_placeholder" placeholder="Nom du stagiaire siège droit (optionnel)"/>
 </div>
@@ -10429,10 +10431,12 @@ var _pendingScenarioId=null;
 function lookupPilotByMat(mat,seat){
   mat=(mat||'').trim().toUpperCase();
   const badge=document.getElementById('badge-'+seat);
+  const ficheBtn=document.getElementById('btn-fiche-'+seat);
   const nameInp=document.getElementById(seat==='cpt'?'inp-cpt':'inp-fo');
   const compInp=document.getElementById('inp-company');
   if(!mat){
     if(badge){badge.style.background='#1E2530';badge.style.color='#475569';badge.textContent='NEW';}
+    if(ficheBtn) ficheBtn.style.display='none';
     return;
   }
   const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
@@ -10444,8 +10448,10 @@ function lookupPilotByMat(mat,seat){
     if(nameInp&&!nameInp.value) nameInp.value=latest[nameKey]||'';
     if(compInp&&!compInp.value&&latest.compagnie) compInp.value=latest.compagnie;
     if(badge){badge.style.background='#10B98122';badge.style.color='#10B981';badge.textContent='✓ '+sessions.length+' SESSION'+(sessions.length>1?'S':'');}
+    if(ficheBtn) ficheBtn.style.display='inline-block';
   } else {
     if(badge){badge.style.background='#1E2530';badge.style.color='#475569';badge.textContent='NOUVEAU';}
+    if(ficheBtn) ficheBtn.style.display='none';
   }
 }
 function updatePilotDB(session){
@@ -10462,6 +10468,174 @@ function updatePilotDB(session){
   if(session.pilotMatricule) upsert(session.pilotMatricule,session.pilotName,session.compagnie);
   if(session.foMatricule&&session.foName) upsert(session.foMatricule,session.foName,session.compagnie);
   localStorage.setItem('cbta_pilotdb',JSON.stringify(db));
+}
+function showPilotCard(seat){
+  const matInp=document.getElementById(seat==='cpt'?'inp-mat-cpt':'inp-mat-fo');
+  const mat=(matInp?matInp.value:'').trim().toUpperCase();
+  if(!mat) return;
+  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const matKey=seat==='cpt'?'pilotMatricule':'foMatricule';
+  const nameKey=seat==='cpt'?'pilotName':'foName';
+  const avgKey=seat==='cpt'?'compAvgs':'compAvgsFo';
+  const sessions=hist.filter(s=>(s[matKey]||'').toUpperCase()===mat);
+  if(!sessions.length) return;
+  const name=sessions[0][nameKey]||'Pilote';
+  const company=sessions[0].compagnie||'';
+  const role=seat==='cpt'?(sessions[0].pilotRole||'CPT'):(sessions[0].foRole||'FO');
+  const totalEx=sessions.reduce((s,sess)=>s+(sess.exercisesCount||0),0);
+  const compTotals={};const compCounts={};
+  COMPETENCIES.forEach(c=>{compTotals[c.id]=0;compCounts[c.id]=0;});
+  sessions.forEach(sess=>{
+    const ca=sess[avgKey];if(!ca) return;
+    COMPETENCIES.forEach(c=>{
+      const v=parseFloat(ca[c.id]);
+      if(v>0){compTotals[c.id]+=v;compCounts[c.id]++;}
+    });
+  });
+  const compAvgs={};
+  COMPETENCIES.forEach(c=>{compAvgs[c.id]=compCounts[c.id]>0?compTotals[c.id]/compCounts[c.id]:0;});
+  const vals=Object.values(compAvgs).filter(v=>v>0);
+  const globalAvg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:0;
+  const strong=COMPETENCIES.filter(c=>compAvgs[c.id]>=3.5).map(c=>c.label);
+  const weak=COMPETENCIES.filter(c=>compAvgs[c.id]>0&&compAvgs[c.id]<3.0).map(c=>c.label);
+  const stampLevel=globalAvg>=4.5?5:globalAvg>=3.5?4:globalAvg>=2.5?3:globalAvg>=1.5?2:1;
+  const stampColor={1:'#EF4444',2:'#F97316',3:'#F59E0B',4:'#10B981',5:'#3B82F6'};
+  const stampLabel={1:'INSUFFISANT',2:'SOUS-STANDARD',3:'STANDARD',4:'COMPÉTENT',5:'EXCELLENT'};
+  const levelColor=stampColor[stampLevel];
+  // Trend
+  let trend='→';let trendColor='#94a3b8';
+  if(sessions.length>=2){
+    const recent=parseFloat(sessions[0].avgScore)||0;
+    const older=parseFloat(sessions[sessions.length-1].avgScore)||0;
+    if(recent>older+0.2){trend='↗';trendColor='#10B981';}
+    else if(recent<older-0.2){trend='↘';trendColor='#EF4444';}
+  }
+  // Mini evolution data
+  const evoData=sessions.slice(0,8).reverse().map(s=>parseFloat(s.avgScore)||0);
+  const evoMax=5;
+  const evoW=180;const evoH=50;
+  let evoPath='';
+  if(evoData.length>1){
+    const pts=evoData.map((v,i)=>[i/(evoData.length-1)*evoW,evoH-(v/evoMax)*evoH]);
+    evoPath='M '+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L ');
+  }
+  // Radar SVG
+  const cx=90,cy=90,r=70,n=COMPETENCIES.length;
+  const angle=(i)=>(i/n)*2*Math.PI-Math.PI/2;
+  const pt=(i,v)=>{const a=angle(i),rv=r*(v/5);return[cx+Math.cos(a)*rv,cy+Math.sin(a)*rv];};
+  let gridSvg='';
+  for(let lv=1;lv<=5;lv++){
+    const ps=COMPETENCIES.map((_,i)=>pt(i,lv));
+    gridSvg+='<polygon points="'+ps.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')+'" fill="none" stroke="#334155" stroke-width="'+(lv===5?1:0.5)+'"/>';
+  }
+  const axesSvg=COMPETENCIES.map((_,i)=>{const[x2,y2]=pt(i,5);return'<line x1="'+cx+'" y1="'+cy+'" x2="'+x2.toFixed(1)+'" y2="'+y2.toFixed(1)+'" stroke="#334155" stroke-width="0.5"/>';}).join('');
+  const dataPts=COMPETENCIES.map((c,i)=>pt(i,Math.max(compAvgs[c.id]||0,0.05)));
+  const dataPath='M '+dataPts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L ')+' Z';
+  const dotsSvg=COMPETENCIES.map((c,i)=>{const[x,y]=dataPts[i];return'<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="3" fill="'+c.color+'"/>';}).join('');
+  const lblSvg=COMPETENCIES.map((c,i)=>{const[lx,ly]=pt(i,6.2);return'<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" fill="'+c.color+'" text-anchor="middle" dominant-baseline="middle" font-size="7" font-weight="700">'+c.label+'</text>';}).join('');
+  const radarSvg='<svg width="180" height="180" viewBox="0 0 180 180">'+gridSvg+axesSvg+'<polygon points="'+dataPts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')+'" fill="'+levelColor+'22" stroke="'+levelColor+'" stroke-width="1.5"/>'+dotsSvg+lblSvg+'</svg>';
+  // Comp bars
+  const compBars=COMPETENCIES.filter(c=>compAvgs[c.id]>0).map(c=>{
+    const v=compAvgs[c.id];const pct=v/5*100;
+    return '<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;"><div style="width:30px;font-size:9px;font-weight:800;color:'+c.color+';">'+c.label+'</div><div style="flex:1;background:#1E2530;border-radius:3px;height:6px;overflow:hidden;"><div style="background:'+c.color+';height:100%;width:'+pct+'%;border-radius:3px;"></div></div><div style="width:24px;font-size:10px;font-weight:800;color:'+c.color+';text-align:right;">'+v.toFixed(1)+'</div></div>';
+  }).join('');
+  // Build card HTML
+  const cardHTML=`
+<div id="pilot-card-overlay" onclick="if(event.target===this)this.remove()" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;">
+<div style="width:100%;max-width:380px;background:linear-gradient(160deg,#0A0C10 0%,#111827 50%,#0A0C10 100%);border-radius:20px;border:1px solid #1E2530;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
+  <!-- Header -->
+  <div style="background:linear-gradient(135deg,${levelColor}22,${levelColor}11);padding:16px;border-bottom:1px solid ${levelColor}33;position:relative;">
+    <div style="position:absolute;top:10px;right:12px;display:flex;gap:6px;">
+      <button onclick="sharePilotCard()" style="padding:4px 10px;border-radius:6px;background:#1E2530;border:1px solid #334155;color:#94a3b8;font-size:10px;font-weight:700;cursor:pointer;">📤 Partager</button>
+      <button onclick="document.getElementById('pilot-card-overlay').remove()" style="padding:4px 10px;border-radius:6px;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:12px;font-weight:700;cursor:pointer;">✕</button>
+    </div>
+    <div style="font-size:8px;color:${levelColor};font-weight:700;letter-spacing:2px;margin-bottom:4px;">◆ SCORE CBTA — FICHE PILOTE</div>
+    <div style="font-size:18px;font-weight:900;color:#F1F5F9;">${name}</div>
+    <div style="font-size:11px;color:#94a3b8;margin-top:2px;">MAT: ${mat} · ${company||'—'}</div>
+    <div style="display:inline-block;padding:2px 8px;border-radius:4px;background:${levelColor}22;border:1px solid ${levelColor}55;color:${levelColor};font-size:10px;font-weight:800;margin-top:4px;">${role}</div>
+  </div>
+  <!-- Score + Radar -->
+  <div style="display:flex;padding:14px 16px;gap:12px;align-items:center;">
+    <div style="flex-shrink:0;text-align:center;">
+      ${radarSvg}
+    </div>
+    <div style="flex:1;">
+      <div style="font-size:36px;font-weight:900;color:${levelColor};line-height:1;">${globalAvg.toFixed(2)}</div>
+      <div style="font-size:10px;color:#64748b;">/5.00</div>
+      <div style="display:inline-block;padding:3px 10px;border-radius:6px;background:${levelColor}22;border:1px solid ${levelColor};color:${levelColor};font-size:10px;font-weight:800;margin-top:4px;">${stampLabel[stampLevel]}</div>
+      <div style="margin-top:8px;font-size:24px;color:${trendColor};font-weight:900;">${trend} <span style="font-size:10px;color:#64748b;font-weight:600;">${trend==='↗'?'Progression':trend==='↘'?'Régression':'Stable'}</span></div>
+    </div>
+  </div>
+  <!-- Stats bar -->
+  <div style="display:flex;gap:0;border-top:1px solid #1E2530;border-bottom:1px solid #1E2530;">
+    <div style="flex:1;text-align:center;padding:8px;border-right:1px solid #1E2530;">
+      <div style="font-size:18px;font-weight:900;color:#3B82F6;">${sessions.length}</div>
+      <div style="font-size:8px;color:#64748b;font-weight:700;">SESSIONS</div>
+    </div>
+    <div style="flex:1;text-align:center;padding:8px;border-right:1px solid #1E2530;">
+      <div style="font-size:18px;font-weight:900;color:#8B5CF6;">${totalEx}</div>
+      <div style="font-size:8px;color:#64748b;font-weight:700;">EXERCICES</div>
+    </div>
+    <div style="flex:1;text-align:center;padding:8px;">
+      <div style="font-size:12px;font-weight:800;color:#94a3b8;">${sessions[0].date||'—'}</div>
+      <div style="font-size:8px;color:#64748b;font-weight:700;">DERNIÈRE</div>
+    </div>
+  </div>
+  <!-- Competency bars -->
+  <div style="padding:12px 16px;">
+    <div style="font-size:8px;font-weight:700;color:#64748b;letter-spacing:2px;margin-bottom:6px;">COMPÉTENCES MOYENNES</div>
+    ${compBars}
+  </div>
+  <!-- Strengths / Weaknesses -->
+  <div style="display:flex;gap:0;border-top:1px solid #1E2530;">
+    <div style="flex:1;padding:10px 12px;border-right:1px solid #1E2530;">
+      <div style="font-size:8px;font-weight:800;color:#10B981;letter-spacing:1px;margin-bottom:4px;">✓ POINTS FORTS</div>
+      <div style="font-size:11px;color:#10B981;font-weight:700;">${strong.length?strong.join(', '):'—'}</div>
+    </div>
+    <div style="flex:1;padding:10px 12px;">
+      <div style="font-size:8px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:4px;">△ À RENFORCER</div>
+      <div style="font-size:11px;color:#EF4444;font-weight:700;">${weak.length?weak.join(', '):'—'}</div>
+    </div>
+  </div>
+  <!-- Evolution mini chart -->
+  ${evoData.length>1?`
+  <div style="padding:10px 16px;border-top:1px solid #1E2530;">
+    <div style="font-size:8px;font-weight:700;color:#64748b;letter-spacing:2px;margin-bottom:6px;">ÉVOLUTION (${evoData.length} sessions)</div>
+    <svg width="${evoW}" height="${evoH}" viewBox="0 0 ${evoW} ${evoH}" style="width:100%;">
+      <line x1="0" y1="${evoH-3/5*evoH}" x2="${evoW}" y2="${evoH-3/5*evoH}" stroke="#F59E0B33" stroke-width="0.5" stroke-dasharray="3,3"/>
+      <path d="${evoPath}" fill="none" stroke="${levelColor}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      ${evoData.map((v,i)=>'<circle cx="'+(i/(evoData.length-1)*evoW).toFixed(1)+'" cy="'+(evoH-v/evoMax*evoH).toFixed(1)+'" r="3" fill="'+levelColor+'"/>').join('')}
+    </svg>
+    <div style="display:flex;justify-content:space-between;font-size:8px;color:#475569;">
+      <span>${sessions[sessions.length>8?7:sessions.length-1].date||''}</span>
+      <span>${sessions[0].date||''}</span>
+    </div>
+  </div>`:''}
+  <!-- Footer -->
+  <div style="padding:8px 16px 12px;border-top:1px solid #1E2530;text-align:center;">
+    <div style="font-size:7px;color:#475569;letter-spacing:1px;">Safety · Competency · Operational Reporting for Evaluation</div>
+  </div>
+</div>
+</div>`;
+  const existing=document.getElementById('pilot-card-overlay');
+  if(existing) existing.remove();
+  document.body.insertAdjacentHTML('beforeend',cardHTML);
+}
+function sharePilotCard(){
+  const overlay=document.getElementById('pilot-card-overlay');
+  if(!overlay) return;
+  const card=overlay.querySelector('div>div');
+  if(!card) return;
+  const html='<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fiche Pilote SCORE CBTA</title></head><body style="margin:0;background:#0A0C10;display:flex;align-items:center;justify-content:center;min-height:100vh;">'+card.outerHTML+'</body></html>';
+  const blob=new Blob([html],{type:'text/html'});
+  const file=new File([blob],'fiche-pilote-score.html',{type:'text/html'});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+    navigator.share({title:'Fiche Pilote SCORE CBTA',files:[file]});
+  } else {
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='fiche-pilote-score.html';a.click();
+    URL.revokeObjectURL(url);
+  }
 }
 function showScenarioLib(){
   document.getElementById('modal-scenarios').style.display='flex';
