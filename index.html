@@ -9598,7 +9598,10 @@ el.innerHTML = pilotTabsHtml + collectiveHtml + condHtml + memHtml +
 <div class="comp-grid">${compGrid}</div>
 <div style="margin-bottom:14px;">
 <div class="section-lbl" style="color:#F59E0B;">📝 ${_lang==='en'?'MY PRIVATE NOTES (not included in report)':'MES NOTES PRIVÉES (non incluses dans le rapport)'}</div>
-<textarea class="note-area" placeholder="${_lang==='en'?'Private debrief notes — for your use only...':'Notes de conduite du débriefing — privées, pour votre usage uniquement...'}" onchange="saveNotes(this.value)">${notesVal}</textarea>
+<div style="position:relative;">
+<textarea id="ta-private-notes" class="note-area" placeholder="${_lang==='en'?'Private debrief notes — for your use only...':'Notes de conduite du débriefing — privées, pour votre usage uniquement...'}" onchange="saveNotes(this.value)" oninput="showAutocomplete(this,'general')" onfocus="hideAutocomplete()">${notesVal}</textarea>
+<button onclick="browsePhrases(document.getElementById('ta-private-notes'),'general')" style="position:absolute;top:6px;right:6px;padding:3px 8px;border-radius:6px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:9px;font-weight:800;cursor:pointer;">⚡ Phrases</button>
+</div>
 </div>`;
 }
 
@@ -9610,6 +9613,273 @@ renderExContent();
 function saveNotes(val){
 state.exercises[state.activeIdx].notes = val;
 }
+
+// ─── PHRASES-RÉFLEXES ENGINE ───
+const PHRASE_DB = {
+  general: [
+    "Good overall situational awareness throughout the exercise",
+    "Excellent crew coordination and task sharing",
+    "Good CRM during complex failure management",
+    "Needs improvement in monitoring and cross-checking",
+    "Demonstrated solid knowledge of aircraft systems",
+    "Effective use of automation at all times",
+    "Appropriate energy management during approach",
+    "Good communication with ATC and cabin crew",
+    "Proactive threat identification and mitigation",
+    "Well-structured briefings before each phase of flight",
+    "Timely and appropriate decision-making under pressure",
+    "Smooth and stabilized approach within parameters",
+    "Good management of abnormal and emergency procedures",
+    "Effective workload distribution between crew members",
+    "Maintained sterile cockpit discipline below FL100",
+    "Professional attitude and leadership demonstrated",
+    "Appropriate use of checklists and SOPs",
+    "Clear and concise radio communications",
+    "Good recovery technique from upset condition",
+    "Effective windshear escape maneuver execution"
+  ],
+  kno: [
+    "Sound knowledge of aircraft limitations and performance",
+    "Good understanding of FCOM/QRH procedures",
+    "Knows where to find required information quickly",
+    "Needs to review MEL/CDL dispatch procedures",
+    "Excellent knowledge of weather phenomena and hazards",
+    "Good understanding of FMS/LNAV/VNAV modes",
+    "Demonstrates solid knowledge of B737NG systems interactions",
+    "Should review fuel system crossfeed procedures",
+    "Good knowledge of applicable regulations and minima",
+    "Needs improvement in emergency equipment knowledge"
+  ],
+  pro: [
+    "Standard callouts made accurately and timely",
+    "SOPs followed consistently throughout the flight",
+    "Checklists completed without omission",
+    "Missed items on after takeoff checklist",
+    "Good adherence to stabilized approach criteria",
+    "Deviated from standard taxi procedures",
+    "Professional execution of all required procedures",
+    "Needs to improve flow pattern consistency",
+    "All limitations respected during maneuvers",
+    "Briefings complete and covering all required items"
+  ],
+  fpa: [
+    "Smooth and accurate manual flying skills",
+    "Good pitch and power management during approach",
+    "Appropriate use of autoflight systems",
+    "Lateral deviation during manual ILS approach",
+    "Good speed management during approach phase",
+    "Excellent crosswind landing technique",
+    "Energy management needs improvement in descent",
+    "Smooth transition from automation to manual flight",
+    "Go-around executed promptly and correctly",
+    "Maintains accurate altitude and heading in manual flight"
+  ],
+  com: [
+    "Clear, concise and timely communications",
+    "Good readback technique with ATC",
+    "Effective inter-crew communication during workload",
+    "Missed readback of critical ATC clearance",
+    "Good use of standard phraseology",
+    "Should improve assertiveness in communications",
+    "Proactive communication of intentions to crew",
+    "ATC communication effective during emergency declaration",
+    "Good coordination calls during non-normal procedures",
+    "Cabin crew briefing thorough and well-structured"
+  ],
+  ltw: [
+    "Effective leadership and crew coordination",
+    "Good task delegation during high workload",
+    "Maintained positive team environment",
+    "Should demonstrate more assertive leadership",
+    "Good conflict resolution within the crew",
+    "Effective management of crew resources under pressure",
+    "Encouraged open communication and feedback",
+    "PM role well executed with appropriate monitoring",
+    "Good balance between authority and participation",
+    "Created supportive environment for crew learning"
+  ],
+  psd: [
+    "Good detection and management of threats",
+    "Identified potential errors before they occurred",
+    "Effective use of error trapping techniques",
+    "Missed opportunity to identify latent threat",
+    "Good prioritization under multiple failures",
+    "Surprise factor well managed, maintained composure",
+    "Appropriate risk assessment and mitigation",
+    "Needs to improve scanning technique for threats",
+    "Undesired aircraft state recovered promptly",
+    "Good monitoring of automated systems for deviations"
+  ],
+  sa: [
+    "Maintained good overall situational awareness",
+    "Good awareness of aircraft position and trajectory",
+    "Weather awareness and avoidance well managed",
+    "Temporary loss of SA during complex failure",
+    "Good projection of future aircraft state",
+    "Effective use of all available information sources",
+    "Needs to improve awareness of fuel state evolution",
+    "Good terrain awareness during approach phase",
+    "Traffic awareness maintained throughout",
+    "Recognized and recovered from reduced SA quickly"
+  ],
+  wlm: [
+    "Effective workload management during all phases",
+    "Good prioritization of tasks under pressure",
+    "Appropriate use of automation to manage workload",
+    "Became task-saturated during multiple failures",
+    "Good time management during diversion scenario",
+    "Balanced aviate-navigate-communicate priorities well",
+    "Should delegate more tasks during high workload",
+    "Maintained monitoring despite high taskload",
+    "Good use of available time for planning",
+    "Effective batch processing of lower priority tasks"
+  ],
+  fpm: [
+    "Accurate and timely FMS programming",
+    "Good understanding of LNAV/VNAV modes and transitions",
+    "MCP usage appropriate and verified",
+    "FMS error not caught during route modification",
+    "Good use of heading/VS modes when appropriate",
+    "Speed management through automation well handled",
+    "Should verify FMS entries more systematically",
+    "Good management of approach mode transitions",
+    "Appropriate use of automation level for conditions",
+    "Effective automation monitoring and intervention"
+  ],
+  tem: [
+    "Threat identified and effectively managed",
+    "Error trapped before it developed into UAS",
+    "Undesired aircraft state — recovered correctly",
+    "Threat: adverse weather — mitigated with diversion",
+    "Threat: high workload — managed with task delegation",
+    "Error: incorrect altitude set — caught by PM cross-check",
+    "Error: missed checklist item — recovered during review",
+    "Threat: fatigue indicators — addressed with crew coordination",
+    "UAS: unstabilized approach — go-around executed",
+    "UAS: altitude deviation — corrected immediately"
+  ],
+  conclusion: [
+    "Recommandé pour maintien de qualification — performance standard",
+    "Recommandé pour maintien de qualification — au-dessus du standard",
+    "Performance exemplaire — aucun point de vigilance identifié",
+    "Performance globalement satisfaisante avec points mineurs à améliorer",
+    "Axes de progression identifiés — séance de rattrapage recommandée",
+    "Non recommandé pour maintien — formation complémentaire nécessaire",
+    "Points à travailler en ligne : gestion de la charge de travail",
+    "Points à travailler en ligne : communication et coordination",
+    "Points à travailler en ligne : pilotage manuel et gestion d'énergie",
+    "Prochaine session : focus sur les procédures anormales et secours"
+  ]
+};
+
+const _phraseFreq = JSON.parse(localStorage.getItem('cbta_phrase_freq')||'{}');
+function _bumpPhraseFreq(phrase){
+  _phraseFreq[phrase] = (_phraseFreq[phrase]||0) + 1;
+  localStorage.setItem('cbta_phrase_freq', JSON.stringify(_phraseFreq));
+}
+
+function _getPhrases(category){
+  const cats = category ? [category] : Object.keys(PHRASE_DB);
+  let all = [];
+  cats.forEach(c => { if(PHRASE_DB[c]) all = all.concat(PHRASE_DB[c]); });
+  all.sort((a,b) => ((_phraseFreq[b]||0) - (_phraseFreq[a]||0)));
+  return all;
+}
+
+let _acTarget = null;
+let _acCategory = null;
+
+function showAutocomplete(textarea, category){
+  _acTarget = textarea;
+  _acCategory = category || null;
+  const val = textarea.value;
+  const cursorPos = textarea.selectionStart;
+  const lines = val.substring(0, cursorPos).split('\n');
+  const currentLine = lines[lines.length - 1].trim().toLowerCase();
+  if(currentLine.length < 2){ hideAutocomplete(); return; }
+  const phrases = _getPhrases(_acCategory);
+  const matches = phrases.filter(p => p.toLowerCase().includes(currentLine)).slice(0, 6);
+  if(!matches.length){ hideAutocomplete(); return; }
+  let box = document.getElementById('ac-suggestions');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'ac-suggestions';
+    box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(180deg,#0F1218,#1a1f2e);border-top:2px solid #3B82F6;max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px;';
+    document.body.appendChild(box);
+  }
+  box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;margin-bottom:4px;"><span style="font-size:9px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ PHRASES-RÉFLEXES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:16px;cursor:pointer;">✕</button></div>' +
+    matches.map(m => {
+      const freq = _phraseFreq[m] || 0;
+      const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:8px;padding:1px 5px;border-radius:4px;font-weight:700;">×'+freq+'</span>' : '';
+      return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:8px 10px;margin:3px 0;border-radius:8px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:6px;"><span style="flex:1;font-size:12px;color:#E2E8F0;">'+m+'</span>'+freqBadge+'</div>';
+    }).join('');
+  box.style.display = 'block';
+}
+
+function selectPhrase(el){
+  const phrase = el.getAttribute('data-phrase');
+  if(!_acTarget || !phrase) return;
+  const ta = _acTarget;
+  const val = ta.value;
+  const cursorPos = ta.selectionStart;
+  const lines = val.substring(0, cursorPos).split('\n');
+  const lineStart = cursorPos - lines[lines.length-1].length;
+  ta.value = val.substring(0, lineStart) + phrase + val.substring(cursorPos);
+  ta.selectionStart = ta.selectionEnd = lineStart + phrase.length;
+  _bumpPhraseFreq(phrase);
+  ta.dispatchEvent(new Event('change'));
+  ta.dispatchEvent(new Event('input'));
+  hideAutocomplete();
+  ta.focus();
+}
+
+function hideAutocomplete(){
+  const box = document.getElementById('ac-suggestions');
+  if(box) box.style.display = 'none';
+}
+
+function browsePhrases(textarea, category){
+  _acTarget = textarea;
+  _acCategory = category || null;
+  const phrases = _getPhrases(_acCategory);
+  const cats = _acCategory ? [_acCategory] : Object.keys(PHRASE_DB);
+  let box = document.getElementById('ac-suggestions');
+  if(!box){
+    box = document.createElement('div');
+    box.id = 'ac-suggestions';
+    box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(180deg,#0F1218,#1a1f2e);border-top:2px solid #3B82F6;max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px;';
+    document.body.appendChild(box);
+  }
+  const catBtns = Object.keys(PHRASE_DB).map(c => {
+    const active = (!_acCategory && c === Object.keys(PHRASE_DB)[0]) || _acCategory === c;
+    const colors = {general:'#94a3b8',kno:'#3B82F6',pro:'#10B981',fpa:'#F59E0B',com:'#8B5CF6',ltw:'#EC4899',psd:'#EF4444',sa:'#06B6D4',wlm:'#F97316',fpm:'#14B8A6',tem:'#F43F5E',conclusion:'#FBBF24'};
+    const col = colors[c]||'#94a3b8';
+    return '<button onclick="_filterPhrasesCat(\''+c+'\')" style="padding:4px 8px;border-radius:6px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid '+col+'88;background:'+col+'22;color:'+col+';white-space:nowrap;">'+c.toUpperCase()+'</button>';
+  }).join('');
+  const listHtml = phrases.map(m => {
+    const freq = _phraseFreq[m] || 0;
+    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:8px;padding:1px 5px;border-radius:4px;font-weight:700;">×'+freq+'</span>' : '';
+    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:8px 10px;margin:3px 0;border-radius:8px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:6px;"><span style="flex:1;font-size:12px;color:#E2E8F0;">'+m+'</span>'+freqBadge+'</div>';
+  }).join('');
+  box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;margin-bottom:4px;"><span style="font-size:9px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ BIBLIOTHÈQUE DE PHRASES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:16px;cursor:pointer;">✕</button></div>' +
+    '<div style="display:flex;gap:4px;overflow-x:auto;padding:4px 4px 8px;-webkit-overflow-scrolling:touch;">'+catBtns+'</div>' +
+    '<div id="ac-phrase-list">'+listHtml+'</div>';
+  box.style.display = 'block';
+  box.style.maxHeight = '55vh';
+}
+
+function _filterPhrasesCat(cat){
+  _acCategory = cat;
+  const phrases = _getPhrases(cat);
+  const list = document.getElementById('ac-phrase-list');
+  if(!list) return;
+  list.innerHTML = phrases.map(m => {
+    const freq = _phraseFreq[m] || 0;
+    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:8px;padding:1px 5px;border-radius:4px;font-weight:700;">×'+freq+'</span>' : '';
+    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:8px 10px;margin:3px 0;border-radius:8px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:6px;"><span style="flex:1;font-size:12px;color:#E2E8F0;">'+m+'</span>'+freqBadge+'</div>';
+  }).join('');
+}
+// ─── END PHRASES-RÉFLEXES ───
 
 function toggleBI(biKey, biId, row){
   const ex=state.exercises[state.activeIdx];
@@ -9752,7 +10022,8 @@ return `<div style="margin-bottom:20px;">
 ${sugHtml?`<div class="tem-sug-cont" style="max-height:110px;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;background:#0A0C10;border-radius:8px;padding:6px;">${sugHtml}</div>`:''}
 ${itemsHtml}
 <div class="tem-add-row">
-<input id="tem-inp-${k}" class="form-input" style="flex:1;font-size:var(--fs);" placeholder="${_lang==='en'?'Add...':'Ajouter...'}" onkeydown="if(event.key==='Enter'){addTEMInp('${k}');}"/>
+<input id="tem-inp-${k}" class="form-input" style="flex:1;font-size:var(--fs);" placeholder="${_lang==='en'?'Add...':'Ajouter...'}" onkeydown="if(event.key==='Enter'){addTEMInp('${k}');}" oninput="showAutocomplete(this,'tem')"/>
+<button class="btn" onclick="browsePhrases(document.getElementById('tem-inp-${k}'),'tem')" style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:9px;font-weight:800;">⚡</button>
 <button class="btn" onclick="addTEMInp('${k}')">+</button>
 </div>
 ${mitigHtml}
@@ -9947,7 +10218,10 @@ ${verdictHtml}
 ${html}
 <div style="margin-top:14px;">
 <div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:1px;margin-bottom:6px;">${_lang==='en'?'OVERALL CRM NOTES':'NOTES CRM GLOBALES'}</div>
-<textarea class="note-area" placeholder="Observations générales sur la ressource équipage..." oninput="state.sessionCRMNotes=this.value" style="min-height:80px;">${state.sessionCRMNotes||''}</textarea>
+<div style="position:relative;">
+<textarea id="ta-crm-notes" class="note-area" placeholder="Observations générales sur la ressource équipage..." oninput="state.sessionCRMNotes=this.value;showAutocomplete(this,'general')" onfocus="hideAutocomplete()" style="min-height:80px;">${state.sessionCRMNotes||''}</textarea>
+<button onclick="browsePhrases(document.getElementById('ta-crm-notes'),'general')" style="position:absolute;top:6px;right:6px;padding:3px 8px;border-radius:6px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:9px;font-weight:800;cursor:pointer;">⚡ Phrases</button>
+</div>
 </div>`;
 }
 
@@ -12765,7 +13039,10 @@ return `<div class="card" style="margin-bottom:12px;">
 <div class="section-lbl" style="color:#F59E0B;margin-bottom:8px;">${_lang==='en'?'ROOT CAUSES identified':'ROOT CAUSES identifiees'}</div>
 <div style="margin-bottom:10px;">${rcBtns}</div>
 <div class="section-lbl" style="color:#64748B;">${_lang==='en'?'Debriefing note:':'Note debriefing:'}</div>
-<textarea class="note-area" placeholder="${_lang==='en'?'Observations and analysis...':'Observations et analyse...'}" onchange="saveDebNote('${rcKey}',this.value)">${state.debNotes[rcKey]||''}</textarea>
+<div style="position:relative;">
+<textarea id="ta-deb-${rcKey}" class="note-area" placeholder="${_lang==='en'?'Observations and analysis...':'Observations et analyse...'}" onchange="saveDebNote('${rcKey}',this.value)" oninput="showAutocomplete(this,'general')" onfocus="hideAutocomplete()">${state.debNotes[rcKey]||''}</textarea>
+<button onclick="browsePhrases(document.getElementById('ta-deb-${rcKey}'),'general')" style="position:absolute;top:6px;right:6px;padding:3px 8px;border-radius:6px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:9px;font-weight:800;cursor:pointer;">⚡ Phrases</button>
+</div>
 </div>`;
 }).join('');
 
@@ -13948,7 +14225,10 @@ ${[
   {key:'tpl_text_1',label:t('tpl_unsat'),color:'#EF4444'},
 ].map(tp=>`<button onclick="applyConclTemplate('${tp.key}')" style="flex:1;min-width:80px;padding:6px 4px;border-radius:7px;background:${tp.color}22;border:1px solid ${tp.color}88;color:${tp.color};font-size:9px;font-weight:800;cursor:pointer;letter-spacing:0.5px;">${tp.label}</button>`).join('')}
 </div>
-<textarea id="concl-note-area" class="note-area" style="height:90px;" placeholder="${_lang==='en'?'Recommendation for next session, points to work on line, qualification decision...':'Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification...'}" onchange="state.debConclNotes=this.value">${state.debConclNotes}</textarea>
+<div style="position:relative;">
+<textarea id="concl-note-area" class="note-area" style="height:90px;" placeholder="${_lang==='en'?'Recommendation for next session, points to work on line, qualification decision...':'Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification...'}" onchange="state.debConclNotes=this.value" oninput="showAutocomplete(this,'conclusion')" onfocus="hideAutocomplete()">${state.debConclNotes}</textarea>
+<button onclick="browsePhrases(document.getElementById('concl-note-area'),'conclusion')" style="position:absolute;top:6px;right:6px;padding:3px 8px;border-radius:6px;background:#FBBF2422;border:1px solid #FBBF24;color:#FBBF24;font-size:9px;font-weight:800;cursor:pointer;">⚡ Phrases</button>
+</div>
 </div>
 
 <div style="text-align:center;font-size:12px;color:var(--mut);padding:10px 0;">
