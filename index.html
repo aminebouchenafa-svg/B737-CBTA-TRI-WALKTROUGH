@@ -10547,7 +10547,7 @@ function showPilotCard(seat){
   }).join('');
   // Build card HTML
   const cardHTML=`
-<div id="pilot-card-overlay" onclick="if(event.target===this)this.remove()" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;">
+<div id="pilot-card-overlay" onclick="if(event.target===this)this.remove()" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;">
 <div style="width:100%;max-width:380px;background:linear-gradient(160deg,#0A0C10 0%,#111827 50%,#0A0C10 100%);border-radius:20px;border:1px solid #1E2530;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.5);">
   <!-- Header with logo -->
   <div style="background:linear-gradient(135deg,${levelColor}22,${levelColor}11);padding:16px;border-bottom:1px solid ${levelColor}33;position:relative;">
