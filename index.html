@@ -3067,8 +3067,20 @@ Identifiant ou mot de passe incorrect
   <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
     <div style="width:26px;height:26px;border-radius:50%;background:#F59E0B;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
     <div style="flex:1;">
-      <div style="font-size:12px;font-weight:800;color:#F1F5F9;margin-bottom:3px;">Sélectionner → insertion automatique</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Appuyez sur une phrase pour l'insérer directement dans la zone de texte. La phrase remplace ce que vous étiez en train de taper sur la ligne courante. Un badge <span style="background:#3B82F622;color:#3B82F6;font-size:9px;padding:1px 5px;border-radius:4px;font-weight:700;">×3</span> indique combien de fois vous avez utilisé chaque phrase.</div>
+      <div style="font-size:12px;font-weight:800;color:#F1F5F9;margin-bottom:3px;">Filtrer : POSITIF / NÉGATIF</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Sous les catégories, trois boutons de filtre apparaissent :<br/>
+      <span style="background:#10B981;color:#fff;padding:2px 10px;border-radius:6px;font-size:10px;font-weight:800;">✓ POSITIF</span> — uniquement les commentaires positifs (points forts)<br/>
+      <span style="background:#64748b;color:#fff;padding:2px 10px;border-radius:6px;font-size:10px;font-weight:800;">TOUT</span> — toutes les phrases mélangées<br/>
+      <span style="background:#EF4444;color:#fff;padding:2px 10px;border-radius:6px;font-size:10px;font-weight:800;">✗ NÉGATIF</span> — uniquement les axes d'amélioration<br/>
+      Chaque phrase est marquée d'un <span style="color:#10B981;font-weight:700;">point vert</span> (positif) ou <span style="color:#EF4444;font-weight:700;">point rouge</span> (négatif).</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#8B5CF6;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+    <div style="flex:1;">
+      <div style="font-size:12px;font-weight:800;color:#F1F5F9;margin-bottom:3px;">Multi-sélection → ajout cumulatif</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Appuyez sur une phrase → elle s'ajoute <strong style="color:#F1F5F9;">à la suite</strong> dans la zone de texte (nouvelle ligne). La bibliothèque <strong style="color:#F1F5F9;">reste ouverte</strong> : vous pouvez sélectionner autant de phrases que nécessaire, positives et négatives. Un badge <span style="background:#10B981;color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;font-weight:700;">✓</span> apparaît sur les phrases déjà choisies. Fermez avec <span style="color:#64748b;font-weight:700;">✕</span> quand vous avez terminé.</div>
     </div>
   </div>
 
@@ -3101,13 +3113,16 @@ Identifiant ou mot de passe incorrect
 
   <!-- Exemple concret -->
   <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;margin-top:6px;">
-    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE</div>
-    <div style="font-size:11px;color:#CBD5E1;line-height:1.5;">Vous êtes dans les notes privées pendant un exercice ENGINE FIRE. Vous tapez <span style="font-family:monospace;background:#1E2530;color:#F59E0B;padding:1px 5px;border-radius:3px;font-size:10px;">good cr</span> → la suggestion <em>"Good CRM during complex failure management"</em> apparaît. Vous appuyez dessus → la phrase s'insère. La prochaine fois, cette phrase apparaîtra en premier car elle a été utilisée 1 fois.</div>
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE — WORKFLOW COMPLET</div>
+    <div style="font-size:11px;color:#CBD5E1;line-height:1.5;">Exercice ENGINE FIRE terminé. Vous ouvrez la bibliothèque ⚡ dans les notes privées :<br/>
+    <strong style="color:#10B981;">1.</strong> Appuyez <span style="background:#10B981;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✓ POSITIF</span> → sélectionnez <em>"Good CRM during complex failure management"</em> et <em>"Effective use of QRH procedures"</em>.<br/>
+    <strong style="color:#EF4444;">2.</strong> Appuyez <span style="background:#EF4444;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✗ NÉGATIF</span> → sélectionnez <em>"Should improve crosscheck during memory items"</em>.<br/>
+    <strong style="color:#64748b;">3.</strong> Fermez → les 3 phrases sont dans vos notes, chacune sur une ligne. Prêt pour le débrief.</div>
   </div>
 
   <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:9px 12px;margin-top:6px;">
-    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:3px;">💡 ASTUCE</div>
-    <div style="font-size:11px;color:#CBD5E1;line-height:1.5;">Les phrases sont en <strong>anglais aéronautique standard</strong> pour être directement exploitables dans les rapports officiels CBTA. La fréquence d'utilisation est sauvegardée même entre les sessions.</div>
+    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:3px;">💡 ASTUCE PRO</div>
+    <div style="font-size:11px;color:#CBD5E1;line-height:1.5;">Les phrases sont en <strong>anglais aéronautique standard</strong> pour être directement exploitables dans les rapports officiels CBTA. La fréquence d'utilisation est sauvegardée même entre les sessions. Commencez par <span style="background:#EF4444;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✗ NÉGATIF</span> pour identifier rapidement les axes d'amélioration, puis basculez en <span style="background:#10B981;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✓ POSITIF</span> pour équilibrer le débrief.</div>
   </div>
 </div>
 
@@ -5423,8 +5438,20 @@ Identifiant ou mot de passe incorrect
   <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
     <div style="width:26px;height:26px;border-radius:50%;background:#F59E0B;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
     <div style="flex:1;">
-      <div style="font-size:12px;font-weight:800;color:#F1F5F9;margin-bottom:3px;">Select → auto-insert</div>
-      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Tap a phrase to insert it directly into the text area. A badge <span style="background:#3B82F622;color:#3B82F6;font-size:9px;padding:1px 5px;border-radius:4px;font-weight:700;">×3</span> shows how many times you've used each phrase.</div>
+      <div style="font-size:12px;font-weight:800;color:#F1F5F9;margin-bottom:3px;">Filter: POSITIF / NÉGATIF</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Below the categories, three filter buttons appear:<br/>
+      <span style="background:#10B981;color:#fff;padding:2px 10px;border-radius:6px;font-size:10px;font-weight:800;">✓ POSITIF</span> — positive comments only (strengths)<br/>
+      <span style="background:#64748b;color:#fff;padding:2px 10px;border-radius:6px;font-size:10px;font-weight:800;">TOUT</span> — all phrases mixed<br/>
+      <span style="background:#EF4444;color:#fff;padding:2px 10px;border-radius:6px;font-size:10px;font-weight:800;">✗ NÉGATIF</span> — improvement areas only<br/>
+      Each phrase is marked with a <span style="color:#10B981;font-weight:700;">green dot</span> (positive) or <span style="color:#EF4444;font-weight:700;">red dot</span> (negative).</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #1E2530;">
+    <div style="width:26px;height:26px;border-radius:50%;background:#8B5CF6;font-size:13px;font-weight:900;color:#090C12;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+    <div style="flex:1;">
+      <div style="font-size:12px;font-weight:800;color:#F1F5F9;margin-bottom:3px;">Multi-select → cumulative insert</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Tap a phrase → it is <strong style="color:#F1F5F9;">appended</strong> to the text area (new line). The library <strong style="color:#F1F5F9;">stays open</strong>: select as many phrases as needed, both positive and negative. A green <span style="background:#10B981;color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;font-weight:700;">✓</span> badge marks already-selected phrases. Close with <span style="color:#64748b;font-weight:700;">✕</span> when done.</div>
     </div>
   </div>
 
@@ -5454,8 +5481,16 @@ Identifiant ou mot de passe incorrect
   </div>
 
   <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;margin-top:6px;">
-    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXAMPLE</div>
-    <div style="font-size:11px;color:#CBD5E1;line-height:1.5;">You're in the private notes during an ENGINE FIRE exercise. You type <span style="font-family:monospace;background:#1E2530;color:#F59E0B;padding:1px 5px;border-radius:3px;font-size:10px;">good cr</span> → the suggestion <em>"Good CRM during complex failure management"</em> appears. Tap it → the phrase is inserted. Next time, it will appear first as it's been used once.</div>
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXAMPLE — FULL WORKFLOW</div>
+    <div style="font-size:11px;color:#CBD5E1;line-height:1.5;">ENGINE FIRE exercise completed. Open the ⚡ library in private notes:<br/>
+    <strong style="color:#10B981;">1.</strong> Tap <span style="background:#10B981;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✓ POSITIF</span> → select <em>"Good CRM during complex failure management"</em> and <em>"Effective use of QRH procedures"</em>.<br/>
+    <strong style="color:#EF4444;">2.</strong> Tap <span style="background:#EF4444;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✗ NÉGATIF</span> → select <em>"Should improve crosscheck during memory items"</em>.<br/>
+    <strong style="color:#64748b;">3.</strong> Close → all 3 phrases are in your notes, each on its own line. Ready for debrief.</div>
+  </div>
+
+  <div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:8px;padding:9px 12px;margin-top:6px;">
+    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:2px;margin-bottom:3px;">💡 PRO TIP</div>
+    <div style="font-size:11px;color:#CBD5E1;line-height:1.5;">Start with <span style="background:#EF4444;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✗ NÉGATIF</span> to quickly identify improvement areas, then switch to <span style="background:#10B981;color:#fff;padding:1px 6px;border-radius:4px;font-size:9px;font-weight:800;">✓ POSITIF</span> to balance the debrief. Phrases are in standard aviation English for direct use in official CBTA reports.</div>
   </div>
 </div>
 
