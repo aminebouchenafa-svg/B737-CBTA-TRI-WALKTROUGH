@@ -529,6 +529,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab" onclick="exTab('tem',this)" style="color:#EF4444;">TEM</button>
 <button class="tab" onclick="exTab('crm',this)" style="color:#8B5CF6;">FORDEC</button>
 <button class="tab" onclick="exTab('fac',this)" style="color:#10B981;">Facilitation</button>
+<button class="tab" onclick="exTab('compact',this)" style="color:#FBBF24;font-weight:900;letter-spacing:1px;">⚡ COMPACT</button>
 </div>
 <div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E2530;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
   <div style="text-align:left;min-width:64px;">
@@ -9520,13 +9521,165 @@ if(mandDiv){
 renderExContent();
 }
 
+// ─── COMPACT MODE ───
+function renderCompactMode(ex,sc,el){
+  const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
+  const csKey = state.activePilot==="cpt"?"cs":"csfo";
+  const cs = ex[csKey]||{};
+  const biKey = state.activePilot==='cpt'?'bi':'bifo';
+  if(!ex[biKey]) ex[biKey]={};
+  const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
+
+  // Mini competency row — ultra compact
+  const compRow = COMPETENCIES.map(c=>{
+    const isKey = sc.keys.includes(c.id);
+    const cd = cs[c.id]||{g:0,obs:[]};
+    const pos=(cd.obs||[]).filter(o=>o.s==="+").length;
+    const neg=(cd.obs||[]).filter(o=>o.s==="-").length;
+    const gc = cd.g>0 ? GC[cd.g] : '#334155';
+    const gv = cd.g>0 ? cd.g : '·';
+    return `<div onclick="openComp('${c.id}')" style="display:flex;align-items:center;gap:4px;padding:6px 8px;border-radius:8px;background:${isKey?c.color+'0A':'#0F1218'};border:1px solid ${isKey?c.color+'44':'#1E2530'};cursor:pointer;min-width:0;">
+      <span style="font-size:10px;font-weight:900;color:${c.color};min-width:28px;">${c.label}</span>
+      <span style="font-size:16px;font-weight:900;color:${gc};">${gv}</span>
+      ${pos>0?'<span style="font-size:9px;color:#10B981;font-weight:700;">+'+pos+'</span>':''}
+      ${neg>0?'<span style="font-size:9px;color:#EF4444;font-weight:700;">-'+neg+'</span>':''}
+    </div>`;
+  }).join('');
+
+  // FFA compact
+  const ffaKey = state.activePilot==="cpt" ? "ffa" : "ffafo";
+  const ffa = ex[ffaKey]||{};
+  const ffaTags = ["FLY","FOCUS","ACT"];
+  const ffaColors = {FLY:"#10B981",FOCUS:"#3B82F6",ACT:"#8B5CF6"};
+  const ffaHtml = sc.ffa ? ffaTags.map(tag=>{
+    const col=ffaColors[tag]; const val=ffa[tag];
+    const yc=val===true?'#10B981':val===false?'#EF4444':'#334155';
+    const yl=val===true?'✓':val===false?'✗':'—';
+    return `<div style="display:flex;align-items:center;gap:6px;">
+      <span style="font-size:11px;font-weight:900;color:${col};min-width:42px;">${tag}</span>
+      <button onclick="setFFA('${tag}',true)" style="padding:4px 10px;border-radius:6px;border:1px solid ${val===true?'#10B981':'#334155'};background:${val===true?'#10B98133':'transparent'};color:${val===true?'#10B981':'#64748B'};font-size:10px;font-weight:700;cursor:pointer;">✓</button>
+      <button onclick="setFFA('${tag}',false)" style="padding:4px 10px;border-radius:6px;border:1px solid ${val===false?'#EF4444':'#334155'};background:${val===false?'#EF444433':'transparent'};color:${val===false?'#EF4444':'#64748B'};font-size:10px;font-weight:700;cursor:pointer;">✗</button>
+      <button onclick="setFFA('${tag}',null)" style="padding:4px 6px;border-radius:6px;border:1px solid #334155;background:transparent;color:#64748B;font-size:10px;font-weight:700;cursor:pointer;">—</button>
+    </div>`;
+  }).join('') : '<div style="font-size:10px;color:#475569;">N/A</div>';
+
+  // TEM compact — just counts and quick add
+  const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
+  const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
+  const temCounts = [
+    {k:'threats',l:'MENACES',c:'#3B82F6',items:tem.threats||[]},
+    {k:'errors',l:'ERREURS',c:'#EF4444',items:tem.errors||[]},
+    {k:'uas',l:'UAS',c:'#F59E0B',items:tem.uas||[]}
+  ];
+  const temHtml = temCounts.map(({k,l,c,items})=>{
+    const itemsList = items.map((it,i)=>{
+      const mitCol = it.mit==='ok'?'#10B981':it.mit==='partial'?'#F59E0B':it.mit==='no'?'#EF4444':'#475569';
+      const mitSym = it.mit==='ok'?'✓':it.mit==='partial'?'~':it.mit==='no'?'✗':'○';
+      return `<div style="display:flex;align-items:center;gap:4px;padding:3px 6px;background:${c}11;border-radius:4px;margin:2px 0;">
+        <span style="font-size:10px;color:${c};flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${it.text}</span>
+        <span onclick="setMitigation('${k}',${i},this.dataset.next)" data-next="${it.mit==='ok'?'partial':it.mit==='partial'?'no':'ok'}" style="font-size:12px;color:${mitCol};cursor:pointer;font-weight:900;">${mitSym}</span>
+        <span onclick="removeTEM('${k}',${i})" style="font-size:10px;color:#EF4444;cursor:pointer;">×</span>
+      </div>`;
+    }).join('');
+    return `<div style="margin-bottom:6px;">
+      <div style="font-size:9px;font-weight:800;color:${c};letter-spacing:1px;margin-bottom:3px;">${l} <span style="color:#64748b;">(${items.length})</span></div>
+      ${itemsList}
+      <div style="display:flex;gap:4px;margin-top:3px;">
+        <input id="cpt-tem-${k}" class="form-input" style="flex:1;font-size:11px;padding:5px 8px;margin:0;" placeholder="+" onkeydown="if(event.key==='Enter'){addTEM('${k}',this.value.trim());this.value='';renderExContent();}"/>
+        <button onclick="var i=document.getElementById('cpt-tem-${k}');if(i.value.trim()){addTEM('${k}',i.value.trim());i.value='';}" class="btn" style="padding:4px 8px;font-size:11px;">+</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // FORDEC/NITS compact
+  const fUsed=ex.fordec===true;
+  const nUsed=ex.nits===true;
+  const fordecNitsHtml = `<div style="display:flex;gap:8px;">
+    <button onclick="toggleFordec();renderExContent()" style="flex:1;padding:8px;border-radius:8px;font-size:11px;font-weight:900;cursor:pointer;letter-spacing:1px;border:2px solid ${fUsed?'#8B5CF6':'#334155'};background:${fUsed?'#8B5CF633':'transparent'};color:${fUsed?'#8B5CF6':'#64748B'};">FORDEC ${fUsed?'✓':''}</button>
+    <button onclick="toggleNits();renderExContent()" style="flex:1;padding:8px;border-radius:8px;font-size:11px;font-weight:900;cursor:pointer;letter-spacing:1px;border:2px solid ${nUsed?'#3B82F6':'#334155'};background:${nUsed?'#3B82F633':'transparent'};color:${nUsed?'#3B82F6':'#64748B'};">NITS ${nUsed?'✓':''}</button>
+  </div>`;
+
+  // Notes compact
+  const notesVal = ex.notes||'';
+
+  // Facilitation compact
+  const defaultFac = _lang==='en' ? [
+    "How did you identify and manage the situation?",
+    "Was the coordination effective?",
+    "What could have been done differently?"
+  ] : [
+    "Comment avez-vous identifie et gere la situation ?",
+    "La coordination etait-elle efficace ?",
+    "Qu est-ce qui aurait pu etre fait differemment ?"
+  ];
+  let questions = (_lang==='en'&&sc.fac_en?sc.fac_en:sc.fac)||[];
+  if(questions.length < 3){ questions = [...questions, ...defaultFac.slice(questions.length)]; }
+  const facHtml = questions.map((q,i)=>`<div style="padding:4px 0;border-bottom:1px solid #1E253044;">
+    <div style="font-size:10px;color:#10B981;cursor:pointer;" onclick="var a=this.nextElementSibling;a.style.display=a.style.display==='none'?'block':'none'"><span style="font-weight:900;">${i+1}.</span> ${q}</div>
+    <textarea class="note-area" style="display:none;height:45px;font-size:11px;margin-top:4px;" placeholder="Notes..." onchange="saveFacNote(${i},this.value)">${(ex.facNotes&&ex.facNotes[i])||''}</textarea>
+  </div>`).join('');
+
+  // Memory items
+  const _memArr = (_lang==='en'&&sc.mem_en?sc.mem_en:sc.mem)||[];
+  const memHtml = _memArr.length ? `<div style="background:#1a0a0a;border:1px solid #EF444433;border-radius:8px;padding:6px 8px;margin-bottom:8px;">
+    <div style="font-size:9px;font-weight:800;color:#EF4444;letter-spacing:1px;margin-bottom:3px;">MEMORY ITEMS</div>
+    ${_memArr.map((m,i)=>'<div style="font-size:10px;color:#FCA5A5;padding:2px 0;"><span style="color:#EF4444;font-weight:900;">'+( i+1)+'</span> '+m+'</div>').join('')}
+  </div>` : '';
+
+  // Build the compact layout
+  el.innerHTML = pilotTabsHtml + `
+  <div style="padding:0;">
+    ${memHtml}
+    <!-- Section: Competencies -->
+    <div style="background:#0A0D14;border:1px solid #FBBF2433;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #FBBF2411;">
+      <div style="font-size:8px;font-weight:900;color:#FBBF24;letter-spacing:2px;margin-bottom:6px;">⚡ COMPÉTENCES</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">${compRow}</div>
+    </div>
+
+    <!-- Section: FFA -->
+    <div style="background:#0A0D14;border:1px solid #8B5CF633;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #8B5CF611;">
+      <div style="font-size:8px;font-weight:900;color:#8B5CF6;letter-spacing:2px;margin-bottom:6px;">✈ FFA — FLY · FOCUS · ACT</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">${ffaHtml}</div>
+    </div>
+
+    <!-- Section: TEM -->
+    <div style="background:#0A0D14;border:1px solid #EF444433;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #EF444411;">
+      <div style="font-size:8px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:6px;">▲ TEM — MENACES · ERREURS · UAS</div>
+      ${temHtml}
+    </div>
+
+    <!-- Section: FORDEC/NITS -->
+    <div style="background:#0A0D14;border:1px solid #3B82F633;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #3B82F611;">
+      <div style="font-size:8px;font-weight:900;color:#3B82F6;letter-spacing:2px;margin-bottom:6px;">◆ FORDEC · NITS</div>
+      ${fordecNitsHtml}
+    </div>
+
+    <!-- Section: Notes -->
+    <div style="background:#0A0D14;border:1px solid #F59E0B33;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #F59E0B11;">
+      <div style="font-size:8px;font-weight:900;color:#F59E0B;letter-spacing:2px;margin-bottom:6px;">📝 NOTES PRIVÉES</div>
+      <div style="position:relative;">
+        <textarea id="ta-compact-notes" class="note-area" style="height:50px;font-size:11px;" placeholder="Notes..." onchange="saveNotes(this.value)" oninput="showAutocomplete(this,'general')" onfocus="hideAutocomplete()">${notesVal}</textarea>
+        <button onclick="browsePhrases(document.getElementById('ta-compact-notes'),'general')" style="position:absolute;top:4px;right:4px;padding:2px 6px;border-radius:4px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:8px;font-weight:800;cursor:pointer;">⚡</button>
+      </div>
+    </div>
+
+    <!-- Section: Facilitation -->
+    <div style="background:#0A0D14;border:1px solid #10B98133;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #10B98111;">
+      <div style="font-size:8px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:6px;">? FACILITATION</div>
+      ${facHtml}
+    </div>
+  </div>`;
+}
+// ─── END COMPACT MODE ───
+
 function renderExContent(){
 const ex = state.exercises[state.activeIdx];
 const sc = ALL_SC.find(s=>s.id===ex.sid);
 const tab = state.currentExTab;
 const el = document.getElementById('ex-content');
 
-if(tab==="eval") renderEvalTab(ex,sc,el);
+if(tab==="compact") renderCompactMode(ex,sc,el);
+else if(tab==="eval") renderEvalTab(ex,sc,el);
 else if(tab==="ffa") renderFFATab(ex,sc,el);
 else if(tab==="tem") renderTEMTab(ex,sc,el);
 else if(tab==="crm") renderFordecNitsTab(ex,sc,el);
