@@ -530,6 +530,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab" onclick="exTab('crm',this)" style="color:#8B5CF6;">FORDEC</button>
 <button class="tab" onclick="exTab('fac',this)" style="color:#10B981;">Facilitation</button>
 <button class="tab" onclick="exTab('compact',this)" style="color:#FBBF24;font-weight:900;letter-spacing:1px;">⚡ COMPACT</button>
+<button class="tab" onclick="exTab('focus',this)" style="color:#EF4444;font-weight:900;letter-spacing:1px;">🎯 FOCUS</button>
 </div>
 <div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E2530;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
   <div style="text-align:left;min-width:64px;">
@@ -9521,6 +9522,154 @@ if(mandDiv){
 renderExContent();
 }
 
+// ─── FOCUS MODE ───
+function renderFocusMode(ex,sc,el){
+  const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
+  const csKey = state.activePilot==="cpt"?"cs":"csfo";
+  const cs = ex[csKey]||{};
+  const biKey = state.activePilot==='cpt'?'bi':'bifo';
+  if(!ex[biKey]) ex[biKey]={};
+
+  // Find critical competencies: scored < 3, or key with no score, or with negative obs
+  const critical = COMPETENCIES.filter(c=>{
+    const isKey = sc.keys.includes(c.id);
+    const cd = cs[c.id]||{g:0,obs:[]};
+    const neg = (cd.obs||[]).filter(o=>o.s==="-").length;
+    if(cd.g > 0 && cd.g < 3) return true;
+    if(isKey && cd.g === 0) return true;
+    if(neg > 0) return true;
+    return false;
+  });
+
+  // All scored competencies for overview
+  const scored = COMPETENCIES.filter(c=>{
+    const cd = cs[c.id]||{g:0,obs:[]};
+    return cd.g > 0;
+  });
+
+  // Compute average
+  const avgScore = scored.length ? scored.reduce((s,c)=>{const cd=cs[c.id]||{g:0};return s+cd.g;},0)/scored.length : 0;
+  const avgColor = avgScore>=4?'#10B981':avgScore>=3?'#F59E0B':avgScore>=2?'#F97316':'#EF4444';
+
+  // TEM issues
+  const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
+  const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
+  const unmanaged = [];
+  ['threats','errors','uas'].forEach(k=>{
+    (tem[k]||[]).forEach(it=>{
+      if(it.mit==='no' || it.mit==='partial') unmanaged.push({type:k,item:it});
+    });
+  });
+
+  // FFA issues
+  const ffaKey = state.activePilot==="cpt" ? "ffa" : "ffafo";
+  const ffa = ex[ffaKey]||{};
+  const ffaFails = ["FLY","FOCUS","ACT"].filter(t=>ffa[t]===false);
+
+  // Build critical cards
+  const critCards = critical.length ? critical.map(c=>{
+    const cd = cs[c.id]||{g:0,obs:[]};
+    const neg = (cd.obs||[]).filter(o=>o.s==="-");
+    const pos = (cd.obs||[]).filter(o=>o.s==="+");
+    const isKey = sc.keys.includes(c.id);
+    const gc = cd.g>0 ? GC[cd.g] : '#64748b';
+    return `<div onclick="openComp('${c.id}')" style="background:#0F1218;border:1px solid ${c.color}44;border-left:3px solid ${cd.g>0&&cd.g<3?'#EF4444':c.color};border-radius:10px;padding:10px 12px;margin-bottom:6px;cursor:pointer;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-size:12px;font-weight:900;color:${c.color};">${c.label}</span>
+          <span style="font-size:10px;color:#94a3b8;">${c.full}</span>
+          ${isKey?'<span style="font-size:8px;background:#FBBF2422;color:#FBBF24;padding:1px 5px;border-radius:3px;font-weight:800;">KEY</span>':''}
+        </div>
+        <span style="font-size:20px;font-weight:900;color:${gc};">${cd.g>0?cd.g:'—'}</span>
+      </div>
+      ${neg.length?'<div style="margin-top:4px;">'+neg.map(o=>'<div style="font-size:10px;color:#EF4444;padding:2px 0;">− '+((COMPETENCIES.find(x=>x.id===c.id)||{}).obs||[]).find(x=>x.id===o.id)?.text||'Obs #'+o.id+'</div>').join('')+'</div>':''}
+      ${pos.length?'<div style="margin-top:2px;">'+pos.map(o=>'<div style="font-size:10px;color:#10B981;padding:1px 0;">+ '+((COMPETENCIES.find(x=>x.id===c.id)||{}).obs||[]).find(x=>x.id===o.id)?.text||'Obs #'+o.id+'</div>').join('')+'</div>':''}
+    </div>`;
+  }).join('') : `<div style="text-align:center;padding:20px;color:#10B981;font-size:13px;font-weight:700;">✓ ${_lang==='en'?'No critical items detected':'Aucun point critique détecté'}</div>`;
+
+  // Unmanaged TEM
+  const temAlerts = unmanaged.length ? unmanaged.map(({type,item})=>{
+    const tc = type==='threats'?'#3B82F6':type==='errors'?'#EF4444':'#F59E0B';
+    const tl = type==='threats'?'MENACE':type==='errors'?'ERREUR':'UAS';
+    const mc = item.mit==='no'?'#EF4444':'#F59E0B';
+    return `<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:${mc}11;border:1px solid ${mc}33;border-radius:6px;margin-bottom:4px;">
+      <span style="font-size:8px;font-weight:800;color:${tc};background:${tc}22;padding:2px 5px;border-radius:3px;">${tl}</span>
+      <span style="font-size:11px;color:#E2E8F0;flex:1;">${item.text}</span>
+      <span style="font-size:10px;font-weight:800;color:${mc};">${item.mit==='no'?'NON GÉRÉE':'PARTIELLE'}</span>
+    </div>`;
+  }).join('') : '';
+
+  // FFA alerts
+  const ffaAlerts = ffaFails.length ? ffaFails.map(t=>{
+    const col = {FLY:'#10B981',FOCUS:'#3B82F6',ACT:'#8B5CF6'}[t];
+    return `<div style="display:flex;align-items:center;gap:8px;padding:6px 8px;background:#EF444411;border:1px solid #EF444433;border-radius:6px;margin-bottom:4px;">
+      <span style="font-size:11px;font-weight:900;color:${col};">${t}</span>
+      <span style="font-size:11px;color:#EF4444;font-weight:700;">✗ NON EFFECTUÉ</span>
+    </div>`;
+  }).join('') : '';
+
+  // Score overview bar
+  const scoreBar = scored.length ? `<div style="display:flex;gap:3px;align-items:flex-end;height:40px;margin-bottom:4px;">
+    ${COMPETENCIES.map(c=>{
+      const cd = cs[c.id]||{g:0};
+      const h = cd.g>0 ? (cd.g/5*100) : 0;
+      const col = cd.g>0 ? (cd.g<3?'#EF4444':cd.g<4?'#F59E0B':'#10B981') : '#1E2530';
+      return '<div style="flex:1;background:'+col+';height:'+h+'%;border-radius:3px 3px 0 0;min-height:2px;" title="'+c.label+': '+cd.g+'"></div>';
+    }).join('')}
+  </div>
+  <div style="display:flex;gap:3px;margin-bottom:8px;">
+    ${COMPETENCIES.map(c=>'<div style="flex:1;text-align:center;font-size:7px;font-weight:800;color:'+c.color+';">'+c.label+'</div>').join('')}
+  </div>` : '';
+
+  const hasIssues = critical.length > 0 || unmanaged.length > 0 || ffaFails.length > 0;
+  const statusColor = hasIssues ? '#EF4444' : '#10B981';
+  const statusText = hasIssues
+    ? `${critical.length} compétence${critical.length>1?'s':''} critique${critical.length>1?'s':''} · ${unmanaged.length} TEM non gérée${unmanaged.length>1?'s':''} · ${ffaFails.length} FFA échoué${ffaFails.length>1?'s':''}`
+    : (_lang==='en'?'All clear — no critical items':'RAS — aucun point critique');
+
+  el.innerHTML = pilotTabsHtml + `
+  <div style="padding:0;">
+    <!-- Status banner -->
+    <div style="background:${statusColor}11;border:2px solid ${statusColor}44;border-radius:12px;padding:12px;margin-bottom:10px;text-align:center;box-shadow:0 0 20px ${statusColor}22;">
+      <div style="font-size:9px;font-weight:900;color:${statusColor};letter-spacing:2px;margin-bottom:4px;">🎯 MODE FOCUS — POINTS CRITIQUES</div>
+      ${scored.length?`<div style="font-size:28px;font-weight:900;color:${avgColor};line-height:1;">${avgScore.toFixed(1)} <span style="font-size:12px;color:#64748b;">/5</span></div>`:''}
+      <div style="font-size:10px;color:${statusColor};margin-top:4px;">${statusText}</div>
+    </div>
+
+    <!-- Score overview -->
+    ${scoreBar?`<div style="background:#0A0D14;border:1px solid #334155;border-radius:10px;padding:8px 10px;margin-bottom:8px;">
+      <div style="font-size:8px;font-weight:800;color:#64748b;letter-spacing:1px;margin-bottom:6px;">APERÇU RAPIDE</div>
+      ${scoreBar}
+    </div>`:''}
+
+    <!-- Critical competencies -->
+    ${critical.length?`<div style="background:#0A0D14;border:1px solid #EF444433;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #EF444411;">
+      <div style="font-size:8px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:6px;">⚠ COMPÉTENCES CRITIQUES (${critical.length})</div>
+      ${critCards}
+    </div>`:`<div style="background:#0A0D14;border:1px solid #10B98133;border-radius:10px;padding:12px;margin-bottom:8px;text-align:center;box-shadow:0 0 15px #10B98111;">
+      ${critCards}
+    </div>`}
+
+    <!-- TEM alerts -->
+    ${temAlerts?`<div style="background:#0A0D14;border:1px solid #F59E0B33;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #F59E0B11;">
+      <div style="font-size:8px;font-weight:900;color:#F59E0B;letter-spacing:2px;margin-bottom:6px;">⚠ TEM NON GÉRÉES (${unmanaged.length})</div>
+      ${temAlerts}
+    </div>`:''}
+
+    <!-- FFA alerts -->
+    ${ffaAlerts?`<div style="background:#0A0D14;border:1px solid #8B5CF633;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 15px #8B5CF611;">
+      <div style="font-size:8px;font-weight:900;color:#8B5CF6;letter-spacing:2px;margin-bottom:6px;">⚠ FFA — ÉTAPES NON EFFECTUÉES</div>
+      ${ffaAlerts}
+    </div>`:''}
+
+    <!-- Quick action -->
+    <div style="text-align:center;padding:8px;">
+      <button onclick="exTab('compact',document.querySelector('.tab'))" style="padding:10px 20px;border-radius:10px;background:#FBBF2422;border:1px solid #FBBF24;color:#FBBF24;font-size:11px;font-weight:900;cursor:pointer;letter-spacing:1px;">⚡ PASSER EN MODE COMPACT</button>
+    </div>
+  </div>`;
+}
+// ─── END FOCUS MODE ───
+
 // ─── COMPACT MODE ───
 function renderCompactMode(ex,sc,el){
   const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
@@ -9679,6 +9828,7 @@ const tab = state.currentExTab;
 const el = document.getElementById('ex-content');
 
 if(tab==="compact") renderCompactMode(ex,sc,el);
+else if(tab==="focus") renderFocusMode(ex,sc,el);
 else if(tab==="eval") renderEvalTab(ex,sc,el);
 else if(tab==="ffa") renderFFATab(ex,sc,el);
 else if(tab==="tem") renderTEMTab(ex,sc,el);
