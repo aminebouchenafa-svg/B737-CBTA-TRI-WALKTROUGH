@@ -10758,16 +10758,22 @@ function selectPhrase(el){
   if(!_acTarget || !phrase) return;
   const ta = _acTarget;
   const val = ta.value;
-  const cursorPos = ta.selectionStart;
-  const lines = val.substring(0, cursorPos).split('\n');
-  const lineStart = cursorPos - lines[lines.length-1].length;
-  ta.value = val.substring(0, lineStart) + phrase + val.substring(cursorPos);
-  ta.selectionStart = ta.selectionEnd = lineStart + phrase.length;
+  const sep = val.trim().length > 0 ? '\n' : '';
+  ta.value = val.trimEnd() + sep + phrase;
+  ta.selectionStart = ta.selectionEnd = ta.value.length;
   _bumpPhraseFreq(phrase);
   ta.dispatchEvent(new Event('change'));
   ta.dispatchEvent(new Event('input'));
-  hideAutocomplete();
-  ta.focus();
+  el.style.background = '#10B98133';
+  el.style.border = '1px solid #10B981';
+  const old = el.querySelector('span:last-child');
+  if(!el.querySelector('.added-badge')){
+    const badge = document.createElement('span');
+    badge.className = 'added-badge';
+    badge.style.cssText = 'background:#10B981;color:#fff;font-size:11px;padding:2px 8px;border-radius:5px;font-weight:700;flex-shrink:0;';
+    badge.textContent = '✓';
+    el.appendChild(badge);
+  }
 }
 
 function hideAutocomplete(){
@@ -10815,9 +10821,9 @@ function browsePhrases(textarea, category){
   const goodActive = _phraseFilter==='good';
   const badActive = _phraseFilter==='bad';
   const goodBadBtns = '<div style="display:flex;gap:8px;padding:4px 6px 10px;justify-content:center;">' +
-    '<button onclick="_setGoodBadFilter(\'good\')" id="gbf-good" style="padding:8px 20px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #10B981;background:'+(goodActive?'#10B981':'#10B98122')+';color:'+(goodActive?'#fff':'#10B981')+';letter-spacing:1px;">✓ GOOD</button>' +
-    '<button onclick="_setGoodBadFilter(\'all\')" id="gbf-all" style="padding:8px 20px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #64748b;background:'+((!goodActive&&!badActive)?'#64748b':'#64748b22')+';color:'+((!goodActive&&!badActive)?'#fff':'#64748b')+';letter-spacing:1px;">ALL</button>' +
-    '<button onclick="_setGoodBadFilter(\'bad\')" id="gbf-bad" style="padding:8px 20px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #EF4444;background:'+(badActive?'#EF4444':'#EF444422')+';color:'+(badActive?'#fff':'#EF4444')+';letter-spacing:1px;">✗ BAD</button>' +
+    '<button onclick="_setGoodBadFilter(\'good\')" id="gbf-good" style="padding:8px 18px;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid #10B981;background:'+(goodActive?'#10B981':'#10B98122')+';color:'+(goodActive?'#fff':'#10B981')+';letter-spacing:1px;">✓ POSITIF</button>' +
+    '<button onclick="_setGoodBadFilter(\'all\')" id="gbf-all" style="padding:8px 18px;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid #64748b;background:'+((!goodActive&&!badActive)?'#64748b':'#64748b22')+';color:'+((!goodActive&&!badActive)?'#fff':'#64748b')+';letter-spacing:1px;">TOUT</button>' +
+    '<button onclick="_setGoodBadFilter(\'bad\')" id="gbf-bad" style="padding:8px 18px;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid #EF4444;background:'+(badActive?'#EF4444':'#EF444422')+';color:'+(badActive?'#fff':'#EF4444')+';letter-spacing:1px;">✗ NÉGATIF</button>' +
     '</div>';
   const listHtml = _renderPhraseList(phrases);
   box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;margin-bottom:6px;"><span style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ BIBLIOTHÈQUE DE PHRASES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:22px;cursor:pointer;">✕</button></div>' +
