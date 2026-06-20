@@ -10394,160 +10394,308 @@ state.exercises[state.activeIdx].notes = val;
 
 // ─── PHRASES-RÉFLEXES ENGINE ───
 const PHRASE_DB = {
-  general: [
-    "Good overall situational awareness throughout the exercise",
-    "Excellent crew coordination and task sharing",
-    "Good CRM during complex failure management",
-    "Needs improvement in monitoring and cross-checking",
-    "Demonstrated solid knowledge of aircraft systems",
-    "Effective use of automation at all times",
-    "Appropriate energy management during approach",
-    "Good communication with ATC and cabin crew",
-    "Proactive threat identification and mitigation",
-    "Well-structured briefings before each phase of flight",
-    "Timely and appropriate decision-making under pressure",
-    "Smooth and stabilized approach within parameters",
-    "Good management of abnormal and emergency procedures",
-    "Effective workload distribution between crew members",
-    "Maintained sterile cockpit discipline below FL100",
-    "Professional attitude and leadership demonstrated",
-    "Appropriate use of checklists and SOPs",
-    "Clear and concise radio communications",
-    "Good recovery technique from upset condition",
-    "Effective windshear escape maneuver execution"
-  ],
-  kno: [
-    "Sound knowledge of aircraft limitations and performance",
-    "Good understanding of FCOM/QRH procedures",
-    "Knows where to find required information quickly",
-    "Needs to review MEL/CDL dispatch procedures",
-    "Excellent knowledge of weather phenomena and hazards",
-    "Good understanding of FMS/LNAV/VNAV modes",
-    "Demonstrates solid knowledge of B737NG systems interactions",
-    "Should review fuel system crossfeed procedures",
-    "Good knowledge of applicable regulations and minima",
-    "Needs improvement in emergency equipment knowledge"
-  ],
-  pro: [
-    "Standard callouts made accurately and timely",
-    "SOPs followed consistently throughout the flight",
-    "Checklists completed without omission",
-    "Missed items on after takeoff checklist",
-    "Good adherence to stabilized approach criteria",
-    "Deviated from standard taxi procedures",
-    "Professional execution of all required procedures",
-    "Needs to improve flow pattern consistency",
-    "All limitations respected during maneuvers",
-    "Briefings complete and covering all required items"
-  ],
-  fpa: [
-    "Smooth and accurate manual flying skills",
-    "Good pitch and power management during approach",
-    "Appropriate use of autoflight systems",
-    "Lateral deviation during manual ILS approach",
-    "Good speed management during approach phase",
-    "Excellent crosswind landing technique",
-    "Energy management needs improvement in descent",
-    "Smooth transition from automation to manual flight",
-    "Go-around executed promptly and correctly",
-    "Maintains accurate altitude and heading in manual flight"
-  ],
-  com: [
-    "Clear, concise and timely communications",
-    "Good readback technique with ATC",
-    "Effective inter-crew communication during workload",
-    "Missed readback of critical ATC clearance",
-    "Good use of standard phraseology",
-    "Should improve assertiveness in communications",
-    "Proactive communication of intentions to crew",
-    "ATC communication effective during emergency declaration",
-    "Good coordination calls during non-normal procedures",
-    "Cabin crew briefing thorough and well-structured"
-  ],
-  ltw: [
-    "Effective leadership and crew coordination",
-    "Good task delegation during high workload",
-    "Maintained positive team environment",
-    "Should demonstrate more assertive leadership",
-    "Good conflict resolution within the crew",
-    "Effective management of crew resources under pressure",
-    "Encouraged open communication and feedback",
-    "PM role well executed with appropriate monitoring",
-    "Good balance between authority and participation",
-    "Created supportive environment for crew learning"
-  ],
-  psd: [
-    "Good detection and management of threats",
-    "Identified potential errors before they occurred",
-    "Effective use of error trapping techniques",
-    "Missed opportunity to identify latent threat",
-    "Good prioritization under multiple failures",
-    "Surprise factor well managed, maintained composure",
-    "Appropriate risk assessment and mitigation",
-    "Needs to improve scanning technique for threats",
-    "Undesired aircraft state recovered promptly",
-    "Good monitoring of automated systems for deviations"
-  ],
-  sa: [
-    "Maintained good overall situational awareness",
-    "Good awareness of aircraft position and trajectory",
-    "Weather awareness and avoidance well managed",
-    "Temporary loss of SA during complex failure",
-    "Good projection of future aircraft state",
-    "Effective use of all available information sources",
-    "Needs to improve awareness of fuel state evolution",
-    "Good terrain awareness during approach phase",
-    "Traffic awareness maintained throughout",
-    "Recognized and recovered from reduced SA quickly"
-  ],
-  wlm: [
-    "Effective workload management during all phases",
-    "Good prioritization of tasks under pressure",
-    "Appropriate use of automation to manage workload",
-    "Became task-saturated during multiple failures",
-    "Good time management during diversion scenario",
-    "Balanced aviate-navigate-communicate priorities well",
-    "Should delegate more tasks during high workload",
-    "Maintained monitoring despite high taskload",
-    "Good use of available time for planning",
-    "Effective batch processing of lower priority tasks"
-  ],
-  fpm: [
-    "Accurate and timely FMS programming",
-    "Good understanding of LNAV/VNAV modes and transitions",
-    "MCP usage appropriate and verified",
-    "FMS error not caught during route modification",
-    "Good use of heading/VS modes when appropriate",
-    "Speed management through automation well handled",
-    "Should verify FMS entries more systematically",
-    "Good management of approach mode transitions",
-    "Appropriate use of automation level for conditions",
-    "Effective automation monitoring and intervention"
-  ],
-  tem: [
-    "Threat identified and effectively managed",
-    "Error trapped before it developed into UAS",
-    "Undesired aircraft state — recovered correctly",
-    "Threat: adverse weather — mitigated with diversion",
-    "Threat: high workload — managed with task delegation",
-    "Error: incorrect altitude set — caught by PM cross-check",
-    "Error: missed checklist item — recovered during review",
-    "Threat: fatigue indicators — addressed with crew coordination",
-    "UAS: unstabilized approach — go-around executed",
-    "UAS: altitude deviation — corrected immediately"
-  ],
-  conclusion: [
-    "Recommandé pour maintien de qualification — performance standard",
-    "Recommandé pour maintien de qualification — au-dessus du standard",
-    "Performance exemplaire — aucun point de vigilance identifié",
-    "Performance globalement satisfaisante avec points mineurs à améliorer",
-    "Axes de progression identifiés — séance de rattrapage recommandée",
-    "Non recommandé pour maintien — formation complémentaire nécessaire",
-    "Points à travailler en ligne : gestion de la charge de travail",
-    "Points à travailler en ligne : communication et coordination",
-    "Points à travailler en ligne : pilotage manuel et gestion d'énergie",
-    "Prochaine session : focus sur les procédures anormales et secours"
-  ]
+  general: {
+    good: [
+      "Good overall situational awareness throughout the exercise",
+      "Excellent crew coordination and task sharing",
+      "Good CRM during complex failure management",
+      "Demonstrated solid knowledge of aircraft systems",
+      "Effective use of automation at all times",
+      "Appropriate energy management during approach",
+      "Good communication with ATC and cabin crew",
+      "Proactive threat identification and mitigation",
+      "Well-structured briefings before each phase of flight",
+      "Timely and appropriate decision-making under pressure",
+      "Smooth and stabilized approach within parameters",
+      "Good management of abnormal and emergency procedures",
+      "Effective workload distribution between crew members",
+      "Maintained sterile cockpit discipline below FL100",
+      "Professional attitude and leadership demonstrated",
+      "Appropriate use of checklists and SOPs",
+      "Clear and concise radio communications",
+      "Good recovery technique from upset condition",
+      "Effective windshear escape maneuver execution"
+    ],
+    bad: [
+      "Needs improvement in monitoring and cross-checking",
+      "Lack of situational awareness during critical phase",
+      "Poor crew coordination — tasks not delegated effectively",
+      "Failure to maintain sterile cockpit below FL100",
+      "Inadequate briefing before approach phase",
+      "Delayed decision-making under time pressure",
+      "Insufficient energy management — unstabilized approach",
+      "Failed to apply standard operating procedures correctly",
+      "Poor workload management during multiple failures",
+      "Lack of assertiveness when safety was compromised",
+      "Inadequate communication during emergency situation",
+      "Failed to execute go-around when criteria were not met",
+      "Over-reliance on automation without monitoring",
+      "Poor manual flying skills — significant deviations observed",
+      "Failure to identify and manage threats proactively"
+    ]
+  },
+  kno: {
+    good: [
+      "Sound knowledge of aircraft limitations and performance",
+      "Good understanding of FCOM/QRH procedures",
+      "Knows where to find required information quickly",
+      "Excellent knowledge of weather phenomena and hazards",
+      "Good understanding of FMS/LNAV/VNAV modes",
+      "Demonstrates solid knowledge of B737NG systems interactions",
+      "Good knowledge of applicable regulations and minima",
+      "Accurate knowledge of MEL/CDL dispatch requirements"
+    ],
+    bad: [
+      "Needs to review MEL/CDL dispatch procedures",
+      "Should review fuel system crossfeed procedures",
+      "Needs improvement in emergency equipment knowledge",
+      "Insufficient knowledge of aircraft limitations",
+      "Unable to locate required information in QRH",
+      "Gaps in understanding of B737NG systems interactions",
+      "Incorrect application of performance calculations",
+      "Lacks knowledge of applicable minima for the approach",
+      "Confusion between normal and non-normal procedures",
+      "Insufficient understanding of weather-related hazards"
+    ]
+  },
+  pro: {
+    good: [
+      "Standard callouts made accurately and timely",
+      "SOPs followed consistently throughout the flight",
+      "Checklists completed without omission",
+      "Good adherence to stabilized approach criteria",
+      "Professional execution of all required procedures",
+      "All limitations respected during maneuvers",
+      "Briefings complete and covering all required items",
+      "Correct flow pattern execution at all times"
+    ],
+    bad: [
+      "Missed items on after takeoff checklist",
+      "Deviated from standard taxi procedures",
+      "Needs to improve flow pattern consistency",
+      "Omitted standard callouts during approach",
+      "Failed to complete challenge-and-response checklist",
+      "Incorrect sequence during non-normal procedure",
+      "Briefing incomplete — key items missing",
+      "Did not follow stabilized approach criteria",
+      "Limitations exceeded during maneuver",
+      "Incorrect use of QRH — wrong checklist referenced"
+    ]
+  },
+  fpa: {
+    good: [
+      "Smooth and accurate manual flying skills",
+      "Good pitch and power management during approach",
+      "Appropriate use of autoflight systems",
+      "Good speed management during approach phase",
+      "Excellent crosswind landing technique",
+      "Smooth transition from automation to manual flight",
+      "Go-around executed promptly and correctly",
+      "Maintains accurate altitude and heading in manual flight"
+    ],
+    bad: [
+      "Lateral deviation during manual ILS approach",
+      "Energy management needs improvement in descent",
+      "Excessive speed deviation during approach",
+      "Hard landing — insufficient flare technique",
+      "Poor crosswind correction — runway alignment lost",
+      "Altitude deviation exceeding tolerances in manual flight",
+      "Delayed go-around execution — below minima",
+      "Rough control inputs — PIO tendency observed",
+      "Incorrect thrust management during single engine",
+      "Failed to maintain glideslope during manual approach"
+    ]
+  },
+  com: {
+    good: [
+      "Clear, concise and timely communications",
+      "Good readback technique with ATC",
+      "Effective inter-crew communication during workload",
+      "Good use of standard phraseology",
+      "Proactive communication of intentions to crew",
+      "ATC communication effective during emergency declaration",
+      "Good coordination calls during non-normal procedures",
+      "Cabin crew briefing thorough and well-structured"
+    ],
+    bad: [
+      "Missed readback of critical ATC clearance",
+      "Should improve assertiveness in communications",
+      "Failed to communicate intentions to other crew member",
+      "Incomplete MAYDAY/PAN call — missing information",
+      "Did not use standard phraseology with ATC",
+      "Late or absent callouts during critical phase",
+      "Cabin crew not briefed before emergency landing",
+      "Blocked communication during high workload",
+      "Did not challenge incorrect ATC instruction",
+      "Failed to announce automation mode changes to PM"
+    ]
+  },
+  ltw: {
+    good: [
+      "Effective leadership and crew coordination",
+      "Good task delegation during high workload",
+      "Maintained positive team environment",
+      "Good conflict resolution within the crew",
+      "Effective management of crew resources under pressure",
+      "Encouraged open communication and feedback",
+      "PM role well executed with appropriate monitoring",
+      "Good balance between authority and participation"
+    ],
+    bad: [
+      "Should demonstrate more assertive leadership",
+      "Failed to delegate tasks during high workload",
+      "Authoritarian leadership style — crew input ignored",
+      "PM did not challenge PF deviations from SOP",
+      "Lack of crew coordination during critical phase",
+      "Did not create environment for open communication",
+      "Failed to manage conflict within the crew",
+      "Passive leadership — no clear task assignment",
+      "Did not adapt leadership style to situation demands",
+      "Crew roles not clearly defined during abnormal"
+    ]
+  },
+  psd: {
+    good: [
+      "Good detection and management of threats",
+      "Identified potential errors before they occurred",
+      "Effective use of error trapping techniques",
+      "Good prioritization under multiple failures",
+      "Surprise factor well managed, maintained composure",
+      "Appropriate risk assessment and mitigation",
+      "Undesired aircraft state recovered promptly",
+      "Good monitoring of automated systems for deviations"
+    ],
+    bad: [
+      "Missed opportunity to identify latent threat",
+      "Needs to improve scanning technique for threats",
+      "Failed to detect error before it became UAS",
+      "Poor prioritization — low-priority task before flight safety",
+      "Panic reaction to unexpected failure — loss of composure",
+      "Did not assess risk before making decision",
+      "Slow recovery from undesired aircraft state",
+      "Failed to monitor automation — mode confusion",
+      "No error trapping — PM did not cross-check PF actions",
+      "Continued approach despite multiple unresolved threats"
+    ]
+  },
+  sa: {
+    good: [
+      "Maintained good overall situational awareness",
+      "Good awareness of aircraft position and trajectory",
+      "Weather awareness and avoidance well managed",
+      "Good projection of future aircraft state",
+      "Effective use of all available information sources",
+      "Good terrain awareness during approach phase",
+      "Traffic awareness maintained throughout",
+      "Recognized and recovered from reduced SA quickly"
+    ],
+    bad: [
+      "Temporary loss of SA during complex failure",
+      "Needs to improve awareness of fuel state evolution",
+      "Lost awareness of aircraft position relative to approach path",
+      "Failed to monitor weather evolution during flight",
+      "Tunnel vision on failure — lost overall picture",
+      "Did not anticipate terrain proximity during approach",
+      "Missed TCAS traffic — no visual scan performed",
+      "Unaware of remaining fuel vs. destination distance",
+      "Failed to project aircraft trajectory after failure",
+      "Loss of mode awareness — incorrect FMA interpretation"
+    ]
+  },
+  wlm: {
+    good: [
+      "Effective workload management during all phases",
+      "Good prioritization of tasks under pressure",
+      "Appropriate use of automation to manage workload",
+      "Good time management during diversion scenario",
+      "Balanced aviate-navigate-communicate priorities well",
+      "Maintained monitoring despite high taskload",
+      "Good use of available time for planning",
+      "Effective batch processing of lower priority tasks"
+    ],
+    bad: [
+      "Became task-saturated during multiple failures",
+      "Should delegate more tasks during high workload",
+      "Failed to prioritize — aviate before navigate",
+      "Task fixation on non-critical item during emergency",
+      "Did not use available time for planning ahead",
+      "Overloaded with tasks — monitoring dropped",
+      "Poor time management — rushed approach preparation",
+      "Failed to use automation to reduce workload",
+      "Attempted too many tasks simultaneously",
+      "Did not request delay or hold to manage workload"
+    ]
+  },
+  fpm: {
+    good: [
+      "Accurate and timely FMS programming",
+      "Good understanding of LNAV/VNAV modes and transitions",
+      "MCP usage appropriate and verified",
+      "Good use of heading/VS modes when appropriate",
+      "Speed management through automation well handled",
+      "Good management of approach mode transitions",
+      "Appropriate use of automation level for conditions",
+      "Effective automation monitoring and intervention"
+    ],
+    bad: [
+      "FMS error not caught during route modification",
+      "Should verify FMS entries more systematically",
+      "Incorrect mode selection on MCP",
+      "Failed to detect mode reversion during approach",
+      "FMS programming error — wrong runway/approach selected",
+      "Over-reliance on automation in degraded conditions",
+      "Did not cross-check FMS against raw data",
+      "Incorrect speed intervention — VNAV speed not set",
+      "Late automation disconnection — approach unstabilized",
+      "Mode confusion — incorrect interpretation of FMA"
+    ]
+  },
+  tem: {
+    good: [
+      "Threat identified and effectively managed",
+      "Error trapped before it developed into UAS",
+      "Undesired aircraft state — recovered correctly",
+      "Threat: adverse weather — mitigated with diversion",
+      "Threat: high workload — managed with task delegation",
+      "Error: incorrect altitude set — caught by PM cross-check",
+      "UAS: unstabilized approach — go-around executed"
+    ],
+    bad: [
+      "Threat not identified — no mitigation applied",
+      "Error not trapped — developed into undesired state",
+      "UAS: altitude deviation — late correction applied",
+      "Threat: adverse weather — no contingency plan discussed",
+      "Error: missed checklist item — not recovered",
+      "UAS: speed deviation — not detected by either crew member",
+      "Threat: fatigue — no countermeasures applied",
+      "Error: wrong frequency set — communication lost",
+      "UAS: unstabilized approach — continued to land",
+      "Multiple errors in chain — no break in error chain"
+    ]
+  },
+  conclusion: {
+    good: [
+      "Recommandé pour maintien de qualification — performance standard",
+      "Recommandé pour maintien de qualification — au-dessus du standard",
+      "Performance exemplaire — aucun point de vigilance identifié",
+      "Performance globalement satisfaisante avec points mineurs à améliorer",
+      "Recommended for qualification renewal — standard performance",
+      "Recommended for qualification renewal — above standard",
+      "Exemplary performance — no areas of concern identified"
+    ],
+    bad: [
+      "Axes de progression identifiés — séance de rattrapage recommandée",
+      "Non recommandé pour maintien — formation complémentaire nécessaire",
+      "Points à travailler en ligne : gestion de la charge de travail",
+      "Points à travailler en ligne : communication et coordination",
+      "Points à travailler en ligne : pilotage manuel et gestion d'énergie",
+      "Prochaine session : focus sur les procédures anormales et secours",
+      "Areas for improvement identified — additional training recommended",
+      "Not recommended for renewal — supplementary training required",
+      "Below standard performance — significant gaps in core competencies",
+      "Remedial session required before next qualification check"
+    ]
+  }
 };
 
 const _phraseFreq = JSON.parse(localStorage.getItem('cbta_phrase_freq')||'{}');
@@ -10556,10 +10704,19 @@ function _bumpPhraseFreq(phrase){
   localStorage.setItem('cbta_phrase_freq', JSON.stringify(_phraseFreq));
 }
 
-function _getPhrases(category){
+let _phraseFilter = 'all'; // 'all', 'good', 'bad'
+
+function _getPhrases(category, filter){
+  const f = filter || _phraseFilter || 'all';
   const cats = category ? [category] : Object.keys(PHRASE_DB);
   let all = [];
-  cats.forEach(c => { if(PHRASE_DB[c]) all = all.concat(PHRASE_DB[c]); });
+  cats.forEach(c => {
+    const entry = PHRASE_DB[c];
+    if(!entry) return;
+    if(f === 'good') all = all.concat(entry.good || []);
+    else if(f === 'bad') all = all.concat(entry.bad || []);
+    else all = all.concat(entry.good || [], entry.bad || []);
+  });
   all.sort((a,b) => ((_phraseFreq[b]||0) - (_phraseFreq[a]||0)));
   return all;
 }
@@ -10589,7 +10746,9 @@ function showAutocomplete(textarea, category){
     matches.map(m => {
       const freq = _phraseFreq[m] || 0;
       const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;">×'+freq+'</span>' : '';
-      return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
+      const type = _phraseType(m);
+      const dotColor = type === 'good' ? '#10B981' : '#EF4444';
+      return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:'+dotColor+';flex-shrink:0;"></span><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
     }).join('');
   box.style.display = 'block';
 }
@@ -10616,9 +10775,28 @@ function hideAutocomplete(){
   if(box) box.style.display = 'none';
 }
 
+function _phraseType(phrase){
+  for(const c of Object.keys(PHRASE_DB)){
+    if((PHRASE_DB[c].good||[]).includes(phrase)) return 'good';
+    if((PHRASE_DB[c].bad||[]).includes(phrase)) return 'bad';
+  }
+  return 'good';
+}
+
+function _renderPhraseList(phrases){
+  return phrases.map(m => {
+    const freq = _phraseFreq[m] || 0;
+    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;">×'+freq+'</span>' : '';
+    const type = _phraseType(m);
+    const dotColor = type === 'good' ? '#10B981' : '#EF4444';
+    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="width:8px;height:8px;border-radius:50%;background:'+dotColor+';flex-shrink:0;"></span><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
+  }).join('');
+}
+
 function browsePhrases(textarea, category){
   _acTarget = textarea;
   _acCategory = category || null;
+  _phraseFilter = 'all';
   const phrases = _getPhrases(_acCategory);
   const cats = _acCategory ? [_acCategory] : Object.keys(PHRASE_DB);
   let box = document.getElementById('ac-suggestions');
@@ -10634,13 +10812,17 @@ function browsePhrases(textarea, category){
     const col = colors[c]||'#94a3b8';
     return '<button onclick="_filterPhrasesCat(\''+c+'\')" style="padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid '+col+'88;background:'+col+'22;color:'+col+';white-space:nowrap;">'+c.toUpperCase()+'</button>';
   }).join('');
-  const listHtml = phrases.map(m => {
-    const freq = _phraseFreq[m] || 0;
-    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;">×'+freq+'</span>' : '';
-    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
-  }).join('');
+  const goodActive = _phraseFilter==='good';
+  const badActive = _phraseFilter==='bad';
+  const goodBadBtns = '<div style="display:flex;gap:8px;padding:4px 6px 10px;justify-content:center;">' +
+    '<button onclick="_setGoodBadFilter(\'good\')" id="gbf-good" style="padding:8px 20px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #10B981;background:'+(goodActive?'#10B981':'#10B98122')+';color:'+(goodActive?'#fff':'#10B981')+';letter-spacing:1px;">✓ GOOD</button>' +
+    '<button onclick="_setGoodBadFilter(\'all\')" id="gbf-all" style="padding:8px 20px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #64748b;background:'+((!goodActive&&!badActive)?'#64748b':'#64748b22')+';color:'+((!goodActive&&!badActive)?'#fff':'#64748b')+';letter-spacing:1px;">ALL</button>' +
+    '<button onclick="_setGoodBadFilter(\'bad\')" id="gbf-bad" style="padding:8px 20px;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;border:2px solid #EF4444;background:'+(badActive?'#EF4444':'#EF444422')+';color:'+(badActive?'#fff':'#EF4444')+';letter-spacing:1px;">✗ BAD</button>' +
+    '</div>';
+  const listHtml = _renderPhraseList(phrases);
   box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;margin-bottom:6px;"><span style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ BIBLIOTHÈQUE DE PHRASES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:22px;cursor:pointer;">✕</button></div>' +
     '<div style="display:flex;gap:6px;overflow-x:auto;padding:6px 6px 10px;-webkit-overflow-scrolling:touch;">'+catBtns+'</div>' +
+    goodBadBtns +
     '<div id="ac-phrase-list">'+listHtml+'</div>';
   box.style.display = 'block';
   box.style.maxHeight = '55vh';
@@ -10648,14 +10830,29 @@ function browsePhrases(textarea, category){
 
 function _filterPhrasesCat(cat){
   _acCategory = cat;
-  const phrases = _getPhrases(cat);
+  _refreshPhraseList();
+}
+
+function _setGoodBadFilter(f){
+  _phraseFilter = f;
+  _refreshPhraseList();
+  _updateGoodBadButtons();
+}
+
+function _updateGoodBadButtons(){
+  const gB = document.getElementById('gbf-good');
+  const aB = document.getElementById('gbf-all');
+  const bB = document.getElementById('gbf-bad');
+  if(gB){ gB.style.background = _phraseFilter==='good'?'#10B981':'#10B98122'; gB.style.color = _phraseFilter==='good'?'#fff':'#10B981'; }
+  if(aB){ aB.style.background = _phraseFilter==='all'?'#64748b':'#64748b22'; aB.style.color = _phraseFilter==='all'?'#fff':'#64748b'; }
+  if(bB){ bB.style.background = _phraseFilter==='bad'?'#EF4444':'#EF444422'; bB.style.color = _phraseFilter==='bad'?'#fff':'#EF4444'; }
+}
+
+function _refreshPhraseList(){
+  const phrases = _getPhrases(_acCategory);
   const list = document.getElementById('ac-phrase-list');
   if(!list) return;
-  list.innerHTML = phrases.map(m => {
-    const freq = _phraseFreq[m] || 0;
-    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;">×'+freq+'</span>' : '';
-    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
-  }).join('');
+  list.innerHTML = _renderPhraseList(phrases);
 }
 // ─── END PHRASES-RÉFLEXES ───
 
