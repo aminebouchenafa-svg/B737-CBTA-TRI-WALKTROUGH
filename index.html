@@ -10137,7 +10137,7 @@ function renderCompactMode(ex,sc,el){
   if(!ex[biKey]) ex[biKey]={};
   const pilotColor = state.activePilot==="cpt" ? (_ROLE_COLORS[state.pilotRole]||'#3B82F6') : (_ROLE_COLORS[state.foRole]||'#10B981');
 
-  // Mini competency row — ultra compact
+  // Mini competency row with BI badge
   const compRow = COMPETENCIES.map(c=>{
     const isKey = sc.keys.includes(c.id);
     const cd = cs[c.id]||{g:0,obs:[]};
@@ -10145,11 +10145,15 @@ function renderCompactMode(ex,sc,el){
     const neg=(cd.obs||[]).filter(o=>o.s==="-").length;
     const gc = cd.g>0 ? GC[cd.g] : '#334155';
     const gv = cd.g>0 ? cd.g : '·';
-    return `<div onclick="openComp('${c.id}')" style="display:flex;align-items:center;gap:4px;padding:6px 8px;border-radius:8px;background:${isKey?c.color+'0A':'#0F1218'};border:1px solid ${isKey?c.color+'44':'#1E2530'};cursor:pointer;min-width:0;">
-      <span style="font-size:10px;font-weight:900;color:${c.color};min-width:28px;">${c.label}</span>
-      <span style="font-size:16px;font-weight:900;color:${gc};">${gv}</span>
-      ${pos>0?'<span style="font-size:9px;color:#10B981;font-weight:700;">+'+pos+'</span>':''}
-      ${neg>0?'<span style="font-size:9px;color:#EF4444;font-weight:700;">-'+neg+'</span>':''}
+    const _cBis=(BEHAVIORAL_INDICATORS[c.id]||[]);
+    const _cBiCount=_cBis.filter(b=>ex[biKey][b.id]).length;
+    const biBadge=_cBiCount>0?`<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;font-size:11px;font-weight:900;color:${c.color};background:${c.color}22;border:1.5px solid ${c.color}99;border-radius:50%;box-shadow:0 0 8px ${c.color}88,0 0 3px ${c.color}CC;line-height:1;">${_cBiCount}</span>`:'';
+    return `<div onclick="openComp('${c.id}')" style="display:flex;align-items:center;gap:5px;padding:8px 10px;border-radius:8px;background:${isKey?c.color+'0A':'#0F1218'};border:1px solid ${isKey?c.color+'44':'#1E2530'};cursor:pointer;min-width:0;">
+      <span style="font-size:12px;font-weight:900;color:${c.color};min-width:32px;">${c.label}</span>
+      <span style="font-size:18px;font-weight:900;color:${gc};">${gv}</span>
+      ${biBadge}
+      ${pos>0?'<span style="font-size:10px;color:#10B981;font-weight:700;">+'+pos+'</span>':''}
+      ${neg>0?'<span style="font-size:10px;color:#EF4444;font-weight:700;">-'+neg+'</span>':''}
     </div>`;
   }).join('');
 
@@ -10173,27 +10177,40 @@ function renderCompactMode(ex,sc,el){
   // TEM compact — just counts and quick add
   const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
   const tem = ex[temKey]||{threats:[],errors:[],uas:[]};
+  // Build scenario-specific suggestions for TEM
+  const _cptSugThreats = [...(_lang==='en'&&sc.tT_en?sc.tT_en:sc.tT||[]),...(typeof THREATS_GLOBAL_EXTRA!=='undefined'?THREATS_GLOBAL_EXTRA:[])];
+  const _cptSugErrors = [...(_lang==='en'&&sc.tE_en?sc.tE_en:sc.tE||[]),...(typeof ERRORS_GLOBAL_EXTRA!=='undefined'?ERRORS_GLOBAL_EXTRA:[])];
+  const _cptSugUas = [...(sc.tU||UAS_DICT[sc.id]||[]),...(typeof UAS_GLOBAL!=='undefined'?UAS_GLOBAL:[])];
   const temCounts = [
-    {k:'threats',l:'MENACES',c:'#3B82F6',items:tem.threats||[]},
-    {k:'errors',l:'ERREURS',c:'#EF4444',items:tem.errors||[]},
-    {k:'uas',l:'UAS',c:'#F59E0B',items:tem.uas||[]}
+    {k:'threats',l:_lang==='en'?'THREATS':'MENACES',c:'#3B82F6',items:tem.threats||[],sug:_cptSugThreats},
+    {k:'errors',l:_lang==='en'?'ERRORS':'ERREURS',c:'#EF4444',items:tem.errors||[],sug:_cptSugErrors},
+    {k:'uas',l:'UAS',c:'#F59E0B',items:tem.uas||[],sug:_cptSugUas}
   ];
-  const temHtml = temCounts.map(({k,l,c,items})=>{
+  const temHtml = temCounts.map(({k,l,c,items,sug})=>{
     const itemsList = items.map((it,i)=>{
       const mitCol = it.mit==='ok'?'#10B981':it.mit==='partial'?'#F59E0B':it.mit==='no'?'#EF4444':'#475569';
       const mitSym = it.mit==='ok'?'✓':it.mit==='partial'?'~':it.mit==='no'?'✗':'○';
-      return `<div style="display:flex;align-items:center;gap:4px;padding:3px 6px;background:${c}11;border-radius:4px;margin:2px 0;">
-        <span style="font-size:10px;color:${c};flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${it.text}</span>
-        <span onclick="setMitigation('${k}',${i},this.dataset.next)" data-next="${it.mit==='ok'?'partial':it.mit==='partial'?'no':'ok'}" style="font-size:12px;color:${mitCol};cursor:pointer;font-weight:900;">${mitSym}</span>
-        <span onclick="removeTEM('${k}',${i})" style="font-size:10px;color:#EF4444;cursor:pointer;">×</span>
+      return `<div style="display:flex;align-items:center;gap:6px;padding:8px 10px;background:${c}11;border-radius:6px;margin:3px 0;">
+        <span style="font-size:13px;color:${c};flex:1;">${it.text}</span>
+        <span onclick="setMitigation('${k}',${i},this.dataset.next)" data-next="${it.mit==='ok'?'partial':it.mit==='partial'?'no':'ok'}" style="font-size:16px;color:${mitCol};cursor:pointer;font-weight:900;padding:2px 6px;">${mitSym}</span>
+        <span onclick="removeTEM('${k}',${i})" style="font-size:14px;color:#EF4444;cursor:pointer;padding:2px 4px;">×</span>
       </div>`;
     }).join('');
-    return `<div style="margin-bottom:6px;">
-      <div style="font-size:9px;font-weight:800;color:${c};letter-spacing:1px;margin-bottom:3px;">${l} <span style="color:#64748b;">(${items.length})</span></div>
+    const sugId = 'cpt-sug-'+k;
+    const sugItems = sug.filter(s=>!(items||[]).some(x=>x.text===s));
+    const sugHtml = sugItems.length ? sugItems.map(s=>
+      `<div onclick="addTEM('${k}','${s.replace(/'/g,"\\'")}');renderExContent();" style="padding:10px 12px;margin:3px 0;border-radius:8px;background:${c}11;border:1px solid ${c}22;cursor:pointer;font-size:14px;color:${c};">${s}</div>`
+    ).join('') : '';
+    return `<div style="margin-bottom:10px;">
+      <div onclick="var p=document.getElementById('${sugId}');p.style.display=p.style.display==='none'?'block':'none';" style="font-size:12px;font-weight:900;color:${c};letter-spacing:1px;margin-bottom:4px;cursor:pointer;display:flex;align-items:center;gap:6px;">${l} <span style="color:#64748b;font-weight:600;">(${items.length})</span> <span style="font-size:10px;color:#64748b;">▼ suggestions</span></div>
       ${itemsList}
-      <div style="display:flex;gap:4px;margin-top:3px;">
-        <input id="cpt-tem-${k}" class="form-input" style="flex:1;font-size:11px;padding:5px 8px;margin:0;" placeholder="+" onkeydown="if(event.key==='Enter'){addTEM('${k}',this.value.trim());this.value='';renderExContent();}"/>
-        <button onclick="var i=document.getElementById('cpt-tem-${k}');if(i.value.trim()){addTEM('${k}',i.value.trim());i.value='';}" class="btn" style="padding:4px 8px;font-size:11px;">+</button>
+      <div id="${sugId}" style="display:none;max-height:200px;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#0A0C10;border-radius:8px;padding:4px;margin:4px 0;border:1px solid ${c}33;">
+        <div style="font-size:10px;color:#64748b;padding:4px 8px;font-weight:700;letter-spacing:1px;">📋 SUGGESTIONS — appuyez pour ajouter</div>
+        ${sugHtml}
+      </div>
+      <div style="display:flex;gap:4px;margin-top:4px;">
+        <input id="cpt-tem-${k}" class="form-input" style="flex:1;font-size:13px;padding:8px 10px;margin:0;" placeholder="${_lang==='en'?'Add...':'Ajouter...'}" onkeydown="if(event.key==='Enter'){addTEM('${k}',this.value.trim());this.value='';renderExContent();}"/>
+        <button onclick="var i=document.getElementById('cpt-tem-${k}');if(i.value.trim()){addTEM('${k}',i.value.trim());i.value='';renderExContent();}" class="btn" style="padding:8px 12px;font-size:13px;">+</button>
       </div>
     </div>`;
   }).join('');
@@ -10568,11 +10585,11 @@ function showAutocomplete(textarea, category){
     box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(180deg,#0F1218,#1a1f2e);border-top:2px solid #3B82F6;max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px;';
     document.body.appendChild(box);
   }
-  box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;margin-bottom:4px;"><span style="font-size:9px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ PHRASES-RÉFLEXES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:16px;cursor:pointer;">✕</button></div>' +
+  box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;margin-bottom:6px;"><span style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ PHRASES-RÉFLEXES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:22px;cursor:pointer;">✕</button></div>' +
     matches.map(m => {
       const freq = _phraseFreq[m] || 0;
-      const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:8px;padding:1px 5px;border-radius:4px;font-weight:700;">×'+freq+'</span>' : '';
-      return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:8px 10px;margin:3px 0;border-radius:8px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:6px;"><span style="flex:1;font-size:12px;color:#E2E8F0;">'+m+'</span>'+freqBadge+'</div>';
+      const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;">×'+freq+'</span>' : '';
+      return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
     }).join('');
   box.style.display = 'block';
 }
@@ -10615,15 +10632,15 @@ function browsePhrases(textarea, category){
     const active = (!_acCategory && c === Object.keys(PHRASE_DB)[0]) || _acCategory === c;
     const colors = {general:'#94a3b8',kno:'#3B82F6',pro:'#10B981',fpa:'#F59E0B',com:'#8B5CF6',ltw:'#EC4899',psd:'#EF4444',sa:'#06B6D4',wlm:'#F97316',fpm:'#14B8A6',tem:'#F43F5E',conclusion:'#FBBF24'};
     const col = colors[c]||'#94a3b8';
-    return '<button onclick="_filterPhrasesCat(\''+c+'\')" style="padding:4px 8px;border-radius:6px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid '+col+'88;background:'+col+'22;color:'+col+';white-space:nowrap;">'+c.toUpperCase()+'</button>';
+    return '<button onclick="_filterPhrasesCat(\''+c+'\')" style="padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid '+col+'88;background:'+col+'22;color:'+col+';white-space:nowrap;">'+c.toUpperCase()+'</button>';
   }).join('');
   const listHtml = phrases.map(m => {
     const freq = _phraseFreq[m] || 0;
-    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:8px;padding:1px 5px;border-radius:4px;font-weight:700;">×'+freq+'</span>' : '';
-    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:8px 10px;margin:3px 0;border-radius:8px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:6px;"><span style="flex:1;font-size:12px;color:#E2E8F0;">'+m+'</span>'+freqBadge+'</div>';
+    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;">×'+freq+'</span>' : '';
+    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
   }).join('');
-  box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;margin-bottom:4px;"><span style="font-size:9px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ BIBLIOTHÈQUE DE PHRASES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:16px;cursor:pointer;">✕</button></div>' +
-    '<div style="display:flex;gap:4px;overflow-x:auto;padding:4px 4px 8px;-webkit-overflow-scrolling:touch;">'+catBtns+'</div>' +
+  box.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;margin-bottom:6px;"><span style="font-size:13px;font-weight:800;color:#3B82F6;letter-spacing:2px;">⚡ BIBLIOTHÈQUE DE PHRASES</span><button onclick="hideAutocomplete()" style="background:none;border:none;color:#64748b;font-size:22px;cursor:pointer;">✕</button></div>' +
+    '<div style="display:flex;gap:6px;overflow-x:auto;padding:6px 6px 10px;-webkit-overflow-scrolling:touch;">'+catBtns+'</div>' +
     '<div id="ac-phrase-list">'+listHtml+'</div>';
   box.style.display = 'block';
   box.style.maxHeight = '55vh';
@@ -10636,8 +10653,8 @@ function _filterPhrasesCat(cat){
   if(!list) return;
   list.innerHTML = phrases.map(m => {
     const freq = _phraseFreq[m] || 0;
-    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:8px;padding:1px 5px;border-radius:4px;font-weight:700;">×'+freq+'</span>' : '';
-    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:8px 10px;margin:3px 0;border-radius:8px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:6px;"><span style="flex:1;font-size:12px;color:#E2E8F0;">'+m+'</span>'+freqBadge+'</div>';
+    const freqBadge = freq > 0 ? '<span style="background:#3B82F622;color:#3B82F6;font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;">×'+freq+'</span>' : '';
+    return '<div onclick="selectPhrase(this)" data-phrase="'+m.replace(/"/g,'&quot;')+'" style="padding:14px 16px;margin:5px 0;border-radius:10px;background:#1E2530;border:1px solid #334155;cursor:pointer;display:flex;align-items:center;gap:8px;"><span style="flex:1;font-size:16px;color:#E2E8F0;line-height:1.4;">'+m+'</span>'+freqBadge+'</div>';
   }).join('');
 }
 // ─── END PHRASES-RÉFLEXES ───
