@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCORE CBTA — Présentation Formation TRI</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+body{font-family:'Inter',system-ui,sans-serif;background:#0A0C10;color:#E2E8F0;overflow:hidden;height:100vh;width:100vw;}
+
+/* ── SLIDE SYSTEM ── */
+.slide{display:none;flex-direction:column;justify-content:center;align-items:center;height:100vh;width:100vw;padding:60px 80px;position:relative;animation:fadeIn 0.5s ease;}
+.slide.active{display:flex;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── NAVIGATION ── */
+.nav-bar{position:fixed;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:12px 30px;background:linear-gradient(180deg,transparent,#0A0C10 40%);z-index:100;}
+.nav-btn{padding:10px 24px;border-radius:12px;border:1px solid #334155;background:#1E2530;color:#94A3B8;font-size:14px;font-weight:700;cursor:pointer;transition:all 0.3s;}
+.nav-btn:hover{background:#334155;color:#F1F5F9;}
+.nav-btn.primary{background:#3B82F6;border-color:#3B82F6;color:#fff;}
+.nav-btn.primary:hover{background:#2563EB;}
+.slide-counter{font-size:13px;color:#475569;font-weight:600;letter-spacing:2px;}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,#3B82F6,#8B5CF6);transition:width 0.4s ease;z-index:101;}
+
+/* ── TYPOGRAPHY ── */
+h1{font-size:52px;font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:16px;}
+h2{font-size:38px;font-weight:800;letter-spacing:-0.5px;line-height:1.2;margin-bottom:20px;}
+h3{font-size:26px;font-weight:700;margin-bottom:14px;}
+.subtitle{font-size:20px;color:#94A3B8;font-weight:400;line-height:1.5;max-width:800px;}
+.accent-blue{color:#3B82F6;}
+.accent-green{color:#10B981;}
+.accent-amber{color:#F59E0B;}
+.accent-red{color:#EF4444;}
+.accent-purple{color:#8B5CF6;}
+.accent-cyan{color:#06B6D4;}
+.accent-gold{color:#FFD700;}
+
+/* ── CARDS ── */
+.card-grid{display:grid;gap:20px;width:100%;max-width:1100px;}
+.card-grid.cols-2{grid-template-columns:1fr 1fr;}
+.card-grid.cols-3{grid-template-columns:1fr 1fr 1fr;}
+.card-grid.cols-4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.card{background:#111827;border:1px solid #1E293B;border-radius:16px;padding:24px;transition:all 0.3s;}
+.card:hover{border-color:#334155;transform:translateY(-2px);}
+.card .icon{font-size:32px;margin-bottom:12px;}
+.card .title{font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:8px;letter-spacing:0.5px;}
+.card .desc{font-size:13px;color:#94A3B8;line-height:1.6;}
+.card-accent{border-left:3px solid;}
+
+/* ── FEATURE BOX ── */
+.feature-box{background:#111827;border:1px solid #1E293B;border-radius:16px;padding:30px;width:100%;max-width:900px;}
+.feature-row{display:flex;align-items:flex-start;gap:16px;padding:14px 0;border-bottom:1px solid #1E293B66;}
+.feature-row:last-child{border-bottom:none;}
+.feature-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;flex-shrink:0;}
+.feature-content{flex:1;}
+.feature-content strong{display:block;font-size:15px;color:#F1F5F9;margin-bottom:4px;}
+.feature-content span{font-size:13px;color:#94A3B8;line-height:1.5;}
+
+/* ── FLOW DIAGRAM ── */
+.flow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;}
+.flow-step{background:#111827;border:2px solid #1E293B;border-radius:14px;padding:16px 22px;text-align:center;min-width:140px;transition:all 0.3s;}
+.flow-step .step-icon{font-size:28px;margin-bottom:6px;}
+.flow-step .step-title{font-size:13px;font-weight:800;color:#F1F5F9;letter-spacing:0.5px;}
+.flow-step .step-sub{font-size:11px;color:#64748B;margin-top:4px;}
+.flow-arrow{font-size:24px;color:#334155;}
+
+/* ── COMPETENCY GRID ── */
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:900px;}
+.comp-item{background:#111827;border:1px solid #1E293B;border-radius:12px;padding:16px;text-align:center;}
+.comp-item .comp-code{font-size:22px;font-weight:900;letter-spacing:3px;margin-bottom:4px;}
+.comp-item .comp-name{font-size:11px;color:#94A3B8;font-weight:600;}
+
+/* ── SCALE ── */
+.scale-row{display:flex;align-items:center;gap:16px;padding:10px 0;}
+.scale-num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;color:#fff;}
+.scale-desc{flex:1;}
+.scale-desc strong{font-size:14px;color:#F1F5F9;display:block;margin-bottom:2px;}
+.scale-desc span{font-size:12px;color:#94A3B8;}
+
+/* ── QUIZ ── */
+.quiz-card{background:#111827;border:2px solid #1E293B;border-radius:16px;padding:30px;width:100%;max-width:800px;margin-bottom:16px;}
+.quiz-q{font-size:18px;font-weight:700;color:#F1F5F9;margin-bottom:16px;line-height:1.4;}
+.quiz-opts{display:flex;flex-direction:column;gap:10px;}
+.quiz-opt{padding:14px 20px;border-radius:12px;border:1px solid #334155;background:#1E2530;color:#CBD5E1;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s;text-align:left;}
+.quiz-opt:hover{border-color:#3B82F6;background:#3B82F622;}
+.quiz-opt.correct{border-color:#10B981;background:#10B98122;color:#10B981;}
+.quiz-opt.wrong{border-color:#EF4444;background:#EF444422;color:#EF4444;}
+.quiz-feedback{margin-top:12px;padding:12px 16px;border-radius:10px;font-size:13px;font-weight:600;display:none;line-height:1.5;}
+
+/* ── TABLE ── */
+.info-table{width:100%;max-width:900px;border-collapse:collapse;}
+.info-table th{background:#1E293B;color:#94A3B8;font-size:11px;font-weight:800;letter-spacing:1.5px;padding:10px 16px;text-align:left;border-bottom:2px solid #334155;}
+.info-table td{padding:12px 16px;font-size:13px;color:#CBD5E1;border-bottom:1px solid #1E293B;}
+.info-table tr:hover td{background:#111827;}
+
+/* ── TAGS ── */
+.tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:0.5px;}
+.tag-blue{background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;}
+.tag-green{background:#10B98122;border:1px solid #10B981;color:#10B981;}
+.tag-amber{background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;}
+.tag-red{background:#EF444422;border:1px solid #EF4444;color:#EF4444;}
+.tag-purple{background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;}
+
+/* ── SECTION DIVIDER ── */
+.section-slide{background:linear-gradient(135deg,#0A0C10 0%,#111827 100%);}
+.section-num{font-size:80px;font-weight:900;opacity:0.1;position:absolute;top:40px;right:80px;letter-spacing:-4px;}
+.section-tag{display:inline-block;padding:6px 18px;border-radius:30px;font-size:12px;font-weight:800;letter-spacing:3px;margin-bottom:16px;}
+
+/* ── HIGHLIGHT BOX ── */
+.highlight{background:linear-gradient(135deg,#3B82F611,#8B5CF611);border:1px solid #3B82F633;border-radius:16px;padding:24px 30px;max-width:800px;width:100%;}
+.highlight p{font-size:18px;color:#CBD5E1;line-height:1.7;font-style:italic;}
+.highlight .source{font-size:12px;color:#64748B;margin-top:12px;font-style:normal;}
+
+/* ── EXAMPLE BOX ── */
+.example-box{background:#10B98111;border:1px solid #10B98133;border-radius:14px;padding:20px 24px;max-width:800px;width:100%;margin-top:16px;}
+.example-box .example-label{font-size:11px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:8px;}
+.example-box p{font-size:14px;color:#CBD5E1;line-height:1.6;}
+
+/* ── WARNING BOX ── */
+.warning-box{background:#F59E0B11;border:1px solid #F59E0B33;border-radius:14px;padding:20px 24px;max-width:800px;width:100%;}
+
+/* ── KEYBOARD HINTS ── */
+.kbd-hint{position:fixed;bottom:60px;right:30px;font-size:11px;color:#334155;z-index:99;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+  .slide{padding:30px 24px;}
+  h1{font-size:32px;}h2{font-size:26px;}h3{font-size:20px;}
+  .card-grid.cols-3,.card-grid.cols-4{grid-template-columns:1fr 1fr;}
+  .comp-grid{grid-template-columns:repeat(3,1fr);}
+  .flow{flex-direction:column;}.flow-arrow{transform:rotate(90deg);}
+}
+
+/* ── PRINT ── */
+@media print{
+  .slide{display:flex!important;height:auto;min-height:100vh;page-break-after:always;}
+  .nav-bar,.progress-bar,.kbd-hint{display:none!important;}
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SLIDE 1 — TITLE
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div style="text-align:center;">
+    <div style="font-size:14px;font-weight:800;color:#3B82F6;letter-spacing:6px;margin-bottom:20px;">FORMATION INSTRUCTEUR</div>
+    <h1>SCORE <span class="accent-blue">CBTA</span></h1>
+    <h1 style="font-size:32px;font-weight:400;color:#64748B;margin-bottom:30px;">B737 Competency-Based Training & Assessment</h1>
+    <p class="subtitle" style="margin:0 auto 40px;">Application d'évaluation et de suivi des compétences pilotes<br>selon les standards ICAO & EASA</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <span class="tag tag-blue">PWA OFFLINE</span>
+      <span class="tag tag-green">9 COMPÉTENCES ICAO</span>
+      <span class="tag tag-amber">EXPORT PDF</span>
+      <span class="tag tag-purple">FLEET DASHBOARD</span>
+    </div>
+    <div style="margin-top:50px;font-size:13px;color:#475569;">Appuyez sur <span style="background:#1E2530;padding:4px 12px;border-radius:6px;border:1px solid #334155;color:#94A3B8;font-weight:700;">→</span> ou cliquez <span style="background:#3B82F6;padding:4px 12px;border-radius:6px;color:#fff;font-weight:700;">Suivant</span> pour avancer</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SLIDE 2 — OPENING SPEECH — THE WHY
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div style="text-align:center;max-width:900px;">
+    <div style="font-size:60px;margin-bottom:16px;">🛡️</div>
+    <h2 style="font-size:34px;line-height:1.3;">Chaque vol est un <span class="accent-blue">acte de confiance</span>.</h2>
+    <div style="height:1px;background:linear-gradient(90deg,transparent,#3B82F644,transparent);margin:24px 0;"></div>
+    <p style="font-size:18px;color:#94A3B8;line-height:1.9;max-width:780px;margin:0 auto;">
+      Chaque jour, des millions de passagers montent à bord d'un avion avec une certitude silencieuse : <em style="color:#F1F5F9;font-weight:600;">"Je vais arriver en sécurité."</em><br><br>
+      Cette confiance ne repose pas sur la chance. Elle repose sur <strong style="color:#F1F5F9;">vous</strong> — les pilotes, les instructeurs, les professionnels qui s'entraînent, se remettent en question, et cherchent à être meilleurs à chaque session.
+    </p>
+  </div>
+</div>
+
+<!-- SLIDE 3 — OPENING SPEECH — THE PROBLEM -->
+<div class="slide" id="s3">
+  <div style="text-align:center;max-width:900px;">
+    <div style="font-size:60px;margin-bottom:16px;">📊</div>
+    <h2 style="font-size:34px;line-height:1.3;">Mais comment <span class="accent-amber">mesure-t-on</span> la compétence ?</h2>
+    <div style="height:1px;background:linear-gradient(90deg,transparent,#F59E0B44,transparent);margin:24px 0;"></div>
+    <p style="font-size:18px;color:#94A3B8;line-height:1.9;max-width:780px;margin:0 auto;">
+      Pendant des décennies, la formation pilote répondait à une question simple :<br>
+      <em style="color:#EF4444;font-weight:600;">"La manœuvre est-elle réussie ? Oui ou non."</em><br><br>
+      Mais un pilote qui réussit un ILS dans les tolérances <strong style="color:#F1F5F9;">alors qu'il a perdu la conscience de sa situation</strong>, est-il vraiment compétent ?<br><br>
+      Un pilote qui gère brillamment une panne moteur <strong style="color:#F1F5F9;">mais qui ne communique pas avec son PM</strong>, est-il prêt pour la ligne ?
+    </p>
+  </div>
+</div>
+
+<!-- SLIDE 4 — OPENING SPEECH — THE ANSWER -->
+<div class="slide" id="s4">
+  <div style="text-align:center;max-width:900px;">
+    <div style="font-size:60px;margin-bottom:16px;">✈️</div>
+    <h2 style="font-size:34px;line-height:1.3;">L'ICAO a posé la bonne <span class="accent-green">question</span>.</h2>
+    <div style="height:1px;background:linear-gradient(90deg,transparent,#10B98144,transparent);margin:24px 0;"></div>
+    <p style="font-size:18px;color:#94A3B8;line-height:1.9;max-width:780px;margin:0 auto;">
+      Au lieu de demander <em style="color:#EF4444;">"A-t-il réussi ?"</em>, le CBTA demande :<br><br>
+      <span style="font-size:26px;font-weight:800;color:#10B981;letter-spacing:1px;">"COMMENT a-t-il volé ?"</span><br><br>
+      9 compétences. Une échelle graduée. Des comportements observables.<br>
+      Pas de réussi/échoué — mais un <strong style="color:#F1F5F9;">profil de compétences</strong> qui évolue dans le temps.
+    </p>
+    <div class="highlight" style="margin:24px auto 0;">
+      <p style="font-size:16px;">"Le CBTA n'est pas un nouveau formulaire à remplir. C'est une nouvelle façon de REGARDER le pilote."</p>
+      <div class="source">— ICAO Doc 9995, Evidence-Based Training</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 — OPENING SPEECH — THE TOOL -->
+<div class="slide" id="s5">
+  <div style="text-align:center;max-width:900px;">
+    <div style="font-size:60px;margin-bottom:16px;">🎯</div>
+    <h2 style="font-size:34px;line-height:1.3;">SCORE : l'outil qui <span class="accent-purple">concrétise</span> cette vision.</h2>
+    <div style="height:1px;background:linear-gradient(90deg,transparent,#8B5CF644,transparent);margin:24px 0;"></div>
+    <p style="font-size:18px;color:#94A3B8;line-height:1.9;max-width:780px;margin:0 auto;">
+      SCORE n'est pas un simple formulaire numérique.<br>
+      C'est un <strong style="color:#F1F5F9;">compagnon d'évaluation</strong> conçu par un TRI, pour les TRI.<br><br>
+      Il vous guide du briefing au rapport signé. Il capture ce que vous observez en vol. Il transforme vos notes en données exploitables. Il vous aide à voir les tendances que l'œil humain ne peut pas détecter sur 50 pilotes.
+    </p>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:30px;flex-wrap:wrap;">
+      <div style="text-align:center;">
+        <div style="font-size:36px;font-weight:900;color:#3B82F6;">11</div>
+        <div style="font-size:11px;color:#64748B;font-weight:700;">ÉCRANS</div>
+      </div>
+      <div style="width:1px;background:#1E293B;"></div>
+      <div style="text-align:center;">
+        <div style="font-size:36px;font-weight:900;color:#10B981;">9</div>
+        <div style="font-size:11px;color:#64748B;font-weight:700;">COMPÉTENCES</div>
+      </div>
+      <div style="width:1px;background:#1E293B;"></div>
+      <div style="text-align:center;">
+        <div style="font-size:36px;font-weight:900;color:#F59E0B;">60+</div>
+        <div style="font-size:11px;color:#64748B;font-weight:700;">SCÉNARIOS</div>
+      </div>
+      <div style="width:1px;background:#1E293B;"></div>
+      <div style="text-align:center;">
+        <div style="font-size:36px;font-weight:900;color:#8B5CF6;">120+</div>
+        <div style="font-size:11px;color:#64748B;font-weight:700;">PHRASES</div>
+      </div>
+      <div style="width:1px;background:#1E293B;"></div>
+      <div style="text-align:center;">
+        <div style="font-size:36px;font-weight:900;color:#06B6D4;">0</div>
+        <div style="font-size:11px;color:#64748B;font-weight:700;">SERVEUR</div>
+      </div>
+    </div>
+    <div style="margin-top:30px;font-size:14px;color:#64748B;">Prêt à découvrir ? Allons-y.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SLIDE 6 — AGENDA
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <h2 style="text-align:center;margin-bottom:30px;">📋 Programme de la formation</h2>
+  <div class="feature-box">
+    <div class="feature-row">
+      <div class="feature-num" style="background:#3B82F622;color:#3B82F6;">1</div>
+      <div class="feature-content"><strong>Pourquoi le CBTA ?</strong><span>Contexte ICAO/EASA, évolution de la formation pilote, avantages</span></div>
+      <span style="color:#475569;font-size:12px;font-weight:600;">10 min</span>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#10B98122;color:#10B981;">2</div>
+      <div class="feature-content"><strong>Découverte de SCORE CBTA</strong><span>Architecture, navigation, flux de travail TRI complet</span></div>
+      <span style="color:#475569;font-size:12px;font-weight:600;">10 min</span>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#F59E0B22;color:#F59E0B;">3</div>
+      <div class="feature-content"><strong>Les 9 compétences & l'échelle d'évaluation</strong><span>Chaque compétence détaillée, grille 1-5, observable behaviors</span></div>
+      <span style="color:#475569;font-size:12px;font-weight:600;">10 min</span>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#EF444422;color:#EF4444;">4</div>
+      <div class="feature-content"><strong>Outils d'évaluation en vol</strong><span>FFA, TEM, FORDEC, Mode Compact, Mode Focus, Chronos</span></div>
+      <span style="color:#475569;font-size:12px;font-weight:600;">10 min</span>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#8B5CF622;color:#8B5CF6;">5</div>
+      <div class="feature-content"><strong>Le Debrief : de l'évaluation au rapport</strong><span>Scores, exercices, phrases-réflexes, LOFT, signatures, PDF</span></div>
+      <span style="color:#475569;font-size:12px;font-weight:600;">10 min</span>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#06B6D422;color:#06B6D4;">6</div>
+      <div class="feature-content"><strong>Dashboard & suivi Fleet</strong><span>Historique pilote, tendances, pilotes à risque, heatmap, TNA</span></div>
+      <span style="color:#475569;font-size:12px;font-weight:600;">5 min</span>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#FFD70022;color:#FFD700;">7</div>
+      <div class="feature-content"><strong>Démonstration live & Questionnaire</strong><span>Simulation d'une session complète + quiz de validation</span></div>
+      <span style="color:#475569;font-size:12px;font-weight:600;">15 min</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SECTION 1 — POURQUOI LE CBTA
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide section-slide" id="s3">
+  <div class="section-num">01</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;">PARTIE 1</div>
+    <h1>Pourquoi le <span class="accent-blue">CBTA</span> ?</h1>
+    <p class="subtitle" style="margin:0 auto;">De l'évaluation traditionnelle à l'approche par compétences</p>
+  </div>
+</div>
+
+<!-- SLIDE 4 — L'ANCIEN MODÈLE -->
+<div class="slide" id="s4">
+  <h2 style="text-align:center;margin-bottom:10px;">L'ancien modèle : <span class="accent-red">basé sur les manœuvres</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 30px;">Le système traditionnel de formation avait des limites identifiées</p>
+  <div class="card-grid cols-2" style="max-width:900px;">
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="icon">📋</div>
+      <div class="title">Check-list de manœuvres</div>
+      <div class="desc">Évaluation binaire : réussi/échoué sur chaque item technique. L'ILS est-il dans les tolérances ? La panne moteur est-elle gérée dans les temps ?</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="icon">🔍</div>
+      <div class="title">Focus sur le résultat</div>
+      <div class="desc">On mesure si le pilote a réussi la manœuvre, mais pas COMMENT il y est arrivé. Le processus décisionnel est invisible.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="icon">🤝</div>
+      <div class="title">CRM en parallèle</div>
+      <div class="desc">Les soft skills (communication, leadership, gestion de charge) étaient évaluées séparément, comme si elles étaient indépendantes du vol.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="icon">📊</div>
+      <div class="title">Pas de tendances</div>
+      <div class="desc">Impossible de suivre l'évolution d'un pilote dans le temps. Chaque session est isolée, sans vision longitudinale.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5 — LE CBTA -->
+<div class="slide" id="s5">
+  <h2 style="text-align:center;margin-bottom:10px;">Le CBTA : <span class="accent-green">l'approche par compétences</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 30px;">Recommandé par l'ICAO (Doc 9995) et intégré dans la réglementation EASA</p>
+  <div class="card-grid cols-2" style="max-width:900px;">
+    <div class="card card-accent" style="border-left-color:#10B981;">
+      <div class="icon">🎯</div>
+      <div class="title">9 compétences observables</div>
+      <div class="desc">Chaque compétence a des indicateurs comportementaux précis (Observable Behaviors). On évalue le COMMENT, pas juste le résultat.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#10B981;">
+      <div class="icon">📈</div>
+      <div class="title">Échelle graduée 1-5</div>
+      <div class="desc">Au lieu de réussi/échoué, une échelle de 5 niveaux permet de mesurer la progression et d'identifier les axes d'amélioration.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#10B981;">
+      <div class="icon">🔄</div>
+      <div class="title">Vision intégrée</div>
+      <div class="desc">Les compétences techniques et non-techniques sont évaluées ensemble, comme elles le sont en vol réel. Plus de séparation artificielle.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#10B981;">
+      <div class="icon">📊</div>
+      <div class="title">Suivi longitudinal</div>
+      <div class="desc">Chaque session alimente un historique. On voit les tendances, les forces, les faiblesses récurrentes. Formation ciblée possible.</div>
+    </div>
+  </div>
+  <div class="highlight" style="margin-top:24px;max-width:900px;">
+    <p>"L'approche CBTA permet de passer d'un système de formation basé sur les heures à un système basé sur la démonstration de compétences."</p>
+    <div class="source">— ICAO Doc 9995, Manual of Evidence-Based Training</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SECTION 2 — DÉCOUVERTE DE L'APP
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide section-slide" id="s6">
+  <div class="section-num">02</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#10B98122;border:1px solid #10B981;color:#10B981;">PARTIE 2</div>
+    <h1>Découverte de <span class="accent-green">SCORE CBTA</span></h1>
+    <p class="subtitle" style="margin:0 auto;">Architecture, installation et premier lancement</p>
+  </div>
+</div>
+
+<!-- SLIDE 7 — QU'EST-CE QUE SCORE -->
+<div class="slide" id="s7">
+  <h2 style="text-align:center;margin-bottom:10px;">Qu'est-ce que <span class="accent-blue">SCORE</span> ?</h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 30px;">Un outil conçu par un TRI, pour les TRI</p>
+  <div class="card-grid cols-3" style="max-width:1000px;">
+    <div class="card" style="text-align:center;">
+      <div class="icon">📱</div>
+      <div class="title">Application Web (PWA)</div>
+      <div class="desc">Fonctionne sur tablette, téléphone et PC. Installable comme une app native depuis le navigateur. Pas besoin de l'App Store.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">✈️</div>
+      <div class="title">100% Offline</div>
+      <div class="desc">Une fois installée, l'app fonctionne sans connexion internet. Parfait pour le simulateur. Les données restent sur votre appareil.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">🔒</div>
+      <div class="title">Données locales</div>
+      <div class="desc">Aucun serveur, aucun cloud. Tout est stocké localement sur votre tablette/téléphone. Confidentialité totale des données pilotes.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">🌙</div>
+      <div class="title">Mode sombre / clair</div>
+      <div class="desc">Basculez entre mode sombre (idéal en sim) et mode clair (pour les briefings en salle) d'un simple tap.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">🌍</div>
+      <div class="title">Bilingue FR / EN</div>
+      <div class="desc">Interface et guide disponibles en français et en anglais. Changement de langue instantané.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">📖</div>
+      <div class="title">Guide intégré</div>
+      <div class="desc">20 chapitres de documentation intégrés directement dans l'app. Consultables à tout moment, même hors ligne.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8 — FLUX DE TRAVAIL -->
+<div class="slide" id="s8">
+  <h2 style="text-align:center;margin-bottom:10px;">Flux de travail du TRI</h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 30px;">De la préparation au rapport final — tout dans une seule app</p>
+  <div class="flow" style="margin-bottom:40px;">
+    <div class="flow-step" style="border-color:#3B82F6;">
+      <div class="step-icon">🔐</div>
+      <div class="step-title">Login</div>
+      <div class="step-sub">Identification TRI</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#10B981;">
+      <div class="step-icon">📋</div>
+      <div class="step-title">Setup</div>
+      <div class="step-sub">Pilotes & scénario</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#F59E0B;">
+      <div class="step-icon">📊</div>
+      <div class="step-title">Briefing</div>
+      <div class="step-sub">Tolérances EASA</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#EF4444;">
+      <div class="step-icon">✈️</div>
+      <div class="step-title">Exercices</div>
+      <div class="step-sub">Évaluation en vol</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#8B5CF6;">
+      <div class="step-icon">💬</div>
+      <div class="step-title">Debrief</div>
+      <div class="step-sub">Scores & rapport</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#06B6D4;">
+      <div class="step-icon">📄</div>
+      <div class="step-title">PDF</div>
+      <div class="step-sub">Export & signature</div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:900px;">
+    <div class="example-label">💡 EXEMPLE CONCRET</div>
+    <p>Vous arrivez au sim pour un OPC. Vous ouvrez SCORE, entrez les noms des pilotes, sélectionnez le scénario OPC, lancez le chrono. Pendant le vol, vous notez en temps réel sur votre tablette. Après le vol, vous ouvrez le debrief, les scores sont déjà pré-remplis. Vous ajoutez vos phrases-réflexes, générez le PDF signé, et c'est terminé.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SECTION 3 — LES 9 COMPÉTENCES
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide section-slide" id="s9">
+  <div class="section-num">03</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;">PARTIE 3</div>
+    <h1>Les <span class="accent-amber">9 compétences</span> ICAO</h1>
+    <p class="subtitle" style="margin:0 auto;">Le cœur du système CBTA</p>
+  </div>
+</div>
+
+<!-- SLIDE 10 — GRILLE DES 9 -->
+<div class="slide" id="s10">
+  <h2 style="text-align:center;margin-bottom:24px;">Les 9 compétences <span class="accent-amber">ICAO</span></h2>
+  <div class="comp-grid">
+    <div class="comp-item"><div class="comp-code accent-blue">KNO</div><div class="comp-name">Knowledge<br><strong style="color:#CBD5E1;font-size:12px;">Connaissances</strong></div></div>
+    <div class="comp-item"><div class="comp-code accent-green">PRO</div><div class="comp-name">Procedures<br><strong style="color:#CBD5E1;font-size:12px;">Application des procédures</strong></div></div>
+    <div class="comp-item"><div class="comp-code accent-cyan">FPA</div><div class="comp-name">Flight Path Automation<br><strong style="color:#CBD5E1;font-size:12px;">Gestion de la trajectoire</strong></div></div>
+    <div class="comp-item"><div class="comp-code accent-amber">COM</div><div class="comp-name">Communication<br><strong style="color:#CBD5E1;font-size:12px;">Communication</strong></div></div>
+    <div class="comp-item"><div class="comp-code accent-purple">LTW</div><div class="comp-name">Leadership & Teamwork<br><strong style="color:#CBD5E1;font-size:12px;">Leadership & travail d'équipe</strong></div></div>
+    <div class="comp-item"><div class="comp-code accent-red">PSD</div><div class="comp-name">Problem Solving & Decision<br><strong style="color:#CBD5E1;font-size:12px;">Résolution de problèmes</strong></div></div>
+    <div class="comp-item"><div class="comp-code" style="color:#06B6D4;">SA</div><div class="comp-name">Situation Awareness<br><strong style="color:#CBD5E1;font-size:12px;">Conscience situationnelle</strong></div></div>
+    <div class="comp-item"><div class="comp-code" style="color:#F472B6;">WLM</div><div class="comp-name">Workload Management<br><strong style="color:#CBD5E1;font-size:12px;">Gestion de la charge de travail</strong></div></div>
+    <div class="comp-item"><div class="comp-code accent-gold">FPM</div><div class="comp-name">Flight Path Manual<br><strong style="color:#CBD5E1;font-size:12px;">Pilotage manuel</strong></div></div>
+  </div>
+  <div style="margin-top:20px;text-align:center;">
+    <span class="tag tag-blue" style="margin:4px;">Techniques</span>
+    <span class="tag tag-purple" style="margin:4px;">Non-techniques (CRM)</span>
+    <span class="tag tag-green" style="margin:4px;">Intégrées ensemble dans SCORE</span>
+  </div>
+</div>
+
+<!-- SLIDE 11 — ÉCHELLE 1-5 -->
+<div class="slide" id="s11">
+  <h2 style="text-align:center;margin-bottom:24px;">Échelle d'évaluation <span class="accent-blue">1 à 5</span></h2>
+  <div class="feature-box" style="max-width:800px;">
+    <div class="scale-row">
+      <div class="scale-num" style="background:#EF4444;">1</div>
+      <div class="scale-desc"><strong>Insuffisant</strong><span>Performance dangereuse. Intervention du TRI nécessaire. Le pilote met en danger la sécurité du vol.</span></div>
+    </div>
+    <div class="scale-row" style="border-bottom:1px solid #1E293B66;">
+      <div class="scale-num" style="background:#F97316;">2</div>
+      <div class="scale-desc"><strong>En dessous du standard</strong><span>Des erreurs significatives, corrections tardives. Assistance fréquente requise.</span></div>
+    </div>
+    <div class="scale-row" style="border-bottom:1px solid #1E293B66;">
+      <div class="scale-num" style="background:#F59E0B;">3</div>
+      <div class="scale-desc"><strong>Standard attendu ✓</strong><span>Performance acceptable. Le pilote gère de manière autonome avec des corrections mineures. <strong style="color:#10B981;">Niveau minimum requis.</strong></span></div>
+    </div>
+    <div class="scale-row" style="border-bottom:1px solid #1E293B66;">
+      <div class="scale-num" style="background:#10B981;">4</div>
+      <div class="scale-desc"><strong>Au-dessus du standard</strong><span>Performance fluide et anticipée. Le pilote démontre une maîtrise au-delà de ce qui est attendu.</span></div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-num" style="background:#3B82F6;">5</div>
+      <div class="scale-desc"><strong>Exemplaire</strong><span>Performance de référence. Pourrait servir de modèle pour la formation d'autres pilotes.</span></div>
+    </div>
+  </div>
+  <div class="warning-box" style="margin-top:20px;max-width:800px;">
+    <p style="font-size:13px;color:#F59E0B;"><strong>⚠️ Règle EASA :</strong> Si un pilote obtient un score &lt; 3 sur un exercice, un 2ème essai est autorisé. Si le 2ème essai est aussi &lt; 3, cela doit être consigné dans les notes instructeur avec un briefing remédiation obligatoire avant progression de ligne.</p>
+  </div>
+</div>
+
+<!-- SLIDE 12 — EXEMPLE CONCRET COMPÉTENCE -->
+<div class="slide" id="s12">
+  <h2 style="text-align:center;margin-bottom:16px;">Exemple : évaluer <span class="accent-cyan">FPA</span> en pratique</h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 24px;">Flight Path Automation — Comment observer et noter ?</p>
+  <div class="card-grid cols-2" style="max-width:900px;">
+    <div class="card">
+      <div class="title" style="color:#EF4444;">Score 2 — En dessous du standard</div>
+      <div class="desc" style="line-height:1.7;">
+        <p>Le CPT effectue une approche ILS CAT I à LFPO. À 500ft, il est en mode V/S au lieu de G/S. L'avion passe sous le glide, le PM annonce "glide" mais le CPT ne réagit pas pendant 5 secondes.</p>
+        <p style="margin-top:8px;color:#EF4444;font-weight:700;">→ Mauvaise gestion de l'automatisme, correction tardive, conscience dégradée du mode FMA.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="title" style="color:#10B981;">Score 4 — Au-dessus du standard</div>
+      <div class="desc" style="line-height:1.7;">
+        <p>Le CPT effectue la même approche. Il vérifie le FMA à chaque transition de mode, annonce "LOC captured, G/S alive" au PM. Il anticipe la configuration et stabilise l'avion à 1000ft.</p>
+        <p style="margin-top:8px;color:#10B981;font-weight:700;">→ Gestion proactive de l'automatisme, annonces claires, stabilisation anticipée.</p>
+      </div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:900px;">
+    <div class="example-label">💡 ASTUCE TRI</div>
+    <p>Dans SCORE, vous pouvez noter la compétence FPA directement pendant l'exercice via l'onglet Evaluation. Le mode <strong style="color:#FBBF24;">⚡ COMPACT</strong> vous permet de noter rapidement toutes les compétences d'un seul coup d'œil.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SECTION 4 — OUTILS D'ÉVALUATION EN VOL
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide section-slide" id="s13">
+  <div class="section-num">04</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;">PARTIE 4</div>
+    <h1>Outils d'évaluation <span class="accent-red">en vol</span></h1>
+    <p class="subtitle" style="margin:0 auto;">6 onglets pour tout capturer pendant la session simulateur</p>
+  </div>
+</div>
+
+<!-- SLIDE 14 — LES 7 ONGLETS -->
+<div class="slide" id="s14">
+  <h2 style="text-align:center;margin-bottom:24px;">Les onglets d'évaluation <span class="accent-blue">en vol</span></h2>
+  <div class="card-grid cols-3" style="max-width:1000px;">
+    <div class="card card-accent" style="border-left-color:#3B82F6;">
+      <div class="title"><span class="tag tag-blue" style="margin-right:8px;">EVAL</span> Évaluation</div>
+      <div class="desc">Les 9 compétences ICAO avec slider 1-5. Observation en temps réel avec notes libres pour chaque compétence.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#F59E0B;">
+      <div class="title"><span class="tag tag-amber" style="margin-right:8px;">FFA</span> Fly Focus Act</div>
+      <div class="desc"><strong style="color:#3B82F6;">FLY</strong> : trajectoire OK ? <strong style="color:#F59E0B;">FOCUS</strong> : conscience situation ? <strong style="color:#EF4444;">ACT</strong> : actions adaptées ? Trois checks rapides ✓/✗.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="title"><span class="tag tag-red" style="margin-right:8px;">TEM</span> Threat & Error</div>
+      <div class="desc">Identification des menaces (météo, ATC, panne) et erreurs de l'équipage. Classification et lien avec les compétences.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#8B5CF6;">
+      <div class="title"><span class="tag tag-purple" style="margin-right:8px;">FORDEC</span> Décision</div>
+      <div class="desc">Grille FORDEC structurée : Facts, Options, Risks, Decision, Execution, Check. Évalue le processus décisionnel.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#FBBF24;">
+      <div class="title"><span style="color:#FBBF24;font-weight:900;">⚡</span> Mode Compact</div>
+      <div class="desc">Vue condensée : toutes les compétences + FFA + notes sur un seul écran. Idéal pour noter vite entre deux exercices.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="title"><span style="color:#EF4444;font-weight:900;">🎯</span> Mode Focus</div>
+      <div class="desc">Zoom sur une compétence spécifique à travailler. Affiche les observable behaviors détaillés pour guider l'observation.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 15 — CHRONOS -->
+<div class="slide" id="s15">
+  <h2 style="text-align:center;margin-bottom:16px;">Gestion du temps <span class="accent-green">en session</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 30px;">Deux chronos indépendants pour gérer votre session</p>
+  <div class="card-grid cols-2" style="max-width:800px;">
+    <div class="card" style="text-align:center;padding:30px;">
+      <div style="font-size:48px;font-weight:900;color:#10B981;font-family:monospace;letter-spacing:4px;margin-bottom:12px;">01:23:45</div>
+      <div class="title" style="color:#10B981;">Chrono Session</div>
+      <div class="desc">Durée totale de la session simulateur. Toujours visible en haut de l'écran. Démarre au ▶ et continue sur tous les écrans.</div>
+    </div>
+    <div class="card" style="text-align:center;padding:30px;">
+      <div style="font-size:48px;font-weight:900;color:#F1F5F9;font-family:monospace;letter-spacing:4px;margin-bottom:12px;">08:30</div>
+      <div class="title" style="color:#F59E0B;">Chrono Exercice</div>
+      <div class="desc">Chrono par exercice avec limite configurable. Alarme visuelle quand le temps est dépassé. Reset entre chaque exercice.</div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:800px;">
+    <div class="example-label">💡 EXEMPLE</div>
+    <p>Vous avez un OPC de 4h. Le chrono session affiche le temps total. Pour chaque exercice (ex: ILS CAT II), vous réglez le chrono exercice à 12 minutes. S'il passe au rouge, vous savez que le pilote prend trop de temps — ça peut indiquer un problème de <strong style="color:#F472B6;">WLM</strong> (Workload Management).</p>
+  </div>
+</div>
+
+<!-- SLIDE — OUTILS AVANCÉS EN VOL -->
+<div class="slide" id="s-tools">
+  <h2 style="text-align:center;margin-bottom:10px;">Outils avancés <span class="accent-amber">en session</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 24px;">Des fonctionnalités uniques pour capturer chaque moment</p>
+  <div class="card-grid cols-3" style="max-width:1050px;">
+    <div class="card card-accent" style="border-left-color:#10B981;">
+      <div class="title">🎙️ Notes vocales</div>
+      <div class="desc">Enregistrez vos observations vocalement pendant le vol. L'audio est sauvegardé et disponible en debrief pour réécoute.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#3B82F6;">
+      <div class="title">🚦 Modèle d'intervention</div>
+      <div class="desc">3 niveaux : <strong style="color:#10B981;">ASK</strong> (questionner) → <strong style="color:#F59E0B;">RECOMMEND</strong> (recommander) → <strong style="color:#EF4444;">TAKE CONTROL</strong> (prendre les commandes). Chaque intervention est horodatée.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="title">🎲 Distracteur aléatoire</div>
+      <div class="desc">Injection de menaces surprises : panne météo, TCAS RA, feu cargo... Le bouton 🎲 pioche un scénario aléatoire pour tester la réactivité.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#F59E0B;">
+      <div class="title">🚩 Marqueurs d'événements</div>
+      <div class="desc">Flag rapide avec horodatage pendant le vol. "À 00:23:15 — le CPT a oublié le briefing approche." Visible dans l'onglet Events du debrief.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#8B5CF6;">
+      <div class="title">🔒 Verrouillage écran</div>
+      <div class="desc">Verrouillez la tablette pendant les phases critiques pour éviter les touches accidentelles. Un tap sur le cadenas pour déverrouiller.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#06B6D4;">
+      <div class="title">🎓 Mode Training</div>
+      <div class="desc">Sessions d'entraînement qui ne s'enregistrent PAS dans l'historique. Parfait pour se familiariser avec l'app sans polluer les données.</div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:1050px;">
+    <div class="example-label">💡 SCÉNARIO TYPE</div>
+    <p>Pendant un ILS CAT II, vous observez que le CPT ne vérifie pas le FMA. Vous appuyez <strong style="color:#10B981;">ASK</strong> ("Quel mode est actif ?"). Le CPT ne réagit pas. Vous passez à <strong style="color:#F59E0B;">RECOMMEND</strong> ("Je te recommande de vérifier le FMA"). Tout est horodaté et apparaîtra dans le debrief avec le contexte exact.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SECTION 5 — LE DEBRIEF
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide section-slide" id="s16">
+  <div class="section-num">05</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;">PARTIE 5</div>
+    <h1>Le <span class="accent-purple">Debrief</span></h1>
+    <p class="subtitle" style="margin:0 auto;">De l'évaluation au rapport signé</p>
+  </div>
+</div>
+
+<!-- SLIDE 17 — STRUCTURE DU DEBRIEF -->
+<div class="slide" id="s17">
+  <h2 style="text-align:center;margin-bottom:24px;">Structure du <span class="accent-purple">debrief</span></h2>
+  <div class="card-grid cols-4" style="max-width:1100px;">
+    <div class="card" style="text-align:center;">
+      <div class="icon">📊</div>
+      <div class="title">Scores</div>
+      <div class="desc">Radar chart des 9 compétences. Vue synthétique CPT et FO. Niveau global calculé automatiquement.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">📝</div>
+      <div class="title">Exercices</div>
+      <div class="desc">Résumé de chaque exercice avec les scores par compétence et les notes du TRI.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">⚠️</div>
+      <div class="title">TEM & CRM</div>
+      <div class="desc">Récapitulatif des menaces identifiées et erreurs gérées. Analyse CRM de l'équipage.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">❓</div>
+      <div class="title">Questionnaire</div>
+      <div class="desc">Questions de vérification technique posées pendant le debrief. Score de réponse.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">📋</div>
+      <div class="title">Events</div>
+      <div class="desc">Chronologie des événements marquants de la session notés par le TRI.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">🗂</div>
+      <div class="title">LOFT</div>
+      <div class="desc">Planification et évaluation LOFT. QR Auto-évaluation pour le stagiaire.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">📄</div>
+      <div class="title">Rapport</div>
+      <div class="desc">Rapport examinateur avec radar, statistiques et signatures numériques.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">✅</div>
+      <div class="title">Conclusion</div>
+      <div class="desc">Résultat final, recommandations de formation, export PDF complet.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 18 — PHRASES-RÉFLEXES -->
+<div class="slide" id="s18">
+  <h2 style="text-align:center;margin-bottom:10px;">Bibliothèque <span class="accent-green">Phrases-Réflexes</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 24px;">Des formulations professionnelles prêtes à l'emploi pour vos debriefs</p>
+  <div class="card-grid cols-2" style="max-width:900px;">
+    <div class="card" style="border-left:3px solid #10B981;">
+      <div class="title" style="color:#10B981;">✅ POSITIF</div>
+      <div class="desc" style="line-height:1.8;">
+        <p>• "Excellente gestion des priorités dans une situation complexe"</p>
+        <p>• "Communication claire et structurée avec le PM"</p>
+        <p>• "Anticipation proactive des risques météo"</p>
+        <p>• "Briefing approche complet et adapté aux conditions"</p>
+      </div>
+    </div>
+    <div class="card" style="border-left:3px solid #EF4444;">
+      <div class="title" style="color:#EF4444;">⚠️ NÉGATIF</div>
+      <div class="desc" style="line-height:1.8;">
+        <p>• "Tendance à la fixation sur un seul paramètre"</p>
+        <p>• "Retard dans l'identification du mode FMA actif"</p>
+        <p>• "Distribution des tâches insuffisante en phase critique"</p>
+        <p>• "Check-list challengée de manière incomplète"</p>
+      </div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:900px;">
+    <div class="example-label">💡 UTILISATION</div>
+    <p>En debrief, cliquez sur le bouton <strong style="color:#8B5CF6;">📚</strong> à côté de n'importe quel champ commentaire. La bibliothèque s'ouvre avec filtres <strong style="color:#10B981;">POSITIF</strong> / <strong style="color:#EF4444;">NÉGATIF</strong> / <strong style="color:#94A3B8;">TOUT</strong>. Cliquez sur une phrase pour l'ajouter. Vous pouvez en sélectionner plusieurs — elles s'ajoutent ligne par ligne.</p>
+  </div>
+</div>
+
+<!-- SLIDE 19 — SIGNATURES & PDF -->
+<div class="slide" id="s19">
+  <h2 style="text-align:center;margin-bottom:10px;">Signatures numériques & <span class="accent-amber">Export PDF</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 24px;">Un rapport officiel signé en quelques secondes</p>
+  <div class="card-grid cols-2" style="max-width:900px;">
+    <div class="card" style="text-align:center;padding:30px;">
+      <div style="font-size:60px;margin-bottom:12px;">✍️</div>
+      <div class="title">Signatures tactiles</div>
+      <div class="desc">Pads de signature pour le TRI et le stagiaire. Signez avec le doigt ou un stylet directement sur la tablette. Intégrées automatiquement dans le PDF.</div>
+    </div>
+    <div class="card" style="text-align:center;padding:30px;">
+      <div style="font-size:60px;margin-bottom:12px;">📄</div>
+      <div class="title">Export PDF complet</div>
+      <div class="desc">Un rapport professionnel avec : radar des compétences, scores détaillés, commentaires, TEM/CRM, signatures. Prêt pour l'archivage ou l'envoi.</div>
+    </div>
+  </div>
+  <div class="warning-box" style="margin-top:20px;max-width:900px;">
+    <p style="font-size:13px;color:#F59E0B;"><strong>📌 Proficiency Check :</strong> Pour les OPC et PC, un rapport examinateur dédié est disponible avec ses propres pads de signature TRI + Pilote. Le bouton <strong>☑ PROF CHECK</strong> dans le debrief donne accès à ce formulaire spécifique.</p>
+  </div>
+</div>
+
+<!-- SLIDE 20 — QR AUTO-ÉVALUATION -->
+<div class="slide" id="s20">
+  <h2 style="text-align:center;margin-bottom:10px;">QR <span class="accent-cyan">Auto-évaluation</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 24px;">Le stagiaire s'auto-évalue sur son téléphone</p>
+  <div class="flow" style="margin-bottom:30px;">
+    <div class="flow-step" style="border-color:#3B82F6;">
+      <div class="step-icon">📱</div>
+      <div class="step-title">1. QR Code</div>
+      <div class="step-sub">Le TRI affiche le QR</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#10B981;">
+      <div class="step-icon">📷</div>
+      <div class="step-title">2. Scan</div>
+      <div class="step-sub">Le stagiaire scanne</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#F59E0B;">
+      <div class="step-icon">⭐</div>
+      <div class="step-title">3. Auto-éval</div>
+      <div class="step-sub">Note ses 9 compétences</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#8B5CF6;">
+      <div class="step-icon">🔢</div>
+      <div class="step-title">4. Code 9 chiffres</div>
+      <div class="step-sub">Communique le code</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step" style="border-color:#06B6D4;">
+      <div class="step-icon">📊</div>
+      <div class="step-title">5. Comparaison</div>
+      <div class="step-sub">TRI vs Stagiaire</div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:900px;">
+    <div class="example-label">💡 INTÉRÊT PÉDAGOGIQUE</div>
+    <p>L'auto-évaluation permet de comparer la perception du stagiaire avec celle du TRI. Si le stagiaire se note <strong style="color:#10B981;">4</strong> en SA mais que le TRI a noté <strong style="color:#EF4444;">2</strong>, c'est un point de discussion crucial en debrief. Le code à 9 chiffres (un par compétence) rend l'échange simple : <strong style="color:#F1F5F9;font-family:monospace;letter-spacing:3px;">434543453</strong></p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SECTION 6 — DASHBOARD & FLEET
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide section-slide" id="s21">
+  <div class="section-num">06</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#06B6D422;border:1px solid #06B6D4;color:#06B6D4;">PARTIE 6</div>
+    <h1>Dashboard & <span class="accent-cyan">Fleet</span></h1>
+    <p class="subtitle" style="margin:0 auto;">Historique, tendances et vue Chef Pilote</p>
+  </div>
+</div>
+
+<!-- SLIDE 22 — HISTORIQUE PILOTE -->
+<div class="slide" id="s22">
+  <h2 style="text-align:center;margin-bottom:10px;">Suivi <span class="accent-purple">individuel</span> des pilotes</h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 24px;">Chaque session alimente l'historique du pilote</p>
+  <div class="card-grid cols-3" style="max-width:1000px;">
+    <div class="card" style="text-align:center;">
+      <div class="icon">📈</div>
+      <div class="title">Courbe de tendance</div>
+      <div class="desc">Évolution des scores sur les dernières sessions. Identifiez les progressions et les régressions.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">🕸️</div>
+      <div class="title">Radar individuel</div>
+      <div class="desc">Profil de compétences en araignée. Forces et faiblesses visibles d'un coup d'œil. Exportable en PDF.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">🗂</div>
+      <div class="title">Historique sessions</div>
+      <div class="desc">Toutes les sessions passées avec date, type, scores. Réouverture possible pour consultation.</div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:1000px;">
+    <div class="example-label">💡 EXEMPLE</div>
+    <p>Le CPT Dupont a fait 4 sessions en 6 mois. Son score en <strong style="color:#06B6D4;">SA</strong> est passé de 2 → 2 → 3 → 3. Tendance positive mais encore fragile. En tant que TRI, vous pouvez programmer un LOFT ciblé sur la conscience situationnelle pour consolider cette progression.</p>
+  </div>
+</div>
+
+<!-- SLIDE 23 — FLEET DASHBOARD -->
+<div class="slide" id="s23">
+  <h2 style="text-align:center;margin-bottom:10px;"><span class="accent-amber">Fleet Dashboard</span> — Vue Chef Pilote</h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 24px;">Vision globale de la flotte pour le management de la formation</p>
+  <div class="card-grid cols-3" style="max-width:1000px;">
+    <div class="card card-accent" style="border-left-color:#EF4444;">
+      <div class="icon">🚨</div>
+      <div class="title">Pilotes à risque</div>
+      <div class="desc">Identification automatique des pilotes avec scores critiques (&lt; 3) ou tendances négatives. Alerte visuelle pour intervention prioritaire.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#8B5CF6;">
+      <div class="icon">🗺️</div>
+      <div class="title">Heatmap compétences</div>
+      <div class="desc">Carte thermique de toute la flotte : quelle compétence est la plus faible globalement ? Détection des tendances systémiques.</div>
+    </div>
+    <div class="card card-accent" style="border-left-color:#3B82F6;">
+      <div class="icon">📋</div>
+      <div class="title">Fleet TNA</div>
+      <div class="desc">Training Needs Analysis — Analyse automatique des besoins de formation de la flotte. Recommandations ciblées par compétence.</div>
+    </div>
+  </div>
+  <div class="example-box" style="max-width:1000px;">
+    <div class="example-label">💡 SCÉNARIO</div>
+    <p>Le Fleet Dashboard montre que <strong style="color:#EF4444;">68% des pilotes</strong> ont un score moyen &lt; 3.5 en <strong style="color:#8B5CF6;">PSD</strong> (Problem Solving). C'est un signal systémique : il faut peut-être revoir les scénarios de formation pour inclure plus de situations décisionnelles complexes, pas juste former les pilotes individuellement.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     SECTION 7 — DÉMONSTRATION & QUIZ
+     ════════════════════════════════════════════════════════════════ -->
+<div class="slide section-slide" id="s24">
+  <div class="section-num">07</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#FFD70022;border:1px solid #FFD700;color:#FFD700;">PARTIE 7</div>
+    <h1>Démonstration <span class="accent-gold">live</span></h1>
+    <p class="subtitle" style="margin:0 auto;">Simulation d'une session complète</p>
+  </div>
+</div>
+
+<!-- SLIDE 25 — GUIDE DÉMO -->
+<div class="slide" id="s25">
+  <h2 style="text-align:center;margin-bottom:24px;">Guide de <span class="accent-gold">démonstration</span></h2>
+  <p class="subtitle" style="text-align:center;margin:0 auto 20px;">Ouvrez l'app SCORE et suivez ces étapes</p>
+  <div class="feature-box" style="max-width:800px;">
+    <div class="feature-row">
+      <div class="feature-num" style="background:#3B82F622;color:#3B82F6;">1</div>
+      <div class="feature-content"><strong>Login → Entrez votre nom TRI</strong><span>Montrez le login et l'écran d'accueil avec le guide intégré</span></div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#10B98122;color:#10B981;">2</div>
+      <div class="feature-content"><strong>Setup → Sélectionnez pilotes et scénario OPC</strong><span>Montrez la sélection des rôles CPT/FO et le choix de scénario</span></div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#F59E0B22;color:#F59E0B;">3</div>
+      <div class="feature-content"><strong>Briefing → Parcourez les tolérances EASA</strong><span>Montrez le tableau des tolérances et les checklist briefing</span></div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#EF444422;color:#EF4444;">4</div>
+      <div class="feature-content"><strong>Exercice → Notez un ILS CAT I fictif</strong><span>Montrez Eval, FFA, TEM, FORDEC, Compact et Focus</span></div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#8B5CF622;color:#8B5CF6;">5</div>
+      <div class="feature-content"><strong>Debrief → Ajoutez commentaires et phrases-réflexes</strong><span>Montrez le radar, la bibliothèque de phrases, les signatures</span></div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#06B6D422;color:#06B6D4;">6</div>
+      <div class="feature-content"><strong>PDF → Générez et montrez le rapport final</strong><span>Montrez l'export PDF avec toutes les données et signatures</span></div>
+    </div>
+    <div class="feature-row">
+      <div class="feature-num" style="background:#FFD70022;color:#FFD700;">7</div>
+      <div class="feature-content"><strong>Dashboard → Montrez l'historique et le Fleet</strong><span>Pilotes à risque, heatmap, TNA — la vision Chef Pilote</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 26 — QUIZ INTRO -->
+<div class="slide section-slide" id="s26">
+  <div class="section-num">❓</div>
+  <div style="text-align:center;">
+    <div class="section-tag" style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;">QUESTIONNAIRE</div>
+    <h1>Quiz de <span class="accent-blue">validation</span></h1>
+    <p class="subtitle" style="margin:0 auto;">10 questions pour vérifier vos acquis</p>
+  </div>
+</div>
+
+<!-- QUIZ Q1 -->
+<div class="slide" id="s27">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 1/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Combien de compétences ICAO sont évaluées dans le système CBTA ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,1)">
+      <div class="quiz-opt" data-a="wrong">6 compétences</div>
+      <div class="quiz-opt" data-a="correct">9 compétences</div>
+      <div class="quiz-opt" data-a="wrong">12 compétences</div>
+      <div class="quiz-opt" data-a="wrong">7 compétences</div>
+    </div>
+    <div class="quiz-feedback" id="qf1">Les 9 compétences ICAO sont : KNO, PRO, FPA, COM, LTW, PSD, SA, WLM, FPM.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q2 -->
+<div class="slide" id="s28">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 2/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Quel est le score minimum requis pour valider une compétence selon l'échelle CBTA ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,2)">
+      <div class="quiz-opt" data-a="wrong">2 — En dessous du standard</div>
+      <div class="quiz-opt" data-a="correct">3 — Standard attendu</div>
+      <div class="quiz-opt" data-a="wrong">4 — Au-dessus du standard</div>
+      <div class="quiz-opt" data-a="wrong">1 — Suffisant pour un premier essai</div>
+    </div>
+    <div class="quiz-feedback" id="qf2">Le score 3 correspond au "standard attendu" — c'est le niveau minimum requis. Un score &lt; 3 déclenche un 2ème essai selon la réglementation EASA.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q3 -->
+<div class="slide" id="s29">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 3/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Que signifie FFA dans l'outil d'évaluation ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,3)">
+      <div class="quiz-opt" data-a="wrong">Final Flight Assessment</div>
+      <div class="quiz-opt" data-a="wrong">Flight Failure Analysis</div>
+      <div class="quiz-opt" data-a="correct">Fly, Focus, Act</div>
+      <div class="quiz-opt" data-a="wrong">First Flight Approach</div>
+    </div>
+    <div class="quiz-feedback" id="qf3">FFA = Fly (trajectoire OK ?), Focus (conscience situationnelle ?), Act (actions adaptées ?). Trois dimensions rapides pour évaluer la performance globale.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q4 -->
+<div class="slide" id="s30">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 4/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Que permet le mode ⚡ COMPACT pendant un exercice ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,4)">
+      <div class="quiz-opt" data-a="wrong">Réduire le nombre de compétences évaluées à 3</div>
+      <div class="quiz-opt" data-a="correct">Voir toutes les compétences + FFA + notes sur un seul écran condensé</div>
+      <div class="quiz-opt" data-a="wrong">Compresser le temps de l'exercice</div>
+      <div class="quiz-opt" data-a="wrong">Enregistrer automatiquement les scores par défaut</div>
+    </div>
+    <div class="quiz-feedback" id="qf4">Le mode COMPACT affiche toutes les évaluations sur un seul écran condensé — parfait pour noter rapidement entre deux exercices sans naviguer entre les onglets.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q5 -->
+<div class="slide" id="s31">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 5/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Comment fonctionne l'auto-évaluation QR du stagiaire ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,5)">
+      <div class="quiz-opt" data-a="wrong">Le stagiaire remplit un formulaire papier</div>
+      <div class="quiz-opt" data-a="wrong">Le TRI entre les notes du stagiaire manuellement</div>
+      <div class="quiz-opt" data-a="correct">Le stagiaire scanne un QR, s'auto-évalue sur son téléphone, et communique un code à 9 chiffres</div>
+      <div class="quiz-opt" data-a="wrong">Le stagiaire se connecte au même compte que le TRI</div>
+    </div>
+    <div class="quiz-feedback" id="qf5">Le stagiaire scanne le QR avec son téléphone, note ses 9 compétences de 1 à 5, et obtient un code à 9 chiffres (un chiffre par compétence). Le TRI entre ce code dans SCORE pour comparer les deux évaluations.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q6 -->
+<div class="slide" id="s32">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 6/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Que représente la compétence "PSD" ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,6)">
+      <div class="quiz-opt" data-a="wrong">Pilot Skill Development</div>
+      <div class="quiz-opt" data-a="wrong">Procedure Standard Deviation</div>
+      <div class="quiz-opt" data-a="correct">Problem Solving & Decision Making</div>
+      <div class="quiz-opt" data-a="wrong">Performance Safety Data</div>
+    </div>
+    <div class="quiz-feedback" id="qf6">PSD = Problem Solving & Decision Making (Résolution de problèmes et prise de décision). Évalue la capacité du pilote à analyser une situation et prendre des décisions appropriées, notamment via la méthode FORDEC.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q7 -->
+<div class="slide" id="s33">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 7/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Quel outil du Fleet Dashboard identifie automatiquement les faiblesses systémiques de la flotte ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,7)">
+      <div class="quiz-opt" data-a="wrong">La liste des pilotes à risque</div>
+      <div class="quiz-opt" data-a="correct">La Heatmap des compétences</div>
+      <div class="quiz-opt" data-a="wrong">Le rapport PDF individuel</div>
+      <div class="quiz-opt" data-a="wrong">Le chrono de session</div>
+    </div>
+    <div class="quiz-feedback" id="qf7">La Heatmap montre visuellement les scores de TOUTE la flotte par compétence. Si une colonne est majoritairement rouge, c'est un problème systémique (formation, scénarios) plutôt qu'individuel.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q8 -->
+<div class="slide" id="s34">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 8/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Que se passe-t-il selon la réglementation EASA si un pilote obtient un score &lt; 3 au deuxième essai ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,8)">
+      <div class="quiz-opt" data-a="wrong">Il peut refaire un 3ème essai le même jour</div>
+      <div class="quiz-opt" data-a="wrong">Son licence est suspendue immédiatement</div>
+      <div class="quiz-opt" data-a="correct">Consignation dans les notes instructeur + briefing remédiation obligatoire avant progression de ligne</div>
+      <div class="quiz-opt" data-a="wrong">Rien de particulier, le TRI note simplement le score</div>
+    </div>
+    <div class="quiz-feedback" id="qf8">Un double échec (&lt; 3 aux deux essais) doit être consigné officiellement. Un briefing remédiation est obligatoire avant que le pilote puisse reprendre les vols de ligne. C'est une exigence EASA de traçabilité.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q9 -->
+<div class="slide" id="s35">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 9/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">Quelle est la différence principale entre l'ancien système de formation et le CBTA ?</div>
+    <div class="quiz-opts" onclick="quizCheck(event,9)">
+      <div class="quiz-opt" data-a="wrong">Le CBTA utilise plus de simulateur</div>
+      <div class="quiz-opt" data-a="wrong">Le CBTA élimine les exercices pratiques</div>
+      <div class="quiz-opt" data-a="correct">Le CBTA évalue le COMMENT (compétences) plutôt que juste le résultat (manœuvres réussi/échoué)</div>
+      <div class="quiz-opt" data-a="wrong">Le CBTA ne nécessite plus de TRI</div>
+    </div>
+    <div class="quiz-feedback" id="qf9">Le changement fondamental est le passage d'une évaluation binaire (réussi/échoué) basée sur les manœuvres à une évaluation graduée (1-5) basée sur les compétences observables. On s'intéresse au processus, pas juste au résultat.</div>
+  </div>
+</div>
+
+<!-- QUIZ Q10 -->
+<div class="slide" id="s36">
+  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 10/10</div>
+  <div class="quiz-card">
+    <div class="quiz-q">SCORE CBTA stocke les données des pilotes :</div>
+    <div class="quiz-opts" onclick="quizCheck(event,10)">
+      <div class="quiz-opt" data-a="wrong">Sur un serveur cloud sécurisé</div>
+      <div class="quiz-opt" data-a="wrong">Sur les serveurs de la compagnie aérienne</div>
+      <div class="quiz-opt" data-a="correct">Localement sur l'appareil du TRI (aucun serveur externe)</div>
+      <div class="quiz-opt" data-a="wrong">Sur Google Drive</div>
+    </div>
+    <div class="quiz-feedback" id="qf10">SCORE est une PWA qui stocke toutes les données en localStorage sur l'appareil du TRI. Aucune donnée ne transite par un serveur. Confidentialité totale — les données pilotes restent entre les mains du TRI.</div>
+  </div>
+</div>
+
+<!-- SLIDE FINAL — RÉSULTAT QUIZ -->
+<div class="slide" id="s37">
+  <div style="text-align:center;">
+    <div style="font-size:14px;font-weight:800;color:#10B981;letter-spacing:6px;margin-bottom:20px;">RÉSULTAT</div>
+    <h1>Votre score : <span id="quiz-score" class="accent-green">0</span><span style="color:#475569;">/10</span></h1>
+    <div id="quiz-msg" style="font-size:20px;color:#94A3B8;margin:20px 0 40px;">Répondez aux questions pour voir votre score</div>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;" id="quiz-dots"></div>
+    <div class="highlight">
+      <p style="font-size:22px;font-style:normal;font-weight:700;color:#F1F5F9;">"L'outil ne remplace pas l'instructeur — il amplifie son expertise."</p>
+      <div class="source" style="margin-top:16px;">Merci pour votre attention. Questions ?</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE — FONCTIONNALITÉS SUPPLÉMENTAIRES -->
+<div class="slide" id="s-extra">
+  <h2 style="text-align:center;margin-bottom:24px;">Et aussi...</h2>
+  <div class="card-grid cols-3" style="max-width:1050px;">
+    <div class="card" style="text-align:center;">
+      <div class="icon">🗂️</div>
+      <div class="title">60+ scénarios B737</div>
+      <div class="desc">Bibliothèque de scénarios pré-construits (OPC, PC, LOFT). Filtrables par compétence. Créez vos propres scénarios personnalisés.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">📺</div>
+      <div class="title">Mode Data Show</div>
+      <div class="desc">Projetez le debrief en plein écran. Radar géant, scores colorés, parfait pour le debrief collectif en salle.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">📤</div>
+      <div class="title">Import / Export JSON</div>
+      <div class="desc">Sauvegardez tout l'historique en JSON. Restaurez sur un autre appareil. Backup complet de vos données.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">🔤</div>
+      <div class="title">Taille de police ajustable</div>
+      <div class="desc">4 niveaux de zoom (S/M/L/XL). Adaptez l'affichage à votre vue et à la distance de lecture.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">☑️</div>
+      <div class="title">Proficiency Check dédié</div>
+      <div class="desc">Formulaire réglementaire OPC/PC séparé avec tous les champs EASA : licence, LVO, co-examinateur, résultat officiel.</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div class="icon">📊</div>
+      <div class="title">Comparaison multi-sessions</div>
+      <div class="desc">Superposez les radars de plusieurs sessions d'un même pilote. Visualisez la progression compétence par compétence.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE — MERCI -->
+<div class="slide" id="s38">
+  <div style="text-align:center;">
+    <div style="font-size:80px;margin-bottom:20px;">✈️</div>
+    <h1>Merci !</h1>
+    <p class="subtitle" style="margin:0 auto 30px;">SCORE CBTA est prêt à être utilisé.<br>N'hésitez pas à explorer le guide intégré (20 chapitres) pour approfondir.</p>
+    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+      <div style="background:#111827;border:1px solid #1E293B;border-radius:12px;padding:16px 24px;text-align:center;">
+        <div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:2px;margin-bottom:4px;">INSTALLATION</div>
+        <div style="font-size:14px;color:#F1F5F9;font-weight:700;">Ouvrir le lien → "Ajouter à l'écran d'accueil"</div>
+      </div>
+      <div style="background:#111827;border:1px solid #1E293B;border-radius:12px;padding:16px 24px;text-align:center;">
+        <div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:2px;margin-bottom:4px;">SUPPORT</div>
+        <div style="font-size:14px;color:#F1F5F9;font-weight:700;">Guide intégré FR/EN — 20 chapitres</div>
+      </div>
+      <div style="background:#111827;border:1px solid #1E293B;border-radius:12px;padding:16px 24px;text-align:center;">
+        <div style="font-size:11px;color:#64748B;font-weight:700;letter-spacing:2px;margin-bottom:4px;">FEEDBACK</div>
+        <div style="font-size:14px;color:#F1F5F9;font-weight:700;">Vos retours améliorent l'outil pour tous</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════
+     NAVIGATION BAR
+     ════════════════════════════════════════════════════════════════ -->
+<div class="nav-bar">
+  <button class="nav-btn" onclick="prevSlide()" id="prev-btn">← Précédent</button>
+  <div class="slide-counter"><span id="current">1</span> / <span id="total">38</span></div>
+  <button class="nav-btn primary" onclick="nextSlide()" id="next-btn">Suivant →</button>
+</div>
+
+<div class="kbd-hint">← → pour naviguer</div>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+const total=slides.length;
+let cur=0;
+let quizAnswers={};
+let quizStartSlide=-1;
+// find quiz start
+slides.forEach((s,i)=>{if(s.querySelector('.quiz-card')&&quizStartSlide<0)quizStartSlide=i;});
+
+document.getElementById('total').textContent=total;
+
+function showSlide(n){
+  slides[cur].classList.remove('active');
+  cur=Math.max(0,Math.min(n,total-1));
+  slides[cur].classList.add('active');
+  document.getElementById('current').textContent=cur+1;
+  document.getElementById('progress').style.width=((cur+1)/total*100)+'%';
+  document.getElementById('prev-btn').style.visibility=cur===0?'hidden':'visible';
+  document.getElementById('next-btn').textContent=cur===total-1?'Fin':'Suivant →';
+}
+function nextSlide(){if(cur<total-1)showSlide(cur+1);}
+function prevSlide(){if(cur>0)showSlide(cur-1);}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ')nextSlide();
+  if(e.key==='ArrowLeft')prevSlide();
+  if(e.key==='Home')showSlide(0);
+  if(e.key==='End')showSlide(total-1);
+});
+
+let touchStartX=0;
+document.addEventListener('touchstart',e=>{touchStartX=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-touchStartX;
+  if(Math.abs(dx)>50){dx<0?nextSlide():prevSlide();}
+},{passive:true});
+
+function quizCheck(e,qNum){
+  const opt=e.target.closest('.quiz-opt');
+  if(!opt||quizAnswers[qNum]!==undefined) return;
+  const isCorrect=opt.dataset.a==='correct';
+  quizAnswers[qNum]=isCorrect;
+  opt.classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect){
+    opt.closest('.quiz-opts').querySelector('[data-a="correct"]').classList.add('correct');
+  }
+  const fb=document.getElementById('qf'+qNum);
+  fb.style.display='block';
+  fb.style.background=isCorrect?'#10B98122':'#EF444422';
+  fb.style.color=isCorrect?'#10B981':'#F87171';
+  updateQuizScore();
+}
+
+function updateQuizScore(){
+  const answered=Object.keys(quizAnswers).length;
+  const correct=Object.values(quizAnswers).filter(v=>v).length;
+  document.getElementById('quiz-score').textContent=correct;
+  let dots='';
+  for(let i=1;i<=10;i++){
+    if(quizAnswers[i]!==undefined){
+      dots+='<span style="display:inline-block;width:24px;height:24px;border-radius:50%;line-height:24px;text-align:center;font-size:12px;font-weight:900;background:'+(quizAnswers[i]?'#10B98133;color:#10B981':'#EF444433;color:#EF4444')+';">'+i+'</span>';
+    } else {
+      dots+='<span style="display:inline-block;width:24px;height:24px;border-radius:50%;line-height:24px;text-align:center;font-size:12px;font-weight:700;background:#1E293B;color:#475569;">'+i+'</span>';
+    }
+  }
+  document.getElementById('quiz-dots').innerHTML=dots;
+  const msg=document.getElementById('quiz-msg');
+  if(answered===10){
+    if(correct>=9) msg.innerHTML='<span style="color:#10B981;font-weight:700;">Excellent ! Vous maîtrisez le CBTA et SCORE. 🎯</span>';
+    else if(correct>=7) msg.innerHTML='<span style="color:#3B82F6;font-weight:700;">Très bien ! Quelques points à revoir. 👍</span>';
+    else if(correct>=5) msg.innerHTML='<span style="color:#F59E0B;font-weight:700;">Correct. N\'hésitez pas à consulter le guide intégré. 📖</span>';
+    else msg.innerHTML='<span style="color:#EF4444;font-weight:700;">À retravailler. Le guide en 20 chapitres est là pour vous aider. 📚</span>';
+  } else {
+    msg.textContent=answered+'/10 répondu'+(answered>1?'s':'');
+  }
+}
+
+showSlide(0);
+</script>
+</body>
+</html>
