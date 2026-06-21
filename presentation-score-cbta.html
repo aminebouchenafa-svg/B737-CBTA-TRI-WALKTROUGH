@@ -262,7 +262,7 @@ h3{font-size:26px;font-weight:700;margin-bottom:14px;}
     </div>
     <div class="feature-row">
       <div class="feature-num" style="background:#FFD70022;color:#FFD700;">7</div>
-      <div class="feature-content"><strong>Démo live & Quiz</strong><span>Simulation d'une session complète + 10 questions de validation</span></div>
+      <div class="feature-content"><strong>Démonstration live</strong><span>Simulation d'une session complète sur l'app</span></div>
       <span style="color:#475569;font-size:12px;font-weight:600;">15 min</span>
     </div>
   </div>
@@ -953,180 +953,6 @@ h3{font-size:26px;font-weight:700;margin-bottom:14px;}
   </div>
 </div>
 
-<!-- SLIDE 28 — QUIZ INTRO -->
-<div class="slide section-slide" id="s28">
-  <div class="section-num">❓</div>
-  <div style="text-align:center;">
-    <div class="section-tag" style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;">QUESTIONNAIRE</div>
-    <h1>Quiz de <span class="accent-blue">validation</span></h1>
-    <p class="subtitle" style="margin:0 auto;">10 questions pour vérifier vos acquis</p>
-  </div>
-</div>
-
-<!-- QUIZ Q1 -->
-<div class="slide" id="s29">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 1/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Combien de compétences ICAO sont évaluées dans le système CBTA ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,1)">
-      <div class="quiz-opt" data-a="wrong">6 compétences</div>
-      <div class="quiz-opt" data-a="correct">9 compétences</div>
-      <div class="quiz-opt" data-a="wrong">12 compétences</div>
-      <div class="quiz-opt" data-a="wrong">7 compétences</div>
-    </div>
-    <div class="quiz-feedback" id="qf1">Les 9 compétences ICAO sont : KNO, PRO, FPA, COM, LTW, PSD, SAW, WLM, FPM.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q2 -->
-<div class="slide" id="s30">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 2/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Quel est le score minimum requis pour valider une compétence selon l'échelle CBTA ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,2)">
-      <div class="quiz-opt" data-a="wrong">2 — En dessous du standard</div>
-      <div class="quiz-opt" data-a="correct">3 — Standard attendu</div>
-      <div class="quiz-opt" data-a="wrong">4 — Au-dessus du standard</div>
-      <div class="quiz-opt" data-a="wrong">1 — Suffisant pour un premier essai</div>
-    </div>
-    <div class="quiz-feedback" id="qf2">Le score 3 correspond au "standard attendu" — c'est le niveau minimum requis. Un score &lt; 3 déclenche un 2ème essai selon la réglementation EASA.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q3 -->
-<div class="slide" id="s31">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 3/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Que signifie FFA dans l'outil d'évaluation ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,3)">
-      <div class="quiz-opt" data-a="wrong">Final Flight Assessment</div>
-      <div class="quiz-opt" data-a="wrong">Flight Failure Analysis</div>
-      <div class="quiz-opt" data-a="correct">Fly, Focus, Act</div>
-      <div class="quiz-opt" data-a="wrong">First Flight Approach</div>
-    </div>
-    <div class="quiz-feedback" id="qf3">FFA = Fly (trajectoire OK ?), Focus (conscience situationnelle ?), Act (actions adaptées ?). Trois dimensions rapides pour évaluer la performance globale.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q4 -->
-<div class="slide" id="s32">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 4/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Que permet le mode COMPACT pendant un exercice ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,4)">
-      <div class="quiz-opt" data-a="wrong">Réduire le nombre de compétences évaluées à 3</div>
-      <div class="quiz-opt" data-a="correct">Voir toutes les compétences + FFA + notes sur un seul écran condensé</div>
-      <div class="quiz-opt" data-a="wrong">Compresser le temps de l'exercice</div>
-      <div class="quiz-opt" data-a="wrong">Enregistrer automatiquement les scores par défaut</div>
-    </div>
-    <div class="quiz-feedback" id="qf4">Le mode COMPACT affiche toutes les évaluations sur un seul écran condensé — parfait pour noter rapidement entre deux exercices sans naviguer entre les onglets.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q5 -->
-<div class="slide" id="s33">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 5/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Comment fonctionne l'auto-évaluation QR du stagiaire ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,5)">
-      <div class="quiz-opt" data-a="wrong">Le stagiaire remplit un formulaire papier</div>
-      <div class="quiz-opt" data-a="wrong">Le TRI entre les notes du stagiaire manuellement</div>
-      <div class="quiz-opt" data-a="correct">Le stagiaire scanne un QR, s'auto-évalue sur son téléphone, et communique un code à 9 chiffres</div>
-      <div class="quiz-opt" data-a="wrong">Le stagiaire se connecte au même compte que le TRI</div>
-    </div>
-    <div class="quiz-feedback" id="qf5">Le stagiaire scanne le QR avec son téléphone, note ses 9 compétences de 1 à 5, et obtient un code à 9 chiffres (un chiffre par compétence). Le TRI entre ce code dans SCORE pour comparer les deux évaluations.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q6 -->
-<div class="slide" id="s34">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 6/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Que représente la compétence "PSD" ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,6)">
-      <div class="quiz-opt" data-a="wrong">Pilot Skill Development</div>
-      <div class="quiz-opt" data-a="wrong">Procedure Standard Deviation</div>
-      <div class="quiz-opt" data-a="correct">Problem Solving & Decision Making</div>
-      <div class="quiz-opt" data-a="wrong">Performance Safety Data</div>
-    </div>
-    <div class="quiz-feedback" id="qf6">PSD = Problem Solving & Decision Making (Résolution de problèmes et prise de décision). Évalue la capacité du pilote à analyser une situation et prendre des décisions appropriées, notamment via la méthode FORDEC.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q7 -->
-<div class="slide" id="s35">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 7/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Quel outil du Fleet Dashboard identifie automatiquement les faiblesses systémiques de la flotte ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,7)">
-      <div class="quiz-opt" data-a="wrong">La liste des pilotes à risque</div>
-      <div class="quiz-opt" data-a="correct">La Heatmap des compétences</div>
-      <div class="quiz-opt" data-a="wrong">Le rapport PDF individuel</div>
-      <div class="quiz-opt" data-a="wrong">Le chrono de session</div>
-    </div>
-    <div class="quiz-feedback" id="qf7">La Heatmap montre visuellement les scores de TOUTE la flotte par compétence. Si une colonne est majoritairement rouge, c'est un problème systémique (formation, scénarios) plutôt qu'individuel.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q8 -->
-<div class="slide" id="s36">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 8/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Que se passe-t-il selon la réglementation EASA si un pilote obtient un score &lt; 3 au deuxième essai ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,8)">
-      <div class="quiz-opt" data-a="wrong">Il peut refaire un 3ème essai le même jour</div>
-      <div class="quiz-opt" data-a="wrong">Son licence est suspendue immédiatement</div>
-      <div class="quiz-opt" data-a="correct">Consignation dans les notes instructeur + briefing remédiation obligatoire avant progression de ligne</div>
-      <div class="quiz-opt" data-a="wrong">Rien de particulier, le TRI note simplement le score</div>
-    </div>
-    <div class="quiz-feedback" id="qf8">Un double échec (&lt; 3 aux deux essais) doit être consigné officiellement. Un briefing remédiation est obligatoire avant que le pilote puisse reprendre les vols de ligne. C'est une exigence EASA de traçabilité.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q9 — UPDATED: app-focused question -->
-<div class="slide" id="s37">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 9/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">Quels sont les 3 niveaux du modèle d'intervention TRI dans SCORE ?</div>
-    <div class="quiz-opts" onclick="quizCheck(event,9)">
-      <div class="quiz-opt" data-a="wrong">Observe, Note, Rapport</div>
-      <div class="quiz-opt" data-a="correct">ASK, RECOMMEND, TAKE CONTROL</div>
-      <div class="quiz-opt" data-a="wrong">Warning, Alert, Emergency</div>
-      <div class="quiz-opt" data-a="wrong">Vert, Orange, Rouge</div>
-    </div>
-    <div class="quiz-feedback" id="qf9">Les 3 niveaux sont ASK (questionner le pilote), RECOMMEND (recommander une action), TAKE CONTROL (prendre les commandes). Chaque intervention est horodatée dans SCORE.</div>
-  </div>
-</div>
-
-<!-- QUIZ Q10 -->
-<div class="slide" id="s38">
-  <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:800;color:#3B82F6;letter-spacing:4px;">QUESTION 10/10</div>
-  <div class="quiz-card">
-    <div class="quiz-q">SCORE CBTA stocke les données des pilotes :</div>
-    <div class="quiz-opts" onclick="quizCheck(event,10)">
-      <div class="quiz-opt" data-a="wrong">Sur un serveur cloud sécurisé</div>
-      <div class="quiz-opt" data-a="wrong">Sur les serveurs de la compagnie aérienne</div>
-      <div class="quiz-opt" data-a="correct">Localement sur l'appareil du TRI (aucun serveur externe)</div>
-      <div class="quiz-opt" data-a="wrong">Sur Google Drive</div>
-    </div>
-    <div class="quiz-feedback" id="qf10">SCORE est une PWA qui stocke toutes les données en localStorage sur l'appareil du TRI. Aucune donnée ne transite par un serveur. Confidentialité totale — les données pilotes restent entre les mains du TRI.</div>
-  </div>
-</div>
-
-<!-- SLIDE FINAL — RÉSULTAT QUIZ -->
-<div class="slide" id="s39">
-  <div style="text-align:center;">
-    <div style="font-size:14px;font-weight:800;color:#10B981;letter-spacing:6px;margin-bottom:20px;">RÉSULTAT</div>
-    <h1>Votre score : <span id="quiz-score" class="accent-green">0</span><span style="color:#475569;">/10</span></h1>
-    <div id="quiz-msg" style="font-size:20px;color:#94A3B8;margin:20px 0 40px;">Répondez aux questions pour voir votre score</div>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;" id="quiz-dots"></div>
-    <div class="highlight">
-      <p style="font-size:22px;font-style:normal;font-weight:700;color:#F1F5F9;">"L'outil ne remplace pas l'instructeur — il amplifie son expertise."</p>
-      <div class="source" style="margin-top:16px;">Merci pour votre attention. Questions ?</div>
-    </div>
-  </div>
-</div>
-
 <!-- SLIDE — MERCI -->
 <div class="slide" id="s40">
   <div style="text-align:center;">
@@ -1165,11 +991,6 @@ h3{font-size:26px;font-weight:700;margin-bottom:14px;}
 const slides=document.querySelectorAll('.slide');
 const total=slides.length;
 let cur=0;
-let quizAnswers={};
-let quizStartSlide=-1;
-// find quiz start
-slides.forEach((s,i)=>{if(s.querySelector('.quiz-card')&&quizStartSlide<0)quizStartSlide=i;});
-
 document.getElementById('total').textContent=total;
 
 function showSlide(n){
@@ -1191,46 +1012,6 @@ document.addEventListener('keydown',e=>{
   if(e.key==='End')showSlide(total-1);
 });
 
-
-function quizCheck(e,qNum){
-  const opt=e.target.closest('.quiz-opt');
-  if(!opt||quizAnswers[qNum]!==undefined) return;
-  const isCorrect=opt.dataset.a==='correct';
-  quizAnswers[qNum]=isCorrect;
-  opt.classList.add(isCorrect?'correct':'wrong');
-  if(!isCorrect){
-    opt.closest('.quiz-opts').querySelector('[data-a="correct"]').classList.add('correct');
-  }
-  const fb=document.getElementById('qf'+qNum);
-  fb.style.display='block';
-  fb.style.background=isCorrect?'#10B98122':'#EF444422';
-  fb.style.color=isCorrect?'#10B981':'#F87171';
-  updateQuizScore();
-}
-
-function updateQuizScore(){
-  const answered=Object.keys(quizAnswers).length;
-  const correct=Object.values(quizAnswers).filter(v=>v).length;
-  document.getElementById('quiz-score').textContent=correct;
-  let dots='';
-  for(let i=1;i<=10;i++){
-    if(quizAnswers[i]!==undefined){
-      dots+='<span style="display:inline-block;width:24px;height:24px;border-radius:50%;line-height:24px;text-align:center;font-size:12px;font-weight:900;background:'+(quizAnswers[i]?'#10B98133;color:#10B981':'#EF444433;color:#EF4444')+';">'+i+'</span>';
-    } else {
-      dots+='<span style="display:inline-block;width:24px;height:24px;border-radius:50%;line-height:24px;text-align:center;font-size:12px;font-weight:700;background:#1E293B;color:#475569;">'+i+'</span>';
-    }
-  }
-  document.getElementById('quiz-dots').innerHTML=dots;
-  const msg=document.getElementById('quiz-msg');
-  if(answered===10){
-    if(correct>=9) msg.innerHTML='<span style="color:#10B981;font-weight:700;">Excellent ! Vous maîtrisez le CBTA et SCORE. 🎯</span>';
-    else if(correct>=7) msg.innerHTML='<span style="color:#3B82F6;font-weight:700;">Très bien ! Quelques points à revoir. 👍</span>';
-    else if(correct>=5) msg.innerHTML='<span style="color:#F59E0B;font-weight:700;">Correct. N\'hésitez pas à consulter le guide intégré. 📖</span>';
-    else msg.innerHTML='<span style="color:#EF4444;font-weight:700;">À retravailler. Le guide en 20 chapitres est là pour vous aider. 📚</span>';
-  } else {
-    msg.textContent=answered+'/10 répondu'+(answered>1?'s':'');
-  }
-}
 
 showSlide(0);
 </script>
