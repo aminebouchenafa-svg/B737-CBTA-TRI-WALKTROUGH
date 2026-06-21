@@ -1,5 +1,5 @@
-const CACHE = 'score-v35';
-const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png', './presentation-score-cbta.html', './score-logo-presentation.png', './manifest-presentation.json'];
+const CACHE = 'score-v36';
+const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png', './presentation-score-cbta.html', './score-logo-presentation.png', './manifest-presentation.json', './apple-touch-icon-presentation.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
