@@ -486,10 +486,6 @@ h3{font-size:26px;font-weight:700;margin-bottom:14px;}
       <div class="title">Notes vocales & marqueurs</div>
       <div class="desc">Enregistrez une observation vocalement. Posez un marqueur d'événement horodaté ("le CPT a oublié le briefing approche").</div>
     </div>
-    <div class="card card-accent" style="border-left-color:#06B6D4;">
-      <div class="title">Verrouillage écran</div>
-      <div class="desc">Verrouillez la tablette pendant les phases critiques pour éviter les touches accidentelles. Un tap sur le cadenas pour déverrouiller.</div>
-    </div>
   </div>
 </div>
 
@@ -552,15 +548,15 @@ h3{font-size:26px;font-weight:700;margin-bottom:14px;}
     <div class="card">
       <div class="title" style="color:#EF4444;">Score 2 — En dessous du standard</div>
       <div class="desc" style="line-height:1.7;">
-        <p>Le CPT effectue une approche ILS CAT I à LFPO. À 500ft, il est en mode V/S au lieu de G/S. L'avion passe sous le glide, le PM annonce "glide" mais le CPT ne réagit pas pendant 5 secondes.</p>
-        <p style="margin-top:8px;color:#EF4444;font-weight:700;">→ Mauvaise gestion de l'automatisme, correction tardive, conscience dégradée du mode FMA.</p>
+        <p>Approche ILS RWY 27 à LFPO, radar vectors. Le CPT arme le mode APP mais ne vérifie pas le FMA. Le LOC capture, puis le G/S s'engage — il ne l'annonce pas au PM. À 1000ft, l'avion n'est pas configuré (flaps 15 au lieu de 30), le CPT réagit tardivement et force la configuration en dessous de Vref+20.</p>
+        <p style="margin-top:8px;color:#EF4444;font-weight:700;">→ Monitoring FMA absent, annonces omises, configuration tardive, approche non stabilisée à 1000ft.</p>
       </div>
     </div>
     <div class="card">
       <div class="title" style="color:#10B981;">Score 4 — Au-dessus du standard</div>
       <div class="desc" style="line-height:1.7;">
-        <p>Le CPT effectue la même approche. Il vérifie le FMA à chaque transition de mode, annonce "LOC captured, G/S alive" au PM. Il anticipe la configuration et stabilise l'avion à 1000ft.</p>
-        <p style="margin-top:8px;color:#10B981;font-weight:700;">→ Gestion proactive de l'automatisme, annonces claires, stabilisation anticipée.</p>
+        <p>Même approche ILS RWY 27. Le CPT annonce "APP armed" au PM en arment le mode. À chaque transition FMA, il verbalise : "LOC captured… G/S alive… G/S captured". Il anticipe la configuration flaps 30 et le gear down. L'avion est stabilisé à 1000ft, tous les critères respectés.</p>
+        <p style="margin-top:8px;color:#10B981;font-weight:700;">→ Monitoring FMA systématique, annonces claires à chaque transition, configuration anticipée, approche stabilisée.</p>
       </div>
     </div>
   </div>
@@ -643,10 +639,6 @@ h3{font-size:26px;font-weight:700;margin-bottom:14px;}
     <div class="card card-accent" style="border-left-color:#F59E0B;">
       <div class="title">Marqueurs d'événements</div>
       <div class="desc">Flag rapide avec horodatage pendant le vol. "À 00:23:15 — le CPT a oublié le briefing approche." Visible dans l'onglet Events du debrief.</div>
-    </div>
-    <div class="card card-accent" style="border-left-color:#8B5CF6;">
-      <div class="title">Verrouillage écran</div>
-      <div class="desc">Verrouillez la tablette pendant les phases critiques pour éviter les touches accidentelles. Un tap sur le cadenas pour déverrouiller.</div>
     </div>
     <div class="card card-accent" style="border-left-color:#06B6D4;">
       <div class="title">Mode Training</div>
@@ -1189,7 +1181,7 @@ function showSlide(n){
   document.getElementById('prev-btn').style.visibility=cur===0?'hidden':'visible';
   document.getElementById('next-btn').textContent=cur===total-1?'Fin':'Suivant →';
 }
-function nextSlide(){if(cur<total-1)showSlide(cur+1);}
+function nextSlide(){if(cur<total-1)showSlide(cur+1);else showSlide(0);}
 function prevSlide(){if(cur>0)showSlide(cur-1);}
 
 document.addEventListener('keydown',e=>{
