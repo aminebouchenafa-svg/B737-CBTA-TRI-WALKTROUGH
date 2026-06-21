@@ -1,5 +1,5 @@
-const CACHE = 'score-v24';
-const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-gold.png'];
+const CACHE = 'score-v29';
+const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -18,6 +18,9 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  const url = new URL(e.request.url);
+  const isAppPage = url.pathname.endsWith('/') || url.pathname.endsWith('/index.html');
+
   if (e.request.mode === 'navigate') {
     e.respondWith(
       fetch(e.request).then(response => {
@@ -26,7 +29,7 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE).then(c => c.put(e.request, clone));
         }
         return response;
-      }).catch(() => caches.match('./index.html'))
+      }).catch(() => isAppPage ? caches.match('./index.html') : fetch(e.request))
     );
   } else {
     e.respondWith(
@@ -38,7 +41,7 @@ self.addEventListener('fetch', e => {
             caches.open(CACHE).then(c => c.put(e.request, clone));
           }
           return response;
-        }).catch(() => caches.match('./index.html'));
+        });
       })
     );
   }
