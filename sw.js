@@ -1,5 +1,5 @@
-const CACHE = 'score-v32';
-const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png'];
+const CACHE = 'score-v33';
+const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png', './presentation-score-cbta.html', './score-logo-presentation.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -29,7 +29,11 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE).then(c => c.put(e.request, clone));
         }
         return response;
-      }).catch(() => isAppPage ? caches.match('./index.html') : fetch(e.request))
+      }).catch(() => caches.match(e.request).then(cached => {
+        if (cached) return cached;
+        if (isAppPage) return caches.match('./index.html');
+        return new Response('Offline', {status: 503});
+      }))
     );
   } else {
     e.respondWith(
