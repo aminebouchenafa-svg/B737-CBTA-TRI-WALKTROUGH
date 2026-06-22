@@ -1,5 +1,5 @@
-const CACHE = 'score-v38';
-const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png', './presentation-score-cbta.html', './score-logo-presentation.png', './manifest-presentation.json', './apple-touch-icon-presentation.png'];
+const CACHE = 'score-v39';
+const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png', './presentation-score-cbta.html', './score-logo-presentation.png', './manifest-presentation.json', './apple-touch-icon-presentation.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
@@ -45,7 +45,7 @@ self.addEventListener('fetch', e => {
             caches.open(CACHE).then(c => c.put(e.request, clone));
           }
           return response;
-        });
+        }).catch(() => new Response('Offline', {status: 503}));
       })
     );
   }

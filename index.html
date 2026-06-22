@@ -5976,6 +5976,8 @@ Identifiant ou mot de passe incorrect
 </div>
 </div>
 <script>
+function _esc(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+function _jParse(key,fallback){try{return JSON.parse(localStorage.getItem(key)||fallback);}catch(e){console.warn('Corrupted data for '+key+', resetting');return JSON.parse(fallback);}}
 // ── IndexedDB for large PDF storage ──
 const _PDFDB_NAME='cbta_pdfstore';
 const _PDFDB_VER=1;
@@ -9443,9 +9445,9 @@ function showEditSession(){
   document.getElementById('modal-edit-session').style.display='flex';
 }
 function saveEditSession(){
-  const newSession = document.getElementById('edit-session-name').value || state.sessionName;
-  const newPilot   = document.getElementById('edit-pilot-name').value  || state.pilotName;
-  const newFO      = document.getElementById('edit-fo-name').value;
+  const newSession = _esc(document.getElementById('edit-session-name').value || state.sessionName);
+  const newPilot   = _esc(document.getElementById('edit-pilot-name').value  || state.pilotName);
+  const newFO      = _esc(document.getElementById('edit-fo-name').value);
   state.sessionName    = newSession;
   state.pilotName      = newPilot;
   state.foName         = newFO;
@@ -9507,13 +9509,13 @@ if(fl){
 
 // ── HOME ---──────────────────────────────────────────────────────────────────
 function startSession(){
-state.sessionName    = document.getElementById('inp-session').value || "Session";
-state.pilotName      = document.getElementById('inp-cpt').value || "Pilote";
-state.foName         = document.getElementById('inp-fo').value || "";
-state.instructorName = (document.getElementById('inp-instructor')||{}).value || state.currentUser || "TRI";
-state.pilotMatricule = ((document.getElementById('inp-mat-cpt')||{}).value||'').trim().toUpperCase();
-state.foMatricule    = ((document.getElementById('inp-mat-fo')||{}).value||'').trim().toUpperCase();
-state.compagnie      = ((document.getElementById('inp-company')||{}).value||'').trim();
+state.sessionName    = _esc(document.getElementById('inp-session').value || "Session");
+state.pilotName      = _esc(document.getElementById('inp-cpt').value || "Pilote");
+state.foName         = _esc(document.getElementById('inp-fo').value || "");
+state.instructorName = _esc((document.getElementById('inp-instructor')||{}).value || state.currentUser || "TRI");
+state.pilotMatricule = _esc(((document.getElementById('inp-mat-cpt')||{}).value||'').trim().toUpperCase());
+state.foMatricule    = _esc(((document.getElementById('inp-mat-fo')||{}).value||'').trim().toUpperCase());
+state.compagnie      = _esc(((document.getElementById('inp-company')||{}).value||'').trim());
 state.pilotRole      = _s1Role;
 state.foRole         = _s2Role;
 state.triCheckGrades = {};
@@ -10910,7 +10912,7 @@ const PHRASE_DB = {
   }
 };
 
-const _phraseFreq = JSON.parse(localStorage.getItem('cbta_phrase_freq')||'{}');
+const _phraseFreq = _jParse('cbta_phrase_freq','{}');
 function _bumpPhraseFreq(phrase){
   _phraseFreq[phrase] = (_phraseFreq[phrase]||0) + 1;
   localStorage.setItem('cbta_phrase_freq', JSON.stringify(_phraseFreq));
@@ -11909,7 +11911,7 @@ function lookupPilotByMat(mat,seat){
     if(ficheBtn) ficheBtn.style.display='none';
     return;
   }
-  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const hist=_jParse('cbta_history','[]');
   const matKey=seat==='cpt'?'pilotMatricule':'foMatricule';
   const nameKey=seat==='cpt'?'pilotName':'foName';
   const sessions=hist.filter(s=>(s[matKey]||'').toUpperCase()===mat);
@@ -11926,7 +11928,7 @@ function lookupPilotByMat(mat,seat){
 }
 function updatePilotDB(session){
   if(!session.pilotMatricule&&!session.foMatricule) return;
-  const db=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');
+  const db=_jParse('cbta_pilotdb','{}');
   function upsert(mat,name,company){
     mat=(mat||'').toUpperCase();if(!mat) return;
     if(!db[mat]) db[mat]={name,company:company||'',sessionCount:0,lastSeen:''};
@@ -11943,7 +11945,7 @@ function showPilotCard(seat){
   const matInp=document.getElementById(seat==='cpt'?'inp-mat-cpt':'inp-mat-fo');
   const mat=(matInp?matInp.value:'').trim().toUpperCase();
   if(!mat) return;
-  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const hist=_jParse('cbta_history','[]');
   const matKey=seat==='cpt'?'pilotMatricule':'foMatricule';
   const nameKey=seat==='cpt'?'pilotName':'foName';
   const avgKey=seat==='cpt'?'compAvgs':'compAvgsFo';
@@ -12350,7 +12352,7 @@ var _planEditId = null;
 var _planEditExIds = [];
 var _planAddMode = false;
 
-function getPlans(){ return JSON.parse(localStorage.getItem('cbta_plans')||'[]'); }
+function getPlans(){ return _jParse('cbta_plans','[]'); }
 function _savePlans(plans){ localStorage.setItem('cbta_plans', JSON.stringify(plans)); }
 
 function showPlans(){
@@ -12983,7 +12985,7 @@ const cs=ex[csKey]||{};
 Object.entries(cs).forEach(([cid,cd])=>{
 if(!cd) return;
 if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
-(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else ct[cid].neg++;});
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else if(o.s==="-")ct[cid].neg++;});
 });
 });
 const avgs={};
@@ -13365,7 +13367,7 @@ function shareOverlayFile(){
 }
 
 function printRapportFromHistory(idx){
-  const hist = JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const hist = _jParse('cbta_history','[]');
   const session = hist[idx];
   if(!session || !session.rapportHTML){
     alert(_lang==='en'?'PDF report not available for this session.\n(Sessions saved before the update do not contain the full report.)':'Rapport PDF non disponible pour cette session.\n(Les sessions enregistrées avant la mise à jour ne contiennent pas le rapport complet.)');
@@ -13562,7 +13564,7 @@ return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;">${grid}
 }
 
 function showPilotProgression(pilotName){
-const history=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const history=_jParse('cbta_history','[]');
 // Filter sessions for this pilot
 const pilotSessions=history.filter(s=>(s.pilotName||'').toLowerCase()===pilotName.toLowerCase()||(s.foName||'').toLowerCase()===pilotName.toLowerCase()).sort((a,b)=>{
   const pa=(a.date||'').split('/').reverse().join('');
@@ -13667,7 +13669,7 @@ const cs=ex[csKey]||{};
 Object.entries(cs).forEach(([cid,cd])=>{
 if(!cd) return;
 if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
-(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else ct[cid].neg++;});
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else if(o.s==="-")ct[cid].neg++;});
 });
 });
 const avgs={};
@@ -14489,7 +14491,7 @@ function showProfCheck(){
   });
   renderProfCheck();
   const pcsub=document.getElementById('profcheck-sub');
-  if(pcsub) pcsub.textContent=(state.company||'')+(state.company?' — ':'')+'B737 NG';
+  if(pcsub) pcsub.textContent=(state.compagnie||'')+(state.compagnie?' — ':'')+'B737 NG';
   showScreen('profcheck');
 }
 
@@ -15108,7 +15110,7 @@ const cs=ex[csKey]||{};
 Object.entries(cs).forEach(([cid,cd])=>{
 if(!cd) return;
 if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
-(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else ct[cid].neg++;});
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else if(o.s==="-")ct[cid].neg++;});
 });
 });
 const avgs={}; let sumAll=0,countAll=0;
@@ -15130,12 +15132,14 @@ const weakComps = COMPETENCIES.filter(c=>avgs[c.id]>0&&avgs[c.id]<3.5);
 const strongComps = COMPETENCIES.filter(c=>avgs[c.id]>=4);
 
 const allNeg = closed.reduce((s,ex)=>{
-const all=Object.assign({}, ex.cs||{}, ex.csfo||{});
-return s + Object.values(all).reduce((ss,cd)=>ss+(cd?(cd.obs||[]).filter(o=>o.s==="-").length:0),0);
+const cptObs=Object.values(ex.cs||{}).reduce((ss,cd)=>ss+(cd?(cd.obs||[]).filter(o=>o.s==="-").length:0),0);
+const foObs=Object.values(ex.csfo||{}).reduce((ss,cd)=>ss+(cd?(cd.obs||[]).filter(o=>o.s==="-").length:0),0);
+return s + cptObs + foObs;
 },0);
 const allPos = closed.reduce((s,ex)=>{
-const all=Object.assign({}, ex.cs||{}, ex.csfo||{});
-return s + Object.values(all).reduce((ss,cd)=>ss+(cd?(cd.obs||[]).filter(o=>o.s==="+").length:0),0);
+const cptObs=Object.values(ex.cs||{}).reduce((ss,cd)=>ss+(cd?(cd.obs||[]).filter(o=>o.s==="+").length:0),0);
+const foObs=Object.values(ex.csfo||{}).reduce((ss,cd)=>ss+(cd?(cd.obs||[]).filter(o=>o.s==="+").length:0),0);
+return s + cptObs + foObs;
 },0);
 
 // Root causes summary
@@ -15805,7 +15809,7 @@ function renderDebRapport(el){
   const closed = state.exercises.filter(e=>e.closed);
   const now = new Date();
   const dateStr = now.toLocaleDateString(_lang==='fr'?'fr-FR':'en-GB');
-  const company = state.company||'';
+  const company = state.compagnie||'';
   const instructor = state.instructorName||state.currentUser||'TRI';
 
   let total=0,count=0;
@@ -16290,12 +16294,12 @@ const st=exStats(ex);
 return {title:sc?sc.title:'?', avg:st?st.avg.toFixed(1):'-', page:sc?sc.page:''};
 })
 };
-const hist = JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const hist = _jParse('cbta_history','[]');
 hist.unshift(session);
 if(hist.length>100) hist.pop();
 localStorage.setItem('cbta_history', JSON.stringify(hist));
 updatePilotDB(session);
-} catch(e){ console.log('History save error:', e); }
+} catch(e){ console.log('History save error:', e); alert('⚠️ Erreur de sauvegarde ! Espace de stockage insuffisant. Exportez vos données (JSON) puis supprimez d\'anciennes sessions.'); }
 }
 
 var _histTab='dashboard';
@@ -16306,7 +16310,7 @@ el.classList.add('active');
 renderHistContent();
 }
 function showHistory(){
-const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const hist=_jParse('cbta_history','[]');
 const sub=document.getElementById('dashboard-sub');
 if(sub) sub.textContent='TRI '+( state.currentUser||'')+ ' · '+hist.length+' session'+(hist.length>1?'s':'');
 renderHistContent();
@@ -16323,7 +16327,7 @@ function cl(v){return v>=4.5?t('cl_exemplaire'):v>=3.5?t('cl_au_dessus'):v>=2.5?
 
 function renderDashboard(){
 const el=document.getElementById('history-content');
-const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const hist=_jParse('cbta_history','[]');
 if(!hist.length){
 el.innerHTML='<div style="text-align:center;padding:50px;color:#64748B;"><div style="font-size:40px;margin-bottom:12px;">📊</div><div style="font-size:14px;">'+t('hist_no_sessions')+'</div></div>';
 return;
@@ -16519,7 +16523,7 @@ el.innerHTML=h;
 
 function renderSessionsList(){
 const el=document.getElementById('history-content');
-const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const hist=_jParse('cbta_history','[]');
 if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">'+t('hist_no_sessions')+'</div>';return;}
 let h='<div style="padding:14px;">';
 hist.forEach((s,i)=>{
@@ -16626,7 +16630,7 @@ function showImportSessionModal(){
 function lookupImportPilot(){
   const mat=(document.getElementById('imp-mat-cpt').value||'').trim().toUpperCase();
   if(mat.length<3)return;
-  const db=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');
+  const db=_jParse('cbta_pilotdb','{}');
   const found=db[mat];
   if(found){
     const nameEl=document.getElementById('imp-name-cpt');
@@ -16685,7 +16689,7 @@ function submitImportedSession(){
     notes,exercises:[],strong:[],weak:[],sessionCRM:{},sessionCRMNotes:''
   };
   var _finishImport=function(){
-    const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+    const hist=_jParse('cbta_history','[]');
     hist.unshift(session);
     localStorage.setItem('cbta_history',JSON.stringify(hist));
     updatePilotDB(session);
@@ -16722,7 +16726,7 @@ function _dataUrlToBlob(dataUrl){
 
 var _viewPdfBlobUrl=null;
 function viewImportedPDF(idx){
-  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const hist=_jParse('cbta_history','[]');
   const s=hist[idx];
   if(!s||((!s.hasPDF)&&(!s.importedPDF))){alert(_lang==='en'?'No file for this session.':'Aucun fichier pour cette session.');return;}
   var fileType=s.pdfType||'pdf';
@@ -16764,7 +16768,7 @@ function viewImportedPDF(idx){
 
 function renderPilotesList(){
 const el=document.getElementById('history-content');
-const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const hist=_jParse('cbta_history','[]');
 if(!hist.length){el.innerHTML='<div style="text-align:center;padding:40px;color:#64748B;">'+t('hist_no_pilots')+'</div>';return;}
 const pilotes={};
 function _addPilot(key,name,matricule,company,sc,compAvgs,session){
@@ -16850,7 +16854,7 @@ document.querySelectorAll('.pilot-card').forEach(c=>{
 }
 
 function showComparaisonPilote(key,name){
-const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const hist=_jParse('cbta_history','[]');
 const keyUpper=(key||'').toUpperCase();
 const nameLower=(name||key||'').toLowerCase().trim();
 const sessions=hist.map((s,histIdx)=>{
@@ -16953,7 +16957,7 @@ return r;
 
 function envoyerRapportEmail(idx){
 try {
-const hist = JSON.parse(localStorage.getItem('cbta_history')||'[]');
+const hist = _jParse('cbta_history','[]');
 const s = hist[idx]; if(!s) return;
 const score = parseFloat(s.avgScore)||0;
 const level = score>=4.5?(_lang==='en'?'EXEMPLARY':'EXEMPLAIRE'):score>=3.5?(_lang==='en'?'ABOVE STANDARD':'AU-DESSUS DU STANDARD'):score>=2.5?'STANDARD':score>=1.5?(_lang==='en'?'BELOW STANDARD':'SOUS-STANDARD'):(_lang==='en'?'UNACCEPTABLE':'INACCEPTABLE');
@@ -17085,7 +17089,7 @@ if(!cd) return;
 if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
 (cd.obs||[]).forEach(o=>{
 if(o.s==="+")ct[cid].pos++;
-else{ct[cid].neg++;ct[cid].negObs.push(o.text);}
+else if(o.s==="-"){ct[cid].neg++;ct[cid].negObs.push(o.text);}
 });
 });
 });
@@ -17179,7 +17183,7 @@ const cs=ex[csKey]||{};
 Object.entries(cs).forEach(([cid,cd])=>{
 if(!cd) return;
 if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
-(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else{ct[cid].neg++;ct[cid].negObs.push(o.text);}});
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else if(o.s==="-"){ct[cid].neg++;ct[cid].negObs.push(o.text);}});
 });
 });
 const avgs={};
@@ -17255,7 +17259,7 @@ const cs=ex[csKey]||{};
 Object.entries(cs).forEach(([cid,cd])=>{
 if(!cd) return;
 if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
-(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else{ct[cid].neg++;ct[cid].negObs.push(o.text);}});
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else if(o.s==="-"){ct[cid].neg++;ct[cid].negObs.push(o.text);}});
 });
 });
 const avgs={};
@@ -17337,7 +17341,7 @@ const cs=ex[csKey]||{};
 Object.entries(cs).forEach(([cid,cd])=>{
 if(!cd) return;
 if(cd.g>0){ct[cid].total+=cd.g;ct[cid].count++;}
-(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else ct[cid].neg++;});
+(cd.obs||[]).forEach(o=>{if(o.s==="+")ct[cid].pos++;else if(o.s==="-")ct[cid].neg++;});
 });
 });
 const avgs={};
@@ -17546,7 +17550,7 @@ const found = CREDENTIALS.find(c=>c.user.toLowerCase()===u && c.pass===p);
 if(found){
 document.getElementById('login-error').style.display='none';
 document.body.classList.remove('login-active');
-state.currentUser = found.name;
+state.currentUser = _esc(found.name);
 // Pre-fill instructor name on home
 const instrInp = document.getElementById('inp-instructor');
 if(instrInp) instrInp.value = found.name;
@@ -17588,8 +17592,8 @@ if(uInp) uInp.addEventListener('keydown', e=>{ if(e.key==='Enter') document.getE
 
 // ── EXPORT / IMPORT JSON ─────────────────────────────────────────────────────
 function exportHistoryJSON(){
-  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
-  const db=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');
+  const hist=_jParse('cbta_history','[]');
+  const db=_jParse('cbta_pilotdb','{}');
   const data={version:1,exported:new Date().toISOString(),history:hist,pilotdb:db};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
@@ -17601,7 +17605,7 @@ function exportHistoryJSON(){
 }
 
 function exportSessionJSON(){
-  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const hist=_jParse('cbta_history','[]');
   const session=hist[0];
   if(!session){showToast(_lang==='en'?'❌ No saved session to export':'❌ Aucune session enregistrée à exporter');return;}
   const dateStr=new Date().toISOString().slice(0,10);
@@ -17623,7 +17627,7 @@ function exportSessionJSON(){
 }
 
 function exportPilotDossier(key,name,matricule){
-  const hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+  const hist=_jParse('cbta_history','[]');
   const keyUp=key.toUpperCase();
   const keyLow=key.toLowerCase();
   const pilotSessions=hist.filter(s=>{
@@ -17662,14 +17666,17 @@ function importHistoryJSON(inp){
         showToast(_lang==='en'?'❌ Unrecognized file format':'❌ Format de fichier non reconnu');return;
       }
       if(!incoming.length){showToast(_lang==='en'?'❌ No session in this file':'❌ Aucune session dans ce fichier');return;}
-      const existing=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+      const existing=_jParse('cbta_history','[]');
       // Toujours fusionner — dédupliquer par date+sessionName+pilotName
       const merged=[...incoming,...existing];
       const seen=new Set();
       const deduped=merged.filter(s=>{const k=(s.date||'')+(s.time||'')+(s.sessionName||'')+(s.pilotName||'');if(seen.has(k))return false;seen.add(k);return true;});
-      deduped.sort((a,b)=>new Date(b.date)-new Date(a.date));
+      deduped.sort((a,b)=>{
+        const pD=s=>{if(!s)return 0;const p=s.split('/');return p.length===3?new Date(p[2],p[1]-1,p[0]).getTime():new Date(s).getTime()||0;};
+        return pD(b.date)-pD(a.date);
+      });
       localStorage.setItem('cbta_history',JSON.stringify(deduped));
-      if(data.pilotdb){const edb=JSON.parse(localStorage.getItem('cbta_pilotdb')||'{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
+      if(data.pilotdb){const edb=_jParse('cbta_pilotdb','{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
       if(data.type==='pilot_dossier'){
         showToast(_lang==='en'?'✅ Dossier imported — '+incoming.length+' session(s) merged · Total: '+deduped.length:'✅ Dossier importé — '+incoming.length+' session(s) fusionnées · Total: '+deduped.length);
       } else {
@@ -18102,13 +18109,14 @@ function importSelfEvalCode(seat){
 <script>
 (function _migratePdfsToIDB(){
   try{
-    var hist=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+    var hist=_jParse('cbta_history','[]');
     var changed=false;
     var pending=[];
     hist.forEach(function(s,i){
       if(s.importedPDF&&!s.pdfKey){
-        var key='pdf_migrated_'+i+'_'+Date.now();
-        pending.push({idx:i,key:key,data:s.importedPDF});
+        var uid=(s.date||'')+'_'+(s.time||'')+'_'+(s.pilotName||'')+'_'+i;
+        var key='pdf_migrated_'+uid+'_'+Date.now();
+        pending.push({uid:uid,date:s.date,time:s.time,pilotName:s.pilotName,sessionName:s.sessionName,key:key,data:s.importedPDF});
       }
     });
     if(!pending.length)return;
@@ -18117,12 +18125,13 @@ function importSelfEvalCode(seat){
       var store=tx.objectStore(_PDFDB_STORE);
       pending.forEach(function(p){store.put(p.data,p.key);});
       tx.oncomplete=function(){
-        var h2=JSON.parse(localStorage.getItem('cbta_history')||'[]');
+        var h2=_jParse('cbta_history','[]');
         pending.forEach(function(p){
-          if(h2[p.idx]){
-            h2[p.idx].pdfKey=p.key;
-            h2[p.idx].hasPDF=true;
-            delete h2[p.idx].importedPDF;
+          var match=h2.find(function(s){return s.date===p.date&&s.time===p.time&&s.pilotName===p.pilotName&&s.sessionName===p.sessionName&&s.importedPDF&&!s.pdfKey;});
+          if(match){
+            match.pdfKey=p.key;
+            match.hasPDF=true;
+            delete match.importedPDF;
           }
         });
         localStorage.setItem('cbta_history',JSON.stringify(h2));
