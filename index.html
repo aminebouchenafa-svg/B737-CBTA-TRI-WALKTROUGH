@@ -14913,8 +14913,10 @@ function renderProfCheck(){
   // CPT / FO tab switcher
   h+='<div style="display:flex;gap:8px;margin-bottom:14px;">';
   var cptActive=_pcSeat==='cpt'; var foActive=_pcSeat==='fo';
-  h+='<button onclick="_pcSeat=\'cpt\';renderProfCheck()" style="flex:1;padding:12px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid '+(cptActive?'#3B82F6':'#3B82F644')+';background:'+(cptActive?'#3B82F622':'transparent')+';color:'+(cptActive?'#3B82F6':'#3B82F688')+';">CPT — '+(pc.pilotName||state.pilotName||'Commandant')+'</button>';
-  h+='<button onclick="_pcSeat=\'fo\';renderProfCheck()" style="flex:1;padding:12px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid '+(foActive?'#10B981':'#10B98144')+';background:'+(foActive?'#10B98122':'transparent')+';color:'+(foActive?'#10B981':'#10B98188')+';">FO — '+(state.foName||'Premier Officier')+'</button>';
+  var _cptName=state.pilotName||'Commandant';
+  var _foName=state.foName||'Premier Officier';
+  h+='<button onclick="_pcSeat=\'cpt\';renderProfCheck()" style="flex:1;padding:12px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid '+(cptActive?'#3B82F6':'#3B82F644')+';background:'+(cptActive?'#3B82F622':'transparent')+';color:'+(cptActive?'#3B82F6':'#3B82F688')+';">CPT — '+_cptName+'</button>';
+  h+='<button onclick="_pcSeat=\'fo\';renderProfCheck()" style="flex:1;padding:12px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid '+(foActive?'#10B981':'#10B98144')+';background:'+(foActive?'#10B98122':'transparent')+';color:'+(foActive?'#10B981':'#10B98188')+';">FO — '+_foName+'</button>';
   h+='</div>';
 
   // Mandatory items
