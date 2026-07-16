@@ -14472,11 +14472,11 @@ const PROFCHECK_ITEMS = {
 
 if(!state.profCheck) state.profCheck = {
   date:'', pilotName:'', position:'CAPT', staffId:'', license:'', aircraft:'B737 NG',
-  grades:{}, lvoDate:'', remarks:'', result:'', coExaminer:''
+  grades:{}, gradesFO:{}, lvoDate:'', remarks:'', result:'', coExaminer:''
 };
 
 function showProfCheck(){
-  if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},lvoDate:'',remarks:'',result:'',coExaminer:'',signatures:{tri:'',pilot:''}};
+  if(!state.profCheck) state.profCheck={date:'',pilotName:'',position:'CAPT',staffId:'',license:'',aircraft:'B737 NG',grades:{},gradesFO:{},lvoDate:'',remarks:'',result:'',coExaminer:'',signatures:{tri:'',pilot:''}};
   if(!state.profCheck.pilotName) state.profCheck.pilotName = state.pilotName||'';
   if(!state.profCheck.date) state.profCheck.date = new Date().toISOString().slice(0,10);
   if(!state.profCheck.grades) state.profCheck.grades={};
@@ -14839,9 +14839,12 @@ function toggleSessionTimer(){
     state.sessionRunning=false;
   }
 }
+var _pcSeat = 'cpt';
 function setPCGrade(id, val){
   if(!state.profCheck.grades) state.profCheck.grades={};
-  state.profCheck.grades[id] = state.profCheck.grades[id]===val ? null : val;
+  if(!state.profCheck.gradesFO) state.profCheck.gradesFO={};
+  const g = _pcSeat==='fo' ? state.profCheck.gradesFO : state.profCheck.grades;
+  g[id] = g[id]===val ? null : val;
   renderProfCheck();
 }
 
@@ -14852,7 +14855,8 @@ function setPCResult(r){
 
 function renderProfCheck(){
   const pc = state.profCheck;
-  const grades = pc.grades||{};
+  if(!pc.gradesFO) pc.gradesFO={};
+  const grades = _pcSeat==='fo' ? (pc.gradesFO||{}) : (pc.grades||{});
   const GRADE_COLORS = {5:'#3B82F6',4:'#10B981',3:'#F59E0B',2:'#F97316',1:'#EF4444','/':'#64748B'};
   const GRADE_VALS = ['5','4','3','2','1','/'];
 
@@ -14905,6 +14909,13 @@ function renderProfCheck(){
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">LICENSE N°</div><input type="text" value="'+(pc.license||'')+'" onchange="state.profCheck.license=this.value" placeholder="License et numéro" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='<div><div style="font-size:10px;color:#94A3B8;margin-bottom:3px;">'+(_lang==='en'?'AIRCRAFT':'AERONEF')+'</div><input type="text" value="'+(pc.aircraft||'B737 NG')+'" onchange="state.profCheck.aircraft=this.value" style="width:100%;background:#141920;border:1px solid #2D3748;color:#F1F5F9;border-radius:6px;padding:7px 9px;font-size:13px;"></div>';
   h+='</div></div>';
+
+  // CPT / FO tab switcher
+  h+='<div style="display:flex;gap:8px;margin-bottom:14px;">';
+  var cptActive=_pcSeat==='cpt'; var foActive=_pcSeat==='fo';
+  h+='<button onclick="_pcSeat=\'cpt\';renderProfCheck()" style="flex:1;padding:12px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid '+(cptActive?'#3B82F6':'#3B82F644')+';background:'+(cptActive?'#3B82F622':'transparent')+';color:'+(cptActive?'#3B82F6':'#3B82F688')+';">CPT — '+(pc.pilotName||state.pilotName||'Commandant')+'</button>';
+  h+='<button onclick="_pcSeat=\'fo\';renderProfCheck()" style="flex:1;padding:12px;border-radius:9px;font-size:13px;font-weight:800;cursor:pointer;border:2px solid '+(foActive?'#10B981':'#10B98144')+';background:'+(foActive?'#10B98122':'transparent')+';color:'+(foActive?'#10B981':'#10B98188')+';">FO — '+(state.foName||'Premier Officier')+'</button>';
+  h+='</div>';
 
   // Mandatory items
   h+=sectionHeader('MANDATORY ITEMS AS PF','#EF4444');
@@ -15424,7 +15435,10 @@ ${[
 </div>
 <div style="position:relative;">
 <textarea id="concl-note-area" class="note-area" style="height:90px;" placeholder="${_lang==='en'?'Recommendation for next session, points to work on line, qualification decision...':'Recommandation pour la prochaine session, points a travailler en ligne, decision de qualification...'}" onchange="state.debConclNotes=this.value" oninput="showAutocomplete(this,'conclusion')" onfocus="hideAutocomplete()">${state.debConclNotes}</textarea>
-<button onclick="browsePhrases(document.getElementById('concl-note-area'),'conclusion')" style="position:absolute;top:6px;right:6px;padding:3px 8px;border-radius:6px;background:#FBBF2422;border:1px solid #FBBF24;color:#FBBF24;font-size:9px;font-weight:800;cursor:pointer;">⚡ Phrases</button>
+<div style="position:absolute;top:6px;right:6px;display:flex;gap:4px;">
+<button onclick="browsePhrases(document.getElementById('concl-note-area'),'conclusion')" style="padding:3px 8px;border-radius:6px;background:#FBBF2422;border:1px solid #FBBF24;color:#FBBF24;font-size:9px;font-weight:800;cursor:pointer;">⚡ Phrases</button>
+<button onclick="state.debConclNotes='';const ta=document.getElementById('concl-note-area');if(ta){ta.value='';ta.dispatchEvent(new Event('change'));}" style="padding:3px 8px;border-radius:6px;background:#EF444422;border:1px solid #EF4444;color:#EF4444;font-size:9px;font-weight:800;cursor:pointer;">✕</button>
+</div>
 </div>
 </div>
 
