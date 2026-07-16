@@ -14959,10 +14959,9 @@ function renderProfCheck(){
   if(!state.profCheck.signatures) state.profCheck.signatures={tri:'',pilot:''};
   var pcSigs=state.profCheck.signatures;
   var pcInst=pc.coExaminer||state.instructorName||'TRI';
-  var pcPilot=pc.pilotName||state.pilotName||'—';
-  // Trainee color depends on position being evaluated
-  var pcPos=pc.position||'CAPT';
-  var pilotCol=pcPos==='FO'?'#10B981':pcPos==='TRI'?'#F59E0B':'#3B82F6';
+  var pcPilot=_pcSeat==='fo'?(state.foName||'—'):(state.pilotName||'—');
+  var pcPos=_pcSeat==='fo'?'FO':'CPT';
+  var pilotCol=_pcSeat==='fo'?'#10B981':'#3B82F6';
   // Examiner always violet
   var examCol='#8B5CF6';
   h+='<div style="background:#0F1218;border:1px solid #334155;border-radius:10px;padding:12px;margin-top:14px;">';
