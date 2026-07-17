@@ -16283,13 +16283,15 @@ function renderDebRapport(el){
     </tr></thead>
     <tbody>
     ${closed.map(ex=>{
+      const _sc=ALL_SC?ALL_SC.find(s=>s.id===ex.sid):null;
+      const _exTitle=_sc?(_lang==='en'&&_sc.title_en?_sc.title_en:_sc.title):ex.sid||'—';
       const st=exStats(ex);
       const avg=st?st.avg:0;
       const gc=avg>=4.5?'#3B82F6':avg>=3.5?'#10B981':avg>=2.5?'#F59E0B':avg>=1.5?'#F97316':'#EF4444';
       const mand=ex.mandatory?`<span style="background:#EF444422;color:#EF4444;border:1px solid #EF444444;border-radius:3px;font-size:9px;padding:1px 4px;">MAND</span>`:
                  `<span style="background:#3B82F622;color:#3B82F6;border:1px solid #3B82F644;border-radius:3px;font-size:9px;padding:1px 4px;">TRAIN</span>`;
       return `<tr style="border-bottom:1px solid #1E2530;">
-        <td style="padding:6px 8px;color:#CBD5E1;">${ex.title}</td>
+        <td style="padding:6px 8px;color:#CBD5E1;">${_exTitle}</td>
         <td style="padding:6px 8px;text-align:center;">${mand}</td>
         <td style="padding:6px 8px;text-align:right;font-weight:800;color:${avg>0?gc:'#475569'};">${avg>0?avg.toFixed(1):'—'}</td>
       </tr>`;
