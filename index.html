@@ -552,12 +552,15 @@ Identifiant ou mot de passe incorrect
   </div>
 </div>
 <!-- Intervention Model Bar -->
-<div id="intervention-bar" style="display:flex;gap:4px;padding:5px 10px;background:#050810;border-bottom:1px solid #1E2530;flex-shrink:0;align-items:stretch;">
-  <button onclick="addIntervention('ask')" style="flex:1;padding:5px 2px;border-radius:7px;background:#10B98122;border:1px solid #10B98188;color:#10B981;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟢 ASK<br><span id="cnt-ask" style="font-size:15px;font-weight:900;">0</span></button>
-  <button onclick="addIntervention('recommend')" style="flex:1;padding:5px 2px;border-radius:7px;background:#F9731622;border:1px solid #F9731688;color:#F97316;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟠 REC<br><span id="cnt-recommend" style="font-size:15px;font-weight:900;">0</span></button>
-  <button onclick="addIntervention('takectl')" style="flex:1;padding:5px 2px;border-radius:7px;background:#EF444422;border:1px solid #EF444488;color:#EF4444;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🔴 CTL<br><span id="cnt-takectl" style="font-size:15px;font-weight:900;">0</span></button>
-  <button onclick="showFlagModal()" style="flex-shrink:0;padding:5px 10px;border-radius:7px;background:#F59E0B22;border:1px solid #F59E0B88;color:#F59E0B;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;">🚩 FLAG<br><span id="cnt-flags" style="font-size:15px;font-weight:900;">0</span></button>
-  <button onclick="startVoiceNote()" id="mic-btn" style="flex-shrink:0;padding:5px 10px;border-radius:7px;background:#8B5CF622;border:1px solid #8B5CF688;color:#8B5CF6;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;">🎙 VOICE<br><span style="font-size:15px;font-weight:900;" id="cnt-voice">0</span></button>
+<div id="intervention-bar" style="background:#050810;border-bottom:1px solid #1E2530;flex-shrink:0;">
+  <div style="font-size:7px;font-weight:800;color:#8B5CF6;letter-spacing:1.5px;text-align:center;padding:3px 10px 0;opacity:0.8;">INTERVENTIONS TRI — si le PM n'intervient pas</div>
+  <div style="display:flex;gap:4px;padding:3px 10px 5px;align-items:stretch;">
+    <button onclick="addIntervention('ask')" style="flex:1;padding:5px 2px;border-radius:7px;background:#10B98122;border:1px solid #10B98188;color:#10B981;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟢 ASK<br><span id="cnt-ask" style="font-size:15px;font-weight:900;">0</span></button>
+    <button onclick="addIntervention('recommend')" style="flex:1;padding:5px 2px;border-radius:7px;background:#F9731622;border:1px solid #F9731688;color:#F97316;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟠 REC<br><span id="cnt-recommend" style="font-size:15px;font-weight:900;">0</span></button>
+    <button onclick="addIntervention('takectl')" style="flex:1;padding:5px 2px;border-radius:7px;background:#EF444422;border:1px solid #EF444488;color:#EF4444;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🔴 CTL<br><span id="cnt-takectl" style="font-size:15px;font-weight:900;">0</span></button>
+    <button onclick="showFlagModal()" style="flex-shrink:0;padding:5px 10px;border-radius:7px;background:#F59E0B22;border:1px solid #F59E0B88;color:#F59E0B;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;">🚩 FLAG<br><span id="cnt-flags" style="font-size:15px;font-weight:900;">0</span></button>
+    <button onclick="startVoiceNote()" id="mic-btn" style="flex-shrink:0;padding:5px 10px;border-radius:7px;background:#8B5CF622;border:1px solid #8B5CF688;color:#8B5CF6;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;">🎙 VOICE<br><span style="font-size:15px;font-weight:900;" id="cnt-voice">0</span></button>
+  </div>
 </div>
 <!-- Flag quick modal -->
 <div id="modal-flag" style="display:none;position:fixed;inset:0;z-index:9200;background:#000000AA;align-items:center;justify-content:center;">
@@ -2121,10 +2124,29 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#141B26;border:2px solid #10B98155;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🎯 CHAPITRE 13 — SUIVI PÉDAGOGIQUE AVANCÉ</div>
 
+<!-- PM first / TRI second hierarchy -->
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#8B5CF6;letter-spacing:1.5px;margin-bottom:8px;">⚡ QUI INTERVIENT — PM D'ABORD, TRI ENSUITE</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Le modèle ASK → REC → CTL repose sur une <strong style="color:#F1F5F9;">hiérarchie claire</strong> : c'est d'abord le <strong style="color:#FF61C7;">PM (Pilot Monitoring)</strong> qui doit intervenir. Le TRI ne prend le relais que si le PM reste passif.</div>
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:8px;">
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#FF61C7;letter-spacing:1px;margin-bottom:4px;">👤 RÔLE PM — INTERVENTION PRIORITAIRE</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Le PM surveille en permanence. Si le PF dévie des standards, le PM intervient en premier : question (ASK), puis recommandation (REC), et prise de contrôle si nécessaire (CTL).</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #FF61C744;padding-left:7px;margin-top:5px;line-height:1.6;">Ex PM : <span style="color:#94A3B8;">"FO, tu as vu l'altitude ?" (ASK) → "Je recommande de remonter à FL150 maintenant." (REC) → "Mon contrôle." (CTL si inaction)</span></div>
+    </div>
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#AAFF00;letter-spacing:1px;margin-bottom:4px;">🧑‍✈️ RÔLE TRI — SI LE PM NE RÉAGIT PAS</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Si le PM reste passif face à la déviation, le TRI intervient. La barre d'interventions dans l'exercice est <strong style="color:#AAFF00;">réservée aux interventions TRI</strong> — elle enregistre uniquement les actions de l'instructeur, pas celles des pilotes.</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #AAFF0044;padding-left:7px;margin-top:5px;line-height:1.6;">Ex TRI : <span style="color:#94A3B8;">"Cpt, j'ai une remarque — le PM n'a pas challengé la déviation de vitesse. Je suggère de revérifier ensemble." (REC TRI)</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#64748B;background:#0F1218;border:1px solid #1E2530;border-radius:5px;padding:6px 9px;">📌 Règle d'or : <strong style="color:#F1F5F9;">laissez le PM intervenir en premier.</strong> Si le PM corrige la situation, c'est une opportunité pédagogique précieuse. N'intervenez en tant que TRI que si la sécurité est compromise ou si le PM reste passif.</div>
+</div>
+
 <!-- Intervention Model Tracker -->
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Barre d'interventions permanente visible pendant chaque exercice. Enregistre chaque action de l'instructeur avec horodatage et nom de l'exercice.</div>
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER (TRI)</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Barre d'interventions TRI permanente visible pendant chaque exercice. Enregistre chaque action de l'instructeur avec horodatage et nom de l'exercice.</div>
   <div style="display:flex;flex-direction:column;gap:10px;">
     <div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:9px 11px;">
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Question posée au stagiaire — intervention douce</span></div>
@@ -4613,10 +4635,29 @@ Identifiant ou mot de passe incorrect
 <div class="guide-sec" style="background:#141B26;border:2px solid #10B98155;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
 <div style="font-size:13px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:12px;">🎯 CHAPTER 13 — ADVANCED INSTRUCTOR MONITORING</div>
 
+<!-- PM first / TRI second hierarchy -->
+<div style="background:#8B5CF611;border:1px solid #8B5CF633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#8B5CF6;letter-spacing:1.5px;margin-bottom:8px;">⚡ WHO INTERVENES — PM FIRST, TRI IF NEEDED</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">The ASK → REC → CTL model follows a <strong style="color:#F1F5F9;">clear hierarchy</strong>: it is the <strong style="color:#FF61C7;">PM (Pilot Monitoring)</strong> who should intervene first. The TRI only steps in if the PM remains passive.</div>
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:8px;">
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#FF61C7;letter-spacing:1px;margin-bottom:4px;">👤 PM ROLE — FIRST RESPONDER</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">The PM continuously monitors the flight. If the PF deviates from standards, the PM intervenes first: a question (ASK), then a verbal recommendation (REC), and taking control if necessary (CTL).</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #FF61C744;padding-left:7px;margin-top:5px;line-height:1.6;">Ex PM: <span style="color:#94A3B8;">"FO, do you see the altitude?" (ASK) → "I recommend climbing back to FL150 now." (REC) → "My controls." (CTL if no action)</span></div>
+    </div>
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#AAFF00;letter-spacing:1px;margin-bottom:4px;">🧑‍✈️ TRI ROLE — INTERVENES ONLY IF PM DOESN'T</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">If the PM fails to react to the deviation, the TRI steps in. The intervention bar in the exercise is <strong style="color:#AAFF00;">reserved for TRI interventions only</strong> — it tracks instructor actions, not pilot actions.</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #AAFF0044;padding-left:7px;margin-top:5px;line-height:1.6;">Ex TRI: <span style="color:#94A3B8;">"Captain, I have a concern — the PM did not challenge the speed deviation. I suggest we review together." (TRI REC)</span></div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#64748B;background:#0F1218;border:1px solid #1E2530;border-radius:5px;padding:6px 9px;">📌 Golden rule: <strong style="color:#F1F5F9;">let the PM intervene first.</strong> If the PM corrects the situation, that is a valuable learning moment. Only step in as TRI if safety is at risk or the PM remains passive.</div>
+</div>
+
 <!-- Intervention Model Tracker -->
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
-  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">A permanent intervention bar visible during every exercise. Records each instructor action with a timestamp and exercise name.</div>
+  <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER (TRI)</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">A permanent TRI intervention bar visible during every exercise. Records each instructor action with a timestamp and exercise name.</div>
   <div style="display:flex;flex-direction:column;gap:10px;">
     <div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:9px 11px;">
       <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Question posed to the trainee — soft intervention</span></div>
