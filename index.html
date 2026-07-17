@@ -562,6 +562,19 @@ Identifiant ou mot de passe incorrect
     <button onclick="startVoiceNote()" id="mic-btn" style="flex-shrink:0;padding:5px 10px;border-radius:7px;background:#8B5CF622;border:1px solid #8B5CF688;color:#8B5CF6;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;">🎙 VOICE<br><span style="font-size:15px;font-weight:900;" id="cnt-voice">0</span></button>
   </div>
 </div>
+<!-- PM Pilot Intervention Bar -->
+<div id="pm-bar" style="background:#050810;border-bottom:1px solid #1E2530;flex-shrink:0;">
+  <div id="pm-bar-label" style="font-size:7px;font-weight:800;color:#FF61C7;letter-spacing:1.5px;text-align:center;padding:3px 10px 0;opacity:0.8;">INTERVENTIONS PM — CPT</div>
+  <div style="display:flex;gap:4px;padding:3px 10px 5px;align-items:stretch;">
+    <button onclick="addPilotIntervention('ask')" style="flex:1;padding:5px 2px;border-radius:7px;background:#10B98122;border:1px solid #10B98188;color:#10B981;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟢 ASK<br><span id="cnt-pm-ask" style="font-size:15px;font-weight:900;">0</span></button>
+    <button onclick="addPilotIntervention('recommend')" style="flex:1;padding:5px 2px;border-radius:7px;background:#F9731622;border:1px solid #F9731688;color:#F97316;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🟠 REC<br><span id="cnt-pm-recommend" style="font-size:15px;font-weight:900;">0</span></button>
+    <button onclick="addPilotIntervention('takectl')" style="flex:1;padding:5px 2px;border-radius:7px;background:#EF444422;border:1px solid #EF444488;color:#EF4444;font-size:9px;font-weight:800;cursor:pointer;text-align:center;line-height:1.3;letter-spacing:0.5px;">🔴 CTL<br><span id="cnt-pm-takectl" style="font-size:15px;font-weight:900;">0</span></button>
+    <div style="flex-shrink:0;padding:4px 8px;display:flex;flex-direction:column;justify-content:center;gap:2px;font-size:8px;font-weight:800;color:#64748B;border-left:1px solid #1E2530;">
+      <span id="cnt-cpt-pm" style="color:#3B82F6;">CPT 0</span>
+      <span id="cnt-fo-pm" style="color:#10B981;">FO 0</span>
+    </div>
+  </div>
+</div>
 <!-- Flag quick modal -->
 <div id="modal-flag" style="display:none;position:fixed;inset:0;z-index:9200;background:#000000AA;align-items:center;justify-content:center;">
   <div style="background:#0F1520;border:2px solid #F59E0B;border-radius:14px;padding:20px;margin:20px;width:calc(100% - 40px);max-width:400px;">
@@ -898,28 +911,28 @@ Identifiant ou mot de passe incorrect
 <!-- SOMMAIRE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — 20 CHAPITRES</div>
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — 20 CHAPITRES <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap pour aller au chapitre</span></div>
   <div style="display:flex;flex-direction:column;gap:6px;">
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">1 · Démarrage en 4 étapes</span>
-    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">2 · Grille de notation CBTA</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">3 · Les 9 compétences</span>
-    <span style="background:#F9731622;border:1px solid #F9731655;color:#F97316;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">4 · Anatomie d'un exercice &amp; LOFT</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">5 · Scorer pendant la séance</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">6 · TEM : Menaces &amp; Erreurs</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">7 · FFA : Fly Focus Act</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">8 · CRM : Ressources équipage</span>
-    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">9 · Le Débrief complet</span>
-    <span style="background:#F59E0B22;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">10 · Astuces Pro &amp; Raccourcis</span>
-    <span style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">11 · Notation Juste</span>
-    <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">12 · Mode Offline</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">13 · Suivi Pédagogique Avancé</span>
-    <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">14 · Outils Cliniques Avancés (EBT)</span>
-    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">15 · Phrases-Réflexes</span>
-    <span style="background:#FBBF2422;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">16 · Mode Compact</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">17 · Mode Focus</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">18 · Fiche Pilote</span>
-    <span style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">19 · Fleet Dashboard</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">20 · QR Auto-évaluation</span>
+    <button onclick="scrollToGuideChapter(1)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">1 · Démarrage en 4 étapes ↓</button>
+    <button onclick="scrollToGuideChapter(2)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">2 · Grille de notation CBTA ↓</button>
+    <button onclick="scrollToGuideChapter(3)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">3 · Les 9 compétences ↓</button>
+    <button onclick="scrollToGuideChapter(4)" style="background:#F9731622;border:1px solid #F9731655;color:#F97316;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">4 · Anatomie d'un exercice &amp; LOFT ↓</button>
+    <button onclick="scrollToGuideChapter(5)" style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">5 · Scorer pendant la séance ↓</button>
+    <button onclick="scrollToGuideChapter(6)" style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">6 · TEM : Menaces &amp; Erreurs ↓</button>
+    <button onclick="scrollToGuideChapter(7)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">7 · FFA : Fly Focus Act ↓</button>
+    <button onclick="scrollToGuideChapter(8)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">8 · CRM : Ressources équipage ↓</button>
+    <button onclick="scrollToGuideChapter(9)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">9 · Le Débrief complet ↓</button>
+    <button onclick="scrollToGuideChapter(10)" style="background:#F59E0B22;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">10 · Astuces Pro &amp; Raccourcis ↓</button>
+    <button onclick="scrollToGuideChapter(11)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">11 · Notation Juste ↓</button>
+    <button onclick="scrollToGuideChapter(12)" style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">12 · Mode Offline ↓</button>
+    <button onclick="scrollToGuideChapter(13)" style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">13 · Suivi Pédagogique Avancé ↓</button>
+    <button onclick="scrollToGuideChapter(14)" style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">14 · Outils Cliniques Avancés (EBT) ↓</button>
+    <button onclick="scrollToGuideChapter(15)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">15 · Phrases-Réflexes ↓</button>
+    <button onclick="scrollToGuideChapter(16)" style="background:#FBBF2422;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">16 · Mode Compact ↓</button>
+    <button onclick="scrollToGuideChapter(17)" style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">17 · Mode Focus ↓</button>
+    <button onclick="scrollToGuideChapter(18)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">18 · Fiche Pilote ↓</button>
+    <button onclick="scrollToGuideChapter(19)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">19 · Fleet Dashboard ↓</button>
+    <button onclick="scrollToGuideChapter(20)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">20 · QR Auto-évaluation ↓</button>
   </div>
 </div>
 
@@ -2141,6 +2154,34 @@ Identifiant ou mot de passe incorrect
     </div>
   </div>
   <div style="font-size:10px;color:#64748B;background:#0F1218;border:1px solid #1E2530;border-radius:5px;padding:6px 9px;">📌 Règle d'or : <strong style="color:#F1F5F9;">laissez le PM intervenir en premier.</strong> Si le PM corrige la situation, c'est une opportunité pédagogique précieuse. N'intervenez en tant que TRI que si la sécurité est compromise ou si le PM reste passif.</div>
+</div>
+
+<!-- PF/PM per exercise tracking -->
+<div style="background:#FF61C711;border:1px solid #FF61C733;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#FF61C7;letter-spacing:1.5px;margin-bottom:8px;">✈️ SUIVI PF / PM PAR EXERCICE</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Dans chaque exercice, indiquez quel pilote est <strong style="color:#F97316;">PF (Pilot Flying)</strong> et quel pilote est <strong style="color:#8B5CF6;">PM (Pilot Monitoring)</strong>. Le rôle s'affiche dans la tab pilote et est enregistré à la clôture de l'exercice.</div>
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:8px;">
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#F97316;letter-spacing:1px;margin-bottom:4px;">🔶 BADGE PF</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Appuyez sur le badge <span style="background:#F9731622;color:#F97316;border:1px solid #F9731688;border-radius:4px;font-size:9px;font-weight:900;padding:1px 5px;">PF</span> dans la tab CPT ou FO pour basculer le rôle. Le PF = pilote aux commandes.</div>
+    </div>
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:4px;">🟣 BADGE PM</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Le badge <span style="background:#8B5CF622;color:#8B5CF6;border:1px solid #8B5CF688;border-radius:4px;font-size:9px;font-weight:900;padding:1px 5px;">PM</span> s'affiche sur l'autre pilote. Le PM = pilote qui surveille et intervient en premier si déviation. Quand CPT = PF → FO = PM automatiquement.</div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#64748B;background:#0F1218;border:1px solid #1E2530;border-radius:5px;padding:6px 9px;">📌 Le rôle PF/PM est sauvegardé à la clôture de l'exercice. Visible dans le débrief onglet <strong style="color:#F59E0B;">Events</strong>.</div>
+</div>
+
+<!-- Per-pilot ASK/REC/CTL bar -->
+<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">📊 BARRE D'INTERVENTIONS PAR PILOTE</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">En plus de la barre TRI, une barre <strong style="color:#FF61C7;">PM</strong> est disponible pour enregistrer les interventions du pilote Monitoring actif (CPT ou FO selon le rôle attribué).</div>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:6px;padding:7px 10px;font-size:11px;color:#94A3B8;line-height:1.5;"><span style="color:#8B5CF6;font-weight:700;">Barre violet INTERVENTIONS TRI</span> → actions de l'instructeur (si PM ne réagit pas)</div>
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:6px;padding:7px 10px;font-size:11px;color:#94A3B8;line-height:1.5;"><span style="color:#FF61C7;font-weight:700;">Barre rose INTERVENTIONS PM</span> → actions du pilote PM (CPT ou FO selon rôle). Les compteurs CPT et FO s'affichent séparément.</div>
+  </div>
+  <div style="margin-top:7px;font-size:10px;color:#64748B;">→ Dans le débrief, l'onglet <strong style="color:#F59E0B;">Events</strong> affiche les compteurs TRI, CPT PM et FO PM séparément.</div>
 </div>
 
 <!-- Intervention Model Tracker -->
@@ -3479,28 +3520,28 @@ Identifiant ou mot de passe incorrect
 <!-- TABLE OF CONTENTS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 TABLE OF CONTENTS — 20 CHAPTERS</div>
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 TABLE OF CONTENTS — 20 CHAPTERS <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap to jump</span></div>
   <div style="display:flex;flex-direction:column;gap:6px;">
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">1 · 4-Step Quick Start</span>
-    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">2 · CBTA Grading Scale</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">3 · The 9 Competencies</span>
-    <span style="background:#F9731622;border:1px solid #F9731655;color:#F97316;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">4 · Exercise Anatomy &amp; LOFT</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">5 · Scoring During Session</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">6 · TEM: Threats &amp; Errors</span>
-    <span style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">7 · FFA: Fly Focus Act</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">8 · CRM: Crew Resources</span>
-    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">9 · The Full Debrief</span>
-    <span style="background:#F59E0B22;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">10 · Pro Tips &amp; Shortcuts</span>
-    <span style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">11 · Fair Grading</span>
-    <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">12 · Offline Mode</span>
-    <span style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">13 · Advanced Instructor Monitoring</span>
-    <span style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">14 · Advanced Clinical Tools (EBT)</span>
-    <span style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">15 · Quick Phrases</span>
-    <span style="background:#FBBF2422;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">16 · Compact Mode</span>
-    <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">17 · Focus Mode</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">18 · Pilot Profile Card</span>
-    <span style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">19 · Fleet Dashboard</span>
-    <span style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;">20 · QR Self-Assessment</span>
+    <button onclick="scrollToGuideChapter(1)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">1 · 4-Step Quick Start ↓</button>
+    <button onclick="scrollToGuideChapter(2)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">2 · CBTA Grading Scale ↓</button>
+    <button onclick="scrollToGuideChapter(3)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">3 · The 9 Competencies ↓</button>
+    <button onclick="scrollToGuideChapter(4)" style="background:#F9731622;border:1px solid #F9731655;color:#F97316;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">4 · Exercise Anatomy &amp; LOFT ↓</button>
+    <button onclick="scrollToGuideChapter(5)" style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">5 · Scoring During Session ↓</button>
+    <button onclick="scrollToGuideChapter(6)" style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">6 · TEM: Threats &amp; Errors ↓</button>
+    <button onclick="scrollToGuideChapter(7)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">7 · FFA: Fly Focus Act ↓</button>
+    <button onclick="scrollToGuideChapter(8)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">8 · CRM: Crew Resources ↓</button>
+    <button onclick="scrollToGuideChapter(9)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">9 · The Full Debrief ↓</button>
+    <button onclick="scrollToGuideChapter(10)" style="background:#F59E0B22;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">10 · Pro Tips &amp; Shortcuts ↓</button>
+    <button onclick="scrollToGuideChapter(11)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">11 · Fair Grading ↓</button>
+    <button onclick="scrollToGuideChapter(12)" style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">12 · Offline Mode ↓</button>
+    <button onclick="scrollToGuideChapter(13)" style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">13 · Advanced Instructor Monitoring ↓</button>
+    <button onclick="scrollToGuideChapter(14)" style="background:#06B6D422;border:1px solid #06B6D455;color:#06B6D4;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">14 · Advanced Clinical Tools (EBT) ↓</button>
+    <button onclick="scrollToGuideChapter(15)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">15 · Quick Phrases ↓</button>
+    <button onclick="scrollToGuideChapter(16)" style="background:#FBBF2422;border:1px solid #FBBF2455;color:#FBBF24;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">16 · Compact Mode ↓</button>
+    <button onclick="scrollToGuideChapter(17)" style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">17 · Focus Mode ↓</button>
+    <button onclick="scrollToGuideChapter(18)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">18 · Pilot Profile Card ↓</button>
+    <button onclick="scrollToGuideChapter(19)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">19 · Fleet Dashboard ↓</button>
+    <button onclick="scrollToGuideChapter(20)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">20 · QR Self-Assessment ↓</button>
   </div>
 </div>
 
@@ -4652,6 +4693,34 @@ Identifiant ou mot de passe incorrect
     </div>
   </div>
   <div style="font-size:10px;color:#64748B;background:#0F1218;border:1px solid #1E2530;border-radius:5px;padding:6px 9px;">📌 Golden rule: <strong style="color:#F1F5F9;">let the PM intervene first.</strong> If the PM corrects the situation, that is a valuable learning moment. Only step in as TRI if safety is at risk or the PM remains passive.</div>
+</div>
+
+<!-- PF/PM per exercise tracking -->
+<div style="background:#FF61C711;border:1px solid #FF61C733;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#FF61C7;letter-spacing:1.5px;margin-bottom:8px;">✈️ PF / PM TRACKING PER EXERCISE</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">For each exercise, indicate which pilot is <strong style="color:#F97316;">PF (Pilot Flying)</strong> and which is <strong style="color:#8B5CF6;">PM (Pilot Monitoring)</strong>. The role badge is shown in the pilot tab and is saved when the exercise is closed.</div>
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:8px;">
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#F97316;letter-spacing:1px;margin-bottom:4px;">🔶 PF BADGE</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Tap the <span style="background:#F9731622;color:#F97316;border:1px solid #F9731688;border-radius:4px;font-size:9px;font-weight:900;padding:1px 5px;">PF</span> badge in the CPT or FO tab to toggle the role. PF = pilot at the controls.</div>
+    </div>
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#8B5CF6;letter-spacing:1px;margin-bottom:4px;">🟣 PM BADGE</div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;">The <span style="background:#8B5CF622;color:#8B5CF6;border:1px solid #8B5CF688;border-radius:4px;font-size:9px;font-weight:900;padding:1px 5px;">PM</span> badge shows on the other pilot. PM = pilot who monitors and intervenes first if there is a deviation. When CPT = PF → FO = PM automatically.</div>
+    </div>
+  </div>
+  <div style="font-size:10px;color:#64748B;background:#0F1218;border:1px solid #1E2530;border-radius:5px;padding:6px 9px;">📌 The PF/PM role is saved when the exercise is closed. Visible in the debrief under the <strong style="color:#F59E0B;">Events</strong> tab.</div>
+</div>
+
+<!-- Per-pilot ASK/REC/CTL bar -->
+<div style="background:#3B82F611;border:1px solid #3B82F633;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
+  <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1.5px;margin-bottom:8px;">📊 PER-PILOT INTERVENTION BARS</div>
+  <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">In addition to the TRI bar, a <strong style="color:#FF61C7;">PM</strong> bar records interventions by the active Pilot Monitoring (CPT or FO based on the assigned role).</div>
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:6px;padding:7px 10px;font-size:11px;color:#94A3B8;line-height:1.5;"><span style="color:#8B5CF6;font-weight:700;">Purple bar — INTERVENTIONS TRI</span> → instructor actions (when PM doesn't react)</div>
+    <div style="background:#0F1218;border:1px solid #1E2530;border-radius:6px;padding:7px 10px;font-size:11px;color:#94A3B8;line-height:1.5;"><span style="color:#FF61C7;font-weight:700;">Pink bar — INTERVENTIONS PM</span> → PM pilot actions (CPT or FO based on role). CPT and FO counters are tracked separately.</div>
+  </div>
+  <div style="margin-top:7px;font-size:10px;color:#64748B;">→ In the debrief, the <strong style="color:#F59E0B;">Events</strong> tab shows TRI, CPT PM, and FO PM counters separately.</div>
 </div>
 
 <!-- Intervention Model Tracker -->
@@ -9189,6 +9258,8 @@ debRootCauses:{}, debNotes:{}, debConclNotes:"", sessionCRM:{}, sessionCRMNotes:
 triCheckGrades:{}, triCheckNotes:"", triRecommendation:"", triCheckObs:{},
 profCheck: null,
 interventions:[], flags:[], voiceNotes:[],
+exPilotRole:{cpt:'pf',fo:'pm'},
+pilotInterventions:{cpt:{ask:0,recommend:0,takectl:0},fo:{ask:0,recommend:0,takectl:0}},
 sessionObjectives:{},
 pilotObjectives:{},
 foObjectives:{},
@@ -9377,20 +9448,29 @@ function buildPilotTabsHtml(onChangeSuffix, ex){
   }
   const avgCpt = _pAvg('cs');
   const avgFo  = _pAvg('csfo');
-  if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;"><span style="font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</span>${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}</div>`;
+  const _exRole = state.exPilotRole||{cpt:'pf',fo:'pm'};
+  const _cptFR = _exRole.cpt||'pf';
+  const _foFR  = _exRole.fo||'pm';
+  const _pfC='#F97316', _pmC='#8B5CF6';
+  function _frBadge(seat, role){
+    const col = role==='pf'?_pfC:_pmC;
+    const next = role==='pf'?'pm':'pf';
+    return `<span onclick="event.stopPropagation();setPilotFlightRole('${seat}','${next}')" style="font-size:8px;font-weight:900;background:${col}22;color:${col};border:1px solid ${col}88;border-radius:4px;padding:1px 5px;cursor:pointer;letter-spacing:0.5px;flex-shrink:0;">${role.toUpperCase()}</span>`;
+  }
+  if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;"><span style="font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</span><div style="display:flex;align-items:center;gap:8px;">${_frBadge('cpt',_cptFR)}${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}</div></div>`;
   return `<div class="pilot-tabs" style="margin-bottom:16px;">
 <button class="pilot-tab ${cls1} ${state.activePilot==="cpt"?"active":""}" onclick="setPilot('cpt')${onChangeSuffix}" style="border-right:1px solid #1E2530;">
 <span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l1}</span>
 <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
 <span style="font-size:14px;">${r1} — ${state.pilotName}</span>
-${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}
+<div style="display:flex;align-items:center;gap:5px;">${_frBadge('cpt',_cptFR)}${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}</div>
 </div>
 </button>
 <button class="pilot-tab ${cls2} ${state.activePilot==="fo"?"active":""}" onclick="setPilot('fo')${onChangeSuffix}">
 <span style="font-size:11px;letter-spacing:1px;display:block;margin-bottom:2px;opacity:0.7;">${l2}</span>
 <div style="display:flex;align-items:center;justify-content:space-between;gap:6px;">
 <span style="font-size:14px;">${r2} — ${state.foName}</span>
-${avgFo!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgFo)]||'#64748B'};">${avgFo.toFixed(1)}</span>`:''}
+<div style="display:flex;align-items:center;gap:5px;">${_frBadge('fo',_foFR)}${avgFo!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgFo)]||'#64748B'};">${avgFo.toFixed(1)}</span>`:''}</div>
 </div>
 </button>
 </div>`;
@@ -10158,6 +10238,7 @@ if(wasOpen && ex.timeLimit && ex.openedAt){
   ex.timeDeltaSec = undefined;
 }
 ex.closed = !ex.closed;
+if(ex.closed) ex.pilotFlightRole = {...(state.exPilotRole||{cpt:'pf',fo:'pm'})};
 const btn = document.getElementById('btn-close-ex');
 btn.textContent = ex.closed ? t('exercise_reopen') : t('exercise_close');
 btn.className = ex.closed ? "btn btn-warn" : "btn btn-success";
@@ -15569,24 +15650,115 @@ function addIntervention(type){
 function saveIntervention(){
   const type = window._pendingIntType;
   const exName = window._pendingIntExName||'?';
+  const agent = window._pendingIntAgent || 'tri';
   const note = (document.getElementById('int-modal-input').value||'').trim();
   const ts = Date.now();
   const elapsed = state.sessionStart ? Math.round((ts - state.sessionStart)/1000) : 0;
-  state.interventions.push({type, exName, note, ts, elapsed});
+  state.interventions.push({type, exName, note, ts, elapsed, agent});
+  if(agent !== 'tri'){
+    if(!state.pilotInterventions) state.pilotInterventions={cpt:{ask:0,recommend:0,takectl:0},fo:{ask:0,recommend:0,takectl:0}};
+    if(!state.pilotInterventions[agent]) state.pilotInterventions[agent]={ask:0,recommend:0,takectl:0};
+    state.pilotInterventions[agent][type] = (state.pilotInterventions[agent][type]||0) + 1;
+    updatePMBar();
+  } else {
+    updateInterventionBar();
+  }
+  window._pendingIntAgent = null;
   document.getElementById('modal-intervention').style.display='none';
-  updateInterventionBar();
   const labels={ask:'ASK',recommend:'REC',takectl:'CTL'};
-  showToast(`${_intEmoji[type]||''} ${labels[type]||type}${note?' — '+note:' — '+exName}`);
+  const agentSuffix = agent!=='tri'?' PM '+(agent==='cpt'?(state.pilotName||'CPT'):(state.foName||'FO')):'';
+  showToast(`${_intEmoji[type]||''} ${labels[type]||type}${agentSuffix}${note?' — '+note:' — '+exName}`);
 }
 
 function updateInterventionBar(){
   const counts={ask:0,recommend:0,takectl:0};
-  state.interventions.forEach(i=>{ if(counts[i.type]!==undefined) counts[i.type]++; });
+  state.interventions.filter(i=>!i.agent||i.agent==='tri').forEach(i=>{ if(counts[i.type]!==undefined) counts[i.type]++; });
   const eAsk=document.getElementById('cnt-ask');       if(eAsk) eAsk.textContent=counts.ask;
   const eRec=document.getElementById('cnt-recommend'); if(eRec) eRec.textContent=counts.recommend;
   const eCtl=document.getElementById('cnt-takectl');   if(eCtl) eCtl.textContent=counts.takectl;
   const eFlag=document.getElementById('cnt-flags');    if(eFlag) eFlag.textContent=state.flags.length;
   const eVoice=document.getElementById('cnt-voice');   if(eVoice) eVoice.textContent=state.voiceNotes.length;
+}
+
+// ── PF/PM ROLE MANAGEMENT ─────────────────────────────────────────────────────
+function getPmSeat(){
+  const r = state.exPilotRole||{cpt:'pf',fo:'pm'};
+  return r.fo==='pm' ? 'fo' : (r.cpt==='pm' ? 'cpt' : 'fo');
+}
+
+function setPilotFlightRole(seat, role){
+  if(!state.exPilotRole) state.exPilotRole={cpt:'pf',fo:'pm'};
+  const other = seat==='cpt'?'fo':'cpt';
+  state.exPilotRole[seat] = role;
+  state.exPilotRole[other] = role==='pf'?'pm':'pf';
+  updatePMBar();
+  renderExContent();
+}
+
+function addPilotIntervention(type){
+  const seat = getPmSeat();
+  const ex = state.exercises[state.activeIdx];
+  const sc = ex ? ALL_SC.find(s=>s.id===ex.sid) : null;
+  const exName = sc ? sc.title : (ex ? '?' : '—');
+  const col = _intColors[type]||'#3B82F6';
+  const emoji = _intEmoji[type]||'';
+  const seatName = seat==='cpt'?(state.pilotName||'CPT'):(state.foName||'FO');
+  const labelMap = _lang==='en'
+    ? {ask:'ASK',recommend:'RECOMMEND',takectl:'TAKE CONTROL'}
+    : {ask:'ASK',recommend:'RECOMMANDER',takectl:'PRENDRE CTL'};
+  const label = (labelMap[type]||type)+' — PM '+seatName;
+  const box = document.getElementById('int-modal-box');
+  if(box) box.style.border='2px solid '+col;
+  const title = document.getElementById('int-modal-title');
+  if(title){ title.textContent=emoji+' '+label; title.style.color=col; }
+  const exEl = document.getElementById('int-modal-ex');
+  if(exEl) exEl.textContent=exName;
+  const inp = document.getElementById('int-modal-input');
+  if(inp) inp.value='';
+  const saveBtn = document.getElementById('int-modal-save');
+  if(saveBtn){ saveBtn.style.background=col+'22'; saveBtn.style.borderColor=col; saveBtn.style.color=col; }
+  window._pendingIntType = type;
+  window._pendingIntExName = exName;
+  window._pendingIntAgent = seat;
+  document.getElementById('modal-intervention').style.display='flex';
+  setTimeout(()=>{ if(inp) inp.focus(); },100);
+}
+
+function updatePMBar(){
+  const pmSeat = getPmSeat();
+  const pmName = pmSeat==='cpt'?(state.pilotName||'CPT'):(state.foName||'FO');
+  const lbl = document.getElementById('pm-bar-label');
+  if(lbl) lbl.textContent='INTERVENTIONS PM — '+pmSeat.toUpperCase()+' '+pmName;
+  const pi = state.pilotInterventions||{cpt:{ask:0,recommend:0,takectl:0},fo:{ask:0,recommend:0,takectl:0}};
+  const pmPi = pi[pmSeat]||{ask:0,recommend:0,takectl:0};
+  const eA=document.getElementById('cnt-pm-ask');   if(eA) eA.textContent=pmPi.ask||0;
+  const eR=document.getElementById('cnt-pm-recommend'); if(eR) eR.textContent=pmPi.recommend||0;
+  const eC=document.getElementById('cnt-pm-takectl');  if(eC) eC.textContent=pmPi.takectl||0;
+  const cPi=pi.cpt||{ask:0,recommend:0,takectl:0};
+  const fPi=pi.fo||{ask:0,recommend:0,takectl:0};
+  const cTot=(cPi.ask||0)+(cPi.recommend||0)+(cPi.takectl||0);
+  const fTot=(fPi.ask||0)+(fPi.recommend||0)+(fPi.takectl||0);
+  const eCP=document.getElementById('cnt-cpt-pm'); if(eCP) eCP.textContent='CPT '+cTot;
+  const eFP=document.getElementById('cnt-fo-pm');  if(eFP) eFP.textContent='FO '+fTot;
+}
+
+function scrollToGuideChapter(n){
+  const gsEl=document.getElementById('guide-scroll');
+  if(!gsEl) return;
+  const container=gsEl.parentElement;
+  if(!container) return;
+  const langDiv=document.getElementById(_lang==='fr'?'guide-content-fr':'guide-content-en');
+  if(!langDiv) return;
+  const prefix=(_lang==='fr'?'CHAPITRE ':'CHAPTER ')+n+' —';
+  const secs=langDiv.querySelectorAll('.guide-sec');
+  for(const sec of secs){
+    if(sec.textContent.includes(prefix)){
+      const cr=container.getBoundingClientRect();
+      const sr=sec.getBoundingClientRect();
+      container.scrollTo({top:container.scrollTop+(sr.top-cr.top)-60,behavior:'smooth'});
+      return;
+    }
+  }
 }
 
 function showFlagModal(){
@@ -15683,11 +15855,20 @@ function fmtElapsed(sec){
 }
 
 function renderDebEvents(el){
-  const totalInt = state.interventions.length;
   const totalFlags = state.flags.length;
   const totalVoice = state.voiceNotes.length;
-  const counts={ask:0,recommend:0,takectl:0};
-  state.interventions.forEach(i=>{if(counts[i.type]!==undefined) counts[i.type]++;});
+  const triInts = state.interventions.filter(i=>!i.agent||i.agent==='tri');
+  const cptInts = state.interventions.filter(i=>i.agent==='cpt');
+  const foInts  = state.interventions.filter(i=>i.agent==='fo');
+  const totalInt = triInts.length;
+  const triCounts={ask:0,recommend:0,takectl:0};
+  triInts.forEach(i=>{if(triCounts[i.type]!==undefined) triCounts[i.type]++;});
+  const cptCounts={ask:0,recommend:0,takectl:0};
+  cptInts.forEach(i=>{if(cptCounts[i.type]!==undefined) cptCounts[i.type]++;});
+  const foCounts={ask:0,recommend:0,takectl:0};
+  foInts.forEach(i=>{if(foCounts[i.type]!==undefined) foCounts[i.type]++;});
+  const totalPmCpt = cptCounts.ask+cptCounts.recommend+cptCounts.takectl;
+  const totalPmFo  = foCounts.ask+foCounts.recommend+foCounts.takectl;
 
   const intColorsMap={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
   const intLabelMap={
@@ -15696,17 +15877,25 @@ function renderDebEvents(el){
     takectl: _lang==='en'?'TAKE CONTROL':'PRENDRE CTL'
   };
 
-  const intRows = state.interventions.map((iv,i)=>{
-    const col=intColorsMap[iv.type]||'#3B82F6';
-    return `<div style="padding:7px 0;border-bottom:1px solid #1E2530;">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <span style="background:${col}22;color:${col};border:1px solid ${col}66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 7px;flex-shrink:0;">${intLabelMap[iv.type]||iv.type}</span>
-        <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;flex-shrink:0;">${fmtElapsed(iv.elapsed)}</span>
-        <span style="font-size:12px;color:#94A3B8;">${iv.exName}</span>
-      </div>
-      ${iv.note?`<div style="font-size:12px;color:#F1F5F9;margin-top:3px;padding-left:4px;border-left:2px solid ${col}55;font-style:italic;">"${iv.note}"</div>`:''}
-    </div>`;
-  }).join('');
+  function buildIntRows(arr, agentLabel, agentColor){
+    return arr.map(iv=>{
+      const col=intColorsMap[iv.type]||'#3B82F6';
+      return `<div style="padding:7px 0;border-bottom:1px solid #1E2530;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="background:${col}22;color:${col};border:1px solid ${col}66;border-radius:5px;font-size:9px;font-weight:800;padding:2px 7px;flex-shrink:0;">${intLabelMap[iv.type]||iv.type}</span>
+          ${agentLabel?`<span style="background:${agentColor}22;color:${agentColor};border:1px solid ${agentColor}66;border-radius:4px;font-size:8px;font-weight:800;padding:1px 5px;flex-shrink:0;">PM ${agentLabel}</span>`:''}
+          <span style="font-size:11px;color:#F59E0B;font-weight:700;font-family:monospace;flex-shrink:0;">${fmtElapsed(iv.elapsed)}</span>
+          <span style="font-size:12px;color:#94A3B8;">${iv.exName}</span>
+        </div>
+        ${iv.note?`<div style="font-size:12px;color:#F1F5F9;margin-top:3px;padding-left:4px;border-left:2px solid ${col}55;font-style:italic;">"${iv.note}"</div>`:''}
+      </div>`;
+    }).join('');
+  }
+
+  const triRows = buildIntRows(triInts, '', '');
+  const cptRows = buildIntRows(cptInts, state.pilotName||'CPT', '#3B82F6');
+  const foRows  = buildIntRows(foInts, state.foName||'FO', '#10B981');
+  const intRows = buildIntRows(state.interventions, '', '');
 
   const flagRows = state.flags.map((f,i)=>`
     <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #1E2530;">
@@ -15731,36 +15920,69 @@ function renderDebEvents(el){
       }
     </div>`).join('');
 
+  const _pn = state.pilotName||'CPT', _fn = state.foName||'FO';
   el.innerHTML=`
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+<!-- TRI interventions summary -->
+<div style="font-size:9px;font-weight:800;color:#8B5CF6;letter-spacing:1.5px;margin-bottom:6px;">🧑‍✈️ ${_lang==='en'?'TRI INTERVENTIONS':'INTERVENTIONS TRI'}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
   <div class="card" style="text-align:center;border-top:3px solid #10B981;">
-    <div style="font-size:24px;font-weight:900;color:#10B981;">${counts.ask}</div>
-    <div style="font-size:10px;color:#10B981;font-weight:700;">ASK</div>
+    <div style="font-size:22px;font-weight:900;color:#10B981;">${triCounts.ask}</div>
+    <div style="font-size:9px;color:#10B981;font-weight:700;">ASK</div>
   </div>
   <div class="card" style="text-align:center;border-top:3px solid #F97316;">
-    <div style="font-size:24px;font-weight:900;color:#F97316;">${counts.recommend}</div>
-    <div style="font-size:10px;color:#F97316;font-weight:700;">${_lang==='en'?'RECOMMEND':'REC'}</div>
+    <div style="font-size:22px;font-weight:900;color:#F97316;">${triCounts.recommend}</div>
+    <div style="font-size:9px;color:#F97316;font-weight:700;">${_lang==='en'?'REC':'REC'}</div>
   </div>
   <div class="card" style="text-align:center;border-top:3px solid #EF4444;">
-    <div style="font-size:24px;font-weight:900;color:#EF4444;">${counts.takectl}</div>
-    <div style="font-size:10px;color:#EF4444;font-weight:700;">${_lang==='en'?'TAKE CTL':'PRENDRE CTL'}</div>
+    <div style="font-size:22px;font-weight:900;color:#EF4444;">${triCounts.takectl}</div>
+    <div style="font-size:9px;color:#EF4444;font-weight:700;">CTL</div>
+  </div>
+</div>
+<!-- PM interventions summary -->
+<div style="font-size:9px;font-weight:800;color:#FF61C7;letter-spacing:1.5px;margin-bottom:6px;">👤 ${_lang==='en'?'PM PILOT INTERVENTIONS':'INTERVENTIONS PM PILOTES'}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+  <div class="card" style="border-top:3px solid #3B82F6;">
+    <div style="font-size:10px;font-weight:800;color:#3B82F6;margin-bottom:6px;">CPT ${_pn}</div>
+    <div style="display:flex;gap:8px;justify-content:space-around;">
+      <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:#10B981;">${cptCounts.ask}</div><div style="font-size:8px;color:#94A3B8;">ASK</div></div>
+      <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:#F97316;">${cptCounts.recommend}</div><div style="font-size:8px;color:#94A3B8;">REC</div></div>
+      <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:#EF4444;">${cptCounts.takectl}</div><div style="font-size:8px;color:#94A3B8;">CTL</div></div>
+    </div>
+  </div>
+  <div class="card" style="border-top:3px solid #10B981;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;margin-bottom:6px;">FO ${_fn}</div>
+    <div style="display:flex;gap:8px;justify-content:space-around;">
+      <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:#10B981;">${foCounts.ask}</div><div style="font-size:8px;color:#94A3B8;">ASK</div></div>
+      <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:#F97316;">${foCounts.recommend}</div><div style="font-size:8px;color:#94A3B8;">REC</div></div>
+      <div style="text-align:center;"><div style="font-size:18px;font-weight:900;color:#EF4444;">${foCounts.takectl}</div><div style="font-size:8px;color:#94A3B8;">CTL</div></div>
+    </div>
   </div>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
   <div class="card" style="text-align:center;border-top:3px solid #F59E0B;">
-    <div style="font-size:24px;font-weight:900;color:#F59E0B;">${totalFlags}</div>
-    <div style="font-size:10px;color:#F59E0B;font-weight:700;">${_lang==='en'?'FLAGS':'MARQUEURS'}</div>
+    <div style="font-size:22px;font-weight:900;color:#F59E0B;">${totalFlags}</div>
+    <div style="font-size:9px;color:#F59E0B;font-weight:700;">${_lang==='en'?'FLAGS':'MARQUEURS'}</div>
   </div>
   <div class="card" style="text-align:center;border-top:3px solid #8B5CF6;">
-    <div style="font-size:24px;font-weight:900;color:#8B5CF6;">${totalVoice}</div>
-    <div style="font-size:10px;color:#8B5CF6;font-weight:700;">${_lang==='en'?'VOICE NOTES':'NOTES VOCALES'}</div>
+    <div style="font-size:22px;font-weight:900;color:#8B5CF6;">${totalVoice}</div>
+    <div style="font-size:9px;color:#8B5CF6;font-weight:700;">${_lang==='en'?'VOICE NOTES':'NOTES VOCALES'}</div>
   </div>
 </div>
 
-${totalInt>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #3B82F6;">
-  <div class="section-lbl" style="color:#3B82F6;margin-bottom:8px;">${_lang==='en'?'INSTRUCTOR INTERVENTIONS':'INTERVENTIONS INSTRUCTEUR'} (${totalInt})</div>
-  ${intRows}
-</div>`:`<div class="card" style="margin-bottom:12px;text-align:center;color:#475569;font-size:13px;">${_lang==='en'?'No interventions recorded yet.':'Aucune intervention enregistrée.'}</div>`}
+${triInts.length>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #8B5CF6;">
+  <div class="section-lbl" style="color:#8B5CF6;margin-bottom:8px;">${_lang==='en'?'TRI INTERVENTIONS':'INTERVENTIONS TRI'} (${triInts.length})</div>
+  ${triRows}
+</div>`:triInts.length===0&&cptInts.length===0&&foInts.length===0?`<div class="card" style="margin-bottom:12px;text-align:center;color:#475569;font-size:13px;">${_lang==='en'?'No interventions recorded yet.':'Aucune intervention enregistrée.'}</div>`:''}
+
+${cptInts.length>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #3B82F6;">
+  <div class="section-lbl" style="color:#3B82F6;margin-bottom:8px;">${_lang==='en'?'PM CPT':'PM CPT'} — ${_pn} (${cptInts.length})</div>
+  ${cptRows}
+</div>`:''}
+
+${foInts.length>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #10B981;">
+  <div class="section-lbl" style="color:#10B981;margin-bottom:8px;">${_lang==='en'?'PM FO':'PM FO'} — ${_fn} (${foInts.length})</div>
+  ${foRows}
+</div>`:''}
 
 ${totalFlags>0?`<div class="card" style="margin-bottom:12px;border-left:3px solid #F59E0B;">
   <div class="section-lbl" style="color:#F59E0B;margin-bottom:8px;">${_lang==='en'?'EVENT FLAGS':'MARQUEURS D\'ÉVÉNEMENTS'} (${totalFlags})</div>
