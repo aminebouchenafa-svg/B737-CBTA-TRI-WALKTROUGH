@@ -11456,6 +11456,23 @@ renderExContent();
 }
 }
 
+function setRCACons(exIdx,temKey,type,itemIdx,val){
+const ex=state.exercises[exIdx];
+if(!ex||!ex[temKey]||!ex[temKey][type]||!ex[temKey][type][itemIdx]) return;
+const it=ex[temKey][type][itemIdx];
+if(!it.rca) it.rca={};
+it.rca.cons=it.rca.cons===val?null:val;
+if(state.currentDebTab==='tem'){const el=document.getElementById('deb-content');if(el)renderDebTEM(el);}
+}
+
+function setRCA(exIdx,temKey,type,itemIdx,field,value){
+const ex=state.exercises[exIdx];
+if(!ex||!ex[temKey]||!ex[temKey][type]||!ex[temKey][type][itemIdx]) return;
+const it=ex[temKey][type][itemIdx];
+if(!it.rca) it.rca={};
+it.rca[field]=value;
+}
+
 function addTEMSug(key,idx){
 const sug = (window._temSugs||{})[key]||[];
 if(sug[idx]) addTEM(key, sug[idx]);
@@ -13956,6 +13973,40 @@ const recBadge=_isU&&it.rec?`<span style="font-size:10px;margin-left:4px;backgro
 return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitLabel}${mgdBadge}${corBadge}${recBadge}</div>`;
 }).join('') : '';
 
+const _needsRCA=(it,type)=>{
+if(type==='threats') return it.mgd==='no';
+if(type==='errors') return it.mit==='no'||it.cor==='no';
+if(type==='uas') return it.mit==='no'||it.rec==='no';
+return false;
+};
+const _rcaCard=(it,type,idx,temKey,pLabel,exIdx)=>{
+const rca=it.rca||{};
+const typeIcon=type==='threats'?'▲':type==='errors'?'●':'◆';
+const typeColor=type==='threats'?'#3B82F6':type==='errors'?'#EF4444':'#F59E0B';
+const _L=(fr,en)=>_lang==='en'?en:fr;
+const _consBtnStyle=(val,isSel)=>'flex:1;padding:7px 4px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;border:2px solid '+(isSel?(val==='yes'?'#EF4444':'#10B981'):'#334155')+';background:'+(isSel?(val==='yes'?'#EF444433':'#10B98133'):'transparent')+';color:'+(isSel?(val==='yes'?'#EF4444':'#10B981'):'#64748B')+';';
+const _ta=(field,label,borderColor)=>{const tv=(rca[field]||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');return '<div style="margin-bottom:6px;"><div style="font-size:9px;color:'+borderColor+';font-weight:700;margin-bottom:2px;">'+label+'</div><textarea oninput="setRCA('+exIdx+',\''+temKey+'\',\''+type+'\','+idx+',\''+field+'\',this.value)" style="width:100%;box-sizing:border-box;background:#1E2530;border:1px solid '+borderColor+'55;border-radius:4px;color:#F1F5F9;font-size:11px;padding:4px 6px;min-height:48px;resize:vertical;">'+tv+'</textarea></div>';};
+let h='<div style="margin-top:10px;background:#0F172A;border:1px solid #EF444455;border-radius:8px;padding:10px;">';
+h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">';
+h+='<span style="color:'+typeColor+';font-size:11px;font-weight:700;">'+typeIcon+' '+it.text+'</span>';
+h+='<span style="font-size:9px;color:#EF4444;font-weight:700;background:#EF444422;padding:1px 6px;border-radius:4px;">⚠ RCA</span>';
+h+='</div>';
+h+='<div style="display:flex;gap:6px;margin-bottom:8px;">';
+h+='<button onclick="setRCACons('+exIdx+',\''+temKey+'\',\''+type+'\','+idx+',\'yes\')" style="'+_consBtnStyle('yes',rca.cons==='yes')+'">⚠ '+_L('Conséquentiel','Consequential')+'</button>';
+h+='<button onclick="setRCACons('+exIdx+',\''+temKey+'\',\''+type+'\','+idx+',\'no\')" style="'+_consBtnStyle('no',rca.cons==='no')+'">✓ '+_L('Non conséquentiel','Non-consequential')+'</button>';
+h+='</div>';
+const _5w=[['what',_L('Quoi','What')],['why',_L('Pourquoi','Why')],['when_',_L('Quand','When')],['how',_L('Comment','How')],['where_',_L('Où','Where')],['who',_L('Qui','Who')]];
+h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:8px;">';
+_5w.forEach(w=>{const fv=(rca[w[0]]||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;');h+='<div><div style="font-size:9px;color:#94A3B8;font-weight:700;margin-bottom:2px;">'+w[1]+'</div><input value="'+fv+'" oninput="setRCA('+exIdx+',\''+temKey+'\',\''+type+'\','+idx+',\''+w[0]+'\',this.value)" style="width:100%;box-sizing:border-box;background:#1E2530;border:1px solid #334155;border-radius:4px;color:#F1F5F9;font-size:11px;padding:4px 6px;" placeholder="'+w[1]+'..."></div>';});
+h+='</div>';
+h+=_ta('root','🔴 '+_L('CAUSE RACINE','ROOT CAUSE'),'#EF4444');
+h+=_ta('prevent','🛡 '+_L('ACTIONS PRÉVENTIVES','PREVENTIVE ACTIONS'),'#F59E0B');
+h+=_ta('teach','📚 '+_L('ENSEIGNER / CLARIFIER','TEACH / CLARIFY'),'#3B82F6');
+h+='<div style="font-size:9px;color:#475569;font-style:italic;margin-top:6px;text-align:right;">'+pLabel+'</div>';
+h+='</div>';
+return h;
+};
+
 const exRows = closed.map((ex,i)=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid); if(!sc) return '';
 const temCpt=ex.tem||{threats:[],errors:[],uas:[]};
@@ -13969,6 +14020,18 @@ const recfoLabel=recfo.managed==='yes'?(_lang==='en'?'✓ Recovered':'✓ Récup
 const hasData=(temCpt.threats||[]).length||(temCpt.errors||[]).length||(temCpt.uas||[]).length||
 (temFo.threats||[]).length||(temFo.errors||[]).length||(temFo.uas||[]).length;
 if(!hasData) return '';
+
+const _exIdx=state.exercises.indexOf(ex);
+let rcaHtml='';
+[['tem',state.pilotName||'CPT']].concat(state.foName?[['temfo',state.foName||'FO']]:[]).forEach(tk=>{
+const temData=ex[tk[0]]||{};
+['threats','errors','uas'].forEach(type=>{
+(temData[type]||[]).forEach((it,itemIdx)=>{
+if(_needsRCA(it,type)) rcaHtml+=_rcaCard(it,type,itemIdx,tk[0],tk[1],_exIdx);
+});
+});
+});
+if(rcaHtml) rcaHtml='<div style="margin-top:12px;padding-top:10px;border-top:2px solid #EF444444;"><div style="font-size:10px;color:#EF4444;font-weight:700;letter-spacing:1.5px;margin-bottom:8px;">🔍 '+(_lang==='en'?'ROOT CAUSE ANALYSIS':'ANALYSE CAUSALE — RCA')+'</div>'+rcaHtml+'</div>';
 
 return `<div class="card" style="margin-bottom:12px;border-left:3px solid #EF4444;">
 <div style="font-size:13px;font-weight:700;color:#F1F5F9;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid #1E2530;">${i+1}. ${sc.title}</div>
@@ -13994,6 +14057,7 @@ ${(temFo.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:
 </div>
 </div>`:''}
 </div>
+${rcaHtml}
 </div>`;
 }).join('');
 
