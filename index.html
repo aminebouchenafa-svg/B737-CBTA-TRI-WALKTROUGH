@@ -11378,8 +11378,7 @@ const _mDefs=k==='threats'?[
   {v:'no',fr:'✗ Non gérée',en:'✗ Unmanaged',ac:'#EF4444'},
 ]:k==='errors'?[
   {v:'ok',fr:'✓ Détectée',en:'✓ Detected',ac:'#10B981'},
-  {v:'partial',fr:'✓ Corrigée',en:'✓ Corrected',ac:'#3B82F6'},
-  {v:'no',fr:'✗ Non corrigée',en:'✗ Uncorrected',ac:'#EF4444'},
+  {v:'no',fr:'✗ Non détectée',en:'✗ Not detected',ac:'#EF4444'},
 ]:[
   {v:'ok',fr:'✓ Reconnue',en:'✓ Recognized',ac:'#10B981'},
   {v:'partial',fr:'~ Partielle',en:'~ Partial',ac:'#F59E0B'},
@@ -11390,6 +11389,7 @@ return `<div class="tem-mitg-item" style="background:${mc}11;border:1px solid ${
 <div style="display:flex;gap:5px;align-items:center;">
 ${_mDefs.map(d=>{const sel=it.mit===d.v;return `<button onclick="setMitigation('${k}',${i},'${d.v}')" style="flex:1;padding:10px 6px;border-radius:8px;border:2px solid ${sel?d.ac:'var(--bord)'};background:${sel?d.ac+'33':'transparent'};color:${sel?d.ac:'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?d.en:d.fr}</button>`;}).join('')}
 </div>
+${k==='errors'?`<div style="margin-top:8px;"><div style="font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:1px;margin-bottom:6px;">✓ ${_lang==='en'?'CORRECTION':'CORRECTION'}</div><div style="display:flex;gap:8px;"><button onclick="setErrorCorrection(${i},'ok')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${it.cor==='ok'?'#10B981':'var(--bord)'};background:${it.cor==='ok'?'#10B98133':'transparent'};color:${it.cor==='ok'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✓ ${_lang==='en'?'Corrected':'Corrigée'}</button><button onclick="setErrorCorrection(${i},'partial')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${it.cor==='partial'?'#F59E0B':'var(--bord)'};background:${it.cor==='partial'?'#F59E0B33':'transparent'};color:${it.cor==='partial'?'#F59E0B':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">~ ${_lang==='en'?'Partial':'Partielle'}</button><button onclick="setErrorCorrection(${i},'no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${it.cor==='no'?'#EF4444':'var(--bord)'};background:${it.cor==='no'?'#EF444433':'transparent'};color:${it.cor==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✗ ${_lang==='en'?'Not corrected':'Non corrigée'}</button></div></div>`:''}
 ${k==='uas'?`<div style="margin-top:8px;"><div style="font-size:10px;font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">↩ ${_lang==='en'?'RECOVERY':'RÉCUPÉRATION'}</div><div style="display:flex;gap:8px;"><button onclick="setUASRecovery(${i},'yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${it.rec==='yes'?'#10B981':'var(--bord)'};background:${it.rec==='yes'?'#10B98133':'transparent'};color:${it.rec==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">🔄 ${_lang==='en'?'Recovered':'Rattrapée'}</button><button onclick="setUASRecovery(${i},'no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${it.rec==='no'?'#EF4444':'var(--bord)'};background:${it.rec==='no'?'#EF444433':'transparent'};color:${it.rec==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✗ ${_lang==='en'?'Not recovered':'Non rattrapée'}</button></div></div>`:''}
 </div>`;
 }).join('')}
@@ -11436,6 +11436,14 @@ const ex = state.exercises[state.activeIdx];
 const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
 if(ex[temKey]&&ex[temKey].uas&&ex[temKey].uas[idx]){
 ex[temKey].uas[idx].rec = ex[temKey].uas[idx].rec===val ? null : val;
+renderExContent();
+}
+}
+function setErrorCorrection(idx,val){
+const ex = state.exercises[state.activeIdx];
+const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
+if(ex[temKey]&&ex[temKey].errors&&ex[temKey].errors[idx]){
+ex[temKey].errors[idx].cor = ex[temKey].errors[idx].cor===val ? null : val;
 renderExContent();
 }
 }
@@ -13932,12 +13940,11 @@ ${renderStatRow('Recoveries',statsCpt.rec>0?statsCpt.recOk+'/'+statsCpt.rec:'—
 const renderList = (items,color,icon,type)=>items.length?items.map(it=>{
 const _isE=type==='errors',_isU=type==='uas';
 const _lOk=_isE?(_lang==='en'?'✓ Detected':'✓ Détectée'):_isU?(_lang==='en'?'✓ Recognized':'✓ Reconnue'):(_lang==='en'?'✓ Managed':'✓ Gérée');
-const _lPar=_isE?(_lang==='en'?'✓ Corrected':'✓ Corrigée'):(_lang==='en'?'~ Partial':'~ Partielle');
-const _lNo=_isE?(_lang==='en'?'✗ Uncorrected':'✗ Non corrigée'):_isU?(_lang==='en'?'✗ Unrecognized':'✗ Non reconnue'):(_lang==='en'?'✗ Unmanaged':'✗ Non gérée');
-const _parC=_isE?'#3B82F6':'#F59E0B';
-const mitLabel=it.mit==='ok'?`<span style="color:#10B981;font-size:10px;margin-left:6px;background:#10B98122;padding:1px 6px;border-radius:4px;">${_lOk}</span>`:it.mit==='partial'?`<span style="color:${_parC};font-size:10px;margin-left:6px;background:${_parC}22;padding:1px 6px;border-radius:4px;">${_lPar}</span>`:it.mit==='no'?`<span style="color:#EF4444;font-size:10px;margin-left:6px;background:#EF444422;padding:1px 6px;border-radius:4px;">${_lNo}</span>`:'';
+const _lNo=_isE?(_lang==='en'?'✗ Not detected':'✗ Non détectée'):_isU?(_lang==='en'?'✗ Unrecognized':'✗ Non reconnue'):(_lang==='en'?'✗ Unmanaged':'✗ Non gérée');
+const mitLabel=it.mit==='ok'?`<span style="color:#10B981;font-size:10px;margin-left:6px;background:#10B98122;padding:1px 6px;border-radius:4px;">${_lOk}</span>`:it.mit==='partial'?`<span style="color:#F59E0B;font-size:10px;margin-left:6px;background:#F59E0B22;padding:1px 6px;border-radius:4px;">${_lang==='en'?'~ Partial':'~ Partielle'}</span>`:it.mit==='no'?`<span style="color:#EF4444;font-size:10px;margin-left:6px;background:#EF444422;padding:1px 6px;border-radius:4px;">${_lNo}</span>`:'';
+const corBadge=_isE&&it.cor?`<span style="font-size:10px;margin-left:4px;background:${it.cor==='ok'?'#10B98122':it.cor==='partial'?'#F59E0B22':'#EF444422'};color:${it.cor==='ok'?'#10B981':it.cor==='partial'?'#F59E0B':'#EF4444'};padding:1px 6px;border-radius:4px;">${it.cor==='ok'?(_lang==='en'?'✓ Corrected':'✓ Corrigée'):it.cor==='partial'?(_lang==='en'?'~ Partial':'~ Partielle'):(_lang==='en'?'✗ Not corrected':'✗ Non corrigée')}</span>`:'';
 const recBadge=_isU&&it.rec?`<span style="font-size:10px;margin-left:4px;background:${it.rec==='yes'?'#10B98122':'#EF444422'};color:${it.rec==='yes'?'#10B981':'#EF4444'};padding:1px 6px;border-radius:4px;">${it.rec==='yes'?(_lang==='en'?'🔄 Recovered':'🔄 Rattrapée'):(_lang==='en'?'✗ Not recovered':'✗ Non rattrapée')}</span>`:'';
-return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitLabel}${recBadge}</div>`;
+return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitLabel}${corBadge}${recBadge}</div>`;
 }).join('') : '';
 
 const exRows = closed.map((ex,i)=>{
