@@ -6399,7 +6399,10 @@ Identifiant ou mot de passe incorrect
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
 </div><!-- end guide-content-en -->
 
-<button id="guide-close-btn" onclick="closeGuide()" style="position:sticky;bottom:0;display:block;width:calc(100% - 40px);margin:16px 20px 20px;padding:13px;font-size:15px;border-radius:10px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-weight:700;cursor:pointer;letter-spacing:1px;" data-i18n="guide_close">✕ Fermer le guide</button>
+<div style="position:sticky;bottom:0;display:flex;gap:8px;width:calc(100% - 40px);margin:16px 20px 20px;background:#0A0D15;padding-top:8px;">
+  <button onclick="scrollGuideToTop()" style="flex:1;padding:13px;font-size:13px;border-radius:10px;background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;font-weight:800;cursor:pointer;letter-spacing:1px;">↑ SOMMAIRE</button>
+  <button id="guide-close-btn" onclick="closeGuide()" style="flex:1;padding:13px;font-size:13px;border-radius:10px;background:#1E2530;border:1px solid #334155;color:#94A3B8;font-weight:700;cursor:pointer;letter-spacing:1px;" data-i18n="guide_close">✕ Fermer</button>
+</div>
 </div>
 </div>
 
@@ -16367,6 +16370,13 @@ function updatePMBar(){
   const eFP=document.getElementById('cnt-fo-pm');  if(eFP) eFP.textContent='FO '+fTot;
 }
 
+function scrollGuideToTop(){
+  const gsEl=document.getElementById('guide-scroll');
+  if(!gsEl) return;
+  const container=gsEl.parentElement;
+  if(!container) return;
+  container.scrollTo({top:0,behavior:'smooth'});
+}
 function scrollToGuideChapter(n){
   const gsEl=document.getElementById('guide-scroll');
   if(!gsEl) return;
