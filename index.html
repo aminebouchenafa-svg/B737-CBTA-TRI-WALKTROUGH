@@ -10061,7 +10061,7 @@ function openGuide(){
   const m=document.getElementById('modal-help');
   m.style.display='block';
   const s=document.getElementById('guide-scroll');
-  if(s) s.scrollTop=0;
+  if(s && s.parentElement) s.parentElement.scrollTop=0;
 }
 function closeGuide(){
   document.getElementById('modal-help').style.display='none';
@@ -10737,7 +10737,9 @@ function _doSecondAttemptForPilot(pilot){
   ex.attempt = 2;
   ex.secondAttemptPilot = pilot;
   ex.closed = false;
-  ex.openedAt = Date.now();
+  ex.openedAt = null;
+  ex.paused = false;
+  ex.pausedElapsed = 0;
   renderExView();
 }
 
@@ -13006,7 +13008,7 @@ var _planEditExIds = [];
 var _planAddMode = false;
 
 function getPlans(){ return _jParse('cbta_plans','[]'); }
-function _savePlans(plans){ localStorage.setItem('cbta_plans', JSON.stringify(plans)); }
+function _savePlans(plans){ try{ localStorage.setItem('cbta_plans', JSON.stringify(plans)); }catch(e){ showToast(_lang==='en'?'⚠️ Storage full — cannot save plan':'⚠️ Stockage plein — plan non sauvegardé'); } }
 
 function showPlans(){
   renderPlansList();
@@ -13375,9 +13377,7 @@ document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textConte
 localStorage.setItem('cbta_darkmode', _darkMode?'dark':'light');
 }
 (function(){const fs=localStorage.getItem('cbta_fs')||'M';if(fs!=='M')setFontSize(fs);})();
-// Dark mode is always the default on startup — reset any saved light preference
-localStorage.setItem('cbta_darkmode','dark');
-_darkMode=true;
+(function(){const dm=localStorage.getItem('cbta_darkmode');if(dm==='light'){_darkMode=false;document.body.classList.add('light-mode');document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent='🌙');}})();
 
 // ── VERROUILLAGE ÉCRAN ---─────────────────────────────────────────────────────
 var _locked = false;
@@ -17147,6 +17147,9 @@ state.loftCompareMode=false;
 state.loftNotes={events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}};
 state.rapportNotes='';
 state.rapportSignatures={tri:'',cpt:'',fo:''};
+state.exPilotRole={cpt:'pf',fo:'pm'};
+state.pilotInterventions={cpt:{ask:0,recommend:0,takectl:0},fo:{ask:0,recommend:0,takectl:0}};
+state.activePilot='cpt';
 if(window._mediaRec&&window._mediaRec.state==='recording'){window._mediaRec.stop();}
 if(window._recTimer){clearInterval(window._recTimer);window._recTimer=null;}
 state.sessionStart=null;
@@ -17652,8 +17655,8 @@ function submitImportedSession(){
   var _finishImport=function(){
     const hist=_jParse('cbta_history','[]');
     hist.unshift(session);
-    localStorage.setItem('cbta_history',JSON.stringify(hist));
-    updatePilotDB(session);
+    try{ localStorage.setItem('cbta_history',JSON.stringify(hist)); updatePilotDB(session); }
+    catch(e){ alert('⚠️ Espace de stockage insuffisant. Exportez vos données puis supprimez d\'anciennes sessions.'); }
     _impPdfData=null;_impFileType=null;
     document.getElementById('modal-import-session').style.display='none';
     showHistory();
@@ -18636,8 +18639,10 @@ function importHistoryJSON(inp){
         const pD=s=>{if(!s)return 0;const p=s.split('/');return p.length===3?new Date(p[2],p[1]-1,p[0]).getTime():new Date(s).getTime()||0;};
         return pD(b.date)-pD(a.date);
       });
-      localStorage.setItem('cbta_history',JSON.stringify(deduped));
-      if(data.pilotdb){const edb=_jParse('cbta_pilotdb','{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
+      try{
+        localStorage.setItem('cbta_history',JSON.stringify(deduped));
+        if(data.pilotdb){const edb=_jParse('cbta_pilotdb','{}');localStorage.setItem('cbta_pilotdb',JSON.stringify({...edb,...data.pilotdb}));}
+      }catch(e){ alert('⚠️ Espace de stockage insuffisant. Exportez vos données puis supprimez d\'anciennes sessions.'); inp.value=''; return; }
       if(data.type==='pilot_dossier'){
         showToast(_lang==='en'?'✅ Dossier imported — '+incoming.length+' session(s) merged · Total: '+deduped.length:'✅ Dossier importé — '+incoming.length+' session(s) fusionnées · Total: '+deduped.length);
       } else {
