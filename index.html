@@ -9747,17 +9747,20 @@ state.briefingChecks = state.briefingChecks || {};
 const html = threats.map(t=>{
 const items = t.items.map((item,i)=>{
 const key = t.id+'_'+i;
-const checked = state.briefingChecks[key]||false;
-return `<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #1E2530;cursor:pointer;" onclick="toggleBriefCheck('${key}',this)">
-<div style="width:22px;height:22px;border-radius:6px;border:2px solid ${checked?'#10B981':'#334155'};background:${checked?'#10B98133':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;">
+const val = state.briefingChecks[key];
+const checked = val===true;
+const isNA = val==='na';
+return `<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #1E2530;${isNA?'opacity:0.45;':''}">
+<div onclick="${isNA?'void(0)':("toggleBriefCheck('"+key+"')")}" style="width:22px;height:22px;border-radius:6px;border:2px solid ${checked?'#10B981':'#334155'};background:${checked?'#10B98133':'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:${isNA?'default':'pointer'};transition:all 0.2s;flex-shrink:0;">
 ${checked?'<span style="color:#10B981;font-size:14px;">✓</span>':''}
 </div>
-<div style="font-size:var(--fs);color:${checked?'#10B981':'#CBD5E1'};text-decoration:${checked?'line-through':'none'};transition:all 0.2s;">${item}</div>
+<div onclick="${isNA?'void(0)':("toggleBriefCheck('"+key+"')")}" style="flex:1;font-size:var(--fs);color:${checked?'#10B981':isNA?'#475569':'#CBD5E1'};text-decoration:${checked||isNA?'line-through':'none'};cursor:${isNA?'default':'pointer'};transition:all 0.2s;">${item}</div>
+<button onclick="event.stopPropagation();toggleBriefNA('${key}')" style="padding:3px 8px;border-radius:5px;border:1px solid ${isNA?'#64748B':'#1E253066'};background:${isNA?'#33415566':'transparent'};color:${isNA?'#94A3B8':'#33415599'};font-size:10px;font-weight:800;cursor:pointer;flex-shrink:0;transition:all 0.2s;">N/A</button>
 </div>`;
 }).join('');
 
-const total = t.items.length;
-const done = t.items.filter((_,i)=>state.briefingChecks[t.id+'_'+i]).length;
+const total = t.items.filter((_,i)=>state.briefingChecks[t.id+'_'+i]!=='na').length;
+const done = t.items.filter((_,i)=>state.briefingChecks[t.id+'_'+i]===true).length;
 
 return `<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:12px;overflow:hidden;">
 <div style="padding:12px 14px;background:#151B26;display:flex;align-items:center;gap:10px;">
@@ -9769,15 +9772,15 @@ return `<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12
 </div>`;
 }).join('');
 
-const totalAll = threats.reduce((s,t)=>s+t.items.length,0);
-const doneAll = Object.values(state.briefingChecks).filter(Boolean).length;
-const pct = Math.round(doneAll/totalAll*100);
+const totalAll = threats.reduce((s,t)=>s+t.items.filter((_,i)=>state.briefingChecks[t.id+'_'+i]!=='na').length,0);
+const doneAll = Object.values(state.briefingChecks).filter(v=>v===true).length;
+const pct = totalAll>0?Math.round(doneAll/totalAll*100):100;
 
 // Verdict & missing items
 const _MANDATORY_IDS=['tob','apb'];
-const _mandDone=_MANDATORY_IDS.every(id=>{const cat=threats.find(t=>t.id===id);if(!cat)return true;return cat.items.every((_,i)=>state.briefingChecks[id+'_'+i]||false);});
+const _mandDone=_MANDATORY_IDS.every(id=>{const cat=threats.find(t=>t.id===id);if(!cat)return true;return cat.items.every((_,i)=>{const v=state.briefingChecks[id+'_'+i];return v===true||v==='na';});});
 const _missingItems=[];
-threats.forEach(t=>{t.items.forEach((item,i)=>{if(!state.briefingChecks[t.id+'_'+i])_missingItems.push({cat:t.label,icon:t.icon,item,mand:_MANDATORY_IDS.includes(t.id)});});});
+threats.forEach(t=>{t.items.forEach((item,i)=>{const v=state.briefingChecks[t.id+'_'+i];if(v!==true&&v!=='na')_missingItems.push({cat:t.label,icon:t.icon,item,mand:_MANDATORY_IDS.includes(t.id)});});});
 const _vColor=pct===100?'#10B981':pct>=75?'#F59E0B':'#EF4444';
 const _vIcon=pct===100?'✅':pct>=75?'⚠️':'❌';
 const _vLabel=pct===100?(_lang==='en'?'BRIEFING COMPLETE':'BRIEFING COMPLET'):pct>=75?(_lang==='en'?'BRIEFING PARTIAL':'BRIEFING PARTIEL'):(_lang==='en'?'BRIEFING INCOMPLETE':'BRIEFING INCOMPLET');
@@ -10110,23 +10113,13 @@ function setSessionObjective(compId, objType, pilot){
   showBriefing();
 }
 
-function toggleBriefCheck(key, row){
-state.briefingChecks[key] = !state.briefingChecks[key];
-const checked = state.briefingChecks[key];
-const box = row.querySelector('div');
-box.style.border = '2px solid '+(checked?'#10B981':'#334155');
-box.style.background = checked?'#10B98133':'transparent';
-box.innerHTML = checked?'<span style="color:#10B981;font-size:14px;">✓</span>':'';
-const txt = row.querySelector('div:last-child');
-txt.style.color = checked?'#10B981':'#CBD5E1';
-txt.style.textDecoration = checked?'line-through':'none';
-// Mettre à jour la barre de progression
-const totalAll = 24;
-const doneAll = Object.values(state.briefingChecks).filter(Boolean).length;
-const pct = Math.round(doneAll/totalAll*100);
-const bar = document.querySelector('#briefing-content .btn-primary + div div:last-child div div:last-child') || document.querySelector('#briefing-content [style*="width:"]');
-if(bar) bar.style.width = pct+'%';
-// Mettre à jour compteur section
+function toggleBriefCheck(key){
+const cur=state.briefingChecks[key];
+state.briefingChecks[key]=cur===true?false:true;
+showBriefing();
+}
+function toggleBriefNA(key){
+state.briefingChecks[key]=state.briefingChecks[key]==='na'?false:'na';
 showBriefing();
 }
 
