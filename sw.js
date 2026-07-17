@@ -1,4 +1,4 @@
-const CACHE = 'score-v44';
+const CACHE = 'score-v45';
 const ASSETS = ['./index.html', './manifest.json', './score-logo.png', './score-logo-dark.png', './score-logo-gold.png', './score-logo-guide.png', './presentation-score-cbta.html', './score-logo-presentation.png', './manifest-presentation.json', './apple-touch-icon-presentation.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {

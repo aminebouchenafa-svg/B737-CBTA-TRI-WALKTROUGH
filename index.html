@@ -2125,10 +2125,22 @@ Identifiant ou mot de passe incorrect
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
   <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER</div>
   <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">Barre d'interventions permanente visible pendant chaque exercice. Enregistre chaque action de l'instructeur avec horodatage et nom de l'exercice.</div>
-  <div style="display:flex;flex-direction:column;gap:6px;">
-    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#94A3B8;">Question posée au stagiaire — intervention douce</span></div>
-    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟠 REC</span><span style="font-size:12px;color:#94A3B8;">Recommandation verbale — guidage actif</span></div>
-    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🔴 CTL</span><span style="font-size:12px;color:#94A3B8;">Prise de contrôle — intervention physique</span></div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:9px 11px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Question posée au stagiaire — intervention douce</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:5px;">Stimule la réflexion sans donner la réponse. Le pilote reste aux commandes. À utiliser en priorité.</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #10B98144;padding-left:7px;line-height:1.6;">Ex : <span style="color:#94A3B8;">"CPT, quelle est votre intention à cet instant ?"</span><br/>Ex : <span style="color:#94A3B8;">"Avez-vous consulté le carburant pour votre dégagement ?"</span><br/>Ex : <span style="color:#94A3B8;">"FO, quelle lecture faites-vous de l'altimètre ?"</span></div>
+    </div>
+    <div style="background:#F9731611;border:1px solid #F9731633;border-radius:7px;padding:9px 11px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟠 REC</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Recommandation verbale — guidage actif</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:5px;">Le TRI exprime une préoccupation et propose une alternative. Modèle Boeing : <em style="color:#CBD5E1;">"Cpt, j'ai une remarque — [problème] — je suggère [solution]."</em></div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #F9731644;padding-left:7px;line-height:1.6;">Ex : <span style="color:#94A3B8;">"Cpt, j'ai une remarque. Nous ne serons pas stables à 500ft avec cette configuration. Je recommande de sortir les volets maintenant."</span><br/>Ex : <span style="color:#94A3B8;">"Cpt, j'ai une préoccupation — le dégagement DZIA est fermé. Je suggère de sélectionner DAAG comme alternat et d'en informer l'ATC."</span></div>
+    </div>
+    <div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:9px 11px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🔴 CTL</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Prise de contrôle — intervention physique</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:5px;">Situation dangereuse imminente. Le TRI prend les commandes. Annoncer clairement avant d'agir.</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #EF444444;padding-left:7px;line-height:1.6;">Ex : <span style="color:#94A3B8;">"Mon contrôle — TOGA — je prends les commandes."</span> (approche non stabilisée sans remise de gaz)<br/>Ex : <span style="color:#94A3B8;">"Stop — gel de la situation — on analyse ensemble."</span> (confusion totale de l'équipage)</div>
+    </div>
   </div>
   <div style="margin-top:8px;font-size:11px;color:#64748B;">→ Les compteurs sont visibles en temps réel. L'onglet <strong style="color:#F59E0B;">Events</strong> du débrief affiche la chronologie complète.</div>
 </div>
@@ -2137,7 +2149,8 @@ Identifiant ou mot de passe incorrect
 <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
   <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">🚩 MARQUEUR D'ÉVÉNEMENT (FLAG)</div>
   <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Marque instantanément un moment-clé de la séance avec une note optionnelle. Idéal pour signaler une erreur, une bonne décision ou tout événement à revoir pendant le débrief.</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Utilisation :</strong> Appuyer sur <strong style="color:#F59E0B;">🚩 FLAG</strong> → saisir une note rapide (optionnel) → <strong style="color:#F59E0B;">MARQUER</strong>. Le marqueur est enregistré avec le temps écoulé et l'exercice en cours.</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:7px;"><strong style="color:#F1F5F9;">Utilisation :</strong> Appuyer sur <strong style="color:#F59E0B;">🚩 FLAG</strong> → saisir une note rapide (optionnel) → <strong style="color:#F59E0B;">MARQUER</strong>. Le marqueur est enregistré avec le temps écoulé et l'exercice en cours.</div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #F59E0B44;padding-left:7px;line-height:1.6;">Ex : <span style="color:#94A3B8;">FO ne challenge pas une altitude non conforme du CPT → FLAG "LTW — pas de cross-check"</span><br/>Ex : <span style="color:#94A3B8;">Bonne décision spontanée de dégagement → FLAG "PSD exemplaire — initiative dégagement"</span><br/>Ex : <span style="color:#94A3B8;">Callout "STABLE" annoncé hors critères → FLAG "PRO — annonce stable non conforme 500ft"</span></div>
 </div>
 
 <!-- Voice Notes -->
@@ -4604,10 +4617,22 @@ Identifiant ou mot de passe incorrect
 <div style="background:#10B98111;border:1px solid #10B98133;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
   <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1.5px;margin-bottom:8px;">📊 INTERVENTION MODEL TRACKER</div>
   <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:8px;">A permanent intervention bar visible during every exercise. Records each instructor action with a timestamp and exercise name.</div>
-  <div style="display:flex;flex-direction:column;gap:6px;">
-    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#94A3B8;">Question posed to the trainee — soft intervention</span></div>
-    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟠 REC</span><span style="font-size:12px;color:#94A3B8;">Verbal recommendation — active guidance</span></div>
-    <div style="display:flex;gap:8px;align-items:center;"><span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🔴 CTL</span><span style="font-size:12px;color:#94A3B8;">Taking control — physical intervention</span></div>
+  <div style="display:flex;flex-direction:column;gap:10px;">
+    <div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:9px 11px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#10B98122;color:#10B981;border:1px solid #10B98166;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟢 ASK</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Question posed to the trainee — soft intervention</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:5px;">Stimulates thinking without giving the answer. The pilot stays in control. Use this first.</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #10B98144;padding-left:7px;line-height:1.6;">Ex: <span style="color:#94A3B8;">"Captain, what is your intention at this point?"</span><br/>Ex: <span style="color:#94A3B8;">"Have you checked the fuel for your alternate?"</span><br/>Ex: <span style="color:#94A3B8;">"First Officer, what does the altimeter read?"</span></div>
+    </div>
+    <div style="background:#F9731611;border:1px solid #F9731633;border-radius:7px;padding:9px 11px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#F9731622;color:#F97316;border:1px solid #F9731666;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🟠 REC</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Verbal recommendation — active guidance</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:5px;">The TRI expresses a concern and suggests an alternative. Boeing model: <em style="color:#CBD5E1;">"Captain, I have a concern — [issue] — I suggest [solution]."</em></div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #F9731644;padding-left:7px;line-height:1.6;">Ex: <span style="color:#94A3B8;">"Captain, I have a concern. We won't be stable at 500ft in this configuration. I recommend extending the flaps now."</span><br/>Ex: <span style="color:#94A3B8;">"Captain, I have a concern — we don't have enough fuel to reach our filed alternate. I suggest selecting a closer alternate and advising ATC."</span></div>
+    </div>
+    <div style="background:#EF444411;border:1px solid #EF444433;border-radius:7px;padding:9px 11px;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="background:#EF444422;color:#EF4444;border:1px solid #EF444466;border-radius:5px;font-size:9px;font-weight:800;padding:2px 8px;">🔴 CTL</span><span style="font-size:12px;color:#F1F5F9;font-weight:700;">Taking control — physical intervention</span></div>
+      <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:5px;">Imminent unsafe situation. The TRI takes the controls. Announce clearly before acting.</div>
+      <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #EF444444;padding-left:7px;line-height:1.6;">Ex: <span style="color:#94A3B8;">"My controls — TOGA — I have the aircraft."</span> (unstabilised approach, no go-around called)<br/>Ex: <span style="color:#94A3B8;">"Stop — freeze the situation — let's analyse together."</span> (total crew confusion)</div>
+    </div>
   </div>
   <div style="margin-top:8px;font-size:11px;color:#64748B;">→ Counters are updated in real time. The <strong style="color:#F59E0B;">Events</strong> tab in the debrief shows the full timeline.</div>
 </div>
@@ -4616,7 +4641,8 @@ Identifiant ou mot de passe incorrect
 <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:9px;padding:11px 13px;margin-bottom:10px;">
   <div style="font-size:11px;font-weight:900;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">🚩 EVENT FLAG</div>
   <div style="font-size:12px;color:#94A3B8;line-height:1.6;margin-bottom:6px;">Instantly marks a key moment during the session with an optional note. Ideal for flagging an error, a good decision, or any event to revisit during the debrief.</div>
-  <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><strong style="color:#F1F5F9;">Usage:</strong> Tap <strong style="color:#F59E0B;">🚩 FLAG</strong> → enter a quick note (optional) → <strong style="color:#F59E0B;">MARK</strong>. The flag is saved with elapsed time and the current exercise name.</div>
+  <div style="font-size:11px;color:#94A3B8;line-height:1.5;margin-bottom:7px;"><strong style="color:#F1F5F9;">Usage:</strong> Tap <strong style="color:#F59E0B;">🚩 FLAG</strong> → enter a quick note (optional) → <strong style="color:#F59E0B;">MARK</strong>. The flag is saved with elapsed time and the current exercise name.</div>
+  <div style="font-size:10px;color:#64748B;font-style:italic;border-left:2px solid #F59E0B44;padding-left:7px;line-height:1.6;">Ex: <span style="color:#94A3B8;">FO fails to challenge CPT non-standard altitude → FLAG "LTW — no cross-check"</span><br/>Ex: <span style="color:#94A3B8;">Spontaneous diversion decision by crew → FLAG "PSD exemplary — proactive diversion"</span><br/>Ex: <span style="color:#94A3B8;">"STABLE" callout made outside criteria → FLAG "PRO — non-compliant stable call at 500ft"</span></div>
 </div>
 
 <!-- Voice Notes -->
