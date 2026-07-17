@@ -11388,9 +11388,9 @@ const _mDefs=k==='threats'?[
 return `<div class="tem-mitg-item" style="background:${mc}11;border:1px solid ${mc}33;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
 <div class="tem-mitg-desc" style="font-size:var(--fss);color:${tc};font-weight:${it.injected?'700':'400'};margin-bottom:6px;">${it.injected?'🎲 ':''}${it.text}</div>
 <div style="display:flex;gap:5px;align-items:center;">
-${_mDefs.map(d=>{const sel=it.mit===d.v;return `<button onclick="setMitigation('${k}',${i},'${d.v}')" style="flex:1;padding:7px 3px;border-radius:6px;border:1px solid ${sel?d.ac:'var(--bord)'};background:${sel?d.ac+'33':'transparent'};color:${sel?d.ac:'#64748B'};font-size:9px;font-weight:700;cursor:pointer;">${_lang==='en'?d.en:d.fr}</button>`;}).join('')}
+${_mDefs.map(d=>{const sel=it.mit===d.v;return `<button onclick="setMitigation('${k}',${i},'${d.v}')" style="flex:1;padding:10px 6px;border-radius:8px;border:2px solid ${sel?d.ac:'var(--bord)'};background:${sel?d.ac+'33':'transparent'};color:${sel?d.ac:'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?d.en:d.fr}</button>`;}).join('')}
 </div>
-${k==='uas'?`<div style="display:flex;gap:5px;margin-top:6px;align-items:center;"><span style="font-size:9px;color:#94A3B8;white-space:nowrap;flex-shrink:0;">${_lang==='en'?'Recovered:':'Rattrapée :'}</span><button onclick="setUASRecovery(${i},'yes')" style="flex:1;padding:6px 3px;border-radius:6px;border:1px solid ${it.rec==='yes'?'#10B981':'var(--bord)'};background:${it.rec==='yes'?'#10B98133':'transparent'};color:${it.rec==='yes'?'#10B981':'#64748B'};font-size:9px;font-weight:700;cursor:pointer;">🔄 ${_lang==='en'?'Recovered':'Rattrapée'}</button><button onclick="setUASRecovery(${i},'no')" style="flex:1;padding:6px 3px;border-radius:6px;border:1px solid ${it.rec==='no'?'#EF4444':'var(--bord)'};background:${it.rec==='no'?'#EF444433':'transparent'};color:${it.rec==='no'?'#EF4444':'#64748B'};font-size:9px;font-weight:700;cursor:pointer;">✗ ${_lang==='en'?'Not recovered':'Non rattrapée'}</button></div>`:''}
+${k==='uas'?`<div style="margin-top:8px;"><div style="font-size:10px;font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">↩ ${_lang==='en'?'RECOVERY':'RÉCUPÉRATION'}</div><div style="display:flex;gap:8px;"><button onclick="setUASRecovery(${i},'yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${it.rec==='yes'?'#10B981':'var(--bord)'};background:${it.rec==='yes'?'#10B98133':'transparent'};color:${it.rec==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">🔄 ${_lang==='en'?'Recovered':'Rattrapée'}</button><button onclick="setUASRecovery(${i},'no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${it.rec==='no'?'#EF4444':'var(--bord)'};background:${it.rec==='no'?'#EF444433':'transparent'};color:${it.rec==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">✗ ${_lang==='en'?'Not recovered':'Non rattrapée'}</button></div></div>`:''}
 </div>`;
 }).join('')}
 </div>` : '';
@@ -11408,22 +11408,7 @@ ${mitigHtml}
 </div>`;
 }).join('');
 
-// Section Recovery
-const recKey = temKey==="tem"?"rec":"recfo";
-if(!ex[recKey]) ex[recKey]={managed:null,note:""};
-const rec = ex[recKey];
-const recoveryHtml = `<div class="tem-recovery" style="margin-bottom:20px;background:#0F1218;border:1px solid #10B98133;border-radius:10px;padding:12px 14px;">
-<div style="font-size:11px;font-weight:700;color:#10B981;letter-spacing:2px;margin-bottom:10px;">↩ RECOVERY — ${_lang==='en'?'MANAGEMENT OF UNDESIRED STATE':'GESTION DE L ÉTAT INDÉSIRABLE'}</div>
-<div style="font-size:var(--fs);color:var(--mut);margin-bottom:10px;">${_lang==='en'?'Did the crew manage to recover the situation before an accident?':'L équipage a-t-il su récupérer la situation avant l accident ?'}</div>
-<div style="display:flex;gap:8px;margin-bottom:10px;">
-<button onclick="setRecovery('${recKey}','yes')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='yes'?'#10B981':'var(--bord)'};background:${rec.managed==='yes'?'#10B98133':'transparent'};color:${rec.managed==='yes'?'#10B981':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?'✓ YES — Recovered':'✓ OUI — Récupéré'}</button>
-<button onclick="setRecovery('${recKey}','partial')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='partial'?'#F59E0B':'var(--bord)'};background:${rec.managed==='partial'?'#F59E0B33':'transparent'};color:${rec.managed==='partial'?'#F59E0B':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?'~ Partial':'~ Partiel'}</button>
-<button onclick="setRecovery('${recKey}','no')" style="flex:1;padding:10px;border-radius:8px;border:2px solid ${rec.managed==='no'?'#EF4444':'var(--bord)'};background:${rec.managed==='no'?'#EF444433':'transparent'};color:${rec.managed==='no'?'#EF4444':'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?'✗ NO — Not recovered':'✗ NON — Non récupéré'}</button>
-</div>
-<input class="form-input" style="font-size:13px;" placeholder="${_lang==='en'?'How was the situation recovered?...':'Comment la situation a-t-elle été récupérée ?...'}" value="${rec.note||''}" onchange="setRecoveryNote('${recKey}',this.value)"/>
-</div>`;
-
-el.innerHTML = pilotTabsHtml + info + sectHtml + recoveryHtml;
+el.innerHTML = pilotTabsHtml + info + sectHtml;
 }
 
 function setRecovery(key,val){
