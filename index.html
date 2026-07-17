@@ -9712,6 +9712,7 @@ showBriefing();
 function showBriefing(){
 const c1=_ROLE_COLORS[state.pilotRole]||'#3B82F6';
 const c2=_ROLE_COLORS[state.foRole]||'#10B981';
+const _BRIEF_COLS={rwy:'#FFE500',atc:'#00D4FF',acft:'#BF00FF',wx:'#00FFFF',env:'#00FF88',ops2:'#FF8C00',ops:'#FF00CC',grnd:'#FF3333',phys:'#AAFF00',cabin:'#FFB800',crew:'#00FFCC',tob:'#00BFFF',apb:'#FF61C7'};
 const threats = _lang==='en' ? [
 {id:'rwy',icon:'🛬',label:'AIRPORT / RUNWAY',items:['Contamination','Construction','Signage','Hotspots','NOTAMs']},
 {id:'atc',icon:'📡',label:'AIR TRAFFIC CONTROL',items:['Clearance / Re-routes','ARR/DEP amendments','Runway changes','ATC errors','Language difficulty','Non-standard phraseology','Radio congestion','Similar call signs']},
@@ -9762,11 +9763,12 @@ ${checked?'<span style="color:#10B981;font-size:14px;">✓</span>':''}
 const total = t.items.filter((_,i)=>state.briefingChecks[t.id+'_'+i]!=='na').length;
 const done = t.items.filter((_,i)=>state.briefingChecks[t.id+'_'+i]===true).length;
 
-return `<div style="background:#0F1218;border:1px solid #1E2530;border-radius:12px;margin-bottom:12px;overflow:hidden;">
-<div style="padding:12px 14px;background:#151B26;display:flex;align-items:center;gap:10px;">
+const _nc=_BRIEF_COLS[t.id]||'#F1F5F9';
+return `<div style="background:#0F1218;border:1px solid ${_nc}33;border-radius:12px;margin-bottom:12px;overflow:hidden;box-shadow:0 0 10px ${_nc}18;">
+<div style="padding:12px 14px;background:${_nc}0A;display:flex;align-items:center;gap:10px;">
 <span style="font-size:20px;">${t.icon}</span>
-<div style="flex:1;font-size:var(--fss);font-weight:700;color:#F1F5F9;letter-spacing:1px;">${t.label}</div>
-<div style="font-size:12px;font-weight:700;color:${done===total?'#10B981':'#F59E0B'};">${done}/${total}</div>
+<div style="flex:1;font-size:var(--fss);font-weight:800;color:${_nc};letter-spacing:1.5px;text-shadow:0 0 8px ${_nc},0 0 18px ${_nc}88;">${t.label}</div>
+<div style="font-size:12px;font-weight:700;color:${done===total&&total>0?'#10B981':'#F59E0B'};">${done}/${total}</div>
 </div>
 <div style="padding:0 14px;">${items}</div>
 </div>`;
