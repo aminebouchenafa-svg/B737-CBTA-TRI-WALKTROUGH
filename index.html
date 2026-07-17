@@ -9455,7 +9455,7 @@ function buildPilotTabsHtml(onChangeSuffix, ex){
   function _frBadge(seat, role){
     const col = role==='pf'?_pfC:_pmC;
     const next = role==='pf'?'pm':'pf';
-    return `<span onclick="event.stopPropagation();setPilotFlightRole('${seat}','${next}')" style="font-size:8px;font-weight:900;background:${col}22;color:${col};border:1px solid ${col}88;border-radius:4px;padding:1px 5px;cursor:pointer;letter-spacing:0.5px;flex-shrink:0;">${role.toUpperCase()}</span>`;
+    return `<span onclick="event.stopPropagation();setPilotFlightRole('${seat}','${next}')" style="font-size:11px;font-weight:900;background:${col}22;color:${col};border:1px solid ${col}88;border-radius:5px;padding:3px 8px;cursor:pointer;letter-spacing:0.5px;flex-shrink:0;">${role.toUpperCase()}</span>`;
   }
   if(!state.foName) return `<div class="pilot-single-lbl" style="background:#0d1a2e;border:1px solid ${c1}44;border-left:3px solid ${c1};border-radius:8px;padding:10px 13px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;"><span style="font-size:14px;color:${c1};font-weight:700;">${r1} — ${state.pilotName}</span><div style="display:flex;align-items:center;gap:8px;">${_frBadge('cpt',_cptFR)}${avgCpt!==null?`<span style="font-size:20px;font-weight:900;color:${GC[Math.round(avgCpt)]||'#64748B'};">${avgCpt.toFixed(1)}</span>`:''}</div></div>`;
   return `<div class="pilot-tabs" style="margin-bottom:16px;">
