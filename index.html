@@ -902,7 +902,7 @@ Identifiant ou mot de passe incorrect
   <div style="font-size:9px;color:#94A3B8;letter-spacing:1.5px;margin-bottom:14px;">Safety · Competency · Operational Reporting for Evaluation</div>
   <!-- Sub-badges -->
   <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
-    <div style="background:#3B82F616;border:1px solid #3B82F640;border-radius:20px;padding:3px 11px;font-size:11px;color:#3B82F6;font-weight:700;">20 chapitres</div>
+    <div style="background:#3B82F616;border:1px solid #3B82F640;border-radius:20px;padding:3px 11px;font-size:11px;color:#3B82F6;font-weight:700;">21 chapitres</div>
     <div style="background:#10B98116;border:1px solid #10B98140;border-radius:20px;padding:3px 11px;font-size:11px;color:#10B981;font-weight:700;">~15 min</div>
   </div>
 </div>
@@ -911,7 +911,7 @@ Identifiant ou mot de passe incorrect
 <!-- SOMMAIRE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — 20 CHAPITRES <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap pour aller au chapitre</span></div>
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — 21 CHAPITRES <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap pour aller au chapitre</span></div>
   <div style="display:flex;flex-direction:column;gap:6px;">
     <button onclick="scrollToGuideChapter(1)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">1 · Démarrage en 4 étapes ↓</button>
     <button onclick="scrollToGuideChapter(2)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">2 · Grille de notation CBTA ↓</button>
@@ -933,6 +933,7 @@ Identifiant ou mot de passe incorrect
     <button onclick="scrollToGuideChapter(18)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">18 · Fiche Pilote ↓</button>
     <button onclick="scrollToGuideChapter(19)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">19 · Fleet Dashboard ↓</button>
     <button onclick="scrollToGuideChapter(20)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">20 · QR Auto-évaluation ↓</button>
+    <button onclick="scrollToGuideChapter(21)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">21 · Briefing Pré-Session TEM ↓</button>
   </div>
 </div>
 
@@ -1494,6 +1495,57 @@ Identifiant ou mot de passe incorrect
       <div style="margin-bottom:3px;">Erreur : <em>"Callout GEAR DOWN omis à 1000ft radar altitude"</em> → NON</div>
       <div style="margin-bottom:3px;">UAS : <em>"Déviation cap &gt; 15° pendant procédure QRH"</em></div>
       <div>Recovery : <em>"FO annonce cap — CPT corrige spontanément avant limite"</em> → OK</div>
+    </div>
+  </div>
+
+  <!-- RCA -->
+  <div style="background:#EF444411;border:2px solid #EF444455;border-radius:10px;padding:12px 13px;margin-bottom:4px;">
+    <div style="font-size:11px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:8px;">🔴 RCA — ANALYSE DE CAUSE RACINE</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:9px;">Une carte <strong style="color:#EF4444;">RCA</strong> apparaît <strong style="color:#F1F5F9;">automatiquement</strong> dans l'onglet TEM du Débrief pour chaque item critique non résolu — elle guide l'instructeur dans une analyse structurée en 3 sections.</div>
+
+    <!-- Déclencheurs -->
+    <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:1.5px;margin-bottom:6px;">DÉCLENCHEURS AUTOMATIQUES</div>
+    <div style="display:flex;flex-direction:column;gap:4px;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;gap:8px;background:#3B82F60D;border:1px solid #3B82F633;border-radius:6px;padding:5px 9px;">
+        <span style="color:#3B82F6;font-size:13px;font-weight:900;">▲</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#3B82F6;font-weight:700;">Menace</span> — contre-mesure <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:800;">NON ✗</span> (menace non gérée)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#EF44440D;border:1px solid #EF444433;border-radius:6px;padding:5px 9px;">
+        <span style="color:#EF4444;font-size:13px;font-weight:900;">●</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#EF4444;font-weight:700;">Erreur</span> — non détectée <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:800;">NON ✗</span> <em>ou</em> non corrigée <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:800;">NON ✗</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#F59E0B0D;border:1px solid #F59E0B33;border-radius:6px;padding:5px 9px;">
+        <span style="color:#F59E0B;font-size:13px;font-weight:900;">◆</span>
+        <div style="font-size:12px;color:#CBD5E1;"><span style="color:#F59E0B;font-weight:700;">UAS</span> — non reconnu <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:800;">NON ✗</span> <em>ou</em> non récupéré <span style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:800;">NON ✗</span></div>
+      </div>
+    </div>
+
+    <!-- 3 sections -->
+    <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:1.5px;margin-bottom:6px;">STRUCTURE EN 3 SECTIONS</div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:9px;">
+      <div style="background:#0F172A;border:1px solid #94A3B833;border-radius:8px;padding:9px 11px;">
+        <div style="font-size:10px;font-weight:900;color:#94A3B8;letter-spacing:2px;margin-bottom:5px;">── DESCRIPTION ──</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Contextualise l'événement avec 5 champs : <span style="color:#F1F5F9;font-weight:700;">Quoi ? · Quand ? · Où ? · Qui ? · Comment ?</span><br/><em style="color:#475569;font-size:11px;">→ Établit les faits objectifs sans interprétation</em></div>
+      </div>
+      <div style="background:#0F172A;border:1px solid #F59E0B33;border-radius:8px;padding:9px 11px;">
+        <div style="font-size:10px;font-weight:900;color:#F59E0B;letter-spacing:2px;margin-bottom:5px;">── ANALYSE ──</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#F59E0B;font-weight:700;">Pourquoi ?</span> (drill jusqu'à la racine : Pourquoi → Pourquoi → Pourquoi…) + <span style="color:#EF4444;font-weight:700;">Cause Racine</span> identifiée<br/><em style="color:#475569;font-size:11px;">→ Remonte à la cause fondamentale, pas juste le symptôme</em></div>
+      </div>
+      <div style="background:#0F172A;border:1px solid #10B98133;border-radius:8px;padding:9px 11px;">
+        <div style="font-size:10px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:5px;">── ACTIONS ──</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#10B981;font-weight:700;">⚡ Immédiate</span> (à faire dans cette session) · <span style="color:#3B82F6;font-weight:700;">📋 Préventive</span> (à planifier) · <span style="color:#A78BFA;font-weight:700;">📚 Enseigner</span> (point de clarification)<br/><em style="color:#475569;font-size:11px;">→ Transforme l'analyse en plan d'action concret et traçable</em></div>
+      </div>
+    </div>
+
+    <div style="background:#10B98111;border:1px solid #10B98133;border-radius:7px;padding:8px 10px;">
+      <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:3px;">📋 EXEMPLE RCA</div>
+      <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">
+        <div style="margin-bottom:2px;"><span style="color:#94A3B8;font-weight:700;">Quoi ?</span> Callout GEAR DOWN omis</div>
+        <div style="margin-bottom:2px;"><span style="color:#94A3B8;font-weight:700;">Quand ?</span> Finale à 1000ft RA, config flaps 40</div>
+        <div style="margin-bottom:2px;"><span style="color:#94A3B8;font-weight:700;">Pourquoi ?</span> Surcharge cognitive — ATIS non reçu → reprogrammation FMC tardive → saturation PM</div>
+        <div style="margin-bottom:2px;"><span style="color:#EF4444;font-weight:700;">Cause Racine :</span> Absence de gestion de la charge PM avant l'approche</div>
+        <div><span style="color:#10B981;font-weight:700;">⚡ Immédiat :</span> Rebriefer la division des tâches PM en approche · <span style="color:#3B82F6;font-weight:700;">Préventif :</span> Inclure dans le briefing approche un point explicit sur la charge PM</div>
+      </div>
     </div>
   </div>
 
@@ -2869,7 +2921,22 @@ Identifiant ou mot de passe incorrect
 <div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
 <div style="min-width:28px;height:28px;background:#F59E0B;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">2</div>
 <div><div style="font-size:14px;font-weight:800;color:#F1F5F9;margin-bottom:4px;">BRIEFING PRÉ-SESSION</div>
-<div style="font-size:12px;color:#94A3B8;line-height:1.6;">Cochez items pré-vol, consultez tolérances EASA, puis <span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:800;">✈ DÉMARRER</span>.</div></div>
+<div style="font-size:12px;color:#94A3B8;line-height:1.6;">13 catégories TEM Card (Boeing) organisées en cartes néon. Pour chaque item : cochez ✓ si couvert, ou appuyez <span style="background:#33415566;border:1px solid #64748B;color:#94A3B8;padding:1px 6px;border-radius:4px;font-size:10px;font-weight:800;">N/A</span> si non applicable au scénario (exclut l'item du total). Un verdict <span style="color:#10B981;font-weight:700;">✅</span>/<span style="color:#F59E0B;font-weight:700;">⚠️</span>/<span style="color:#EF4444;font-weight:700;">❌</span> avec liste des items manquants vous guide jusqu'au <span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;padding:1px 7px;border-radius:5px;font-size:11px;font-weight:800;">✈ DÉMARRER</span>.</div>
+<div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;">
+  <span style="background:#FFE50011;border:1px solid #FFE50033;color:#FFE500;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🛬 PISTE</span>
+  <span style="background:#00D4FF11;border:1px solid #00D4FF33;color:#00D4FF;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">📡 ATC</span>
+  <span style="background:#BF00FF11;border:1px solid #BF00FF33;color:#BF00FF;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🛠 AÉRONEF</span>
+  <span style="background:#00FFFF11;border:1px solid #00FFFF33;color:#00FFFF;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🌩 MÉTÉO</span>
+  <span style="background:#00FF8811;border:1px solid #00FF8833;color:#00FF88;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🌍 ENVIRONNEMENT</span>
+  <span style="background:#FF8C0011;border:1px solid #FF8C0033;color:#FF8C00;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🏢 OPS/DISPATCH</span>
+  <span style="background:#FF00CC11;border:1px solid #FF00CC33;color:#FF00CC;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">⏱ OPÉRATIONNEL</span>
+  <span style="background:#FF333311;border:1px solid #FF333333;color:#FF3333;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🔧 RAMP</span>
+  <span style="background:#AAFF0011;border:1px solid #AAFF0033;color:#AAFF00;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🧠 PHYSIOLOGIE</span>
+  <span style="background:#FFB80011;border:1px solid #FFB80033;color:#FFB800;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🧳 CABINE</span>
+  <span style="background:#00FFCC11;border:1px solid #00FFCC33;color:#00FFCC;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">👥 ÉQUIPAGE</span>
+  <span style="background:#00BFFF11;border:1px solid #00BFFF33;color:#00BFFF;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🛫 BRIEFING DÉCOLLAGE</span>
+  <span style="background:#FF61C711;border:1px solid #FF61C733;color:#FF61C7;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:700;">🎯 BRIEFING APPROCHE</span>
+</div></div>
 </div>
 <div style="display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #1E2530;">
 <div style="min-width:28px;height:28px;background:#8B5CF6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">3</div>
@@ -3484,6 +3551,147 @@ Identifiant ou mot de passe incorrect
   <div style="font-size:10px;font-weight:900;color:#EF4444;letter-spacing:1.5px;margin-bottom:5px;">⚖️ AVERTISSEMENT RÉGLEMENTAIRE</div>
   <div style="font-size:11px;color:#94A3B8;line-height:1.5;">Cette application est un <strong style="color:#F1F5F9;">outil d'aide au TRI</strong> — elle ne remplace pas le Boeing CBTA Package officiel, le QRH, le FCTM ni le OM-D de votre opérateur. Tout contenu B737 spécifique doit être validé par le TRI contre les documents approuvés par l'autorité compétente avant usage opérationnel. <strong style="color:#F1F5F9;">La responsabilité de l'évaluation reste celle de l'instructeur.</strong></div>
 </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPITRE 21 — BRIEFING PRÉ-SESSION TEM -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="guide-sec" style="background:#141B26;border:1px solid #F59E0B44;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:10px;">✈ CHAPITRE 21 — BRIEFING PRÉ-SESSION TEM</div>
+  <div style="font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.5;">Le Briefing Pré-Session est un outil de préparation TEM structuré en <strong style="color:#F1F5F9;">13 catégories Boeing TEM Card</strong>. Il vous permet de vérifier systématiquement que toutes les menaces potentielles du scénario ont été identifiées et briefées avant le démarrage de la session.</div>
+
+  <!-- 13 catégories -->
+  <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:1.5px;margin-bottom:7px;">LES 13 CATÉGORIES TEM CARD</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:12px;">
+    <div style="background:#FFE50011;border:1px solid #FFE50033;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#FFE500;margin-bottom:2px;">🛬 AÉROPORT / PISTE</div>
+      <div style="font-size:10px;color:#64748B;">Contamination · Construction · Signalisation · Hotspots · NOTAMs</div>
+    </div>
+    <div style="background:#00D4FF11;border:1px solid #00D4FF33;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#00D4FF;margin-bottom:2px;">📡 CONTRÔLE AÉRIEN</div>
+      <div style="font-size:10px;color:#64748B;">Clairances · Amendements · Changements de piste · Phraséologie</div>
+    </div>
+    <div style="background:#BF00FF11;border:1px solid #BF00FF33;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#BF00FF;margin-bottom:2px;">🛠 AÉRONEF</div>
+      <div style="font-size:10px;color:#64748B;">Systèmes · Équipements · MEL · Automatismes · Performances</div>
+    </div>
+    <div style="background:#00FFFF11;border:1px solid #00FFFF33;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#00FFFF;margin-bottom:2px;">🌩 MÉTÉO ADVERSE</div>
+      <div style="font-size:10px;color:#64748B;">Visibilité · Givrage · Vents/Windshear · Précipitations · Orages</div>
+    </div>
+    <div style="background:#00FF8811;border:1px solid #00FF8833;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#00FF88;margin-bottom:2px;">🌍 ENVIRONNEMENT</div>
+      <div style="font-size:10px;color:#64748B;">Relief · Nuit · Trafic</div>
+    </div>
+    <div style="background:#FF8C0011;border:1px solid #FF8C0033;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#FF8C00;margin-bottom:2px;">🏢 COMPAGNIE / OPS</div>
+      <div style="font-size:10px;color:#64748B;">Pression horaire · Retards · Documents · Charts · FMC DB</div>
+    </div>
+    <div style="background:#FF00CC11;border:1px solid #FF00CC33;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#FF00CC;margin-bottom:2px;">⏱ OPÉRATIONNEL</div>
+      <div style="font-size:10px;color:#64748B;">Pression temps · Remise des gaz · Déroutement · Conditions non normales</div>
+    </div>
+    <div style="background:#FF333311;border:1px solid #FF333333;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#FF3333;margin-bottom:2px;">🔧 PISTE / RAMP</div>
+      <div style="font-size:10px;color:#64748B;">Assistance sol · Congestion · Carnet technique · Maintenance</div>
+    </div>
+    <div style="background:#AAFF0011;border:1px solid #AAFF0033;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#AAFF00;margin-bottom:2px;">🧠 PHYSIOLOGIE</div>
+      <div style="font-size:10px;color:#64748B;">Fatigue · Stress · Hydratation · Nutrition</div>
+    </div>
+    <div style="background:#FFB80011;border:1px solid #FFB80033;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#FFB800;margin-bottom:2px;">🧳 CABINE</div>
+      <div style="font-size:10px;color:#64748B;">Passagers · Interruptions · Distractions · Personnel cabine</div>
+    </div>
+    <div style="background:#00FFCC11;border:1px solid #00FFCC33;border-radius:7px;padding:7px 9px;">
+      <div style="font-size:10px;font-weight:800;color:#00FFCC;margin-bottom:2px;">👥 ÉQUIPAGE</div>
+      <div style="font-size:10px;color:#64748B;">Expérience · Récence · 1er vol ensemble · Connaissance de route</div>
+    </div>
+    <div style="background:#00BFFF11;border:1px solid #00BFFF33;border-radius:7px;padding:7px 9px;grid-column:span 2;">
+      <div style="font-size:10px;font-weight:800;color:#00BFFF;margin-bottom:2px;">🛫 BRIEFING DÉCOLLAGE</div>
+      <div style="font-size:10px;color:#64748B;">Taxi path · Piste · Route/FMC · Retour terrain · Perf déco · Devoirs PM</div>
+    </div>
+    <div style="background:#FF61C711;border:1px solid #FF61C733;border-radius:7px;padding:7px 9px;grid-column:span 2;">
+      <div style="font-size:10px;font-weight:800;color:#FF61C7;margin-bottom:2px;">🎯 BRIEFING APPROCHE</div>
+      <div style="font-size:10px;color:#64748B;">Météo · STAR · Volets/Bugs · Automation · Minimums · Remise des gaz · Dégagement · Devoirs PM</div>
+    </div>
+  </div>
+
+  <!-- N/A toggle -->
+  <div style="background:#0F172A;border:1px solid #334155;border-radius:8px;padding:10px 12px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:1.5px;margin-bottom:6px;">BOUTON N/A — ITEMS NON APPLICABLES</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:7px;">Chaque item dispose d'un bouton <span style="background:#33415566;border:1px solid #64748B;color:#94A3B8;padding:1px 7px;border-radius:4px;font-size:11px;font-weight:800;">N/A</span> pour les menaces non applicables au scénario du jour.</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#10B981;flex-shrink:0;"></span>
+        <span style="font-size:12px;color:#CBD5E1;">Item <strong style="color:#10B981;">coché ✓</strong> — menace identifiée et briefée</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#64748B;flex-shrink:0;"></span>
+        <span style="font-size:12px;color:#CBD5E1;">Item <strong style="color:#94A3B8;">N/A</strong> — exclu du total et de la liste des manquants (ex: pas de givrage en été)</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:#334155;flex-shrink:0;"></span>
+        <span style="font-size:12px;color:#CBD5E1;">Item <strong style="color:#64748B;">non coché</strong> — non encore abordé, compté dans les manquants</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verdict banner -->
+  <div style="background:#0F172A;border:1px solid #334155;border-radius:8px;padding:10px 12px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:1.5px;margin-bottom:6px;">VERDICT AUTOMATIQUE</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.5;margin-bottom:7px;">Un bandeau de verdict global s'affiche en haut et récapitule l'avancement avec les items manquants.</div>
+    <div style="display:flex;flex-direction:column;gap:5px;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="background:#10B98122;border:1px solid #10B981;color:#10B981;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:110px;text-align:center;">✅ COMPLET</span>
+        <span style="font-size:12px;color:#94A3B8;">100% des items applicables couverts — prêt à démarrer</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="background:#F59E0B22;border:1px solid #F59E0B;color:#F59E0B;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:110px;text-align:center;">⚠️ PARTIEL</span>
+        <span style="font-size:12px;color:#94A3B8;">75–99% — quelques items restants, peut démarrer avec précaution</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="background:#EF444422;border:1px solid #EF4444;color:#EF4444;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:800;min-width:110px;text-align:center;">❌ INCOMPLET</span>
+        <span style="font-size:12px;color:#94A3B8;">&lt;75% — items critiques manquants, compléter le briefing avant de voler</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Conseils pratiques -->
+  <div style="background:#F59E0B11;border:1px solid #F59E0B33;border-radius:8px;padding:9px 12px;margin-bottom:8px;">
+    <div style="font-size:10px;font-weight:800;color:#F59E0B;letter-spacing:2px;margin-bottom:5px;">💡 CONSEILS PRATIQUES</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;align-items:flex-start;gap:6px;">
+        <span style="color:#F59E0B;font-weight:800;font-size:12px;flex-shrink:0;">•</span>
+        <span style="font-size:12px;color:#CBD5E1;line-height:1.4;">Commencez toujours par le <strong style="color:#00BFFF;">Briefing Décollage</strong> et le <strong style="color:#FF61C7;">Briefing Approche</strong> — ils sont les plus critiques.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:6px;">
+        <span style="color:#F59E0B;font-weight:800;font-size:12px;flex-shrink:0;">•</span>
+        <span style="font-size:12px;color:#CBD5E1;line-height:1.4;">Marquez N/A généreusement pour un scénario simple — un briefing de 5 items pertinents vaut mieux que 50 cases vides.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:6px;">
+        <span style="color:#F59E0B;font-weight:800;font-size:12px;flex-shrink:0;">•</span>
+        <span style="font-size:12px;color:#CBD5E1;line-height:1.4;">La liste des items manquants en bas du verdict vous sert de rappel discret pendant la session.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:6px;">
+        <span style="color:#F59E0B;font-weight:800;font-size:12px;flex-shrink:0;">•</span>
+        <span style="font-size:12px;color:#CBD5E1;line-height:1.4;">Tout item non coché et non N/A sera visible dans la synthèse TEM du Débrief — c'est une trace pédagogique intentionnelle.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exemple concret -->
+  <div style="background:#10B98111;border:1px solid #10B98133;border-radius:8px;padding:9px 12px;">
+    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;margin-bottom:4px;">📋 EXEMPLE — ILS CAT I DAAG VENT 22KT</div>
+    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">
+      <div style="margin-bottom:2px;"><span style="color:#10B981;font-weight:700;">✓</span> Météo : Vent traversier 22kt, brouillard matinal levé, pas d'orage</div>
+      <div style="margin-bottom:2px;"><span style="color:#10B981;font-weight:700;">✓</span> Piste : DAAG 09/27 sèche, pas de NOTAMs critiques</div>
+      <div style="margin-bottom:2px;"><span style="color:#94A3B8;font-weight:700;">N/A</span> Givrage : saison estivale, exclu</div>
+      <div style="margin-bottom:2px;"><span style="color:#10B981;font-weight:700;">✓</span> Briefing Décollage : complet · Briefing Approche : complet</div>
+      <div style="color:#10B981;font-weight:700;">→ Verdict : ✅ COMPLET — prêt à démarrer</div>
+    </div>
+  </div>
 </div>
 
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
