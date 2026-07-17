@@ -10189,6 +10189,8 @@ return c?`<span style="background:${c.color}18;border:1px solid ${c.color}33;col
 }).join('');
 const tlc=ex.timeLimitColor||'#00E5FF';
 const advGlow=sc.advanced?'box-shadow:0 0 14px #FF8C0033,inset 0 0 20px #FF6B0008;':'';
+const _pfr=ex.pilotFlightRole;
+const _pfmHtml=(_pfr&&ex.closed)?`<span style="background:#FFE50022;border:1px solid #FFE50088;color:#FFE500;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:800;letter-spacing:0.5px;">PF ${_pfr.cpt==='pf'?(state.pilotRole||'CPT'):(state.foRole||'FO')}</span><span style="background:#BF00FF22;border:1px solid #BF00FF88;color:#BF00FF;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:800;letter-spacing:0.5px;">PM ${_pfr.cpt==='pm'?(state.pilotRole||'CPT'):(state.foRole||'FO')}</span>`:'';
 return `<div class="ex-card" style="background:#0F1218;border-left-color:${headerColor};${advGlow}" onclick="openEx(${i})">
 <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
 <span style="font-size:13px;color:var(--mut);font-weight:700;">#${i+1}</span>
@@ -10202,6 +10204,7 @@ ${ex.closed&&ex.timeLimit&&ex.timeDeltaSec!==undefined?(ex.timeDeltaSec>=0?`<div
 <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;">
 <span class="chip" style="background:${cc}18;border:1px solid ${cc}33;color:${cc};">${sc.cat}</span>
 ${keysHtml}
+${_pfmHtml}
 ${ex.fordec?'<span style="background:#8B5CF622;border:1px solid #8B5CF6;color:#8B5CF6;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:800;letter-spacing:0.5px;box-shadow:0 0 6px #8B5CF644;">F</span>':''}${ex.nits?'<span style="background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:800;letter-spacing:0.5px;box-shadow:0 0 6px #3B82F644;">N</span>':''}
 </div>
 </div>`;
@@ -14080,7 +14083,22 @@ function _buildBISummary(biKey,pilotName,pilotRole,pilotColor){
 const _biP=_buildBISummary('bi',state.pilotName||'',state.pilotRole||'CPT',c1);
 const _biF=foMap?_buildBISummary('bifo',state.foName||'',state.foRole||'FO',c2):'';
 const biSummaryHtml=(_biP||_biF)?`<div style="background:#0F121822;border-top:1px solid #33415544;margin-top:4px;"><div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;padding:10px 14px 0;">${_lang==='en'?'BEHAVIORAL INDICATORS — SESSION EVIDENCE':'INDICATEURS COMPORTEMENTAUX — PREUVES SÉANCE'}</div>${_biP}${_biF}</div>`:'';
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + radarHtml + ebtBilanHtml + cptSection + foSection + biSummaryHtml;
+// PF/PM roles per exercise
+const _pfpmRows=closed.map(ex=>{
+  const sc=ALL_SC?ALL_SC.find(s=>s.id===ex.sid):null;
+  const exLabel=sc?sc.title:(ex.sid||(_lang==='en'?'Exercise':'Exercice'));
+  const pfr=ex.pilotFlightRole;
+  if(!pfr) return `<div style="display:flex;align-items:center;gap:8px;padding:5px 10px;border-bottom:1px solid #1E2530;"><span style="font-size:11px;color:#94A3B8;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${exLabel}</span><span style="font-size:9px;color:#475569;">—</span></div>`;
+  const pfName=pfr.cpt==='pf'?(state.pilotName||r1):(state.foName||r2);
+  const pmName=pfr.cpt==='pm'?(state.pilotName||r1):(state.foName||r2);
+  return `<div style="display:flex;align-items:center;gap:6px;padding:5px 10px;border-bottom:1px solid #1E2530;">
+    <span style="font-size:11px;color:#94A3B8;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${exLabel}</span>
+    <span style="font-size:10px;font-weight:800;background:#FFE50022;color:#FFE500;border:1px solid #FFE50088;border-radius:4px;padding:1px 6px;white-space:nowrap;">PF ${pfName}</span>
+    <span style="font-size:10px;font-weight:800;background:#BF00FF22;color:#BF00FF;border:1px solid #BF00FF88;border-radius:4px;padding:1px 6px;white-space:nowrap;">PM ${pmName}</span>
+  </div>`;
+}).join('');
+const pfpmHtml=_pfpmRows?`<div style="padding:10px 14px 4px;"><div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:2px;margin-bottom:6px;">✈️ ${_lang==='en'?'PF / PM ROLES PER EXERCISE':'RÔLES PF / PM PAR EXERCICE'}</div><div style="background:#0F1218;border:1px solid #33415544;border-radius:8px;overflow:hidden;">${_pfpmRows}</div></div>`:' ';
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + pfpmHtml + radarHtml + ebtBilanHtml + cptSection + foSection + biSummaryHtml;
 }
 
 function renderDebExercises(el){
