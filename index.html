@@ -1032,7 +1032,7 @@ Identifiant ou mot de passe incorrect
 
   <!-- TECH -->
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
-    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:2px;">TECH</div>
+    <div style="font-size:10px;font-weight:800;color:#FF61C7;letter-spacing:2px;">TECH</div>
     <div style="font-size:10px;color:#64748B;">— Compétences Techniques</div>
   </div>
   <div style="font-size:9px;font-weight:700;color:#64748B;letter-spacing:1.5px;margin-bottom:5px;margin-left:2px;">KNOWLEDGE-BASED</div>
@@ -1076,7 +1076,7 @@ Identifiant ou mot de passe incorrect
 
   <!-- NON-TECH -->
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
-    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;">NON-TECH</div>
+    <div style="font-size:10px;font-weight:800;color:#AAFF00;letter-spacing:2px;">NON-TECH</div>
     <div style="font-size:10px;color:#64748B;">— Facteurs Humains (CRM)</div>
   </div>
   <div style="font-size:9px;font-weight:700;color:#64748B;letter-spacing:1.5px;margin-bottom:5px;margin-left:2px;">COGNITIVE</div>
@@ -3581,7 +3581,7 @@ Identifiant ou mot de passe incorrect
 
   <!-- TECH EN -->
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
-    <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:2px;">TECH</div>
+    <div style="font-size:10px;font-weight:800;color:#FF61C7;letter-spacing:2px;">TECH</div>
     <div style="font-size:10px;color:#64748B;">— Technical Skills</div>
   </div>
   <div style="font-size:9px;font-weight:700;color:#64748B;letter-spacing:1.5px;margin-bottom:5px;margin-left:2px;">KNOWLEDGE-BASED</div>
@@ -3625,7 +3625,7 @@ Identifiant ou mot de passe incorrect
 
   <!-- NON-TECH EN -->
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
-    <div style="font-size:10px;font-weight:800;color:#10B981;letter-spacing:2px;">NON-TECH</div>
+    <div style="font-size:10px;font-weight:800;color:#AAFF00;letter-spacing:2px;">NON-TECH</div>
     <div style="font-size:10px;color:#64748B;">— Human Factors (CRM)</div>
   </div>
   <div style="font-size:9px;font-weight:700;color:#64748B;letter-spacing:1.5px;margin-bottom:5px;margin-left:2px;">COGNITIVE</div>
@@ -10588,7 +10588,7 @@ const _cardBis=BEHAVIORAL_INDICATORS[c.id]||[];
 const _cardBiCount=_cardBis.filter(b=>ex[biKey][b.id]).length;
 const biBadge=_cardBiCount>0?`<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;font-size:10px;font-weight:900;color:${c.color};background:${c.color}22;border:1.5px solid ${c.color}99;border-radius:50%;margin-left:4px;box-shadow:0 0 7px ${c.color}88,0 0 2px ${c.color}CC;line-height:1;vertical-align:middle;">${_cardBiCount}</span>`:'';
 const _isTech=['KNO','PRO','FPM','FPA'].includes(c.id);
-const _techBadge=`<span style="font-size:7px;font-weight:800;color:${_isTech?'#3B82F6':'#10B981'};background:${_isTech?'#3B82F611':'#10B98111'};border:1px solid ${_isTech?'#3B82F633':'#10B98133'};border-radius:3px;padding:1px 4px;letter-spacing:0.5px;vertical-align:middle;margin-left:4px;">${_isTech?'TECH':'NO TECH'}</span>`;
+const _techBadge=`<span style="font-size:7px;font-weight:800;color:${_isTech?'#FF61C7':'#AAFF00'};background:${_isTech?'#FF61C711':'#AAFF0011'};border:1px solid ${_isTech?'#FF61C733':'#AAFF0033'};border-radius:3px;padding:1px 4px;letter-spacing:0.5px;vertical-align:middle;margin-left:4px;">${_isTech?'TECH':'NO TECH'}</span>`;
 return `<div class="comp-card${isKey?' key':''}" style="--key-color:${c.color};${isKey?'border-color:'+c.color+'44;background:'+c.color+'0A;':''}" onclick="openComp('${c.id}')">
 ${isKey?`<div class="top-bar" style="background:${c.color};"></div>`:''}
 <div class="comp-label" style="color:${c.color};opacity:${isKey?1:0.65};">${c.label}${biBadge}${_techBadge}</div>
