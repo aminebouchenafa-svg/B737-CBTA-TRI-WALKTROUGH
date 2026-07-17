@@ -14098,7 +14098,73 @@ const _pfpmRows=closed.map(ex=>{
   </div>`;
 }).join('');
 const pfpmHtml=_pfpmRows?`<div style="padding:10px 14px 4px;"><div style="font-size:10px;font-weight:800;color:#94A3B8;letter-spacing:2px;margin-bottom:6px;">✈️ ${_lang==='en'?'PF / PM ROLES PER EXERCISE':'RÔLES PF / PM PAR EXERCICE'}</div><div style="background:#0F1218;border:1px solid #33415544;border-radius:8px;overflow:hidden;">${_pfpmRows}</div></div>`:' ';
-el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + pfpmHtml + radarHtml + ebtBilanHtml + cptSection + foSection + biSummaryHtml;
+// TECH vs NON-TECH profile analysis
+const _TECH_IDS=['KNO','PRO','FPM','FPA'];
+const _NTECH_IDS=['COM','LTW','WLM','SAW','PSD'];
+const _TC='#FF61C7',_NC='#AAFF00';
+function _techAnalysis(compMap,pName,pRole,pColor){
+  function _gavg(ids){let t=0,n=0;ids.forEach(id=>{const v=compMap[id];if(v>0){t+=v;n++;}});return n?t/n:null;}
+  const ta=_gavg(_TECH_IDS),na=_gavg(_NTECH_IDS);
+  if(!ta&&!na) return '';
+  let verd='',vc='';
+  if(ta!==null&&na!==null){
+    if(ta<3&&na<3){verd=_lang==='en'?'⚠️ CRITICAL — gaps in both domains':'⚠️ CRITIQUE — lacunes dans les deux domaines';vc='#EF4444';}
+    else if(ta<na-0.3){verd=_lang==='en'?'🔧 DOMINANT WEAKNESS: TECHNICAL SKILLS':'🔧 FAIBLESSE DOMINANTE : COMPÉTENCES TECHNIQUES';vc=_TC;}
+    else if(na<ta-0.3){verd=_lang==='en'?'🧠 DOMINANT WEAKNESS: HUMAN FACTORS (CRM)':'🧠 FAIBLESSE DOMINANTE : FACTEURS HUMAINS (CRM)';vc=_NC;}
+    else{verd=_lang==='en'?'✅ BALANCED PROFILE':'✅ PROFIL ÉQUILIBRÉ';vc='#10B981';}
+  }
+  function _bars(ids){
+    return ids.map(id=>{
+      const c=COMPETENCIES.find(x=>x.id===id);if(!c) return '';
+      const v=compMap[id]||0;if(!v) return '';
+      const pct=Math.round(v/5*100);
+      const zc=v<3?'#EF4444':v<3.5?'#F59E0B':'#10B981';
+      const zl=v<3?(_lang==='en'?'GAP':'LACUNE'):v<3.5?(_lang==='en'?'BLIND SPOT':'POINT MORT'):'OK';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #1E2530;">
+        <span style="font-size:11px;font-weight:800;color:${c.color};width:30px;flex-shrink:0;">${c.label}</span>
+        <div style="flex:1;height:6px;background:#1E2530;border-radius:3px;overflow:hidden;position:relative;">
+          <div style="height:6px;background:${zc};width:${pct}%;border-radius:3px;"></div>
+          <div style="position:absolute;top:-2px;left:60%;height:10px;width:1px;background:#FFFFFF50;"></div>
+          <div style="position:absolute;top:-2px;left:70%;height:10px;width:1px;background:#FFFFFF30;"></div>
+        </div>
+        <span style="font-size:12px;font-weight:900;color:${zc};width:24px;text-align:right;flex-shrink:0;">${v.toFixed(1)}</span>
+        <span style="font-size:8px;font-weight:800;color:${zc};background:${zc}22;border:1px solid ${zc}44;border-radius:3px;padding:1px 4px;width:56px;text-align:center;flex-shrink:0;">${zl}</span>
+      </div>`;
+    }).join('');
+  }
+  const techBars=_bars(_TECH_IDS),ntechBars=_bars(_NTECH_IDS);
+  if(!techBars&&!ntechBars) return '';
+  const tcC=ta?ta<3?'#EF4444':ta<3.5?'#F59E0B':'#10B981':'#475569';
+  const ncC=na?na<3?'#EF4444':na<3.5?'#F59E0B':'#10B981':'#475569';
+  const legendHtml=`<div style="display:flex;gap:10px;padding:0 10px 6px;margin-top:2px;">
+    <span style="font-size:8px;color:#64748B;">── 3.0 LACUNE</span>
+    <span style="font-size:8px;color:#64748B;">── 3.5 STD</span>
+  </div>`;
+  return `<div style="padding:10px 14px 8px;">
+    <div style="font-size:10px;font-weight:800;color:${pColor};letter-spacing:2px;margin-bottom:6px;">📊 ${_lang==='en'?'PROFILE ANALYSIS':'ANALYSE PROFIL'} — ${pRole} ${pName}</div>
+    ${verd?`<div style="font-size:11px;font-weight:900;color:${vc};background:${vc}12;border:1px solid ${vc}44;border-radius:6px;padding:7px 10px;margin-bottom:8px;text-align:center;">${verd}</div>`:''}
+    ${techBars?`<div style="background:#0F1218;border:1px solid ${_TC}33;border-radius:8px;overflow:hidden;margin-bottom:8px;">
+      <div style="padding:7px 10px;background:${_TC}0D;border-bottom:1px solid ${_TC}33;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:10px;font-weight:800;color:${_TC};letter-spacing:1px;">🔧 ${_lang==='en'?'TECHNICAL SKILLS':'COMPÉTENCES TECHNIQUES'}</span>
+        ${ta!==null?`<span style="font-size:18px;font-weight:900;color:${tcC};">${ta.toFixed(2)}</span>`:''}
+      </div>
+      <div style="padding:2px 10px;">${techBars}</div>
+      ${legendHtml}
+    </div>`:''}
+    ${ntechBars?`<div style="background:#0F1218;border:1px solid ${_NC}33;border-radius:8px;overflow:hidden;">
+      <div style="padding:7px 10px;background:${_NC}0D;border-bottom:1px solid ${_NC}33;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:10px;font-weight:800;color:${_NC};letter-spacing:1px;">🧠 ${_lang==='en'?'NON-TECH / HUMAN FACTORS':'NON-TECH / FACTEURS HUMAINS'}</span>
+        ${na!==null?`<span style="font-size:18px;font-weight:900;color:${ncC};">${na.toFixed(2)}</span>`:''}
+      </div>
+      <div style="padding:2px 10px;">${ntechBars}</div>
+      ${legendHtml}
+    </div>`:''}
+  </div>`;
+}
+const _taCpt=_techAnalysis(cptMap,state.pilotName||'',state.pilotRole||'CPT',c1);
+const _taFo=foMap?_techAnalysis(foMap,state.foName||'',state.foRole||'FO',c2):'';
+const techAnalysisHtml=(_taCpt||_taFo)?`<div style="background:#0F121822;border-top:1px solid #FF61C733;">${_taCpt}${_taFo}</div>`:'';
+el.innerHTML = `<div style="display:flex;justify-content:flex-end;padding:8px 14px 0;"><button onclick="showSectionDataShow('scores')" style="background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;padding:5px 11px;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:0 0 8px #F59E0B44;">📺 DS</button></div>` + header + pfpmHtml + radarHtml + techAnalysisHtml + ebtBilanHtml + cptSection + foSection + biSummaryHtml;
 }
 
 function renderDebExercises(el){
