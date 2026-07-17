@@ -9713,19 +9713,23 @@ function showBriefing(){
 const c1=_ROLE_COLORS[state.pilotRole]||'#3B82F6';
 const c2=_ROLE_COLORS[state.foRole]||'#10B981';
 const threats = _lang==='en' ? [
-{id:'wx',icon:'🌩️',label:'WEATHER',items:['Windshear','Icing','Reduced visibility','Thunderstorm / CB on route']},
-{id:'notam',icon:'📋',label:'NOTAMs / ATIS',items:['Runway / ILS NOTAM','Special procedures','Airspace restrictions','ATIS received and analyzed']},
-{id:'fuel',icon:'⛽',label:'FUEL',items:['Required vs loaded fuel','Alternate fuel','Extra fuel if needed','Fuel freeze altitude']},
-{id:'perf',icon:'📊',label:'PERFORMANCE',items:['V1 / VR / V2 calculated','Mass and balance','Takeoff distance','Landing distance']},
-{id:'crew',icon:'👥',label:'CREW',items:['Takeoff briefing done','Approach briefing done','PF/PM roles defined','FMS programmed and verified']},
-{id:'sys',icon:'⚙️',label:'SYSTEMS',items:['Applicable MEL checked','Systems tested','Hydraulic / electrical','Pressurization']},
+{id:'rwy',icon:'🛬',label:'AIRPORT / RUNWAY',items:['Runway contamination / condition','Construction / active works','Hotspots / signage','Intersection / reduced TORA']},
+{id:'wx',icon:'🌩️',label:'ADVERSE WEATHER',items:['Reduced visibility','Icing / De-icing required','Winds / Windshear reported','Precipitation / Thunderstorms / CB']},
+{id:'atc',icon:'📡',label:'ATC / AIRSPACE',items:['Unusual clearances / Re-routes','ARR/DEP amendments','Non-standard phraseology','Radio congestion / Similar call signs']},
+{id:'acft',icon:'🛠️',label:'AIRCRAFT',items:['Systems / Applicable MEL','Equipment / Automation','Performance calculated','Mass and balance / CG']},
+{id:'crew',icon:'👥',label:'CREW',items:['Experience / Recency','First crew flight together','Fatigue / Stress / Hydration','Route familiarity / FMC database']},
+{id:'ops',icon:'⏱️',label:'OPERATIONAL',items:['Schedule pressure / Delays','Alternate unavailable','Unfamiliar airport','Missed approach / Diversion plan']},
+{id:'tob',icon:'🛫',label:'TAKEOFF BRIEFING',items:['Taxi path · Runway · Intersection','Route: Clearance · Flight Plan · FMC RTE Xcheck','Return to airport: Emergency · Takeoff alternate','Takeoff perf: Data valid · Config · Conditions + PM duties / Engine failure plan']},
+{id:'apb',icon:'🎯',label:'APPROACH BRIEFING',items:['Weather · FMC programming · NOTAMs','Flaps · VREF & Bugs · STAR & Routing','Automation: Mode · Minimums · MCP ALT · Missed appr · Alternate · Fuel','Landing runway · Dist assessment · TD point · Exit · Taxi · Autobrake + PM duties / Arrival missed appr plan']},
 ] : [
-{id:'wx',icon:'🌩️',label:'MÉTÉO',items:['Vent cisaillant / windshear','Givrage / icing','Visibilité réduite','Orage / CB sur route']},
-{id:'notam',icon:'📋',label:'NOTAMs / ATIS',items:['NOTAM piste / ILS','Procédures spéciales','Restrictions espace aérien','ATIS reçu et analysé']},
-{id:'fuel',icon:'⛽',label:'CARBURANT',items:['Fuel requis vs chargé','Alternate fuel','Extra fuel si besoin','Fuel freeze altitude']},
-{id:'perf',icon:'📊',label:'PERFORMANCE',items:['V1 / VR / V2 calculés','Masse et centrage','Distance décollage','Distance atterrissage']},
-{id:'crew',icon:'👥',label:'ÉQUIPAGE',items:['Briefing décollage fait','Briefing approche fait','Rôles PF/PM définis','FMS programmé et vérifié']},
-{id:'sys',icon:'⚙️',label:'SYSTÈMES',items:['MEL applicable vérifié','Systèmes testés','Hydraulique / électrique','Pressurisation']},
+{id:'rwy',icon:'🛬',label:'AÉROPORT / PISTE',items:['Contamination / état de piste','Construction / travaux actifs','Hotspots / signalisation','Intersection / TORA réduite']},
+{id:'wx',icon:'🌩️',label:'MÉTÉO ADVERSE',items:['Visibilité réduite','Givrage / De-icing requis','Vents forts / Windshear signalé','Précipitations / Orages / CB']},
+{id:'atc',icon:'📡',label:'ATC / ESPACE AÉRIEN',items:['Clairances inhabituelles / Re-routes','Modifications ARR/DEP','Phraséologie non-standard','Congestion radio / Call signs similaires']},
+{id:'acft',icon:'🛠️',label:'AÉRONEF',items:['Systèmes / MEL applicable','Équipement / Automatismes','Performances calculées','Masses et centrage / CG']},
+{id:'crew',icon:'👥',label:'ÉQUIPAGE',items:['Expérience / Récence','Premier vol ensemble','Fatigue / Stress / Hydratation','Connaissance route / Base FMC à jour']},
+{id:'ops',icon:'⏱️',label:'OPÉRATIONNEL',items:['Pression horaire / Retards','Dégagement indisponible','Aéroport non familier','Plan remise des gaz / Déroutement']},
+{id:'tob',icon:'🛫',label:'BRIEFING DÉCOLLAGE',items:['Taxi path · Piste · Intersection','Route: Clairance · Plan vol · FMC RTE Crosscheck','Retour terrain: Urgence · Alternate décollage','Perf déco: Data valide · Config · Conditions + Devoirs PM / Plan panne moteur']},
+{id:'apb',icon:'🎯',label:'BRIEFING APPROCHE',items:['Météo · Prog FMC · NOTAMs','Volets · VREF & Bugs · STAR & Route','Automation: Mode · Minimums · ALT MCP · Remise des gaz · Dégagement · Carburant','Piste arrivée · Dist atterro · TD point · Sortie · Taxi · Autobrake + Devoirs PM / Plan remise des gaz arrivée']},
 ];
 
 state.briefingChecks = state.briefingChecks || {};
