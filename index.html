@@ -11372,13 +11372,25 @@ const mitigHtml = items.length ? `<div style="margin-top:8px;margin-bottom:4px;"
 ${items.map((it,i)=>{
 const mc=it.injected&&it.color?it.color:'#10B981';
 const tc=it.injected&&it.color?it.color:'#94A3B8';
+const _mDefs=k==='threats'?[
+  {v:'ok',fr:'✓ Gérée',en:'✓ Managed',ac:'#10B981'},
+  {v:'partial',fr:'~ Partielle',en:'~ Partial',ac:'#F59E0B'},
+  {v:'no',fr:'✗ Non gérée',en:'✗ Unmanaged',ac:'#EF4444'},
+]:k==='errors'?[
+  {v:'ok',fr:'✓ Détectée',en:'✓ Detected',ac:'#10B981'},
+  {v:'partial',fr:'✓ Corrigée',en:'✓ Corrected',ac:'#3B82F6'},
+  {v:'no',fr:'✗ Non corrigée',en:'✗ Uncorrected',ac:'#EF4444'},
+]:[
+  {v:'ok',fr:'✓ Reconnue',en:'✓ Recognized',ac:'#10B981'},
+  {v:'partial',fr:'~ Partielle',en:'~ Partial',ac:'#F59E0B'},
+  {v:'no',fr:'✗ Non reconnue',en:'✗ Unrecognized',ac:'#EF4444'},
+];
 return `<div class="tem-mitg-item" style="background:${mc}11;border:1px solid ${mc}33;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
 <div class="tem-mitg-desc" style="font-size:var(--fss);color:${tc};font-weight:${it.injected?'700':'400'};margin-bottom:6px;">${it.injected?'🎲 ':''}${it.text}</div>
-<div style="display:flex;gap:8px;align-items:center;">
-<button onclick="setMitigation('${k}',${i},'ok')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='ok')?'#10B981':'var(--bord)'};background:${(it.mit==='ok')?'#10B98133':'transparent'};color:${(it.mit==='ok')?'#10B981':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'✓ Managed':'✓ Gérée'}</button>
-<button onclick="setMitigation('${k}',${i},'partial')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='partial')?'#F59E0B':'var(--bord)'};background:${(it.mit==='partial')?'#F59E0B33':'transparent'};color:${(it.mit==='partial')?'#F59E0B':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'~ Partial':'~ Partielle'}</button>
-<button onclick="setMitigation('${k}',${i},'no')" style="flex:1;padding:8px 6px;border-radius:6px;border:1px solid ${(it.mit==='no')?'#EF4444':'var(--bord)'};background:${(it.mit==='no')?'#EF444433':'transparent'};color:${(it.mit==='no')?'#EF4444':'#64748B'};font-size:var(--fss);font-weight:700;cursor:pointer;">${_lang==='en'?'✗ Unmanaged':'✗ Non gérée'}</button>
+<div style="display:flex;gap:5px;align-items:center;">
+${_mDefs.map(d=>{const sel=it.mit===d.v;return `<button onclick="setMitigation('${k}',${i},'${d.v}')" style="flex:1;padding:7px 3px;border-radius:6px;border:1px solid ${sel?d.ac:'var(--bord)'};background:${sel?d.ac+'33':'transparent'};color:${sel?d.ac:'#64748B'};font-size:9px;font-weight:700;cursor:pointer;">${_lang==='en'?d.en:d.fr}</button>`;}).join('')}
 </div>
+${k==='uas'?`<div style="display:flex;gap:5px;margin-top:6px;align-items:center;"><span style="font-size:9px;color:#94A3B8;white-space:nowrap;flex-shrink:0;">${_lang==='en'?'Recovered:':'Rattrapée :'}</span><button onclick="setUASRecovery(${i},'yes')" style="flex:1;padding:6px 3px;border-radius:6px;border:1px solid ${it.rec==='yes'?'#10B981':'var(--bord)'};background:${it.rec==='yes'?'#10B98133':'transparent'};color:${it.rec==='yes'?'#10B981':'#64748B'};font-size:9px;font-weight:700;cursor:pointer;">🔄 ${_lang==='en'?'Recovered':'Rattrapée'}</button><button onclick="setUASRecovery(${i},'no')" style="flex:1;padding:6px 3px;border-radius:6px;border:1px solid ${it.rec==='no'?'#EF4444':'var(--bord)'};background:${it.rec==='no'?'#EF444433':'transparent'};color:${it.rec==='no'?'#EF4444':'#64748B'};font-size:9px;font-weight:700;cursor:pointer;">✗ ${_lang==='en'?'Not recovered':'Non rattrapée'}</button></div>`:''}
 </div>`;
 }).join('')}
 </div>` : '';
@@ -11431,6 +11443,14 @@ const ex = state.exercises[state.activeIdx];
 const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
 if(ex[temKey]&&ex[temKey][key]&&ex[temKey][key][idx]){
 ex[temKey][key][idx].mit = ex[temKey][key][idx].mit===val ? null : val;
+renderExContent();
+}
+}
+function setUASRecovery(idx,val){
+const ex = state.exercises[state.activeIdx];
+const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
+if(ex[temKey]&&ex[temKey].uas&&ex[temKey].uas[idx]){
+ex[temKey].uas[idx].rec = ex[temKey].uas[idx].rec===val ? null : val;
 renderExContent();
 }
 }
@@ -13924,11 +13944,15 @@ ${renderStatRow('Recoveries',statsCpt.rec>0?statsCpt.recOk+'/'+statsCpt.rec:'—
 </table>
 </div>`;
 
-const renderList = (items,color,icon)=>items.length?items.map(it=>{
-const mitLabel = it.mit==='ok'?`<span style="color:#10B981;font-size:10px;margin-left:6px;background:#10B98122;padding:1px 6px;border-radius:4px;">${_lang==='en'?'✓ Managed':'✓ Gérée'}</span>`:
-it.mit==='partial'?`<span style="color:#F59E0B;font-size:10px;margin-left:6px;background:#F59E0B22;padding:1px 6px;border-radius:4px;">${_lang==='en'?'~ Partial':'~ Partielle'}</span>`:
-it.mit==='no'?`<span style="color:#EF4444;font-size:10px;margin-left:6px;background:#EF444422;padding:1px 6px;border-radius:4px;">${_lang==='en'?'✗ Unmanaged':'✗ Non gérée'}</span>`:'';
-return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitLabel}</div>`;
+const renderList = (items,color,icon,type)=>items.length?items.map(it=>{
+const _isE=type==='errors',_isU=type==='uas';
+const _lOk=_isE?(_lang==='en'?'✓ Detected':'✓ Détectée'):_isU?(_lang==='en'?'✓ Recognized':'✓ Reconnue'):(_lang==='en'?'✓ Managed':'✓ Gérée');
+const _lPar=_isE?(_lang==='en'?'✓ Corrected':'✓ Corrigée'):(_lang==='en'?'~ Partial':'~ Partielle');
+const _lNo=_isE?(_lang==='en'?'✗ Uncorrected':'✗ Non corrigée'):_isU?(_lang==='en'?'✗ Unrecognized':'✗ Non reconnue'):(_lang==='en'?'✗ Unmanaged':'✗ Non gérée');
+const _parC=_isE?'#3B82F6':'#F59E0B';
+const mitLabel=it.mit==='ok'?`<span style="color:#10B981;font-size:10px;margin-left:6px;background:#10B98122;padding:1px 6px;border-radius:4px;">${_lOk}</span>`:it.mit==='partial'?`<span style="color:${_parC};font-size:10px;margin-left:6px;background:${_parC}22;padding:1px 6px;border-radius:4px;">${_lPar}</span>`:it.mit==='no'?`<span style="color:#EF4444;font-size:10px;margin-left:6px;background:#EF444422;padding:1px 6px;border-radius:4px;">${_lNo}</span>`:'';
+const recBadge=_isU&&it.rec?`<span style="font-size:10px;margin-left:4px;background:${it.rec==='yes'?'#10B98122':'#EF444422'};color:${it.rec==='yes'?'#10B981':'#EF4444'};padding:1px 6px;border-radius:4px;">${it.rec==='yes'?(_lang==='en'?'🔄 Recovered':'🔄 Rattrapée'):(_lang==='en'?'✗ Not recovered':'✗ Non rattrapée')}</span>`:'';
+return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitLabel}${recBadge}</div>`;
 }).join('') : '';
 
 const exRows = closed.map((ex,i)=>{
@@ -13950,9 +13974,9 @@ return `<div class="card" style="margin-bottom:12px;border-left:3px solid #EF444
 <div style="display:grid;grid-template-columns:1fr${state.foName?' 1fr':''};gap:12px;">
 <div>
 <div style="font-size:10px;color:#3B82F6;font-weight:700;letter-spacing:1px;margin-bottom:6px;">CPT — ${state.pilotName}</div>
-${(temCpt.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#3B82F644;margin-bottom:3px;">▲ ${_lang==='en'?'THREATS':'MENACES'}</div>${renderList(temCpt.threats,'#3B82F6','▲')}</div>`:''}
-${(temCpt.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#EF444444;margin-bottom:3px;">● ${_lang==='en'?'ERRORS':'ERREURS'}</div>${renderList(temCpt.errors,'#EF4444','●')}</div>`:''}
-${(temCpt.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F59E0B44;margin-bottom:3px;">◆ UAS</div>${renderList(temCpt.uas,'#F59E0B','◆')}</div>`:''}
+${(temCpt.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#3B82F644;margin-bottom:3px;">▲ ${_lang==='en'?'THREATS':'MENACES'}</div>${renderList(temCpt.threats,'#3B82F6','▲','threats')}</div>`:''}
+${(temCpt.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#EF444444;margin-bottom:3px;">● ${_lang==='en'?'ERRORS':'ERREURS'}</div>${renderList(temCpt.errors,'#EF4444','●','errors')}</div>`:''}
+${(temCpt.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F59E0B44;margin-bottom:3px;">◆ UAS</div>${renderList(temCpt.uas,'#F59E0B','◆','uas')}</div>`:''}
 <div style="padding:6px 8px;background:#10B98111;border-radius:6px;border:1px solid #10B98133;margin-top:4px;">
 <span style="font-size:10px;font-weight:700;color:#10B981;">RECOVERY: </span>
 <span style="font-size:12px;font-weight:700;color:${recColor};">${recLabel}</span>
@@ -13960,9 +13984,9 @@ ${(temCpt.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size
 </div>
 ${state.foName?`<div>
 <div style="font-size:10px;color:#10B981;font-weight:700;letter-spacing:1px;margin-bottom:6px;">FO — ${state.foName}</div>
-${(temFo.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#10B98144;margin-bottom:3px;">▲ ${_lang==='en'?'THREATS':'MENACES'}</div>${renderList(temFo.threats,'#10B981','▲')}</div>`:''}
-${(temFo.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F9731644;margin-bottom:3px;">● ${_lang==='en'?'ERRORS':'ERREURS'}</div>${renderList(temFo.errors,'#F97316','●')}</div>`:''}
-${(temFo.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F59E0B44;margin-bottom:3px;">◆ UAS</div>${renderList(temFo.uas,'#F59E0B','◆')}</div>`:''}
+${(temFo.threats||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#10B98144;margin-bottom:3px;">▲ ${_lang==='en'?'THREATS':'MENACES'}</div>${renderList(temFo.threats,'#10B981','▲','threats')}</div>`:''}
+${(temFo.errors||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F9731644;margin-bottom:3px;">● ${_lang==='en'?'ERRORS':'ERREURS'}</div>${renderList(temFo.errors,'#F97316','●','errors')}</div>`:''}
+${(temFo.uas||[]).length?`<div style="margin-bottom:6px;"><div style="font-size:10px;color:#F59E0B44;margin-bottom:3px;">◆ UAS</div>${renderList(temFo.uas,'#F59E0B','◆','uas')}</div>`:''}
 <div style="padding:6px 8px;background:#10B98111;border-radius:6px;border:1px solid #10B98133;margin-top:4px;">
 <span style="font-size:10px;font-weight:700;color:#10B981;">RECOVERY: </span>
 <span style="font-size:12px;font-weight:700;color:${recfoColor};">${recfoLabel}</span>
