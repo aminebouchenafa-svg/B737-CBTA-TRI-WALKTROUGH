@@ -14240,6 +14240,7 @@ ${eFo!==null?`<div style="text-align:center;background:${c2}15;border:1px solid 
 ${(eFo!==null&&eCpt!==null&&st)?`<div style="text-align:center;background:#64748B15;border:1px solid #64748B33;border-radius:7px;padding:3px 8px;"><div style="font-size:17px;font-weight:900;color:${ac};line-height:1;">${st.avg.toFixed(1)}</div><div style="font-size:9px;color:#64748B;font-weight:700;">${_lang==='en'?'AVG':'MOY'}</div></div>`:(st?`<div style="font-size:18px;font-weight:800;color:${ac};">${st.avg.toFixed(1)}</div>`:'')}
 </div>
 </div>
+${ex.pilotFlightRole?`<div style="display:flex;gap:6px;margin-bottom:6px;"><span style="font-size:10px;font-weight:800;background:#FFE50022;color:#FFE500;border:1px solid #FFE50088;border-radius:4px;padding:2px 8px;">PF ${ex.pilotFlightRole.cpt==='pf'?(state.pilotName||r1):(state.foName||r2)}</span><span style="font-size:10px;font-weight:800;background:#BF00FF22;color:#BF00FF;border:1px solid #BF00FF88;border-radius:4px;padding:2px 8px;">PM ${ex.pilotFlightRole.cpt==='pm'?(state.pilotName||r1):(state.foName||r2)}</span></div>`:''}
 <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">${compBadges}</div>
 ${ffaHtml?`<div style="margin-bottom:6px;">${ffaHtml}</div>`:''}
 ${temHtml?`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px;">${temHtml}</div>`:''}
