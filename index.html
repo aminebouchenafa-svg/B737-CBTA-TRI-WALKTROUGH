@@ -7048,7 +7048,7 @@ function t(k) {
 
 function setLang(l) {
   _lang = l;
-  localStorage.setItem('cbta_lang', l);
+  try{ localStorage.setItem('cbta_lang', l); }catch(e){}
   const btn = document.getElementById('lang-toggle-btn');
   if(btn) btn.innerHTML = l === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -12412,6 +12412,7 @@ if(comp) renderCompContent(comp);
 
 function saveComp(){
 const ex = state.exercises[state.activeIdx];
+if(ex && ex.closed){ showToast(_lang==='en'?'⚠ Reopen the exercise to change grades':'⚠ Rouvrez l\'exercice pour modifier les notes'); showScreen('ex'); return; }
 var _ac=state.activeComp; var cid=_ac.cid; var csKey=_ac.csKey; var g=_ac.g; var obs=_ac.obs;
 if(!ex[csKey]) ex[csKey]={};
 ex[csKey][cid] = {g,obs};
@@ -12551,7 +12552,7 @@ function setFontSize(s){
   if(s==='S') document.body.classList.add('fs-small');
   if(s==='L') document.body.classList.add('fs-large');
   if(s==='XL') document.body.classList.add('fs-xlarge');
-  localStorage.setItem('cbta_fs', s||'M');
+  try{ localStorage.setItem('cbta_fs', s||'M'); }catch(e){}
   document.querySelectorAll('.fs-btn').forEach(b=>{
     b.style.background=b.dataset.fs===s?'#3B82F622':'transparent';
     b.style.color=b.dataset.fs===s?'#3B82F6':'#64748B';
@@ -13380,7 +13381,7 @@ _darkMode = !_darkMode;
 document.body.classList.toggle('light-mode', !_darkMode);
 const icon = _darkMode ? '☀️' : '🌙';
 document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent=icon);
-localStorage.setItem('cbta_darkmode', _darkMode?'dark':'light');
+try{ localStorage.setItem('cbta_darkmode', _darkMode?'dark':'light'); }catch(e){}
 }
 (function(){const fs=localStorage.getItem('cbta_fs')||'M';if(fs!=='M')setFontSize(fs);})();
 (function(){const dm=localStorage.getItem('cbta_darkmode');if(dm==='light'){_darkMode=false;document.body.classList.add('light-mode');document.querySelectorAll('[onclick="toggleDarkMode()"]').forEach(b=>b.textContent='🌙');}})();
@@ -15656,7 +15657,7 @@ document.addEventListener('click',function(e){
 function toggleTrainingMode(){
   const cur=localStorage.getItem('cbta_training')==='1';
   const next=!cur;
-  localStorage.setItem('cbta_training',next?'1':'0');
+  try{ localStorage.setItem('cbta_training',next?'1':'0'); }catch(e){}
   const btn=document.getElementById('btn-training-mode');
   const banner=document.getElementById('training-banner');
   if(btn){
@@ -17304,7 +17305,22 @@ profCheck: state.profCheck,
 exercises: closed.map(ex=>{
 const sc=ALL_SC.find(s=>s.id===ex.sid);
 const st=exStats(ex);
-return {title:sc?sc.title:'?', avg:st?st.avg.toFixed(1):'-', page:sc?sc.page:''};
+return {
+  sid: ex.sid,
+  title: sc?sc.title:'?',
+  avg: st?st.avg.toFixed(1):'-',
+  page: sc?sc.page:'',
+  cs: ex.cs||{},
+  csfo: ex.csfo||{},
+  ffa: ex.ffa||{},
+  ffafo: ex.ffafo||{},
+  tem: {threats:(ex.tem&&ex.tem.threats)||[],errors:(ex.tem&&ex.tem.errors)||[],uas:(ex.tem&&ex.tem.uas)||[]},
+  temfo: {threats:(ex.temfo&&ex.temfo.threats)||[],errors:(ex.temfo&&ex.temfo.errors)||[],uas:(ex.temfo&&ex.temfo.uas)||[]},
+  notes: ex.notes||'',
+  attempt: ex.attempt||1,
+  mandatory: ex.mandatory||false,
+  timeDeltaSec: ex.timeDeltaSec
+};
 })
 };
 const hist = _jParse('cbta_history','[]');
