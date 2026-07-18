@@ -10678,9 +10678,13 @@ function backToList(){ renderExList(); showScreen('session'); }
 function toggleCloseEx(){
 const ex = state.exercises[state.activeIdx];
 const wasOpen = !ex.closed;
+if(wasOpen && ex.openedAt && !ex.paused){
+  ex.pausedElapsed = Math.floor((Date.now()-ex.openedAt)/1000);
+  ex.paused = true;
+}
 if(wasOpen && ex.timeLimit && ex.openedAt){
   const elapsed = ex.paused ? (ex.pausedElapsed||0) : Math.floor((Date.now()-ex.openedAt)/1000);
-  ex.timeDeltaSec = (ex.timeLimit*60) - elapsed; // >0 = gain, <0 = loss
+  ex.timeDeltaSec = (ex.timeLimit*60) - elapsed;
 } else if(!wasOpen){
   ex.timeDeltaSec = undefined;
 }
@@ -10881,7 +10885,7 @@ function renderFocusMode(ex,sc,el){
     const mc = item.mit==='no'?'#EF4444':'#F59E0B';
     return `<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;background:${mc}11;border:1px solid ${mc}33;border-radius:6px;margin-bottom:4px;">
       <span style="font-size:8px;font-weight:800;color:${tc};background:${tc}22;padding:2px 5px;border-radius:3px;">${tl}</span>
-      <span style="font-size:11px;color:#E2E8F0;flex:1;">${item.text}</span>
+      <span style="font-size:11px;color:#E2E8F0;flex:1;">${_esc(item.text)}</span>
       <span style="font-size:10px;font-weight:800;color:${mc};">${item.mit==='no'?'NON GÉRÉE':'PARTIELLE'}</span>
     </div>`;
   }).join('') : '';
@@ -11020,7 +11024,7 @@ function renderCompactMode(ex,sc,el){
       const mitCol = it.mit==='ok'?'#10B981':it.mit==='partial'?'#F59E0B':it.mit==='no'?'#EF4444':'#475569';
       const mitSym = it.mit==='ok'?'✓':it.mit==='partial'?'~':it.mit==='no'?'✗':'○';
       return `<div style="display:flex;align-items:center;gap:6px;padding:8px 10px;background:${c}11;border-radius:6px;margin:3px 0;">
-        <span style="font-size:13px;color:${c};flex:1;">${it.text}</span>
+        <span style="font-size:13px;color:${c};flex:1;">${_esc(it.text)}</span>
         <span onclick="setMitigation('${k}',${i},this.dataset.next)" data-next="${it.mit==='ok'?'partial':it.mit==='partial'?'no':'ok'}" style="font-size:16px;color:${mitCol};cursor:pointer;font-weight:900;padding:2px 6px;">${mitSym}</span>
         <span onclick="removeTEM('${k}',${i})" style="font-size:14px;color:#EF4444;cursor:pointer;padding:2px 4px;">×</span>
       </div>`;
@@ -11069,7 +11073,7 @@ function renderCompactMode(ex,sc,el){
   if(questions.length < 3){ questions = [...questions, ...defaultFac.slice(questions.length)]; }
   const facHtml = questions.map((q,i)=>`<div style="padding:4px 0;border-bottom:1px solid #1E253044;">
     <div style="font-size:10px;color:#10B981;cursor:pointer;" onclick="var a=this.nextElementSibling;a.style.display=a.style.display==='none'?'block':'none'"><span style="font-weight:900;">${i+1}.</span> ${q}</div>
-    <textarea class="note-area" style="display:none;height:45px;font-size:11px;margin-top:4px;" placeholder="Notes..." onchange="saveFacNote(${i},this.value)">${(ex.facNotes&&ex.facNotes[i])||''}</textarea>
+    <textarea class="note-area" style="display:none;height:45px;font-size:11px;margin-top:4px;" placeholder="Notes..." onchange="saveFacNote(${i},this.value)">${_esc((ex.facNotes&&ex.facNotes[i])||'')}</textarea>
   </div>`).join('');
 
   // Memory items
@@ -11807,7 +11811,7 @@ const sugHtml = sug.map((t)=>`<span class="tem-sug" style="background:${c}11;bor
 const itemsHtml = items.map((it,i)=>{
 const ic=it.injected&&it.color?it.color:c;
 return `<div class="tem-item" style="background:${ic}22;border-left:3px solid ${ic};color:var(--text);font-size:var(--fs);padding:10px 12px;">
-<span style="color:${ic};font-weight:${it.injected?'800':'400'};">${it.injected?'🎲 ':icon+' '}${it.text}${it.ts?`<span style="margin-left:8px;font-size:10px;color:#475569;font-family:monospace;font-weight:700;">⏱${it.ts}</span>`:''}</span>
+<span style="color:${ic};font-weight:${it.injected?'800':'400'};">${it.injected?'🎲 ':icon+' '}${_esc(it.text)}${it.ts?`<span style="margin-left:8px;font-size:10px;color:#475569;font-family:monospace;font-weight:700;">⏱${it.ts}</span>`:''}</span>
 <button onclick="removeTEM('${k}',${i})" style="background:none;border:none;color:#EF4444;font-size:18px;cursor:pointer;">x</button>
 </div>`;
 }).join('');
@@ -11830,7 +11834,7 @@ const _mDefs=k==='threats'?[
   {v:'no',fr:'✗ Non reconnue',en:'✗ Unrecognized',ac:'#EF4444'},
 ];
 return `<div class="tem-mitg-item" style="background:${mc}11;border:1px solid ${mc}33;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
-<div class="tem-mitg-desc" style="font-size:var(--fss);color:${tc};font-weight:${it.injected?'700':'400'};margin-bottom:6px;">${it.injected?'🎲 ':''}${it.text}</div>
+<div class="tem-mitg-desc" style="font-size:var(--fss);color:${tc};font-weight:${it.injected?'700':'400'};margin-bottom:6px;">${it.injected?'🎲 ':''}${_esc(it.text)}</div>
 <div style="display:flex;gap:5px;align-items:center;">
 ${_mDefs.map(d=>{const sel=it.mit===d.v;return `<button onclick="setMitigation('${k}',${i},'${d.v}')" style="flex:1;padding:10px 6px;border-radius:8px;border:2px solid ${sel?d.ac:'var(--bord)'};background:${sel?d.ac+'33':'transparent'};color:${sel?d.ac:'#64748B'};font-size:13px;font-weight:700;cursor:pointer;">${_lang==='en'?d.en:d.fr}</button>`;}).join('')}
 </div>
@@ -11925,6 +11929,7 @@ if(sug[idx]) addTEM(key, sug[idx]);
 }
 function addTEM(key,text){
 const ex = state.exercises[state.activeIdx];
+if(ex && ex.closed){ showToast(_lang==='en'?'⚠ Reopen the exercise to edit TEM':'⚠ Rouvrez l\'exercice pour modifier le TEM'); return; }
 const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
 if(!ex[temKey]) ex[temKey]={threats:[],errors:[],uas:[]};
 if(!ex[temKey][key]) ex[temKey][key]=[];
@@ -11941,6 +11946,7 @@ if(inp&&inp.value.trim()) { addTEM(key,inp.value.trim()); inp.value=''; }
 
 function removeTEM(key,i){
 const ex = state.exercises[state.activeIdx];
+if(ex && ex.closed){ showToast(_lang==='en'?'⚠ Reopen the exercise to edit TEM':'⚠ Rouvrez l\'exercice pour modifier le TEM'); return; }
 const temKey = state.activePilot==="cpt" ? "tem" : "temfo";
 ex[temKey][key].splice(i,1);
 renderExContent();
@@ -12106,7 +12112,7 @@ const html = questions.map((q,i)=>`
 <div class="fac-q" style="font-size:15px;line-height:1.5;">${q}</div>
 </div>
 <div class="fac-ans" style="display:none;margin-top:10px;">
-<textarea class="note-area" style="height:65px;font-size:14px;" placeholder="${_lang==='en'?'Response notes...':'Note de reponse...'}" onchange="saveFacNote(${i},this.value)">${(ex.facNotes&&ex.facNotes[i])||''}</textarea>
+<textarea class="note-area" style="height:65px;font-size:14px;" placeholder="${_lang==='en'?'Response notes...':'Note de reponse...'}" onchange="saveFacNote(${i},this.value)">${_esc((ex.facNotes&&ex.facNotes[i])||'')}</textarea>
 </div>
 </div>`).join('');
 
@@ -13786,6 +13792,49 @@ ${filter!=='cpt'&&state.foName?pilotBlock('csfo',(state.foRole||'FO')+' — '+st
 <div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'EXERCISE DETAILS':'DÉTAIL DES EXERCICES'}</div>
 <div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">${exRows||`<div style="padding:16px;color:#94a3b8;font-size:13px;">${_lang==='en'?'No closed exercises':'Aucun exercice clôturé'}</div>`}</div>
 
+${(()=>{
+const temExRows = closed.filter(ex=>{
+  const t=ex.tem||{};const tf=ex.temfo||{};
+  return (t.threats||[]).length||(t.errors||[]).length||(t.uas||[]).length||(tf.threats||[]).length||(tf.errors||[]).length||(tf.uas||[]).length;
+});
+if(!temExRows.length) return '';
+const mitBadgePDF=(it)=>it.mit==='ok'?`<span style="background:#10B98122;color:#10B981;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;">✓</span>`:it.mit==='partial'?`<span style="background:#F59E0B22;color:#F59E0B;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;">~</span>`:it.mit==='no'?`<span style="background:#EF444422;color:#EF4444;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px;">✗</span>`:'';
+const temPilotBlock=(temData,label,pColor)=>{
+  const th=temData.threats||[],er=temData.errors||[],us=temData.uas||[];
+  if(!th.length&&!er.length&&!us.length) return '';
+  const mitOk=(arr)=>arr.filter(x=>x.mit==='ok'||x.mit==='partial').length;
+  let s=`<div style="margin-bottom:6px;"><div style="font-size:9px;font-weight:800;color:${pColor};letter-spacing:1px;margin-bottom:4px;">${label}</div>`;
+  if(th.length) s+=`<div style="margin-bottom:3px;"><span style="font-size:9px;color:#64748b;font-weight:700;">▲ ${_lang==='en'?'THREATS':'MENACES'} (${mitOk(th)}/${th.length} ${_lang==='en'?'managed':'gérées'})</span>${th.map(it=>`<div style="font-size:10px;color:#374151;padding:2px 0 2px 8px;">• ${it.text}${mitBadgePDF(it)}</div>`).join('')}</div>`;
+  if(er.length) s+=`<div style="margin-bottom:3px;"><span style="font-size:9px;color:#64748b;font-weight:700;">● ${_lang==='en'?'ERRORS':'ERREURS'} (${mitOk(er)}/${er.length} ${_lang==='en'?'corrected':'corrigées'})</span>${er.map(it=>`<div style="font-size:10px;color:#374151;padding:2px 0 2px 8px;">• ${it.text}${mitBadgePDF(it)}</div>`).join('')}</div>`;
+  if(us.length) s+=`<div><span style="font-size:9px;color:#64748b;font-weight:700;">◆ UAS (${mitOk(us)}/${us.length} ${_lang==='en'?'mitigated':'atténués'})</span>${us.map(it=>`<div style="font-size:10px;color:#374151;padding:2px 0 2px 8px;">• ${it.text}${mitBadgePDF(it)}</div>`).join('')}</div>`;
+  s+='</div>';
+  return s;
+};
+let temSect=`<div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'THREAT & ERROR MANAGEMENT':'THREAT & ERROR MANAGEMENT (TEM)'}</div>`;
+temSect+=`<div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;overflow:hidden;">`;
+temExRows.forEach((ex,i)=>{
+  const sc=ALL_SC.find(s=>s.id===ex.sid);
+  const t=ex.tem||{},tf=ex.temfo||{};
+  const allTh=(t.threats||[]).length+(tf.threats||[]).length;
+  const allEr=(t.errors||[]).length+(tf.errors||[]).length;
+  const allUas=(t.uas||[]).length+(tf.uas||[]).length;
+  const mitTh=(t.threats||[]).filter(x=>x.mit==='ok'||x.mit==='partial').length+(tf.threats||[]).filter(x=>x.mit==='ok'||x.mit==='partial').length;
+  const mitEr=(t.errors||[]).filter(x=>x.mit==='ok'||x.mit==='partial').length+(tf.errors||[]).filter(x=>x.mit==='ok'||x.mit==='partial').length;
+  temSect+=`<div style="padding:12px 16px;${i>0?'border-top:1px solid #f1f5f9;':''}">`;
+  temSect+=`<div style="font-size:12px;font-weight:800;color:#0f172a;margin-bottom:6px;">${i+1}. ${sc?sc.title:'?'}</div>`;
+  temSect+=`<div style="display:flex;gap:12px;margin-bottom:8px;">`;
+  if(allTh) temSect+=`<span style="font-size:10px;background:#3B82F622;color:#3B82F6;padding:2px 8px;border-radius:4px;font-weight:700;">▲ ${mitTh}/${allTh} ${_lang==='en'?'threats':'menaces'}</span>`;
+  if(allEr) temSect+=`<span style="font-size:10px;background:#EF444422;color:#EF4444;padding:2px 8px;border-radius:4px;font-weight:700;">● ${mitEr}/${allEr} ${_lang==='en'?'errors':'erreurs'}</span>`;
+  if(allUas) temSect+=`<span style="font-size:10px;background:#F59E0B22;color:#F59E0B;padding:2px 8px;border-radius:4px;font-weight:700;">◆ ${allUas} UAS</span>`;
+  temSect+='</div>';
+  if(filter!=='fo') temSect+=temPilotBlock(t,(state.pilotRole||'CPT')+' — '+state.pilotName,CPT_COLOR);
+  if(filter!=='cpt'&&state.foName) temSect+=temPilotBlock(tf,(state.foRole||'FO')+' — '+state.foName,FO_COLOR);
+  temSect+='</div>';
+});
+temSect+='</div>';
+return temSect;
+})()}
+
 ${conclusion?`
 <div style="font-size:10px;font-weight:700;color:#64748b;letter-spacing:2px;padding:16px 16px 4px;">${_lang==='en'?'INSTRUCTOR RECOMMENDATIONS':'RECOMMANDATIONS INSTRUCTEUR'}</div>
 <div style="background:#fff;border-radius:12px;border:1px solid #e2e8f0;margin:0 16px;padding:14px;font-size:13px;line-height:1.7;border-left:4px solid #0f172a;">${conclusion}</div>`:''}
@@ -14414,7 +14463,7 @@ const mitLabel=it.mit==='ok'?`<span style="color:#10B981;font-size:10px;margin-l
 const mgdBadge=_isT&&it.mgd?`<span style="font-size:10px;margin-left:4px;background:${it.mgd==='ok'?'#10B98122':it.mgd==='partial'?'#F59E0B22':'#EF444422'};color:${it.mgd==='ok'?'#10B981':it.mgd==='partial'?'#F59E0B':'#EF4444'};padding:1px 6px;border-radius:4px;">${it.mgd==='ok'?(_lang==='en'?'✓ Managed':'✓ Gérée'):it.mgd==='partial'?(_lang==='en'?'~ Partial':'~ Partielle'):(_lang==='en'?'✗ Not managed':'✗ Non gérée')}</span>`:'';
 const corBadge=_isE&&it.cor?`<span style="font-size:10px;margin-left:4px;background:${it.cor==='ok'?'#10B98122':it.cor==='partial'?'#F59E0B22':'#EF444422'};color:${it.cor==='ok'?'#10B981':it.cor==='partial'?'#F59E0B':'#EF4444'};padding:1px 6px;border-radius:4px;">${it.cor==='ok'?(_lang==='en'?'✓ Corrected':'✓ Corrigée'):it.cor==='partial'?(_lang==='en'?'~ Partial':'~ Partielle'):(_lang==='en'?'✗ Not corrected':'✗ Non corrigée')}</span>`:'';
 const recBadge=_isU&&it.rec?`<span style="font-size:10px;margin-left:4px;background:${it.rec==='yes'?'#10B98122':'#EF444422'};color:${it.rec==='yes'?'#10B981':'#EF4444'};padding:1px 6px;border-radius:4px;">${it.rec==='yes'?(_lang==='en'?'🔄 Recovered':'🔄 Rattrapée'):(_lang==='en'?'✗ Not recovered':'✗ Non rattrapée')}</span>`:'';
-return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitLabel}${mgdBadge}${corBadge}${recBadge}</div>`;
+return `<div style="font-size:13px;color:var(--text);padding:5px 0;border-bottom:1px solid #1E253033;">${icon} ${_esc(it.text)}${mitLabel}${mgdBadge}${corBadge}${recBadge}</div>`;
 }).join('') : '';
 
 const _needsRCA=(it,type)=>{
@@ -14436,7 +14485,7 @@ const _row=(ico,lbl,field,ph)=>'<div style="margin-bottom:6px;"><div style="font
 const _taRow=(ico,lbl,field,bc,ph)=>'<div style="margin-bottom:6px;"><div style="font-size:9px;color:'+bc+';font-weight:700;margin-bottom:2px;">'+ico+' '+lbl+'</div>'+_ta(field,bc,ph)+'</div>';
 let h='<div style="margin-top:10px;background:#0F172A;border:1px solid #EF444455;border-radius:8px;padding:10px;">';
 h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">';
-h+='<span style="color:'+typeColor+';font-size:11px;font-weight:700;">'+typeIcon+' '+it.text+'</span>';
+h+='<span style="color:'+typeColor+';font-size:11px;font-weight:700;">'+typeIcon+' '+_esc(it.text)+'</span>';
 h+='<span style="font-size:9px;color:#EF4444;font-weight:700;background:#EF444422;padding:1px 6px;border-radius:4px;">⚠ RCA</span>';
 h+='</div>';
 h+='<div style="display:flex;gap:6px;margin-bottom:4px;">';
@@ -14853,7 +14902,7 @@ ${ex.pilotFlightRole?`<div style="display:flex;gap:6px;margin-bottom:6px;"><span
 <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;">${compBadges}</div>
 ${ffaHtml?`<div style="margin-bottom:6px;">${ffaHtml}</div>`:''}
 ${temHtml?`<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px;">${temHtml}</div>`:''}
-${ex.notes?`<div style="font-size:11px;color:#F59E0B;font-weight:700;margin:6px 0 2px;letter-spacing:0.5px;">📝 ${_lang==='en'?'MY NOTES':'MES NOTES'}</div><div style="font-size:12px;color:#94A3B8;font-style:italic;background:#F59E0B0D;border:1px solid #F59E0B33;border-radius:6px;padding:6px 10px;">${ex.notes}</div>`:''}
+${ex.notes?`<div style="font-size:11px;color:#F59E0B;font-weight:700;margin:6px 0 2px;letter-spacing:0.5px;">📝 ${_lang==='en'?'MY NOTES':'MES NOTES'}</div><div style="font-size:12px;color:#94A3B8;font-style:italic;background:#F59E0B0D;border:1px solid #F59E0B33;border-radius:6px;padding:6px 10px;">${_esc(ex.notes)}</div>`:''}
 ${facNotes}
 </div>`;
 }).join('');
@@ -18798,7 +18847,7 @@ else if(section==='tem'){
     ${sRow('↩ Recovery',recTxt(recC),recTxt(recF),recColor(recC),recColor(recF))}
   </div>`;
   const mitBadge=(it)=>it.mit==='ok'?'<span style="color:#10B981;font-size:11px;font-weight:700;"> ✓</span>':it.mit==='partial'?'<span style="color:#F59E0B;font-size:11px;font-weight:700;"> ~</span>':it.mit==='no'?'<span style="color:#EF4444;font-size:11px;font-weight:700;"> ✗</span>':'';
-  const renderList=(items,c,icon)=>(items||[]).map(it=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E253033;">${icon} ${it.text}${mitBadge(it)}</div>`).join('');
+  const renderList=(items,c,icon)=>(items||[]).map(it=>`<div style="font-size:13px;color:#CBD5E1;padding:4px 0;border-bottom:1px solid #1E253033;">${icon} ${_esc(it.text)}${mitBadge(it)}</div>`).join('');
   const pilotTEM=(temData,label,c)=>{
     if(!(temData.threats||[]).length&&!(temData.errors||[]).length&&!(temData.uas||[]).length) return '';
     return `<div style="margin-bottom:8px;"><div style="font-size:10px;font-weight:800;color:${c};letter-spacing:2px;margin-bottom:6px;">${label}</div>
