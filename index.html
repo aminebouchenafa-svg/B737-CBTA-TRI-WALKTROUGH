@@ -918,7 +918,7 @@ Identifiant ou mot de passe incorrect
 <!-- SOMMAIRE -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — 21 CHAPITRES <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap pour aller au chapitre</span></div>
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 SOMMAIRE — 22 CHAPITRES <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap pour aller au chapitre</span></div>
   <div style="display:flex;flex-direction:column;gap:6px;">
     <button onclick="scrollToGuideChapter(1)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">1 · Démarrage en 4 étapes ↓</button>
     <button onclick="scrollToGuideChapter(2)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">2 · Grille de notation CBTA ↓</button>
@@ -941,6 +941,7 @@ Identifiant ou mot de passe incorrect
     <button onclick="scrollToGuideChapter(19)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">19 · Fleet Dashboard ↓</button>
     <button onclick="scrollToGuideChapter(20)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">20 · QR Auto-évaluation ↓</button>
     <button onclick="scrollToGuideChapter(21)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">21 · Briefing Pré-Session TEM ↓</button>
+    <button onclick="scrollToGuideChapter(22)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">22 · Quick Eval &amp; TRI Corner ↓</button>
   </div>
 </div>
 
@@ -3701,6 +3702,105 @@ Identifiant ou mot de passe incorrect
   </div>
 </div>
 
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPITRE 22 — QUICK EVAL & TRI CORNER -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="guide-sec" data-chapter="22" style="background:#141B26;border:1px solid #A78BFA44;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:2px;margin-bottom:12px;">🔢 CHAPITRE 22 — QUICK EVAL &amp; TRI CORNER</div>
+
+  <!-- Intro -->
+  <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:14px;">
+    Le mode <span style="color:#A78BFA;font-weight:800;">🔢 QUICK</span> est conçu pour les instructeurs qui veulent noter rapidement chaque compétence sur 9 cartes — sans ouvrir les onglets Eval / FFA / TEM. Toutes les données Quick Eval sont liées à votre relevé d'observations et alimentent le PDF de débrief automatiquement.
+  </div>
+
+  <!-- Section 1 : Carte compétence -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">1 · LES 9 CARTES COMPÉTENCE</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:8px;">
+      Chaque carte représente une compétence CBTA (KNO, WLM, SAW, PSD, LTW, FPM, FPA, COM, PRO). Deux lignes d'action par carte :
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:900;flex-shrink:0;">+ Obs</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Ajoute un marqueur positif lié à cette compétence — influe sur la note suggérée et apparaît dans le rapport PDF.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:900;flex-shrink:0;">− Obs</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Ouvre la page de sélection de tag rapide — choisis parmi 12 comportements prédéfinis. Influe sur la note suggérée et le PDF.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 : Roue de note -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">2 · ROUE DE NOTE DIRECTE 1–5</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:8px;">
+      En bas de chaque carte, 5 cercles colorés permettent d'attribuer une note directe <strong style="color:#F1F5F9;">indépendante</strong> du comptage d'observations :
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <span style="width:22px;height:22px;border-radius:50%;background:#EF4444;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">1</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#F97316;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">2</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#F59E0B;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">3</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#10B981;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">4</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#3B82F6;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">5</span>
+      <span style="font-size:11px;color:#64748B;">→ tap pour noter · re-tap pour désélectionner</span>
+    </div>
+    <div style="background:#1E2530;border-radius:8px;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.6;">
+      <span style="color:#F59E0B;font-weight:700;">Badge dual :</span> si une note directe ET une suggestion d'obs coexistent et diffèrent, le badge affiche les deux — ex. <span style="background:#10B98133;border:1px solid #10B98155;color:#10B981;padding:1px 5px;border-radius:4px;font-weight:800;">4</span> <span style="color:#3B82F6;opacity:0.7;">~5</span> — la note directe est prioritaire dans le PDF.
+    </div>
+  </div>
+
+  <!-- Section 3 : Quick Tags -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">3 · QUICK TAGS (PRIVÉS)</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:6px;">
+      Un appui sur <span style="color:#EF4444;font-weight:700;">−</span> ouvre une page plein écran avec 12 tags comportementaux prédéfinis :
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-bottom:8px;">
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Briefing insuffisant</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Non-standard call-out</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Late identification</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Startle / surprise</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Tunnel effect</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Energy management</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">SOP deviation</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">CRM à retravailler</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Communication croisée</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Décision tardive</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Manque d'assertivité</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Stabilisation approche</div>
+    </div>
+    <div style="background:#1A2030;border-left:3px solid #F59E0B;border-radius:0 6px 6px 0;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.6;">
+      <span style="color:#F59E0B;font-weight:700;">🔒 Privé :</span> les quick tags restent dans votre interface — ils n'apparaissent <strong style="color:#F1F5F9;">jamais</strong> dans le rapport PDF du pilote. Réservés à votre mémoire d'instructeur pendant la séance.
+    </div>
+  </div>
+
+  <!-- Section 4 : TRI Corner -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;">
+    <div style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">4 · 🔒 TRI CORNER — ESPACE INSTRUCTEUR PRIVÉ</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:8px;">
+      L'onglet <span style="color:#F59E0B;font-weight:800;">🔒 TRI Corner</span> dans le débrief agrège en un seul endroit toutes vos notes privées d'instructeur :
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="color:#F59E0B;font-size:14px;flex-shrink:0;">📝</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#F1F5F9;font-weight:700;">Notes privées globales</span> — zone de texte libre visible uniquement par vous. Idéal pour les points pédagogiques que vous ne souhaitez pas inclure dans le rapport.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="color:#F59E0B;font-size:14px;flex-shrink:0;">💬</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#F1F5F9;font-weight:700;">Notes de facilitation</span> — récupérées depuis l'onglet Facilitation de chaque exercice (techniques pédagogiques, questions posées, réponses pilote).</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="color:#EF4444;font-size:14px;flex-shrink:0;">🏷</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#F1F5F9;font-weight:700;">Quick Tags</span> — tous les tags sélectionnés pendant la séance, regroupés par exercice et compétence pour un récapitulatif rapide avant le débrief.</div>
+      </div>
+    </div>
+    <div style="background:#1A2030;border-left:3px solid #EF4444;border-radius:0 6px 6px 0;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.6;">
+      <span style="color:#EF4444;font-weight:700;">⚠️ Rappel :</span> tout le contenu du TRI Corner est <strong style="color:#F1F5F9;">strictement privé</strong> — jamais inclus dans le rapport pilote ni dans l'export PDF. C'est votre espace de préparation au débrief.
+    </div>
+  </div>
+</div>
+
 <div style="text-align:center;padding:10px;color:#334155;font-size:11px;">By Cpt Bouchenafa Mohamed Amine · B737NG QRH Rev55 · FCTM Rev25</div>
 </div>
 </div><!-- end guide-content-fr -->
@@ -3735,7 +3835,7 @@ Identifiant ou mot de passe incorrect
 <!-- TABLE OF CONTENTS -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <div class="guide-sec" style="background:#141B26;border:1px solid #33415533;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
-  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 TABLE OF CONTENTS — 21 CHAPTERS <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap to jump</span></div>
+  <div style="font-size:13px;font-weight:800;color:#64748B;letter-spacing:2px;margin-bottom:10px;">📑 TABLE OF CONTENTS — 22 CHAPTERS <span style="font-size:9px;color:#475569;font-weight:400;letter-spacing:0;font-style:italic;">→ tap to jump</span></div>
   <div style="display:flex;flex-direction:column;gap:6px;">
     <button onclick="scrollToGuideChapter(1)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">1 · 4-Step Quick Start ↓</button>
     <button onclick="scrollToGuideChapter(2)" style="background:#3B82F622;border:1px solid #3B82F655;color:#3B82F6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">2 · CBTA Grading Scale ↓</button>
@@ -3758,6 +3858,7 @@ Identifiant ou mot de passe incorrect
     <button onclick="scrollToGuideChapter(19)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">19 · Fleet Dashboard ↓</button>
     <button onclick="scrollToGuideChapter(20)" style="background:#8B5CF622;border:1px solid #8B5CF655;color:#8B5CF6;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">20 · QR Self-Assessment ↓</button>
     <button onclick="scrollToGuideChapter(21)" style="background:#F59E0B22;border:1px solid #F59E0B55;color:#F59E0B;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">21 · Pre-Session TEM Briefing ↓</button>
+    <button onclick="scrollToGuideChapter(22)" style="background:#A78BFA22;border:1px solid #A78BFA55;color:#A78BFA;padding:5px 10px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;text-align:left;">22 · Quick Eval &amp; TRI Corner ↓</button>
   </div>
 </div>
 
@@ -6399,6 +6500,105 @@ Identifiant ou mot de passe incorrect
       <div style="margin-bottom:2px;"><span style="color:#94A3B8;font-weight:700;">N/A</span> Icing: summer season, excluded</div>
       <div style="margin-bottom:2px;"><span style="color:#10B981;font-weight:700;">✓</span> Takeoff Briefing: complete · Approach Briefing: complete</div>
       <div style="color:#10B981;font-weight:700;">→ Verdict: ✅ COMPLETE — ready to start</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- CHAPTER 22 — QUICK EVAL & TRI CORNER -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="guide-sec" data-chapter="22" style="background:#141B26;border:1px solid #A78BFA44;border-radius:10px;padding:12px 14px;margin-bottom:12px;">
+  <div style="font-size:13px;font-weight:800;color:#A78BFA;letter-spacing:2px;margin-bottom:12px;">🔢 CHAPTER 22 — QUICK EVAL &amp; TRI CORNER</div>
+
+  <!-- Intro -->
+  <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:14px;">
+    The <span style="color:#A78BFA;font-weight:800;">🔢 QUICK</span> tab is designed for instructors who want to rapidly assess all 9 competencies using dedicated cards — without navigating the Eval / FFA / TEM tabs. All Quick Eval data is linked to your observation log and automatically feeds into the debrief PDF.
+  </div>
+
+  <!-- Section 1 : Competency cards -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">1 · THE 9 COMPETENCY CARDS</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:8px;">
+      Each card represents one CBTA competency (KNO, WLM, SAW, PSD, LTW, FPM, FPA, COM, PRO). Two quick actions per card:
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="background:#10B98122;border:1px solid #10B98155;color:#10B981;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:900;flex-shrink:0;">+ Obs</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Adds a positive marker linked to this competency — influences the suggested grade and appears in the PDF report.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="background:#EF444422;border:1px solid #EF444455;color:#EF4444;padding:2px 8px;border-radius:5px;font-size:11px;font-weight:900;flex-shrink:0;">− Obs</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;">Opens the quick tag full-screen page — pick from 12 predefined behavioral patterns. Influences the suggested grade and PDF.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2 : Grade wheel -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">2 · DIRECT GRADE WHEEL 1–5</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:8px;">
+      At the bottom of each card, 5 colored circles let you assign a direct grade <strong style="color:#F1F5F9;">independently</strong> of your observation count:
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+      <span style="width:22px;height:22px;border-radius:50%;background:#EF4444;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">1</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#F97316;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">2</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#F59E0B;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">3</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#10B981;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">4</span>
+      <span style="width:22px;height:22px;border-radius:50%;background:#3B82F6;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;">5</span>
+      <span style="font-size:11px;color:#64748B;">→ tap to grade · tap again to deselect</span>
+    </div>
+    <div style="background:#1E2530;border-radius:8px;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.6;">
+      <span style="color:#F59E0B;font-weight:700;">Dual badge:</span> when a direct grade and an obs-based suggestion coexist and differ, both are shown — e.g. <span style="background:#10B98133;border:1px solid #10B98155;color:#10B981;padding:1px 5px;border-radius:4px;font-weight:800;">4</span> <span style="color:#3B82F6;opacity:0.7;">~5</span> — the direct grade takes priority in the PDF.
+    </div>
+  </div>
+
+  <!-- Section 3 : Quick Tags -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;margin-bottom:12px;">
+    <div style="font-size:11px;font-weight:800;color:#A78BFA;letter-spacing:1.5px;margin-bottom:8px;">3 · QUICK TAGS (PRIVATE)</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:6px;">
+      Tapping <span style="color:#EF4444;font-weight:700;">−</span> opens a full-screen page with 12 predefined behavioral tags:
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;margin-bottom:8px;">
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Insufficient briefing</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Non-standard call-out</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Late identification</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Startle / surprise</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Tunnel effect</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Energy management</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">SOP deviation</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">CRM needs work</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Cross-cockpit comm.</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Late decision</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Lack of assertiveness</div>
+      <div style="background:#EF444411;border:1px solid #EF444433;border-radius:6px;padding:4px 7px;font-size:10px;color:#EF4444;font-weight:700;">Approach stabilization</div>
+    </div>
+    <div style="background:#1A2030;border-left:3px solid #F59E0B;border-radius:0 6px 6px 0;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.6;">
+      <span style="color:#F59E0B;font-weight:700;">🔒 Private:</span> quick tags stay in your interface — they <strong style="color:#F1F5F9;">never</strong> appear in the pilot's PDF report. They are reserved for your in-session instructor memory only.
+    </div>
+  </div>
+
+  <!-- Section 4 : TRI Corner -->
+  <div style="border-top:1px solid #1E2530;padding-top:10px;">
+    <div style="font-size:11px;font-weight:800;color:#F59E0B;letter-spacing:1.5px;margin-bottom:8px;">4 · 🔒 TRI CORNER — PRIVATE INSTRUCTOR SPACE</div>
+    <div style="font-size:12px;color:#94A3B8;line-height:1.7;margin-bottom:8px;">
+      The <span style="color:#F59E0B;font-weight:800;">🔒 TRI Corner</span> tab in the debrief aggregates all your private instructor notes in one place:
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="color:#F59E0B;font-size:14px;flex-shrink:0;">📝</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#F1F5F9;font-weight:700;">Global private notes</span> — free-text area visible only to you. Ideal for pedagogical points you do not want to include in the report.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="color:#F59E0B;font-size:14px;flex-shrink:0;">💬</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#F1F5F9;font-weight:700;">Facilitation notes</span> — pulled from the Facilitation tab of each exercise (pedagogical techniques, questions asked, pilot responses).</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <div style="color:#EF4444;font-size:14px;flex-shrink:0;">🏷</div>
+        <div style="font-size:12px;color:#94A3B8;line-height:1.5;"><span style="color:#F1F5F9;font-weight:700;">Quick Tags</span> — all tags selected during the session, grouped by exercise and competency for a rapid overview before the debrief.</div>
+      </div>
+    </div>
+    <div style="background:#1A2030;border-left:3px solid #EF4444;border-radius:0 6px 6px 0;padding:8px 10px;font-size:11px;color:#94A3B8;line-height:1.6;">
+      <span style="color:#EF4444;font-weight:700;">⚠️ Reminder:</span> all TRI Corner content is <strong style="color:#F1F5F9;">strictly private</strong> — never included in the pilot report or PDF export. It is your debrief preparation space.
     </div>
   </div>
 </div>
