@@ -12164,12 +12164,15 @@ function renderQuickEval(ex,sc,el){
     const total = plus + minus;
     const tags = qt[c.id]||[];
 
+    // Grade set directly by instructor (takes priority), else suggested from obs
+    const directGrade = data.g||0;
     let sg=0;
     if(total>0){
       const r=plus/total;
       if(r>=0.9) sg=5; else if(r>=0.65) sg=4; else if(r>=0.4) sg=3; else if(r>=0.15) sg=2; else sg=1;
     }
-    const gc = GC[sg]||'#64748B';
+    const displayGrade = directGrade>0 ? directGrade : sg;
+    const gc = GC[displayGrade]||'#64748B';
     const nc = plus>minus?'#10B981':minus>plus?'#EF4444':'#F59E0B';
 
     const pills = tags.map((t,i)=>
@@ -12178,10 +12181,22 @@ function renderQuickEval(ex,sc,el){
       </span>`
     ).join('');
 
+    // Grade wheel: 5 small circles, filled if selected (direct grade), ring if suggested
+    const gradeWheel = [1,2,3,4,5].map(g=>{
+      const col = GC[g];
+      const isDirect = directGrade===g;
+      const isSug = !directGrade && sg===g;
+      const bg = isDirect ? col : 'transparent';
+      const border = isDirect ? col : (isSug ? col+'88' : '#1E2530');
+      const textCol = isDirect ? '#fff' : (isSug ? col : '#334155');
+      return `<button onclick="setQuickGrade('${p}','${c.id}',${isDirect?0:g})"
+        style="width:22px;height:22px;border-radius:50%;background:${bg};border:2px solid ${border};color:${textCol};font-size:9px;font-weight:900;cursor:pointer;padding:0;line-height:1;flex-shrink:0;">${g}</button>`;
+    }).join('');
+
     return `<div style="background:#0D1117;border:1px solid ${c.color}44;border-radius:10px;padding:9px 8px;display:flex;flex-direction:column;gap:5px;">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:2px;">
         <span style="font-weight:900;font-size:11px;color:${c.color};letter-spacing:0.5px;">${c.label}</span>
-        ${sg>0?`<span style="font-size:10px;font-weight:700;color:${gc};background:${gc}22;border-radius:6px;padding:1px 5px;">${sg}</span>`:''}
+        ${displayGrade>0?`<span style="font-size:11px;font-weight:900;color:${gc};background:${gc}22;border-radius:6px;padding:1px 6px;${directGrade?'border:1px solid '+gc+'66':''}">${displayGrade}</span>`:''}
       </div>
       <div style="display:flex;align-items:center;gap:4px;">
         <button onclick="quickTap('${p}','${c.id}','+')" style="flex:1;padding:9px 0;font-size:22px;font-weight:900;background:#10B98122;border:2px solid #10B981;border-radius:7px;color:#10B981;cursor:pointer;">+</button>
@@ -12190,6 +12205,7 @@ function renderQuickEval(ex,sc,el){
         </div>
         <button onclick="quickTap('${p}','${c.id}','-')" style="flex:1;padding:9px 0;font-size:22px;font-weight:900;background:#EF444422;border:2px solid #EF4444;border-radius:7px;color:#EF4444;cursor:pointer;">−</button>
       </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px;">${gradeWheel}</div>
       ${tags.length?`<div style="display:flex;flex-wrap:wrap;gap:3px;">${pills}</div>`:''}
     </div>`;
   }).join('');
@@ -12280,6 +12296,15 @@ function removeQuickTag(p, cid, idx){
   const ex = state.exercises[state.activeIdx];
   if(!ex||!ex.quickTags||!ex.quickTags[p]||!ex.quickTags[p][cid]) return;
   ex.quickTags[p][cid].splice(idx,1);
+  renderExContent();
+}
+
+function setQuickGrade(p, cid, grade){
+  const ex = state.exercises[state.activeIdx];
+  if(!ex) return;
+  const csKey = p==='cpt'?'cs':'csfo';
+  if(!ex[csKey][cid]) ex[csKey][cid]={g:0,obs:[]};
+  ex[csKey][cid].g = grade; // 0 = reset to suggested
   renderExContent();
 }
 
