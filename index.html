@@ -866,6 +866,11 @@ Identifiant ou mot de passe incorrect
 </div>
 <div style="padding:14px 16px;display:flex;flex-direction:column;flex:1;overflow:hidden;">
 <input id="plan-name-input" class="form-input" data-i18n-ph="loft_name_ph" placeholder="Nom du plan (ex: Summer Recurrent 2026)" style="margin-bottom:12px;flex-shrink:0;"/>
+<!-- Mandatory quick-add inside LOFT editor -->
+<div style="flex-shrink:0;margin-bottom:10px;">
+  <div style="font-size:10px;font-weight:900;color:#EF4444;letter-spacing:1.5px;margin-bottom:6px;">⚠️ MANDATORY ITEMS — tap pour ajouter</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:5px;" id="plan-mand-grid"></div>
+</div>
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-shrink:0;">
 <div style="font-size:13px;font-weight:700;color:#64748B;flex:1;" id="plan-ex-count">0 exercice</div>
 <button onclick="openAddForPlan()" style="padding:8px 16px;border-radius:8px;background:#3B82F622;border:1px solid #3B82F6;color:#3B82F6;font-size:13px;font-weight:700;cursor:pointer;" data-i18n="loft_add_btn">＋ Ajouter</button>
@@ -11911,7 +11916,9 @@ ${mitigHtml}
 </div>`;
 }).join('');
 
-el.innerHTML = pilotTabsHtml + info + sectHtml;
+el.innerHTML = pilotTabsHtml +
+  `<div style="font-size:10px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:8px;padding:5px 10px;background:#EF44440D;border-radius:7px;border-left:3px solid #EF4444;">⚠️ TEM — THREAT · ERROR · UAS</div>` +
+  info + sectHtml;
 }
 
 function setRecovery(key,val){
@@ -13279,6 +13286,42 @@ function renderPlansList(){
   }).join('');
 }
 
+const _PLAN_MAND = [
+  {id:"rto",             label:"RTO"},
+  {id:"ef_v1v2",         label:"EF V1–V2"},
+  {id:"se_ils",          label:"SE ILS"},
+  {id:"se_ga",           label:"SE GA"},
+  {id:"se_ldg",          label:"SE LDG"},
+  {id:"non_ils",         label:"NON-ILS"},
+  {id:"tcas_ra",         label:"TCAS RA"},
+  {id:"windshear_manual",label:"W/S ESC"},
+  {id:"upset_recovery",  label:"UPSET"},
+];
+const _PLAN_MAND_COLORS=['#FF5577','#FF8844','#FFCC33','#44EE99','#33CCFF','#5588FF','#BB55FF','#FF66BB','#33DDBB'];
+
+function renderPlanMandGrid(){
+  const grid = document.getElementById('plan-mand-grid');
+  if(!grid) return;
+  grid.innerHTML = _PLAN_MAND.map((m,idx)=>{
+    const inPlan = _planEditExIds.includes(m.id);
+    const col = _PLAN_MAND_COLORS[idx];
+    if(inPlan){
+      return `<button onclick="removePlanMandEx('${m.id}')" style="padding:7px 4px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;text-align:center;line-height:1.3;border:1px solid ${col};background:${col}33;color:${col};position:relative;">
+        <span style="position:absolute;top:2px;right:3px;font-size:9px;">✓</span>${m.label}</button>`;
+    }
+    return `<button onclick="addPlanMandEx('${m.id}')" style="padding:7px 4px;border-radius:6px;font-size:10px;font-weight:600;cursor:pointer;text-align:center;line-height:1.3;border:1px solid ${col}88;background:#1A1F2E;color:#64748B;box-shadow:0 0 8px ${col}33;">${m.label}</button>`;
+  }).join('');
+}
+function addPlanMandEx(sid){
+  if(!_planEditExIds.includes(sid)) _planEditExIds.push(sid);
+  renderPlanExList();
+}
+function removePlanMandEx(sid){
+  const i = _planEditExIds.indexOf(sid);
+  if(i>-1) _planEditExIds.splice(i,1);
+  renderPlanExList();
+}
+
 function newPlan(){
   _planEditId = null;
   _planEditExIds = [];
@@ -13302,6 +13345,7 @@ function closePlanEdit(){
   _planAddMode = false;
 }
 function renderPlanExList(){
+  renderPlanMandGrid();
   const cnt = document.getElementById('plan-ex-count');
   const el = document.getElementById('plan-ex-list');
   if(cnt) cnt.textContent = _planEditExIds.length + ' ' + (_lang==='en'?'exercise':'exercice') + (_planEditExIds.length>1?'s':'');
