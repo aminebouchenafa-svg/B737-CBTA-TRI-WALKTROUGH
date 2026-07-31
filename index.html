@@ -10590,7 +10590,23 @@ const howToEn = `<div class="card" style="text-align:left;font-size:var(--fs);co
 <div>6. <span style="color:#10B981;font-weight:700;">Close</span> the exercise, then add the next one</div>
 <div>7. <span style="color:#3B82F6;font-weight:700;">DEBRIEF</span> → scores, FORDEC/NITS, Time Management, Questionnaire, CRM</div>
 </div>`;
-el.innerHTML = `<div style="text-align:center;color:var(--faint);padding:50px 20px;">
+const _emptyPlans = _jParse('cbta_plans','[]');
+let _emptyPlansHtml = '';
+if(_emptyPlans.length){
+  _emptyPlansHtml += '<div style="padding:0 10px 10px;">';
+  _emptyPlansHtml += '<div style="background:#0A0C12;border:1px solid #06B6D422;border-radius:12px;padding:10px 10px 8px;">';
+  _emptyPlansHtml += '<div style="font-size:11px;font-weight:900;color:#06B6D4;letter-spacing:2px;margin-bottom:8px;">📋 MES PLANS DE SESSION</div>';
+  _emptyPlansHtml += '<div style="display:flex;flex-direction:column;gap:6px;">';
+  _emptyPlans.forEach(function(plan, idx){
+    const n = plan.exIds ? plan.exIds.length : 0;
+    _emptyPlansHtml += '<button onclick="applyQuickPlan('+idx+')" style="width:100%;padding:11px 13px;border-radius:9px;background:#06B6D411;border:1px solid #06B6D444;color:#06B6D4;font-size:13px;font-weight:700;cursor:pointer;text-align:left;display:flex;justify-content:space-between;align-items:center;">';
+    _emptyPlansHtml += '<span>'+(plan.name?_esc(plan.name):'Plan '+(idx+1))+'</span>';
+    _emptyPlansHtml += '<span style="font-size:11px;color:#475569;font-weight:400;">'+n+' exercice'+(n!==1?'s':'')+'</span>';
+    _emptyPlansHtml += '</button>';
+  });
+  _emptyPlansHtml += '</div></div></div>';
+}
+el.innerHTML = _emptyPlansHtml + `<div style="text-align:center;color:var(--faint);padding:30px 20px;">
 <div style="font-size:40px;margin-bottom:14px;"></div>
 <div style="font-size:15px;color:#94A3B8;margin-bottom:6px;">${t('exercise_no_exo')}</div>
 <div style="font-size:13px;color:var(--mut);margin-bottom:20px;">${t('exercise_no_exo_sub')}</div>
