@@ -6436,6 +6436,18 @@ Identifiant ou mot de passe incorrect
 <div id="rds-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px;touch-action:pan-y;"></div>
 </div>
 
+<!-- Quick Tag Full-Screen Overlay (persistent, body-level) -->
+<div id="quick-tag-fullpage" style="display:none;position:fixed;inset:0;z-index:99999;background:#060A12;flex-direction:column;overflow:hidden;">
+  <div id="qtfp-header" style="flex-shrink:0;padding:14px 16px 12px;display:flex;align-items:center;gap:14px;border-bottom:2px solid #1E2530;">
+    <button onclick="closeQuickTagPage()" style="width:42px;height:42px;border-radius:50%;background:#1E2530;border:none;color:#fff;font-size:22px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">←</button>
+    <div>
+      <div id="qtfp-title" style="font-size:17px;font-weight:900;letter-spacing:1px;"></div>
+      <div style="font-size:11px;color:#475569;margin-top:1px;">Sélectionne un tag · privé, non inclus dans le rapport</div>
+    </div>
+  </div>
+  <div id="qtfp-list" style="flex:1;overflow-y:auto;padding:18px 16px 30px;display:flex;flex-direction:column;gap:10px;"></div>
+</div>
+
 <div id="modal-confirm" style="display:none;" class="modal-overlay">
 <div class="modal-box center">
 <div style="font-size:15px;font-weight:700;color:var(--yellow);margin-bottom:10px;" data-i18n="modal_reset_title">Reset session</div>
@@ -12187,17 +12199,7 @@ function renderQuickEval(ex,sc,el){
   el.innerHTML = `<div style="padding:2px;">
     ${pilotTabsHtml}
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;">${cards}</div>
-    <div style="margin-top:10px;font-size:10px;color:#334155;text-align:center;letter-spacing:0.5px;">Tap +/− pour enregistrer les observations · − ouvre les tags rapides</div>
-  </div>
-  <div id="quick-tag-popup" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;background:#000000BB;z-index:9999;align-items:flex-end;justify-content:center;flex-direction:column;">
-    <div style="background:#111827;border-radius:16px 16px 0 0;padding:16px 14px 24px;width:100%;max-width:480px;margin:0 auto;max-height:65vh;overflow-y:auto;">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <span style="font-weight:900;color:#F59E0B;font-size:13px;letter-spacing:1px;">🔖 TAG RAPIDE INSTRUCTEUR</span>
-        <button onclick="document.getElementById('quick-tag-popup').style.display='none'" style="background:none;border:none;color:#64748B;font-size:22px;cursor:pointer;line-height:1;">×</button>
-      </div>
-      <div id="quick-tag-list" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
-      <div style="margin-top:12px;font-size:10px;color:#475569;text-align:center;">Tags privés — non inclus dans le rapport PDF</div>
-    </div>
+    <div style="margin-top:10px;font-size:10px;color:#334155;text-align:center;letter-spacing:0.5px;">Tap +/− · − ouvre la sélection de tags</div>
   </div>`;
 }
 
@@ -12223,18 +12225,43 @@ function quickTap(p, cid, sign){
 }
 
 function showQuickTagPopup(p, cid){
-  const popup = document.getElementById('quick-tag-popup');
-  if(!popup) return;
   const ex = state.exercises[state.activeIdx];
+  if(!ex) return;
   if(!ex.quickTags) ex.quickTags={cpt:{},fo:{}};
   const existing = (ex.quickTags[p]||{})[cid]||[];
-  const list = document.getElementById('quick-tag-list');
-  if(!list) return;
+  const comp = COMPETENCIES.find(c=>c.id===cid)||{color:'#F59E0B',label:cid,full:cid};
+
+  const title = document.getElementById('qtfp-title');
+  const header = document.getElementById('qtfp-header');
+  const list = document.getElementById('qtfp-list');
+  const page = document.getElementById('quick-tag-fullpage');
+  if(!title||!list||!page) return;
+
+  title.textContent = comp.label + ' — ' + comp.full;
+  title.style.color = comp.color;
+  header.style.borderBottomColor = comp.color + '66';
+
   list.innerHTML = QUICK_TAGS.map(t=>{
     const sel = existing.includes(t);
-    return `<button onclick="addQuickTag('${p}','${_esc(cid)}','${t.replace(/'/g,'\\\'')}')" style="padding:7px 12px;border-radius:20px;background:${sel?'#F59E0B22':'#1E2530'};border:1px solid ${sel?'#F59E0B':'#334155'};color:${sel?'#F59E0B':'#94A3B8'};font-size:12px;cursor:pointer;font-weight:${sel?'700':'400'};">${_esc(t)}</button>`;
+    const safeTag = t.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<button onclick="addQuickTag('${p}','${cid}','${safeTag}')"
+      style="width:100%;padding:16px 20px;border-radius:12px;text-align:left;
+      background:${sel ? comp.color+'22' : '#111827'};
+      border:2px solid ${sel ? comp.color : '#1E2530'};
+      color:${sel ? comp.color : '#CBD5E1'};
+      font-size:16px;font-weight:${sel?'800':'400'};
+      cursor:pointer;line-height:1.3;transition:background 0.15s;">
+      ${sel?'✓ ':''}${_esc(t)}
+    </button>`;
   }).join('');
-  popup.style.display='flex';
+
+  page.style.display='flex';
+}
+
+function closeQuickTagPage(){
+  const page = document.getElementById('quick-tag-fullpage');
+  if(page) page.style.display='none';
+  renderExContent();
 }
 
 function addQuickTag(p, cid, tag){
@@ -12244,9 +12271,9 @@ function addQuickTag(p, cid, tag){
   if(!ex.quickTags[p]) ex.quickTags[p]={};
   if(!ex.quickTags[p][cid]) ex.quickTags[p][cid]=[];
   const arr = ex.quickTags[p][cid];
-  if(!arr.includes(tag)) arr.push(tag);
-  document.getElementById('quick-tag-popup').style.display='none';
-  renderExContent();
+  const idx = arr.indexOf(tag);
+  if(idx===-1) arr.push(tag); else arr.splice(idx,1);
+  closeQuickTagPage();
 }
 
 function removeQuickTag(p, cid, idx){
