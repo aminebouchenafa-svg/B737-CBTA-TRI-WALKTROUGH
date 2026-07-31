@@ -531,6 +531,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab" onclick="exTab('fac',this)" style="color:#10B981;">Facilitation</button>
 <button class="tab" onclick="exTab('compact',this)" style="color:#FBBF24;font-weight:900;letter-spacing:1px;">⚡ COMPACT</button>
 <button class="tab" onclick="exTab('focus',this)" style="color:#EF4444;font-weight:900;letter-spacing:1px;">🎯 FOCUS</button>
+<button class="tab" onclick="exTab('quick',this)" style="color:#A78BFA;font-weight:900;letter-spacing:1px;">⚡ QUICK</button>
 </div>
 <div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E2530;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
   <div style="text-align:left;min-width:64px;">
@@ -715,6 +716,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab" onclick="debTab('loft',this)" style="color:#06B6D4;">LOFT</button>
 <button class="tab" onclick="debTab('rapport',this)" style="color:#10B981;">Rapport</button>
 <button class="tab" onclick="debTab('conclusion',this)">Conclusion</button>
+<button class="tab" onclick="debTab('tricorner',this)" style="color:#F59E0B;font-weight:800;">🔒 TRI Corner</button>
 </div>
 <div class="scroll" id="deb-content" style="padding:14px;"></div>
 </div>
@@ -9685,7 +9687,8 @@ foObjectives:{},
 sessionMeteo:{crosswind:'',ceiling:'',visibility:'',wind:'',runwayCondMode:'talpa',runwayCond:''},
 loftNotes:{events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}},
 rapportNotes:'',
-rapportSignatures:{tri:'',cpt:'',fo:''}
+rapportSignatures:{tri:'',cpt:'',fo:''},
+triCornerNotes:''
 };
 
 // ── CHRONOMETER ---───────────────────────────────────────────────────────────
@@ -11142,6 +11145,7 @@ else if(tab==="ffa") renderFFATab(ex,sc,el);
 else if(tab==="tem") renderTEMTab(ex,sc,el);
 else if(tab==="crm") renderFordecNitsTab(ex,sc,el);
 else if(tab==="fac") renderFacTab(ex,sc,el);
+else if(tab==="quick") renderQuickEval(ex,sc,el);
 }
 
 function renderEvalTab(ex,sc,el){
@@ -12127,6 +12131,131 @@ if(!ex.facNotes) ex.facNotes={};
 ex.facNotes[i]=val;
 }
 
+// ── QUICK EVAL ─────────────────────────────────────────────────────────────────
+const QUICK_TAGS = [
+  'Briefing insuffisant','Non-standard call-out','Late identification',
+  'Startle / surprise','Tunnel effect','Energy management',
+  'SOP deviation','CRM à retravailler','Communication croisée',
+  'Décision tardive','Manque d\'assertivité','Stabilisation approche'
+];
+
+function renderQuickEval(ex,sc,el){
+  if(!ex.quickTags) ex.quickTags={cpt:{},fo:{}};
+  const p = state.activePilot;
+  const cs = p==='cpt' ? ex.cs : ex.csfo;
+  const qt = ex.quickTags[p];
+
+  const cards = COMPETENCIES.map(c=>{
+    const data = cs[c.id]||{g:0,obs:[]};
+    const plus = (data.obs||[]).filter(o=>o.s==='+').length;
+    const minus = (data.obs||[]).filter(o=>o.s==='-').length;
+    const total = plus + minus;
+    const tags = qt[c.id]||[];
+
+    let sg=0;
+    if(total>0){
+      const r=plus/total;
+      if(r>=0.9) sg=5; else if(r>=0.65) sg=4; else if(r>=0.4) sg=3; else if(r>=0.15) sg=2; else sg=1;
+    }
+    const gc = GC[sg]||'#64748B';
+    const nc = plus>minus?'#10B981':minus>plus?'#EF4444':'#F59E0B';
+
+    const pills = tags.map((t,i)=>
+      `<span style="display:inline-flex;align-items:center;gap:2px;background:#1E253088;border:1px solid #334155;border-radius:10px;padding:2px 7px;font-size:10px;color:#94A3B8;">
+        ${_esc(t)}<button onclick="removeQuickTag('${p}','${_esc(c.id)}',${i})" style="background:none;border:none;color:#EF4444;cursor:pointer;font-size:12px;padding:0 0 0 2px;line-height:1;">×</button>
+      </span>`
+    ).join('');
+
+    return `<div style="background:#0D1117;border:1px solid ${c.color}44;border-radius:10px;padding:9px 8px;display:flex;flex-direction:column;gap:5px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:2px;">
+        <span style="font-weight:900;font-size:11px;color:${c.color};letter-spacing:0.5px;">${c.label}</span>
+        ${sg>0?`<span style="font-size:10px;font-weight:700;color:${gc};background:${gc}22;border-radius:6px;padding:1px 5px;">${sg}</span>`:''}
+      </div>
+      <div style="display:flex;align-items:center;gap:4px;">
+        <button onclick="quickTap('${p}','${c.id}','+')" style="flex:1;padding:9px 0;font-size:22px;font-weight:900;background:#10B98122;border:2px solid #10B981;border-radius:7px;color:#10B981;cursor:pointer;">+</button>
+        <div style="text-align:center;min-width:28px;">
+          ${total>0?`<div style="font-size:10px;font-weight:800;color:${nc};line-height:1.2;">${plus>0?'+'+plus:''}<br>${minus>0?'−'+minus:''}</div>`:'<div style="font-size:14px;color:#334155;">—</div>'}
+        </div>
+        <button onclick="quickTap('${p}','${c.id}','-')" style="flex:1;padding:9px 0;font-size:22px;font-weight:900;background:#EF444422;border:2px solid #EF4444;border-radius:7px;color:#EF4444;cursor:pointer;">−</button>
+      </div>
+      ${tags.length?`<div style="display:flex;flex-wrap:wrap;gap:3px;">${pills}</div>`:''}
+    </div>`;
+  }).join('');
+
+  const pilotTabsHtml = buildPilotTabsHtml(';renderExContent()', ex);
+
+  el.innerHTML = `<div style="padding:2px;">
+    ${pilotTabsHtml}
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;">${cards}</div>
+    <div style="margin-top:10px;font-size:10px;color:#334155;text-align:center;letter-spacing:0.5px;">Tap +/− pour enregistrer les observations · − ouvre les tags rapides</div>
+  </div>
+  <div id="quick-tag-popup" onclick="if(event.target===this)this.style.display='none'" style="display:none;position:fixed;inset:0;background:#000000BB;z-index:9999;align-items:flex-end;justify-content:center;flex-direction:column;">
+    <div style="background:#111827;border-radius:16px 16px 0 0;padding:16px 14px 24px;width:100%;max-width:480px;margin:0 auto;max-height:65vh;overflow-y:auto;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <span style="font-weight:900;color:#F59E0B;font-size:13px;letter-spacing:1px;">🔖 TAG RAPIDE INSTRUCTEUR</span>
+        <button onclick="document.getElementById('quick-tag-popup').style.display='none'" style="background:none;border:none;color:#64748B;font-size:22px;cursor:pointer;line-height:1;">×</button>
+      </div>
+      <div id="quick-tag-list" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+      <div style="margin-top:12px;font-size:10px;color:#475569;text-align:center;">Tags privés — non inclus dans le rapport PDF</div>
+    </div>
+  </div>`;
+}
+
+var _quickTagTarget = {p:'cpt', cid:'KNO'};
+
+function quickTap(p, cid, sign){
+  const ex = state.exercises[state.activeIdx];
+  if(!ex) return;
+  if(!ex.quickTags) ex.quickTags={cpt:{},fo:{}};
+  if(!ex.cs) ex.cs={};
+  if(!ex.csfo) ex.csfo={};
+  const csKey = p==='cpt'?'cs':'csfo';
+  if(!ex[csKey][cid]) ex[csKey][cid]={g:0,obs:[]};
+  const entry = ex[csKey][cid];
+  if(!entry.obs) entry.obs=[];
+  entry.obs.push({s:sign, t:Date.now()});
+  if(sign==='-'){
+    _quickTagTarget={p,cid};
+    showQuickTagPopup(p, cid);
+  } else {
+    renderExContent();
+  }
+}
+
+function showQuickTagPopup(p, cid){
+  const popup = document.getElementById('quick-tag-popup');
+  if(!popup) return;
+  const ex = state.exercises[state.activeIdx];
+  if(!ex.quickTags) ex.quickTags={cpt:{},fo:{}};
+  const existing = (ex.quickTags[p]||{})[cid]||[];
+  const list = document.getElementById('quick-tag-list');
+  if(!list) return;
+  list.innerHTML = QUICK_TAGS.map(t=>{
+    const sel = existing.includes(t);
+    return `<button onclick="addQuickTag('${p}','${_esc(cid)}','${t.replace(/'/g,'\\\'')}')" style="padding:7px 12px;border-radius:20px;background:${sel?'#F59E0B22':'#1E2530'};border:1px solid ${sel?'#F59E0B':'#334155'};color:${sel?'#F59E0B':'#94A3B8'};font-size:12px;cursor:pointer;font-weight:${sel?'700':'400'};">${_esc(t)}</button>`;
+  }).join('');
+  popup.style.display='flex';
+}
+
+function addQuickTag(p, cid, tag){
+  const ex = state.exercises[state.activeIdx];
+  if(!ex) return;
+  if(!ex.quickTags) ex.quickTags={cpt:{},fo:{}};
+  if(!ex.quickTags[p]) ex.quickTags[p]={};
+  if(!ex.quickTags[p][cid]) ex.quickTags[p][cid]=[];
+  const arr = ex.quickTags[p][cid];
+  if(!arr.includes(tag)) arr.push(tag);
+  document.getElementById('quick-tag-popup').style.display='none';
+  renderExContent();
+}
+
+function removeQuickTag(p, cid, idx){
+  const ex = state.exercises[state.activeIdx];
+  if(!ex||!ex.quickTags||!ex.quickTags[p]||!ex.quickTags[p][cid]) return;
+  ex.quickTags[p][cid].splice(idx,1);
+  renderExContent();
+}
+
 function renderFordecNitsTab(ex,sc,el){
 const FORDEC_STEPS=[
   {l:'F',label:'FACTS',desc:_lang==='en'?"FACTS: What is happening exactly? Gather available information.":"Que se passe-t-il exactement ? Rassembler les informations disponibles.",color:'#FF61C7'},
@@ -12536,7 +12665,7 @@ if(_planAddMode){
   return;
 }
 const _sc=ALL_SC.find(s=>s.id===sid);
-state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
 closeAddModal();
 openEx(state.exercises.length-1);
 }
@@ -12853,7 +12982,7 @@ function _applyScenario(s){
   s.exercises.forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid);
     if(!sc) return;
-    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:e.min,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:e.min,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
   });
   document.getElementById('modal-scenarios').style.display='none';
   showScreen('session');
@@ -13000,7 +13129,7 @@ function loadScenarioCustom(id){
   state.exercises=[];
   edits.filter(e=>e.enabled).forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid); if(!sc) return;
-    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:parseInt(e.min)||0,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:parseInt(e.min)||0,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
   });
   document.getElementById('modal-scen-edit').style.display='none';
   document.getElementById('modal-scenarios').style.display='none';
@@ -13368,7 +13497,7 @@ function _applyPlan(plan){
   state.exercises = [];
   plan.exIds.forEach(sid=>{
     if(!ALL_SC.find(x=>x.id===sid)) return;
-    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
   });
   closePlans();
   renderExList();
@@ -14133,6 +14262,7 @@ else if(tab==="events") renderDebEvents(el);
 else if(tab==="loft") renderDebLOFT(el);
 else if(tab==="rapport") renderDebRapport(el);
 else if(tab==="conclusion") renderDebConclusion(el);
+else if(tab==="tricorner") renderDebTriCorner(el);
 }
 
 function buildRadar(avgs, color){
@@ -16294,6 +16424,90 @@ B737 NG CBTA TRI · QRH Rev55 · FCTM Rev25
 </div>`;
 }
 
+// ── TRI CORNER ─────────────────────────────────────────────────────────────────
+function renderDebTriCorner(el){
+  const exs = state.exercises;
+
+  const exCards = exs.map((ex,i)=>{
+    const sc = ALL_SC.find(s=>s.id===ex.sid);
+    const label = sc ? (_lang==='en'&&sc.label_en?sc.label_en:sc.label) : ex.sid;
+
+    const hasNotes = ex.notes && ex.notes.trim();
+    const hasFac = ex.facNotes && Object.values(ex.facNotes).some(v=>v&&v.trim());
+    const hasTags = ex.quickTags && (
+      Object.values(ex.quickTags.cpt||{}).some(a=>a.length>0) ||
+      Object.values(ex.quickTags.fo||{}).some(a=>a.length>0)
+    );
+
+    if(!hasNotes && !hasFac && !hasTags) return '';
+
+    let tagSection = '';
+    if(hasTags){
+      const qt = ex.quickTags||{cpt:{},fo:{}};
+      const sides = [];
+      ['cpt','fo'].forEach(seat=>{
+        const role = seat==='cpt'?(state.pilotRole||'CPT'):(state.foRole||'FO');
+        const name = seat==='cpt'?state.pilotName:state.foName;
+        if(!name) return;
+        const seatTags = [];
+        COMPETENCIES.forEach(c=>{
+          const tags = (qt[seat]||{})[c.id]||[];
+          if(tags.length) seatTags.push({cid:c.id,color:c.color,tags});
+        });
+        if(!seatTags.length) return;
+        const pills = seatTags.map(s=>
+          `<div style="margin-bottom:4px;">
+            <span style="font-size:10px;font-weight:800;color:${s.color};margin-right:4px;">${s.cid}</span>
+            ${s.tags.map(t=>`<span style="display:inline-block;background:#F59E0B22;border:1px solid #F59E0B55;border-radius:8px;padding:2px 8px;font-size:11px;color:#F59E0B;margin:2px 2px 0 0;">${_esc(t)}</span>`).join('')}
+          </div>`
+        ).join('');
+        sides.push(`<div><div style="font-size:10px;font-weight:700;color:#64748B;letter-spacing:1px;margin-bottom:4px;">${role} — ${_esc(name)}</div>${pills}</div>`);
+      });
+      if(sides.length) tagSection = `<div style="margin-top:8px;padding:8px 10px;background:#F59E0B0D;border:1px solid #F59E0B22;border-radius:8px;">
+        <div style="font-size:10px;font-weight:700;color:#F59E0B;letter-spacing:1px;margin-bottom:6px;">🔖 TAGS RAPIDES</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">${sides.join('')}</div>
+      </div>`;
+    }
+
+    let facSection = '';
+    if(hasFac){
+      const fqs = sc ? ((_lang==='en'&&sc.fac_en?sc.fac_en:sc.fac)||[]) : [];
+      const entries = Object.entries(ex.facNotes).filter(([,v])=>v&&v.trim());
+      facSection = `<div style="margin-top:8px;padding:8px 10px;background:#10B9810D;border:1px solid #10B98122;border-radius:8px;">
+        <div style="font-size:10px;font-weight:700;color:#10B981;letter-spacing:1px;margin-bottom:6px;">💬 FACILITATION</div>
+        ${entries.map(([k,v])=>`<div style="margin-bottom:6px;"><div style="font-size:11px;color:#475569;margin-bottom:2px;">${fqs[k]?_esc(fqs[k].substring(0,60))+'…':'Q'+(parseInt(k)+1)}</div><div style="font-size:12px;color:#CBD5E1;line-height:1.5;">${_esc(v)}</div></div>`).join('')}
+      </div>`;
+    }
+
+    return `<div style="background:#0D1117;border:1px solid #1E2530;border-radius:10px;padding:12px;margin-bottom:8px;">
+      <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:0.5px;margin-bottom:6px;">${i+1}. ${_esc(label)}</div>
+      ${hasNotes?`<div style="padding:8px 10px;background:#3B82F60D;border:1px solid #3B82F622;border-radius:8px;">
+        <div style="font-size:10px;font-weight:700;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">📝 NOTES PRIVÉES</div>
+        <div style="font-size:13px;color:#CBD5E1;line-height:1.6;white-space:pre-wrap;">${_esc(ex.notes)}</div>
+      </div>`:''}
+      ${facSection}
+      ${tagSection}
+    </div>`;
+  }).filter(Boolean).join('');
+
+  el.innerHTML = `
+    <div style="background:#F59E0B11;border:1px solid #F59E0B44;border-radius:10px;padding:10px 12px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+      <span style="font-size:20px;">🔒</span>
+      <div>
+        <div style="font-size:12px;font-weight:900;color:#F59E0B;letter-spacing:1px;">TRI CORNER — ESPACE INSTRUCTEUR</div>
+        <div style="font-size:11px;color:#64748B;margin-top:2px;">PRIVÉ — Non inclus dans le rapport</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <div style="font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:1px;margin-bottom:6px;">📋 NOTES GLOBALES DE SÉANCE</div>
+      <textarea class="note-area" style="height:90px;font-size:14px;" placeholder="Synthèse instructeur, impressions générales, axes prioritaires de débriefing..." onchange="state.triCornerNotes=this.value" oninput="state.triCornerNotes=this.value">${_esc(state.triCornerNotes||'')}</textarea>
+    </div>
+
+    ${exCards ? `<div style="font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:1px;margin-bottom:8px;">📂 PAR EXERCICE</div>${exCards}` : `<div style="text-align:center;color:#334155;padding:30px 0;font-size:13px;">Aucune note ou tag enregistré pour cette séance.</div>`}
+  `;
+}
+
 // ── INTERVENTION MODEL ──────────────────────────────────────────────────────
 const _intColors={ask:'#10B981',recommend:'#F97316',takectl:'#EF4444'};
 const _intEmoji={ask:'🟢',recommend:'🟠',takectl:'🔴'};
@@ -17197,6 +17411,7 @@ state.loftCompareMode=false;
 state.loftNotes={events:'',learningPoints:['','',''],actionPlan:'',selfAssessCpt:{},selfAssessFo:{}};
 state.rapportNotes='';
 state.rapportSignatures={tri:'',cpt:'',fo:''};
+state.triCornerNotes='';
 state.exPilotRole={cpt:'pf',fo:'pm'};
 state.pilotInterventions={cpt:{ask:0,recommend:0,takectl:0},fo:{ask:0,recommend:0,takectl:0}};
 state.activePilot='cpt';
