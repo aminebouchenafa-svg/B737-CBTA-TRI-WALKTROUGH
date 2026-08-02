@@ -6691,6 +6691,11 @@ Identifiant ou mot de passe incorrect
           <div style="font-size:10px;font-weight:800;color:#64748B;letter-spacing:1px;margin-bottom:4px;">🛢️ FUEL ON BOARD (kg)</div>
           <input id="ma-fob" type="text" inputmode="numeric" oninput="saveMeteoAvion('fob',this.value)" placeholder="18 000" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #1E2530;border-radius:8px;padding:12px 14px;font-size:20px;font-weight:900;color:#E2E8F0;font-family:monospace;">
         </div>
+        <div style="border-top:1px solid #1E2530;padding-top:10px;margin-top:2px;">
+          <div style="font-size:10px;font-weight:800;color:#3B82F6;letter-spacing:1px;margin-bottom:4px;">🛫 TAKE-OFF WEIGHT (kg)</div>
+          <div id="ma-tow" style="width:100%;box-sizing:border-box;background:#0A1628;border:2px solid #3B82F633;border-radius:8px;padding:12px 14px;font-size:26px;font-weight:900;color:#334155;font-family:monospace;text-align:center;letter-spacing:1px;">—</div>
+          <div style="font-size:10px;color:#334155;text-align:center;margin-top:4px;">ZFW + FOB</div>
+        </div>
       </div>
     </div>
   </div>
@@ -12644,6 +12649,7 @@ function openMeteoAvion(){
   const ma=state.meteoAvion;
   const fields={dep:'ma-dep',toa:'ma-toa',dest:'ma-dest',escDest:'ma-esc',zfw:'ma-zfw',mac:'ma-mac',fob:'ma-fob'};
   Object.keys(fields).forEach(k=>{const el=document.getElementById(fields[k]);if(el)el.value=ma[k]||'';});
+  _updateTOW();
   document.getElementById('modal-meteo-avion').style.display='flex';
 }
 function closeMeteoAvion(){
@@ -12652,6 +12658,26 @@ function closeMeteoAvion(){
 function saveMeteoAvion(key,val){
   if(!state.meteoAvion) state.meteoAvion={dep:'',toa:'',dest:'',escDest:'',zfw:'',mac:'',fob:''};
   state.meteoAvion[key]=val;
+  _updateTOW();
+}
+function _updateTOW(){
+  const ma=state.meteoAvion||{};
+  const zfw=parseFloat((ma.zfw||'').replace(/[\s ]/g,''));
+  const fob=parseFloat((ma.fob||'').replace(/[\s ]/g,''));
+  const el=document.getElementById('ma-tow');
+  if(!el) return;
+  if(!isNaN(zfw)&&!isNaN(fob)&&(ma.zfw||'').trim()&&(ma.fob||'').trim()){
+    const tow=zfw+fob;
+    el.textContent=tow.toLocaleString('fr-FR')+' kg';
+    el.style.color='#3B82F6';
+    el.style.borderColor='#3B82F655';
+    el.style.textShadow='0 0 16px #3B82F644';
+  } else {
+    el.textContent='—';
+    el.style.color='#334155';
+    el.style.borderColor='#3B82F622';
+    el.style.textShadow='none';
+  }
 }
 
 function renderFordecNitsTab(ex,sc,el){
