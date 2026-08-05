@@ -6663,22 +6663,22 @@ Identifiant ou mot de passe incorrect
 
         <div>
           <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:1px;margin-bottom:5px;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block;flex-shrink:0;"></span>🛫 DÉPART</div>
-          <textarea id="ma-dep" oninput="saveMeteoAvion('dep',this.value)" placeholder="DAAG 021200Z 36012KT CAVOK 22/08 Q1014" style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #10B98133;border-left:3px solid #10B981;border-radius:0 8px 8px 0;padding:10px 12px;font-size:14px;color:#E2E8F0;font-family:monospace;resize:none;min-height:100px;line-height:1.7;"></textarea>
+          <textarea id="ma-dep" oninput="saveMeteoAvion('dep',this.value)" placeholder="DAAG 021200Z 36012KT CAVOK 22/08 Q1014" style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #10B98133;border-left:3px solid #10B981;border-radius:0 8px 8px 0;padding:10px 12px;font-size:16px;color:#E2E8F0;font-family:monospace;resize:none;min-height:110px;line-height:1.7;"></textarea>
         </div>
 
         <div>
           <div style="font-size:11px;font-weight:900;color:#F97316;letter-spacing:1px;margin-bottom:5px;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#F97316;display:inline-block;flex-shrink:0;"></span>↗️ ALTERNAT DÉCOLLAGE</div>
-          <textarea id="ma-toa" oninput="saveMeteoAvion('toa',this.value)" placeholder="DAAE 021200Z..." style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 8px 8px 0;padding:10px 12px;font-size:14px;color:#E2E8F0;font-family:monospace;resize:none;min-height:100px;line-height:1.7;"></textarea>
+          <textarea id="ma-toa" oninput="saveMeteoAvion('toa',this.value)" placeholder="DAAE 021200Z..." style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #F9731633;border-left:3px solid #F97316;border-radius:0 8px 8px 0;padding:10px 12px;font-size:16px;color:#E2E8F0;font-family:monospace;resize:none;min-height:110px;line-height:1.7;"></textarea>
         </div>
 
         <div>
           <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:1px;margin-bottom:5px;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#3B82F6;display:inline-block;flex-shrink:0;"></span>🛬 DESTINATION</div>
-          <textarea id="ma-dest" oninput="saveMeteoAvion('dest',this.value)" placeholder="DABB 021200Z 05008KT..." style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 8px 8px 0;padding:10px 12px;font-size:14px;color:#E2E8F0;font-family:monospace;resize:none;min-height:100px;line-height:1.7;"></textarea>
+          <textarea id="ma-dest" oninput="saveMeteoAvion('dest',this.value)" placeholder="DABB 021200Z 05008KT..." style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #3B82F633;border-left:3px solid #3B82F6;border-radius:0 8px 8px 0;padding:10px 12px;font-size:16px;color:#E2E8F0;font-family:monospace;resize:none;min-height:110px;line-height:1.7;"></textarea>
         </div>
 
         <div>
           <div style="font-size:11px;font-weight:900;color:#A78BFA;letter-spacing:1px;margin-bottom:5px;display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#A78BFA;display:inline-block;flex-shrink:0;"></span>⛽ DÉGAGEMENT DESTINATION</div>
-          <textarea id="ma-esc" oninput="saveMeteoAvion('escDest',this.value)" placeholder="DAOO 021200Z..." style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #A78BFA33;border-left:3px solid #A78BFA;border-radius:0 8px 8px 0;padding:10px 12px;font-size:14px;color:#E2E8F0;font-family:monospace;resize:none;min-height:100px;line-height:1.7;"></textarea>
+          <textarea id="ma-esc" oninput="saveMeteoAvion('escDest',this.value)" placeholder="DAOO 021200Z..." style="width:100%;box-sizing:border-box;background:#060A0F;border:1px solid #A78BFA33;border-left:3px solid #A78BFA;border-radius:0 8px 8px 0;padding:10px 12px;font-size:16px;color:#E2E8F0;font-family:monospace;resize:none;min-height:110px;line-height:1.7;"></textarea>
         </div>
 
       </div>
@@ -11471,6 +11471,26 @@ function renderCompactMode(ex,sc,el){
       <div style="font-size:8px;font-weight:900;color:#10B981;letter-spacing:2px;margin-bottom:6px;">? FACILITATION</div>
       ${facHtml}
     </div>
+
+    ${(()=>{
+      const injList=(ex.tem&&ex.tem.threats||[]).filter(t=>t.injected);
+      if(!injList.length) return '';
+      const rows=injList.map((t,i)=>{
+        const iOk=t.identified;const gOk=t.managed;
+        const col=t.color||'#EF4444';
+        return `<div style="background:${col}0D;border:1px solid ${col}33;border-radius:8px;padding:8px 10px;margin-bottom:6px;">
+          <div style="font-size:12px;color:${col};font-weight:700;margin-bottom:6px;line-height:1.3;">${_esc(t.text)}</div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="toggleDistInj(${i},'identified')" style="flex:1;padding:7px 6px;border-radius:7px;font-size:11px;font-weight:900;cursor:pointer;border:2px solid ${iOk?'#10B981':'#334155'};background:${iOk?'#10B98133':'transparent'};color:${iOk?'#10B981':'#64748B'};letter-spacing:0.5px;">${iOk?'✓':''} ${_lang==='en'?'IDENTIFIED':'IDENTIFIÉ'}</button>
+            <button onclick="toggleDistInj(${i},'managed')" style="flex:1;padding:7px 6px;border-radius:7px;font-size:11px;font-weight:900;cursor:pointer;border:2px solid ${gOk?'#F59E0B':'#334155'};background:${gOk?'#F59E0B33':'transparent'};color:${gOk?'#F59E0B':'#64748B'};letter-spacing:0.5px;">${gOk?'✓':''} ${_lang==='en'?'MANAGED':'GÉRÉ'}</button>
+          </div>
+        </div>`;
+      }).join('');
+      return `<div style="background:#0A0D14;border:2px solid #EF444455;border-radius:10px;padding:8px;margin-bottom:8px;box-shadow:0 0 18px #EF444422;">
+        <div style="font-size:8px;font-weight:900;color:#EF4444;letter-spacing:2px;margin-bottom:8px;">🎲 ${_lang==='en'?'INJECTED DISTRACTORS':'DISTRACTEURS INJECTÉS'}</div>
+        ${rows}
+      </div>`;
+    })()}
   </div>`;
 }
 // ─── END COMPACT MODE ───
@@ -11881,6 +11901,304 @@ const PHRASE_DB = {
   }
 };
 
+const PHRASE_DB_FR = {
+  general: {
+    good: [
+      "Bonne conscience situationnelle globale tout au long de l'exercice",
+      "Excellente coordination équipage et partage des tâches",
+      "Bonne GRS lors de la gestion de panne complexe",
+      "Démontre une solide connaissance des systèmes aéronef",
+      "Utilisation efficace de l'automatisation en permanence",
+      "Gestion d'énergie appropriée lors de l'approche",
+      "Bonne communication avec l'ATC et le personnel de cabine",
+      "Identification et atténuation proactives des menaces",
+      "Briefings bien structurés avant chaque phase de vol",
+      "Prise de décision rapide et appropriée sous pression",
+      "Approche douce et stabilisée dans les paramètres",
+      "Bonne gestion des procédures anormales et d'urgence",
+      "Répartition efficace de la charge de travail entre les membres d'équipage",
+      "Respect de la discipline cockpit stérile sous le FL100",
+      "Attitude professionnelle et leadership démontrés",
+      "Utilisation appropriée des check-lists et des SOP",
+      "Communications radio claires et concises",
+      "Bonne technique de récupération de situation inhabituelle",
+      "Exécution efficace de la manœuvre d'évitement windshear"
+    ],
+    bad: [
+      "Améliorer la surveillance et le contrôle croisé",
+      "Manque de conscience situationnelle lors de la phase critique",
+      "Mauvaise coordination équipage — tâches non déléguées efficacement",
+      "Non-respect du cockpit stérile sous le FL100",
+      "Briefing insuffisant avant la phase d'approche",
+      "Prise de décision tardive sous pression temporelle",
+      "Gestion d'énergie insuffisante — approche non stabilisée",
+      "Procédures opérationnelles standard incorrectement appliquées",
+      "Mauvaise gestion de la charge lors de pannes multiples",
+      "Manque d'assertivité lorsque la sécurité était compromise",
+      "Communication inadaptée lors de la situation d'urgence",
+      "N'a pas exécuté la remise des gaz lorsque les critères n'étaient pas satisfaits",
+      "Sur-dépendance à l'automatisation sans surveillance",
+      "Compétences de pilotage manuel insuffisantes — déviations significatives observées",
+      "Échec à identifier et gérer les menaces de manière proactive"
+    ]
+  },
+  kno: {
+    good: [
+      "Bonne connaissance des limitations et performances aéronef",
+      "Bonne compréhension des procédures FCOM/QRH",
+      "Sait où trouver rapidement les informations requises",
+      "Excellente connaissance des phénomènes météorologiques et dangers",
+      "Bonne compréhension des modes FMS/LNAV/VNAV",
+      "Démontre une solide connaissance des interactions systèmes B737NG",
+      "Bonne connaissance des réglementations et minimums applicables",
+      "Connaissance précise des exigences de dispatch MEL/CDL"
+    ],
+    bad: [
+      "Doit réviser les procédures de dispatch MEL/CDL",
+      "Doit réviser les procédures de cross-feed carburant",
+      "Amélioration nécessaire de la connaissance des équipements de secours",
+      "Connaissance insuffisante des limitations aéronef",
+      "Incapable de localiser l'information requise dans le QRH",
+      "Lacunes dans la compréhension des interactions systèmes B737NG",
+      "Application incorrecte des calculs de performances",
+      "Méconnaissance des minimums applicables pour l'approche",
+      "Confusion entre les procédures normales et non normales",
+      "Compréhension insuffisante des dangers liés à la météo"
+    ]
+  },
+  pro: {
+    good: [
+      "Annonces standard effectuées avec précision et dans les temps",
+      "SOP respectées de manière constante tout au long du vol",
+      "Check-lists complétées sans omission",
+      "Bonne adhérence aux critères d'approche stabilisée",
+      "Exécution professionnelle de toutes les procédures requises",
+      "Toutes les limitations respectées lors des manœuvres",
+      "Briefings complets couvrant tous les éléments requis",
+      "Exécution correcte des flows en toute circonstance"
+    ],
+    bad: [
+      "Éléments manqués sur la check-list after takeoff",
+      "Dérogation aux procédures standard de roulage",
+      "Améliorer la cohérence dans l'exécution des flows",
+      "Annonces standard omises lors de l'approche",
+      "N'a pas complété la check-list challenge-and-response",
+      "Séquence incorrecte lors de la procédure non normale",
+      "Briefing incomplet — éléments clés manquants",
+      "Non-respect des critères d'approche stabilisée",
+      "Limitations dépassées lors de la manœuvre",
+      "Utilisation incorrecte du QRH — mauvaise check-list référencée"
+    ]
+  },
+  fpa: {
+    good: [
+      "Pilotage manuel doux et précis",
+      "Bonne gestion de l'assiette et de la puissance lors de l'approche",
+      "Utilisation appropriée des systèmes d'autovol",
+      "Bonne gestion de la vitesse lors de la phase d'approche",
+      "Excellente technique d'atterrissage par vent de travers",
+      "Transition douce de l'automatisation au pilotage manuel",
+      "Remise des gaz exécutée promptement et correctement",
+      "Maintien précis de l'altitude et du cap en pilotage manuel"
+    ],
+    bad: [
+      "Déviation latérale lors de l'approche ILS manuelle",
+      "Gestion d'énergie à améliorer en descente",
+      "Déviation de vitesse excessive lors de l'approche",
+      "Atterrissage dur — technique d'arrondi insuffisante",
+      "Correction vent de travers insuffisante — alignement piste perdu",
+      "Déviation d'altitude dépassant les tolérances en pilotage manuel",
+      "Exécution tardive de la remise des gaz — sous les minimums",
+      "Inputs de commandes brusques — tendance aux PIO observée",
+      "Gestion de la poussée incorrecte en monomoteur",
+      "N'a pas maintenu le plan de descente lors de l'approche manuelle"
+    ]
+  },
+  com: {
+    good: [
+      "Communications claires, concises et dans les temps",
+      "Bonne technique de readback avec l'ATC",
+      "Communication inter-équipage efficace sous forte charge de travail",
+      "Bonne utilisation de la phraséologie standard",
+      "Communication proactive des intentions à l'équipage",
+      "Communication ATC efficace lors de la déclaration d'urgence",
+      "Bonnes annonces de coordination lors des procédures non normales",
+      "Briefing équipage de cabine complet et bien structuré"
+    ],
+    bad: [
+      "Readback manqué d'une clairance ATC critique",
+      "Doit améliorer l'assertivité dans les communications",
+      "N'a pas communiqué ses intentions à l'autre membre d'équipage",
+      "Appel MAYDAY/PAN incomplet — informations manquantes",
+      "N'a pas utilisé la phraséologie standard avec l'ATC",
+      "Annonces tardives ou absentes lors de la phase critique",
+      "Personnel de cabine non briefé avant l'atterrissage d'urgence",
+      "Communication bloquée lors de forte charge de travail",
+      "N'a pas remis en cause une instruction ATC incorrecte",
+      "N'a pas annoncé les changements de mode d'automatisation au PNF"
+    ]
+  },
+  ltw: {
+    good: [
+      "Leadership efficace et coordination d'équipage",
+      "Bonne délégation des tâches lors de forte charge de travail",
+      "Maintien d'un environnement d'équipe positif",
+      "Bonne résolution des conflits au sein de l'équipage",
+      "Gestion efficace des ressources d'équipage sous pression",
+      "Encourage la communication ouverte et les retours d'information",
+      "Rôle PNF bien exécuté avec surveillance appropriée",
+      "Bon équilibre entre autorité et participation"
+    ],
+    bad: [
+      "Doit démontrer un leadership plus assertif",
+      "N'a pas délégué les tâches lors de forte charge de travail",
+      "Style de leadership autoritaire — avis de l'équipage ignoré",
+      "Le PNF n'a pas remis en cause les déviations du PF par rapport aux SOP",
+      "Manque de coordination d'équipage lors de la phase critique",
+      "N'a pas créé un environnement propice à la communication ouverte",
+      "N'a pas géré les conflits au sein de l'équipage",
+      "Leadership passif — pas d'attribution claire des tâches",
+      "N'a pas adapté le style de leadership aux exigences de la situation",
+      "Rôles d'équipage non clairement définis lors de la phase anormale"
+    ]
+  },
+  psd: {
+    good: [
+      "Bonne détection et gestion des menaces",
+      "Erreurs potentielles identifiées avant qu'elles ne surviennent",
+      "Utilisation efficace des techniques de piégeage d'erreurs",
+      "Bonne priorisation lors de pannes multiples",
+      "Facteur surprise bien géré, calme maintenu",
+      "Évaluation des risques et atténuation appropriées",
+      "État aéronef indésirable récupéré promptement",
+      "Bonne surveillance des systèmes automatiques pour les déviations"
+    ],
+    bad: [
+      "Opportunité manquée d'identifier une menace latente",
+      "Doit améliorer la technique de scan des menaces",
+      "Erreur non détectée avant de devenir un EAI",
+      "Mauvaise priorisation — tâche non critique avant la sécurité des vols",
+      "Réaction de panique à une panne inattendue — perte de calme",
+      "N'a pas évalué le risque avant de prendre une décision",
+      "Récupération lente d'un état aéronef indésirable",
+      "N'a pas surveillé l'automatisation — confusion de modes",
+      "Pas de piégeage d'erreur — le PNF n'a pas contrôlé les actions du PF",
+      "A continué l'approche malgré des menaces multiples non résolues"
+    ]
+  },
+  sa: {
+    good: [
+      "Bonne conscience situationnelle globale maintenue",
+      "Bonne conscience de la position et de la trajectoire de l'aéronef",
+      "Conscience et évitement météo bien gérés",
+      "Bonne projection de l'état futur de l'aéronef",
+      "Utilisation efficace de toutes les sources d'information disponibles",
+      "Bonne conscience du relief lors de la phase d'approche",
+      "Conscience du trafic maintenue tout au long du vol",
+      "A reconnu et récupéré rapidement d'une perte de CS"
+    ],
+    bad: [
+      "Perte temporaire de CS lors de panne complexe",
+      "Doit améliorer la conscience de l'évolution de l'état carburant",
+      "A perdu la conscience de la position par rapport à l'axe d'approche",
+      "N'a pas surveillé l'évolution météo pendant le vol",
+      "Fixation sur la panne — perte de la vision globale",
+      "N'a pas anticipé la proximité du relief lors de l'approche",
+      "Trafic TCAS manqué — pas de scan visuel effectué",
+      "Pas de conscience du carburant restant vs distance à destination",
+      "N'a pas projeté la trajectoire après la panne",
+      "Perte de conscience des modes — interprétation FMA incorrecte"
+    ]
+  },
+  wlm: {
+    good: [
+      "Gestion efficace de la charge de travail lors de toutes les phases",
+      "Bonne priorisation des tâches sous pression",
+      "Utilisation appropriée de l'automatisation pour gérer la charge",
+      "Bonne gestion du temps lors du scénario de déroutement",
+      "Bonne gestion des priorités aviate-navigate-communicate",
+      "Surveillance maintenue malgré forte charge de travail",
+      "Bonne utilisation du temps disponible pour la planification",
+      "Traitement efficace des tâches de priorité inférieure"
+    ],
+    bad: [
+      "Saturation de tâches lors de pannes multiples",
+      "Doit déléguer davantage lors de forte charge de travail",
+      "N'a pas priorisé — aviate avant navigate",
+      "Fixation sur un élément non critique lors de l'urgence",
+      "N'a pas utilisé le temps disponible pour anticiper",
+      "Surchargé de tâches — surveillance abandonnée",
+      "Mauvaise gestion du temps — préparation de l'approche précipitée",
+      "N'a pas utilisé l'automatisation pour réduire la charge de travail",
+      "Tentative simultanée de trop nombreuses tâches",
+      "N'a pas demandé de délai ou d'attente pour gérer la charge"
+    ]
+  },
+  fpm: {
+    good: [
+      "Programmation FMS précise et dans les temps",
+      "Bonne compréhension des modes LNAV/VNAV et des transitions",
+      "Utilisation du MCP appropriée et vérifiée",
+      "Bonne utilisation des modes HDG/VS lorsque approprié",
+      "Gestion de la vitesse par automatisation bien maîtrisée",
+      "Bonne gestion des transitions de mode d'approche",
+      "Niveau d'automatisation approprié aux conditions",
+      "Surveillance efficace de l'automatisation et intervention"
+    ],
+    bad: [
+      "Erreur FMS non détectée lors de la modification de route",
+      "Doit vérifier les entrées FMS plus systématiquement",
+      "Sélection de mode incorrecte sur le MCP",
+      "N'a pas détecté la réversion de mode lors de l'approche",
+      "Erreur de programmation FMS — mauvaise piste/approche sélectionnée",
+      "Sur-dépendance à l'automatisation en conditions dégradées",
+      "N'a pas contrôlé le FMS avec les données brutes",
+      "Intervention de vitesse incorrecte — vitesse VNAV non réglée",
+      "Déconnexion tardive de l'automatisation — approche déstabilisée",
+      "Confusion de modes — interprétation FMA incorrecte"
+    ]
+  },
+  tem: {
+    good: [
+      "Menace identifiée et efficacement gérée",
+      "Erreur piégée avant de se transformer en EAI",
+      "État aéronef indésirable — récupération correcte",
+      "Menace : météo défavorable — atténuée par déroutement",
+      "Menace : forte charge de travail — gérée par délégation",
+      "Erreur : altitude incorrecte réglée — détectée par contrôle croisé PNF",
+      "EAI : approche déstabilisée — remise des gaz exécutée"
+    ],
+    bad: [
+      "Menace non identifiée — pas d'atténuation appliquée",
+      "Erreur non piégée — évolution vers état aéronef indésirable",
+      "EAI : déviation d'altitude — correction tardive appliquée",
+      "Menace : météo défavorable — pas de plan de contingence discuté",
+      "Erreur : élément de check-list manqué — non récupéré",
+      "EAI : déviation de vitesse — non détectée par l'équipage",
+      "Menace : fatigue — pas de contre-mesures appliquées",
+      "Erreur : mauvaise fréquence réglée — communication perdue",
+      "EAI : approche non stabilisée — atterrissage poursuivi",
+      "Erreurs multiples en chaîne — chaîne d'erreurs non interrompue"
+    ]
+  },
+  conclusion: {
+    good: [
+      "Recommandé pour maintien de qualification — performance standard",
+      "Recommandé pour maintien de qualification — au-dessus du standard",
+      "Performance exemplaire — aucun point de vigilance identifié",
+      "Performance globalement satisfaisante avec points mineurs à améliorer"
+    ],
+    bad: [
+      "Axes de progression identifiés — séance de rattrapage recommandée",
+      "Non recommandé pour maintien — formation complémentaire nécessaire",
+      "Points à travailler en ligne : gestion de la charge de travail",
+      "Points à travailler en ligne : communication et coordination",
+      "Points à travailler en ligne : pilotage manuel et gestion d'énergie",
+      "Prochaine session : focus sur les procédures anormales et secours"
+    ]
+  }
+};
+
 const _phraseFreq = _jParse('cbta_phrase_freq','{}');
 function _bumpPhraseFreq(phrase){
   _phraseFreq[phrase] = (_phraseFreq[phrase]||0) + 1;
@@ -11891,10 +12209,11 @@ let _phraseFilter = 'all'; // 'all', 'good', 'bad'
 
 function _getPhrases(category, filter){
   const f = filter || _phraseFilter || 'all';
-  const cats = category ? [category] : Object.keys(PHRASE_DB);
+  const db = _lang==='fr' ? PHRASE_DB_FR : PHRASE_DB;
+  const cats = category ? [category] : Object.keys(db);
   let all = [];
   cats.forEach(c => {
-    const entry = PHRASE_DB[c];
+    const entry = db[c];
     if(!entry) return;
     if(f === 'good') all = all.concat(entry.good || []);
     else if(f === 'bad') all = all.concat(entry.bad || []);
@@ -11965,9 +12284,10 @@ function hideAutocomplete(){
 }
 
 function _phraseType(phrase){
-  for(const c of Object.keys(PHRASE_DB)){
-    if((PHRASE_DB[c].good||[]).includes(phrase)) return 'good';
-    if((PHRASE_DB[c].bad||[]).includes(phrase)) return 'bad';
+  const db = _lang==='fr' ? PHRASE_DB_FR : PHRASE_DB;
+  for(const c of Object.keys(db)){
+    if((db[c].good||[]).includes(phrase)) return 'good';
+    if((db[c].bad||[]).includes(phrase)) return 'bad';
   }
   return 'good';
 }
@@ -11987,7 +12307,8 @@ function browsePhrases(textarea, category){
   _acCategory = category || null;
   _phraseFilter = 'all';
   const phrases = _getPhrases(_acCategory);
-  const cats = _acCategory ? [_acCategory] : Object.keys(PHRASE_DB);
+  const _pdb = _lang==='fr' ? PHRASE_DB_FR : PHRASE_DB;
+  const cats = _acCategory ? [_acCategory] : Object.keys(_pdb);
   let box = document.getElementById('ac-suggestions');
   if(!box){
     box = document.createElement('div');
@@ -11995,8 +12316,8 @@ function browsePhrases(textarea, category){
     box.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(180deg,#0F0020,#1a1f2e);border-top:2px solid #3B82F6;max-height:55vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px;';
     document.body.appendChild(box);
   }
-  const catBtns = Object.keys(PHRASE_DB).map(c => {
-    const active = (!_acCategory && c === Object.keys(PHRASE_DB)[0]) || _acCategory === c;
+  const catBtns = Object.keys(_pdb).map(c => {
+    const active = (!_acCategory && c === Object.keys(_pdb)[0]) || _acCategory === c;
     const colors = {general:'#94a3b8',kno:'#3B82F6',pro:'#10B981',fpa:'#F59E0B',com:'#8B5CF6',ltw:'#EC4899',psd:'#EF4444',sa:'#06B6D4',wlm:'#F97316',fpm:'#14B8A6',tem:'#F43F5E',conclusion:'#FBBF24'};
     const col = colors[c]||'#94a3b8';
     return '<button onclick="_filterPhrasesCat(\''+c+'\')" style="padding:6px 12px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;border:1px solid '+col+'88;background:'+col+'22;color:'+col+';white-space:nowrap;">'+c.toUpperCase()+'</button>';
@@ -13969,6 +14290,20 @@ function injectDistracteur(i){
 
 function closeDistracteur(){
   document.getElementById('modal-distracteur').style.display='none';
+}
+
+function toggleDistInj(idx, prop){
+  const ex=state.exercises[state.activeIdx];
+  if(!ex||!ex.tem||!ex.tem.threats) return;
+  const injected=ex.tem.threats.filter(t=>t.injected);
+  const th=injected[idx];
+  if(!th) return;
+  th[prop]=!th[prop];
+  if(ex.temfo&&ex.temfo.threats){
+    const fo=ex.temfo.threats.find(t=>t.text===th.text&&t.injected);
+    if(fo) fo[prop]=th[prop];
+  }
+  renderExContent();
 }
 // ──────────────────────────────────────────────────────────────────────────
 
