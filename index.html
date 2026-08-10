@@ -497,6 +497,7 @@ Identifiant ou mot de passe incorrect
 <button onclick="openGuide()" style="width:32px;height:32px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</button>
 <button onclick="toggleDarkMode()" id="dark-btn-session" style="padding:5px 8px;border-radius:6px;background:transparent;border:1px solid #334155;color:#94A3B8;font-size:15px;cursor:pointer;">☀️</button>
 <button onclick="openMeteoAvion()" title="Météo & Avion" style="padding:5px 8px;border-radius:6px;background:#F59E0B11;border:1px solid #F59E0B44;color:#F59E0B;font-size:15px;cursor:pointer;flex-shrink:0;">🌤</button>
+<button onclick="showSessionTimeline()" title="Timeline session" style="padding:5px 8px;border-radius:6px;background:#3B82F611;border:1px solid #3B82F644;color:#3B82F6;font-size:15px;cursor:pointer;flex-shrink:0;">⏱</button>
 <button onclick="showScenarioLib()" style="width:32px;height:32px;border-radius:50%;background:#8B5CF622;border:2px solid #8B5CF6;color:#8B5CF6;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;">📋</button>
 <button class="btn" onclick="showEditSession()" style="background:#8B5CF622;border-color:#8B5CF6;color:#8B5CF6;font-size:15px;padding:6px 10px;">✎</button>
 <button class="btn" onclick="showBriefing()" style="background:#F59E0B22;border-color:#F59E0B;color:#F59E0B;font-size:13px;padding:6px 9px;">📋</button>
@@ -527,6 +528,9 @@ Identifiant ou mot de passe incorrect
 <button onclick="openMeteoAvion()" title="Météo & Avion" style="padding:5px 8px;border-radius:6px;background:#F59E0B11;border:1px solid #F59E0B44;color:#F59E0B;font-size:15px;cursor:pointer;flex-shrink:0;">🌤</button>
 <button class="btn" onclick="backToList()" data-i18n="back_list">Liste</button>
 </div>
+<div id="phase-strip" style="display:flex;align-items:center;gap:0;overflow-x:auto;-webkit-overflow-scrolling:touch;background:rgba(13,0,24,0.85);border-bottom:1px solid #1E1035;padding:6px 10px;flex-shrink:0;">
+  <!-- rendered by JS -->
+</div>
 <div class="tabs">
 <button class="tab active" onclick="exTab('eval',this)" style="color:#3B82F6;">📊 Eval</button>
 <button class="tab" onclick="exTab('ffa',this)" style="color:#F59E0B;">✈️ FFA</button>
@@ -536,6 +540,7 @@ Identifiant ou mot de passe incorrect
 <button class="tab" onclick="exTab('compact',this)" style="color:#FBBF24;font-weight:900;letter-spacing:1px;">⚡ COMPACT</button>
 <button class="tab" onclick="exTab('focus',this)" style="color:#EF4444;font-weight:900;letter-spacing:1px;">🎯 FOCUS</button>
 <button class="tab" onclick="exTab('quick',this)" style="color:#A78BFA;font-weight:900;letter-spacing:1px;">🔢 QUICK</button>
+<button class="tab" onclick="exTab('timeline',this)" style="color:#3B82F6;font-weight:900;letter-spacing:1px;">⏱ TL</button>
 </div>
 <div id="ex-timer-bar" style="display:flex;align-items:center;justify-content:space-between;padding:7px 14px 6px;background:#080B10;border-bottom:2px solid #1E1035;flex-shrink:0;gap:6px;transition:border-color 0.4s;">
   <div style="text-align:left;min-width:64px;">
@@ -6645,6 +6650,15 @@ Identifiant ou mot de passe incorrect
 <div id="rds-content" style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px;touch-action:pan-y;"></div>
 </div>
 
+<!-- SESSION TIMELINE Overlay -->
+<div id="modal-session-timeline" style="display:none;position:fixed;inset:0;z-index:99995;background:#060010F5;flex-direction:column;">
+  <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(13,0,24,0.9);border-bottom:1px solid #1E1035;flex-shrink:0;">
+    <span style="font-size:15px;font-weight:900;color:#3B82F6;flex:1;letter-spacing:1px;">⏱ TIMELINE SESSION</span>
+    <button onclick="closeSessionTimeline()" style="background:none;border:none;color:#64748B;font-size:24px;cursor:pointer;">✕</button>
+  </div>
+  <div id="session-timeline-content" class="scroll" style="padding:16px;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;"></div>
+</div>
+
 <!-- METEO & AVION Full-Screen Overlay -->
 <div id="modal-meteo-avion" style="display:none;position:fixed;inset:0;z-index:99990;background:#060010;flex-direction:column;overflow:hidden;">
   <div style="flex-shrink:0;padding:14px 16px 12px;display:flex;align-items:center;gap:14px;border-bottom:2px solid #1E1035;">
@@ -9738,6 +9752,18 @@ const COMPETENCIES = [
 ]},
 ]
 
+// ── FLIGHT PHASES ─────────────────────────────────────────────────────────────
+const PHASES = [
+  {id:'start', label:'DÉMARRAGE', short:'START', color:'#64748B'},
+  {id:'taxi',  label:'ROULAGE',   short:'TAXI',  color:'#94A3B8'},
+  {id:'to',    label:'DÉCOLLAGE', short:'DECOL', color:'#F97316'},
+  {id:'climb', label:'MONTÉE',    short:'MONTÉE',color:'#10B981'},
+  {id:'crz',   label:'CROISIÈRE', short:'CRZ',   color:'#3B82F6'},
+  {id:'desc',  label:'DESCENTE',  short:'DESC',  color:'#F59E0B'},
+  {id:'appr',  label:'APPROCHE',  short:'APPR',  color:'#8B5CF6'},
+  {id:'ldg',   label:'ATTERR',    short:'ATTERR',color:'#EF4444'},
+];
+
 // ── COMPETENCIES EN (official Boeing CBTA OBs) ---─────────────────────────────
 const COMPETENCIES_EN = [
 {id:"KNO",obs:[
@@ -11099,6 +11125,7 @@ state.currentExTab = tab;
 document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('active'));
 el.classList.add('active');
 renderExContent();
+renderPhaseStrip();
 }
 
 function renderExView(){
@@ -11157,6 +11184,7 @@ if(mandDiv){
   mandDiv.innerHTML = mandBtnHtml + redoHtml;
 }
 renderExContent();
+renderPhaseStrip();
 }
 
 // ─── FOCUS MODE ───
@@ -11509,6 +11537,175 @@ else if(tab==="tem") renderTEMTab(ex,sc,el);
 else if(tab==="crm") renderFordecNitsTab(ex,sc,el);
 else if(tab==="fac") renderFacTab(ex,sc,el);
 else if(tab==="quick") renderQuickEval(ex,sc,el);
+else if(tab==="timeline") renderTimeline(ex,sc,el);
+}
+
+// ─── PHASE STRIP FUNCTIONS ───────────────────────────────────────────────────
+function tapPhase(id){
+  const ex=state.exercises[state.activeIdx];
+  if(!ex) return;
+  if(!ex.activePhases) ex.activePhases=[];
+  if(ex.currentPhase===id){
+    ex.activePhases=ex.activePhases.filter(p=>p!==id);
+    ex.currentPhase=null;
+  } else if(ex.activePhases.includes(id)){
+    ex.currentPhase=id;
+  } else {
+    ex.activePhases.push(id);
+    ex.currentPhase=id;
+  }
+  renderPhaseStrip();
+}
+
+function renderPhaseStrip(){
+  const el=document.getElementById('phase-strip');
+  if(!el) return;
+  const ex=state.exercises[state.activeIdx];
+  if(!ex){el.innerHTML='';return;}
+  if(!ex.activePhases) ex.activePhases=[];
+  el.innerHTML = PHASES.map(p=>{
+    const isActive=ex.activePhases.includes(p.id);
+    const isCurrent=ex.currentPhase===p.id;
+    return `<div onclick="tapPhase('${p.id}')" style="flex-shrink:0;padding:5px 10px;border-radius:20px;font-size:10px;font-weight:900;letter-spacing:1px;cursor:pointer;margin-right:4px;user-select:none;-webkit-user-select:none;background:${isActive?p.color+'22':'transparent'};border:${isCurrent?'2px solid '+p.color:'1px solid '+(isActive?p.color+'55':'#1E1035')};color:${isActive?p.color:'#334155'};${isCurrent?'box-shadow:0 0 10px '+p.color+'55;':''}">${isCurrent?'● ':''} ${p.short}</div>`;
+  }).join('');
+}
+
+// ─── TIMELINE TAB ────────────────────────────────────────────────────────────
+function renderTimeline(ex, sc, el){
+  if(!ex.activePhases||!ex.activePhases.length){
+    el.innerHTML=`<div style="padding:40px 20px;text-align:center;color:#334155;">
+      <div style="font-size:40px;margin-bottom:16px;">⏱</div>
+      <div style="font-size:14px;font-weight:700;color:#475569;margin-bottom:8px;">${_lang==='en'?'No phases selected':'Aucune phase sélectionnée'}</div>
+      <div style="font-size:12px;color:#334155;">${_lang==='en'?'Tap the phase chips above to activate phases for this exercise':'Appuyez sur les phases ci-dessus pour activer les phases de cet exercice'}</div>
+    </div>`;
+    return;
+  }
+  const csKey=state.activePilot==='cpt'?'cs':'csfo';
+  const temKey=state.activePilot==='cpt'?'tem':'temfo';
+  const cs=ex[csKey]||{};
+  const tem=ex[temKey]||{threats:[],errors:[],uas:[]};
+  const cols = ex.activePhases.map(phId=>{
+    const phase = PHASES.find(p=>p.id===phId);
+    if(!phase) return null;
+    const compRows = COMPETENCIES.map(comp=>{
+      const cd=cs[comp.id]||{};
+      const obs=(cd.obs||[]).filter(o=>o.ph===phId);
+      const plus=obs.filter(o=>o.s==='+').length;
+      const minus=obs.filter(o=>o.s==='-').length;
+      const grade=cd.g||0;
+      if(!obs.length) return null;
+      return {comp, plus, minus, grade};
+    }).filter(Boolean);
+    const threats=(tem.threats||[]).filter(t=>t.ph===phId);
+    const errors=(tem.errors||[]).filter(t=>t.ph===phId);
+    const uas=(tem.uas||[]).filter(t=>t.ph===phId);
+    return {phase, compRows, threats, errors, uas};
+  }).filter(Boolean);
+  const colsHtml = cols.map(col=>{
+    const compHtml = col.compRows.map(r=>{
+      const scoreColor=r.grade>0?GC[r.grade]:'#334155';
+      return `<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;background:${col.phase.color}0D;margin-bottom:4px;">
+        <span style="font-size:11px;font-weight:900;color:${r.comp.color};min-width:30px;">${r.comp.label}</span>
+        ${r.grade>0?`<span style="font-size:14px;font-weight:900;color:${scoreColor};">${r.grade}</span>`:''}
+        ${r.plus>0?`<span style="font-size:10px;color:#10B981;font-weight:700;">+${r.plus}</span>`:''}
+        ${r.minus>0?`<span style="font-size:10px;color:#EF4444;font-weight:700;">-${r.minus}</span>`:''}
+      </div>`;
+    }).join('');
+    const temHtml = [
+      ...col.threats.map(t=>`<div style="font-size:11px;color:#3B82F6;padding:3px 6px;background:#3B82F611;border-radius:4px;margin-bottom:3px;">⚠ ${_esc(t.text)}</div>`),
+      ...col.errors.map(t=>`<div style="font-size:11px;color:#EF4444;padding:3px 6px;background:#EF444411;border-radius:4px;margin-bottom:3px;">✗ ${_esc(t.text)}</div>`),
+      ...col.uas.map(t=>`<div style="font-size:11px;color:#F59E0B;padding:3px 6px;background:#F59E0B11;border-radius:4px;margin-bottom:3px;">△ ${_esc(t.text)}</div>`),
+    ].join('');
+    const isEmpty = !col.compRows.length && !col.threats.length && !col.errors.length && !col.uas.length;
+    return `<div style="flex-shrink:0;width:160px;background:#0A0D14;border:1px solid ${col.phase.color}44;border-top:3px solid ${col.phase.color};border-radius:10px;padding:10px;margin-right:10px;">
+      <div style="font-size:9px;font-weight:900;color:${col.phase.color};letter-spacing:2px;margin-bottom:8px;">${col.phase.short}</div>
+      ${isEmpty?`<div style="font-size:11px;color:#334155;font-style:italic;">${_lang==='en'?'No observations':'Aucune obs.'}</div>`:''}
+      ${compHtml}
+      ${temHtml}
+    </div>`;
+  }).join('');
+  el.innerHTML = `<div style="padding:12px;">
+    <div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;margin-bottom:12px;">⏱ TIMELINE — ${_lang==='en'?'FLIGHT PHASES':'PHASES DE VOL'}</div>
+    <div style="display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px;">
+      ${colsHtml}
+    </div>
+    ${!cols.length?`<div style="text-align:center;color:#334155;font-size:12px;padding:20px;">${_lang==='en'?'Add observations in any tab — they will appear here tagged by phase':'Ajoutez des observations dans n\'importe quel onglet — elles apparaîtront ici taguées par phase'}</div>`:''}
+  </div>`;
+}
+
+// ─── SESSION TIMELINE ────────────────────────────────────────────────────────
+function showSessionTimeline(){
+  renderSessionTimeline();
+  document.getElementById('modal-session-timeline').style.display='flex';
+}
+function closeSessionTimeline(){
+  document.getElementById('modal-session-timeline').style.display='none';
+}
+
+function renderSessionTimeline(){
+  const el=document.getElementById('session-timeline-content');
+  if(!el) return;
+  const exs=state.exercises;
+  if(!exs.length){
+    el.innerHTML=`<div style="text-align:center;padding:40px;color:#334155;">${_lang==='en'?'No exercises yet':'Aucun exercice'}</div>`;
+    return;
+  }
+  const usedPhaseIds=[...new Set(exs.flatMap(e=>e.activePhases||[]))];
+  const usedPhases=PHASES.filter(p=>usedPhaseIds.includes(p.id));
+  if(!usedPhases.length){
+    el.innerHTML=`<div style="text-align:center;padding:40px;color:#334155;font-size:13px;">${_lang==='en'?'No phases tagged yet. Open an exercise and activate phases from the strip above the tabs.':'Aucune phase taguée. Ouvrez un exercice et activez les phases depuis le bandeau au-dessus des onglets.'}</div>`;
+    return;
+  }
+  const headerCols=usedPhases.map(p=>`<th style="padding:6px 8px;font-size:9px;font-weight:900;color:${p.color};letter-spacing:1.5px;white-space:nowrap;border-bottom:2px solid ${p.color}55;">${p.short}</th>`).join('');
+  const rows=exs.map((ex,i)=>{
+    const sc=ALL_SC.find(s=>s.id===ex.sid);
+    const exName=sc?(_lang==='en'&&sc.name_en?sc.name_en:sc.name):'?';
+    const cells=usedPhases.map(phase=>{
+      if(!(ex.activePhases||[]).includes(phase.id)){
+        return `<td style="padding:6px 8px;text-align:center;color:#1E1035;">—</td>`;
+      }
+      const cs=ex.cs||{};
+      const csfo=ex.csfo||{};
+      const tem=ex.tem||{threats:[],errors:[],uas:[]};
+      let plusCount=0, minusCount=0, temCount=0;
+      [...Object.values(cs), ...Object.values(csfo)].forEach(cd=>{
+        (cd.obs||[]).forEach(o=>{
+          if(o.ph===phase.id){o.s==='+'?plusCount++:minusCount++;}
+        });
+      });
+      (tem.threats||[]).forEach(t=>{if(t.ph===phase.id)temCount++;});
+      (tem.errors||[]).forEach(t=>{if(t.ph===phase.id)temCount++;});
+      (tem.uas||[]).forEach(t=>{if(t.ph===phase.id)temCount++;});
+      const total=plusCount+minusCount+temCount;
+      let bgColor, dot;
+      if(total===0){bgColor='transparent';dot='·';}
+      else if(minusCount===0&&temCount===0){bgColor=phase.color+'22';dot='✓';}
+      else if(plusCount===0&&minusCount>0){bgColor='#EF444422';dot='✗';}
+      else{bgColor=phase.color+'11';dot='~';}
+      return `<td onclick="openEx(${i});state.currentExTab='timeline';renderExContent();renderPhaseStrip();closeSessionTimeline();" style="padding:6px 8px;text-align:center;cursor:pointer;background:${bgColor};border-radius:4px;">
+        <div style="font-size:14px;color:${total?phase.color:'#1E1035'};">${dot}</div>
+        ${total?`<div style="font-size:9px;color:#64748B;">${plusCount>0?'+'+plusCount+' ':''}${minusCount>0?'-'+minusCount+' ':''}${temCount>0?'⚠'+temCount:''}</div>`:''}
+      </td>`;
+    }).join('');
+    return `<tr style="border-bottom:1px solid #1E1035;">
+      <td style="padding:8px;font-size:11px;color:#CBD5E1;font-weight:700;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis;" title="${_esc(exName)}">${exName.length>18?exName.substring(0,17)+'…':exName}</td>
+      ${cells}
+    </tr>`;
+  }).join('');
+  el.innerHTML=`
+    <div style="font-size:10px;color:#64748B;margin-bottom:12px;">${_lang==='en'?'Tap a cell to open the exercise timeline':'Touchez une cellule pour ouvrir la timeline de l\'exercice'}</div>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+      <table style="width:100%;border-collapse:collapse;min-width:300px;">
+        <thead>
+          <tr>
+            <th style="padding:6px 8px;font-size:9px;font-weight:900;color:#64748B;text-align:left;border-bottom:1px solid #1E1035;">${_lang==='en'?'EXERCISE':'EXERCICE'}</th>
+            ${headerCols}
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
 }
 
 function renderEvalTab(ex,sc,el){
@@ -12608,7 +12805,8 @@ if(!ex[temKey]) ex[temKey]={threats:[],errors:[],uas:[]};
 if(!ex[temKey][key]) ex[temKey][key]=[];
 if(ex[temKey][key].some(x=>x.text===text)) return;
 const ts = new Date().toTimeString().slice(0,5);
-ex[temKey][key].push({text,ts});
+const ph = (state.exercises[state.activeIdx]||{}).currentPhase || null;
+ex[temKey][key].push({text,ts,ph});
 renderExContent();
 }
 
@@ -12899,7 +13097,8 @@ function quickTap(p, cid, sign){
   if(!ex[csKey][cid]) ex[csKey][cid]={g:0,obs:[]};
   const entry = ex[csKey][cid];
   if(!entry.obs) entry.obs=[];
-  entry.obs.push({s:sign, t:Date.now()});
+  const _qph = (state.exercises[state.activeIdx]||{}).currentPhase || null;
+  entry.obs.push({s:sign, t:Date.now(), ph:_qph});
   if(sign==='-'){
     _quickTagTarget={p,cid};
     showQuickTagPopup(p, cid);
@@ -13441,7 +13640,7 @@ if(_planAddMode){
   return;
 }
 const _sc=ALL_SC.find(s=>s.id===sid);
-state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
 closeAddModal();
 openEx(state.exercises.length-1);
 }
@@ -13758,7 +13957,7 @@ function _applyScenario(s){
   s.exercises.forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid);
     if(!sc) return;
-    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:e.min,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:e.min,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
   });
   document.getElementById('modal-scenarios').style.display='none';
   showScreen('session');
@@ -13905,7 +14104,7 @@ function loadScenarioCustom(id){
   state.exercises=[];
   edits.filter(e=>e.enabled).forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid); if(!sc) return;
-    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:parseInt(e.min)||0,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:parseInt(e.min)||0,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
   });
   document.getElementById('modal-scen-edit').style.display='none';
   document.getElementById('modal-scenarios').style.display='none';
@@ -14324,7 +14523,7 @@ function _applyPlan(plan){
   state.exercises = [];
   plan.exIds.forEach(sid=>{
     if(!ALL_SC.find(x=>x.id===sid)) return;
-    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false});
+    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
   });
   closePlans();
   renderExList();
