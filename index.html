@@ -11573,63 +11573,73 @@ function renderPhaseStrip(){
 // ─── TIMELINE TAB ────────────────────────────────────────────────────────────
 function renderTimeline(ex, sc, el){
   if(!ex.activePhases||!ex.activePhases.length){
-    el.innerHTML=`<div style="padding:40px 20px;text-align:center;color:#334155;">
-      <div style="font-size:40px;margin-bottom:16px;">⏱</div>
-      <div style="font-size:14px;font-weight:700;color:#475569;margin-bottom:8px;">${_lang==='en'?'No phases selected':'Aucune phase sélectionnée'}</div>
-      <div style="font-size:12px;color:#334155;">${_lang==='en'?'Tap the phase chips above to activate phases for this exercise':'Appuyez sur les phases ci-dessus pour activer les phases de cet exercice'}</div>
+    el.innerHTML=`<div style="padding:40px 20px;text-align:center;">
+      <div style="font-size:36px;margin-bottom:14px;">⏱</div>
+      <div style="font-size:13px;font-weight:700;color:#475569;margin-bottom:6px;">${_lang==='en'?'Activate a phase above':'Activez une phase ci-dessus'}</div>
+      <div style="font-size:11px;color:#334155;line-height:1.6;">${_lang==='en'?'Tap a phase chip → select it as active → grade competencies in any tab → come back here to see them mapped by phase':'Tapez une phase dans le bandeau → notez les compétences dans l\'onglet EVAL ou QUICK → revenez ici pour voir la timeline'}</div>
     </div>`;
     return;
   }
   const csKey=state.activePilot==='cpt'?'cs':'csfo';
   const temKey=state.activePilot==='cpt'?'tem':'temfo';
-  const cs=ex[csKey]||{};
   const tem=ex[temKey]||{threats:[],errors:[],uas:[]};
+  const pg=(ex.phaseGrades&&ex.phaseGrades[csKey])||{};
+
   const cols = ex.activePhases.map(phId=>{
-    const phase = PHASES.find(p=>p.id===phId);
+    const phase=PHASES.find(p=>p.id===phId);
     if(!phase) return null;
-    const compRows = COMPETENCIES.map(comp=>{
-      const cd=cs[comp.id]||{};
-      const obs=(cd.obs||[]).filter(o=>o.ph===phId);
-      const plus=obs.filter(o=>o.s==='+').length;
-      const minus=obs.filter(o=>o.s==='-').length;
-      const grade=cd.g||0;
-      if(!obs.length) return null;
-      return {comp, plus, minus, grade};
+    // Grades enregistrés dans cette phase
+    const phGrades=pg[phId]||{};
+    const compRows=COMPETENCIES.map(comp=>{
+      const g=phGrades[comp.id]||0;
+      // obs taguées à cette phase (quickTap)
+      const cd=(ex[csKey]||{})[comp.id]||{};
+      const phObs=(cd.obs||[]).filter(o=>o.ph===phId);
+      const plus=phObs.filter(o=>o.s==='+').length;
+      const minus=phObs.filter(o=>o.s==='-').length;
+      if(!g&&!plus&&!minus) return null;
+      return {comp,g,plus,minus};
     }).filter(Boolean);
     const threats=(tem.threats||[]).filter(t=>t.ph===phId);
     const errors=(tem.errors||[]).filter(t=>t.ph===phId);
     const uas=(tem.uas||[]).filter(t=>t.ph===phId);
-    return {phase, compRows, threats, errors, uas};
+    return {phase,compRows,threats,errors,uas};
   }).filter(Boolean);
-  const colsHtml = cols.map(col=>{
-    const compHtml = col.compRows.map(r=>{
-      const scoreColor=r.grade>0?GC[r.grade]:'#334155';
-      return `<div style="display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:6px;background:${col.phase.color}0D;margin-bottom:4px;">
-        <span style="font-size:11px;font-weight:900;color:${r.comp.color};min-width:30px;">${r.comp.label}</span>
-        ${r.grade>0?`<span style="font-size:14px;font-weight:900;color:${scoreColor};">${r.grade}</span>`:''}
-        ${r.plus>0?`<span style="font-size:10px;color:#10B981;font-weight:700;">+${r.plus}</span>`:''}
-        ${r.minus>0?`<span style="font-size:10px;color:#EF4444;font-weight:700;">-${r.minus}</span>`:''}
+
+  const colsHtml=cols.map(col=>{
+    const compHtml=col.compRows.map(r=>{
+      const gc=r.g>0?GC[r.g]:'#475569';
+      return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:8px;background:${col.phase.color}11;border:1px solid ${col.phase.color}22;margin-bottom:5px;">
+        <span style="font-size:12px;font-weight:900;color:${r.comp.color};min-width:34px;">${r.comp.label}</span>
+        ${r.g>0?`<span style="font-size:18px;font-weight:900;color:${gc};min-width:18px;">${r.g}</span>`:'<span style="min-width:18px;"></span>'}
+        <span style="display:flex;gap:4px;flex-wrap:wrap;">
+          ${r.plus>0?`<span style="font-size:10px;color:#10B981;font-weight:800;">+${r.plus}</span>`:''}
+          ${r.minus>0?`<span style="font-size:10px;color:#EF4444;font-weight:800;">-${r.minus}</span>`:''}
+        </span>
       </div>`;
     }).join('');
-    const temHtml = [
-      ...col.threats.map(t=>`<div style="font-size:11px;color:#3B82F6;padding:3px 6px;background:#3B82F611;border-radius:4px;margin-bottom:3px;">⚠ ${_esc(t.text)}</div>`),
-      ...col.errors.map(t=>`<div style="font-size:11px;color:#EF4444;padding:3px 6px;background:#EF444411;border-radius:4px;margin-bottom:3px;">✗ ${_esc(t.text)}</div>`),
-      ...col.uas.map(t=>`<div style="font-size:11px;color:#F59E0B;padding:3px 6px;background:#F59E0B11;border-radius:4px;margin-bottom:3px;">△ ${_esc(t.text)}</div>`),
+    const temHtml=[
+      ...col.threats.map(t=>`<div style="font-size:11px;color:#3B82F6;padding:4px 8px;background:#3B82F611;border-radius:6px;margin-bottom:3px;line-height:1.4;">⚠ ${_esc(t.text)}</div>`),
+      ...col.errors.map(t=>`<div style="font-size:11px;color:#EF4444;padding:4px 8px;background:#EF444411;border-radius:6px;margin-bottom:3px;line-height:1.4;">✗ ${_esc(t.text)}</div>`),
+      ...col.uas.map(t=>`<div style="font-size:11px;color:#F59E0B;padding:4px 8px;background:#F59E0B11;border-radius:6px;margin-bottom:3px;line-height:1.4;">△ ${_esc(t.text)}</div>`),
     ].join('');
-    const isEmpty = !col.compRows.length && !col.threats.length && !col.errors.length && !col.uas.length;
-    return `<div style="flex-shrink:0;width:160px;background:#0A0D14;border:1px solid ${col.phase.color}44;border-top:3px solid ${col.phase.color};border-radius:10px;padding:10px;margin-right:10px;">
-      <div style="font-size:9px;font-weight:900;color:${col.phase.color};letter-spacing:2px;margin-bottom:8px;">${col.phase.short}</div>
-      ${isEmpty?`<div style="font-size:11px;color:#334155;font-style:italic;">${_lang==='en'?'No observations':'Aucune obs.'}</div>`:''}
+    const isEmpty=!col.compRows.length&&!col.threats.length&&!col.errors.length&&!col.uas.length;
+    return `<div style="flex-shrink:0;width:170px;background:#0A0D14;border:1px solid ${col.phase.color}44;border-top:3px solid ${col.phase.color};border-radius:10px;padding:10px;margin-right:10px;">
+      <div style="font-size:9px;font-weight:900;color:${col.phase.color};letter-spacing:2px;margin-bottom:10px;">${col.phase.short}</div>
+      ${isEmpty?`<div style="font-size:11px;color:#334155;font-style:italic;padding:4px 0;">${_lang==='en'?'No data':'Aucune donnée'}</div>`:''}
       ${compHtml}
-      ${temHtml}
+      ${temHtml?`<div style="margin-top:${col.compRows.length?'8px':'0'}">${temHtml}</div>`:''}
     </div>`;
   }).join('');
-  el.innerHTML = `<div style="padding:12px;">
-    <div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;margin-bottom:12px;">⏱ TIMELINE — ${_lang==='en'?'FLIGHT PHASES':'PHASES DE VOL'}</div>
-    <div style="display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:12px;">
+
+  const hasData=cols.some(c=>c.compRows.length||c.threats.length||c.errors.length||c.uas.length);
+  el.innerHTML=`<div style="padding:12px;">
+    <div style="font-size:9px;font-weight:900;color:#64748B;letter-spacing:2px;margin-bottom:4px;">⏱ TIMELINE — ${_lang==='en'?'FLIGHT PHASES':'PHASES DE VOL'}</div>
+    <div style="font-size:10px;color:#334155;margin-bottom:12px;">${_lang==='en'?'Pilot':'Pilote'}: <span style="color:${state.activePilot==='cpt'?'#3B82F6':'#10B981'};font-weight:700;">${state.activePilot==='cpt'?(state.pilotRole||'CPT'):(state.foRole||'FO')}</span></div>
+    ${!hasData?`<div style="font-size:11px;color:#334155;padding:16px 0;">${_lang==='en'?'Grade competencies in EVAL or QUICK tab while a phase is active — they will appear here.':'Notez les compétences dans EVAL ou QUICK pendant qu\'une phase est active — elles apparaîtront ici.'}</div>`:''}
+    <div style="display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px;">
       ${colsHtml}
     </div>
-    ${!cols.length?`<div style="text-align:center;color:#334155;font-size:12px;padding:20px;">${_lang==='en'?'Add observations in any tab — they will appear here tagged by phase':'Ajoutez des observations dans n\'importe quel onglet — elles apparaîtront ici taguées par phase'}</div>`:''}
   </div>`;
 }
 
@@ -13177,7 +13187,13 @@ function setQuickGrade(p, cid, grade){
   if(!ex) return;
   const csKey = p==='cpt'?'cs':'csfo';
   if(!ex[csKey][cid]) ex[csKey][cid]={g:0,obs:[]};
-  ex[csKey][cid].g = grade; // 0 = reset to suggested
+  ex[csKey][cid].g = grade;
+  if(grade>0 && ex.currentPhase){
+    if(!ex.phaseGrades) ex.phaseGrades={};
+    if(!ex.phaseGrades[csKey]) ex.phaseGrades[csKey]={};
+    if(!ex.phaseGrades[csKey][ex.currentPhase]) ex.phaseGrades[csKey][ex.currentPhase]={};
+    ex.phaseGrades[csKey][ex.currentPhase][cid]=grade;
+  }
   renderExContent();
 }
 
@@ -13520,6 +13536,12 @@ if(ex && ex.closed){ showToast(_lang==='en'?'⚠ Reopen the exercise to change g
 var _ac=state.activeComp; var cid=_ac.cid; var csKey=_ac.csKey; var g=_ac.g; var obs=_ac.obs;
 if(!ex[csKey]) ex[csKey]={};
 ex[csKey][cid] = {g,obs};
+if(g>0 && ex.currentPhase){
+  if(!ex.phaseGrades) ex.phaseGrades={};
+  if(!ex.phaseGrades[csKey]) ex.phaseGrades[csKey]={};
+  if(!ex.phaseGrades[csKey][ex.currentPhase]) ex.phaseGrades[csKey][ex.currentPhase]={};
+  ex.phaseGrades[csKey][ex.currentPhase][cid]=g;
+}
 renderExView();
 showScreen('ex');
 }
@@ -13640,7 +13662,7 @@ if(_planAddMode){
   return;
 }
 const _sc=ALL_SC.find(s=>s.id===sid);
-state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
+state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null,phaseGrades:{}});
 closeAddModal();
 openEx(state.exercises.length-1);
 }
@@ -13957,7 +13979,7 @@ function _applyScenario(s){
   s.exercises.forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid);
     if(!sc) return;
-    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:e.min,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
+    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:e.min,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null,phaseGrades:{}});
   });
   document.getElementById('modal-scenarios').style.display='none';
   showScreen('session');
@@ -14104,7 +14126,7 @@ function loadScenarioCustom(id){
   state.exercises=[];
   edits.filter(e=>e.enabled).forEach(e=>{
     const sc=ALL_SC.find(x=>x.id===e.sid); if(!sc) return;
-    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:parseInt(e.min)||0,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
+    state.exercises.push({sid:e.sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:parseInt(e.min)||0,mandatory:MANDATORY_IDS.has(e.sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null,phaseGrades:{}});
   });
   document.getElementById('modal-scen-edit').style.display='none';
   document.getElementById('modal-scenarios').style.display='none';
@@ -14523,7 +14545,7 @@ function _applyPlan(plan){
   state.exercises = [];
   plan.exIds.forEach(sid=>{
     if(!ALL_SC.find(x=>x.id===sid)) return;
-    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null});
+    state.exercises.push({sid,cs:{},csfo:{},ffa:{},ffafo:{},tem:{threats:[],errors:[],uas:[]},temfo:{threats:[],errors:[],uas:[]},notes:"",facNotes:{},quickTags:{cpt:{},fo:{}},closed:false,startTime:Date.now(),openedAt:null,timeLimit:0,mandatory:MANDATORY_IDS.has(sid),attempt:1,attempt1cs:null,attempt1csfo:null,fordec:false,nits:false,activePhases:[],currentPhase:null,phaseGrades:{}});
   });
   closePlans();
   renderExList();
