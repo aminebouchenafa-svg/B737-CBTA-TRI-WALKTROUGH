@@ -378,7 +378,7 @@ Identifiant ou mot de passe incorrect
 
 <div class="screen" id="screen-home">
 <div class="topbar" style="justify-content:flex-end;">
-<span style="font-size:9px;color:#334155;font-weight:700;letter-spacing:1px;margin-right:4px;">v2.4</span>
+<span style="font-size:9px;color:#334155;font-weight:700;letter-spacing:1px;margin-right:4px;">v2.5</span>
 <button onclick="openGuide()" style="width:34px;height:34px;border-radius:50%;background:#F59E0B22;border:2px solid #F59E0B;color:#F59E0B;font-size:17px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-right:4px;">?</button>
 <button class="btn" onclick="toggleDarkMode()" id="dark-btn" style="font-size:16px;padding:5px 10px;">☀️</button>
 <button onclick="openMeteoAvion()" title="Météo & Avion" style="padding:5px 8px;border-radius:6px;background:#F59E0B11;border:1px solid #F59E0B44;color:#F59E0B;font-size:15px;cursor:pointer;flex-shrink:0;">🌤</button>
@@ -400,10 +400,14 @@ Identifiant ou mot de passe incorrect
 <div style="font-size:10px;font-weight:700;letter-spacing:3px;color:#3B82F6;margin-bottom:3px;">SCORE CBTA</div>
 <div style="font-size:22px;font-weight:700;color:#F1F5F9;margin-bottom:2px;" data-i18n="home_session_title">Instructor Station</div>
 <div style="font-size:13px;color:var(--mut);margin-bottom:10px;" data-i18n="home_session_sub">B737NG · QRH Rev55 · FCTM Rev25</div>
-<button onclick="openGuide()" style="width:100%;padding:10px;border-radius:10px;background:#F59E0B11;border:1px solid #F59E0B44;color:#F59E0B;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;letter-spacing:1px;">
-  <span style="font-size:17px;font-weight:900;background:#F59E0B22;border:1px solid #F59E0B;border-radius:50%;width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;">?</span>
-  <span data-i18n="guide_btn">GUIDE D'UTILISATION</span>
-</button>
+<div style="display:flex;gap:8px;margin-bottom:18px;">
+  <button onclick="showOnboarding()" style="flex:1;padding:10px;border-radius:10px;background:#3B82F611;border:1px solid #3B82F644;color:#3B82F6;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:1px;">
+    <span style="font-size:16px;">🚀</span><span>DÉMARRAGE RAPIDE</span>
+  </button>
+  <button onclick="openGuide()" style="flex:1;padding:10px;border-radius:10px;background:#F59E0B11;border:1px solid #F59E0B44;color:#F59E0B;font-size:13px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:1px;">
+    <span style="font-size:16px;">📖</span><span data-i18n="guide_btn">GUIDE COMPLET</span>
+  </button>
+</div>
 <div style="margin-bottom:12px;">
 <label class="form-label" data-i18n="home_session_name">Session / Vol</label>
 <input id="inp-session" class="form-input" data-i18n-ph="home_session_placeholder" placeholder="ex: B737-800 OPC Innsbruck"/>
@@ -6651,6 +6655,102 @@ Identifiant ou mot de passe incorrect
 </div>
 
 <!-- SESSION TIMELINE Overlay -->
+<!-- ══ ONBOARDING OVERLAY ══════════════════════════════════════════════════ -->
+<div id="modal-onboarding" style="display:none;position:fixed;inset:0;z-index:999999;background:#060010F8;flex-direction:column;align-items:center;justify-content:center;padding:20px;">
+  <div style="width:100%;max-width:420px;background:linear-gradient(160deg,#130025,#0A0015);border:1px solid #3B82F655;border-radius:20px;overflow:hidden;box-shadow:0 0 60px #3B82F622;">
+
+    <!-- Progress bar -->
+    <div style="height:3px;background:#1E1035;">
+      <div id="onb-bar" style="height:100%;background:linear-gradient(90deg,#3B82F6,#8B5CF6);transition:width 0.3s;width:20%;"></div>
+    </div>
+
+    <!-- Content -->
+    <div style="padding:28px 24px 20px;">
+
+      <!-- Step 1 — Bienvenue -->
+      <div class="onb-step" id="onb-1" style="display:block;text-align:center;">
+        <div style="font-size:52px;margin-bottom:16px;">✈️</div>
+        <div style="font-size:11px;font-weight:900;color:#3B82F6;letter-spacing:3px;margin-bottom:8px;">BIENVENUE</div>
+        <div style="font-size:20px;font-weight:900;color:#F1F5F9;margin-bottom:12px;">SCORE CBTA</div>
+        <div style="font-size:13px;color:#94A3B8;line-height:1.7;margin-bottom:8px;">L'outil de notation et débrief CBTA conçu pour les <strong style="color:#F1F5F9;">TRI/TRE B737</strong>.</div>
+        <div style="font-size:13px;color:#94A3B8;line-height:1.7;">Ce guide rapide te montre l'essentiel en <strong style="color:#3B82F6;">5 étapes.</strong></div>
+      </div>
+
+      <!-- Step 2 — Session -->
+      <div class="onb-step" id="onb-2" style="display:none;">
+        <div style="font-size:40px;margin-bottom:14px;text-align:center;">📋</div>
+        <div style="font-size:11px;font-weight:900;color:#10B981;letter-spacing:3px;margin-bottom:10px;">ÉTAPE 1 — LA SESSION</div>
+        <div style="font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:14px;">Crée ta session simulateur</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">✏️</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Renseigne le nom de la session, du CPT et du FO</span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">▶️</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Appuie sur <strong style="color:#10B981;">DÉMARRER LA SESSION</strong></span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">🌤</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Optionnel : renseigne la météo via le bouton 🌤 en haut</span></div>
+        </div>
+      </div>
+
+      <!-- Step 3 — Exercice -->
+      <div class="onb-step" id="onb-3" style="display:none;">
+        <div style="font-size:40px;margin-bottom:14px;text-align:center;">📂</div>
+        <div style="font-size:11px;font-weight:900;color:#F97316;letter-spacing:3px;margin-bottom:10px;">ÉTAPE 2 — LES EXERCICES</div>
+        <div style="font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:14px;">Construis ton plan de vol</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">➕</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Ajoute les exercices un par un depuis la bibliothèque B737</span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">📁</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Ou charge un <strong style="color:#F97316;">LOFT prédéfini</strong> pour gagner du temps</span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">🎲</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">En séance, injecte des distracteurs via le bouton 🎲</span></div>
+        </div>
+      </div>
+
+      <!-- Step 4 — Notation -->
+      <div class="onb-step" id="onb-4" style="display:none;">
+        <div style="font-size:40px;margin-bottom:14px;text-align:center;">⚡</div>
+        <div style="font-size:11px;font-weight:900;color:#8B5CF6;letter-spacing:3px;margin-bottom:10px;">ÉTAPE 3 — LA NOTATION</div>
+        <div style="font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:14px;">Note vite, note juste</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">⚡</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;"><strong style="color:#8B5CF6;">Mode QUICK</strong> — tap + ou - par compétence, rapide comme l'éclair</span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">🎯</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;"><strong style="color:#3B82F6;">Mode EVAL</strong> — grade 1 à 5, observations détaillées, TEM</span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">⏱</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Active une <strong style="color:#F59E0B;">phase de vol</strong> dans le bandeau pour tagger tes notes</span></div>
+        </div>
+      </div>
+
+      <!-- Step 5 — Débrief -->
+      <div class="onb-step" id="onb-5" style="display:none;text-align:center;">
+        <div style="font-size:40px;margin-bottom:14px;">📄</div>
+        <div style="font-size:11px;font-weight:900;color:#EF4444;letter-spacing:3px;margin-bottom:10px;">ÉTAPE 4 — LE DÉBRIEF</div>
+        <div style="font-size:16px;font-weight:800;color:#F1F5F9;margin-bottom:14px;">Un rapport complet en un clic</div>
+        <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:18px;">
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">✅</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Clôture les exercices puis appuie sur <strong style="color:#EF4444;">DÉBRIEF</strong></span></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;"><span style="font-size:18px;flex-shrink:0;">📊</span><span style="font-size:13px;color:#CBD5E1;line-height:1.6;">Grades CBTA, TEM, radar de compétences, rapport PDF automatique</span></div>
+        </div>
+        <div style="background:#10B98115;border:1px solid #10B98133;border-radius:12px;padding:14px;">
+          <div style="font-size:14px;font-weight:800;color:#10B981;margin-bottom:4px;">C'est tout ! ✓</div>
+          <div style="font-size:12px;color:#94A3B8;">Le guide complet reste accessible via le bouton 📖 sur l'accueil.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px 20px;border-top:1px solid #1E1035;">
+      <!-- Dots -->
+      <div style="display:flex;gap:6px;align-items:center;">
+        <div id="onb-d1" style="width:8px;height:8px;border-radius:50%;background:#3B82F6;transition:all 0.3s;"></div>
+        <div id="onb-d2" style="width:8px;height:8px;border-radius:50%;background:#1E1035;transition:all 0.3s;"></div>
+        <div id="onb-d3" style="width:8px;height:8px;border-radius:50%;background:#1E1035;transition:all 0.3s;"></div>
+        <div id="onb-d4" style="width:8px;height:8px;border-radius:50%;background:#1E1035;transition:all 0.3s;"></div>
+        <div id="onb-d5" style="width:8px;height:8px;border-radius:50%;background:#1E1035;transition:all 0.3s;"></div>
+      </div>
+      <!-- Buttons -->
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button id="onb-skip" onclick="closeOnboarding()" style="padding:8px 14px;border-radius:8px;background:transparent;border:1px solid #334155;color:#475569;font-size:12px;font-weight:700;cursor:pointer;">Passer</button>
+        <button id="onb-prev" onclick="onbGo(-1)" style="display:none;padding:8px 14px;border-radius:8px;background:#1E1035;border:1px solid #334155;color:#94A3B8;font-size:12px;font-weight:700;cursor:pointer;">← Préc.</button>
+        <button id="onb-next" onclick="onbGo(1)" style="padding:10px 20px;border-radius:8px;background:linear-gradient(135deg,#3B82F6,#8B5CF6);border:none;color:#fff;font-size:13px;font-weight:800;cursor:pointer;letter-spacing:0.5px;">Suivant →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ══ END ONBOARDING ═══════════════════════════════════════════════════════ -->
+
 <div id="modal-session-timeline" style="display:none;position:fixed;inset:0;z-index:99995;background:#060010F5;flex-direction:column;">
   <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(13,0,24,0.9);border-bottom:1px solid #1E1035;flex-shrink:0;">
     <span style="font-size:15px;font-weight:900;color:#3B82F6;flex:1;letter-spacing:1px;">⏱ TIMELINE SESSION</span>
@@ -10391,6 +10491,40 @@ function openGuide(){
 function closeGuide(){
   document.getElementById('modal-help').style.display='none';
 }
+// ── ONBOARDING ────────────────────────────────────────────────────────────────
+var _onbStep = 1;
+var _onbTotal = 5;
+function showOnboarding(){
+  _onbStep = 1;
+  _onbRender();
+  document.getElementById('modal-onboarding').style.display='flex';
+}
+function closeOnboarding(){
+  document.getElementById('modal-onboarding').style.display='none';
+  localStorage.setItem('cbta_welcomed','1');
+}
+function onbGo(dir){
+  _onbStep = Math.max(1, Math.min(_onbTotal, _onbStep + dir));
+  _onbRender();
+}
+function _onbRender(){
+  for(var i=1;i<=_onbTotal;i++){
+    var s=document.getElementById('onb-'+i);
+    if(s) s.style.display=(i===_onbStep)?'block':'none';
+    var d=document.getElementById('onb-d'+i);
+    if(d){ d.style.background=i===_onbStep?'#3B82F6':'#1E1035'; d.style.width=i===_onbStep?'20px':'8px'; }
+  }
+  var bar=document.getElementById('onb-bar');
+  if(bar) bar.style.width=Math.round((_onbStep/_onbTotal)*100)+'%';
+  var prev=document.getElementById('onb-prev');
+  var next=document.getElementById('onb-next');
+  var skip=document.getElementById('onb-skip');
+  if(prev) prev.style.display=_onbStep>1?'block':'none';
+  if(next){ next.textContent=_onbStep===_onbTotal?'Commencer ✓':'Suivant →'; if(_onbStep===_onbTotal){ next.style.background='linear-gradient(135deg,#10B981,#3B82F6)'; next.onclick=function(){closeOnboarding();}; } else { next.style.background='linear-gradient(135deg,#3B82F6,#8B5CF6)'; next.onclick=function(){onbGo(1);}; } }
+  if(skip) skip.style.display=_onbStep===_onbTotal?'none':'block';
+}
+// ── END ONBOARDING ────────────────────────────────────────────────────────────
+
 function showToast(msg,duration){
   duration=duration||3500;
   let t=document.getElementById('_toast');
@@ -20444,6 +20578,12 @@ function importSelfEvalCode(seat){
     }).catch(function(e){console.warn('PDF migration skipped',e);});
   }catch(e){console.warn('PDF migration error',e);}
 })();
+</script>
+<script>
+// Auto-show onboarding on first visit
+if(!localStorage.getItem('cbta_welcomed')){
+  setTimeout(function(){ if(typeof showOnboarding==='function') showOnboarding(); }, 800);
+}
 </script>
 <script>
 if('serviceWorker' in navigator){
